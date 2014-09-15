@@ -249,19 +249,14 @@
    </portlet>
 
    <filter>
-      <filter-name>FilterTests_ActionFilter_ApiActionFilter_filter</filter-name>
-      <filter-class>javax.portlet.tck.filters.FilterTests_ActionFilter_ApiActionFilter_filter</filter-class>
-      <lifecycle>ACTION_PHASE</lifecycle>
+      <filter-name>FilterTests_PortletFilter_ApiResourceFilter_filter</filter-name>
+      <filter-class>javax.portlet.tck.filters.FilterTests_PortletFilter_ApiResourceFilter_filter</filter-class>
+      <lifecycle>RESOURCE_PHASE</lifecycle>
    </filter>
    <filter>
-      <filter-name>FilterTests_RenderFilter_ApiRenderFilter_filter</filter-name>
-      <filter-class>javax.portlet.tck.filters.FilterTests_RenderFilter_ApiRenderFilter_filter</filter-class>
-      <lifecycle>RENDER_PHASE</lifecycle>
-   </filter>
-   <filter>
-      <filter-name>FilterTests_PortletFilter_ApiActionFilter_filter</filter-name>
-      <filter-class>javax.portlet.tck.filters.FilterTests_PortletFilter_ApiActionFilter_filter</filter-class>
-      <lifecycle>ACTION_PHASE</lifecycle>
+      <filter-name>FilterTests_FilterChain_ApiEventFilter_filter</filter-name>
+      <filter-class>javax.portlet.tck.filters.FilterTests_FilterChain_ApiEventFilter_filter</filter-class>
+      <lifecycle>EVENT_PHASE</lifecycle>
    </filter>
    <filter>
       <filter-name>FilterTests_PortletFilter_ApiRenderFilter_filter</filter-name>
@@ -269,29 +264,9 @@
       <lifecycle>RENDER_PHASE</lifecycle>
    </filter>
    <filter>
-      <filter-name>FilterTests_PortletFilter_ApiResourceFilter_filter</filter-name>
-      <filter-class>javax.portlet.tck.filters.FilterTests_PortletFilter_ApiResourceFilter_filter</filter-class>
-      <lifecycle>RESOURCE_PHASE</lifecycle>
-   </filter>
-   <filter>
       <filter-name>FilterTests_ResourceFilter_ApiResourceFilter_filter</filter-name>
       <filter-class>javax.portlet.tck.filters.FilterTests_ResourceFilter_ApiResourceFilter_filter</filter-class>
       <lifecycle>RESOURCE_PHASE</lifecycle>
-   </filter>
-   <filter>
-      <filter-name>FilterTests_PortletFilter_ApiEventFilter_filter</filter-name>
-      <filter-class>javax.portlet.tck.filters.FilterTests_PortletFilter_ApiEventFilter_filter</filter-class>
-      <lifecycle>EVENT_PHASE</lifecycle>
-   </filter>
-   <filter>
-      <filter-name>FilterTests_EventFilter_ApiEventFilter_filter</filter-name>
-      <filter-class>javax.portlet.tck.filters.FilterTests_EventFilter_ApiEventFilter_filter</filter-class>
-      <lifecycle>EVENT_PHASE</lifecycle>
-   </filter>
-   <filter>
-      <filter-name>FilterTests_FilterChain_ApiActionFilter_filter</filter-name>
-      <filter-class>javax.portlet.tck.filters.FilterTests_FilterChain_ApiActionFilter_filter</filter-class>
-      <lifecycle>ACTION_PHASE</lifecycle>
    </filter>
    <filter>
       <filter-name>FilterTests_FilterChain_ApiRenderFilter_filter</filter-name>
@@ -304,51 +279,56 @@
       <lifecycle>RESOURCE_PHASE</lifecycle>
    </filter>
    <filter>
+      <filter-name>FilterTests_PortletFilter_ApiActionFilter_filter</filter-name>
+      <filter-class>javax.portlet.tck.filters.FilterTests_PortletFilter_ApiActionFilter_filter</filter-class>
+      <lifecycle>ACTION_PHASE</lifecycle>
+   </filter>
+   <filter>
+      <filter-name>FilterTests_PortletFilter_ApiEventFilter_filter</filter-name>
+      <filter-class>javax.portlet.tck.filters.FilterTests_PortletFilter_ApiEventFilter_filter</filter-class>
+      <lifecycle>EVENT_PHASE</lifecycle>
+   </filter>
+   <filter>
+      <filter-name>FilterTests_EventFilter_ApiEventFilter_filter</filter-name>
+      <filter-class>javax.portlet.tck.filters.FilterTests_EventFilter_ApiEventFilter_filter</filter-class>
+      <lifecycle>EVENT_PHASE</lifecycle>
+   </filter>
+   <filter>
       <filter-name>FilterTests_FilterConfig_ApiRenderFilter_filter</filter-name>
       <filter-class>javax.portlet.tck.filters.FilterTests_FilterConfig_ApiRenderFilter_filter</filter-class>
       <lifecycle>RENDER_PHASE</lifecycle>
    </filter>
    <filter>
-      <filter-name>FilterTests_FilterChain_ApiEventFilter_filter</filter-name>
-      <filter-class>javax.portlet.tck.filters.FilterTests_FilterChain_ApiEventFilter_filter</filter-class>
-      <lifecycle>EVENT_PHASE</lifecycle>
+      <filter-name>FilterTests_ActionFilter_ApiActionFilter_filter</filter-name>
+      <filter-class>javax.portlet.tck.filters.FilterTests_ActionFilter_ApiActionFilter_filter</filter-class>
+      <lifecycle>ACTION_PHASE</lifecycle>
+   </filter>
+   <filter>
+      <filter-name>FilterTests_RenderFilter_ApiRenderFilter_filter</filter-name>
+      <filter-class>javax.portlet.tck.filters.FilterTests_RenderFilter_ApiRenderFilter_filter</filter-class>
+      <lifecycle>RENDER_PHASE</lifecycle>
+   </filter>
+   <filter>
+      <filter-name>FilterTests_FilterChain_ApiActionFilter_filter</filter-name>
+      <filter-class>javax.portlet.tck.filters.FilterTests_FilterChain_ApiActionFilter_filter</filter-class>
+      <lifecycle>ACTION_PHASE</lifecycle>
    </filter>
 
    <filter-mapping>
-      <filter-name>FilterTests_ActionFilter_ApiActionFilter_filter</filter-name>
-      <portlet-name>FilterTests_ActionFilter_ApiActionFilter</portlet-name>
+      <filter-name>FilterTests_PortletFilter_ApiResourceFilter_filter</filter-name>
+      <portlet-name>FilterTests_PortletFilter_ApiResourceFilter</portlet-name>
    </filter-mapping>
    <filter-mapping>
-      <filter-name>FilterTests_RenderFilter_ApiRenderFilter_filter</filter-name>
-      <portlet-name>FilterTests_RenderFilter_ApiRenderFilter</portlet-name>
-   </filter-mapping>
-   <filter-mapping>
-      <filter-name>FilterTests_PortletFilter_ApiActionFilter_filter</filter-name>
-      <portlet-name>FilterTests_PortletFilter_ApiActionFilter</portlet-name>
+      <filter-name>FilterTests_FilterChain_ApiEventFilter_filter</filter-name>
+      <portlet-name>FilterTests_FilterChain_ApiEventFilter_event</portlet-name>
    </filter-mapping>
    <filter-mapping>
       <filter-name>FilterTests_PortletFilter_ApiRenderFilter_filter</filter-name>
       <portlet-name>FilterTests_PortletFilter_ApiRenderFilter</portlet-name>
    </filter-mapping>
    <filter-mapping>
-      <filter-name>FilterTests_PortletFilter_ApiResourceFilter_filter</filter-name>
-      <portlet-name>FilterTests_PortletFilter_ApiResourceFilter</portlet-name>
-   </filter-mapping>
-   <filter-mapping>
       <filter-name>FilterTests_ResourceFilter_ApiResourceFilter_filter</filter-name>
       <portlet-name>FilterTests_ResourceFilter_ApiResourceFilter</portlet-name>
-   </filter-mapping>
-   <filter-mapping>
-      <filter-name>FilterTests_PortletFilter_ApiEventFilter_filter</filter-name>
-      <portlet-name>FilterTests_PortletFilter_ApiEventFilter_event</portlet-name>
-   </filter-mapping>
-   <filter-mapping>
-      <filter-name>FilterTests_EventFilter_ApiEventFilter_filter</filter-name>
-      <portlet-name>FilterTests_EventFilter_ApiEventFilter_event</portlet-name>
-   </filter-mapping>
-   <filter-mapping>
-      <filter-name>FilterTests_FilterChain_ApiActionFilter_filter</filter-name>
-      <portlet-name>FilterTests_FilterChain_ApiActionFilter</portlet-name>
    </filter-mapping>
    <filter-mapping>
       <filter-name>FilterTests_FilterChain_ApiRenderFilter_filter</filter-name>
@@ -359,12 +339,32 @@
       <portlet-name>FilterTests_FilterChain_ApiResourceFilter</portlet-name>
    </filter-mapping>
    <filter-mapping>
+      <filter-name>FilterTests_PortletFilter_ApiActionFilter_filter</filter-name>
+      <portlet-name>FilterTests_PortletFilter_ApiActionFilter</portlet-name>
+   </filter-mapping>
+   <filter-mapping>
+      <filter-name>FilterTests_PortletFilter_ApiEventFilter_filter</filter-name>
+      <portlet-name>FilterTests_PortletFilter_ApiEventFilter_event</portlet-name>
+   </filter-mapping>
+   <filter-mapping>
+      <filter-name>FilterTests_EventFilter_ApiEventFilter_filter</filter-name>
+      <portlet-name>FilterTests_EventFilter_ApiEventFilter_event</portlet-name>
+   </filter-mapping>
+   <filter-mapping>
       <filter-name>FilterTests_FilterConfig_ApiRenderFilter_filter</filter-name>
       <portlet-name>FilterTests_FilterConfig_ApiRenderFilter</portlet-name>
    </filter-mapping>
    <filter-mapping>
-      <filter-name>FilterTests_FilterChain_ApiEventFilter_filter</filter-name>
-      <portlet-name>FilterTests_FilterChain_ApiEventFilter_event</portlet-name>
+      <filter-name>FilterTests_ActionFilter_ApiActionFilter_filter</filter-name>
+      <portlet-name>FilterTests_ActionFilter_ApiActionFilter</portlet-name>
+   </filter-mapping>
+   <filter-mapping>
+      <filter-name>FilterTests_RenderFilter_ApiRenderFilter_filter</filter-name>
+      <portlet-name>FilterTests_RenderFilter_ApiRenderFilter</portlet-name>
+   </filter-mapping>
+   <filter-mapping>
+      <filter-name>FilterTests_FilterChain_ApiActionFilter_filter</filter-name>
+      <portlet-name>FilterTests_FilterChain_ApiActionFilter</portlet-name>
    </filter-mapping>
 
    <event-definition>

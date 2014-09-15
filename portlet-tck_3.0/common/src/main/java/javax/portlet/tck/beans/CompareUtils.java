@@ -19,11 +19,14 @@
 package javax.portlet.tck.beans;
 
 import java.text.Format;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Formatter;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /** Contains some useful comparison methods 
@@ -31,7 +34,9 @@ import java.util.Set;
  * @author nick
  */
 public class CompareUtils {
-
+   private static final String LOG_CLASS = CompareUtils.class.getName();
+   private static final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+   
    /**
     * Compares two strings and sets the test result accordingly. 
     * If both strings are null, comparison is successful.
@@ -142,7 +147,13 @@ public class CompareUtils {
    @SuppressWarnings({ "rawtypes", "unchecked" })
    static public void mapsEqual(String aname, Map<String, String[]> a, String bname, Map<String, String[]> b, TestResult tr) {
 
-      boolean ok = a.equals(b);     // compares the mappings
+      boolean ok = a.keySet().equals(b.keySet());
+      if (ok) {
+         for (String key : a.keySet()) {
+            ok = ok & (Arrays.deepEquals((String[])a.get(key), (String[])b.get(key)));
+         }
+      }
+
       // if not OK, write debug output:
       if (!ok) {
          StringBuffer sb = new StringBuffer(256);

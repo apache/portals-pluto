@@ -107,36 +107,32 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* Details: "Method setParameter(String, String): Sets the parameter    */
       /* value for the specified name"                                        */
       TestResult tr0 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA1);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr0.appendTcDetail("Not implemented.");
       tr0.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterA4          */
       /* Details: "Method setParameter(String, String): An action parameter   */
       /* can be set"                                                          */
       TestResult tr1 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA4);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr1.appendTcDetail("Not implemented.");
       tr1.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterA6          */
       /* Details: "Method setParameter(String, String): All previously        */
       /* existing values for the specified key are removed"                   */
       TestResult tr2 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA6);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr2.appendTcDetail("Not implemented.");
       tr2.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterA7          */
       /* Details: "Method setParameter(String, String): If the value is       */
       /* null, all values for the specified key are removed"                  */
       TestResult tr3 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA7);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr3.appendTcDetail("Not implemented.");
       tr3.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterA8          */
@@ -160,36 +156,32 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* Details: "Method setParameter(String, String[]): Sets the            */
       /* parameter value array for the specified name"                        */
       TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB1);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr5.appendTcDetail("Not implemented.");
       tr5.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterB4          */
       /* Details: "Method setParameter(String, String[]): An action           */
       /* parameter can be set"                                                */
       TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB4);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr6.appendTcDetail("Not implemented.");
       tr6.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterB6          */
       /* Details: "Method setParameter(String, String[]): All previously      */
       /* existing values for the specified key are removed"                   */
       TestResult tr7 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB6);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr7.appendTcDetail("Not implemented.");
       tr7.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterB7          */
       /* Details: "Method setParameter(String, String[]): If the value is     */
       /* null, all values for the specified key are removed"                  */
       TestResult tr8 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB7);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr8.appendTcDetail("Not implemented.");
       tr8.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterB8          */
@@ -213,18 +205,16 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* Details: "Method setParameters(java.util.Map): Sets the parameter    */
       /* map to the specified value"                                          */
       TestResult tr10 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS1);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr10.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr10.appendTcDetail("Not implemented.");
       tr10.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters4          */
       /* Details: "Method setParameters(java.util.Map): Action parameters     */
       /* can be set through the map"                                          */
       TestResult tr11 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS4);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr11.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr11.appendTcDetail("Not implemented.");
       tr11.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters6          */
@@ -232,9 +222,8 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* private parameters not contained in the specified input map are      */
       /* removed"                                                             */
       TestResult tr12 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS6);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr12.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr12.appendTcDetail("Not implemented.");
       tr12.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters7          */
@@ -242,18 +231,16 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* public parameters not contained in the specified input map remain    */
       /* unchanged"                                                           */
       TestResult tr13 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS7);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr13.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr13.appendTcDetail("Not implemented.");
       tr13.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters8          */
       /* Details: "Method setParameters(java.util.Map): Parameters that are   */
       /* set are available in requests initiated through the URL"             */
       TestResult tr14 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS8);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr14.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr14.appendTcDetail("Not implemented.");
       tr14.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters9          */
@@ -294,9 +281,8 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* IllegalArgumentException if any key in the map is the empty string   */
       /* (\"\") "                                                             */
       TestResult tr17 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS11);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr17.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr17.appendTcDetail("Not implemented.");
       tr17.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters12         */
@@ -337,27 +323,24 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* IllegalStateException if the method is invoked after the             */
       /* sendRedirect method has been called"                                 */
       TestResult tr20 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS14);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr20.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr20.appendTcDetail("Not implemented.");
       tr20.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setSecure2              */
       /* Details: "Method setSecure(boolean): If the input parameter is       */
       /* true, the resulting URL uses a secure connection (HTTPS)"            */
       TestResult tr21 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETSECURE2);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr21.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr21.appendTcDetail("Not implemented.");
       tr21.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_toString                */
       /* Details: "Method toString(): Returns a String containing the         */
       /* portlet URL representation to be included in the markup"             */
       TestResult tr22 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_TOSTRING);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr22.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr22.appendTcDetail("Not implemented.");
       tr22.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_getParameterMap1        */
@@ -411,18 +394,16 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* Details: "Method write(): Writes the URL to the output stream        */
       /* through the provided Writer"                                         */
       TestResult tr26 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_WRITEA1);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr26.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr26.appendTcDetail("Not implemented.");
       tr26.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_writeB1                 */
       /* Details: "Method write(): Writes the URL to the output stream        */
       /* through the provided Writer"                                         */
       TestResult tr27 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_WRITEB1);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-      } catch(Exception e) {tr27.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr27.appendTcDetail("Not implemented.");
       tr27.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_addProperty1            */
@@ -430,8 +411,8 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* added"                                                               */
       TestResult tr28 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_ADDPROPERTY1);
       try {
-         PortletURL turl = portletResp.createActionURL();
          // Test if method can be called. Not possible to check resulting property values.
+         PortletURL turl = portletResp.createActionURL();
          turl.addProperty("prop1", "val1");
          tr28.setTcSuccess(true);
       } catch(Exception e) {tr28.appendTcDetail(e.toString());}
@@ -459,8 +440,8 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* value for the specified key"                                         */
       TestResult tr30 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPROPERTY1);
       try {
-         PortletURL turl = portletResp.createActionURL();
          // Test if method can be called. Not possible to check resulting property values.
+         PortletURL turl = portletResp.createActionURL();
          turl.setProperty("prop1", "val1");
          tr30.setTcSuccess(true);
       } catch(Exception e) {tr30.appendTcDetail(e.toString());}

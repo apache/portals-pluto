@@ -140,27 +140,24 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
       /* Details: "Method setResourceID(String): Sets the specified String    */
       /* as the portlet resource ID"                                          */
       TestResult tr4 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETRESOURCEID);
-      try {
-         ResourceURL turl = portletResp.createResourceURL();
-      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr4.appendTcDetail("Not implemented.");
       tr4.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_getCacheability     */
       /* Details: "Method getCacheability(): Returns a String containing      */
       /* the cacheability level set on the resource URL"                      */
       TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_GETCACHEABILITY);
-      try {
-         ResourceURL turl = portletResp.createResourceURL();
-      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr5.appendTcDetail("Not implemented.");
       tr5.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_setCacheability1    */
       /* Details: "Method setCacheability(String): Sets the cacheability      */
       /* level for the resource URL"                                          */
       TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY1);
-      try {
-         ResourceURL turl = portletResp.createResourceURL();
-      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr6.appendTcDetail("Not implemented.");
       tr6.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_setCacheability2    */
@@ -168,9 +165,8 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
       /* IllegalArgumentException if the input parameter does not have a      */
       /* value of \"FULL\", \"PAGE\", or \"PORTLET\""                         */
       TestResult tr7 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY2);
-      try {
-         ResourceURL turl = portletResp.createResourceURL();
-      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr7.appendTcDetail("Not implemented.");
       tr7.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_setCacheability3    */
@@ -178,9 +174,8 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
       /* IllegalStateException if the specified cacheability level is         */
       /* weaker than the cacheability level for the parent resource URL"      */
       TestResult tr8 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY3);
-      try {
-         ResourceURL turl = portletResp.createResourceURL();
-      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
+      /* TODO: implement test */
+      tr8.appendTcDetail("Not implemented.");
       tr8.writeTo(writer);
 
    }
