@@ -115,8 +115,9 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
       /* filterActionURL(PortletURL): method is called before the toString    */
       /* or write methods are executed on an action URL"                      */
       TestResult tr1 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERACTIONURL1);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL2 */
@@ -124,8 +125,9 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
       /* method is passed the PortletURL object representing the action       */
       /* URL"                                                                 */
       TestResult tr2 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERACTIONURL2);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL3 */
@@ -133,8 +135,9 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
       /* object can be modified by setting a parameter and the modified URL   */
       /* object is processed by the PortletURL toString or write method"      */
       TestResult tr3 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERACTIONURL3);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL4 */
@@ -142,8 +145,9 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
       /* object can be modified by setting a property and the modified URL    */
       /* object is processed by the PortletURL toString or write method"      */
       TestResult tr4 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERACTIONURL4);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL5 */
@@ -151,8 +155,9 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
       /* filterRenderURL(PortletURL): method is called before the toString    */
       /* or write methods are executed on an action URL"                      */
       TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRENDERURL5);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL6 */
@@ -160,8 +165,9 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
       /* method is passed the PortletURL object representing the action       */
       /* URL"                                                                 */
       TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRENDERURL6);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL7 */
@@ -169,8 +175,9 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
       /* object can be modified by setting a parameter and the modified URL   */
       /* object is processed by the PortletURL toString or write method"      */
       TestResult tr7 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRENDERURL7);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL8 */
@@ -178,8 +185,9 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
       /* object can be modified by setting a property and the modified URL    */
       /* object is processed by the PortletURL toString or write method"      */
       TestResult tr8 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRENDERURL8);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
       tr8.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL1 */
@@ -187,8 +195,9 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
       /* filterResourceURL(PortletURL): method is called before the           */
       /* toString or write methods are executed on an action URL"             */
       TestResult tr9 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL1);
-      /* TODO: implement test */
-      tr9.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr9.appendTcDetail(e.toString());}
       tr9.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL2 */
@@ -196,8 +205,9 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
       /* filterResourceURL method is passed the PortletURL object             */
       /* representing the action URL"                                         */
       TestResult tr10 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL2);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr10.appendTcDetail(e.toString());}
       tr10.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL3 */
@@ -206,8 +216,9 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
       /* URL object is processed by the PortletURL toString or write          */
       /* method"                                                              */
       TestResult tr11 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL3);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr11.appendTcDetail(e.toString());}
       tr11.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL4 */
@@ -216,8 +227,9 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
       /* URL object is processed by the PortletURL toString or write          */
       /* method"                                                              */
       TestResult tr12 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL4);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr12.appendTcDetail(e.toString());}
       tr12.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL5 */
@@ -226,8 +238,9 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
       /* modified URL object is processed by the PortletURL toString or       */
       /* write method"                                                        */
       TestResult tr13 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL5);
-      /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr13.appendTcDetail(e.toString());}
       tr13.writeTo(writer);
 
    }

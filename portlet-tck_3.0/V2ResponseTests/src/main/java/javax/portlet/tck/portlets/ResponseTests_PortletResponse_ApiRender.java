@@ -134,170 +134,153 @@ public class ResponseTests_PortletResponse_ApiRender implements Portlet, Resourc
       tr2.appendTcDetail("Not implemented.");
       tr2.writeTo(writer);
 
-      /* TestCase: V2ResponseTests_PortletResponse_ApiRender_addPropertyB2    */
-      /* Details: "Method addProperty(String, org.w3c.dom.Element): If a      */
-      /* DOM Element for the specified key already exists, the new element    */
-      /* is added in addition to the existing element"                        */
-      TestResult tr3 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYB2);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
-      tr3.writeTo(writer);
-
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_addPropertyB3    */
       /* Details: "Method addProperty(String, org.w3c.dom.Element): If the    */
       /* specified DOM Element value is null, the key is removed from the     */
       /* response"                                                            */
-      TestResult tr4 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYB3);
+      TestResult tr3 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYB3);
       /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
-      tr4.writeTo(writer);
+      tr3.appendTcDetail("Not implemented.");
+      tr3.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_addPropertyB4    */
       /* Details: "Method addProperty(String, org.w3c.dom.Element): Throws    */
       /* IllegalArgumentException if the specified key is null"               */
-      TestResult tr5 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYB4);
+      TestResult tr4 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYB4);
       try {
          try {
             org.w3c.dom.Element el = portletResp.createElement("p");
             portletResp.addProperty((String)null, el);
-            tr5.appendTcDetail("Method did not throw an exception.");
+            tr4.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
-            tr5.setTcSuccess(true);
+            tr4.setTcSuccess(true);
          } catch (Exception e) {
-            tr5.appendTcDetail(e.toString());
+            tr4.appendTcDetail(e.toString());
          }
-      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
-      tr5.writeTo(writer);
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
+      tr4.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_addPropertyC1    */
-      /* Details: "Method addProperty(String, String): Adds a property        */
-      /* value to an existing key to allow the key to have multiple values"   */
-      TestResult tr6 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYC1);
+      /* Details: "Method addProperty(String, String): A property can be      */
+      /* added"                                                               */
+      TestResult tr5 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYC1);
       /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
-      tr6.writeTo(writer);
+      tr5.appendTcDetail("Not implemented.");
+      tr5.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_addPropertyC2    */
       /* Details: "Method addProperty(String, String): Throws                 */
       /* IllegalArgumentException if the specified key is null"               */
-      TestResult tr7 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYC2);
+      TestResult tr6 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYC2);
       try {
          try {
             portletResp.addProperty(null, "value");
-            tr7.appendTcDetail("Method did not throw an exception.");
+            tr6.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
-            tr7.setTcSuccess(true);
+            tr6.setTcSuccess(true);
          } catch (Exception e) {
-            tr7.appendTcDetail(e.toString());
+            tr6.appendTcDetail(e.toString());
          }
-      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
-      tr7.writeTo(writer);
+      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
+      tr6.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_setProperty1     */
       /* Details: "Method setProperty(String, String): Sets a property        */
       /* value for the specified key"                                         */
-      TestResult tr8 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_SETPROPERTY1);
+      TestResult tr7 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_SETPROPERTY1);
       /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
-      tr8.writeTo(writer);
-
-      /* TestCase: V2ResponseTests_PortletResponse_ApiRender_setProperty2     */
-      /* Details: "Method setProperty(String, String): Resets any existing    */
-      /* property values for the specified key"                               */
-      TestResult tr9 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_SETPROPERTY2);
-      /* TODO: implement test */
-      tr9.appendTcDetail("Not implemented.");
-      tr9.writeTo(writer);
+      tr7.appendTcDetail("Not implemented.");
+      tr7.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_setProperty3     */
       /* Details: "Method setProperty(String, String): Throws                 */
       /* IllegalArgumentException if the specified key is null"               */
-      TestResult tr10 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_SETPROPERTY3);
+      TestResult tr8 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_SETPROPERTY3);
       try {
          try {
             portletResp.setProperty(null, "value");
-            tr10.appendTcDetail("Method did not throw an exception.");
+            tr8.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
-            tr10.setTcSuccess(true);
+            tr8.setTcSuccess(true);
          } catch (Exception e) {
-            tr10.appendTcDetail(e.toString());
+            tr8.appendTcDetail(e.toString());
          }
-      } catch(Exception e) {tr10.appendTcDetail(e.toString());}
-      tr10.writeTo(writer);
+      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
+      tr8.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_encodeURL1       */
       /* Details: "Method encodeURL(String): Returns a String representing    */
       /* the encoded URL"                                                     */
-      TestResult tr11 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ENCODEURL1);
+      TestResult tr9 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ENCODEURL1);
       /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
-      tr11.writeTo(writer);
+      tr9.appendTcDetail("Not implemented.");
+      tr9.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_encodeURL2       */
       /* Details: "Method encodeURL(String): Throws                           */
       /* IllegalArgumentException if the input string is not an absolute      */
       /* URL and does not start with at \"/\" character"                      */
-      TestResult tr12 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ENCODEURL2);
+      TestResult tr10 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ENCODEURL2);
       /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
-      tr12.writeTo(writer);
+      tr10.appendTcDetail("Not implemented.");
+      tr10.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_getNamespace1    */
       /* Details: "Method getNamespace(): Returns a String containing the     */
       /* namespace value"                                                     */
-      TestResult tr13 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_GETNAMESPACE1);
+      TestResult tr11 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_GETNAMESPACE1);
       /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
-      tr13.writeTo(writer);
+      tr11.appendTcDetail("Not implemented.");
+      tr11.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_createElement1   */
       /* Details: "Method createElement(String): Returns an                   */
       /* org.w3c.dom.Element object for the specified tag name"               */
-      TestResult tr14 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT1);
+      TestResult tr12 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT1);
       /* TODO: implement test */
-      tr14.appendTcDetail("Not implemented.");
-      tr14.writeTo(writer);
+      tr12.appendTcDetail("Not implemented.");
+      tr12.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_createElement2   */
       /* Details: "Method createElement(String): The returned Element has     */
       /* nodeName set to the the specified tag name "                         */
-      TestResult tr15 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT2);
+      TestResult tr13 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT2);
       /* TODO: implement test */
-      tr15.appendTcDetail("Not implemented.");
-      tr15.writeTo(writer);
+      tr13.appendTcDetail("Not implemented.");
+      tr13.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_createElement3   */
       /* Details: "Method createElement(String): The returned Element has     */
       /* localName set to null"                                               */
-      TestResult tr16 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT3);
+      TestResult tr14 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT3);
       /* TODO: implement test */
-      tr16.appendTcDetail("Not implemented.");
-      tr16.writeTo(writer);
+      tr14.appendTcDetail("Not implemented.");
+      tr14.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_createElement4   */
       /* Details: "Method createElement(String): The returned Element has     */
       /* prefix set to null"                                                  */
-      TestResult tr17 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT4);
+      TestResult tr15 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT4);
       /* TODO: implement test */
-      tr17.appendTcDetail("Not implemented.");
-      tr17.writeTo(writer);
+      tr15.appendTcDetail("Not implemented.");
+      tr15.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_createElement5   */
       /* Details: "Method createElement(String): The returned Element has     */
       /* namespaceURI set to null"                                            */
-      TestResult tr18 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT5);
+      TestResult tr16 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT5);
       /* TODO: implement test */
-      tr18.appendTcDetail("Not implemented.");
-      tr18.writeTo(writer);
+      tr16.appendTcDetail("Not implemented.");
+      tr16.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_createElement6   */
       /* Details: "Method createElement(String): Throws                       */
       /* org.w3c.dom.DOMException - INVALID_CHARACTER_ERR if the specified    */
       /* name contains an illegal character. "                                */
-      TestResult tr19 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT6);
+      TestResult tr17 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT6);
       /* TODO: implement test */
-      tr19.appendTcDetail("Not implemented.");
-      tr19.writeTo(writer);
+      tr17.appendTcDetail("Not implemented.");
+      tr17.writeTo(writer);
 
    }
 

@@ -193,21 +193,6 @@
 
 
    <event-definition>
-      <qname>tck:FilterTests_FilterChain_ApiEventFilter</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <event-definition>
-      <qname>tck:FilterTests_PortletFilter_ApiEventFilter</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <event-definition>
-      <qname>tck:FilterTests_EventFilter_ApiEventFilter</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <event-definition>
       <qname>tck:WrapperTests_EventRequestWrapper_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>

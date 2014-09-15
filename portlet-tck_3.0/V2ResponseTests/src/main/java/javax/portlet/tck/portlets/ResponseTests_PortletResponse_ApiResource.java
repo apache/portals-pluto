@@ -158,8 +158,8 @@ public class ResponseTests_PortletResponse_ApiResource implements Portlet, Resou
       tr5.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiResource_addPropertyC1  */
-      /* Details: "Method addProperty(String, String): Adds a property        */
-      /* value to an existing key to allow the key to have multiple values"   */
+      /* Details: "Method addProperty(String, String): A property can be      */
+      /* added"                                                               */
       TestResult tr6 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRESOURCE_ADDPROPERTYC1);
       /* TODO: implement test */
       tr6.appendTcDetail("Not implemented.");

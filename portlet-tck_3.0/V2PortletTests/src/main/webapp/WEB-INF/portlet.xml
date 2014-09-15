@@ -193,61 +193,6 @@
 
 
    <event-definition>
-      <qname>tck:FilterTests_FilterChain_ApiEventFilter</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <event-definition>
-      <qname>tck:FilterTests_PortletFilter_ApiEventFilter</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <event-definition>
-      <qname>tck:FilterTests_EventFilter_ApiEventFilter</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <event-definition>
-      <qname>tck:WrapperTests_EventRequestWrapper_ApiEvent</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <event-definition>
-      <qname>tck:WrapperTests_EventResponseWrapper_ApiEvent</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <event-definition>
-      <qname>tck:RequestTests_PortletRequest_ApiEvent</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <event-definition>
-      <qname>tck:RequestTests_EventRequest_ApiEvent</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <event-definition>
-      <qname>tck:ResponseTests_PortletResponse_ApiEvent</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <event-definition>
-      <qname>tck:ResponseTests_StateAwareResponse_ApiEvent</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <event-definition>
-      <qname>tck:ResponseTests_EventResponse_ApiEvent</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <event-definition>
-      <qname>tck:AnnotationTests_ProcessEvent_ApiEvent</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <event-definition>
       <qname>tck:PortletTests_Event_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>

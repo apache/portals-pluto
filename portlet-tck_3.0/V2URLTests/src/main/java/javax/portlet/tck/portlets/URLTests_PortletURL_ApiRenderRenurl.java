@@ -107,8 +107,9 @@ public class URLTests_PortletURL_ApiRenderRenurl implements Portlet, ResourceSer
       /* Details: "Method setWindowState(WindowState): Sets the WindowState   */
       /* to be used when the URL is activated"                                */
       TestResult tr0 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERRENURL_SETWINDOWSTATE1);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURL_ApiRenderRenurl_setWindowState2      */
@@ -116,8 +117,9 @@ public class URLTests_PortletURL_ApiRenderRenurl implements Portlet, ResourceSer
       /* WindowStateException if the portal does not support the specified    */
       /* Window State"                                                        */
       TestResult tr1 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERRENURL_SETWINDOWSTATE2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURL_ApiRenderRenurl_setWindowState3      */
@@ -125,8 +127,9 @@ public class URLTests_PortletURL_ApiRenderRenurl implements Portlet, ResourceSer
       /* WindowStateException if the specified WindowState is not declared    */
       /* in the deployment descriptor"                                        */
       TestResult tr2 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERRENURL_SETWINDOWSTATE3);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURL_ApiRenderRenurl_setWindowState4      */
@@ -134,16 +137,18 @@ public class URLTests_PortletURL_ApiRenderRenurl implements Portlet, ResourceSer
       /* WindowStateException if the user is not allowed to switch to the     */
       /* specified WindowState"                                               */
       TestResult tr3 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERRENURL_SETWINDOWSTATE4);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURL_ApiRenderRenurl_setPortletMode1      */
       /* Details: "Method setPortletMode(PortletMode): Sets the PortletMode   */
       /* to be used when the URL is activated"                                */
       TestResult tr4 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERRENURL_SETPORTLETMODE1);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURL_ApiRenderRenurl_setPortletMode2      */
@@ -151,8 +156,9 @@ public class URLTests_PortletURL_ApiRenderRenurl implements Portlet, ResourceSer
       /* PortletModeException if the portal does not support the specified    */
       /* Window State"                                                        */
       TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERRENURL_SETPORTLETMODE2);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURL_ApiRenderRenurl_setPortletMode3      */
@@ -160,8 +166,9 @@ public class URLTests_PortletURL_ApiRenderRenurl implements Portlet, ResourceSer
       /* PortletModeException if the specified PortletMode is not declared    */
       /* in the deployment descriptor"                                        */
       TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERRENURL_SETPORTLETMODE3);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURL_ApiRenderRenurl_setPortletMode4      */
@@ -169,48 +176,54 @@ public class URLTests_PortletURL_ApiRenderRenurl implements Portlet, ResourceSer
       /* PortletModeException if the user is not allowed to switch to the     */
       /* specified PortletMode"                                               */
       TestResult tr7 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERRENURL_SETPORTLETMODE4);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURL_ApiRenderRenurl_getPortletMode1      */
       /* Details: "Method getPortletMode(): Returns the PortletMode object    */
       /* set on the URL"                                                      */
       TestResult tr8 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERRENURL_GETPORTLETMODE1);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
       tr8.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURL_ApiRenderRenurl_getPortletMode2      */
       /* Details: "Method getPortletMode(): Returns null if the PortletMode   */
       /* has not been set"                                                    */
       TestResult tr9 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERRENURL_GETPORTLETMODE2);
-      /* TODO: implement test */
-      tr9.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr9.appendTcDetail(e.toString());}
       tr9.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURL_ApiRenderRenurl_getWindowState1      */
       /* Details: "Method getWindowState(): Returns the WindowState object    */
       /* set on the URL"                                                      */
       TestResult tr10 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERRENURL_GETWINDOWSTATE1);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr10.appendTcDetail(e.toString());}
       tr10.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURL_ApiRenderRenurl_getWindowState2      */
       /* Details: "Method getWindowState(): Returns null if the Window        */
       /* State has not been set"                                              */
       TestResult tr11 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERRENURL_GETWINDOWSTATE2);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr11.appendTcDetail(e.toString());}
       tr11.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURL_ApiRenderRenurl_removePublicRenderParameter1 */
       /* Details: "Method removePublicRenderParameter(String): Removes the    */
       /* specified public render parameter"                                   */
       TestResult tr12 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERRENURL_REMOVEPUBLICRENDERPARAMETER1);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+      } catch(Exception e) {tr12.appendTcDetail(e.toString());}
       tr12.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURL_ApiRenderRenurl_removePublicRenderParameter2 */

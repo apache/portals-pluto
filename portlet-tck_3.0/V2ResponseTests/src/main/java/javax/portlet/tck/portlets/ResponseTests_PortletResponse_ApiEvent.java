@@ -129,17 +129,6 @@ public class ResponseTests_PortletResponse_ApiEvent implements Portlet, Resource
          tb.writeTo(writer);
       }
 
-      /* TestCase: V2ResponseTests_PortletResponse_ApiEvent_addPropertyB2     */
-      /* Details: "Method addProperty(String, org.w3c.dom.Element): If a      */
-      /* DOM Element for the specified key already exists, the new element    */
-      /* is added in addition to the existing element"                        */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_PortletResponse_ApiEvent_addPropertyB2", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V2ResponseTests_PortletResponse_ApiEvent_addPropertyB3     */
       /* Details: "Method addProperty(String, org.w3c.dom.Element): If the    */
       /* specified DOM Element value is null, the key is removed from the     */
@@ -162,8 +151,8 @@ public class ResponseTests_PortletResponse_ApiEvent implements Portlet, Resource
       }
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiEvent_addPropertyC1     */
-      /* Details: "Method addProperty(String, String): Adds a property        */
-      /* value to an existing key to allow the key to have multiple values"   */
+      /* Details: "Method addProperty(String, String): A property can be      */
+      /* added"                                                               */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -188,16 +177,6 @@ public class ResponseTests_PortletResponse_ApiEvent implements Portlet, Resource
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2ResponseTests_PortletResponse_ApiEvent_setProperty1", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2ResponseTests_PortletResponse_ApiEvent_setProperty2      */
-      /* Details: "Method setProperty(String, String): Resets any existing    */
-      /* property values for the specified key"                               */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_PortletResponse_ApiEvent_setProperty2", aurl);
          tb.writeTo(writer);
       }
 
