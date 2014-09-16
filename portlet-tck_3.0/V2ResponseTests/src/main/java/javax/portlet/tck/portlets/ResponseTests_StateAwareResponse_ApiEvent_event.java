@@ -221,24 +221,35 @@ public class ResponseTests_StateAwareResponse_ApiEvent_event implements Portlet,
       } catch(Exception e) {tr13.appendTcDetail(e.toString());}
       tr13.writeTo(writer);
 
-      /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters9 */
-      /* Details: "Method setRenderParameters(java.util.Map): Throws          */
-      /* IllegalArgumentException if any key in the map is the empty string   */
-      /* (\"\") "                                                             */
-      TestResult tr14 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS9);
-      /* TODO: implement test */
-      tr14.appendTcDetail("Not implemented.");
-      tr14.writeTo(writer);
-
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters10 */
       /* Details: "Method setRenderParameters(java.util.Map): Throws          */
       /* IllegalArgumentException if the values array for any key is null "   */
-      TestResult tr15 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS10);
+      TestResult tr14 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS10);
       try {
          try {
             Map<String, String[]> parms = new HashMap<String, String[]>();
             parms.put("parm1", new String[]{"val1-1", "val1-2"});
             parms.put("parm2", null);
+            portletResp.setRenderParameters(parms);
+            tr14.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr14.setTcSuccess(true);
+         } catch (Exception e) {
+            tr14.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr14.appendTcDetail(e.toString());}
+      tr14.writeTo(writer);
+
+      /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters11 */
+      /* Details: "Method setRenderParameters(java.util.Map): Throws          */
+      /* IllegalArgumentException if any element in any values array is       */
+      /* null "                                                               */
+      TestResult tr15 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS11);
+      try {
+         try {
+            Map<String, String[]> parms = new HashMap<String, String[]>();
+            parms.put("parm1", new String[]{null, "val1-2"});
+            parms.put("parm2", new String[]{"val2-1", "val2-2"});
             portletResp.setRenderParameters(parms);
             tr15.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
@@ -249,136 +260,132 @@ public class ResponseTests_StateAwareResponse_ApiEvent_event implements Portlet,
       } catch(Exception e) {tr15.appendTcDetail(e.toString());}
       tr15.writeTo(writer);
 
-      /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters11 */
-      /* Details: "Method setRenderParameters(java.util.Map): Throws          */
-      /* IllegalArgumentException if any element in any values array is       */
-      /* null "                                                               */
-      TestResult tr16 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS11);
-      try {
-         try {
-            Map<String, String[]> parms = new HashMap<String, String[]>();
-            parms.put("parm1", new String[]{null, "val1-2"});
-            parms.put("parm2", new String[]{"val2-1", "val2-2"});
-            portletResp.setRenderParameters(parms);
-            tr16.appendTcDetail("Method did not throw an exception.");
-         } catch (IllegalArgumentException iae) {
-            tr16.setTcSuccess(true);
-         } catch (Exception e) {
-            tr16.appendTcDetail(e.toString());
-         }
-      } catch(Exception e) {tr16.appendTcDetail(e.toString());}
-      tr16.writeTo(writer);
-
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters12 */
       /* Details: "Method setRenderParameters(java.util.Map): Throws          */
       /* IllegalStateException if the method is invoked after the             */
       /* sendRedirect method has been called"                                 */
-      TestResult tr17 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS12);
+      TestResult tr16 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS12);
       /* TODO: implement test */
-      tr17.appendTcDetail("Not implemented.");
-      tr17.writeTo(writer);
+      tr16.appendTcDetail("Not implemented.");
+      tr16.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA1 */
       /* Details: "Method setRenderParameter(String, String): Sets the        */
       /* parameter value for the specified name"                              */
-      TestResult tr18 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA1);
+      TestResult tr17 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA1);
       /* TODO: implement test */
-      tr18.appendTcDetail("Not implemented.");
-      tr18.writeTo(writer);
+      tr17.appendTcDetail("Not implemented.");
+      tr17.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA2 */
       /* Details: "Method setRenderParameter(String, String): A private       */
       /* parameter can be set"                                                */
-      TestResult tr19 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA2);
+      TestResult tr18 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA2);
       /* TODO: implement test */
-      tr19.appendTcDetail("Not implemented.");
-      tr19.writeTo(writer);
+      tr18.appendTcDetail("Not implemented.");
+      tr18.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA3 */
       /* Details: "Method setRenderParameter(String, String): A public        */
       /* parameter can be set"                                                */
-      TestResult tr20 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA3);
+      TestResult tr19 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA3);
       /* TODO: implement test */
-      tr20.appendTcDetail("Not implemented.");
-      tr20.writeTo(writer);
+      tr19.appendTcDetail("Not implemented.");
+      tr19.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA4 */
       /* Details: "Method setRenderParameter(String, String): All             */
       /* previously existing values for the specified name are removed"       */
-      TestResult tr21 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA4);
+      TestResult tr20 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA4);
       /* TODO: implement test */
-      tr21.appendTcDetail("Not implemented.");
-      tr21.writeTo(writer);
+      tr20.appendTcDetail("Not implemented.");
+      tr20.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA5 */
       /* Details: "Method setRenderParameter(String, String): If the value    */
       /* is null, all values for the specified name are removed"              */
-      TestResult tr22 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA5);
+      TestResult tr21 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA5);
       /* TODO: implement test */
-      tr22.appendTcDetail("Not implemented.");
-      tr22.writeTo(writer);
+      tr21.appendTcDetail("Not implemented.");
+      tr21.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA6 */
       /* Details: "Method setRenderParameter(String, String): Parameters      */
       /* that are set are available in subsequent render requests"            */
-      TestResult tr23 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA6);
+      TestResult tr22 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA6);
       /* TODO: implement test */
-      tr23.appendTcDetail("Not implemented.");
-      tr23.writeTo(writer);
+      tr22.appendTcDetail("Not implemented.");
+      tr22.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA7 */
       /* Details: "Method setRenderParameter(String, String): Throws          */
       /* IllegalArgumentException if the name is null"                        */
-      TestResult tr24 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA7);
+      TestResult tr23 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA7);
       try {
          try {
             portletResp.setRenderParameter(null, "value");
-            tr24.appendTcDetail("Method did not throw an exception.");
+            tr23.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
-            tr24.setTcSuccess(true);
+            tr23.setTcSuccess(true);
          } catch (Exception e) {
-            tr24.appendTcDetail(e.toString());
+            tr23.appendTcDetail(e.toString());
          }
-      } catch(Exception e) {tr24.appendTcDetail(e.toString());}
-      tr24.writeTo(writer);
+      } catch(Exception e) {tr23.appendTcDetail(e.toString());}
+      tr23.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA8 */
       /* Details: "Method setRenderParameter(String, String): Throws          */
       /* IllegalStateException if the method is invoked after the             */
       /* sendRedirect method has been called"                                 */
-      TestResult tr25 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA8);
+      TestResult tr24 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA8);
       /* TODO: implement test */
-      tr25.appendTcDetail("Not implemented.");
-      tr25.writeTo(writer);
+      tr24.appendTcDetail("Not implemented.");
+      tr24.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterB1 */
       /* Details: "Method setRenderParameter(String, String[]): Sets the      */
       /* parameter values for the specified name."                            */
-      TestResult tr26 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB1);
+      TestResult tr25 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB1);
       /* TODO: implement test */
-      tr26.appendTcDetail("Not implemented.");
-      tr26.writeTo(writer);
+      tr25.appendTcDetail("Not implemented.");
+      tr25.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterB2 */
       /* Details: "Method setRenderParameter(String, String[]): All           */
       /* existing values are removed"                                         */
-      TestResult tr27 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB2);
+      TestResult tr26 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB2);
       /* TODO: implement test */
-      tr27.appendTcDetail("Not implemented.");
-      tr27.writeTo(writer);
+      tr26.appendTcDetail("Not implemented.");
+      tr26.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterB3 */
       /* Details: "Method setRenderParameter(String, String[]): Parameters    */
       /* that are set are available in subsequent render requests"            */
-      TestResult tr28 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB3);
+      TestResult tr27 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB3);
       /* TODO: implement test */
-      tr28.appendTcDetail("Not implemented.");
-      tr28.writeTo(writer);
+      tr27.appendTcDetail("Not implemented.");
+      tr27.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterB4 */
       /* Details: "Method setRenderParameter(String, String[]): Throws        */
       /* IllegalArgumentException if the name is null"                        */
-      TestResult tr29 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB4);
+      TestResult tr28 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB4);
+      try {
+         try {
+            portletResp.setRenderParameter(null, new String[]{"val1-1", "val1-2"});
+            tr28.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr28.setTcSuccess(true);
+         } catch (Exception e) {
+            tr28.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr28.appendTcDetail(e.toString());}
+      tr28.writeTo(writer);
+
+      /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterB5 */
+      /* Details: "Method setRenderParameter(String, String[]): Throws        */
+      /* IllegalArgumentException if the values array is null"                */
+      TestResult tr29 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB5);
       try {
          try {
             portletResp.setRenderParameter(null, new String[]{"val1-1", "val1-2"});
@@ -391,222 +398,206 @@ public class ResponseTests_StateAwareResponse_ApiEvent_event implements Portlet,
       } catch(Exception e) {tr29.appendTcDetail(e.toString());}
       tr29.writeTo(writer);
 
-      /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterB5 */
-      /* Details: "Method setRenderParameter(String, String[]): Throws        */
-      /* IllegalArgumentException if the values array is null"                */
-      TestResult tr30 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB5);
-      try {
-         try {
-            portletResp.setRenderParameter(null, new String[]{"val1-1", "val1-2"});
-            tr30.appendTcDetail("Method did not throw an exception.");
-         } catch (IllegalArgumentException iae) {
-            tr30.setTcSuccess(true);
-         } catch (Exception e) {
-            tr30.appendTcDetail(e.toString());
-         }
-      } catch(Exception e) {tr30.appendTcDetail(e.toString());}
-      tr30.writeTo(writer);
-
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterB6 */
       /* Details: "Method setRenderParameter(String, String[]): Throws        */
       /* IllegalStateException if the method is invoked after the             */
       /* sendRedirect method has been called"                                 */
-      TestResult tr31 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB6);
+      TestResult tr30 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB6);
       /* TODO: implement test */
-      tr31.appendTcDetail("Not implemented.");
-      tr31.writeTo(writer);
+      tr30.appendTcDetail("Not implemented.");
+      tr30.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setEventA1     */
       /* Details: "Method setEvent(javax.xml.namespace.QName,                 */
       /* java.io.Serializable): Publishes an event with the specified name    */
       /* and payload"                                                         */
-      TestResult tr32 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA1);
+      TestResult tr31 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA1);
       /* TODO: implement test */
-      tr32.appendTcDetail("Not implemented.");
-      tr32.writeTo(writer);
+      tr31.appendTcDetail("Not implemented.");
+      tr31.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setEventA2     */
       /* Details: "Method setEvent(javax.xml.namespace.QName,                 */
       /* java.io.Serializable): Throws IllegalArgumentException if the name   */
       /* is null"                                                             */
-      TestResult tr33 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA2);
+      TestResult tr32 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA2);
       try {
          try {
             portletResp.setEvent((javax.xml.namespace.QName)null, "value");
-            tr33.appendTcDetail("Method did not throw an exception.");
+            tr32.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
-            tr33.setTcSuccess(true);
+            tr32.setTcSuccess(true);
          } catch (Exception e) {
-            tr33.appendTcDetail(e.toString());
+            tr32.appendTcDetail(e.toString());
          }
-      } catch(Exception e) {tr33.appendTcDetail(e.toString());}
-      tr33.writeTo(writer);
+      } catch(Exception e) {tr32.appendTcDetail(e.toString());}
+      tr32.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setEventA3     */
       /* Details: "Method setEvent(javax.xml.namespace.QName,                 */
       /* java.io.Serializable): Throws IllegalArgumentException if the        */
       /* value is not serializable"                                           */
-      TestResult tr34 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA3);
+      TestResult tr33 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA3);
       /* TODO: implement test */
-      tr34.appendTcDetail("Not implemented.");
-      tr34.writeTo(writer);
+      tr33.appendTcDetail("Not implemented.");
+      tr33.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setEventA4     */
       /* Details: "Method setEvent(javax.xml.namespace.QName,                 */
       /* java.io.Serializable): Throws IllegalArgumentException if the        */
       /* value does not have a valid JAXB binding"                            */
-      TestResult tr35 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA4);
+      TestResult tr34 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA4);
       /* TODO: implement test */
-      tr35.appendTcDetail("Not implemented.");
-      tr35.writeTo(writer);
+      tr34.appendTcDetail("Not implemented.");
+      tr34.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setEventA5     */
       /* Details: "Method setEvent(javax.xml.namespace.QName,                 */
       /* java.io.Serializable): Throws IllegalArgumentException if the        */
       /* value object type is not as specified in the deployment              */
       /* descriptor"                                                          */
-      TestResult tr36 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA5);
+      TestResult tr35 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA5);
       /* TODO: implement test */
-      tr36.appendTcDetail("Not implemented.");
-      tr36.writeTo(writer);
+      tr35.appendTcDetail("Not implemented.");
+      tr35.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setEventB1     */
       /* Details: "Method setEvent(String, java.io.Serializable): Publishes   */
       /* an event with the specified name and payload"                        */
-      TestResult tr37 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB1);
+      TestResult tr36 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB1);
       /* TODO: implement test */
-      tr37.appendTcDetail("Not implemented.");
-      tr37.writeTo(writer);
+      tr36.appendTcDetail("Not implemented.");
+      tr36.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setEventB2     */
       /* Details: "Method setEvent(String, java.io.Serializable): Throws      */
       /* IllegalArgumentException if the name is null"                        */
-      TestResult tr38 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB2);
+      TestResult tr37 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB2);
       try {
          try {
             portletResp.setEvent((javax.xml.namespace.QName)null, "value");
-            tr38.appendTcDetail("Method did not throw an exception.");
+            tr37.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
-            tr38.setTcSuccess(true);
+            tr37.setTcSuccess(true);
          } catch (Exception e) {
-            tr38.appendTcDetail(e.toString());
+            tr37.appendTcDetail(e.toString());
          }
-      } catch(Exception e) {tr38.appendTcDetail(e.toString());}
-      tr38.writeTo(writer);
+      } catch(Exception e) {tr37.appendTcDetail(e.toString());}
+      tr37.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setEventB3     */
       /* Details: "Method setEvent(String, java.io.Serializable): Throws      */
       /* IllegalArgumentException if the value is not serializable"           */
-      TestResult tr39 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB3);
+      TestResult tr38 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB3);
       /* TODO: implement test */
-      tr39.appendTcDetail("Not implemented.");
-      tr39.writeTo(writer);
+      tr38.appendTcDetail("Not implemented.");
+      tr38.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setEventB4     */
       /* Details: "Method setEvent(String, java.io.Serializable): Throws      */
       /* IllegalArgumentException if the value does not have a valid JAXB     */
       /* binding"                                                             */
-      TestResult tr40 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB4);
+      TestResult tr39 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB4);
       /* TODO: implement test */
-      tr40.appendTcDetail("Not implemented.");
-      tr40.writeTo(writer);
+      tr39.appendTcDetail("Not implemented.");
+      tr39.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setEventB5     */
       /* Details: "Method setEvent(String, java.io.Serializable): Throws      */
       /* IllegalArgumentException if the value object type is not as          */
       /* specified in the deployment descriptor"                              */
-      TestResult tr41 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB5);
+      TestResult tr40 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB5);
       /* TODO: implement test */
-      tr41.appendTcDetail("Not implemented.");
-      tr41.writeTo(writer);
+      tr40.appendTcDetail("Not implemented.");
+      tr40.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_getRenderParameterMap1 */
       /* Details: "Method getRenderParameterMap(): Returns a map of the       */
       /* render parameters currently set on the response"                     */
-      TestResult tr42 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP1);
+      TestResult tr41 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP1);
       /* TODO: implement test */
-      tr42.appendTcDetail("Not implemented.");
-      tr42.writeTo(writer);
+      tr41.appendTcDetail("Not implemented.");
+      tr41.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_getRenderParameterMap2 */
       /* Details: "Method getRenderParameterMap(): The returned map           */
       /* contains public render parameters"                                   */
-      TestResult tr43 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP2);
+      TestResult tr42 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP2);
       /* TODO: implement test */
-      tr43.appendTcDetail("Not implemented.");
-      tr43.writeTo(writer);
+      tr42.appendTcDetail("Not implemented.");
+      tr42.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_getRenderParameterMap3 */
       /* Details: "Method getRenderParameterMap(): The returned map           */
       /* contains private render parameters"                                  */
-      TestResult tr44 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP3);
+      TestResult tr43 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP3);
       /* TODO: implement test */
-      tr44.appendTcDetail("Not implemented.");
-      tr44.writeTo(writer);
+      tr43.appendTcDetail("Not implemented.");
+      tr43.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_getRenderParameterMap4 */
       /* Details: "Method getRenderParameterMap(): An empty map is returned   */
       /* if no parameters have been set "                                     */
-      TestResult tr45 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP4);
+      TestResult tr44 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP4);
       /* TODO: implement test */
-      tr45.appendTcDetail("Not implemented.");
-      tr45.writeTo(writer);
+      tr44.appendTcDetail("Not implemented.");
+      tr44.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_getPortletMode1 */
       /* Details: "Method getPortletMode(): Returns the current PortletMode   */
       /* for the portlet"                                                     */
-      TestResult tr46 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETPORTLETMODE1);
+      TestResult tr45 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETPORTLETMODE1);
       /* TODO: implement test */
-      tr46.appendTcDetail("Not implemented.");
-      tr46.writeTo(writer);
+      tr45.appendTcDetail("Not implemented.");
+      tr45.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_getPortletMode2 */
       /* Details: "Method getPortletMode(): Returns null if no PortletMode    */
       /* has been set"                                                        */
-      TestResult tr47 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETPORTLETMODE2);
+      TestResult tr46 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETPORTLETMODE2);
       /* TODO: implement test */
-      tr47.appendTcDetail("Not implemented.");
-      tr47.writeTo(writer);
+      tr46.appendTcDetail("Not implemented.");
+      tr46.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_getWindowState1 */
       /* Details: "Method getWindowState(): Returns the current WindowState   */
       /* for the portlet"                                                     */
-      TestResult tr48 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETWINDOWSTATE1);
+      TestResult tr47 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETWINDOWSTATE1);
       /* TODO: implement test */
-      tr48.appendTcDetail("Not implemented.");
-      tr48.writeTo(writer);
+      tr47.appendTcDetail("Not implemented.");
+      tr47.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_getWindowState2 */
       /* Details: "Method getWindowState(): Returns null if no WindowState    */
       /* has been set"                                                        */
-      TestResult tr49 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETWINDOWSTATE2);
+      TestResult tr48 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETWINDOWSTATE2);
       /* TODO: implement test */
-      tr49.appendTcDetail("Not implemented.");
-      tr49.writeTo(writer);
+      tr48.appendTcDetail("Not implemented.");
+      tr48.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_removePublicRenderParameter1 */
       /* Details: "Method removePublicRenderParameter(String): Removes the    */
       /* specified public render parameter"                                   */
-      TestResult tr50 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_REMOVEPUBLICRENDERPARAMETER1);
+      TestResult tr49 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_REMOVEPUBLICRENDERPARAMETER1);
       /* TODO: implement test */
-      tr50.appendTcDetail("Not implemented.");
-      tr50.writeTo(writer);
+      tr49.appendTcDetail("Not implemented.");
+      tr49.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_removePublicRenderParameter2 */
       /* Details: "Method removePublicRenderParameter(String): Throws         */
       /* IllegalArgumentException if the name is null"                        */
-      TestResult tr51 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_REMOVEPUBLICRENDERPARAMETER2);
+      TestResult tr50 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_REMOVEPUBLICRENDERPARAMETER2);
       try {
          try {
             portletResp.removePublicRenderParameter(null);
-            tr51.appendTcDetail("Method did not throw an exception.");
+            tr50.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
-            tr51.setTcSuccess(true);
+            tr50.setTcSuccess(true);
          } catch (Exception e) {
-            tr51.appendTcDetail(e.toString());
+            tr50.appendTcDetail(e.toString());
          }
-      } catch(Exception e) {tr51.appendTcDetail(e.toString());}
-      tr51.writeTo(writer);
+      } catch(Exception e) {tr50.appendTcDetail(e.toString());}
+      tr50.writeTo(writer);
 
       portletReq.getPortletSession().setAttribute(
                    Constants.RESULT_ATTR_PREFIX + "ResponseTests_StateAwareResponse_ApiEvent",

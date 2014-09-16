@@ -33,6 +33,7 @@
       <portlet-info>
          <title>ExceptionTests_PortletModeException_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -46,6 +47,7 @@
       <portlet-info>
          <title>ExceptionTests_UnavailableException_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -59,6 +61,7 @@
       <portlet-info>
          <title>ExceptionTests_ValidatorException_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -72,6 +75,7 @@
       <portlet-info>
          <title>ExceptionTests_WindowStateException_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
 

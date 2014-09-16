@@ -245,17 +245,6 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
          tb.writeTo(writer);
       }
 
-      /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters9 */
-      /* Details: "Method setRenderParameters(java.util.Map): Throws          */
-      /* IllegalArgumentException if any key in the map is the empty string   */
-      /* (\"\") "                                                             */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters9", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters10 */
       /* Details: "Method setRenderParameters(java.util.Map): Throws          */
       /* IllegalArgumentException if the values array for any key is null "   */

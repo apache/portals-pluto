@@ -33,6 +33,7 @@
       <portlet-info>
          <title>RequestTests_PortletRequest_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -46,6 +47,7 @@
       <portlet-info>
          <title>RequestTests_PortletRequest_ApiAction</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -62,6 +64,7 @@
       <supported-publishing-event>
          <qname>tck:RequestTests_PortletRequest_ApiEvent</qname>
       </supported-publishing-event>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -91,6 +94,7 @@
       <portlet-info>
          <title>RequestTests_PortletRequest_ApiResource</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -104,6 +108,7 @@
       <portlet-info>
          <title>RequestTests_ClientDataRequest_ApiAction</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -117,6 +122,7 @@
       <portlet-info>
          <title>RequestTests_ClientDataRequest_ApiResource</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -130,6 +136,7 @@
       <portlet-info>
          <title>RequestTests_ActionRequest_ApiAction</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -143,6 +150,7 @@
       <portlet-info>
          <title>RequestTests_ResourceRequest_ApiResource</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -159,6 +167,7 @@
       <supported-publishing-event>
          <qname>tck:RequestTests_EventRequest_ApiEvent</qname>
       </supported-publishing-event>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -188,6 +197,7 @@
       <portlet-info>
          <title>RequestTests_RenderRequest_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
 
