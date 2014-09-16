@@ -257,20 +257,10 @@ public class TCKSimpleTestDriver {
          if (wels.isEmpty()) {
             wels = accessPage();
          }
-
-         // Test case results or links are on the page. check for results first.
-         List<WebElement> tcels = null;
-         for (WebElement wel : wels) {
-            tcels = wel.findElements(By.id(resultId));
-            if (debug) System.out.println("   Results found: " + !tcels.isEmpty());
-            if (!tcels.isEmpty()) break;
-         }
-
-         // if results aren't there, see if there is a link to be clicked
-         if (tcels.isEmpty()) {
-            wels = processClickable(wels);
-            if (debug) System.out.println("   After processing clickable, results found: " + !wels.isEmpty());
-         }
+         
+         // process links if present
+         wels = processClickable(wels);
+         if (debug) System.out.println("   After processing clickable, results found: " + !wels.isEmpty());
 
          checkResults(wels);
 
@@ -407,21 +397,12 @@ public class TCKSimpleTestDriver {
          if(debug) System.out.println("   xpath string: ===" + expr + "===");
 
          wdw.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(expr)));
+         wels = driver.findElements(By.name(tcName));
          if (debug) {
             System.out.println("   Found elements: " + (!wels.isEmpty()));
             List<WebElement> xels = driver.findElements(By.xpath(expr));
             for (WebElement w : xels) {
                System.out.println("      Element: " + w.getTagName() + ", id=" + w.getAttribute("id"));
-            }
-         }
-
-         // check if results already found. if so, we're done.
-         wels = driver.findElements(By.name(tcName));
-         for (WebElement w : wels) {
-            tcels = w.findElements(By.id(resultId));
-            if (!tcels.isEmpty()) {
-               if (debug) System.out.println("   Results available after setup.");
-               return wels;
             }
          }
       }
@@ -432,21 +413,20 @@ public class TCKSimpleTestDriver {
          if (!tcels.isEmpty()) break;
       }
       if (debug) System.out.println("   Clickable link found: " + ((tcels != null) && !tcels.isEmpty()));
-
-      if ((tcels == null) || tcels.isEmpty()) {
-         throw new Exception("Test case " + tcName + " failed. TCK error - Unknown TC content.");
+      
+      if (tcels != null && !tcels.isEmpty()) {
+         WebElement wel = tcels.get(0);
+         wel.click();
+         WebDriverWait wdw = new WebDriverWait(driver, timeout);
+         wdw.until(ExpectedConditions.visibilityOfElementLocated(By.id(resultId)));
+         wels = driver.findElements(By.name(tcName));
+         if ((wels == null) || wels.isEmpty()) {
+            throw new Exception("Test case " + tcName + " failed. No results after action link click.");
+         }
       }
       
-      WebElement wel = tcels.get(0);
-      wel.click();
-      WebDriverWait wdw = new WebDriverWait(driver, timeout);
-      wdw.until(ExpectedConditions.visibilityOfElementLocated(By.id(resultId)));
-      tcels = driver.findElements(By.name(tcName));
-      if ((tcels == null) || tcels.isEmpty()) {
-         throw new Exception("Test case " + tcName + " failed. No results after action link click.");
-      }
 
-      return tcels;
+      return wels;
    }
 
 }
