@@ -33,6 +33,7 @@
       <portlet-info>
          <title>AnnotationTests_ProcessAction_ApiAction</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -49,6 +50,7 @@
       <supported-publishing-event>
          <qname>tck:AnnotationTests_ProcessEvent_ApiEvent</qname>
       </supported-publishing-event>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -78,6 +80,7 @@
       <portlet-info>
          <title>AnnotationTests_RenderMode_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
 

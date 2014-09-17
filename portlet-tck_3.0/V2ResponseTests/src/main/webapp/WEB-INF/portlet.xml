@@ -33,6 +33,7 @@
       <portlet-info>
          <title>ResponseTests_PortletResponse_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -46,6 +47,7 @@
       <portlet-info>
          <title>ResponseTests_PortletResponse_ApiResource</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -59,6 +61,7 @@
       <portlet-info>
          <title>ResponseTests_PortletResponse_ApiAction</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -75,6 +78,7 @@
       <supported-publishing-event>
          <qname>tck:ResponseTests_PortletResponse_ApiEvent</qname>
       </supported-publishing-event>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -107,6 +111,7 @@
       <supported-publishing-event>
          <qname>tck:ResponseTests_StateAwareResponse_ApiEvent</qname>
       </supported-publishing-event>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -136,6 +141,7 @@
       <portlet-info>
          <title>ResponseTests_StateAwareResponse_ApiAction</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -149,6 +155,7 @@
       <portlet-info>
          <title>ResponseTests_ActionResponse_ApiAction</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -165,6 +172,7 @@
       <supported-publishing-event>
          <qname>tck:ResponseTests_EventResponse_ApiEvent</qname>
       </supported-publishing-event>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -194,6 +202,7 @@
       <portlet-info>
          <title>ResponseTests_MimeResponse_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -207,6 +216,7 @@
       <portlet-info>
          <title>ResponseTests_MimeResponse_ApiResource</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -220,6 +230,7 @@
       <portlet-info>
          <title>ResponseTests_RenderResponse_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -233,6 +244,7 @@
       <portlet-info>
          <title>ResponseTests_ResourceResponse_ApiResource</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
 

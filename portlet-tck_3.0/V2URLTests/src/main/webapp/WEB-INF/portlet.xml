@@ -33,6 +33,7 @@
       <portlet-info>
          <title>URLTests_BaseURL_ApiRenderRenurl</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -46,6 +47,7 @@
       <portlet-info>
          <title>URLTests_BaseURL_ApiRenderActurl</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -59,6 +61,7 @@
       <portlet-info>
          <title>URLTests_BaseURL_ApiRenderResurl</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -72,6 +75,7 @@
       <portlet-info>
          <title>URLTests_PortletURL_ApiRenderRenurl</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -85,6 +89,7 @@
       <portlet-info>
          <title>URLTests_PortletURL_ApiRenderActurl</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -98,6 +103,7 @@
       <portlet-info>
          <title>URLTests_ResourceURL_ApiRenderResurl</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -111,6 +117,7 @@
       <portlet-info>
          <title>URLTests_PortletURLGenerationListener_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
 

@@ -33,6 +33,7 @@
       <portlet-info>
          <title>EnvironmentTests_CacheControl_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -46,6 +47,7 @@
       <portlet-info>
          <title>EnvironmentTests_CacheControl_ApiResource</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -59,6 +61,7 @@
       <portlet-info>
          <title>EnvironmentTests_PortalContext_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -72,6 +75,7 @@
       <portlet-info>
          <title>EnvironmentTests_PortletContext_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -85,6 +89,7 @@
       <portlet-info>
          <title>EnvironmentTests_PortletPreferences_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -98,6 +103,7 @@
       <portlet-info>
          <title>EnvironmentTests_PortletPreferences_ApiAction</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -111,6 +117,7 @@
       <portlet-info>
          <title>EnvironmentTests_PreferencesValidator_ApiAction</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -127,6 +134,7 @@
       <supported-publishing-event>
          <qname>tck:EnvironmentTests_PortletPreferences_ApiEvent</qname>
       </supported-publishing-event>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -159,6 +167,7 @@
       <supported-publishing-event>
          <qname>tck:EnvironmentTests_PreferencesValidator_ApiEvent</qname>
       </supported-publishing-event>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -188,6 +197,7 @@
       <portlet-info>
          <title>EnvironmentTests_PortletPreferences_ApiResource</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -201,6 +211,7 @@
       <portlet-info>
          <title>EnvironmentTests_PreferencesValidator_ApiResource</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -214,6 +225,7 @@
       <portlet-info>
          <title>EnvironmentTests_PortletRequestDispatcher_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -227,6 +239,7 @@
       <portlet-info>
          <title>EnvironmentTests_PortletSession_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -240,6 +253,7 @@
       <portlet-info>
          <title>EnvironmentTests_PortletSessionUtil_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
 

@@ -33,6 +33,7 @@
       <portlet-info>
          <title>WrapperTests_ActionRequestWrapper_ApiAction</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -46,6 +47,7 @@
       <portlet-info>
          <title>WrapperTests_ActionResponseWrapper_ApiAction</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -62,6 +64,7 @@
       <supported-publishing-event>
          <qname>tck:WrapperTests_EventRequestWrapper_ApiEvent</qname>
       </supported-publishing-event>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -94,6 +97,7 @@
       <supported-publishing-event>
          <qname>tck:WrapperTests_EventResponseWrapper_ApiEvent</qname>
       </supported-publishing-event>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -123,6 +127,7 @@
       <portlet-info>
          <title>WrapperTests_PortletRequestWrapper_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -136,6 +141,7 @@
       <portlet-info>
          <title>WrapperTests_PortletResponseWrapper_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -149,6 +155,7 @@
       <portlet-info>
          <title>WrapperTests_RenderRequestWrapper_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -162,6 +169,7 @@
       <portlet-info>
          <title>WrapperTests_RenderResponseWrapper_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -175,6 +183,7 @@
       <portlet-info>
          <title>WrapperTests_ResourceRequestWrapper_ApiResource</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -188,6 +197,7 @@
       <portlet-info>
          <title>WrapperTests_ResourceResponseWrapper_ApiResource</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
 

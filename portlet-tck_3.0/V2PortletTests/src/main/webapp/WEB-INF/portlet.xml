@@ -33,6 +33,7 @@
       <portlet-info>
          <title>PortletTests_PortletConfig_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -46,6 +47,7 @@
       <portlet-info>
          <title>PortletTests_PortletConfig_ApiRender2</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -59,6 +61,7 @@
       <portlet-info>
          <title>PortletTests_PortletMode_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -72,6 +75,7 @@
       <portlet-info>
          <title>PortletTests_WindowState_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -85,6 +89,7 @@
       <portlet-info>
          <title>PortletTests_Portlet_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -98,6 +103,7 @@
       <portlet-info>
          <title>PortletTests_Portlet_ApiAction</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -114,6 +120,7 @@
       <supported-publishing-event>
          <qname>tck:PortletTests_Event_ApiEvent</qname>
       </supported-publishing-event>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -146,6 +153,7 @@
       <supported-publishing-event>
          <qname>tck:PortletTests_EventPortlet_ApiEvent</qname>
       </supported-publishing-event>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -175,6 +183,7 @@
       <portlet-info>
          <title>PortletTests_ResourceServingPortlet_ApiResource</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -188,6 +197,7 @@
       <portlet-info>
          <title>PortletTests_GenericPortlet_ApiRender</title>
       </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
 
