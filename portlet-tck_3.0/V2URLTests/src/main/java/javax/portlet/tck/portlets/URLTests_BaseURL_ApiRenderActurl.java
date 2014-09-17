@@ -341,6 +341,10 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       try {
          try {
             PortletURL turl = portletResp.createActionURL();
+            Map<String, String[]> parms = new HashMap<String, String[]>();
+            parms.put("parm1", new String[]{"val1-1", "val1-2"});
+            parms.put(null, new String[]{"val2-1", "val2-2"});
+            turl.setParameters(parms);
             tr16.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
             tr16.setTcSuccess(true);
@@ -357,6 +361,10 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       try {
          try {
             PortletURL turl = portletResp.createActionURL();
+            Map<String, String[]> parms = new HashMap<String, String[]>();
+            parms.put("parm1", new String[]{"val1-1", "val1-2"});
+            parms.put("parm2", null);
+            turl.setParameters(parms);
             tr17.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
             tr17.setTcSuccess(true);
@@ -368,12 +376,16 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters13         */
       /* Details: "Method setParameters(java.util.Map): Throws                */
-      /* IllegalArgumentException if any element in any values array is       */
+      /* IllegalArgumentException if any element in the values array is       */
       /* null "                                                               */
       TestResult tr18 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS13);
       try {
          try {
             PortletURL turl = portletResp.createActionURL();
+            Map<String, String[]> parms = new HashMap<String, String[]>();
+            parms.put("parm1", new String[]{null, "val1-2"});
+            parms.put("parm2", new String[]{"val2-1", "val2-2"});
+            turl.setParameters(parms);
             tr18.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
             tr18.setTcSuccess(true);

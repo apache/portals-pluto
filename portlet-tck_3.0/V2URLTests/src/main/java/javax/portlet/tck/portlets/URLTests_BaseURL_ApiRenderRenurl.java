@@ -529,7 +529,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
             Map<String, String[]> eval = new HashMap<String, String[]>();
             eval.put("tc", new String[]{"V2URLTests_BaseURL_ApiRenderRenurl_setParameters7"});
             eval.put("parm1", new String[]{"val1", "val2"});
-            eval.put("tckPRP1", new String[]{"val1", "V2URLTests_BaseURL_ApiRenderRenurl_setParameters7"});
+            eval.put("tckPRP1", new String[]{"V2URLTests_BaseURL_ApiRenderRenurl_setParameters7"});
             CompareUtils.mapsEqual("Request", aval, " expected: ", eval, tr16);
          }
       } catch(Exception e) {tr16.appendTcDetail(e.toString());}
@@ -592,6 +592,10 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
       try {
          try {
             PortletURL turl = portletResp.createRenderURL();
+            Map<String, String[]> parms = new HashMap<String, String[]>();
+            parms.put("parm1", new String[]{"val1-1", "val1-2"});
+            parms.put(null, new String[]{"val2-1", "val2-2"});
+            turl.setParameters(parms);
             tr19.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
             tr19.setTcSuccess(true);
@@ -608,6 +612,10 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
       try {
          try {
             PortletURL turl = portletResp.createRenderURL();
+            Map<String, String[]> parms = new HashMap<String, String[]>();
+            parms.put("parm1", new String[]{"val1-1", "val1-2"});
+            parms.put("parm2", null);
+            turl.setParameters(parms);
             tr20.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
             tr20.setTcSuccess(true);
@@ -619,12 +627,16 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderRenurl_setParameters13         */
       /* Details: "Method setParameters(java.util.Map): Throws                */
-      /* IllegalArgumentException if any element in any values array is       */
+      /* IllegalArgumentException if any element in the values array is       */
       /* null "                                                               */
       TestResult tr21 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERS13);
       try {
          try {
             PortletURL turl = portletResp.createRenderURL();
+            Map<String, String[]> parms = new HashMap<String, String[]>();
+            parms.put("parm1", new String[]{null, "val1-2"});
+            parms.put("parm2", new String[]{"val2-1", "val2-2"});
+            turl.setParameters(parms);
             tr21.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
             tr21.setTcSuccess(true);
