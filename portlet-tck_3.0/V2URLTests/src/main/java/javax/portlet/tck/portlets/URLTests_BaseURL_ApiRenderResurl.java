@@ -237,6 +237,12 @@ public class URLTests_BaseURL_ApiRenderResurl implements Portlet, ResourceServin
          parms.put("tc", new String[]{"V2URLTests_BaseURL_ApiRenderResurl_setParameters1"});
          parms.put("parm1", new String[]{"val1", "val2"});
          turl.setParameters(parms);
+         
+         // Use setup link to set public render parameter to known value
+         PortletURL rurl = portletResp.createRenderURL();
+         rurl.removePublicRenderParameter("tckPRP1");
+         TestSetupLink tsl = new TestSetupLink("V2URLTests_BaseURL_ApiRenderResurl_setParameters1", rurl);
+         tsl.writeTo(writer);
       } catch(Exception e) {tr10.appendTcDetail(e.toString());}
       tr10.writeTo(writer);
 
@@ -260,9 +266,15 @@ public class URLTests_BaseURL_ApiRenderResurl implements Portlet, ResourceServin
          ResourceURL turl = portletResp.createResourceURL();
          Map<String, String[]> parms = new HashMap<String, String[]>();
          parms.put("tc", new String[]{"V2URLTests_BaseURL_ApiRenderResurl_setParameters6"});
-         turl.setParameter("parm1", "oldVal");
+         turl.setParameter("oldParm", "oldVal");
          parms.put("parm1", new String[]{"val1", "val2"});
          turl.setParameters(parms);
+         
+         // Use setup link to set public render parameter to known value
+         PortletURL rurl = portletResp.createRenderURL();
+         rurl.removePublicRenderParameter("tckPRP1");
+         TestSetupLink tsl = new TestSetupLink("V2URLTests_BaseURL_ApiRenderResurl_setParameters6", rurl);
+         tsl.writeTo(writer);
       } catch(Exception e) {tr12.appendTcDetail(e.toString());}
       tr12.writeTo(writer);
 
@@ -275,7 +287,14 @@ public class URLTests_BaseURL_ApiRenderResurl implements Portlet, ResourceServin
          ResourceURL turl = portletResp.createResourceURL();
          Map<String, String[]> parms = new HashMap<String, String[]>();
          parms.put("tc", new String[]{"V2URLTests_BaseURL_ApiRenderResurl_setParameters7"});
-         turl.setParameter("parm1", "oldVal");
+         parms.put("parm1", new String[]{"val1", "val2"});
+         turl.setParameters(parms);
+         
+         // Use setup link to set public render parameter to known value
+         PortletURL rurl = portletResp.createRenderURL();
+         rurl.setParameter("tckPRP1", "V2URLTests_BaseURL_ApiRenderResurl_setParameters7");
+         TestSetupLink tsl = new TestSetupLink("V2URLTests_BaseURL_ApiRenderResurl_setParameters7", rurl);
+         tsl.writeTo(writer);
       } catch(Exception e) {tr13.appendTcDetail(e.toString());}
       tr13.writeTo(writer);
 
@@ -289,6 +308,12 @@ public class URLTests_BaseURL_ApiRenderResurl implements Portlet, ResourceServin
          parms.put("tc", new String[]{"V2URLTests_BaseURL_ApiRenderResurl_setParameters8"});
          parms.put("parm1", new String[]{"val1", "val2"});
          turl.setParameters(parms);
+         
+         // Use setup link to set public render parameter to known value
+         PortletURL rurl = portletResp.createRenderURL();
+         rurl.removePublicRenderParameter("tckPRP1");
+         TestSetupLink tsl = new TestSetupLink("V2URLTests_BaseURL_ApiRenderResurl_setParameters8", rurl);
+         tsl.writeTo(writer);
       } catch(Exception e) {tr14.appendTcDetail(e.toString());}
       tr14.writeTo(writer);
 
