@@ -257,7 +257,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters11 */
       /* Details: "Method setRenderParameters(java.util.Map): Throws          */
-      /* IllegalArgumentException if any element in any values array is       */
+      /* IllegalArgumentException if any element in the values array is       */
       /* null "                                                               */
       {
          PortletURL aurl = portletResp.createActionURL();

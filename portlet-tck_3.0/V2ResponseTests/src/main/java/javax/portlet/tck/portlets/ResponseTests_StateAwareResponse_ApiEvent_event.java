@@ -242,7 +242,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent_event implements Portlet,
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters11 */
       /* Details: "Method setRenderParameters(java.util.Map): Throws          */
-      /* IllegalArgumentException if any element in any values array is       */
+      /* IllegalArgumentException if any element in the values array is       */
       /* null "                                                               */
       TestResult tr15 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS11);
       try {

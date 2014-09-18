@@ -236,7 +236,7 @@ public class ResponseTests_StateAwareResponse_ApiAction implements Portlet, Reso
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiAction_setRenderParameters11 */
       /* Details: "Method setRenderParameters(java.util.Map): Throws          */
-      /* IllegalArgumentException if any element in any values array is       */
+      /* IllegalArgumentException if any element in the values array is       */
       /* null "                                                               */
       TestResult tr15 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIACTION_SETRENDERPARAMETERS11);
       try {
@@ -785,7 +785,7 @@ public class ResponseTests_StateAwareResponse_ApiAction implements Portlet, Reso
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiAction_setRenderParameters11 */
       /* Details: "Method setRenderParameters(java.util.Map): Throws          */
-      /* IllegalArgumentException if any element in any values array is       */
+      /* IllegalArgumentException if any element in the values array is       */
       /* null "                                                               */
       {
          PortletURL aurl = portletResp.createActionURL();

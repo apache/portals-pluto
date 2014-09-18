@@ -86,6 +86,20 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          }
       }
 
+      // evaluate results for test case V2URLTests_BaseURL_ApiRenderActurl_setParameterA4
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr1 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA4);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA4")) {
+            String aval = portletReq.getParameter("parm1");
+            String eval = "val1";
+            CompareUtils.stringsEqual("Request", aval, " expected: ", eval, tr1);
+            PortletSession ps = portletReq.getPortletSession();
+            ps.setAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA4", tr1);
+         }
+      }
+
       // evaluate results for test case V2URLTests_BaseURL_ApiRenderActurl_setParameterA6
       {
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
@@ -125,6 +139,20 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
             CompareUtils.arraysEqual("Request", aval, " expected: ", eval, tr5);
             PortletSession ps = portletReq.getPortletSession();
             ps.setAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB1", tr5);
+         }
+      }
+
+      // evaluate results for test case V2URLTests_BaseURL_ApiRenderActurl_setParameterB4
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB4);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB4")) {
+            String[] aval = portletReq.getParameterValues("parm1");
+            String[] eval = new String[]{"val1", "val2"};
+            CompareUtils.arraysEqual("Request", aval, " expected: ", eval, tr6);
+            PortletSession ps = portletReq.getPortletSession();
+            ps.setAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB4", tr6);
          }
       }
 
@@ -169,6 +197,22 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
             CompareUtils.mapsEqual("Request", aval, " expected: ", eval, tr10);
             PortletSession ps = portletReq.getPortletSession();
             ps.setAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters1", tr10);
+         }
+      }
+
+      // evaluate results for test case V2URLTests_BaseURL_ApiRenderActurl_setParameters4
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr11 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS4);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters4")) {
+            Map<String, String[]> aval = portletReq.getParameterMap();
+            Map<String, String[]> eval = new HashMap<String, String[]>();
+            eval.put("tc", new String[]{"V2URLTests_BaseURL_ApiRenderActurl_setParameters4"});
+            eval.put("parm1", new String[]{"val1", "val2"});
+            CompareUtils.mapsEqual("Request", aval, " expected: ", eval, tr11);
+            PortletSession ps = portletReq.getPortletSession();
+            ps.setAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters4", tr11);
          }
       }
 
@@ -262,8 +306,8 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          turl.setParameter("parm1", "val1");
          
          // add the execution button for an action request
-         TestButton tl = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameterA1", turl);
-         tl.writeTo(writer);
+         TestButton tb = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameterA1", turl);
+         tb.writeTo(writer);
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
@@ -285,6 +329,22 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       try {
          PortletURL turl = portletResp.createActionURL();
          turl.setParameter("tc", "V2URLTests_BaseURL_ApiRenderActurl_setParameterA4");
+         turl.setParameter("parm1", "val1");
+         
+         // add the execution button for an action request
+         TestButton tb = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameterA4", turl);
+         tb.writeTo(writer);
+         
+         // display evaluated results
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA4")) {
+            PortletSession ps = portletReq.getPortletSession();
+            TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA4");
+            if (tmp != null) {
+               tr1 = tmp;
+               ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA4");
+            }
+         }
       } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
@@ -299,8 +359,8 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          turl.setParameter("parm1", "newVal");
          
          // add the execution button for an action request
-         TestButton tl = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameterA6", turl);
-         tl.writeTo(writer);
+         TestButton tb = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameterA6", turl);
+         tb.writeTo(writer);
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
@@ -326,8 +386,8 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          turl.setParameter("parm1", (String)null);
          
          // add the execution button for an action request
-         TestButton tl = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameterA7", turl);
-         tl.writeTo(writer);
+         TestButton tb = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameterA7", turl);
+         tb.writeTo(writer);
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
@@ -369,8 +429,8 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          turl.setParameter("parm1", new String[]{"val1", "val2"});
          
          // add the execution button for an action request
-         TestButton tl = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameterB1", turl);
-         tl.writeTo(writer);
+         TestButton tb = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameterB1", turl);
+         tb.writeTo(writer);
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
@@ -392,6 +452,22 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       try {
          PortletURL turl = portletResp.createActionURL();
          turl.setParameter("tc", "V2URLTests_BaseURL_ApiRenderActurl_setParameterB4");
+         turl.setParameter("parm1", new String[]{"val1", "val2"});
+         
+         // add the execution button for an action request
+         TestButton tb = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameterB4", turl);
+         tb.writeTo(writer);
+         
+         // display evaluated results
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB4")) {
+            PortletSession ps = portletReq.getPortletSession();
+            TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB4");
+            if (tmp != null) {
+               tr6 = tmp;
+               ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB4");
+            }
+         }
       } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
 
@@ -406,8 +482,8 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          turl.setParameter("parm1", new String[]{"newVal"});
          
          // add the execution button for an action request
-         TestButton tl = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameterB6", turl);
-         tl.writeTo(writer);
+         TestButton tb = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameterB6", turl);
+         tb.writeTo(writer);
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
@@ -433,8 +509,8 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          turl.setParameter("parm1", (String[])null);
          
          // add the execution button for an action request
-         TestButton tl = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameterB7", turl);
-         tl.writeTo(writer);
+         TestButton tb = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameterB7", turl);
+         tb.writeTo(writer);
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
@@ -484,8 +560,8 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          tsl.writeTo(writer);
          
          // add the execution button for an action request
-         TestButton tl = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameters1", turl);
-         tl.writeTo(writer);
+         TestButton tb = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameters1", turl);
+         tb.writeTo(writer);
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
@@ -508,6 +584,29 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          PortletURL turl = portletResp.createActionURL();
          Map<String, String[]> parms = new HashMap<String, String[]>();
          parms.put("tc", new String[]{"V2URLTests_BaseURL_ApiRenderActurl_setParameters4"});
+         parms.put("parm1", new String[]{"val1", "val2"});
+         turl.setParameters(parms);
+         
+         // Use setup link to set public render parameter to known value
+         PortletURL rurl = portletResp.createRenderURL();
+         rurl.removePublicRenderParameter("tckPRP1");
+         TestSetupLink tsl = new TestSetupLink("V2URLTests_BaseURL_ApiRenderActurl_setParameters4", rurl);
+         tsl.writeTo(writer);
+         
+         // add the execution button for an action request
+         TestButton tb = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameters4", turl);
+         tb.writeTo(writer);
+         
+         // display evaluated results
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters4")) {
+            PortletSession ps = portletReq.getPortletSession();
+            TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters4");
+            if (tmp != null) {
+               tr11 = tmp;
+               ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters4");
+            }
+         }
       } catch(Exception e) {tr11.appendTcDetail(e.toString());}
       tr11.writeTo(writer);
 
@@ -531,8 +630,8 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          tsl.writeTo(writer);
          
          // add the execution button for an action request
-         TestButton tl = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameters6", turl);
-         tl.writeTo(writer);
+         TestButton tb = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameters6", turl);
+         tb.writeTo(writer);
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
@@ -566,8 +665,8 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          tsl.writeTo(writer);
          
          // add the execution button for an action request
-         TestButton tl = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameters7", turl);
-         tl.writeTo(writer);
+         TestButton tb = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameters7", turl);
+         tb.writeTo(writer);
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
@@ -600,8 +699,8 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          tsl.writeTo(writer);
          
          // add the execution button for an action request
-         TestButton tl = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameters8", turl);
-         tl.writeTo(writer);
+         TestButton tb = new TestButton("V2URLTests_BaseURL_ApiRenderActurl_setParameters8", turl);
+         tb.writeTo(writer);
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
