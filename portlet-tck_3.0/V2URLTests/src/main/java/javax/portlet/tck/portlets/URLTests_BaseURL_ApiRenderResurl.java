@@ -264,6 +264,56 @@ public class URLTests_BaseURL_ApiRenderResurl implements Portlet, ResourceServin
          }
       }
 
+      // evaluate results for test case V2URLTests_BaseURL_ApiRenderResurl_setSecure2
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr19 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERRESURL_SETSECURE2);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_BaseURL_ApiRenderResurl_setSecure2")) {
+            String val = portletReq.getParameter("ok");
+            boolean ok = (val != null);
+            ok = ok || portletReq.isSecure();
+            tr19.setTcSuccess(ok);
+            tr19.writeTo(writer);
+         }
+      }
+
+      // evaluate results for test case V2URLTests_BaseURL_ApiRenderResurl_toString
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr20 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERRESURL_TOSTRING);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_BaseURL_ApiRenderResurl_toString")) {
+            // If execution makes it to here, the test was successful
+            tr20.setTcSuccess(true);
+            tr20.writeTo(writer);
+         }
+      }
+
+      // evaluate results for test case V2URLTests_BaseURL_ApiRenderResurl_writeA1
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr25 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERRESURL_WRITEA1);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_BaseURL_ApiRenderResurl_writeA1")) {
+            // If execution makes it to here, the test was successful
+            tr25.setTcSuccess(true);
+            tr25.writeTo(writer);
+         }
+      }
+
+      // evaluate results for test case V2URLTests_BaseURL_ApiRenderResurl_writeB1
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr26 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERRESURL_WRITEB1);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_BaseURL_ApiRenderResurl_writeB1")) {
+            // If execution makes it to here, the test was successful
+            tr26.setTcSuccess(true);
+            tr26.writeTo(writer);
+         }
+      }
+
    }
 
    @Override
@@ -667,17 +717,39 @@ public class URLTests_BaseURL_ApiRenderResurl implements Portlet, ResourceServin
       /* Details: "Method setSecure(boolean): If the input parameter is       */
       /* true, the resulting URL uses a secure connection (HTTPS)"            */
       TestResult tr19 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERRESURL_SETSECURE2);
-      /* TODO: implement test */
-      tr19.appendTcDetail("Not implemented.");
-      tr19.writeTo(writer);
+      try {
+         ResourceURL turl = portletResp.createResourceURL();
+         turl.setParameter("tc", "V2URLTests_BaseURL_ApiRenderResurl_setSecure2");
+         try {
+            turl.setSecure(true);
+         } catch(PortletSecurityException e) {
+            // handle as successful completion, since runtime does not support setting            turl.setParameter("ok", "true");
+         }
+         
+         // add the resource results fetcher to the output stream
+         ResourceLink rl = new ResourceLink("V2URLTests_BaseURL_ApiRenderResurl_setSecure2", turl);
+         rl.writeResourceFetcher(writer);
+      } catch(Exception e) {
+         tr19.appendTcDetail(e.toString());
+         tr19.writeTo(writer);
+      }
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderResurl_toString                */
       /* Details: "Method toString(): Returns a String containing the         */
       /* portlet URL representation to be included in the markup"             */
       TestResult tr20 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERRESURL_TOSTRING);
-      /* TODO: implement test */
-      tr20.appendTcDetail("Not implemented.");
-      tr20.writeTo(writer);
+      try {
+         ResourceURL turl = portletResp.createResourceURL();
+         turl.setParameter("tc", "V2URLTests_BaseURL_ApiRenderResurl_toString");
+         String urlstr = turl.toString();
+         
+         // add the resource results fetcher to the output stream
+         ResourceLink rl = new ResourceLink("V2URLTests_BaseURL_ApiRenderResurl_toString", urlstr);
+         rl.writeResourceFetcher(writer);
+      } catch(Exception e) {
+         tr20.appendTcDetail(e.toString());
+         tr20.writeTo(writer);
+      }
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderResurl_getParameterMap1        */
       /* Details: "Method getParameterMap(): Returns an                       */
@@ -749,20 +821,42 @@ public class URLTests_BaseURL_ApiRenderResurl implements Portlet, ResourceServin
       tr24.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderResurl_writeA1                 */
-      /* Details: "Method write(): Writes the URL to the output stream        */
-      /* through the provided Writer"                                         */
+      /* Details: "Method write(Writer out): Writes the URL to the output     */
+      /* stream through the provided Writer"                                  */
       TestResult tr25 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERRESURL_WRITEA1);
-      /* TODO: implement test */
-      tr25.appendTcDetail("Not implemented.");
-      tr25.writeTo(writer);
+      try {
+         ResourceURL turl = portletResp.createResourceURL();
+         turl.setParameter("tc", "V2URLTests_BaseURL_ApiRenderResurl_writeA1");
+         StringWriter tsw = new StringWriter();
+         turl.write(tsw);
+         String urlstr = tsw.toString();
+         
+         // add the resource results fetcher to the output stream
+         ResourceLink rl = new ResourceLink("V2URLTests_BaseURL_ApiRenderResurl_writeA1", urlstr);
+         rl.writeResourceFetcher(writer);
+      } catch(Exception e) {
+         tr25.appendTcDetail(e.toString());
+         tr25.writeTo(writer);
+      }
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderResurl_writeB1                 */
-      /* Details: "Method write(): Writes the URL to the output stream        */
-      /* through the provided Writer"                                         */
+      /* Details: "Method write(Writer out, boolean escapeXML): Writes the    */
+      /* URL to the output stream through the provided Writer"                */
       TestResult tr26 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERRESURL_WRITEB1);
-      /* TODO: implement test */
-      tr26.appendTcDetail("Not implemented.");
-      tr26.writeTo(writer);
+      try {
+         ResourceURL turl = portletResp.createResourceURL();
+         turl.setParameter("tc", "V2URLTests_BaseURL_ApiRenderResurl_writeB1");
+         StringWriter tsw = new StringWriter();
+         turl.write(tsw, true);
+         String urlstr = tsw.toString();
+         
+         // add the resource results fetcher to the output stream
+         ResourceLink rl = new ResourceLink("V2URLTests_BaseURL_ApiRenderResurl_writeB1", urlstr);
+         rl.writeResourceFetcher(writer);
+      } catch(Exception e) {
+         tr26.appendTcDetail(e.toString());
+         tr26.writeTo(writer);
+      }
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderResurl_addProperty1            */
       /* Details: "Method addProperty(String, String): A property can be      */

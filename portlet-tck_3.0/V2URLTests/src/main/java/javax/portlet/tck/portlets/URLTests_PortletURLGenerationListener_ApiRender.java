@@ -72,6 +72,96 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
 
       StringWriter writer = new StringWriter();
 
+      // evaluate results for test case V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL1
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr1 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERACTIONURL1);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL1")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Action");
+            if (!ok) {
+               tr1.appendTcDetail("Parameter not set by listener. Expected: Action, actual: " + val);
+            }
+            tr1.setTcSuccess(ok);
+            PortletSession ps = portletReq.getPortletSession();
+            ps.setAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL1", tr1);
+         }
+      }
+
+      // evaluate results for test case V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL2
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr2 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERACTIONURL2);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL2")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Action");
+            if (!ok) {
+               tr2.appendTcDetail("Parameter not set by listener. Expected: Action, actual: " + val);
+            }
+            tr2.setTcSuccess(ok);
+            PortletSession ps = portletReq.getPortletSession();
+            ps.setAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL2", tr2);
+         }
+      }
+
+      // evaluate results for test case V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL3
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr3 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERACTIONURL3);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL3")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Action");
+            if (!ok) {
+               tr3.appendTcDetail("Parameter not set by listener. Expected: Action, actual: " + val);
+            }
+            tr3.setTcSuccess(ok);
+            PortletSession ps = portletReq.getPortletSession();
+            ps.setAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL3", tr3);
+         }
+      }
+
+      // evaluate results for test case V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL4
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr4 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERACTIONURL4);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL4")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Action");
+            if (!ok) {
+               tr4.appendTcDetail("Parameter not set by listener. Expected: Action, actual: " + val);
+            }
+            tr4.setTcSuccess(ok);
+            PortletSession ps = portletReq.getPortletSession();
+            ps.setAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL4", tr4);
+         }
+      }
+
+      // evaluate results for test case V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL5
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERACTIONURL5);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL5")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Action");
+            if (!ok) {
+               tr5.appendTcDetail("Parameter not set by listener. Expected: Action, actual: " + val);
+            }
+            tr5.setTcSuccess(ok);
+            PortletSession ps = portletReq.getPortletSession();
+            ps.setAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL5", tr5);
+         }
+      }
+
    }
 
    @Override
@@ -83,6 +173,108 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
       portletReq.setAttribute(THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
+
+      // evaluate results for test case V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL1
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr11 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL1);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL1")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Resource");
+            if (!ok) {
+               tr11.appendTcDetail("Parameter not set by listener. Expected: Resource, actual: " + val);
+            }
+            tr11.setTcSuccess(ok);
+            tr11.writeTo(writer);
+         }
+      }
+
+      // evaluate results for test case V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL2
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr12 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL2);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL2")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Resource");
+            if (!ok) {
+               tr12.appendTcDetail("Parameter not set by listener. Expected: Resource, actual: " + val);
+            }
+            tr12.setTcSuccess(ok);
+            tr12.writeTo(writer);
+         }
+      }
+
+      // evaluate results for test case V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL3
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr13 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL3);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL3")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Resource");
+            if (!ok) {
+               tr13.appendTcDetail("Parameter not set by listener. Expected: Resource, actual: " + val);
+            }
+            tr13.setTcSuccess(ok);
+            tr13.writeTo(writer);
+         }
+      }
+
+      // evaluate results for test case V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL4
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr14 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL4);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL4")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Resource");
+            if (!ok) {
+               tr14.appendTcDetail("Parameter not set by listener. Expected: Resource, actual: " + val);
+            }
+            tr14.setTcSuccess(ok);
+            tr14.writeTo(writer);
+         }
+      }
+
+      // evaluate results for test case V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL5
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr15 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL5);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL5")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Resource");
+            if (!ok) {
+               tr15.appendTcDetail("Parameter not set by listener. Expected: Resource, actual: " + val);
+            }
+            tr15.setTcSuccess(ok);
+            tr15.writeTo(writer);
+         }
+      }
+
+      // evaluate results for test case V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL7
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr16 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL7);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL7")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Resource");
+            if (!ok) {
+               tr16.appendTcDetail("Parameter not set by listener. Expected: Resource, actual: " + val);
+            }
+            tr16.setTcSuccess(ok);
+            tr16.writeTo(writer);
+         }
+      }
 
    }
 
@@ -106,129 +298,432 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
       /* Details: "A PortletURLGenerationListener can be configured in the    */
       /* portlet deployment descriptor"                                       */
       TestResult tr0 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_CONFIGURATION);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_configuration");
+         StringWriter tsw = new StringWriter();
+         turl.write(tsw);
+         String urlstr = tsw.toString();
+         
+         // add the execution link
+         TestLink tl = new TestLink("V2URLTests_PortletURLGenerationListener_ApiRender_configuration", urlstr);
+         tl.writeTo(writer);
+         
+         // evaluate results
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_configuration")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Render");
+            if (!ok) {
+               tr0.appendTcDetail("Parameter not set by listener. Expected: Render, actual: " + val);
+            }
+            tr0.setTcSuccess(ok);
+         }
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL1 */
       /* Details: "Method filterActionURL(PortletURL): The                    */
-      /* filterActionURL(PortletURL): method is called before the toString    */
-      /* or write methods are executed on an action URL"                      */
+      /* filterActionURL(PortletURL): method is called before the             */
+      /* toString() method is executed"                                       */
       TestResult tr1 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERACTIONURL1);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL1");
+         String urlstr = turl.toString();
+         
+         // add the execution button for an action request
+         TestButton tb = new TestButton("V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL1", urlstr);
+         tb.writeTo(writer);
+         
+         // display evaluated results
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL1")) {
+            PortletSession ps = portletReq.getPortletSession();
+            TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL1");
+            if (tmp != null) {
+               tr1 = tmp;
+               ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL1");
+            }
+         }
+      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL2 */
-      /* Details: "Method filterActionURL(PortletURL): The filterActionURL    */
-      /* method is passed the PortletURL object representing the action       */
-      /* URL"                                                                 */
+      /* Details: "Method filterActionURL(PortletURL): The                    */
+      /* filterActionURL(PortletURL): method is called before the             */
+      /* write(Writer out) method is executed"                                */
       TestResult tr2 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERACTIONURL2);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL2");
+         StringWriter tsw = new StringWriter();
+         turl.write(tsw);
+         String urlstr = tsw.toString();
+         
+         // add the execution button for an action request
+         TestButton tb = new TestButton("V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL2", urlstr);
+         tb.writeTo(writer);
+         
+         // display evaluated results
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL2")) {
+            PortletSession ps = portletReq.getPortletSession();
+            TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL2");
+            if (tmp != null) {
+               tr2 = tmp;
+               ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL2");
+            }
+         }
+      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL3 */
-      /* Details: "Method filterActionURL(PortletURL): The input action URL   */
-      /* object can be modified by setting a parameter and the modified URL   */
-      /* object is processed by the PortletURL toString or write method"      */
+      /* Details: "Method filterActionURL(PortletURL): The                    */
+      /* filterActionURL(PortletURL): method is called before the             */
+      /* write(Writer out, boolean escapeXML) method is executed"             */
       TestResult tr3 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERACTIONURL3);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL3");
+         StringWriter tsw = new StringWriter();
+         turl.write(tsw, true);
+         String urlstr = tsw.toString();
+         
+         // add the execution button for an action request
+         TestButton tb = new TestButton("V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL3", urlstr);
+         tb.writeTo(writer);
+         
+         // display evaluated results
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL3")) {
+            PortletSession ps = portletReq.getPortletSession();
+            TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL3");
+            if (tmp != null) {
+               tr3 = tmp;
+               ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL3");
+            }
+         }
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL4 */
-      /* Details: "Method filterActionURL(PortletURL): The input action URL   */
-      /* object can be modified by setting a property and the modified URL    */
-      /* object is processed by the PortletURL toString or write method"      */
+      /* Details: "Method filterActionURL(PortletURL): The filterActionURL    */
+      /* method is passed the PortletURL object representing the action       */
+      /* URL"                                                                 */
       TestResult tr4 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERACTIONURL4);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL4");
+         StringWriter tsw = new StringWriter();
+         turl.write(tsw);
+         String urlstr = tsw.toString();
+         
+         // add the execution button for an action request
+         TestButton tb = new TestButton("V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL4", urlstr);
+         tb.writeTo(writer);
+         
+         // display evaluated results
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL4")) {
+            PortletSession ps = portletReq.getPortletSession();
+            TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL4");
+            if (tmp != null) {
+               tr4 = tmp;
+               ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL4");
+            }
+         }
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
-      /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL5 */
-      /* Details: "Method filterRenderURL(PortletURL): The                    */
-      /* filterRenderURL(PortletURL): method is called before the toString    */
-      /* or write methods are executed on an action URL"                      */
-      TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRENDERURL5);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL5 */
+      /* Details: "Method filterActionURL(PortletURL): The input URL object   */
+      /* can be modified by setting a parameter and the modified URL object   */
+      /* is processed by the PortletURL toString or write method"             */
+      TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERACTIONURL5);
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL5");
+         String urlstr = turl.toString();
+         
+         // add the execution button for an action request
+         TestButton tb = new TestButton("V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL5", urlstr);
+         tb.writeTo(writer);
+         
+         // display evaluated results
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL5")) {
+            PortletSession ps = portletReq.getPortletSession();
+            TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL5");
+            if (tmp != null) {
+               tr5 = tmp;
+               ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL5");
+            }
+         }
+      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 
-      /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL6 */
+      /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL1 */
+      /* Details: "Method filterRenderURL(PortletURL): The                    */
+      /* filterRenderURL(PortletURL): method is called before the             */
+      /* toString() method is executed"                                       */
+      TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRENDERURL1);
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL1");
+         String urlstr = turl.toString();
+         
+         // add the execution link
+         TestLink tl = new TestLink("V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL1", urlstr);
+         tl.writeTo(writer);
+         
+         // evaluate results
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL1")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Render");
+            if (!ok) {
+               tr6.appendTcDetail("Parameter not set by listener. Expected: Render, actual: " + val);
+            }
+            tr6.setTcSuccess(ok);
+         }
+      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
+      tr6.writeTo(writer);
+
+      /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL2 */
+      /* Details: "Method filterRenderURL(PortletURL): The                    */
+      /* filterRenderURL(PortletURL): method is called before the             */
+      /* write(Writer out) method is executed"                                */
+      TestResult tr7 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRENDERURL2);
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL2");
+         StringWriter tsw = new StringWriter();
+         turl.write(tsw);
+         String urlstr = tsw.toString();
+         
+         // add the execution link
+         TestLink tl = new TestLink("V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL2", urlstr);
+         tl.writeTo(writer);
+         
+         // evaluate results
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL2")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Render");
+            if (!ok) {
+               tr7.appendTcDetail("Parameter not set by listener. Expected: Render, actual: " + val);
+            }
+            tr7.setTcSuccess(ok);
+         }
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
+      tr7.writeTo(writer);
+
+      /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL3 */
+      /* Details: "Method filterRenderURL(PortletURL): The                    */
+      /* filterRenderURL(PortletURL): method is called before the             */
+      /* write(Writer out, boolean escapeXML) method is executed"             */
+      TestResult tr8 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRENDERURL3);
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL3");
+         StringWriter tsw = new StringWriter();
+         turl.write(tsw, true);
+         String urlstr = tsw.toString();
+         
+         // add the execution link
+         TestLink tl = new TestLink("V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL3", urlstr);
+         tl.writeTo(writer);
+         
+         // evaluate results
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL3")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Render");
+            if (!ok) {
+               tr8.appendTcDetail("Parameter not set by listener. Expected: Render, actual: " + val);
+            }
+            tr8.setTcSuccess(ok);
+         }
+      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
+      tr8.writeTo(writer);
+
+      /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL4 */
       /* Details: "Method filterRenderURL(PortletURL): The filterRenderURL    */
       /* method is passed the PortletURL object representing the action       */
       /* URL"                                                                 */
-      TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRENDERURL6);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
-      tr6.writeTo(writer);
+      TestResult tr9 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRENDERURL4);
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL4");
+         StringWriter tsw = new StringWriter();
+         turl.write(tsw);
+         String urlstr = tsw.toString();
+         
+         // add the execution link
+         TestLink tl = new TestLink("V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL4", urlstr);
+         tl.writeTo(writer);
+         
+         // evaluate results
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL4")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Render");
+            if (!ok) {
+               tr9.appendTcDetail("Parameter not set by listener. Expected: Render, actual: " + val);
+            }
+            tr9.setTcSuccess(ok);
+         }
+      } catch(Exception e) {tr9.appendTcDetail(e.toString());}
+      tr9.writeTo(writer);
 
-      /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL7 */
-      /* Details: "Method filterRenderURL(PortletURL): The input action URL   */
-      /* object can be modified by setting a parameter and the modified URL   */
-      /* object is processed by the PortletURL toString or write method"      */
-      TestResult tr7 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRENDERURL7);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
-      tr7.writeTo(writer);
-
-      /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL8 */
-      /* Details: "Method filterRenderURL(PortletURL): The input action URL   */
-      /* object can be modified by setting a property and the modified URL    */
-      /* object is processed by the PortletURL toString or write method"      */
-      TestResult tr8 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRENDERURL8);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
-      tr8.writeTo(writer);
+      /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL5 */
+      /* Details: "Method filterRenderURL(PortletURL): The input URL object   */
+      /* can be modified by setting a parameter and the modified URL object   */
+      /* is processed by the PortletURL toString or write method"             */
+      TestResult tr10 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRENDERURL5);
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL5");
+         String urlstr = turl.toString();
+         
+         // add the execution link
+         TestLink tl = new TestLink("V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL5", urlstr);
+         tl.writeTo(writer);
+         
+         // evaluate results
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL5")) {
+            // Verify that the listener set the parameter as expected
+            String val = portletReq.getParameter("PUGL");
+            boolean ok = (val != null) && val.equals("Render");
+            if (!ok) {
+               tr10.appendTcDetail("Parameter not set by listener. Expected: Render, actual: " + val);
+            }
+            tr10.setTcSuccess(ok);
+         }
+      } catch(Exception e) {tr10.appendTcDetail(e.toString());}
+      tr10.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL1 */
       /* Details: "Method filterResourceURL(ResourceURL): The                 */
       /* filterResourceURL(PortletURL): method is called before the           */
-      /* toString or write methods are executed on an action URL"             */
-      TestResult tr9 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL1);
-      /* TODO: implement test */
-      tr9.appendTcDetail("Not implemented.");
-      tr9.writeTo(writer);
+      /* toString() method is executed"                                       */
+      TestResult tr11 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL1);
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL1");
+         String urlstr = turl.toString();
+         
+         // add the resource results fetcher to the output stream
+         ResourceLink rl = new ResourceLink("V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL1", urlstr);
+         rl.writeResourceFetcher(writer);
+      } catch(Exception e) {
+         tr11.appendTcDetail(e.toString());
+         tr11.writeTo(writer);
+      }
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL2 */
       /* Details: "Method filterResourceURL(ResourceURL): The                 */
-      /* filterResourceURL method is passed the PortletURL object             */
-      /* representing the action URL"                                         */
-      TestResult tr10 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL2);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
-      tr10.writeTo(writer);
+      /* filterResourceURL(PortletURL): method is called before the           */
+      /* write(Writer out) method is executed"                                */
+      TestResult tr12 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL2);
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL2");
+         StringWriter tsw = new StringWriter();
+         turl.write(tsw);
+         String urlstr = tsw.toString();
+         
+         // add the resource results fetcher to the output stream
+         ResourceLink rl = new ResourceLink("V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL2", urlstr);
+         rl.writeResourceFetcher(writer);
+      } catch(Exception e) {
+         tr12.appendTcDetail(e.toString());
+         tr12.writeTo(writer);
+      }
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL3 */
-      /* Details: "Method filterResourceURL(ResourceURL): The input action    */
-      /* URL object can be modified by setting a parameter and the modified   */
-      /* URL object is processed by the PortletURL toString or write          */
-      /* method"                                                              */
-      TestResult tr11 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL3);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
-      tr11.writeTo(writer);
+      /* Details: "Method filterResourceURL(ResourceURL): The                 */
+      /* filterResourceURL(PortletURL): method is called before the           */
+      /* write(Writer out, boolean escapeXML) method is executed"             */
+      TestResult tr13 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL3);
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL3");
+         StringWriter tsw = new StringWriter();
+         turl.write(tsw, true);
+         String urlstr = tsw.toString();
+         
+         // add the resource results fetcher to the output stream
+         ResourceLink rl = new ResourceLink("V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL3", urlstr);
+         rl.writeResourceFetcher(writer);
+      } catch(Exception e) {
+         tr13.appendTcDetail(e.toString());
+         tr13.writeTo(writer);
+      }
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL4 */
-      /* Details: "Method filterResourceURL(ResourceURL): The input action    */
-      /* URL object can be modified by setting a property and the modified    */
-      /* URL object is processed by the PortletURL toString or write          */
-      /* method"                                                              */
-      TestResult tr12 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL4);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
-      tr12.writeTo(writer);
+      /* Details: "Method filterResourceURL(ResourceURL): The                 */
+      /* filterResourceURL method is passed the PortletURL object             */
+      /* representing the action URL"                                         */
+      TestResult tr14 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL4);
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL4");
+         StringWriter tsw = new StringWriter();
+         turl.write(tsw);
+         String urlstr = tsw.toString();
+         
+         // add the resource results fetcher to the output stream
+         ResourceLink rl = new ResourceLink("V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL4", urlstr);
+         rl.writeResourceFetcher(writer);
+      } catch(Exception e) {
+         tr14.appendTcDetail(e.toString());
+         tr14.writeTo(writer);
+      }
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL5 */
-      /* Details: "Method filterResourceURL(ResourceURL): The input action    */
-      /* URL object can be modified by setting the resource ID and the        */
-      /* modified URL object is processed by the PortletURL toString or       */
-      /* write method"                                                        */
-      TestResult tr13 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL5);
-      /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
-      tr13.writeTo(writer);
+      /* Details: "Method filterResourceURL(ResourceURL): The input URL       */
+      /* object can be modified by setting a parameter and the modified URL   */
+      /* object is processed by the PortletURL toString or write method"      */
+      TestResult tr15 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL5);
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL5");
+         String urlstr = turl.toString();
+         
+         // add the resource results fetcher to the output stream
+         ResourceLink rl = new ResourceLink("V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL5", urlstr);
+         rl.writeResourceFetcher(writer);
+      } catch(Exception e) {
+         tr15.appendTcDetail(e.toString());
+         tr15.writeTo(writer);
+      }
+
+      /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL7 */
+      /* Details: "Method filterResourceURL(ResourceURL): The input URL       */
+      /* object can be modified by setting the resource ID and the modified   */
+      /* URL object is processed by the PortletURL toString or write          */
+      /* method"                                                              */
+      TestResult tr16 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDER_FILTERRESOURCEURL7);
+      try {
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc", "V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL7");
+         String urlstr = turl.toString();
+         
+         // add the resource results fetcher to the output stream
+         ResourceLink rl = new ResourceLink("V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL7", urlstr);
+         rl.writeResourceFetcher(writer);
+      } catch(Exception e) {
+         tr16.appendTcDetail(e.toString());
+         tr16.writeTo(writer);
+      }
 
    }
 

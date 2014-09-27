@@ -49,6 +49,7 @@ import javax.portlet.tck.constants.Constants;
 public class TestButton {
    
    private String tcName;
+   private String urlstr;
    private PortletURL purl;
    
    /**
@@ -57,6 +58,7 @@ public class TestButton {
    public TestButton() {
       tcName = "";
       purl = null;
+      urlstr = null;
    }
 
    /**
@@ -68,6 +70,20 @@ public class TestButton {
    public TestButton(String tcName, PortletURL purl) {
       this.tcName = tcName;
       this.purl = purl;
+      this.urlstr = null;
+   }
+
+   /**
+    * Creates a test link initialized with a URL in string form.
+    * This enables certain URL test cases such as "*URL.toString()"
+    * 
+    * @param tcName     test case name
+    * @param urlstr     url for the test case in string form
+    */
+   public TestButton(String tcName, String urlstr) {
+      this.tcName = tcName;
+      this.urlstr = urlstr;
+      this.purl = null;
    }
 
    /**
@@ -82,6 +98,7 @@ public class TestButton {
    public String toString() {
       final String actId = tcName + Constants.CLICK_ID;
       
+      if (urlstr == null) urlstr = purl.toString();
       StringBuilder sb = new StringBuilder();
       sb.append("<div class='portletTCKTestcase' name='");
       sb.append(tcName);
@@ -91,7 +108,7 @@ public class TestButton {
       sb.append(" button (POST):");
       sb.append("</h4>");
       sb.append("<form  class='portletTCKButton'" +
-                " action='" + purl.toString() + "' method='post'>");
+                " action='" + urlstr + "' method='post'>");
       sb.append("<input type='submit' value='" + tcName + "'  id='" + actId + "'/>");
       sb.append("</form>");
       sb.append("</div>");

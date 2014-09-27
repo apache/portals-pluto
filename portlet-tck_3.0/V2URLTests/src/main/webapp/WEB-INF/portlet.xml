@@ -70,6 +70,8 @@
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+         <portlet-mode>EDIT</portlet-mode>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
@@ -84,6 +86,8 @@
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+         <portlet-mode>EDIT</portlet-mode>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
@@ -112,6 +116,8 @@
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+         <portlet-mode>EDIT</portlet-mode>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
@@ -126,4 +132,7 @@
       <identifier>tckPRP1</identifier>
       <qname>tck:tckPRP1</qname>
    </public-render-parameter>
+   <listener>
+      <listener-class>javax.portlet.tck.listeners.TestPortletURLGenerationListener</listener-class>
+   </listener>
 </portlet-app>

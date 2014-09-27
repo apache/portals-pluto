@@ -116,12 +116,9 @@
 <entry key="V2URLTests_BaseURL_ApiRenderResurl_setProperty3">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderRenurl_setWindowState1">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderRenurl_setWindowState2">V2URLTests</entry>
-<entry key="V2URLTests_PortletURL_ApiRenderRenurl_setWindowState3">V2URLTests</entry>
-<entry key="V2URLTests_PortletURL_ApiRenderRenurl_setWindowState4">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderRenurl_setPortletMode1">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderRenurl_setPortletMode2">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderRenurl_setPortletMode3">V2URLTests</entry>
-<entry key="V2URLTests_PortletURL_ApiRenderRenurl_setPortletMode4">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderRenurl_getPortletMode1">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderRenurl_getPortletMode2">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderRenurl_getWindowState1">V2URLTests</entry>
@@ -130,12 +127,9 @@
 <entry key="V2URLTests_PortletURL_ApiRenderRenurl_removePublicRenderParameter2">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderActurl_setWindowState1">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderActurl_setWindowState2">V2URLTests</entry>
-<entry key="V2URLTests_PortletURL_ApiRenderActurl_setWindowState3">V2URLTests</entry>
-<entry key="V2URLTests_PortletURL_ApiRenderActurl_setWindowState4">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderActurl_setPortletMode1">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderActurl_setPortletMode2">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderActurl_setPortletMode3">V2URLTests</entry>
-<entry key="V2URLTests_PortletURL_ApiRenderActurl_setPortletMode4">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderActurl_getPortletMode1">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderActurl_getPortletMode2">V2URLTests</entry>
 <entry key="V2URLTests_PortletURL_ApiRenderActurl_getWindowState1">V2URLTests</entry>
@@ -156,13 +150,16 @@
 <entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL2">V2URLTests</entry>
 <entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL3">V2URLTests</entry>
 <entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL4">V2URLTests</entry>
+<entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterActionURL5">V2URLTests</entry>
+<entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL1">V2URLTests</entry>
+<entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL2">V2URLTests</entry>
+<entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL3">V2URLTests</entry>
+<entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL4">V2URLTests</entry>
 <entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL5">V2URLTests</entry>
-<entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL6">V2URLTests</entry>
-<entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL7">V2URLTests</entry>
-<entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterRenderURL8">V2URLTests</entry>
 <entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL1">V2URLTests</entry>
 <entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL2">V2URLTests</entry>
 <entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL3">V2URLTests</entry>
 <entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL4">V2URLTests</entry>
 <entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL5">V2URLTests</entry>
+<entry key="V2URLTests_PortletURLGenerationListener_ApiRender_filterResourceURL7">V2URLTests</entry>
 </properties>

@@ -48,6 +48,7 @@ import javax.portlet.tck.constants.Constants;
 public class ResourceLink {
    
    String tcName;
+   String urlstr;
    ResourceURL rurl;
    String actId;
    String resId;
@@ -64,6 +65,7 @@ public class ResourceLink {
       divId = "";
       title = "";
       rurl = null;
+      urlstr = null;
    }
 
    /**
@@ -79,6 +81,24 @@ public class ResourceLink {
       this.divId = tcName + Constants.RESOURCE_DIV_ID;
       this.title = " Resource Link";
       this.rurl = rurl;
+      this.urlstr = null;
+   }
+
+   /**
+    * Creates a resource link initialized with a URL in string form.
+    * This enables certain URL test cases such as "*URL.toString()"
+    * 
+    * @param tcName     test case name
+    * @param urlstr     url for the test case in string form
+    */
+   public ResourceLink(String tcName, String urlstr) {
+      this.tcName = tcName;
+      this.actId = tcName + Constants.CLICK_ID;
+      this.resId = tcName + Constants.RESOURCE_LINK_ID;
+      this.divId = tcName + Constants.RESOURCE_DIV_ID;
+      this.title = " Resource Link";
+      this.urlstr = urlstr;
+      this.rurl = null;
    }
 
    /**
@@ -92,6 +112,7 @@ public class ResourceLink {
    @Override
    public String toString() {
       
+      if (urlstr == null) urlstr = rurl.toString();
       StringBuilder sb = new StringBuilder();
       sb.append("<div class='portletTCKTestcase' name='");
       sb.append(tcName);
@@ -103,7 +124,7 @@ public class ResourceLink {
       sb.append("<a class='portletTCKLink' id='");
       sb.append(resId);
       sb.append("' href='");
-      sb.append(rurl.toString());
+      sb.append(urlstr);
       sb.append("'>");
       sb.append(tcName);
       sb.append("</a>");
@@ -137,6 +158,7 @@ public class ResourceLink {
     */
    public void writeResourceFetcher(Writer writer) throws IOException {
 
+      if (urlstr == null) urlstr = rurl.toString();
       StringBuilder sb = new StringBuilder();
       sb.append("<div class='portletTCKTestcase' name='").append(tcName);
       sb.append("' id='").append(divId).append("'>\n");
@@ -157,7 +179,7 @@ public class ResourceLink {
       sb.append("            document.getElementById('" + divId + "').innerHTML=xhr.responseText;\n");
       sb.append("         }\n");
       sb.append("      };\n");
-      sb.append("      xhr.open('GET', '" + rurl.toString() + "',true);\n");
+      sb.append("      xhr.open('GET', '" + urlstr + "',true);\n");
       sb.append("      xhr.send();\n");
       sb.append("   };\n");
       sb.append("   document.getElementById('" + actId + "').onclick = getRes;\n");
