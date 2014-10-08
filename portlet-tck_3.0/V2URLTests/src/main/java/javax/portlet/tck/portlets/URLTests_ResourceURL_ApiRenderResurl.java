@@ -211,8 +211,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          ResourceURL turl = portletResp.createResourceURL();
          turl.setParameter("tc", "V2URLTests_ResourceURL_ApiRenderResurl_getCacheability");
          String c = turl.getCacheability();
-         boolean ok = false;
-         ok = ok || ((c != null) && ResourceURL.PAGE.equals(c));
+         boolean ok = ((c != null) && ResourceURL.PAGE.equals(c));
          if (!ok) {
             tr5.appendTcDetail("Cacheability expected: " + ResourceURL.PAGE + ", actual: " + c);
          }

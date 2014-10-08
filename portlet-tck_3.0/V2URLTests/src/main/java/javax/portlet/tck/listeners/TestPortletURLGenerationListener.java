@@ -34,7 +34,7 @@ import static javax.portlet.ResourceURL.*;
 
 /**
  *Test PortletURLGenerationListener
- * Used by portlet: URLTests_PortletURLGenerationListener_ApiRender
+ * Used by portlet: URLTests_PortletURLGenerationListener_ApiRenderResurl
  *
  * @author nick
  *
@@ -47,15 +47,25 @@ public class TestPortletURLGenerationListener implements PortletURLGenerationLis
       // set parameters on URLs to indicate test success
 
    public void filterActionURL(PortletURL url) {
-      url.setParameter("PUGL", "Action");
+      if (isURLGenTc(url)) url.setParameter("PUGL", "Action");
    }
 
    public void filterRenderURL(PortletURL url) {
-      url.setParameter("PUGL", "Render");
+      if (isURLGenTc(url)) url.setParameter("PUGL", "Render");
    }
 
    public void filterResourceURL(ResourceURL url) {
-      url.setParameter("PUGL", "Resource");
+      if (isURLGenTc(url)) url.setParameter("PUGL", "Resource");
+   }
+
+   // only set parm for PortletURLGenerationListener test cases
+   private boolean isURLGenTc(BaseURL url) {
+      boolean ok = false;
+      String[] vals = (String[]) url.getParameterMap().get("tc");
+      if ((vals != null) && (vals.length > 0) && vals[0].contains("PortletURLGenerationListener")) {
+         ok = true;
+      }
+      return ok;
    }
 
 

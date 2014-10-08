@@ -51,8 +51,10 @@ public class ResourceLink {
    String urlstr;
    ResourceURL rurl;
    String actId;
-   String resId;
+   String linkId;
    String divId;
+   String resId;
+   String detId;
    String title;
    
    /**
@@ -61,8 +63,10 @@ public class ResourceLink {
    public ResourceLink() {
       tcName = "";
       actId = "";
-      resId = "";
+      linkId = "";
       divId = "";
+      resId = "";
+      detId = "";
       title = "";
       rurl = null;
       urlstr = null;
@@ -77,8 +81,10 @@ public class ResourceLink {
    public ResourceLink(String tcName, ResourceURL rurl) {
       this.tcName = tcName;
       this.actId = tcName + Constants.CLICK_ID;
-      this.resId = tcName + Constants.RESOURCE_LINK_ID;
+      this.linkId = tcName + Constants.RESOURCE_LINK_ID;
       this.divId = tcName + Constants.RESOURCE_DIV_ID;
+      this.resId = tcName + Constants.RESULT_ID;
+      this.detId = tcName + Constants.DETAIL_ID;
       this.title = " Resource Link";
       this.rurl = rurl;
       this.urlstr = null;
@@ -94,8 +100,10 @@ public class ResourceLink {
    public ResourceLink(String tcName, String urlstr) {
       this.tcName = tcName;
       this.actId = tcName + Constants.CLICK_ID;
-      this.resId = tcName + Constants.RESOURCE_LINK_ID;
+      this.linkId = tcName + Constants.RESOURCE_LINK_ID;
       this.divId = tcName + Constants.RESOURCE_DIV_ID;
+      this.resId = tcName + Constants.RESULT_ID;
+      this.detId = tcName + Constants.DETAIL_ID;
       this.title = " Resource Link";
       this.urlstr = urlstr;
       this.rurl = null;
@@ -122,7 +130,7 @@ public class ResourceLink {
       sb.append(" " + title + ":");
       sb.append("</h4>");
       sb.append("<a class='portletTCKLink' id='");
-      sb.append(resId);
+      sb.append(linkId);
       sb.append("' href='");
       sb.append(urlstr);
       sb.append("'>");
@@ -160,6 +168,7 @@ public class ResourceLink {
 
       if (urlstr == null) urlstr = rurl.toString();
       StringBuilder sb = new StringBuilder();
+      TestResult tr = new TestResult(tcName, false, "");
       sb.append("<div class='portletTCKTestcase' name='").append(tcName);
       sb.append("' id='").append(divId).append("'>\n");
       sb.append("<h4>");
@@ -175,8 +184,15 @@ public class ResourceLink {
       sb.append("   var getRes = function () {\n");
       sb.append("      var xhr = new XMLHttpRequest();\n");
       sb.append("      xhr.onreadystatechange=function() {\n");
-      sb.append("         if (xhr.readyState==4 && xhr.status==200) {\n");
-      sb.append("            document.getElementById('" + divId + "').innerHTML=xhr.responseText;\n");
+      sb.append("         if (xhr.readyState==4) {\n");
+      sb.append("            if (xhr.status==200) {\n");
+      sb.append("               document.getElementById('" + divId + "').innerHTML=xhr.responseText;\n");
+      sb.append("            } else {\n");
+      sb.append("               var str=\"" + tr.toString() + "\";\n");
+      sb.append("               document.getElementById('" + divId + "').innerHTML=str;\n");
+      sb.append("               str=\"XMLHttpRequest status=\" + xhr.status;\n");
+      sb.append("               document.getElementById('" + detId + "').innerHTML=str;\n");
+      sb.append("            }\n");
       sb.append("         }\n");
       sb.append("      };\n");
       sb.append("      xhr.open('GET', '" + urlstr + "',true);\n");

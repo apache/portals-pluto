@@ -111,8 +111,8 @@
    </portlet>
 
    <portlet>
-      <portlet-name>URLTests_PortletURLGenerationListener_ApiRender</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.URLTests_PortletURLGenerationListener_ApiRender</portlet-class>
+      <portlet-name>URLTests_PortletURLGenerationListener_ApiRenderActurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_PortletURLGenerationListener_ApiRenderActurl</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
@@ -121,7 +121,39 @@
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>URLTests_PortletURLGenerationListener_ApiRender</title>
+         <title>URLTests_PortletURLGenerationListener_ApiRenderActurl</title>
+      </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>URLTests_PortletURLGenerationListener_ApiRenderRenurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_PortletURLGenerationListener_ApiRenderRenurl</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+         <portlet-mode>EDIT</portlet-mode>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>URLTests_PortletURLGenerationListener_ApiRenderRenurl</title>
+      </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>URLTests_PortletURLGenerationListener_ApiRenderResurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_PortletURLGenerationListener_ApiRenderResurl</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+         <portlet-mode>EDIT</portlet-mode>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>URLTests_PortletURLGenerationListener_ApiRenderResurl</title>
       </portlet-info>
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
