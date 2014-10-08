@@ -167,4 +167,7 @@
    <listener>
       <listener-class>javax.portlet.tck.listeners.TestPortletURLGenerationListener</listener-class>
    </listener>
+   <listener>
+      <listener-class>javax.portlet.tck.listeners.TestPortletURLGenerationListener2</listener-class>
+   </listener>
 </portlet-app>

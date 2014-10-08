@@ -987,7 +987,6 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
    public final static String V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERS9 = "V2URLTests_BaseURL_ApiRenderRenurl_setParameters9";
    public final static String V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERS10 = "V2URLTests_BaseURL_ApiRenderRenurl_setParameters10";
    public final static String V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERS12 = "V2URLTests_BaseURL_ApiRenderRenurl_setParameters12";
-   public final static String V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERS13 = "V2URLTests_BaseURL_ApiRenderRenurl_setParameters13";
    public final static String V2URLTESTS_BASEURL_APIRENDERRENURL_SETSECURE2 = "V2URLTests_BaseURL_ApiRenderRenurl_setSecure2";
    public final static String V2URLTESTS_BASEURL_APIRENDERRENURL_TOSTRING = "V2URLTests_BaseURL_ApiRenderRenurl_toString";
    public final static String V2URLTESTS_BASEURL_APIRENDERRENURL_GETPARAMETERMAP1 = "V2URLTests_BaseURL_ApiRenderRenurl_getParameterMap1";
@@ -1017,7 +1016,6 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
    public final static String V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS9 = "V2URLTests_BaseURL_ApiRenderActurl_setParameters9";
    public final static String V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS10 = "V2URLTests_BaseURL_ApiRenderActurl_setParameters10";
    public final static String V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS12 = "V2URLTests_BaseURL_ApiRenderActurl_setParameters12";
-   public final static String V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS13 = "V2URLTests_BaseURL_ApiRenderActurl_setParameters13";
    public final static String V2URLTESTS_BASEURL_APIRENDERACTURL_SETSECURE2 = "V2URLTests_BaseURL_ApiRenderActurl_setSecure2";
    public final static String V2URLTESTS_BASEURL_APIRENDERACTURL_TOSTRING = "V2URLTests_BaseURL_ApiRenderActurl_toString";
    public final static String V2URLTESTS_BASEURL_APIRENDERACTURL_GETPARAMETERMAP1 = "V2URLTests_BaseURL_ApiRenderActurl_getParameterMap1";
@@ -1047,7 +1045,6 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
    public final static String V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERS9 = "V2URLTests_BaseURL_ApiRenderResurl_setParameters9";
    public final static String V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERS10 = "V2URLTests_BaseURL_ApiRenderResurl_setParameters10";
    public final static String V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERS12 = "V2URLTests_BaseURL_ApiRenderResurl_setParameters12";
-   public final static String V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERS13 = "V2URLTests_BaseURL_ApiRenderResurl_setParameters13";
    public final static String V2URLTESTS_BASEURL_APIRENDERRESURL_SETSECURE2 = "V2URLTests_BaseURL_ApiRenderResurl_setSecure2";
    public final static String V2URLTESTS_BASEURL_APIRENDERRESURL_TOSTRING = "V2URLTests_BaseURL_ApiRenderResurl_toString";
    public final static String V2URLTESTS_BASEURL_APIRENDERRESURL_GETPARAMETERMAP1 = "V2URLTests_BaseURL_ApiRenderResurl_getParameterMap1";
@@ -1086,12 +1083,15 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
    public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDPAGE = "V2URLTests_ResourceURL_ApiRenderResurl_fieldPAGE";
    public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDPORTLET = "V2URLTests_ResourceURL_ApiRenderResurl_fieldPORTLET";
    public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDSHARED = "V2URLTests_ResourceURL_ApiRenderResurl_fieldSHARED";
+   public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL8 = "V2URLTests_ResourceURL_ApiRenderResurl_resourceURL8";
+   public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL9 = "V2URLTests_ResourceURL_ApiRenderResurl_resourceURL9";
    public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETRESOURCEID = "V2URLTests_ResourceURL_ApiRenderResurl_setResourceID";
    public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_GETCACHEABILITY = "V2URLTests_ResourceURL_ApiRenderResurl_getCacheability";
    public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY1 = "V2URLTests_ResourceURL_ApiRenderResurl_setCacheability1";
    public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY2 = "V2URLTests_ResourceURL_ApiRenderResurl_setCacheability2";
    public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY3 = "V2URLTests_ResourceURL_ApiRenderResurl_setCacheability3";
    public final static String V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_CONFIGURATION = "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_configuration";
+   public final static String V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_PORTLETURLGENERATIONLISTENER6 = "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_portletURLGenerationListener6";
    public final static String V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL1 = "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL1";
    public final static String V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL2 = "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL2";
    public final static String V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL3 = "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL3";
@@ -2501,7 +2501,6 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERS9, "Method setParameters(java.util.Map): Throws IllegalArgumentException if the input map is null");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERS10, "Method setParameters(java.util.Map): Throws IllegalArgumentException if any key in the map is null");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERS12, "Method setParameters(java.util.Map): Throws IllegalArgumentException if the values array for any key is null ");
-      tcd.put(V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERS13, "Method setParameters(java.util.Map): Throws IllegalArgumentException if any element in the values array is null ");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRENURL_SETSECURE2, "Method setSecure(boolean): If the input parameter is true, the resulting URL uses a secure connection (HTTPS)");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRENURL_TOSTRING, "Method toString(): Returns a String containing the portlet URL representation to be included in the markup");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRENURL_GETPARAMETERMAP1, "Method getParameterMap(): Returns an java.util.Map&lt;java.lang.String,java.lang.String[]&gt; object for the parameter names and values if parameters are available");
@@ -2531,7 +2530,6 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS9, "Method setParameters(java.util.Map): Throws IllegalArgumentException if the input map is null");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS10, "Method setParameters(java.util.Map): Throws IllegalArgumentException if any key in the map is null");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS12, "Method setParameters(java.util.Map): Throws IllegalArgumentException if the values array for any key is null ");
-      tcd.put(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS13, "Method setParameters(java.util.Map): Throws IllegalArgumentException if any element in the values array is null ");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERACTURL_SETSECURE2, "Method setSecure(boolean): If the input parameter is true, the resulting URL uses a secure connection (HTTPS)");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERACTURL_TOSTRING, "Method toString(): Returns a String containing the portlet URL representation to be included in the markup");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERACTURL_GETPARAMETERMAP1, "Method getParameterMap(): Returns an java.util.Map&lt;java.lang.String,java.lang.String[]&gt; object for the parameter names and values if parameters are available");
@@ -2561,7 +2559,6 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERS9, "Method setParameters(java.util.Map): Throws IllegalArgumentException if the input map is null");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERS10, "Method setParameters(java.util.Map): Throws IllegalArgumentException if any key in the map is null");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERS12, "Method setParameters(java.util.Map): Throws IllegalArgumentException if the values array for any key is null ");
-      tcd.put(V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERS13, "Method setParameters(java.util.Map): Throws IllegalArgumentException if any element in the values array is null ");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRESURL_SETSECURE2, "Method setSecure(boolean): If the input parameter is true, the resulting URL uses a secure connection (HTTPS)");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRESURL_TOSTRING, "Method toString(): Returns a String containing the portlet URL representation to be included in the markup");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRESURL_GETPARAMETERMAP1, "Method getParameterMap(): Returns an java.util.Map&lt;java.lang.String,java.lang.String[]&gt; object for the parameter names and values if parameters are available");
@@ -2600,12 +2597,15 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDPAGE, "Has String field PAGE with value of \"cacheLevelPage\" ");
       tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDPORTLET, "Has String field PORTLET with value of \"cacheLevelPortlet\" ");
       tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDSHARED, "Has String field SHARED with value of \"javax.portlet.shared\" ");
+      tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL8, "When a resource URL is created, render parameters from the current request are automatically copied to the new resource URL");
+      tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL9, "When a resource URL is created, the automatically copied render parameters are hidden to the ResourceURL getParameter method");
       tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETRESOURCEID, "Method setResourceID(String): Sets the specified String as the portlet resource ID");
       tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_GETCACHEABILITY, "Method getCacheability(): Returns a String containing the cacheability level set on the resource URL");
       tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY1, "Method setCacheability(String): Sets the cacheability level for the resource URL");
       tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY2, "Method setCacheability(String): Throws IllegalArgumentException if the input parameter does not have a value of \"FULL\", \"PAGE\", or \"PORTLET\"");
       tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY3, "Method setCacheability(String): Throws IllegalStateException if the specified cacheability level is weaker than the cacheability level for the parent resource URL");
       tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_CONFIGURATION, "A PortletURLGenerationListener can be configured in the portlet deployment descriptor");
+      tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_PORTLETURLGENERATIONLISTENER6, "If more than one listener is registered the portlet container must chain the listeners in the order of how they appear in the deployment descriptor");
       tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL1, "Method filterActionURL(PortletURL): The filterActionURL(PortletURL): method is called before the toString() method is executed");
       tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL2, "Method filterActionURL(PortletURL): The filterActionURL(PortletURL): method is called before the write(Writer out) method is executed");
       tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL3, "Method filterActionURL(PortletURL): The filterActionURL(PortletURL): method is called before the write(Writer out, boolean escapeXML) method is executed");
@@ -2614,12 +2614,12 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRENURL_FILTERRENDERURL1, "Method filterRenderURL(PortletURL): The filterRenderURL(PortletURL): method is called before the toString() method is executed");
       tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRENURL_FILTERRENDERURL2, "Method filterRenderURL(PortletURL): The filterRenderURL(PortletURL): method is called before the write(Writer out) method is executed");
       tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRENURL_FILTERRENDERURL3, "Method filterRenderURL(PortletURL): The filterRenderURL(PortletURL): method is called before the write(Writer out, boolean escapeXML) method is executed");
-      tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRENURL_FILTERRENDERURL4, "Method filterRenderURL(PortletURL): The filterRenderURL method is passed the PortletURL object representing the action URL");
+      tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRENURL_FILTERRENDERURL4, "Method filterRenderURL(PortletURL): The filterRenderURL method is passed the PortletURL object representing the render URL");
       tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRENURL_FILTERRENDERURL5, "Method filterRenderURL(PortletURL): The input URL object can be modified by setting a parameter and the modified URL object is processed by the PortletURL toString or write method");
       tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL1, "Method filterResourceURL(ResourceURL): The filterResourceURL(ResourceURL): method is called before the toString() method is executed");
       tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL2, "Method filterResourceURL(ResourceURL): The filterResourceURL(ResourceURL): method is called before the write(Writer out) method is executed");
       tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL3, "Method filterResourceURL(ResourceURL): The filterResourceURL(ResourceURL): method is called before the write(Writer out, boolean escapeXML) method is executed");
-      tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL4, "Method filterResourceURL(ResourceURL): The filterResourceURL method is passed the ResourceURL object representing the action URL");
+      tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL4, "Method filterResourceURL(ResourceURL): The filterResourceURL method is passed the ResourceURL object representing the resource URL");
       tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL5, "Method filterResourceURL(ResourceURL): The input URL object can be modified by setting a parameter and the modified URL object is processed by the ResourceURL toString or write method");
       tcd.put(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL7, "Method filterResourceURL(ResourceURL): The input URL object can be modified by setting the resource ID and the modified URL object is processed by the ResourceURL toString or write method");
       tcd.put(V2EXCEPTIONTESTS_PORTLETMODEEXCEPTION_APIRENDER_HASGETMODE2, "Returns the PortletMode object causing this exception");

@@ -87,50 +87,50 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
       // evaluate results for test case V2URLTests_ResourceURL_ApiRenderResurl_setResourceID
       {
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
-         TestResult tr4 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETRESOURCEID);
+         TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETRESOURCEID);
          String tcval = portletReq.getParameter("tc");
          if (tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_setResourceID")) {
             String resid = portletReq.getResourceID();
             boolean ok = (resid.equals("TestResourceID"));
             if (!ok) {
-               tr4.appendTcDetail("ResourceID expected: \"TestResourceID\", actual: " + resid);
-            }
-            tr4.setTcSuccess(ok);
-            tr4.writeTo(writer);
-         }
-      }
-
-      // evaluate results for test case V2URLTests_ResourceURL_ApiRenderResurl_setCacheability1
-      {
-         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
-         TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY1);
-         String tcval = portletReq.getParameter("tc");
-         if (tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_setCacheability1")) {
-            String c = portletReq.getCacheability();
-            boolean ok = (c.equals(ResourceURL.PORTLET));
-            if (!ok) {
-               tr6.appendTcDetail("Cacheability expected: " + ResourceURL.PORTLET + ", actual: " + c);
+               tr6.appendTcDetail("ResourceID expected: \"TestResourceID\", actual: " + resid);
             }
             tr6.setTcSuccess(ok);
             tr6.writeTo(writer);
          }
       }
 
+      // evaluate results for test case V2URLTests_ResourceURL_ApiRenderResurl_setCacheability1
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr8 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY1);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_setCacheability1")) {
+            String c = portletReq.getCacheability();
+            boolean ok = (c.equals(ResourceURL.PORTLET));
+            if (!ok) {
+               tr8.appendTcDetail("Cacheability expected: " + ResourceURL.PORTLET + ", actual: " + c);
+            }
+            tr8.setTcSuccess(ok);
+            tr8.writeTo(writer);
+         }
+      }
+
       // evaluate results for test case V2URLTests_ResourceURL_ApiRenderResurl_setCacheability3
       {
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
-         TestResult tr8 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY3);
+         TestResult tr10 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY3);
          String tcval = portletReq.getParameter("tc");
          if (tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_setCacheability3")) {
             try {
                ResourceURL rurl = portletResp.createResourceURL();
                rurl.setCacheability(ResourceURL.PAGE);
             } catch (IllegalStateException ise) {
-               tr8.setTcSuccess(true);
+               tr10.setTcSuccess(true);
             } catch (Exception e) {
-               tr8.appendTcDetail(e.toString());
+               tr10.appendTcDetail(e.toString());
             }
-            tr8.writeTo(writer);
+            tr10.writeTo(writer);
          }
       }
 
@@ -186,10 +186,28 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
       } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
+      /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_resourceURL8        */
+      /* Details: "When a resource URL is created, render parameters from     */
+      /* the current request are automatically copied to the new resource     */
+      /* URL"                                                                 */
+      TestResult tr4 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL8);
+      /* TODO: implement test */
+      tr4.appendTcDetail("Not implemented.");
+      tr4.writeTo(writer);
+
+      /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_resourceURL9        */
+      /* Details: "When a resource URL is created, the automatically copied   */
+      /* render parameters are hidden to the ResourceURL getParameter         */
+      /* method"                                                              */
+      TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL9);
+      /* TODO: implement test */
+      tr5.appendTcDetail("Not implemented.");
+      tr5.writeTo(writer);
+
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_setResourceID       */
       /* Details: "Method setResourceID(String): Sets the specified String    */
       /* as the portlet resource ID"                                          */
-      TestResult tr4 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETRESOURCEID);
+      TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETRESOURCEID);
       try {
          ResourceURL turl = portletResp.createResourceURL();
          turl.setParameter("tc", "V2URLTests_ResourceURL_ApiRenderResurl_setResourceID");
@@ -199,30 +217,30 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          ResourceLink rl = new ResourceLink("V2URLTests_ResourceURL_ApiRenderResurl_setResourceID", turl);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr4.appendTcDetail(e.toString());
-         tr4.writeTo(writer);
+         tr6.appendTcDetail(e.toString());
+         tr6.writeTo(writer);
       }
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_getCacheability     */
       /* Details: "Method getCacheability(): Returns a String containing      */
       /* the cacheability level set on the resource URL"                      */
-      TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_GETCACHEABILITY);
+      TestResult tr7 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_GETCACHEABILITY);
       try {
          ResourceURL turl = portletResp.createResourceURL();
          turl.setParameter("tc", "V2URLTests_ResourceURL_ApiRenderResurl_getCacheability");
          String c = turl.getCacheability();
          boolean ok = ((c != null) && ResourceURL.PAGE.equals(c));
          if (!ok) {
-            tr5.appendTcDetail("Cacheability expected: " + ResourceURL.PAGE + ", actual: " + c);
+            tr7.appendTcDetail("Cacheability expected: " + ResourceURL.PAGE + ", actual: " + c);
          }
-         tr5.setTcSuccess(ok);
-      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
-      tr5.writeTo(writer);
+         tr7.setTcSuccess(ok);
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
+      tr7.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_setCacheability1    */
       /* Details: "Method setCacheability(String): Sets the cacheability      */
       /* level for the resource URL"                                          */
-      TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY1);
+      TestResult tr8 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY1);
       try {
          ResourceURL turl = portletResp.createResourceURL();
          turl.setParameter("tc", "V2URLTests_ResourceURL_ApiRenderResurl_setCacheability1");
@@ -232,33 +250,33 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          ResourceLink rl = new ResourceLink("V2URLTests_ResourceURL_ApiRenderResurl_setCacheability1", turl);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr6.appendTcDetail(e.toString());
-         tr6.writeTo(writer);
+         tr8.appendTcDetail(e.toString());
+         tr8.writeTo(writer);
       }
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_setCacheability2    */
       /* Details: "Method setCacheability(String): Throws                     */
       /* IllegalArgumentException if the input parameter does not have a      */
       /* value of \"FULL\", \"PAGE\", or \"PORTLET\""                         */
-      TestResult tr7 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY2);
+      TestResult tr9 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY2);
       try {
          ResourceURL turl = portletResp.createResourceURL();
          turl.setParameter("tc", "V2URLTests_ResourceURL_ApiRenderResurl_setCacheability2");
          try {
             turl.setCacheability("InvalidCacheability");;
          } catch (IllegalArgumentException iae) {
-            tr7.setTcSuccess(true);
+            tr9.setTcSuccess(true);
          } catch (Exception e) {
-            tr7.appendTcDetail(e.toString());
+            tr9.appendTcDetail(e.toString());
          }
-      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
-      tr7.writeTo(writer);
+      } catch(Exception e) {tr9.appendTcDetail(e.toString());}
+      tr9.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_setCacheability3    */
       /* Details: "Method setCacheability(String): Throws                     */
       /* IllegalStateException if the specified cacheability level is         */
       /* weaker than the cacheability level for the parent resource URL"      */
-      TestResult tr8 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY3);
+      TestResult tr10 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY3);
       try {
          ResourceURL turl = portletResp.createResourceURL();
          turl.setParameter("tc", "V2URLTests_ResourceURL_ApiRenderResurl_setCacheability3");
@@ -268,8 +286,8 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          ResourceLink rl = new ResourceLink("V2URLTests_ResourceURL_ApiRenderResurl_setCacheability3", turl);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr8.appendTcDetail(e.toString());
-         tr8.writeTo(writer);
+         tr10.appendTcDetail(e.toString());
+         tr10.writeTo(writer);
       }
 
    }
