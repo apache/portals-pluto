@@ -84,6 +84,18 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
 
       PrintWriter writer = portletResp.getWriter();
 
+      // evaluate results for test case V2URLTests_ResourceURL_ApiRenderResurl_resourceURL8
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr4 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL8);
+         String tcval = portletReq.getParameter("tc");
+         if (tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL8")) {
+            String val = portletReq.getParameter("parm1");
+            CompareUtils.stringsEqual("Request parameter name=parm1 ", val, " expected ", "V2URLTests_ResourceURL_ApiRenderResurl_resourceURL8", tr4);
+            tr4.writeTo(writer);
+         }
+      }
+
       // evaluate results for test case V2URLTests_ResourceURL_ApiRenderResurl_setResourceID
       {
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
@@ -191,17 +203,39 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
       /* the current request are automatically copied to the new resource     */
       /* URL"                                                                 */
       TestResult tr4 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL8);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
-      tr4.writeTo(writer);
+      try {
+         // set a parameter through the setup link
+         PortletURL rurl = portletResp.createRenderURL();
+         rurl.setParameter("parm1", "V2URLTests_ResourceURL_ApiRenderResurl_resourceURL8");
+         TestSetupLink tsl = new TestSetupLink("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL8", rurl);
+         tsl.writeTo(writer);
+
+         ResourceURL turl = portletResp.createResourceURL();
+         
+         // add the resource results fetcher to the output stream
+         ResourceLink rl = new ResourceLink("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL8", turl);
+         rl.writeResourceFetcher(writer);
+      } catch(Exception e) {
+         tr4.appendTcDetail(e.toString());
+         tr4.writeTo(writer);
+      }
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_resourceURL9        */
       /* Details: "When a resource URL is created, the automatically copied   */
       /* render parameters are hidden to the ResourceURL getParameter         */
       /* method"                                                              */
       TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL9);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      try {
+         // set a parameter through the setup link
+         PortletURL rurl = portletResp.createRenderURL();
+         rurl.setParameter("parm1", "V2URLTests_ResourceURL_ApiRenderResurl_resourceURL9");
+         TestSetupLink tsl = new TestSetupLink("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL9", rurl);
+         tsl.writeTo(writer);
+
+         ResourceURL turl = portletResp.createResourceURL();
+         String[] vals = (String[]) turl.getParameterMap().get("parm1");
+         CompareUtils.arraysEqual("Request parameter name=parm1 ", vals, " expected ", null, tr5);
+      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_setResourceID       */
