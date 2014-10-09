@@ -77,6 +77,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr0 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA1);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA1")) {
             String aval = portletReq.getParameter("parm1");
             String eval = "val1";
@@ -91,6 +92,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr1 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA4);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA4")) {
             String aval = portletReq.getParameter("parm1");
             String eval = "val1";
@@ -105,6 +107,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr2 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA6);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA6")) {
             String aval = portletReq.getParameter("parm1");
             String eval = "newVal";
@@ -119,6 +122,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr3 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA7);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA7")) {
             String aval = portletReq.getParameter("parm1");
             String eval = null;
@@ -133,6 +137,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB1);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB1")) {
             String[] aval = portletReq.getParameterValues("parm1");
             String[] eval = new String[]{"val1", "val2"};
@@ -147,6 +152,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB4);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB4")) {
             String[] aval = portletReq.getParameterValues("parm1");
             String[] eval = new String[]{"val1", "val2"};
@@ -161,6 +167,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr7 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB6);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB6")) {
             String[] aval = portletReq.getParameterValues("parm1");
             String[] eval = new String[]{"newVal"};
@@ -175,6 +182,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr8 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB7);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB7")) {
             String[] aval = portletReq.getParameterValues("parm1");
             String[] eval = null;
@@ -189,6 +197,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr10 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS1);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters1")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
@@ -205,6 +214,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr11 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS4);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters4")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
@@ -221,6 +231,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr12 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS6);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters6")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
@@ -237,6 +248,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr13 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS7);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters7")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
@@ -254,6 +266,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr14 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS8);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters8")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
@@ -270,6 +283,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr18 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETSECURE2);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setSecure2")) {
             String val = portletReq.getParameter("setSecure");
             boolean ok = (val != null);
@@ -288,6 +302,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr19 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_TOSTRING);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_toString")) {
             // If execution makes it to here, the test was successful
             tr19.setTcSuccess(true);
@@ -301,6 +316,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr23 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_WRITEA1);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_writeA1")) {
             // If execution makes it to here, the test was successful
             tr23.setTcSuccess(true);
@@ -314,6 +330,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr24 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_WRITEB1);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_writeB1")) {
             // If execution makes it to here, the test was successful
             tr24.setTcSuccess(true);
@@ -368,6 +385,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA1")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA1");
@@ -394,6 +412,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA4")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA4");
@@ -421,6 +440,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA6")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA6");
@@ -448,6 +468,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA7")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA7");
@@ -491,6 +512,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB1")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB1");
@@ -517,6 +539,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB4")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB4");
@@ -544,6 +567,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB6")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB6");
@@ -571,6 +595,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB7")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB7");
@@ -622,6 +647,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters1")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters1");
@@ -656,6 +682,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters4")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters4");
@@ -692,6 +719,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters6")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters6");
@@ -727,6 +755,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters7")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters7");
@@ -761,6 +790,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters8")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters8");
@@ -849,6 +879,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setSecure2")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setSecure2");
@@ -875,6 +906,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_toString")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_toString");
@@ -950,6 +982,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_writeA1")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_writeA1");
@@ -978,6 +1011,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_writeB1")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_writeB1");

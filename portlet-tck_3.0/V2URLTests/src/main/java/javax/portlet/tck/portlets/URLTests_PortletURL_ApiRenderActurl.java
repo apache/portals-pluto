@@ -77,6 +77,7 @@ public class URLTests_PortletURL_ApiRenderActurl implements Portlet, ResourceSer
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr0 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERACTURL_SETWINDOWSTATE1);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_PortletURL_ApiRenderActurl_setWindowState1")) {
             WindowState ws = portletReq.getWindowState();
             boolean ok = (ws.equals(WindowState.NORMAL));
@@ -95,6 +96,7 @@ public class URLTests_PortletURL_ApiRenderActurl implements Portlet, ResourceSer
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr2 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERACTURL_SETPORTLETMODE1);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_PortletURL_ApiRenderActurl_setPortletMode1")) {
             PortletMode pm = portletReq.getPortletMode();
             boolean ok = (pm.equals(PortletMode.VIEW));
@@ -113,6 +115,7 @@ public class URLTests_PortletURL_ApiRenderActurl implements Portlet, ResourceSer
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr9 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERACTURL_REMOVEPUBLICRENDERPARAMETER1);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_PortletURL_ApiRenderActurl_removePublicRenderParameter1")) {
             String val = portletReq.getParameter("tckPRP1");
             CompareUtils.stringsEqual("Request PRP name=tckPRP1 ", val, " expected ", null, tr9);
@@ -175,6 +178,7 @@ public class URLTests_PortletURL_ApiRenderActurl implements Portlet, ResourceSer
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURL_ApiRenderActurl_setWindowState1")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURL_ApiRenderActurl_setWindowState1");
@@ -226,6 +230,7 @@ public class URLTests_PortletURL_ApiRenderActurl implements Portlet, ResourceSer
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURL_ApiRenderActurl_setPortletMode1")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURL_ApiRenderActurl_setPortletMode1");
@@ -357,6 +362,7 @@ public class URLTests_PortletURL_ApiRenderActurl implements Portlet, ResourceSer
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURL_ApiRenderActurl_removePublicRenderParameter1")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURL_ApiRenderActurl_removePublicRenderParameter1");

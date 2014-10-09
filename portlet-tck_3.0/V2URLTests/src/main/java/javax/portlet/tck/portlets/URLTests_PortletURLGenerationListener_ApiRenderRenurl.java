@@ -118,6 +118,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL1")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
@@ -148,6 +149,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL2")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
@@ -178,6 +180,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL3")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
@@ -206,6 +209,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL4")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
@@ -234,6 +238,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL5")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");

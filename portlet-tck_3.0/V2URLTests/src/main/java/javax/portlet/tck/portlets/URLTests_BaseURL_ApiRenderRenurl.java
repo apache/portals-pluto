@@ -118,6 +118,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameterA1")) {
             String aval = portletReq.getParameter("parm1");
             String eval = "val1";
@@ -141,6 +142,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameterA2")) {
             String aval = portletReq.getParameter("parm1");
             String eval = "val1";
@@ -164,6 +166,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameterA3")) {
             String aval = portletReq.getParameter("tckPRP1");
             String eval = "V2URLTests_BaseURL_ApiRenderRenurl_setParameterA3";
@@ -188,6 +191,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameterA6")) {
             String aval = portletReq.getParameter("parm1");
             String eval = "newVal";
@@ -212,6 +216,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameterA7")) {
             String aval = portletReq.getParameter("parm1");
             String eval = null;
@@ -252,6 +257,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameterB1")) {
             String[] aval = portletReq.getParameterValues("parm1");
             String[] eval = new String[]{"val1", "val2"};
@@ -275,6 +281,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameterB2")) {
             String[] aval = portletReq.getParameterValues("parm1");
             String[] eval = new String[]{"val1", "val2"};
@@ -298,6 +305,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameterB3")) {
             String[] aval = portletReq.getParameterValues("tckPRP1");
             String[] eval = new String[]{"val1", "val2"};
@@ -322,6 +330,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameterB6")) {
             String[] aval = portletReq.getParameterValues("parm1");
             String[] eval = new String[]{"newVal"};
@@ -346,6 +355,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameterB7")) {
             String[] aval = portletReq.getParameterValues("parm1");
             String[] eval = null;
@@ -394,6 +404,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameters1")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
@@ -422,6 +433,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameters2")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
@@ -455,6 +467,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameters3")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
@@ -490,6 +503,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameters6")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
@@ -524,6 +538,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameters7")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
@@ -558,6 +573,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameters8")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
@@ -645,6 +661,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_setSecure2")) {
             String val = portletReq.getParameter("setSecure");
             boolean ok = (val != null);
@@ -672,6 +689,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_toString")) {
             // If execution makes it to here, the test was successful
             tr22.setTcSuccess(true);
@@ -743,6 +761,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_writeA1")) {
             // If execution makes it to here, the test was successful
             tr26.setTcSuccess(true);
@@ -767,6 +786,7 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet, ResourceServin
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_BaseURL_ApiRenderRenurl_writeB1")) {
             // If execution makes it to here, the test was successful
             tr27.setTcSuccess(true);

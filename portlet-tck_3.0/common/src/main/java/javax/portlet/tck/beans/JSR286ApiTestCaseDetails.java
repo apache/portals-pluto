@@ -1083,6 +1083,10 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
    public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDPAGE = "V2URLTests_ResourceURL_ApiRenderResurl_fieldPAGE";
    public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDPORTLET = "V2URLTests_ResourceURL_ApiRenderResurl_fieldPORTLET";
    public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDSHARED = "V2URLTests_ResourceURL_ApiRenderResurl_fieldSHARED";
+   public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL4 = "V2URLTests_ResourceURL_ApiRenderResurl_resourceURL4";
+   public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL5 = "V2URLTests_ResourceURL_ApiRenderResurl_resourceURL5";
+   public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL6 = "V2URLTests_ResourceURL_ApiRenderResurl_resourceURL6";
+   public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL7 = "V2URLTests_ResourceURL_ApiRenderResurl_resourceURL7";
    public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL8 = "V2URLTests_ResourceURL_ApiRenderResurl_resourceURL8";
    public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL9 = "V2URLTests_ResourceURL_ApiRenderResurl_resourceURL9";
    public final static String V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETRESOURCEID = "V2URLTests_ResourceURL_ApiRenderResurl_setResourceID";
@@ -2597,8 +2601,12 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDPAGE, "Has String field PAGE with value of \"cacheLevelPage\" ");
       tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDPORTLET, "Has String field PORTLET with value of \"cacheLevelPortlet\" ");
       tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDSHARED, "Has String field SHARED with value of \"javax.portlet.shared\" ");
-      tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL8, "When a resource URL is created, render parameters from the current request are automatically copied to the new resource URL");
-      tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL9, "When a resource URL is created, the automatically copied render parameters are hidden to the ResourceURL getParameter method");
+      tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL4, "A resource parameter with the same name as a public render parameter appears before the public render parameter in the values array");
+      tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL5, "A resource parameter with the same name as a private render parameter appears before the private render parameter in the values array");
+      tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL6, "When a resource URL is created, public render parameters from the current request are automatically copied to the new resource URL");
+      tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL7, "When a resource URL is created, the automatically copied public render parameters are hidden to the ResourceURL getParameter method");
+      tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL8, "When a resource URL is created, private render parameters from the current request are automatically copied to the new resource URL");
+      tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL9, "When a resource URL is created, the automatically copied private render parameters are hidden to the ResourceURL getParameter method");
       tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETRESOURCEID, "Method setResourceID(String): Sets the specified String as the portlet resource ID");
       tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_GETCACHEABILITY, "Method getCacheability(): Returns a String containing the cacheability level set on the resource URL");
       tcd.put(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY1, "Method setCacheability(String): Sets the cacheability level for the resource URL");

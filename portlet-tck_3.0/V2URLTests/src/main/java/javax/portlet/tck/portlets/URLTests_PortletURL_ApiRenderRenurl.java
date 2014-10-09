@@ -126,6 +126,7 @@ public class URLTests_PortletURL_ApiRenderRenurl implements Portlet, ResourceSer
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURL_ApiRenderRenurl_setWindowState1")) {
             WindowState ws = portletReq.getWindowState();
             boolean ok = (ws.equals(WindowState.NORMAL));
@@ -178,6 +179,7 @@ public class URLTests_PortletURL_ApiRenderRenurl implements Portlet, ResourceSer
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURL_ApiRenderRenurl_setPortletMode1")) {
             PortletMode pm = portletReq.getPortletMode();
             boolean ok = (pm.equals(PortletMode.VIEW));
@@ -310,6 +312,7 @@ public class URLTests_PortletURL_ApiRenderRenurl implements Portlet, ResourceSer
          
          // evaluate results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURL_ApiRenderRenurl_removePublicRenderParameter1")) {
             String val = portletReq.getParameter("tckPRP1");
             CompareUtils.stringsEqual("Request PRP name=tckPRP1 ", val, " expected ", null, tr9);

@@ -77,6 +77,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr0 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_CONFIGURATION);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_configuration")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
@@ -95,6 +96,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr1 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_PORTLETURLGENERATIONLISTENER6);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_portletURLGenerationListener6")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL2");
@@ -113,6 +115,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr2 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL1);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL1")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
@@ -131,6 +134,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr3 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL2);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL2")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
@@ -149,6 +153,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr4 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL3);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL3")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
@@ -167,6 +172,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL4);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL4")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
@@ -185,6 +191,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL5);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't defined (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL5")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
@@ -243,6 +250,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_configuration")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_configuration");
@@ -270,6 +278,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_portletURLGenerationListener6")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_portletURLGenerationListener6");
@@ -297,6 +306,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL1")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL1");
@@ -326,6 +336,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL2")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL2");
@@ -355,6 +366,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL3")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL3");
@@ -382,6 +394,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL4")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL4");
@@ -409,6 +422,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL5")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL5");

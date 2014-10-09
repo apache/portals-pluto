@@ -89,6 +89,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr0 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL1);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL1")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
@@ -106,6 +107,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr1 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL2);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL2")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
@@ -123,6 +125,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr2 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL3);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL3")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
@@ -140,6 +143,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr3 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL4);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL4")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
@@ -157,6 +161,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr4 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL5);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL5")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
@@ -174,6 +179,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
          TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL7);
          String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
          if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL7")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
