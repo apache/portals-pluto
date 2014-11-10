@@ -19,6 +19,7 @@ limitations under the License.
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://portals.apache.org/pluto" prefix="pluto" %>
+<%@ page import="javax.portlet.*" %>
 <% pageContext.setAttribute("now", new java.util.Date()); %>
 
 <!--
@@ -37,9 +38,49 @@ group (the left column) displays portlets with odd IDs, while the second group
         @import "<c:out value="${pageContext.request.contextPath}"/>/portlet-spec-1.0.css";
         @import "<c:out value="${pageContext.request.contextPath}"/>/portlet-spec-2.0.css";
     </style>
-    <script type="text/javascript"
-            src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js">
+    <script type="text/javascript">
+       /**
+        * Initialization code for portlet hub
+        */
+       var portlet = portlet || {};
+       portlet.impl = portlet.impl || {};
+       portlet.impl.getInitData = function () {
+          return {       
+             <c:forEach var="pid" items="${currentPage.portletIds}">
+                <%
+                   StringBuffer ns = new StringBuffer("Pluto_");
+                   String pid = (String)pageContext.getAttribute("pid");
+                   for (int ii=0; ii < pid.length(); ii++) {
+                      if (Character.isJavaIdentifierPart(pid.charAt(ii))) {
+                         ns.append(pid.charAt(ii));
+                      } else {
+                         ns.append("_");
+                      }
+                   }
+                   ns.append("_");
+                %>
+                '<%= ns.toString() %>' : {
+                   'state' : {
+                      'parameters' : {
+                      }, 
+                      'portletMode' : 'VIEW', 
+                      'windowState' : 'NORMAL'
+                   },
+                   'pubParms' : ['imgName', 'color'],
+                   'allowedPM' : ['VIEW'],
+                   'allowedWS' : ['NORMAL'],
+                   'renderData' : {
+                      'renderData' : null,
+                      'mimeType' : "text/plain"
+                   }
+                },
+             </c:forEach>
+          }
+       }
     </script>
+    <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js"></script>
+    <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/portletHubImpl.js"></script>
+    <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/portlet.js"></script>
 </head>
 
 <body>
