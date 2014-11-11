@@ -439,6 +439,51 @@ var portlet = portlet || {};
    },
    
    
+   // Constants used for URL Encoding/Decoding (copied from Pluto impl code)  ----------
+
+   PREFIX = "__",
+   DELIM = "_",
+   PORTLET_ID = "pd",
+   ACTION = "ac",
+   RESOURCE = "rs",
+   RESOURCE_ID = "ri",
+   CACHE_LEVEL = "cl",
+   RENDER_PARAM = "rp",
+   PRIVATE_RENDER_PARAM = "pr",
+   PUBLIC_RENDER_PARAM = "sp",
+   WINDOW_STATE = "ws",
+   PORTLET_MODE = "pm",
+   VALUE_DELIM = "0x0",
+   
+   
+   /**
+    * Helper for generating parameter strings for the URL
+    */
+   genParmString = function (pid, name, type) {
+      var vals, jj, sep, str = "", wid = "";
+      vals = pageState[pid].state.parameters[name];
+      
+      // If encoding a render parameter, insert the pid in Pluto internal form 
+      // as opposed to namespace form -
+      
+      if (type === RENDER_PARAM) {
+         wid = plutoEncode(pageState[pid].urlpid)
+      }
+      
+      // If values are present, encode the multivalued parameter string
+      
+      if (vals) {
+         sep = "";
+         str += "/" + PREFIX + type + wid + DELIM + encodeURIComponent(name) + "/";
+         for (jj=0; jj < vals.length; jj++) {
+            str += sep + encodeURIComponent(vals[jj]);
+            sep = VALUE_DELIM;
+         }
+      }
+      return str;
+   },
+   
+   
    /**
     * Returns a URL of the specified type.
     * 
@@ -453,23 +498,7 @@ var portlet = portlet || {};
    getUrl = function (type, pid, parms, cache) {
    
       var url = portlet.impl.getUrlBase(), ca = 'cacheLevelPage', parm, 
-          sep = "", name, names, val, vals, ii, jj, str, id, ids,
-      
-      // Constants used for Encoding/Decoding (copied from Pluto impl code)  ----------
-
-      PREFIX = "__",
-      DELIM = "_",
-      PORTLET_ID = "pd",
-      ACTION = "ac",
-      RESOURCE = "rs",
-      RESOURCE_ID = "ri",
-      CACHE_LEVEL = "cl",
-      RENDER_PARAM = "rp",
-      PRIVATE_RENDER_PARAM = "pr",
-      PUBLIC_RENDER_PARAM = "sp",
-      WINDOW_STATE = "ws",
-      PORTLET_MODE = "pm",
-      VALUE_DELIM = "0x0";
+          sep = "", name, names, val, vals, ii, jj, str, id, ids;
 
       if (type === "RESOURCE") {
          
@@ -483,10 +512,10 @@ var portlet = portlet || {};
          url += "/" + PREFIX + CACHE_LEVEL + plutoEncode(ca);
          
          // Put the private & public parameters on the URL if cacheability != FULL
-         if (cache !== "cacheLevelFull") {
+         if (ca !== "cacheLevelFull") {
             
             // If cacheability = PAGE, add the state for the non-target portlets
-            if (cache === "cacheLevelPage") {
+            if (ca === "cacheLevelPage") {
                
                ids = getIds();
                for (ii = 0; ii < ids.length; ii++) {
@@ -495,18 +524,9 @@ var portlet = portlet || {};
                      str = "";
                      names = pageState[id].state.parameters;
                      for (name in names) {
+                        // Public render parameters are encoded separately
                         if (names.hasOwnProperty(name) && !isPRP(id, name)) {
-                           vals = pageState[id].state.parameters[name];
-                           // might not be set yet ...
-                           if (vals) {
-                              sep = "";
-                              str += "/" + PREFIX + RENDER_PARAM + plutoEncode(pageState[id].urlpid)
-                                     + DELIM + encodeURIComponent(name) + "/";
-                              for (jj=0; jj < vals.length; jj++) {
-                                 str += sep + encodeURIComponent(vals[jj]);
-                                 sep = VALUE_DELIM;
-                              }
-                           }
+                           str += genParmString(id, name, RENDER_PARAM);
                         }
                      }
                      url += str;
@@ -520,17 +540,9 @@ var portlet = portlet || {};
             str = "";
             names = pageState[pid].state.parameters;
             for (name in names) {
+               // Public render parameters are encoded separately
                if (names.hasOwnProperty(name) && !isPRP(pid, name)) {
-                  vals = pageState[pid].state.parameters[name];
-                  // might not be set yet ...
-                  if (vals) {
-                     sep = "";
-                     str += "/" + PREFIX + PRIVATE_RENDER_PARAM + DELIM + encodeURIComponent(name) + "/";
-                     for (jj=0; jj < vals.length; jj++) {
-                        str += sep + encodeURIComponent(vals[jj]);
-                        sep = VALUE_DELIM;
-                     }
-                  }
+                  str += genParmString(pid, name, PRIVATE_RENDER_PARAM);
                }
             }
             url += str;
@@ -540,16 +552,7 @@ var portlet = portlet || {};
             names = pageState[pid].pubParms;
             for (ii=0; ii < names.length; ii++) {
                name = names[ii];
-               vals = pageState[pid].state.parameters[name];
-               // might not be set yet ...
-               if (vals) {
-                  sep = "";
-                  str += "/" + PREFIX + PUBLIC_RENDER_PARAM + DELIM + encodeURIComponent(name) + "/";
-                  for (jj=0; jj < vals.length; jj++) {
-                     str += sep + encodeURIComponent(vals[jj]);
-                     sep = VALUE_DELIM;
-                  }
-               }
+               str += genParmString(pid, name, PUBLIC_RENDER_PARAM);
             }
             url += str;
 
