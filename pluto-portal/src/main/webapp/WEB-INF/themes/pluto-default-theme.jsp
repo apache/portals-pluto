@@ -16,10 +16,11 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
+<%@page import="org.apache.pluto.driver.core.PortalRequestContext"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://portals.apache.org/pluto" prefix="pluto" %>
-<%@ page import="javax.portlet.*" %>
+<%@ page import="java.util.*,javax.portlet.*,org.apache.pluto.driver.url.*" %>
 <% pageContext.setAttribute("now", new java.util.Date()); %>
 
 <!--
@@ -46,6 +47,19 @@ group (the left column) displays portlets with odd IDs, while the second group
        portlet.impl = portlet.impl || {};
        portlet.impl.getInitData = function () {
           return {       
+             <%
+                PortalRequestContext prc = PortalRequestContext.getContext(request);
+                PortalURL pu = prc.getRequestedPortalURL(); 
+                Collection<PortalURLParameter> pups = pu.getParameters();
+                // on the URL at least, prps are not differentiated by portlet ID
+                Map<String, String[]> prps = pu.getPublicParameters();
+                StringBuffer prpnames = new StringBuffer();
+                String c0 = "";
+                for (String prp : prps.keySet()) {
+                   prpnames.append(c0 + "'" + prp + "'");
+                   c0 = ", ";
+                }
+             %>
              <c:forEach var="pid" items="${currentPage.portletIds}">
                 <%
                    StringBuffer ns = new StringBuffer("Pluto_");
@@ -58,24 +72,68 @@ group (the left column) displays portlets with odd IDs, while the second group
                       }
                    }
                    ns.append("_");
+                   
+                   String pm = pu.getPortletMode(pid).toString();
+                   String ws = pu.getWindowState(pid).toString();
                 %>
-                '<%= ns.toString() %>' : {
+                '<%=ns%>' : {
                    'state' : {
                       'parameters' : {
+                      <%
+                         String c1 = "";
+                         for (PortalURLParameter pup : pups){
+                            if (pup.getWindowId().equals(pid)){
+                               out.write(c1 + "   '" + pup.getName() + "' : [");
+                               String c2 = "";
+                               for (String val : pup.getValues()) {
+                                  out.write(c2 + " '" + val + "'");
+                                  c2 = ", ";
+                               }
+                               out.write("]");
+                               c1 = ",\n                      ";
+                            }
+                         }
+                         // this is a hack, but just add all public parms for all portlets on page
+                         for (String prp : prps.keySet()) {
+                            out.write(c1 + "   '" + prp + "' : [");
+                            String c2 = "";
+                            for (String val : (String[])prps.get(prp)) {
+                               out.write(c2 + " '" + val + "'");
+                               c2 = ",";
+                            }
+                            out.write("]");
+                            c1 = ",\n                      ";
+                            
+                         }
+                      %>
                       }, 
-                      'portletMode' : 'VIEW', 
-                      'windowState' : 'NORMAL'
+                      'portletMode' : '<%=pm%>', 
+                      'windowState' : '<%=ws%>'
                    },
+                   // 'pubParms' : [<%=prpnames.toString()%>],
                    'pubParms' : ['imgName', 'color'],
-                   'allowedPM' : ['VIEW'],
-                   'allowedWS' : ['NORMAL'],
+                   'allowedPM' : ['view'],
+                   'allowedWS' : ['normal'],
                    'renderData' : {
                       'renderData' : null,
                       'mimeType' : "text/plain"
-                   }
+                   },
+                   'urlpid' : '<%=pid%>'
                 },
              </c:forEach>
           }
+       }
+       <%
+          StringBuffer ub = new StringBuffer();
+          //ub.append(request.getScheme()).append("://").append(request.getServerName());
+          //ub.append(request.getServerPort());
+          ub.append(pu.getServletPath().startsWith("/")?"":"/")
+            .append(pu.getServletPath())
+            .append(pu.getRenderPath());
+          String urlBase = response.encodeURL(ub.toString());
+       %>
+       portlet.impl.getUrlBase = function () {
+          return '<%=urlBase%>';
        }
     </script>
     <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js"></script>

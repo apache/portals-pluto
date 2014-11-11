@@ -178,6 +178,20 @@ var portlet = portlet || {};
    getPRPNames = function (pid) {
       return pageState[pid].pubParms;
    },
+   
+   /**
+    * function for checking if the parameter is private
+    */
+   isPRP = function (pid, name) {
+      var ii, result = false;
+      for (ii = 0; ii < pageState[pid].pubParms.length; ii++) {
+         if (name === pageState[pid].pubParms[ii]) {
+            result = true;
+         }
+      }
+      return result;
+   },
+
 
    /**
     * Gets the updated public parameters for the given portlet
@@ -393,6 +407,37 @@ var portlet = portlet || {};
 
    },
    
+   /**
+    * Function to encode url tokens as Pluto likes it
+    */
+   plutoEncode = function (istr) {
+      var ENCODINGS = {
+            "_" :  "0x1",
+            "." :  "0x2",
+            "/" :  "0x3",
+            "\r" : "0x4",
+            "\n" : "0x5",
+            "<" :  "0x6",
+            ">" :  "0x7",
+            " " :  "0x8",
+            "#" :  "0x9",
+            "?" :  "0xa",
+            "\\" : "0xb",
+            "%" :  "0xc",
+            "|" :  "%7C"
+                      }, ii, ostr = "";
+      
+      for (ii=0; ii < istr.length; ii++) {
+         if (ENCODINGS[istr.charAt(ii)]) {
+            ostr += ENCODINGS[istr.charAt(ii)];
+         } else {
+            ostr += istr.charAt(ii);
+         }
+      }
+
+      return ostr;
+   },
+   
    
    /**
     * Returns a URL of the specified type.
@@ -407,92 +452,129 @@ var portlet = portlet || {};
     */
    getUrl = function (type, pid, parms, cache) {
    
-      var url = "http://www.dummyportal.com/some/context/";
-          var qparms = [], rparms, qp, state, tpid, val, pids, ii, jj;
-          
-      // for a mockup, should be good enough ...
-      // optimized for easy parsing by the test code. 
-      // see "portlet.test" below.
+      var url = portlet.impl.getUrlBase(), ca = 'cacheLevelPage', parm, 
+          sep = "", name, names, val, vals, ii, jj, str, id, ids,
       
-      // This is how it should look:
-      //  http://www.dummyportal.com/some/context/PortletA/ACTION/PAGE/?&rp1=resVal&RENDERPARMS
-      //  &~~~&PortletA&mode=VIEW&ws=NORMAL&parm1=Fred&parm2=Wilma&parm2=Pebbles&parm3=Barney&parm3=Betty&parm3=Bam%20Bam
-      //  &~~~&PortletB&mode=VIEW&ws=NORMAL&parm1=val1&pubparm1=pubval1&parm2=val2&parm2=val3
-      //  &~~~&PortletC&mode=VIEW&ws=NORMAL&parm1=val1&pubparm1=pubval1&pubparm2=pubval2&parm2=val2&parm2=val3
-      //  &~~~&PortletD&mode=VIEW&ws=NORMAL&pubparm1=private_val1&pubparm2=pubval2&parm2=val2&parm2=val3
-      //  &~~~&PortletE&mode=VIEW&ws=NORMAL&parm1=val1&parm2=val2&parm2=val3&pubparm1=pubval1&pubparm2=pubval2
-      //  &~~~&PortletF&mode=VIEW&ws=NORMAL&~~~
-      
-      url += pid + "/" + type + "/"; 
-      url += (((cache===undefined)||(cache===null))?"cacheLevelPage":cache) + "/?";
-          
-      // put the additional parameters on the URL
-      if (parms !== null) {
-         for (qp in parms) {
-            for (var ii=0; ii<parms[qp].length; ii++) {
-               val = (parms[qp][ii] === null) ? "" : "=" + encodeURIComponent(parms[qp][ii]);
-               qparms.push(encodeURIComponent(qp) + val);
-            }
+      // Constants used for Encoding/Decoding (copied from Pluto impl code)  ----------
+
+      PREFIX = "__",
+      DELIM = "_",
+      PORTLET_ID = "pd",
+      ACTION = "ac",
+      RESOURCE = "rs",
+      RESOURCE_ID = "ri",
+      CACHE_LEVEL = "cl",
+      RENDER_PARAM = "rp",
+      PRIVATE_RENDER_PARAM = "pr",
+      PUBLIC_RENDER_PARAM = "sp",
+      WINDOW_STATE = "ws",
+      PORTLET_MODE = "pm",
+      VALUE_DELIM = "0x0";
+
+      if (type === "RESOURCE") {
+         
+         // Add the resource window
+         url += "/" + PREFIX + RESOURCE + plutoEncode(pageState[pid].urlpid);
+         
+         // Add cacheability
+         if (cache) {
+            ca = cache;
          }
-      }
-   
-      qparms.push("RENDERPARMS")
-      qparms.push("~~~")
-   
-      // Don't put any render parameters on it cache=cacheLevelFull
-      if ((type !== "RESOURCE") || 
-          ((type === "RESOURCE") && (cache !== "cacheLevelFull"))) {
+         url += "/" + PREFIX + CACHE_LEVEL + plutoEncode(ca);
          
-         pids = getIds();
-         jj = pids.length;
-         while ((jj = jj - 1) >= 0) {
-            tpid = pids[jj];
+         // Put the private & public parameters on the URL if cacheability != FULL
+         if (cache !== "cacheLevelFull") {
             
-            // If cache=cacheLevelPortlet, only put on the parms for that portlet
-            if ((type === "RESOURCE") && (cache === "cacheLevelPortlet") && (pid !== tpid)) {
-               continue;
+            // If cacheability = PAGE, add the state for the non-target portlets
+            if (cache === "cacheLevelPage") {
+               
+               ids = getIds();
+               for (ii = 0; ii < ids.length; ii++) {
+                  id = ids[ii];
+                  if (id !== pid) {  // only for non-target portlets
+                     str = "";
+                     names = pageState[id].state.parameters;
+                     for (name in names) {
+                        if (names.hasOwnProperty(name) && !isPRP(id, name)) {
+                           vals = pageState[id].state.parameters[name];
+                           // might not be set yet ...
+                           if (vals) {
+                              sep = "";
+                              str += "/" + PREFIX + RENDER_PARAM + plutoEncode(pageState[id].urlpid)
+                                     + DELIM + encodeURIComponent(name) + "/";
+                              for (jj=0; jj < vals.length; jj++) {
+                                 str += sep + encodeURIComponent(vals[jj]);
+                                 sep = VALUE_DELIM;
+                              }
+                           }
+                        }
+                     }
+                     url += str;
+                  }
+               }
+               
             }
             
-            // put the portlet state parameters on the URL
-            state = getState(tpid);
+            // add the private parameters for the target portlet
             
-            qparms.push(encodeURIComponent(tpid));
-            qparms.push("mode=" + state.portletMode);
-            qparms.push("ws=" + state.windowState);
-         
-            rparms = state.parameters;
-            for (qp in rparms) {
-               for (ii=0; ii<rparms[qp].length; ii++) {
-                  val = (rparms[qp][ii] === null) ? "" : "=" + encodeURIComponent(rparms[qp][ii]);
-                  qparms.push(encodeURIComponent(qp) + val);
+            str = "";
+            names = pageState[pid].state.parameters;
+            for (name in names) {
+               if (names.hasOwnProperty(name) && !isPRP(pid, name)) {
+                  vals = pageState[pid].state.parameters[name];
+                  // might not be set yet ...
+                  if (vals) {
+                     sep = "";
+                     str += "/" + PREFIX + PRIVATE_RENDER_PARAM + DELIM + encodeURIComponent(name) + "/";
+                     for (jj=0; jj < vals.length; jj++) {
+                        str += sep + encodeURIComponent(vals[jj]);
+                        sep = VALUE_DELIM;
+                     }
+                  }
                }
             }
-            qparms.push("~~~");
+            url += str;
             
+            // Add the public render parameters
+            str = "";
+            names = pageState[pid].pubParms;
+            for (ii=0; ii < names.length; ii++) {
+               name = names[ii];
+               vals = pageState[pid].state.parameters[name];
+               // might not be set yet ...
+               if (vals) {
+                  sep = "";
+                  str += "/" + PREFIX + PUBLIC_RENDER_PARAM + DELIM + encodeURIComponent(name) + "/";
+                  for (jj=0; jj < vals.length; jj++) {
+                     str += sep + encodeURIComponent(vals[jj]);
+                     sep = VALUE_DELIM;
+                  }
+               }
+            }
+            url += str;
+
          }
-      }
-      
-      // put on the query parms
-      while (qparms.length > 0) {
-         url += "&" + qparms.shift();
+
+         // Encode resource parameters as query string
+         if (parms) {
+            str = "?"; sep = "";
+            for (parm in parms) {
+               if (parms.hasOwnProperty(parm)) {
+                  vals = parms[parm];
+                  for (ii=0; ii < vals.length; ii++) {
+                     str += sep + encodeURIComponent(parm) + "=" + encodeURIComponent(vals[ii]);
+                     sep = "&";
+                  }
+               }
+            }
+            url += str;
+         }
+         
       }
       
       // Use Promise to allow for potential server communication - 
       return new Promise(function (resolve, reject) {
-         var simval = '';
-         if (pid === 'SimulateCommError' && (parms)) {
-            simval = parms.SimulateError;
-            if (simval) {
-               simval = simval[0];
-            }
-         }
-            
-         // reject promise of an error is to be simulated
-         if (simval === 'reject') {
-            reject(new Error("Simulated error occurred when getting a URL!"));
-         } else {
-            resolve(url);
-         }
+         resolve(url);
       });
    },
    
