@@ -454,7 +454,10 @@ var portlet = portlet || {};
    WINDOW_STATE = "ws",
    PORTLET_MODE = "pm",
    VALUE_DELIM = "0x0",
-   
+
+   AJAX_ACTION = "aa",              // new for portlet spec 3
+   PARTIAL_ACTION = "pa",           // new for portlet spec 3
+
    
    /**
     * Helper for generating parameter strings for the URL
@@ -485,6 +488,21 @@ var portlet = portlet || {};
    
    
    /**
+    * Helper for generating portlet mode & window state strings for the URL
+    */
+   genPMWSString = function (pid) {
+      var pm = pageState[pid].state.portletMode, 
+          ws = pageState[pid].state.windowState, 
+          wid = plutoEncode(pageState[pid].urlpid), str = "";
+
+      str += "/" + PREFIX + PORTLET_MODE + wid + DELIM + encodeURIComponent(pm);
+      str += "/" + PREFIX + WINDOW_STATE + wid + DELIM + encodeURIComponent(ws);
+
+      return str;
+   },
+   
+   
+   /**
     * Returns a URL of the specified type.
     * 
     * @param   {string}    type     The URL type
@@ -500,81 +518,90 @@ var portlet = portlet || {};
       var url = portlet.impl.getUrlBase(), ca = 'cacheLevelPage', parm, 
           sep = "", name, names, val, vals, ii, jj, str, id, ids;
 
+      // First add the appropriate window identifier according to URL type.
+      // Note that no special window ID is added to a RENDER URL. 
+      
       if (type === "RESOURCE") {
-         
-         // Add the resource window
+         // If generating resource URL, add resource window & cacheability
          url += "/" + PREFIX + RESOURCE + plutoEncode(pageState[pid].urlpid);
-         
-         // Add cacheability
          if (cache) {
             ca = cache;
          }
          url += "/" + PREFIX + CACHE_LEVEL + plutoEncode(ca);
-         
-         // Put the private & public parameters on the URL if cacheability != FULL
-         if (ca !== "cacheLevelFull") {
-            
-            // If cacheability = PAGE, add the state for the non-target portlets
-            if (ca === "cacheLevelPage") {
-               
-               ids = getIds();
-               for (ii = 0; ii < ids.length; ii++) {
-                  id = ids[ii];
-                  if (id !== pid) {  // only for non-target portlets
-                     str = "";
-                     names = pageState[id].state.parameters;
-                     for (name in names) {
-                        // Public render parameters are encoded separately
-                        if (names.hasOwnProperty(name) && !isPRP(id, name)) {
-                           str += genParmString(id, name, RENDER_PARAM);
-                        }
-                     }
-                     url += str;
-                  }
-               }
-               
-            }
-            
-            // add the private parameters for the target portlet
-            
-            str = "";
-            names = pageState[pid].state.parameters;
-            for (name in names) {
-               // Public render parameters are encoded separately
-               if (names.hasOwnProperty(name) && !isPRP(pid, name)) {
-                  str += genParmString(pid, name, PRIVATE_RENDER_PARAM);
-               }
-            }
-            url += str;
-            
-            // Add the public render parameters
-            str = "";
-            names = pageState[pid].pubParms;
-            for (ii=0; ii < names.length; ii++) {
-               name = names[ii];
-               str += genParmString(pid, name, PUBLIC_RENDER_PARAM);
-            }
-            url += str;
-
-         }
-
-         // Encode resource parameters as query string
-         if (parms) {
-            str = "?"; sep = "";
-            for (parm in parms) {
-               if (parms.hasOwnProperty(parm)) {
-                  vals = parms[parm];
-                  for (ii=0; ii < vals.length; ii++) {
-                     str += sep + encodeURIComponent(parm) + "=" + encodeURIComponent(vals[ii]);
-                     sep = "&";
-                  }
-               }
-            }
-            url += str;
-         }
-         
+      } else if (type === "ACTION") {
+         // Add Ajax Action window
+         url += "/" + PREFIX + AJAX_ACTION + plutoEncode(pageState[pid].urlpid);
+      } else if (type === "PARTIAL_ACTION") {
+         // Add Partial Action window
+         url += "/" + PREFIX + PARTIAL_ACTION + plutoEncode(pageState[pid].urlpid);
       }
       
+      // Now add the state to the URL, taking into account cacheability if
+      // we're dealing with a resource URL. 
+
+      // Put the private & public parameters on the URL if cacheability != FULL
+      if ((type !== "RESOURCE") || (ca !== "cacheLevelFull")) {
+
+         // If cacheability = PAGE, add the state for the non-target portlets
+         if ((type !== "RESOURCE") || (ca === "cacheLevelPage")) {
+
+            ids = getIds();
+            for (ii = 0; ii < ids.length; ii++) {
+               id = ids[ii];
+               if (id !== pid) {  // only for non-target portlets
+                  url += genPMWSString(id);  // portlet mode & window state
+                  str = "";
+                  names = pageState[id].state.parameters;
+                  for (name in names) {
+                     // Public render parameters are encoded separately
+                     if (names.hasOwnProperty(name) && !isPRP(id, name)) {
+                        str += genParmString(id, name, RENDER_PARAM);
+                     }
+                  }
+                  url += str;
+               }
+            }
+
+         }
+
+         // add the state for the target portlet
+         url += genPMWSString(pid);  // portlet mode & window state
+         str = "";
+         names = pageState[pid].state.parameters;
+         for (name in names) {
+            // Public render parameters are encoded separately
+            if (names.hasOwnProperty(name) && !isPRP(pid, name)) {
+               str += genParmString(pid, name, PRIVATE_RENDER_PARAM);
+            }
+         }
+         url += str;
+
+         // Add the public render parameters
+         str = "";
+         names = pageState[pid].pubParms;
+         for (ii=0; ii < names.length; ii++) {
+            name = names[ii];
+            str += genParmString(pid, name, PUBLIC_RENDER_PARAM);
+         }
+         url += str;
+
+      }
+
+      // Encode resource or action parameters as query string
+      if (parms) {
+         str = "?"; sep = "";
+         for (parm in parms) {
+            if (parms.hasOwnProperty(parm)) {
+               vals = parms[parm];
+               for (ii=0; ii < vals.length; ii++) {
+                  str += sep + encodeURIComponent(parm) + "=" + encodeURIComponent(vals[ii]);
+                  sep = "&";
+               }
+            }
+         }
+         url += str;
+      }
+
       // Use Promise to allow for potential server communication - 
       return new Promise(function (resolve, reject) {
          resolve(url);

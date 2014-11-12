@@ -1563,7 +1563,7 @@ var portlet = portlet || {};
                // let errors propagate to caller.
                
                pi = _registeredPortlets[portletId];
-               return pi.getUrl("PARTIALACTION", parms).then(function (url) {
+               return pi.getUrl("PARTIAL_ACTION", parms).then(function (url) {
                   paObj.url = url;
                   paObj.setPageState = function (ustr) {setPageState(portletId, ustr);};
                   return paObj;
