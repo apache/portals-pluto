@@ -21,6 +21,8 @@ limitations under the License.
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://portals.apache.org/pluto" prefix="pluto" %>
 <%@ page import="java.util.*,javax.portlet.*,org.apache.pluto.driver.url.*" %>
+<%@ page import="org.apache.pluto.driver.config.*,org.apache.pluto.driver.*" %>
+<%@ page import="org.apache.pluto.container.*,javax.servlet.jsp.*" %>
 <% pageContext.setAttribute("now", new java.util.Date()); %>
 
 <!--
@@ -51,14 +53,9 @@ group (the left column) displays portlets with odd IDs, while the second group
                 PortalRequestContext prc = PortalRequestContext.getContext(request);
                 PortalURL pu = prc.getRequestedPortalURL(); 
                 Collection<PortalURLParameter> pups = pu.getParameters();
-                // on the URL at least, prps are not differentiated by portlet ID
-                Map<String, String[]> prps = pu.getPublicParameters();
-                StringBuffer prpnames = new StringBuffer();
-                String c0 = "";
-                for (String prp : prps.keySet()) {
-                   prpnames.append(c0 + "'" + prp + "'");
-                   c0 = ", ";
-                }
+                Map<String, String[]> pubparms = pu.getPublicParameters();
+                DriverConfiguration dc = (DriverConfiguration) prc.getServletContext()
+                      .getAttribute(AttributeKeys.DRIVER_CONFIG);
              %>
              <c:forEach var="pid" items="${currentPage.portletIds}">
                 <%
@@ -72,6 +69,21 @@ group (the left column) displays portlets with odd IDs, while the second group
                       }
                    }
                    ns.append("_");
+
+                   PortletConfig pc = null;
+                   StringBuffer prpstring = new StringBuffer();
+                   Set<String> prpnames = new HashSet<String>();
+                   String sep = "";
+                   try {
+                      pc = dc.getPortletConfig(pid);
+                      Enumeration<String> prps = pc.getPublicRenderParameterNames();
+                      while (prps.hasMoreElements()) {
+                         String prp = prps.nextElement();
+                         prpnames.add(prp);
+                         prpstring.append(sep + "'" + prp + "'");
+                         sep = ", ";
+                      }
+                   } catch (Exception e) {}
                    
                    String pm = pu.getPortletMode(pid).toString();
                    String ws = pu.getWindowState(pid).toString();
@@ -93,25 +105,27 @@ group (the left column) displays portlets with odd IDs, while the second group
                                c1 = ",\n                      ";
                             }
                          }
-                         // this is a hack, but just add all public parms for all portlets on page
-                         for (String prp : prps.keySet()) {
-                            out.write(c1 + "   '" + prp + "' : [");
-                            String c2 = "";
-                            for (String val : (String[])prps.get(prp)) {
-                               out.write(c2 + " '" + val + "'");
-                               c2 = ",";
+                         
+                         // Add the public render parameter values for this portlet
+                         
+                         for (String prp : pubparms.keySet()) {
+                            if (prpnames.contains(prp)) {
+                               out.write(c1 + "   '" + prp + "' : [");
+                               String c2 = "";
+                               for (String val : (String[])pubparms.get(prp)) {
+                                  out.write(c2 + " '" + val + "'");
+                                  c2 = ",";
+                               }
+                               out.write("]");
+                               c1 = ",\n                      ";
                             }
-                            out.write("]");
-                            c1 = ",\n                      ";
-                            
                          }
                       %>
                       }, 
                       'portletMode' : '<%=pm%>', 
                       'windowState' : '<%=ws%>'
                    },
-                   // 'pubParms' : [<%=prpnames.toString()%>],
-                   'pubParms' : ['imgName', 'color'],
+                   'pubParms' : [<%=prpstring.toString()%>],
                    'allowedPM' : ['view'],
                    'allowedWS' : ['normal'],
                    'renderData' : {
