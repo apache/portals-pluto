@@ -20,6 +20,8 @@ import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.container.om.portlet.CustomWindowState;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.apache.pluto.container.om.portlet.Supports;
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
@@ -28,173 +30,220 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.portlet.WindowState;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 public class SupportedWindowStateServiceImpl implements
-        SupportedWindowStateService
-{
+      SupportedWindowStateService {
 
-    /**
-     * Logger *
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(SupportedWindowStateServiceImpl.class);
+   /**
+    * Logger *
+    */
+   private static final Logger             LOG                         = LoggerFactory
+                                                                             .getLogger(SupportedWindowStateServiceImpl.class);
 
-    /**
-     * PropertyConfigService is injected by Spring.  We
-     * use it to obtain the window states that the portal
-     * supports.  It is protected only so that the unit
-     * tests have access to the field.
-     */
-    protected final PropertyConfigService propertyService;
+   /**
+    * PropertyConfigService is injected by Spring. We use it to obtain the
+    * window states that the portal supports. It is protected only so that the
+    * unit tests have access to the field.
+    */
+   protected final PropertyConfigService   propertyService;
 
-    /**
-     * PortletRegistry is obtained from the PortletContainer on
-     * this service's initialization.  It is protected only
-     * so that the unit tests have access to the field.
-     * <p/>
-     * Note that it is an optional container service, but
-     * this implmentation requires it.
-     */
-    protected final PortletRegistryService portletRegistry;
+   /**
+    * PortletRegistry is obtained from the PortletContainer on this service's
+    * initialization. It is protected only so that the unit tests have access to
+    * the field.
+    * <p/>
+    * Note that it is an optional container service, but this implmentation
+    * requires it.
+    */
+   protected final PortletRegistryService  portletRegistry;
 
-    /**
-     * Contains String objects of window states supported
-     * by the portal (obtained from PropertyConfigService).
-     * It is protected only so that the unit tests have
-     * access to the field.
-     */
-    protected Set portalSupportedWindowStates = new HashSet(3);
+   /**
+    * Contains String objects of window states supported by the portal (obtained
+    * from PropertyConfigService). It is protected only so that the unit tests
+    * have access to the field.
+    */
+   protected Set<String>                   portalSupportedWindowStates = new HashSet<String>(
+                                                                             3);
 
-    /**
-     * Window States that are specified in PLT.9
-     */
-    protected static final Set JSR168_WINDOW_STATES;
+   /**
+    * Window States that are specified in PLT.9
+    */
+   protected static final Set<WindowState> JSR168_WINDOW_STATES;
 
-    static
-    {
-        JSR168_WINDOW_STATES = new HashSet(3);
-        JSR168_WINDOW_STATES.add(WindowState.MAXIMIZED);
-        JSR168_WINDOW_STATES.add(WindowState.MINIMIZED);
-        JSR168_WINDOW_STATES.add(WindowState.NORMAL);
-    }
+   static {
+      JSR168_WINDOW_STATES = new HashSet<WindowState>(3);
+      JSR168_WINDOW_STATES.add(WindowState.MAXIMIZED);
+      JSR168_WINDOW_STATES.add(WindowState.MINIMIZED);
+      JSR168_WINDOW_STATES.add(WindowState.NORMAL);
+   }
 
-    public SupportedWindowStateServiceImpl(PropertyConfigService propertyService, PortletRegistryService portletRegistry)
-    {
-        this.propertyService = propertyService;
-        this.portletRegistry = portletRegistry;
-        LOG.debug("Initializing SupportedWindowStateService... ");
+   public SupportedWindowStateServiceImpl(
+         PropertyConfigService propertyService,
+         PortletRegistryService portletRegistry) {
+      this.propertyService = propertyService;
+      this.portletRegistry = portletRegistry;
+      LOG.debug("Initializing SupportedWindowStateService... ");
 
-        portalSupportedWindowStates = propertyService.getSupportedWindowStates();
-        if (LOG.isDebugEnabled())
-        {
-            StringBuffer msg = new StringBuffer();
+      portalSupportedWindowStates = propertyService.getSupportedWindowStates();
+      if (LOG.isDebugEnabled()) {
+         StringBuffer msg = new StringBuffer();
 
-            if (portalSupportedWindowStates != null)
-            {
-                msg.append("Portal supports [" + portalSupportedWindowStates.size() + "] window states.  ");
-                for (Iterator i = portalSupportedWindowStates.iterator(); i.hasNext();)
-                {
-                    msg.append("[" + i.next() + "]");
-                    if (i.hasNext())
-                    {
-                        msg.append(", ");
-                    }
-                }
-                LOG.debug(msg.toString());
+         if (portalSupportedWindowStates != null) {
+            msg.append("Portal supports [" + portalSupportedWindowStates.size()
+                  + "] window states.  ");
+            for (Iterator<String> i = portalSupportedWindowStates.iterator(); i
+                  .hasNext();) {
+               msg.append("[" + i.next() + "]");
+               if (i.hasNext()) {
+                  msg.append(", ");
+               }
             }
-        }
+            LOG.debug(msg.toString());
+         }
+      }
 
-        if (portalSupportedWindowStates == null)
-        {
-            final String msg = "Portal supported window states is null!";
-            LOG.error(msg);
-            throw new DriverConfigurationException(msg);
-        }
-        LOG.debug("SupportedWindowStateService initialized.");
-    }
+      if (portalSupportedWindowStates == null) {
+         final String msg = "Portal supported window states is null!";
+         LOG.error(msg);
+         throw new DriverConfigurationException(msg);
+      }
+      LOG.debug("SupportedWindowStateService initialized.");
+   }
 
-    public boolean isWindowStateSupported(String portletId, String state)
-    {
-        // If the supplied window state is a JSR 168 window state,
-        // we can return immediately
-        if (JSR168_WINDOW_STATES.contains(state))
-        {
-            return true;
-        }
+   public boolean isWindowStateSupported(String portletId, String state) {
+      // If the supplied window state is a JSR 168 window state,
+      // we can return immediately
+      if (JSR168_WINDOW_STATES.contains(state)) {
+         return true;
+      }
 
-        // Otherwise we need to check for custom window states
+      // Otherwise we need to check for custom window states
 
-        return isWindowStateSupportedByPortal(state) &&
-                isWindowStateSupportedByPortlet(portletId, state);
-    }
+      return isWindowStateSupportedByPortal(state)
+            && isWindowStateSupportedByPortlet(portletId, state);
+   }
 
-    public boolean isWindowStateSupportedByPortal(String state)
-    {
-        return portalSupportedWindowStates.contains(state);
-    }
+   public boolean isWindowStateSupportedByPortal(String state) {
+      return portalSupportedWindowStates.contains(state);
+   }
 
-    public boolean isWindowStateSupportedByPortlet(String portletId, String state)
-    {
-        if (portletId == null ||
-                state == null ||
-                portletId.trim().equals("") ||
-                state.trim().equals(""))
-        {
-            StringBuffer errMsg = new StringBuffer("Cannot determine supported window " +
-                    "states for portletId [" + portletId + "] and window state [" + state + "].  ");
-            String msg = errMsg.append("One or both of the arguments is empty or null.").toString();
-            LOG.error(msg);
-            throw new IllegalArgumentException(msg);
-        }
+   public boolean isWindowStateSupportedByPortlet(String portletId, String state) {
+      if (portletId == null || state == null || portletId.trim().equals("")
+            || state.trim().equals("")) {
+         StringBuffer errMsg = new StringBuffer(
+               "Cannot determine supported window " + "states for portletId ["
+                     + portletId + "] and window state [" + state + "].  ");
+         String msg = errMsg.append(
+               "One or both of the arguments is empty or null.").toString();
+         LOG.error(msg);
+         throw new IllegalArgumentException(msg);
+      }
 
-        // We can short-circut the registry lookup if the window state is
-        // one from PLT.9
-        if (JSR168_WINDOW_STATES.contains(new WindowState(state)))
-        {
-            return true;
-        }
+      // We can short-circut the registry lookup if the window state is
+      // one from PLT.9
+      if (JSR168_WINDOW_STATES.contains(new WindowState(state))) {
+         return true;
+      }
 
-        // If the supplied window state isn't a JSR 168 window state,
-        // we look to see if it is a custom window state.
+      // If the supplied window state isn't a JSR 168 window state,
+      // we look to see if it is a custom window state.
 
-        String appId = PortletWindowConfig.parseContextPath(portletId);
-        String applicationName = appId;
-        PortletApplicationDefinition portletAppDD = null;
+      String appId = PortletWindowConfig.parseContextPath(portletId);
+      String applicationName = appId;
+      PortletApplicationDefinition portletAppDD = null;
 
-        if (portletRegistry == null)
-        {
-            return false;
-        }
+      if (portletRegistry == null) {
+         return false;
+      }
 
-        try
-        {
-            portletAppDD = portletRegistry.getPortletApplication(applicationName);
-        }
-        catch (PortletContainerException e)
-        {
-            StringBuffer errMsg = new StringBuffer("Cannot determine supported window " +
-                    "states for portletId [" + portletId + "] and window state [" + state + "].  ");
-            String msg = errMsg.append("Unable to access the Portlet Registry Service.").toString();
-            LOG.error(msg, e);
-        }
+      try {
+         portletAppDD = portletRegistry.getPortletApplication(applicationName);
+      } catch (PortletContainerException e) {
+         StringBuffer errMsg = new StringBuffer(
+               "Cannot determine supported window " + "states for portletId ["
+                     + portletId + "] and window state [" + state + "].  ");
+         String msg = errMsg.append(
+               "Unable to access the Portlet Registry Service.").toString();
+         LOG.error(msg, e);
+      }
 
-        List customWindowStates = portletAppDD.getCustomWindowStates();
-        if (customWindowStates != null)
-        {
-            for (Iterator i = customWindowStates.iterator(); i.hasNext();)
-            {
-                CustomWindowState customState = (CustomWindowState) i.next();
-                if (customState.getWindowState().equals(state))
-                {
-                    return true;
-                }
+      List<? extends CustomWindowState> customWindowStates = portletAppDD
+            .getCustomWindowStates();
+      if (customWindowStates != null) {
+         for (Iterator<? extends CustomWindowState> i = customWindowStates
+               .iterator(); i.hasNext();) {
+            CustomWindowState customState = (CustomWindowState) i.next();
+            if (customState.getWindowState().equals(state)) {
+               return true;
             }
-        }
+         }
+      }
 
-        return false;
-    }
+      return false;
+   }
+
+   /*
+    * (non-Javadoc)
+    * 
+    * @see org.apache.pluto.driver.services.portal.SupportedWindowStateService#
+    * getSupportedWindowStates(java.lang.String)
+    */
+   public Set<WindowState> getSupportedWindowStates(String portletId, String contentType)
+         throws PortletContainerException {
+      
+      Set<WindowState> wstates = new HashSet<WindowState>();
+      Set<WindowState> cstates = new HashSet<WindowState>();
+      wstates.addAll(JSR168_WINDOW_STATES);
+
+      // Get the custom states for the portlet & portlet app. see if custom states need
+      // to be added
+
+      String appId = PortletWindowConfig.parseContextPath(portletId);
+      String applicationName = appId;
+      PortletApplicationDefinition portletAppDD = null;
+      String portletName = PortletWindowConfig.parsePortletName(portletId);
+
+      if (portletRegistry == null) {
+         return wstates;
+      }
+
+      try {
+
+         portletAppDD = portletRegistry.getPortletApplication(applicationName);
+
+//          // get custom window states defined for portlet app
+//          
+//          List<? extends CustomWindowState> customWindowStates = portletAppDD
+//                .getCustomWindowStates();
+//          for (CustomWindowState cws : customWindowStates) {
+//             cstates.add(new WindowState(cws.getWindowState()));
+//          }
+         
+         // get window states defined for portlet & specified content type
+         
+         for (PortletDefinition pd : portletAppDD.getPortlets()) {
+            if (portletName.equals(pd.getPortletName())) {
+               for (Supports sup : pd.getSupports()) {
+                  if (sup.getMimeType().equals(contentType)) {
+                     for (String ws : sup.getWindowStates()) {
+                        cstates.add(new WindowState(ws));
+                     }
+                  }
+               }
+            }
+         }
+         
+         wstates.addAll(cstates);
+         
+      } catch (PortletContainerException e) { 
+      }
+
+      return wstates;
+   }
 
 }

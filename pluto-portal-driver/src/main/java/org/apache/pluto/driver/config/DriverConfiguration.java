@@ -21,6 +21,7 @@ import java.util.Set;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
+import javax.portlet.WindowState;
 
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletPreferencesService;
@@ -89,6 +90,8 @@ public interface DriverConfiguration {
     boolean isWindowStateSupportedByPortlet(String portletId, String windowState);
 
     boolean isWindowStateSupported(String portletId, String windowState);
+
+    public Set<WindowState> getSupportedWindowStates(String portletId, String contentType) throws PortletContainerException; 
 
 //
 // Utility methods for the container
