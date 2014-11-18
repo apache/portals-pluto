@@ -85,6 +85,16 @@ group (the left column) displays portlets with odd IDs, while the second group
                       }
                    } catch (Exception e) {}
                    
+                   StringBuffer pmstring = new StringBuffer();
+                   try {
+                      Set<PortletMode> allowedPMs = dc.getSupportedPortletModes(pid);
+                      sep = "";
+                      for (PortletMode pm : allowedPMs) {
+                         pmstring.append(sep + "'" + pm.toString() + "'");
+                         sep = ", ";
+                      }
+                   } catch (Exception e) {}
+                   
                    String pm = pu.getPortletMode(pid).toString();
                    String ws = pu.getWindowState(pid).toString();
                 %>
@@ -126,7 +136,7 @@ group (the left column) displays portlets with odd IDs, while the second group
                       'windowState' : '<%=ws%>'
                    },
                    'pubParms' : [<%=prpstring.toString()%>],
-                   'allowedPM' : ['view'],
+                   'allowedPM' : [<%=pmstring.toString()%>],
                    'allowedWS' : ['normal'],
                    'renderData' : {
                       'renderData' : null,
