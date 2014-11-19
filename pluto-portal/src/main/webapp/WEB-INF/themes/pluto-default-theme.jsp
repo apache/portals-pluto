@@ -22,6 +22,7 @@ limitations under the License.
 <%@ taglib uri="http://portals.apache.org/pluto" prefix="pluto" %>
 <%@ page import="java.util.*,javax.portlet.*,org.apache.pluto.driver.url.*" %>
 <%@ page import="org.apache.pluto.driver.config.*,org.apache.pluto.driver.*" %>
+<%@ page import="org.apache.pluto.driver.util.*" %>
 <%@ page import="org.apache.pluto.container.*,javax.servlet.jsp.*" %>
 <% pageContext.setAttribute("now", new java.util.Date()); %>
 
@@ -50,63 +51,27 @@ group (the left column) displays portlets with odd IDs, while the second group
        portlet.impl.getInitData = function () {
           return {       
              <%
-                PortalRequestContext prc = PortalRequestContext.getContext(request);
-                PortalURL pu = prc.getRequestedPortalURL(); 
-                Collection<PortalURLParameter> pups = pu.getParameters();
-                Map<String, String[]> pubparms = pu.getPublicParameters();
-                DriverConfiguration dc = (DriverConfiguration) prc.getServletContext()
-                      .getAttribute(AttributeKeys.DRIVER_CONFIG);
+                PageState ps = new PageState(request);
+                Collection<String> poids = ps.getPortletIds();
+             
+                Collection<PortalURLParameter> pups = ps.getParameters();
+                Map<String, String[]> pubparms = ps.getPublicParameters();
              %>
              <c:forEach var="pid" items="${currentPage.portletIds}">
                 <%
-                   StringBuffer ns = new StringBuffer("Pluto_");
                    String pid = (String)pageContext.getAttribute("pid");
-                   for (int ii=0; ii < pid.length(); ii++) {
-                      if (Character.isJavaIdentifierPart(pid.charAt(ii))) {
-                         ns.append(pid.charAt(ii));
-                      } else {
-                         ns.append("_");
-                      }
-                   }
-                   ns.append("_");
+                   
+                   String ns = ps.getNameSpace(pid);
 
-                   PortletConfig pc = null;
-                   StringBuffer prpstring = new StringBuffer();
-                   Set<String> prpnames = new HashSet<String>();
-                   String sep = "";
-                   try {
-                      pc = dc.getPortletConfig(pid);
-                      Enumeration<String> prps = pc.getPublicRenderParameterNames();
-                      while (prps.hasMoreElements()) {
-                         String prp = prps.nextElement();
-                         prpnames.add(prp);
-                         prpstring.append(sep + "'" + prp + "'");
-                         sep = ", ";
-                      }
-                   } catch (Exception e) {}
+                   String prpstring = ps.getPRPNamesAsString(pid);
+                   Set<String> prpnames = ps.getPRPNames(pid);
                    
-                   StringBuffer pmstring = new StringBuffer();
-                   try {
-                      Set<PortletMode> allowedPMs = dc.getSupportedPortletModes(pid);
-                      sep = "";
-                      for (PortletMode pm : allowedPMs) {
-                         pmstring.append(sep + "'" + pm.toString() + "'");
-                         sep = ", ";
-                      }
-                   } catch (Exception e) {}
+                   String pmstring = ps.getPortletModesAsString(pid);
                    
-                   StringBuffer wsstring = new StringBuffer();
-                   try {
-                      Set<WindowState> allowedWSs = dc.getSupportedWindowStates(pid, "text/html");
-                      sep = "";
-                      for (WindowState ws : allowedWSs) {
-                         wsstring.append(sep + "'" + ws.toString() + "'");
-                         sep = ", ";
-                      }
-                   } catch (Exception e) {}
+                   String wsstring = ps.getWindowStatesAsString(pid);
                    
-                   String pm = pu.getPortletMode(pid).toString();
-                   String ws = pu.getWindowState(pid).toString();
+                   String pm = ps.getPortletMode(pid);
+                   String ws = ps.getWindowState(pid);
                 %>
                 '<%=ns%>' : {
                    'state' : {
@@ -145,9 +110,9 @@ group (the left column) displays portlets with odd IDs, while the second group
                       'portletMode' : '<%=pm%>', 
                       'windowState' : '<%=ws%>'
                    },
-                   'pubParms' : [<%=prpstring.toString()%>],
-                   'allowedPM' : [<%=pmstring.toString()%>],
-                   'allowedWS' : [<%=wsstring.toString()%>],
+                   'pubParms' : [<%=prpstring%>],
+                   'allowedPM' : [<%=pmstring%>],
+                   'allowedWS' : [<%=wsstring%>],
                    'renderData' : {
                       'renderData' : null,
                       'mimeType' : "text/plain"
@@ -158,13 +123,7 @@ group (the left column) displays portlets with odd IDs, while the second group
           }
        }
        <%
-          StringBuffer ub = new StringBuffer();
-          //ub.append(request.getScheme()).append("://").append(request.getServerName());
-          //ub.append(request.getServerPort());
-          ub.append(pu.getServletPath().startsWith("/")?"":"/")
-            .append(pu.getServletPath())
-            .append(pu.getRenderPath());
-          String urlBase = response.encodeURL(ub.toString());
+          String urlBase = response.encodeURL(ps.getUrlBase());
        %>
        portlet.impl.getUrlBase = function () {
           return '<%=urlBase%>';
