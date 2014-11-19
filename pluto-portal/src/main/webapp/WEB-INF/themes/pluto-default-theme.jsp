@@ -46,87 +46,16 @@ group (the left column) displays portlets with odd IDs, while the second group
        /**
         * Initialization code for portlet hub
         */
+       <%
+          PageState ps = new PageState(request);
+       %>
        var portlet = portlet || {};
        portlet.impl = portlet.impl || {};
        portlet.impl.getInitData = function () {
-          return {       
-             <%
-                PageState ps = new PageState(request);
-                Collection<String> poids = ps.getPortletIds();
-             
-                Collection<PortalURLParameter> pups = ps.getParameters();
-                Map<String, String[]> pubparms = ps.getPublicParameters();
-             %>
-             <c:forEach var="pid" items="${currentPage.portletIds}">
-                <%
-                   String pid = (String)pageContext.getAttribute("pid");
-                   
-                   String ns = ps.getNameSpace(pid);
-
-                   String prpstring = ps.getPRPNamesAsString(pid);
-                   Set<String> prpnames = ps.getPRPNames(pid);
-                   
-                   String pmstring = ps.getPortletModesAsString(pid);
-                   
-                   String wsstring = ps.getWindowStatesAsString(pid);
-                   
-                   String pm = ps.getPortletMode(pid);
-                   String ws = ps.getWindowState(pid);
-                %>
-                '<%=ns%>' : {
-                   'state' : {
-                      'parameters' : {
-                      <%
-                         String c1 = "";
-                         for (PortalURLParameter pup : pups){
-                            if (pup.getWindowId().equals(pid)){
-                               out.write(c1 + "   '" + pup.getName() + "' : [");
-                               String c2 = "";
-                               for (String val : pup.getValues()) {
-                                  out.write(c2 + " '" + val + "'");
-                                  c2 = ", ";
-                               }
-                               out.write("]");
-                               c1 = ",\n                      ";
-                            }
-                         }
-                         
-                         // Add the public render parameter values for this portlet
-                         
-                         for (String prp : pubparms.keySet()) {
-                            if (prpnames.contains(prp)) {
-                               out.write(c1 + "   '" + prp + "' : [");
-                               String c2 = "";
-                               for (String val : (String[])pubparms.get(prp)) {
-                                  out.write(c2 + " '" + val + "'");
-                                  c2 = ",";
-                               }
-                               out.write("]");
-                               c1 = ",\n                      ";
-                            }
-                         }
-                      %>
-                      }, 
-                      'portletMode' : '<%=pm%>', 
-                      'windowState' : '<%=ws%>'
-                   },
-                   'pubParms' : [<%=prpstring%>],
-                   'allowedPM' : [<%=pmstring%>],
-                   'allowedWS' : [<%=wsstring%>],
-                   'renderData' : {
-                      'renderData' : null,
-                      'mimeType' : "text/plain"
-                   },
-                   'urlpid' : '<%=pid%>'
-                },
-             </c:forEach>
-          }
+          return <%=ps.toJSONString()%>;
        }
-       <%
-          String urlBase = response.encodeURL(ps.getUrlBase());
-       %>
        portlet.impl.getUrlBase = function () {
-          return '<%=urlBase%>';
+          return '<%=response.encodeURL(ps.getUrlBase())%>';
        }
     </script>
     <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js"></script>

@@ -593,6 +593,9 @@ TODO: Check if we need all of them. -->
         <module>pluto-portal-driver-impl</module>
         <module>pluto-portal</module>
         <module>pluto-testsuite</module>
+        
+        <!-- PortletHub demo portlets -->
+        <module>pluto-PortletHubDemo</module>
 
         <!-- Pluto Utilities, Maven Plugins and Ant Tasks -->
         <module>pluto-util</module>

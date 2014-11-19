@@ -236,17 +236,23 @@ public class PageState {
       return ub.toString();
    }
    
+   /**
+    * Returns the page state needed by the portlet hub as a JSON string suitable
+    * for transport to the client.
+    * 
+    * @return  JSON string representing the current page state
+    */
    public String toJSONString() {
       StringBuffer json = new StringBuffer(1024);
-      json.append("{");
+      json.append("{\n");
       
       Collection<PortalURLParameter> pups = getParameters();
       Map<String, String[]> pubparms = getPublicParameters();
       
       for (String pid : getPortletIds()) {
-         json.append("   '" + getNameSpace(pid) + "' : {");
-         json.append("      'state' : {");
-         json.append("         'parameters' : {");
+         json.append("   '" + getNameSpace(pid) + "' : {\n");
+         json.append("      'state' : {\n");
+         json.append("         'parameters' : {\n");
 
          // Add the portlet parameters
          String c1 = "            '";
@@ -279,19 +285,19 @@ public class PageState {
             }
          }
 
-         json.append("         }, ");
-         json.append("         'portletMode' : '" + getPortletMode(pid) + "', ");
-         json.append("         'windowState' : '" + getWindowState(pid) + "'");
-         json.append("      },");
-         json.append("      'pubParms' : [" + getPRPNamesAsString(pid) + "],");
-         json.append("      'allowedPM' : [" + getPortletModesAsString(pid) + "],");
-         json.append("      'allowedWS' : [" + getWindowStatesAsString(pid) + "],");
-         json.append("      'renderData' : {");
-         json.append("         'renderData' : null,");
-         json.append("         'mimeType' : \"text/plain\"");
-         json.append("      },");
-         json.append("      'urlpid' : '" + pid + "'");
-         json.append("   },");
+         json.append("         }, \n");
+         json.append("         'portletMode' : '" + getPortletMode(pid) + "', \n");
+         json.append("         'windowState' : '" + getWindowState(pid) + "'\n");
+         json.append("      },\n");
+         json.append("      'pubParms' : [" + getPRPNamesAsString(pid) + "],\n");
+         json.append("      'allowedPM' : [" + getPortletModesAsString(pid) + "],\n");
+         json.append("      'allowedWS' : [" + getWindowStatesAsString(pid) + "],\n");
+         json.append("      'renderData' : {\n");
+         json.append("         'renderData' : null,\n");
+         json.append("         'mimeType' : \"text/plain\"\n");
+         json.append("      },\n");
+         json.append("      'urlpid' : '" + pid + "'\n");
+         json.append("   },\n");
       }
       
       json.append("}");
