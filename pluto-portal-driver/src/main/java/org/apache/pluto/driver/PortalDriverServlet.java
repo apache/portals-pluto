@@ -17,6 +17,7 @@
 package org.apache.pluto.driver;
 
 import java.io.IOException;
+import java.io.Writer;
 
 import javax.portlet.PortletException;
 import javax.servlet.RequestDispatcher;
@@ -35,6 +36,7 @@ import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.util.PageState;
 
 /**
  * The controller servlet used to drive the Portal Driver. All requests mapped
@@ -90,107 +92,160 @@ public class PortalDriverServlet extends HttpServlet {
      * @throws IOException  if an error occurs writing to the response.
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        if (LOG.isDebugEnabled()) {
-        	LOG.debug("Start of PortalDriverServlet.doGet() to process portlet request . . .");
-        }
+          throws ServletException, IOException {
+       if (LOG.isDebugEnabled()) {
+          LOG.debug("Start of PortalDriverServlet.doGet() to process portlet request . . .");
+       }
 
-        if ( contentType != "" ) {
-            response.setContentType( contentType );
-        }
+       if ( contentType != "" ) {
+          response.setContentType( contentType );
+       }
 
-        PortalRequestContext portalRequestContext =
-            new PortalRequestContext(getServletContext(), request, response);
+       PortalRequestContext portalRequestContext =
+             new PortalRequestContext(getServletContext(), request, response);
 
-        PortalURL portalURL = null;
-        
-        try {
-        	portalURL = portalRequestContext.getRequestedPortalURL();
-        } catch(Exception ex) {
-        	String msg = "Cannot handle request for portal URL. Problem: "  + ex.getMessage();
-        	LOG.error(msg, ex);
-        	throw new ServletException(msg, ex);
-        }
-        String actionWindowId = portalURL.getActionWindow();
-        String resourceWindowId = portalURL.getResourceWindow();
-        
-        PortletWindowConfig actionWindowConfig = null;
-        PortletWindowConfig resourceWindowConfig = null;
-        
-		if (resourceWindowId != null){
-			resourceWindowConfig = PortletWindowConfig.fromId(resourceWindowId);
-		} else if(actionWindowId != null){
-			 actionWindowConfig = PortletWindowConfig.fromId(actionWindowId);
-		}
+       PortalURL portalURL = null;
 
-        // Action window config will only exist if there is an action request.
-        if (actionWindowConfig != null) {
-            PortletWindowImpl portletWindow = new PortletWindowImpl(container,
-            		actionWindowConfig, portalURL);
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Processing action request for window: "
-                		+ portletWindow.getId().getStringId());
-            }
-            try {
-                container.doAction(portletWindow, request, response, true);
-            } catch (PortletContainerException ex) {
-            	LOG.error(ex.getMessage(), ex);
-                throw new ServletException(ex);
-            } catch (PortletException ex) {
-            	LOG.error(ex.getMessage(), ex);
-                throw new ServletException(ex);
-            }
-            if (LOG.isDebugEnabled()) {
-            	LOG.debug("Action request processed.\n\n");
-            }
-        }
-        //Resource request
-        else if (resourceWindowConfig != null) {
-            PortletWindowImpl portletWindow = new PortletWindowImpl(container,
-                               resourceWindowConfig, portalURL);
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Processing resource Serving request for window: "
-                               + portletWindow.getId().getStringId());
-            }
-            try {
-                container.doServeResource(portletWindow, request, response);
-            } catch (PortletContainerException ex) {
-            	LOG.error(ex.getMessage(), ex);
-                throw new ServletException(ex);
-            } catch (PortletException ex) {
-            	LOG.error(ex.getMessage(), ex);
-                throw new ServletException(ex);
-            }
-            if (LOG.isDebugEnabled()) {
-               LOG.debug("Resource serving request processed.\n\n");
-            }
-        }
-        // Otherwise (actionWindowConfig == null), handle the render request.
-        else {
-        	if (LOG.isDebugEnabled()) {
-        		LOG.debug("Processing render request.");
-        	}
-            PageConfig pageConfig = portalURL.getPageConfig(servletContext);
-            if (pageConfig == null)
-            {
-            	String renderPath = (portalURL == null ? "" : portalURL.getRenderPath());
-                String msg = "PageConfig for render path [" + renderPath + "] could not be found.";
-                LOG.error(msg);
-                throw new ServletException(msg);
-            }
-            
-            request.setAttribute(AttributeKeys.CURRENT_PAGE, pageConfig);
-            String uri = (pageConfig.getUri() != null)
-            		? pageConfig.getUri() : DEFAULT_PAGE_URI;
-            if (LOG.isDebugEnabled()) {
-            	LOG.debug("Dispatching to: " + uri);
-            }
-            RequestDispatcher dispatcher = request.getRequestDispatcher(uri);
-            dispatcher.forward(request, response);
-            if (LOG.isDebugEnabled()) {
-            	LOG.debug("Render request processed.\n\n");
-            }
-        }
+       try {
+          portalURL = portalRequestContext.getRequestedPortalURL();
+       } catch(Exception ex) {
+          String msg = "Cannot handle request for portal URL. Problem: "  + ex.getMessage();
+          LOG.error(msg, ex);
+          throw new ServletException(msg, ex);
+       }
+
+       String ajaxActionWindowId = portalURL.getAjaxActionWindow();
+       String partialActionWindowId = portalURL.getPartialActionWindow();
+       String actionWindowId = portalURL.getActionWindow();
+       String resourceWindowId = portalURL.getResourceWindow();
+
+       PortletWindowConfig windowConfig = null;
+
+       // Action window config will only exist if there is an action request.
+       if (actionWindowId != null) {
+          windowConfig = PortletWindowConfig.fromId(actionWindowId);
+          PortletWindowImpl portletWindow = new PortletWindowImpl(container,
+                windowConfig, portalURL);
+          if (LOG.isDebugEnabled()) {
+             LOG.debug("Processing action request for window: "
+                   + portletWindow.getId().getStringId());
+          }
+          try {
+             container.doAction(portletWindow, request, response, true);
+          } catch (PortletContainerException ex) {
+             LOG.error(ex.getMessage(), ex);
+             throw new ServletException(ex);
+          } catch (PortletException ex) {
+             LOG.error(ex.getMessage(), ex);
+             throw new ServletException(ex);
+          }
+          if (LOG.isDebugEnabled()) {
+             LOG.debug("Action request processed.\n\n");
+          }
+       }
+       
+       // Ajax Action request
+       else if (ajaxActionWindowId != null) {
+          windowConfig = PortletWindowConfig.fromId(ajaxActionWindowId);
+          PortletWindowImpl portletWindow = new PortletWindowImpl(container,
+                windowConfig, portalURL);
+          if (LOG.isDebugEnabled()) {
+             LOG.debug("Processing Ajax Action request for window: "
+                   + portletWindow.getId().getStringId());
+          }
+          try {
+             container.doAction(portletWindow, request, response, false);
+             PageState ps = new PageState(request);
+             Writer writer = response.getWriter();
+             String jsondata = ps.toJSONString();
+             LOG.debug("Ajax Action: returning new page state to client: " + jsondata);
+             writer.write(jsondata);
+          } catch (PortletContainerException ex) {
+             LOG.error(ex.getMessage(), ex);
+             throw new ServletException(ex);
+          } catch (PortletException ex) {
+             LOG.error(ex.getMessage(), ex);
+             throw new ServletException(ex);
+          }
+          if (LOG.isDebugEnabled()) {
+             LOG.debug("Ajax Action request processed.\n\n");
+          }
+       }
+       
+       // Partial Action request
+       else if (partialActionWindowId != null) {
+          windowConfig = PortletWindowConfig.fromId(partialActionWindowId);
+          PortletWindowImpl portletWindow = new PortletWindowImpl(container,
+                windowConfig, portalURL);
+          if (LOG.isDebugEnabled()) {
+             LOG.debug("Processing Partial Action request for window: "
+                   + portletWindow.getId().getStringId());
+          }
+          try {
+             container.doAction(portletWindow, request, response, false);
+             // TO DO: make page state data available to portlet thru ResourceRequest
+             container.doServeResource(portletWindow, request, response);
+          } catch (PortletContainerException ex) {
+             LOG.error(ex.getMessage(), ex);
+             throw new ServletException(ex);
+          } catch (PortletException ex) {
+             LOG.error(ex.getMessage(), ex);
+             throw new ServletException(ex);
+          }
+          if (LOG.isDebugEnabled()) {
+             LOG.debug("Partial Action request processed.\n\n");
+          }
+       }
+       
+       //Resource request
+       else if (resourceWindowId != null) {
+          windowConfig = PortletWindowConfig.fromId(resourceWindowId);
+          PortletWindowImpl portletWindow = new PortletWindowImpl(container,
+                windowConfig, portalURL);
+          if (LOG.isDebugEnabled()) {
+             LOG.debug("Processing resource Serving request for window: "
+                   + portletWindow.getId().getStringId());
+          }
+          try {
+             container.doServeResource(portletWindow, request, response);
+          } catch (PortletContainerException ex) {
+             LOG.error(ex.getMessage(), ex);
+             throw new ServletException(ex);
+          } catch (PortletException ex) {
+             LOG.error(ex.getMessage(), ex);
+             throw new ServletException(ex);
+          }
+          if (LOG.isDebugEnabled()) {
+             LOG.debug("Resource serving request processed.\n\n");
+          }
+       }
+       
+       // Otherwise (actionWindowConfig == null), handle the render request.
+       else {
+          if (LOG.isDebugEnabled()) {
+             LOG.debug("Processing render request.");
+          }
+          PageConfig pageConfig = portalURL.getPageConfig(servletContext);
+          if (pageConfig == null)
+          {
+             String renderPath = (portalURL == null ? "" : portalURL.getRenderPath());
+             String msg = "PageConfig for render path [" + renderPath + "] could not be found.";
+             LOG.error(msg);
+             throw new ServletException(msg);
+          }
+
+          request.setAttribute(AttributeKeys.CURRENT_PAGE, pageConfig);
+          String uri = (pageConfig.getUri() != null)
+                ? pageConfig.getUri() : DEFAULT_PAGE_URI;
+                if (LOG.isDebugEnabled()) {
+                   LOG.debug("Dispatching to: " + uri);
+                }
+                RequestDispatcher dispatcher = request.getRequestDispatcher(uri);
+                dispatcher.forward(request, response);
+                if (LOG.isDebugEnabled()) {
+                   LOG.debug("Render request processed.\n\n");
+                }
+       }
     }
 
     /**
