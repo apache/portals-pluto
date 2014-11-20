@@ -61,6 +61,10 @@ public class PortalURLParserImpl implements PortalURLParser {
     private static final String WINDOW_STATE = "ws";
     private static final String PORTLET_MODE = "pm";
     private static final String VALUE_DELIM = "0x0";
+    
+    private static final String AJAX_ACTION = "aa";      // new for portlet spec 3
+    private static final String PARTIAL_ACTION = "pa";   // new for portlet spec 3
+
 
     //This is a list of characters that need to be encoded  to be protected
     //The ? is necessary to protect URI's with a query portion that is being passed as a parameter
@@ -138,79 +142,87 @@ public class PortalURLParserImpl implements PortalURLParser {
         StringTokenizer st = new StringTokenizer(pathInfo, "/", false);
         while (st.hasMoreTokens()) {
 
-        	String token = st.nextToken();
+           String token = st.nextToken();
 
-        	// Part of the render path: append to renderPath.
-        	if (!token.startsWith(PREFIX)) {
-//        		renderPath.append(token);
-        		//Fix for PLUTO-243
-        		renderPath.append('/').append(token);
-        	}
-//        	 Resource window definition: portalURL.setResourceWindow().
-           else if (token.startsWith(PREFIX + RESOURCE)) {
-               portalURL.setResourceWindow(decodeControlParameter(token)[0]);
+           // Part of the render path: append to renderPath.
+           if (!token.startsWith(PREFIX)) {
+              //        		renderPath.append(token);
+              //Fix for PLUTO-243
+              renderPath.append('/').append(token);
            }
-        	// Action window definition: portalURL.setActionWindow().
-        	else if (token.startsWith(PREFIX + ACTION)) {
-        		portalURL.setActionWindow(decodeControlParameter(token)[0]);
-        	}
-            // Cacheability definition: portalURL.setCacheability().
-            else if (token.startsWith(PREFIX + CACHE_LEVEL)) {
-                portalURL.setCacheability(decodeControlParameter(token)[0]);
-            }
-            // ResourceID definition: portalURL.setResourceID().
-            else if (token.startsWith(PREFIX + RESOURCE_ID)) {
-                portalURL.setResourceID(decodeControlParameter(token)[0]);
-            }
-        	// Window state definition: portalURL.setWindowState().
-        	else if (token.startsWith(PREFIX + WINDOW_STATE)) {
-        		String[] decoded = decodeControlParameter(token);
-        		portalURL.setWindowState(decoded[0], new WindowState(decoded[1]));
-        	}
-        	// Portlet mode definition: portalURL.setPortletMode().
-        	else if (token.startsWith(PREFIX + PORTLET_MODE)) {
-        		String[] decoded = decodeControlParameter(token);
-        		portalURL.setPortletMode(decoded[0], new PortletMode(decoded[1]));
-        	}
-        	// Portal URL parameter: portalURL.addParameter().
-        	else if(token.startsWith(PREFIX + RENDER_PARAM)) {
-        		String value = null;
-        		if (st.hasMoreTokens()) {
-        			value = st.nextToken();
-        		}
-        		//set the
-        		PortalURLParameter param = decodeParameter(token, value);
-        		portalURL.addParameter(param);
+           //        	 Resource window definition: portalURL.setResourceWindow().
+           else if (token.startsWith(PREFIX + RESOURCE)) {
+              portalURL.setResourceWindow(decodeControlParameter(token)[0]);
+           }
+           // Action window definition: portalURL.setActionWindow().
+           else if (token.startsWith(PREFIX + ACTION)) {
+              portalURL.setActionWindow(decodeControlParameter(token)[0]);
+           }
+           // Action window definition: portalURL.setActionWindow().
+           else if (token.startsWith(PREFIX + AJAX_ACTION)) {
+              portalURL.setAjaxActionWindow(decodeControlParameter(token)[0]);
+           }
+           // Action window definition: portalURL.setActionWindow().
+           else if (token.startsWith(PREFIX + PARTIAL_ACTION)) {
+              portalURL.setPartialActionWindow(decodeControlParameter(token)[0]);
+           }
+           // Cacheability definition: portalURL.setCacheability().
+           else if (token.startsWith(PREFIX + CACHE_LEVEL)) {
+              portalURL.setCacheability(decodeControlParameter(token)[0]);
+           }
+           // ResourceID definition: portalURL.setResourceID().
+           else if (token.startsWith(PREFIX + RESOURCE_ID)) {
+              portalURL.setResourceID(decodeControlParameter(token)[0]);
+           }
+           // Window state definition: portalURL.setWindowState().
+           else if (token.startsWith(PREFIX + WINDOW_STATE)) {
+              String[] decoded = decodeControlParameter(token);
+              portalURL.setWindowState(decoded[0], new WindowState(decoded[1]));
+           }
+           // Portlet mode definition: portalURL.setPortletMode().
+           else if (token.startsWith(PREFIX + PORTLET_MODE)) {
+              String[] decoded = decodeControlParameter(token);
+              portalURL.setPortletMode(decoded[0], new PortletMode(decoded[1]));
+           }
+           // Portal URL parameter: portalURL.addParameter().
+           else if(token.startsWith(PREFIX + RENDER_PARAM)) {
+              String value = null;
+              if (st.hasMoreTokens()) {
+                 value = st.nextToken();
+              }
+              //set the
+              PortalURLParameter param = decodeParameter(token, value);
+              portalURL.addParameter(param);
 
 
-        	}
-            else if (token.startsWith(PREFIX + PRIVATE_RENDER_PARAM)){
-                String value = null;
-                if (st.hasMoreTokens()) {
-                    value = st.nextToken();
-                }
-                PortalURLParameter param = decodePublicParameter(token, value);
-                if( param != null )
-                {
-                    //set private (Resource) parameter in portalURL
-                    portalURL.getPrivateRenderParameters().put(param.getName(), param.getValues());
-                }
-            }
-        	else if (token.startsWith(PREFIX + PUBLIC_RENDER_PARAM)){
-        		String value = null;
-        		if (st.hasMoreTokens()) {
-        			value = st.nextToken();
-        		}
-        		PortalURLParameter param = decodePublicParameter(token, value);
-        		if( param != null )
-        		{
-        			//set public parameter in portalURL
-    	    		portalURL.addPublicParameterCurrent(param.getName(), param.getValues());
-        		}
-        	}
+           }
+           else if (token.startsWith(PREFIX + PRIVATE_RENDER_PARAM)){
+              String value = null;
+              if (st.hasMoreTokens()) {
+                 value = st.nextToken();
+              }
+              PortalURLParameter param = decodePublicParameter(token, value);
+              if( param != null )
+              {
+                 //set private (Resource) parameter in portalURL
+                 portalURL.getPrivateRenderParameters().put(param.getName(), param.getValues());
+              }
+           }
+           else if (token.startsWith(PREFIX + PUBLIC_RENDER_PARAM)){
+              String value = null;
+              if (st.hasMoreTokens()) {
+                 value = st.nextToken();
+              }
+              PortalURLParameter param = decodePublicParameter(token, value);
+              if( param != null )
+              {
+                 //set public parameter in portalURL
+                 portalURL.addPublicParameterCurrent(param.getName(), param.getValues());
+              }
+           }
         }
         if (renderPath.length() > 0) {
-            portalURL.setRenderPath(renderPath.toString());
+           portalURL.setRenderPath(renderPath.toString());
         }
 
         // Return the portal URL.

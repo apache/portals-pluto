@@ -132,7 +132,7 @@ public class PortalDriverServlet extends HttpServlet {
                 		+ portletWindow.getId().getStringId());
             }
             try {
-                container.doAction(portletWindow, request, response);
+                container.doAction(portletWindow, request, response, true);
             } catch (PortletContainerException ex) {
             	LOG.error(ex.getMessage(), ex);
                 throw new ServletException(ex);

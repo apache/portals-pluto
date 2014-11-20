@@ -100,6 +100,9 @@ public interface PortletContainer {
      * @param portletWindow the portlet Window
      * @param request               the servlet request
      * @param response              the servlet response
+     * @param isRedirect   Flag indicating whether redirect is to be performed. 
+     *                     should be true for Action request and false for Ajax Action or 
+     *                     Partial Action requests.
      * @throws PortletException          if one portlet has trouble fulfilling
      *                                   the request
      * @throws PortletContainerException if the portlet container implementation
@@ -107,7 +110,8 @@ public interface PortletContainer {
      */
     void doAction(PortletWindow portletWindow,
             HttpServletRequest request,
-            HttpServletResponse response)
+            HttpServletResponse response,
+            boolean isRedirect)
     throws PortletException, IOException, PortletContainerException;
 
     /**

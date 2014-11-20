@@ -167,7 +167,7 @@ public class PortalDriverFilter implements Filter {
                     + portletWindow.getId().getStringId());
             }
             try {
-                container.doAction(portletWindow, request, response);
+                container.doAction(portletWindow, request, response, true);
             } catch (PortletContainerException ex) {
                 throw new ServletException(ex);
             } catch (PortletException ex) {

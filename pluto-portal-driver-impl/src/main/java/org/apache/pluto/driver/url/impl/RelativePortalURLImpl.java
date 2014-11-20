@@ -47,6 +47,8 @@ public class RelativePortalURLImpl implements PortalURL {
     private String servletPath;
     private String renderPath;
     private String actionWindow;
+    private String ajaxActionWindow;
+    private String partialActionWindow;
     private String resourceWindow;
     private String cacheLevel;
     private String resourceID;
@@ -118,6 +120,22 @@ public class RelativePortalURLImpl implements PortalURL {
 
     public String getActionWindow() {
         return actionWindow;
+    }
+
+    public void setAjaxActionWindow(String window) {
+        this.ajaxActionWindow = window;
+    }
+
+    public String getAjaxActionWindow() {
+        return ajaxActionWindow;
+    }
+
+    public void setPartialActionWindow(String window) {
+        this.partialActionWindow = window;
+    }
+
+    public String getPartialActionWindow() {
+        return partialActionWindow;
     }
 
     public Map<String, PortletMode> getPortletModes() {

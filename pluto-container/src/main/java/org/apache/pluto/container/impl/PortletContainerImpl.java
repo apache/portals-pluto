@@ -215,8 +215,11 @@ public class PortletContainerImpl implements PortletContainer
     /**
      * Process action for the portlet associated with the given portlet window.
      * @param portletWindow  the portlet window.
-     * @param request  the servlet request.
-     * @param response  the servlet response.
+     * @param request      the servlet request.
+     * @param response     the servlet response.
+     * @param isRedirect   Flag indicating whether redirect is to be performed. 
+     *                     should be true for Action request and false for Ajax Action or 
+     *                     Partial Action requests.
      * @throws PortletException
      * @throws IOException
      * @throws PortletContainerException
@@ -225,7 +228,8 @@ public class PortletContainerImpl implements PortletContainer
      */
     public void doAction(PortletWindow portletWindow,
             HttpServletRequest request,
-            HttpServletResponse response)
+            HttpServletResponse response,
+            boolean isRedirect)
     throws PortletException, IOException, PortletContainerException
     {
         ensureInitialized();
@@ -245,12 +249,16 @@ public class PortletContainerImpl implements PortletContainer
         FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.ACTION_PHASE);
 
         String location = null;
+        String logtxt = "Portlet action";
+        if (isRedirect) {
+           logtxt = "Portlet Ajax or Partial action";
+        }
 
         try
         {
             invoker.action(requestContext, portletRequest, portletResponse, filterManager);
 
-            debugWithName("Portlet action processed for: "
+            debugWithName(logtxt + " processed for: "
                     + portletWindow.getPortletDefinition().getPortletName());
 
             // Mark portlet interaction is completed: backend implementation can flush response state now
@@ -273,9 +281,11 @@ public class PortletContainerImpl implements PortletContainer
         {
             responseContext.release();
         }
-        redirect(request, response, location);
+        if (isRedirect) {
+           redirect(request, response, location);
+        }
 
-        debugWithName("Portlet action done for: " + portletWindow.getPortletDefinition().getPortletName());
+        debugWithName(logtxt + " done for: " + portletWindow.getPortletDefinition().getPortletName());
     }
 
     protected void redirect(HttpServletRequest request, HttpServletResponse response, String location) throws IOException

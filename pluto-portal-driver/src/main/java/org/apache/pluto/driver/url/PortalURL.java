@@ -54,6 +54,16 @@ public interface PortalURL extends Cloneable {
     void setActionWindow(String actionWindow);
 
     String getActionWindow();
+    
+    // Ajax action & partial action for portlet spec 3
+    
+    void setAjaxActionWindow(String window);
+
+    String getAjaxActionWindow();
+    
+    void setPartialActionWindow(String window);
+
+    String getPartialActionWindow();
 
     Map<String, PortletMode> getPortletModes();
 
