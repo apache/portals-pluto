@@ -61,12 +61,10 @@ public class MessageBoxPortlet extends GenericPortlet {
       String style = "\"border-style:solid; border-width:3px; padding:4px; overflow:auto;" + 
            "border-color:#000088; min-height:70px; background:#E0E0E0;\"";
       
-      String aurl = resp.createActionURL().toString();
-      
       writer.write("<div style='clear:both;'>\n");
       writer.write("<div style='float:left;'><h3>Image Viewer</h3></div>\n");
       writer.write("<div style='float:right;'>\n");
-      writer.write("<form action='" + aurl + "' method='post'><input type='submit' name='action' value='clear' /></form>\n");
+      writer.write("<form   onsubmit='return false;'><input id='" + pid + "-clear' type='submit' name='action' value='clear' /></form>\n");
       writer.write("</div>\n");
       writer.write("</div><div style='clear:both;'><hr/>\n");
       writer.write("<h3>Message Box Portlet</h3>\n");
@@ -74,18 +72,44 @@ public class MessageBoxPortlet extends GenericPortlet {
       writer.write("<div id='" + pid + "-responseDiv' style=" + style + "></div>\n");
       writer.write("</div>\n");
    
-      ResourceURL resurl = resp.createResourceURL();
-      
       writer.write("<script>\n");
       writer.write("(function () {\n");
-      writer.write("   var xhr = new XMLHttpRequest();\n");
-      writer.write("   xhr.onreadystatechange=function() {\n");
-      writer.write("      if (xhr.readyState==4 && xhr.status==200) {\n");
-      writer.write("         document.getElementById('" + pid + "-responseDiv').innerHTML=xhr.responseText;\n");
-      writer.write("      }\n");
-      writer.write("   };\n");
-      writer.write("   xhr.open(\"GET\",\"" + resurl.toString() + "\",true);\n");
-      writer.write("   xhr.send();\n");
+      writer.write("   var pid = '" + pid + "',\n");
+      writer.write("       resdiv = '" + pid + "-responseDiv',\n");
+      writer.write("       clrButton = '" + pid + "-clear',\n");
+      writer.write("   \n");
+      writer.write("       state,\n");
+      writer.write("       resparms = {},\n");
+      writer.write("       cacheability = 'cacheLevelPage',\n");
+      writer.write("       portletInit;\n");
+      writer.write("   \n");
+      writer.write("   var update = function (type, state) {\n");
+      writer.write("      console.log(\"Resource Portlet: state updated.\");\n");
+      writer.write("      \n");
+      writer.write("      portletInit.createResourceUrl(resparms, cacheability).then(function (url) {\n");
+      writer.write("         var brdr = (resparms.border == undefined) ? undefined : resparms.border[0];\n");
+      writer.write("         console.log(\"Resource Portlet: got url: \" + url + \", res parm border=\" + brdr);\n");
+      writer.write("         var xhr = new XMLHttpRequest();\n");
+      writer.write("         xhr.onreadystatechange=function() {\n");
+      writer.write("            if (xhr.readyState==4 && xhr.status==200) {\n");
+      writer.write("               document.getElementById(resdiv).innerHTML=xhr.responseText;\n");
+      writer.write("            }\n");
+      writer.write("         };\n");
+      writer.write("         xhr.open(\"GET\",url,true);\n");
+      writer.write("         xhr.send();\n");
+      writer.write("      });\n");
+      writer.write("   }\n");
+      writer.write("   \n");
+      writer.write("   document.getElementById(clrButton).onclick = function () {\n");
+      writer.write("      console.log(\"clear button clicked. \");\n");
+      writer.write("   }\n");
+      writer.write("   \n");
+      writer.write("   portlet.register(pid).then(function (pi) {\n");
+      writer.write("      console.log(\"Message Box portlet registered: \" + pid);\n");
+      writer.write("      portletInit = pi;\n");
+      writer.write("      portletInit.addEventListener(\"portlet.onStateChange\", update);\n");
+      writer.write("   });\n");
+      writer.write("   \n");
       writer.write("})();\n");
       writer.write("</script>\n");
 
@@ -124,8 +148,19 @@ public class MessageBoxPortlet extends GenericPortlet {
       }
       
       String[] msg;
+      int numMsgs = 0;
+      try {
+         numMsgs = Integer.parseInt(req.getParameter(PARAM_NUM_MSGS));
+      } catch (Exception e) {}
+      
+      if (numMsgs == 0) {
+         msgs.clear();
+      }
 
       try {
+         // Both pieces of info are transported in a delimted string rather than 
+         // an array since the Pluto impl doesn't seem to get along with array types as 
+         // event payload types.
          String val = (String) req.getEvent().getValue();
          msg = val.split(DELIM);
       } catch (Exception e) {
@@ -138,7 +173,7 @@ public class MessageBoxPortlet extends GenericPortlet {
       clr = (clr == null) ? "#FFFFFF" : clr;
       
       StringBuffer sb = new StringBuffer();
-      sb.append("<p style='margin:0px 5px 0px 5px; color:" + msg[1] 
+      sb.append("<p style='margin:2px 5px 2px 5px; color:" + msg[1] 
             + "; background-color:" + clr + ";'>");
       sb.append("" + (msgs.size() + 1) + ": " + msg[0]);
       sb.append("</p>");

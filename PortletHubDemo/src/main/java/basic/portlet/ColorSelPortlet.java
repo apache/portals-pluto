@@ -54,7 +54,6 @@ public class ColorSelPortlet extends GenericPortlet {
       
       String pid = resp.getNamespace();
       
-      String msg = req.getParameter(PARAM_ERRMSG);
       String clr = req.getParameter(PARAM_COLOR);
       clr = (clr == null) ? "#FFFFFF" : clr;
       
@@ -75,12 +74,9 @@ public class ColorSelPortlet extends GenericPortlet {
 
       writer.write("   Enter background color (public param):");
       writer.write("   </td><td colspan=3>");
-      writer.write("   <input name='" + PARAM_COLOR + "' type='text' value='" + clr + "' size='10' maxlength='10'>");
-      writer.write("   </td><td>");
-      if (msg != null) {
-         writer.write(msg);
-      }
-      writer.write("   </td></tr><tr><td>");
+      writer.write("   <input id='" + pid + "-color' name='" + PARAM_COLOR + "' type='text' value='" + clr + "' size='10' maxlength='10'>");
+      writer.write("   </td><td><div id='" + pid + "-putMsgHere'>");
+      writer.write("   </div></td></tr><tr><td>");
 
       writer.write("   Select active foreground colors:");
       writer.write("   </td><td>");
