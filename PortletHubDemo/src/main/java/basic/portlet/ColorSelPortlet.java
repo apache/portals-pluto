@@ -18,8 +18,8 @@
 
 package basic.portlet;
 
-import static basic.portlet.Constants.PARAM_COLOR;
-import static basic.portlet.Constants.PARAM_ERRMSG;
+import static basic.portlet.Constants.*;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -27,10 +27,12 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.xml.namespace.QName;
 
 
 /**
@@ -48,20 +50,57 @@ public class ColorSelPortlet extends GenericPortlet {
       
       resp.setContentType("text/html");
       PrintWriter writer = resp.getWriter();
-      writer.write("<h3>Image Background Color Selector</h3><hr/>\n");
+      writer.write("<h3>Color Selector & Message Sender</h3><hr/>\n");
       
       String pid = resp.getNamespace();
       
+      String msg = req.getParameter(PARAM_ERRMSG);
       String clr = req.getParameter(PARAM_COLOR);
       clr = (clr == null) ? "#FFFFFF" : clr;
       
+      String[] vals = req.getParameterValues(PARAM_FG_COLOR);
+      String r = "";
+      String g = "";
+      String b = "";
+      if (vals != null) {
+         for (String v : vals) {
+            if (v.equals(PARAM_FG_RED)) r = "checked";
+            if (v.equals(PARAM_FG_GREEN)) g = "checked";
+            if (v.equals(PARAM_FG_BLUE)) b = "checked";
+         }
+      }
+      
       writer.write("<FORM id='" + pid + "-setParams'  onsubmit='return false;'>");
       writer.write("   <table><tr><td align='left'>");
-      writer.write("   Enter color (public param):");
+
+      writer.write("   Enter background color (public param):");
+      writer.write("   </td><td colspan=3>");
+      writer.write("   <input name='" + PARAM_COLOR + "' type='text' value='" + clr + "' size='10' maxlength='10'>");
       writer.write("   </td><td>");
-      writer.write("   <input id='" + pid + "-color' name='" + PARAM_COLOR + "' type='text' value='' size='10' maxlength='10'>");
+      if (msg != null) {
+         writer.write(msg);
+      }
+      writer.write("   </td></tr><tr><td>");
+
+      writer.write("   Select active foreground colors:");
       writer.write("   </td><td>");
-      writer.write("   <div id='" + pid + "-putMsgHere' style='color: #B00'></div>\n");
+      writer.write("   <input name='" + PARAM_FG_COLOR + "' value='" + PARAM_FG_RED + "' type='checkbox' " + r + ">");
+      writer.write("   </td><td>Red");
+      writer.write("   </td><td>");
+      writer.write("   <input name='" + PARAM_FG_COLOR + "' value='" + PARAM_FG_GREEN + "' type='checkbox' " + g + ">");
+      writer.write("   </td><td>Green");
+      writer.write("   </td><td>");
+      writer.write("   <input name='" + PARAM_FG_COLOR + "' value='" + PARAM_FG_BLUE + "' type='checkbox' " + b + ">");
+      writer.write("   </td><td>Blue");
+
+      writer.write("   </td></tr><tr><td>");
+      writer.write("   Enter message:");
+      writer.write("   </td><td colspan=6>");
+      writer.write("   <input name='" + PARAM_MSG_INPUT + "' type='text' value='' size='50' maxlength='50'>");
+      writer.write("   </td><td>");
+
+      writer.write("   </td></tr><tr><td>");
+      writer.write("   <INPUT VALUE='send' CLASS='portlet-form-button' TYPE='submit'>");
       writer.write("   </td></tr></table>");
       writer.write("</FORM>");
       writer.write("<p><hr/></p>\n");
@@ -135,6 +174,30 @@ public class ColorSelPortlet extends GenericPortlet {
       } else {
          resp.setRenderParameter(PARAM_ERRMSG, "enter color #xxxxxx or #xxx.");
       }
+      
+      String[] vals = req.getParameterValues(PARAM_FG_COLOR);
+      String r = "0";
+      String g = "0";
+      String b = "0";
+      if (vals != null) {
+         for (String v : vals) {
+            if (v.equals(PARAM_FG_RED)) r = "F";
+            if (v.equals(PARAM_FG_GREEN)) g = "F";
+            if (v.equals(PARAM_FG_BLUE)) b = "F";
+         }
+      }
+      
+      if (vals != null) {
+         resp.setRenderParameter(PARAM_FG_COLOR, vals);
+      }
+      
+      String clr = "#" + r + g + b;
+      val = req.getParameter(PARAM_MSG_INPUT);
+      
+      String msg = val + DELIM + clr;
+      QName qn = new QName(EVENT_NAMESPACE, EVENT_NAME);
+      resp.setEvent(qn, msg);
+      
    }
 
 }

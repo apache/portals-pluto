@@ -29,4 +29,18 @@ public class Constants {
    public final static String PARAM_CACHE_PAGE = "pa";
    public final static String PARAM_CACHE_PORTLET = "po";
    public final static String PARAM_CACHE_FULL = "fu";
+   
+   public final static String PARAM_FG_COLOR = "fgcolor";
+   public final static String PARAM_FG_RED = "red";
+   public final static String PARAM_FG_GREEN = "green";
+   public final static String PARAM_FG_BLUE = "blue";
+   public final static String PARAM_MSG_INPUT = "imsg";
+   
+   public final static String PARAM_NUM_MSGS = "numMsgs";
+   public final static String ATTRIB_MSGS = "msgs";
+   
+   public final static String EVENT_NAMESPACE = "http://www.apache.org/portals/pluto/pub-render-params/ResourcePortlet";
+   public final static String EVENT_NAME = "Message";
+   
+   public final static String DELIM = ";%;";
 }
