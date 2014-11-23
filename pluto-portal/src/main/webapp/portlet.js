@@ -688,8 +688,12 @@ var portlet = portlet || {};
    updatePageState = function (upids) {
       var ii;
       
-      for (ii = 0; ii < upids.length; ii++) {
-         _updateStateForPortlet(upids[ii]);
+      if (upids.length === 0) {
+         busy = false;
+      } else {
+         for (ii = 0; ii < upids.length; ii++) {
+            _updateStateForPortlet(upids[ii]);
+         }
       }
 
    },
@@ -732,6 +736,7 @@ var portlet = portlet || {};
       pi.setState(state).then(function (upids) {
          updatePageState(upids);
       }, function (err) {
+         busy = false;
          if (oeListeners[pid]) {
             delay( function () {
                oeListeners[pid].callback('portlet.onError', err);
@@ -921,6 +926,7 @@ var portlet = portlet || {};
       pi.executeAction(parms, element).then(function (upids) {
          updatePageState(upids);
       }, function (err) {
+         busy = false;
          if (oeListeners[pid]) {
             delay( function () {
                oeListeners[pid].callback('portlet.onError', err);

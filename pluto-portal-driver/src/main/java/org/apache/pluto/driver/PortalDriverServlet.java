@@ -155,6 +155,7 @@ public class PortalDriverServlet extends HttpServlet {
           }
           try {
              container.doAction(portletWindow, request, response, false);
+             response.setContentType("application/json");
              PageState ps = new PageState(request);
              Writer writer = response.getWriter();
              String jsondata = ps.toJSONString();

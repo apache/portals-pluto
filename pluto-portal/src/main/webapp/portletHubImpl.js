@@ -140,7 +140,7 @@ var portlet = portlet || {};
     * Throws exception if input state is malformed.
     */
    stateChanged = function (nstate, pid) {
-      var ostate, nparm, oparm, result = false;
+      var ostate, pname, nparm, oparm, result = false;
       
       ostate = pageState[pid].state;
       
@@ -156,9 +156,10 @@ var portlet = portlet || {};
          } else {
             
             // Has a parameter changed or been added?
-            for (nparm in nstate.parameters) {
-               if (nstate.parameters.hasOwnProperty(nparm)) {
-                  oparm = ostate.parameters[nparm];
+            for (pname in nstate.parameters) {
+               if (nstate.parameters.hasOwnProperty(pname)) {
+                  nparm = nstate.parameters[pname];
+                  oparm = ostate.parameters[pname];
                   if (!_isParmEqual(nparm, oparm)) {
                      result = true;
                   }
@@ -166,9 +167,9 @@ var portlet = portlet || {};
             }
             
             // make sure no parameter was deleted
-            for (oparm in ostate.parameters) {
-               if (ostate.parameters.hasOwnProperty(oparm)) {
-                  if (!nstate.parameters[oparm]) {
+            for (pname in ostate.parameters) {
+               if (ostate.parameters.hasOwnProperty(pname)) {
+                  if (!nstate.parameters[pname]) {
                      result = true;
                   }
                }
