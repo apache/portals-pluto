@@ -24,29 +24,8 @@
 
 /**
  * @fileOverview
- * This module provides mock data & functions for the mock portlet hub.
+ * This module provides the implementation for the Pluto portlet hub.
  * <p>
- * The functions encapsulate all mockup-specific implementation details.
- * The intention is that support for a different portal can added by 
- * reimplementing these functions.
- * <p>
- * To implement the portlet hub for your portal, implement the methods 
- * described under "portlet.impl".
- * In order to make the Jasmine tests work with your implementation, the
- * test functions will need to be modified appropiately as well.
- * <p>
- * Sets up data that is used by the Jasmine unit tests as well as by the 
- * portlet hub implementation. In particular, the Jasmine tests need initialization
- * data for the portlets on the page. The portlet hub requires this
- * data as well, so it is being provided through the global name space to be used both
- * by the hub and by the test code.
- * <p> 
- * Later, it should hopefully be possible to use the Jasmine tests with a "live" 
- * portlet hub implementation by making the portlet info on the page 
- * available to Jasmine through this mechanism.
- * <p>
- * A "real" portlet hub implementation would likely obtain this information in a 
- * different manner.
  * 
  * @author Scott Nicklous
  * @copyright IBM Corp., 2014
@@ -153,6 +132,51 @@ var portlet = portlet || {};
       }
 
       return true;
+   },
+   
+   
+   /**
+    * Returns true if input state differs from the current page state.
+    * Throws exception if input state is malformed.
+    */
+   stateChanged = function (nstate, pid) {
+      var ostate, nparm, oparm, result = false;
+      
+      ostate = pageState[pid].state;
+      
+      if (!nstate.portletMode || !nstate.windowState || !nstate.parameters) {
+         throw new Error ("Error decoding state: " + nstate);
+      }
+      
+      if (nstate.portletMode !== ostate.portletMode) {
+         result = true;
+      } else {
+         if (nstate.windowState != ostate.windowState) {
+            result = true;
+         } else {
+            
+            // Has a parameter changed or been added?
+            for (nparm in nstate.parameters) {
+               if (nstate.parameters.hasOwnProperty(nparm)) {
+                  oparm = ostate.parameters[nparm];
+                  if (!_isParmEqual(nparm, oparm)) {
+                     result = true;
+                  }
+               }
+            }
+            
+            // make sure no parameter was deleted
+            for (oparm in ostate.parameters) {
+               if (ostate.parameters.hasOwnProperty(oparm)) {
+                  if (!nstate.parameters[oparm]) {
+                     result = true;
+                  }
+               }
+            }
+         }
+      }
+      
+      return result;
    },
 
    /**
@@ -366,7 +390,6 @@ var portlet = portlet || {};
    /**
     * performs the actual action.
     * 
-    * @param   {string}    type     The URL type
     * @param   {string}    pid      The portlet ID
     * @param   {PortletParameters}    parms      
     *                Additional parameters. May be <code>null</code>
@@ -375,34 +398,44 @@ var portlet = portlet || {};
     * @private 
     */
    executeAction = function (pid, parms, element) {
-      var states, ustr, tpid, state, upids = [];
-   
-      // pretend to create a url, etc. ... for the mockup
-      // we don't need the parms or element
-   
-      // get the mockup data update string and make it into an object.
-      // update each affected portlet client. Makes use of a 
-      // test function for decoding. 
-      
-      ustr = portlet.test.data.updateStrings[pid];
-      upids = updatePageStateFromString(ustr, pid);
-      
-      // Use Promise to allow for potential server communication - 
+      var url;
+
+      console.log("impl: executing action. parms=" + parms + ", element=" + element)
+
+      // create & return promise to caller. 
+
       return new Promise(function (resolve, reject) {
-         var simval = '';
-         if (pid === 'SimulateCommError' && (parms)) {
-            simval = parms.SimulateError;
-            if (simval) {
-               simval = simval[0];
-            }
-         }
+
+         // get the ajax action URL. The Pluto impl creates the URL in JS
+         // therefore no error handling 
+         getUrl("ACTION", pid, parms).then(function (url) {
+            var xhr, upids;
+
+            console.log("ajax action URL: " + url);
             
-         // reject promise of an error is to be simulated
-         if (simval === 'reject') {
-            reject(new Error("Simulated error occurred during action!"));
-         } else {
-            resolve(upids);
-         }
+            if (element) {
+
+            } else {
+               xhr = new XMLHttpRequest();
+               xhr.onreadystatechange = function () {
+                  if (xhr.readyState==4) {
+                     if (xhr.status==200) {
+                        try {
+                           upids = updatePageStateFromString(xhr.responseText, pid);
+                           resolve(upids);
+                        } catch (e) {
+                           reject(new Error("Ajax Action decode status: " + e.message));
+                        }
+                     } else {
+                        reject(new Error("Ajax Action xhr status: " + xhr.statusText));
+                     }
+                  }
+               };
+               xhr.open("POST", url, true);
+                     xhr.send();
+            }
+         });
+            
       });
 
    },
@@ -516,7 +549,7 @@ var portlet = portlet || {};
    getUrl = function (type, pid, parms, cache) {
    
       var url = portlet.impl.getUrlBase(), ca = 'cacheLevelPage', parm, 
-          sep = "", name, names, val, vals, ii, jj, str, id, ids;
+          sep = "", name, names, val, vals, ii, jj, str, id, ids, tpid, prpstrings;
 
       // First add the appropriate window identifier according to URL type.
       // Note that no special window ID is added to a RENDER URL. 
@@ -576,12 +609,22 @@ var portlet = portlet || {};
          }
          url += str;
 
-         // Add the public render parameters
+         // Add the public render parameters for all portlets
+
          str = "";
-         names = pageState[pid].pubParms;
-         for (ii=0; ii < names.length; ii++) {
-            name = names[ii];
-            str += genParmString(pid, name, PUBLIC_RENDER_PARAM);
+         prpstrings = {};
+         for (tpid in pageState) {
+            if (pageState.hasOwnProperty(tpid)) {               
+               names = pageState[tpid].pubParms;
+               for (ii=0; ii < names.length; ii++) {
+                  name = names[ii];
+                  // only need to add parameter once, since it is shared
+                  if (!prpstrings.hasOwnProperty(name)) {
+                     prpstrings[name] = genParmString(tpid, name, PUBLIC_RENDER_PARAM);
+                     str += prpstrings[name];
+                  }
+               }
+            }
          }
          url += str;
 
@@ -623,32 +666,32 @@ var portlet = portlet || {};
    },
 
    
-   // decodes the update strings
+   // decodes the update strings. The update string is 
+   // a JSON object containing the entire page state. This decoder 
+   // returns an object containing the state for portlets whose 
+   // state has changed as compared to the current page state.
    decodeUpdateString = function (ustr) {
-      var states = {}, state, pid, ii, ind,
-          pids = ustr.match(/~~&.*?&/g); // reluctant match
-      
-      // If there is no match, bad input data
-      if (pids === null) {
-         throwIllegalArgumentException("Invalid update string.");
-      }
-      
-      // For each portlet being updated, get the new data
-      ii = pids.length;
-      while ((ii = ii -1) >= 0) {
-         if (pids[ii].length < 5) {
-            // the portlet ID must be at least 1 character long
-            throwIllegalArgumentException("Invalid portlet ID in update string.");
+      var states = {}, ostate, nstate, pid, ps, npids = 0, cpids = 0;
+
+      ps = JSON.parse(ustr);
+      for (pid in ps) {
+         if (ps.hasOwnProperty(pid)) {
+            npids++;
+            nstate = ps[pid].state;
+            ostate = pageState[pid].state;
+            
+            if (!nstate || !ostate) {
+               throw new Error ("Invalid update string. ostate=" + ostate + ", nstate=" + nstate);
+            }
+            
+            if (stateChanged(nstate, pid)) {
+               states[pid] = cloneState(nstate);
+               cpids++;
+            }
          }
-         
-         // trim extra stuff off of the portlet id
-         ind = pids[ii].length - 1;
-         pid = pids[ii].substring(3, ind);
-      
-         state = portlet.test.action.getState(ustr, pid);
-         states[pid] = state;
-         
       }
+      
+      console.log("decoded state for " + npids + " portlets. # changed = " + cpids);
       
       return states;
    };
@@ -709,7 +752,7 @@ var portlet = portlet || {};
 			/**
 			 * Perform the Ajax action request
 			 */
-			executeAction : function (parms, element, callback, onError) {return executeAction(pid, parms, element, callback, onError);},
+			executeAction : function (parms, element) {return executeAction(pid, parms, element);},
    
 			/**
 			 * Get a URL of the specified type - resource or partial action

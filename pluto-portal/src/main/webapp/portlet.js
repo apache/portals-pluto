@@ -1436,7 +1436,9 @@ var portlet = portlet || {};
              */
             action : function (actParams, element) {
                var ii, arg, type, parms = null, el = null;
-         
+
+               console.log("Executing action for portlet: " + portletId);
+
                // check arguments. make sure there is a maximum of two
                // args and determine the types. Check values as possible.
                if (arguments.length > 2) {

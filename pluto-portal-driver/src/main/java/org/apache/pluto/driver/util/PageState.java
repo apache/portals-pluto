@@ -155,7 +155,7 @@ public class PageState {
          Enumeration<String> prps = pc.getPublicRenderParameterNames();
          while (prps.hasMoreElements()) {
             String prp = prps.nextElement();
-            prpstring.append(sep + "'" + prp + "'");
+            prpstring.append(sep + "\"" + prp + "\"");
             sep = ", ";
          }
       } catch (Exception e) {}
@@ -175,7 +175,7 @@ public class PageState {
          Set<PortletMode> allowedPMs = drvrConfig.getSupportedPortletModes(portletId);
          String sep = "";
          for (PortletMode pm : allowedPMs) {
-            pmstring.append(sep + "'" + pm.toString() + "'");
+            pmstring.append(sep + "\"" + pm.toString() + "\"");
             sep = ", ";
          }
       } catch (Exception e) {}
@@ -195,7 +195,7 @@ public class PageState {
          Set<WindowState> allowedWSs = drvrConfig.getSupportedWindowStates(portletId, "text/html");
          String sep = "";
          for (WindowState ws : allowedWSs) {
-            wsstring.append(sep + "'" + ws.toString() + "'");
+            wsstring.append(sep + "\"" + ws.toString() + "\"");
             sep = ", ";
          }
       } catch (Exception e) {}
@@ -249,23 +249,28 @@ public class PageState {
       Collection<PortalURLParameter> pups = getParameters();
       Map<String, String[]> pubparms = getPublicParameters();
       
+      boolean sep = false;
       for (String pid : getPortletIds()) {
-         json.append("   '" + getNameSpace(pid) + "' : {\n");
-         json.append("      'state' : {\n");
-         json.append("         'parameters' : {\n");
+         if (sep) {
+            json.append(",\n");
+         }
+         sep = true;
+         json.append("   \"" + getNameSpace(pid) + "\" : {\n");
+         json.append("      \"state\" : {\n");
+         json.append("         \"parameters\" : {\n");
 
          // Add the portlet parameters
-         String c1 = "            '";
+         String c1 = "            \"";
          for (PortalURLParameter pup : pups){
             if (pup.getWindowId().equals(pid)){
-               json.append(c1  + pup.getName() + "' : [");
+               json.append(c1  + pup.getName() + "\" : [");
                String c2 = "";
                for (String val : pup.getValues()) {
-                  json.append(c2 + " '" + val + "'");
+                  json.append(c2 + " \"" + val + "\"");
                   c2 = ",";
                }
                json.append("]");
-               c1 = ",\n            '";
+               c1 = ",\n            \"";
             }
          }
          
@@ -274,33 +279,33 @@ public class PageState {
          Set<String> prpnames = getPRPNames(pid);
          for (String prp : pubparms.keySet()) {
             if (prpnames.contains(prp)) {
-               json.append(c1 + prp + "' : [");
+               json.append(c1 + prp + "\" : [");
                String c2 = "";
                for (String val : (String[])pubparms.get(prp)) {
-                  json.append(c2 + " '" + val + "'");
+                  json.append(c2 + " \"" + val + "\"");
                   c2 = ",";
                }
                json.append("]");
-               c1 = ",\n            '";
+               c1 = ",\n            \"";
             }
          }
 
          json.append("         }, \n");
-         json.append("         'portletMode' : '" + getPortletMode(pid) + "', \n");
-         json.append("         'windowState' : '" + getWindowState(pid) + "'\n");
+         json.append("         \"portletMode\" : \"" + getPortletMode(pid) + "\", \n");
+         json.append("         \"windowState\" : \"" + getWindowState(pid) + "\"\n");
          json.append("      },\n");
-         json.append("      'pubParms' : [" + getPRPNamesAsString(pid) + "],\n");
-         json.append("      'allowedPM' : [" + getPortletModesAsString(pid) + "],\n");
-         json.append("      'allowedWS' : [" + getWindowStatesAsString(pid) + "],\n");
-         json.append("      'renderData' : {\n");
-         json.append("         'renderData' : null,\n");
-         json.append("         'mimeType' : \"text/plain\"\n");
+         json.append("      \"pubParms\" : [" + getPRPNamesAsString(pid) + "],\n");
+         json.append("      \"allowedPM\" : [" + getPortletModesAsString(pid) + "],\n");
+         json.append("      \"allowedWS\" : [" + getWindowStatesAsString(pid) + "],\n");
+         json.append("      \"renderData\" : {\n");
+         json.append("         \"renderData\" : null,\n");
+         json.append("         \"mimeType\" : \"text/plain\"\n");
          json.append("      },\n");
-         json.append("      'urlpid' : '" + pid + "'\n");
-         json.append("   },\n");
+         json.append("      \"urlpid\" : \"" + pid + "\"\n");
+         json.append("   }");
       }
       
-      json.append("}");
+      json.append("\n}");
       return json.toString();
    }
 }

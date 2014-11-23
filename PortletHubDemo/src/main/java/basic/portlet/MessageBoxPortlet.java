@@ -102,6 +102,7 @@ public class MessageBoxPortlet extends GenericPortlet {
       writer.write("   \n");
       writer.write("   document.getElementById(clrButton).onclick = function () {\n");
       writer.write("      console.log(\"clear button clicked. \");\n");
+      writer.write("      portletInit.action();\n");
       writer.write("   }\n");
       writer.write("   \n");
       writer.write("   portlet.register(pid).then(function (pi) {\n");
