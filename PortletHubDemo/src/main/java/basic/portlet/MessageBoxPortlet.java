@@ -123,19 +123,18 @@ public class MessageBoxPortlet extends GenericPortlet {
       // the only action for this portlet is to reset the stored messages
       
       String actionName = req.getParameter("action");
-      if ("clear".equals(actionName)) {
-         
-         ArrayList<String> msgs = new ArrayList<String>();
-         StringBuffer sb = new StringBuffer();
-         sb.append("<p style='margin:0px 5px 0px 5px; color:#00D;"
-               + " background-color:#AAF;'>");
-         sb.append("Reset - No messages.");
-         sb.append("</p>");
-         msgs.add(sb.toString());
+      logger.fine("MBP: Resetting messages. numMsgs = 0,  actionName = " + actionName);
 
-         resp.setRenderParameter(PARAM_NUM_MSGS, "0");
-         req.getPortletSession().setAttribute(ATTRIB_MSGS, msgs);
-      }
+      ArrayList<String> msgs = new ArrayList<String>();
+      StringBuffer sb = new StringBuffer();
+      sb.append("<p style='margin:2px 5px 2px 5px; color:#00D;"
+            + " background-color:#AAF;'>");
+      sb.append("Reset - No messages.");
+      sb.append("</p>");
+      msgs.add(sb.toString());
+
+      resp.setRenderParameter(PARAM_NUM_MSGS, "0");
+      req.getPortletSession().setAttribute(ATTRIB_MSGS, msgs);
    }
    
    @SuppressWarnings("unchecked")
@@ -157,6 +156,8 @@ public class MessageBoxPortlet extends GenericPortlet {
       if (numMsgs == 0) {
          msgs.clear();
       }
+      
+      logger.fine("MBP: Processing message event. Current # messages = " + msgs.size());
 
       try {
          // Both pieces of info are transported in a delimted string rather than 
@@ -180,6 +181,8 @@ public class MessageBoxPortlet extends GenericPortlet {
       sb.append("</p>");
       
       msgs.add(sb.toString());
+      
+      logger.fine("Adding message: " + sb.toString());
 
       resp.setRenderParameter(PARAM_NUM_MSGS, Integer.toString(msgs.size()));
       req.getPortletSession().setAttribute(ATTRIB_MSGS, msgs);
