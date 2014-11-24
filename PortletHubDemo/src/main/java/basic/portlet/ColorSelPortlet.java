@@ -70,35 +70,35 @@ public class ColorSelPortlet extends GenericPortlet {
       }
       
       writer.write("<FORM id='" + pid + "-setParams'  onsubmit='return false;'>");
-      writer.write("   <table><tr><td align='left'>");
+      writer.write("   <table><tr><td align='left'>\n");
 
-      writer.write("   Enter background color (public param):");
-      writer.write("   </td><td colspan=3>");
-      writer.write("   <input id='" + pid + "-color' name='" + PARAM_COLOR + "' type='text' value='" + clr + "' size='10' maxlength='10'>");
-      writer.write("   </td><td><div id='" + pid + "-putMsgHere'>");
-      writer.write("   </div></td></tr><tr><td>");
+      writer.write("   Enter background color (public param):\n");
+      writer.write("   </td><td colspan=3>\n");
+      writer.write("   <input id='" + pid + "-color' name='" + PARAM_COLOR + "' type='text' value='" + clr + "' size='10' maxlength='10'>\n");
+      writer.write("   </td><td><div id='" + pid + "-putMsgHere'>\n");
+      writer.write("   </div></td></tr><tr><td>\n");
 
-      writer.write("   Select active foreground colors:");
-      writer.write("   </td><td>");
-      writer.write("   <input name='" + PARAM_FG_COLOR + "' value='" + PARAM_FG_RED + "' type='checkbox' " + r + ">");
-      writer.write("   </td><td>Red");
-      writer.write("   </td><td>");
-      writer.write("   <input name='" + PARAM_FG_COLOR + "' value='" + PARAM_FG_GREEN + "' type='checkbox' " + g + ">");
-      writer.write("   </td><td>Green");
-      writer.write("   </td><td>");
-      writer.write("   <input name='" + PARAM_FG_COLOR + "' value='" + PARAM_FG_BLUE + "' type='checkbox' " + b + ">");
-      writer.write("   </td><td>Blue");
+      writer.write("   Select active foreground colors:\n");
+      writer.write("   </td><td>\n");
+      writer.write("   <input id='" + pid + "-red' name='" + PARAM_FG_COLOR + "' value='" + PARAM_FG_RED + "' type='checkbox' " + r + ">\n");
+      writer.write("   </td><td>Red\n");
+      writer.write("   </td><td>\n");
+      writer.write("   <input id='" + pid + "-green'  name='" + PARAM_FG_COLOR + "' value='" + PARAM_FG_GREEN + "' type='checkbox' " + g + ">\n");
+      writer.write("   </td><td>Green\n");
+      writer.write("   </td><td>\n");
+      writer.write("   <input id='" + pid + "-blue'  name='" + PARAM_FG_COLOR + "' value='" + PARAM_FG_BLUE + "' type='checkbox' " + b + ">\n");
+      writer.write("   </td><td>Blue\n");
 
-      writer.write("   </td></tr><tr><td>");
-      writer.write("   Enter message:");
-      writer.write("   </td><td colspan=6>");
-      writer.write("   <input name='" + PARAM_MSG_INPUT + "' type='text' value='' size='50' maxlength='50'>");
-      writer.write("   </td><td>");
+      writer.write("   </td></tr><tr><td>\n");
+      writer.write("   Enter message:\n");
+      writer.write("   </td><td colspan=6>\n");
+      writer.write("   <input id='" + pid + "-msg' name='" + PARAM_MSG_INPUT + "' type='text' value='' size='50' maxlength='50'>\n");
+      writer.write("   </td><td>\n");
 
-      writer.write("   </td></tr><tr><td>");
-      writer.write("   <INPUT VALUE='send' CLASS='portlet-form-button' TYPE='submit'>");
-      writer.write("   </td></tr></table>");
-      writer.write("</FORM>");
+      writer.write("   </td></tr><tr><td>\n");
+      writer.write("   <INPUT id ='" + pid + "-send' VALUE='send' TYPE='button'>\n");
+      writer.write("   </td></tr></table>\n");
+      writer.write("</FORM>\n");
       writer.write("<p><hr/></p>\n");
 
       writer.write("<script>\n");
@@ -106,6 +106,11 @@ public class ColorSelPortlet extends GenericPortlet {
       writer.write("   var pid = '" + pid + "',\n");
       writer.write("       colorEntry = '" + pid + "-color',\n");
       writer.write("       msgdiv = '" + pid + "-putMsgHere',\n");
+      writer.write("       sendbtn = '" + pid + "-send',\n");
+      writer.write("       rid = '" + pid + "-red',\n");
+      writer.write("       gid = '" + pid + "-green',\n");
+      writer.write("       bid = '" + pid + "-blue',\n");
+      writer.write("       mid = '" + pid + "-msg',\n");
       writer.write("       currState,\n");
       writer.write("       portletInit;\n");
 
@@ -136,6 +141,22 @@ public class ColorSelPortlet extends GenericPortlet {
       writer.write("   document.getElementById(colorEntry).onchange = handleEntry;\n");
       writer.write("   \n");
 
+      writer.write("   var handleSend = function () {\n");
+      writer.write("      var parms = {}, clrs = [], msg = \"\";\n");
+      writer.write("      console.log(\"CSP: sending message.\");");
+      writer.write("      parms['action'] = ['send'];\n");
+      writer.write("      if (document.getElementById(rid).checked) clrs.push(\"red\"); \n");
+      writer.write("      if (document.getElementById(gid).checked) clrs.push(\"green\"); \n");
+      writer.write("      if (document.getElementById(bid).checked) clrs.push(\"blue\"); \n");
+      writer.write("      if (clrs.length > 0) {\n");
+      writer.write("         parms['fgcolor'] = clrs;\n");
+      writer.write("      }\n");
+      writer.write("      parms['imsg'] = [document.getElementById(mid).value];\n");
+      writer.write("      portletInit.action(parms);\n");
+      writer.write("   }\n");
+      writer.write("   document.getElementById(sendbtn).onclick = handleSend;\n");
+      writer.write("   \n");
+
       writer.write("   portlet.register(pid).then(function (pi) {\n");
       writer.write("      console.log(\"CSP Color Selection Portlet: registered: \" + pid);\n");
       writer.write("      portletInit = pi;\n");
@@ -159,7 +180,7 @@ public class ColorSelPortlet extends GenericPortlet {
          throws PortletException, IOException {
       
       // pass the action params from the form submission as render parameters
-      resp.setRenderParameter(PARAM_ERRMSG, "");
+      resp.setRenderParameter(PARAM_ERRMSG, " "); // hack as Pluto does not support deleting parameters
       String val = req.getParameter(PARAM_COLOR);
       if (val != null) {
          if (val.matches("^#(?:[A-Fa-f0-9]{3}){1,2}$")) {

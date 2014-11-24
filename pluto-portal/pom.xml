@@ -187,6 +187,11 @@
           <skip>true</skip>
         </configuration>
       </plugin>
+      <!-- Javascript compressor plugin -->
+      <plugin>
+         <groupId>net.alchim31.maven</groupId>
+         <artifactId>yuicompressor-maven-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
 

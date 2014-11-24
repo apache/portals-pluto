@@ -556,6 +556,24 @@ TODO: Check if we need all of them. -->
             <autoVersionSubmodules>true</autoVersionSubmodules>
           </configuration>
         </plugin>
+
+			<!-- Javascript compressor plugin -->
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>yuicompressor-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>compress-js</id>
+						<goals>
+							<goal>compress</goal>
+						</goals>
+						<configuration>
+							<jswarn>false</jswarn>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
       </plugins>
     </pluginManagement>
 
