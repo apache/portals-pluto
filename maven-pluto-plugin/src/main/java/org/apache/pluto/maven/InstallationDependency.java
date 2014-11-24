@@ -47,7 +47,7 @@ class InstallationDependency {
     }
 
     public static final InstallationDependency PORTLET_API =
-        new InstallationDependency("org.apache.portals", "portlet-api_2.0_spec", 
+        new InstallationDependency("org.apache.portals.pluto", "portlet-api_2.0_spec", 
                 VERSION_PROPERTIES.getProperty("portals.portlet2-api-spec.version"));
 
     public static final InstallationDependency CONTAINER_API =

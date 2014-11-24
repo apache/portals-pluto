@@ -48,10 +48,12 @@
 
     <!-- Specification Libraries =========================================== -->
     <dependency>
-      <groupId>org.apache.portals</groupId>
+      <groupId>org.apache.portals.pluto</groupId>
       <artifactId>portlet-api_2.0_spec</artifactId>
+      <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
+
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>

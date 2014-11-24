@@ -12,10 +12,10 @@
 
    <dependencies>
       <dependency>
-         <groupId>javax.portlet</groupId>
-         <artifactId>portlet-api</artifactId>
-         <version>2.0</version>
-         <scope>provided</scope>
+        <groupId>org.apache.portals.pluto</groupId>
+        <artifactId>portlet-api_2.0_spec</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
       </dependency>
       <dependency>
          <groupId>javax.servlet</groupId>

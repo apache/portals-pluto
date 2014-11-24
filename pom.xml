@@ -256,7 +256,7 @@ generate mailto links. -->
     <pluto.container.name>Pluto</pluto.container.name>
     <javax.portlet.version.major>2</javax.portlet.version.major>
     <javax.portlet.version.minor>0</javax.portlet.version.minor>
-    <portals.portlet2-api-spec.version>1.0</portals.portlet2-api-spec.version>
+    <portals.portlet2-api-spec.version>${project.version}</portals.portlet2-api-spec.version>
     <servlet-api.version>2.4</servlet-api.version>
     <jsp-api.version>2.0</jsp-api.version>
     <jstl.version>1.1.2</jstl.version>
@@ -598,6 +598,9 @@ TODO: Check if we need all of them. -->
       
       <!-- Pluto Modules ======================================================= -->
       <modules>
+        <!-- Portlet API module (spec -->
+        <module>portlet-api_2.0_spec</module>
+
         <!-- Pluto Container API -->
         <module>pluto-container-api</module>
 
