@@ -22,6 +22,7 @@ import java.util.Map;
 import javax.portlet.CacheControl;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletResourceResponseContext;
@@ -75,4 +76,15 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
     {
         return getServletRequest().getHeaders("accept");
     }
+
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceRequest#getPageState()
+    */
+   public String getPageState() {
+      // The page state is provided by the driver servlet via a request attribute.
+      // The attribute is only set if a partial action request is being processed.
+      HttpServletRequest req = requestContext.getServletRequest();
+      String ps = (String) req.getAttribute("PartialActionPageState");
+      return ps;
+   }
 }

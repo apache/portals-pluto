@@ -171,6 +171,13 @@ public class ResourceRequestWrapper extends PortletRequestWrapper implements Res
     public String getCacheability() {
         return request.getCacheability();
     }
+
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceRequest#getPageState()
+    */
+   public String getPageState() {
+      return request.getPageState();
+   }
     
 
 }

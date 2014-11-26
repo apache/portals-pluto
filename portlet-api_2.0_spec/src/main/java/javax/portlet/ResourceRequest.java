@@ -83,6 +83,21 @@ public interface ResourceRequest extends ClientDataRequest {
      *          if no resource ID was set on the URL. 
      */
     public String getResourceID();
+    
+    /**
+     * Returns a <code>String</code> representing the current page state.
+     * 
+     * The content of the returned value is unspecified. It is to be passed to the
+     * Portlet Hub in order to conclude a Partial Action processing sequence. 
+     * <code>null</code> is a valid return value.
+     * 
+     * This call is only valid during Partial Action processing. If called at other times,
+     * the returned value is unspecified.
+     * 
+     * @return String to be passed to the Portlet Hub to conclude a Partial Action
+     *         processing sequence.
+     */
+    public String getPageState();
  
     /**
      * Returns a <code>Map</code> of the private render parameters of this request.

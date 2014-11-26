@@ -184,7 +184,12 @@ public class PortalDriverServlet extends HttpServlet {
           }
           try {
              container.doAction(portletWindow, request, response, false);
-             // TO DO: make page state data available to portlet thru ResourceRequest
+             // The page state is made available to the ResourceRequest via a 
+             // request attribute
+             PageState ps = new PageState(request);
+             String jsondata = ps.toJSONString();
+             LOG.debug("Partial Action: adding page state attribute to servlet request: " + jsondata);
+             request.setAttribute("PartialActionPageState", jsondata);
              container.doServeResource(portletWindow, request, response);
           } catch (PortletContainerException ex) {
              LOG.error(ex.getMessage(), ex);
