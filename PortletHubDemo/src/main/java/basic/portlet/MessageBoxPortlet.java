@@ -33,6 +33,7 @@ import javax.portlet.EventResponse;
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -55,64 +56,11 @@ public class MessageBoxPortlet extends GenericPortlet {
          logger.logp(Level.FINE, this.getClass().getName(), "doView", "Entry");
       }
       
-      String pid = resp.getNamespace();
       resp.setContentType("text/html");
-      PrintWriter writer = resp.getWriter();
-      String style = "\"border-style:solid; border-width:3px; padding:4px; overflow:auto;" + 
-           "border-color:#000088; min-height:70px; background:#E0E0E0;\"";
-      
-      writer.write("<div style='clear:both;'>\n");
-      writer.write("<div style='float:left;'><h3>Image Viewer</h3></div>\n");
-      writer.write("<div style='float:right;'>\n");
-      writer.write("<form   onsubmit='return false;'><input id='" + pid + "-clear' type='submit' name='action' value='clear' /></form>\n");
-      writer.write("</div>\n");
-      writer.write("</div><div style='clear:both;'><hr/>\n");
-      writer.write("<h3>Message Box Portlet</h3>\n");
-      writer.write("<p>Messages that arrive via events from other portlets are displayed in this box.</p>\n");
-      writer.write("<div id='" + pid + "-responseDiv' style=" + style + "></div>\n");
-      writer.write("</div>\n");
-   
-      writer.write("<script>\n");
-      writer.write("(function () {\n");
-      writer.write("   var pid = '" + pid + "',\n");
-      writer.write("       resdiv = '" + pid + "-responseDiv',\n");
-      writer.write("       clrButton = '" + pid + "-clear',\n");
-      writer.write("   \n");
-      writer.write("       state,\n");
-      writer.write("       resparms = {},\n");
-      writer.write("       cacheability = 'cacheLevelPage',\n");
-      writer.write("       portletInit;\n");
-      writer.write("   \n");
-      writer.write("   var update = function (type, state) {\n");
-      writer.write("      console.log(\"Resource Portlet: state updated.\");\n");
-      writer.write("      \n");
-      writer.write("      portletInit.createResourceUrl(resparms, cacheability).then(function (url) {\n");
-      writer.write("         var brdr = (resparms.border == undefined) ? undefined : resparms.border[0];\n");
-      writer.write("         console.log(\"Resource Portlet: got url: \" + url + \", res parm border=\" + brdr);\n");
-      writer.write("         var xhr = new XMLHttpRequest();\n");
-      writer.write("         xhr.onreadystatechange=function() {\n");
-      writer.write("            if (xhr.readyState==4 && xhr.status==200) {\n");
-      writer.write("               document.getElementById(resdiv).innerHTML=xhr.responseText;\n");
-      writer.write("            }\n");
-      writer.write("         };\n");
-      writer.write("         xhr.open(\"GET\",url,true);\n");
-      writer.write("         xhr.send();\n");
-      writer.write("      });\n");
-      writer.write("   }\n");
-      writer.write("   \n");
-      writer.write("   document.getElementById(clrButton).onclick = function () {\n");
-      writer.write("      console.log(\"clear button clicked. \");\n");
-      writer.write("      portletInit.action();\n");
-      writer.write("   }\n");
-      writer.write("   \n");
-      writer.write("   portlet.register(pid).then(function (pi) {\n");
-      writer.write("      console.log(\"Message Box portlet registered: \" + pid);\n");
-      writer.write("      portletInit = pi;\n");
-      writer.write("      portletInit.addEventListener(\"portlet.onStateChange\", update);\n");
-      writer.write("   });\n");
-      writer.write("   \n");
-      writer.write("})();\n");
-      writer.write("</script>\n");
+
+      PortletRequestDispatcher rd = getPortletContext().getRequestDispatcher(
+            "/WEB-INF/jsp/view-mbp.jsp");
+      rd.include(req, resp);
 
    }
 

@@ -76,7 +76,7 @@
                 <dependency>
                     <groupId>javax.servlet</groupId>
                     <artifactId>jstl</artifactId>
-                    <scope>provided</scope>
+                    <scope>compile</scope>
                     <exclusions>
                         <exclusion>
                             <groupId>javax.servlet</groupId>
@@ -87,7 +87,7 @@
                 <dependency>
                     <groupId>taglibs</groupId>
                     <artifactId>standard</artifactId>
-                    <scope>provided</scope>
+                    <scope>compile</scope>
                 </dependency>
          </dependencies>
          
@@ -104,7 +104,6 @@
                <plugin>
                   <groupId>org.apache.portals.pluto</groupId>
                   <artifactId>maven-pluto-plugin</artifactId>
-                  <version>${project.version}</version>
                   <dependencies>
                      <dependency>
                         <groupId>org.apache.portals.pluto</groupId>
