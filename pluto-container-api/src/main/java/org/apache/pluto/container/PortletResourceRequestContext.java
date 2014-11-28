@@ -27,4 +27,10 @@ public interface PortletResourceRequestContext extends PortletRequestContext
     String getResourceID();
     String getCacheability();
     Map<String, String[]> getPrivateRenderParameterMap();
+    
+    /**
+     * get page state when handling a partial action request
+     * @return
+     */
+    String getPageState();
 }

@@ -31,12 +31,11 @@ limitations under the License.
 %>
 
 <div style='clear:both;'>
-<div style='float:left;'><h3>Image Viewer</h3></div>
+<div style='float:left;'><h3>Message Box Portlet</h3></div>
 <div style='float:right;'>
 <form   onsubmit='return false;'><input id='<portlet:namespace/>-clear' type='submit' name='action' value='clear' /></form>
 </div>
 </div><div style='clear:both;'><hr/>
-<h3>Message Box Portlet</h3>
 <p>Messages that arrive via events from other portlets are displayed in this box.</p>
 <div id='<portlet:namespace/>-responseDiv' style="<%=style.toString()%>"></div>
 </div>
@@ -55,14 +54,13 @@ limitations under the License.
    
    // Handler for onStateChange event
    update = function (type, s) {
-      console.log("Resource Portlet: state updated. Event type = " + type);
+      console.log("MBP: state updated. Event type = " + type);
       state = s;
       
       portletInit.createResourceUrl(resparms, cacheability).then(function (url) {
-         var brdr = (resparms.border === undefined) ? undefined : resparms.border[0],
-             xhr = new XMLHttpRequest();
-         console.log("Resource Portlet: got url: " + url + ", res parm border=" + brdr);
-         xhr.onreadystatechange=function() {
+         var xhr = new XMLHttpRequest();
+         console.log("MBP: got url: " + url);
+         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                document.getElementById(resdiv).innerHTML=xhr.responseText;
             }
@@ -74,13 +72,13 @@ limitations under the License.
    
    // Handler for "clear" button. execute an action which clears the stored messages
    document.getElementById(clrButton).onclick = function () {
-      console.log("clear button clicked. ");
+      console.log("MBP: clear button clicked. ");
       portletInit.action();
    };
    
    // Register portlet with Portlet Hub; add onStateChange listener 
    portlet.register(pid).then(function (pi) {
-      console.log("Message Box portlet registered: " + pid);
+      console.log("MBP: Message Box portlet registered: " + pid);
       portletInit = pi;
       portletInit.addEventListener("portlet.onStateChange", update);
    });

@@ -63,12 +63,12 @@ limitations under the License.
    
    // Update function called by the Portlet Hub when an onStatechange event occurs. 
    update = function (type, state) {
-      console.log("Resource Portlet: state updated. event type=" + type);
+      console.log("IVP: state updated. event type=" + type);
       
       portletInit.createResourceUrl(resparms, cacheability).then(function (url) {
          var brdr = (resparms.border === undefined) ? undefined : resparms.border[0],
              xhr = new XMLHttpRequest();
-         console.log("Resource Portlet: got url: " + url + ", res parm border=" + brdr);
+         console.log("IVP: got url: " + url + ", res parm border=" + brdr);
          xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                document.getElementById(resdiv).innerHTML=xhr.responseText;
@@ -81,7 +81,7 @@ limitations under the License.
    
    // Handler for cacheability radio buttons
    handleCA = function () {
-      console.log("cacheability button clicked: " + this.value);
+      console.log("IVP: cacheability button clicked: " + this.value);
       if (cacheability !== this.value) {
          cacheability = this.value;
          update();
@@ -96,7 +96,7 @@ limitations under the License.
    // Handler for 'border' checkbox 
    document.getElementById(border).checked = false;
    document.getElementById(border).onclick = function () {
-      console.log("border checked: " + this.checked);
+      console.log("IVP: border checked: " + this.checked);
       if (this.checked) {
          resparms.border = ['#00F'];
       } else {
@@ -108,7 +108,7 @@ limitations under the License.
    // Register this portlet with the Portlet Hub and add event listener for 
    // the onStateChange event
    portlet.register(pid).then(function (pi) {
-      console.log("registered: " + pid);
+      console.log("IVP: registered: " + pid);
       portletInit = pi;
       portletInit.addEventListener("portlet.onStateChange", update);
    });

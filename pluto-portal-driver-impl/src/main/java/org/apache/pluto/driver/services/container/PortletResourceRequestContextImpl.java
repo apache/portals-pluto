@@ -32,10 +32,17 @@ import org.apache.pluto.container.PortletWindow;
 public class PortletResourceRequestContextImpl extends PortletRequestContextImpl implements
                 PortletResourceRequestContext
 {
+   private String pageState;
+   
     public PortletResourceRequestContextImpl(PortletContainer container, HttpServletRequest containerRequest,
-                                             HttpServletResponse containerResponse, PortletWindow window)
+                                             HttpServletResponse containerResponse, PortletWindow window,
+                                             String pageState)
     {
-        super(container, containerRequest, containerResponse, window, true);
+       // if pageState != null, we're dealing with a Partial Action request, so 
+       // the servlet parameters are not to be used. Otherwise, resource params could be
+       // passed as servlet parameters.
+        super(container, containerRequest, containerResponse, window, (pageState==null));
+        this.pageState = pageState;
     }
 
     public String getCacheability()
@@ -52,4 +59,11 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
     {
         return getPortalURL().getResourceID();
     }
+
+   /* (non-Javadoc)
+    * @see org.apache.pluto.container.PortletResourceRequestContext#getPageState()
+    */
+   public String getPageState() {
+      return pageState;
+   }
 }

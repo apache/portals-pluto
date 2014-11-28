@@ -1,5 +1,5 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
+  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
@@ -184,13 +184,18 @@ public class PortalDriverServlet extends HttpServlet {
           }
           try {
              container.doAction(portletWindow, request, response, false);
-             // The page state is made available to the ResourceRequest via a 
-             // request attribute
+             
+             // The page state is made available to the ResourceRequest by passing 
+             // it through all layers, which allows for special case processing at
+             // some points.
+             
              PageState ps = new PageState(request);
              String jsondata = ps.toJSONString();
-             LOG.debug("Partial Action: adding page state attribute to servlet request: " + jsondata);
-             request.setAttribute("PartialActionPageState", jsondata);
-             container.doServeResource(portletWindow, request, response);
+             if (LOG.isDebugEnabled()) {
+                LOG.debug("Partial Action: dump page state:\n" + jsondata);
+             }
+             
+             container.doServeResource(portletWindow, request, response, jsondata);
           } catch (PortletContainerException ex) {
              LOG.error(ex.getMessage(), ex);
              throw new ServletException(ex);
@@ -213,7 +218,7 @@ public class PortalDriverServlet extends HttpServlet {
                    + portletWindow.getId().getStringId());
           }
           try {
-             container.doServeResource(portletWindow, request, response);
+             container.doServeResource(portletWindow, request, response, null);
           } catch (PortletContainerException ex) {
              LOG.error(ex.getMessage(), ex);
              throw new ServletException(ex);

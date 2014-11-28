@@ -92,6 +92,26 @@
       </supported-publishing-event>
       <supported-public-render-parameter>color</supported-public-render-parameter>
    </portlet>
+
+   <portlet>
+      <portlet-name>PartialActionPortlet</portlet-name>
+      <display-name>Partial Action Portlet</display-name>
+      
+      <portlet-class>basic.portlet.PartialActionPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>PH Partial Action Portlet</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>color</supported-public-render-parameter>
+   </portlet>
    
    <event-definition>
       <qname>rp:Message</qname>
