@@ -360,6 +360,32 @@ var portlet = portlet || {};
          }
       });
    },
+   
+   
+   /**
+    * Update page state passed in after partial action. The list of 
+    * ID's of updated portlets is passed back through a promise in order
+    * to decouple the layers.
+    * 
+    * @param   {string}    ustr     The 
+    * @param   {string}    pid      The portlet ID
+    * @private 
+    */
+   updatePageState = function (ustr, pid) {
+            
+      // Use Promise to allow for potential server communication - 
+      return new Promise(function (resolve, reject) {
+         var upids;
+               
+         try {
+            upids = updatePageStateFromString(ustr, pid);
+            resolve(upids);
+         } catch (e) {
+            reject(new Error("Partial Action Action decode status: " + e.message));
+         }
+      });
+
+   },
 
       
    /**
@@ -549,7 +575,7 @@ var portlet = portlet || {};
     */
    getUrl = function (type, pid, parms, cache) {
    
-      var url = portlet.impl.getUrlBase(), ca = 'cacheLevelPage', parm, 
+      var url = portlet.impl.getUrlBase(), ca = 'cacheLevelPage', parm, isAction = false,
           sep = "", name, names, val, vals, ii, jj, str, id, ids, tpid, prpstrings;
 
       // First add the appropriate window identifier according to URL type.
@@ -564,9 +590,11 @@ var portlet = portlet || {};
          url += "/" + PREFIX + CACHE_LEVEL + plutoEncode(ca);
       } else if (type === "ACTION") {
          // Add Ajax Action window
+         isAction = true;
          url += "/" + PREFIX + AJAX_ACTION + plutoEncode(pageState[pid].urlpid);
       } else if (type === "PARTIAL_ACTION") {
          // Add Partial Action window
+         isAction = true;
          url += "/" + PREFIX + PARTIAL_ACTION + plutoEncode(pageState[pid].urlpid);
       }
       
@@ -598,17 +626,20 @@ var portlet = portlet || {};
 
          }
 
-         // add the state for the target portlet
-         url += genPMWSString(pid);  // portlet mode & window state
-         str = "";
-         names = pageState[pid].state.parameters;
-         for (name in names) {
-            // Public render parameters are encoded separately
-            if (names.hasOwnProperty(name) && !isPRP(pid, name)) {
-               str += genParmString(pid, name, PRIVATE_RENDER_PARAM);
+         // add the state for the target portlet for on-action urls.
+         // (Action URLs have only action parameters in the query string)
+         if (!isAction) {
+            url += genPMWSString(pid);  // portlet mode & window state
+            str = "";
+            names = pageState[pid].state.parameters;
+            for (name in names) {
+               // Public render parameters are encoded separately
+               if (names.hasOwnProperty(name) && !isPRP(pid, name)) {
+                  str += genParmString(pid, name, PRIVATE_RENDER_PARAM);
+               }
             }
+            url += str;
          }
-         url += str;
 
          // Add the public render parameters for all portlets
 
@@ -764,7 +795,7 @@ var portlet = portlet || {};
 			 * Decode the update string returned by the partial action request.
 			 * Returns array of IDs of portlets to be updated.
 			 */
-			decodeUpdateString : function (ustr) {return updatePageStateFromString(ustr, pid);},
+			decodeUpdateString : function (ustr) {return updatePageState(ustr, pid);},
    
       };            
       

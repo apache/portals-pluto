@@ -956,18 +956,23 @@ var portlet = portlet || {};
     * @callback   setPageState
     */
    setPageState = function (pid, ustr) {
-      var upids, pi;
-
-      // check for exactly 2 arguments of type 'string'
-      checkArguments(arguments, 2, 2, [ 'string', 'string' ]);
+      var pi;
 
       // convert page state into an object.
       // update each affected portlet client. Makes use of a 
       // mockup-specific function for decoding. 
 
       pi = _registeredPortlets[pid];
-      upids = pi.decodeUpdateString(ustr);
-      updatePageState(upids);
+      pi.decodeUpdateString(ustr).then(function (upids) {
+         updatePageState(upids);
+      }, function (err) {
+         busy = false;
+         if (oeListeners[pid]) {
+            delay( function () {
+               oeListeners[pid].callback('portlet.onError', err);
+            }, 0);
+         }
+      });
 
    };
 

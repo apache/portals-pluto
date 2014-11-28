@@ -26,9 +26,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletResourceResponseContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ResourceRequestImpl extends ClientDataRequestImpl implements ResourceRequest
 {
+
+   /** Internal logger. */
+   private static final Logger LOG = LoggerFactory.getLogger(ResourceRequestImpl.class);
+
     private PortletResourceRequestContext requestContext;
     private CacheControl cacheControl;
     
@@ -81,10 +87,34 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
     * @see javax.portlet.ResourceRequest#getPageState()
     */
    public String getPageState() {
-      // The page state is provided by the driver servlet via a request attribute.
-      // The attribute is only set if a partial action request is being processed.
-      HttpServletRequest req = requestContext.getServletRequest();
-      String ps = (String) req.getAttribute("PartialActionPageState");
+      // The page state is provided through the request context.
+      String ps = requestContext.getPageState();
+      if (LOG.isDebugEnabled()) {
+         LOG.debug("ResourceRequest#getPageState called.");
+      }
       return ps;
+   }
+   
+   // Debug code - intercept getParameter call & dump all parameters to trace
+   @Override
+   public String getParameter(String name) {
+      String val = super.getParameter(name);
+      if (LOG.isDebugEnabled()) {
+         Map<String, String[]> pmap = super.getParameterMap();
+         StringBuffer txt = new StringBuffer(1024);
+         txt.append("Resource Request parameter map dump:\n");
+         for (String n : pmap.keySet()) {
+            txt.append("Name: " + n + ", Values: ");
+            String[] vals = pmap.get(n);
+            String sep = "";
+            for (String v : vals) {
+               txt.append(sep + v);
+               sep = ", ";
+            }
+            txt.append("\n");
+         }
+         LOG.debug(txt.toString());
+      }
+      return val;
    }
 }

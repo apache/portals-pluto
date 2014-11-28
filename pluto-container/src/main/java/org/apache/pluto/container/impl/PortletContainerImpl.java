@@ -179,7 +179,8 @@ public class PortletContainerImpl implements PortletContainer
      */
     public void doServeResource(PortletWindow portletWindow,
             HttpServletRequest request,
-            HttpServletResponse response)
+            HttpServletResponse response,
+            String pageState)
     throws PortletException, IOException, PortletContainerException
     {
         ensureInitialized();
@@ -191,7 +192,7 @@ public class PortletContainerImpl implements PortletContainer
         PortletEnvironmentService envService = getContainerServices().getPortletEnvironmentService();
         PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
 
-        PortletResourceRequestContext requestContext = rcService.getPortletResourceRequestContext(this, request, response, portletWindow);
+        PortletResourceRequestContext requestContext = rcService.getPortletResourceRequestContext(this, request, response, portletWindow, pageState);
         PortletResourceResponseContext responseContext = rcService.getPortletResourceResponseContext(this, request, response, portletWindow);
         ResourceRequest portletRequest = envService.createResourceRequest(requestContext, responseContext);
         ResourceResponse portletResponse = envService.createResourceResponse(responseContext, requestContext.getCacheability());

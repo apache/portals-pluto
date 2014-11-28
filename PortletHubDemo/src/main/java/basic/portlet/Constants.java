@@ -36,6 +36,8 @@ public class Constants {
    public final static String PARAM_FG_BLUE = "blue";
    public final static String PARAM_MSG_INPUT = "imsg";
    
+   public final static String PARAM_NUM_ACTIONS = "numActions";
+
    public final static String PARAM_NUM_MSGS = "numMsgs";
    public final static String ATTRIB_MSGS = "msgs";
    
