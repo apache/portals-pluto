@@ -958,6 +958,10 @@ var portlet = portlet || {};
    setPageState = function (pid, ustr) {
       var pi;
 
+      // Perform some checks on the update string. allow null string.
+      if ((ustr === undefined) || ((ustr !== null) && (typeof ustr !== 'string'))) {
+         throwIllegalArgumentException("Invalid update string: " + ustr);
+      }
       // convert page state into an object.
       // update each affected portlet client. Makes use of a 
       // mockup-specific function for decoding. 
