@@ -118,7 +118,7 @@ limitations under the License.
       if ((newColor === undefined) || (newColor === null) || !newColor.match("^#(?:[A-Fa-f0-9]{3}){1,2}$")) {
          document.getElementById(msgdiv).innerHTML = 'Bad color. Enter #xxxxxx or #xxx.';
       } else {
-         newState = portletInit.cloneState(currState);
+         newState = currState.clone();
          newState.parameters.color = [newColor];
          portletInit.setPortletState(newState);
       }

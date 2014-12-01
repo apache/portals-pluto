@@ -59,7 +59,7 @@ limitations under the License.
       console.log("ISP: image selected (radio): " + this.value);
       
       if (currState.parameters.imgName !== this.value) {
-         var newState = portletInit.cloneState(currState);
+         var newState = currState.clone();
          newState.parameters.imgName = [this.value];
          portletInit.setPortletState(newState);
       }
@@ -70,7 +70,7 @@ limitations under the License.
       console.log("ISP: image selected (dropdown): " + this.value);
       
       if (currState.parameters.imgName !== this.value) {
-         var newState = portletInit.cloneState(currState);
+         var newState = currState.clone();
          newState.parameters.imgName = [this.value];
          portletInit.setPortletState(newState);
       }
@@ -134,7 +134,7 @@ limitations under the License.
    handleST = function () {
       console.log("ISP: select display type clicked: " + this.value);
       if (currState.parameters.selType !==  this.value) {
-         var newState = portletInit.cloneState(currState);
+         var newState = currState.clone();
          newState.parameters.selType = [this.value];
          portletInit.setPortletState(newState);
       }
