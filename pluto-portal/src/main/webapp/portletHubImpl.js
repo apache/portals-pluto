@@ -58,11 +58,10 @@ var portlet = portlet || {};
    isValidId = function (pid) {
       var id;
       for (id in pageState) {
-         if (!pageState.hasOwnProperty(id)) {
-            continue;
-         }
-         if (pid === id) {
-            return true;
+         if (pageState.hasOwnProperty(id)) {
+            if (pid === id) {
+               return true;
+            }
          }
       }
       return false;
@@ -86,17 +85,6 @@ var portlet = portlet || {};
     */
    getParmVal = function (pid, name) {
       return pageState[pid].state.parameters[name];
-   },
-   
-   /**
-    * gets parameter value
-    */
-   setParmVal = function (pid, name, val) {
-      if (val === undefined) {
-         delete pageState[pid].state.parameters[name];
-      } else {
-         pageState[pid].state.parameters[name] = val.slice(0);
-      }
    },
 
    /**
@@ -151,7 +139,7 @@ var portlet = portlet || {};
       if (nstate.portletMode !== ostate.portletMode) {
          result = true;
       } else {
-         if (nstate.windowState != ostate.windowState) {
+         if (nstate.windowState !== ostate.windowState) {
             result = true;
          } else {
             
@@ -262,7 +250,9 @@ var portlet = portlet || {};
       }, key, oldParams = aState.parameters;
    
       for (key in oldParams) {
-         newParams[key] = oldParams[key].slice(0); 
+         if (oldParams.hasOwnProperty(key)) {
+            newParams[key] = oldParams[key].slice(0);
+         }
       }
    
       return newState;
@@ -360,31 +350,36 @@ var portlet = portlet || {};
          }
       });
    },
-   
-   
-   /**
-    * Update page state passed in after partial action. The list of 
-    * ID's of updated portlets is passed back through a promise in order
-    * to decouple the layers.
-    * 
-    * @param   {string}    ustr     The 
-    * @param   {string}    pid      The portlet ID
-    * @private 
-    */
-   updatePageState = function (ustr, pid) {
-            
-      // Use Promise to allow for potential server communication - 
-      return new Promise(function (resolve, reject) {
-         var upids;
-               
-         try {
-            upids = updatePageStateFromString(ustr, pid);
-            resolve(upids);
-         } catch (e) {
-            reject(new Error("Partial Action Action decode status: " + e.message));
-         }
-      });
 
+   
+   // decodes the update strings. The update string is 
+   // a JSON object containing the entire page state. This decoder 
+   // returns an object containing the state for portlets whose 
+   // state has changed as compared to the current page state.
+   decodeUpdateString = function (ustr) {
+      var states = {}, ostate, nstate, pid, ps, npids = 0, cpids = 0;
+
+      ps = JSON.parse(ustr);
+      for (pid in ps) {
+         if (ps.hasOwnProperty(pid)) {
+            npids++;
+            nstate = ps[pid].state;
+            ostate = pageState[pid].state;
+            
+            if (!nstate || !ostate) {
+               throw new Error ("Invalid update string. ostate=" + ostate + ", nstate=" + nstate);
+            }
+            
+            if (stateChanged(nstate, pid)) {
+               states[pid] = cloneState(nstate);
+               cpids++;
+            }
+         }
+      }
+      
+      console.log("decoded state for " + npids + " portlets. # changed = " + cpids);
+      
+      return states;
    },
 
       
@@ -412,57 +407,29 @@ var portlet = portlet || {};
 
       return upids;
    },
-
-      
+   
+   
    /**
-    * performs the actual action.
+    * Update page state passed in after partial action. The list of 
+    * ID's of updated portlets is passed back through a promise in order
+    * to decouple the layers.
     * 
+    * @param   {string}    ustr     The 
     * @param   {string}    pid      The portlet ID
-    * @param   {PortletParameters}    parms      
-    *                Additional parameters. May be <code>null</code>
-    * @param   {HTMLFormElement}    Form to be submitted
-    *                               May be <code>null</code> 
     * @private 
     */
-   executeAction = function (pid, parms, element) {
-      var url;
-
-      console.log("impl: executing action. parms=" + parms + ", element=" + element)
-
-      // create & return promise to caller. 
-
+   updatePageState = function (ustr, pid) {
+            
+      // Use Promise to allow for potential server communication - 
       return new Promise(function (resolve, reject) {
-
-         // get the ajax action URL. The Pluto impl creates the URL in JS
-         // therefore no error handling 
-         getUrl("ACTION", pid, parms).then(function (url) {
-            var xhr, upids;
-
-            console.log("ajax action URL: " + url);
-            
-            if (element) {
-
-            } else {
-               xhr = new XMLHttpRequest();
-               xhr.onreadystatechange = function () {
-                  if (xhr.readyState==4) {
-                     if (xhr.status==200) {
-                        try {
-                           upids = updatePageStateFromString(xhr.responseText, pid);
-                           resolve(upids);
-                        } catch (e) {
-                           reject(new Error("Ajax Action decode status: " + e.message));
-                        }
-                     } else {
-                        reject(new Error("Ajax Action xhr status: " + xhr.statusText));
-                     }
-                  }
-               };
-               xhr.open("POST", url, true);
-                     xhr.send();
-            }
-         });
-            
+         var upids;
+               
+         try {
+            upids = updatePageStateFromString(ustr, pid);
+            resolve(upids);
+         } catch (e) {
+            reject(new Error("Partial Action Action decode status: " + e.message));
+         }
       });
 
    },
@@ -530,7 +497,7 @@ var portlet = portlet || {};
       // as opposed to namespace form -
       
       if (type === RENDER_PARAM) {
-         wid = plutoEncode(pageState[pid].urlpid)
+         wid = plutoEncode(pageState[pid].urlpid);
       }
       
       // If values are present, encode the multivalued parameter string
@@ -576,7 +543,7 @@ var portlet = portlet || {};
    getUrl = function (type, pid, parms, cache) {
    
       var url = portlet.impl.getUrlBase(), ca = 'cacheLevelPage', parm, isAction = false,
-          sep = "", name, names, val, vals, ii, jj, str, id, ids, tpid, prpstrings;
+          sep = "", name, names, vals, ii, str, id, ids, tpid, prpstrings;
 
       // First add the appropriate window identifier according to URL type.
       // Note that no special window ID is added to a RENDER URL. 
@@ -678,54 +645,65 @@ var portlet = portlet || {};
       }
 
       // Use Promise to allow for potential server communication - 
-      return new Promise(function (resolve, reject) {
+      return new Promise(function (resolve) {
          resolve(url);
       });
    },
-   
-   
+
+      
    /**
-    * Exception thrown when a portlet hub method is provided with an invalid argument.
-    * @typedef    IllegalArgumentException 
-    * @property   {string}    name     The exception name, equal to "IllegalArgumentException"
-    * @property   {string}    message  An optional message that provides more detail about the exception
+    * performs the actual action.
+    * 
+    * @param   {string}    pid      The portlet ID
+    * @param   {PortletParameters}    parms      
+    *                Additional parameters. May be <code>null</code>
+    * @param   {HTMLFormElement}    Form to be submitted
+    *                               May be <code>null</code> 
+    * @private 
     */
-   throwIllegalArgumentException = function (msg) {
-      throw {
-         name : "IllegalArgumentException",
-         message : msg
-      };
-   },
+   executeAction = function (pid, parms, element) {
 
-   
-   // decodes the update strings. The update string is 
-   // a JSON object containing the entire page state. This decoder 
-   // returns an object containing the state for portlets whose 
-   // state has changed as compared to the current page state.
-   decodeUpdateString = function (ustr) {
-      var states = {}, ostate, nstate, pid, ps, npids = 0, cpids = 0;
+      console.log("impl: executing action. parms=" + parms + ", element=" + element);
 
-      ps = JSON.parse(ustr);
-      for (pid in ps) {
-         if (ps.hasOwnProperty(pid)) {
-            npids++;
-            nstate = ps[pid].state;
-            ostate = pageState[pid].state;
+      // create & return promise to caller. 
+
+      return new Promise(function (resolve, reject) {
+
+         // get the ajax action URL. The Pluto impl creates the URL in JS
+         // therefore no error handling 
+         getUrl("ACTION", pid, parms).then(function (url) {
+            var xhr, upids, fd;
+
+            console.log("ajax action URL: " + url);
             
-            if (!nstate || !ostate) {
-               throw new Error ("Invalid update string. ostate=" + ostate + ", nstate=" + nstate);
+            xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+               if (xhr.readyState === 4) {
+                  if (xhr.status === 200) {
+                     try {
+                        upids = updatePageStateFromString(xhr.responseText, pid);
+                        resolve(upids);
+                     } catch (e) {
+                        reject(new Error("Ajax Action decode status: " + e.message));
+                     }
+                  } else {
+                     reject(new Error("Ajax Action xhr status: " + xhr.statusText));
+                  }
+               }
+            };
+            xhr.open("POST", url, true);
+            if (element) {
+               fd = new FormData(element);
+               console.log("ajax action: POST using FormData object: " + fd);
+               xhr.send(fd);
+            } else {
+               console.log("ajax action: POST using URL with parameters");
+               xhr.send();
             }
+         });
             
-            if (stateChanged(nstate, pid)) {
-               states[pid] = cloneState(nstate);
-               cpids++;
-            }
-         }
-      }
-      
-      console.log("decoded state for " + npids + " portlets. # changed = " + cpids);
-      
-      return states;
+      });
+
    };
 
    
@@ -755,47 +733,47 @@ var portlet = portlet || {};
       // stubs for accessing data for this portlet
       var stubs = {
    
-			/**
-			 * Get allowed window states for portlet
-			 */
-			getAllowedWS : function () {return getAllowedWS(pid);},
+         /**
+          * Get allowed window states for portlet
+          */
+         getAllowedWS : function () {return getAllowedWS(pid);},
    
-			/**
-			 * Get allowed portlet modes for portlet
-			 */
-			getAllowedPM : function () {return getAllowedPM(pid);},
+         /**
+          * Get allowed portlet modes for portlet
+          */
+         getAllowedPM : function () {return getAllowedPM(pid);},
    
-			/**
-			 * Get render data for portlet, if any
-			 */
-			getRenderData : function () {return getRenderData(pid);},
+         /**
+          * Get render data for portlet, if any
+          */
+         getRenderData : function () {return getRenderData(pid);},
    
-			/**
-			 * Get current portlet state
-			 */
-			getState : function () {return getState(pid);},
+         /**
+          * Get current portlet state
+          */
+         getState : function () {return getState(pid);},
    
-			/**
-			 * Set new portlet state. Returns promise fullfilled with an array of
-			 * IDs of portlets whose state have been modified.
-			 */
-			setState : function (state) {return setState(pid, state);},
+         /**
+          * Set new portlet state. Returns promise fullfilled with an array of
+          * IDs of portlets whose state have been modified.
+          */
+         setState : function (state) {return setState(pid, state);},
    
-			/**
-			 * Perform the Ajax action request
-			 */
-			executeAction : function (parms, element) {return executeAction(pid, parms, element);},
+         /**
+          * Perform the Ajax action request
+          */
+         executeAction : function (parms, element) {return executeAction(pid, parms, element);},
    
-			/**
-			 * Get a URL of the specified type - resource or partial action
-			 */
-			getUrl : function (type, parms, cache) {return getUrl(type, pid, parms, cache);},
+         /**
+          * Get a URL of the specified type - resource or partial action
+          */
+         getUrl : function (type, parms, cache) {return getUrl(type, pid, parms, cache);},
    
-			/**
-			 * Decode the update string returned by the partial action request.
-			 * Returns array of IDs of portlets to be updated.
-			 */
-			decodeUpdateString : function (ustr) {return updatePageState(ustr, pid);},
+         /**
+          * Decode the update string returned by the partial action request.
+          * Returns array of IDs of portlets to be updated.
+          */
+         decodeUpdateString : function (ustr) {return updatePageState(ustr, pid);}
    
       };            
       
@@ -829,4 +807,4 @@ var portlet = portlet || {};
       getIds : getIds
    }; 
    
-})();
+}());

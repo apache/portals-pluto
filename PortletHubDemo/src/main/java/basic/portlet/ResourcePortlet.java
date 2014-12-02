@@ -34,6 +34,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -93,13 +94,24 @@ public class ResourcePortlet extends GenericPortlet {
       
       String clr = req.getParameter(PARAM_COLOR);
       clr = (clr == null) ? "#FFFFFF" : clr;
+      
+      // add action button if cacheability allows -
+      PortletURL aurl = null;
+      String bmu = "<p>Action URL could not be created.</p>";
+      try {
+         aurl = resp.createActionURL();
+      } catch (Exception e) {}
+      if (aurl != null) {
+         bmu = "<form  METHOD='POST' ACTION='" + aurl + "'><input id='<portlet:namespace/>-clear' type='submit' name='action' value='Action' /></form>";
+      }
 
       writer.write("<div style='background-color:" + clr + ";'>\n");
       writer.write("   <table style='background-color:" + clr + ";'>");
       writer.write("   <tr><td align='center' style='background-color:" + clr + ";'>");
       writer.write("   <img src='" + ctx + imgDir + "'" + imgStyle + ">\n");
       writer.write("   </td><td style='background-color:" + clr + ";'>");
-      writer.write("   Cacheability: " + ca);
+      writer.write("   <p>" + bmu + "</p>");
+      writer.write("   <p>Cacheability: " + ca + "</p>");
       writer.write("   </td></tr>");
       writer.write("   </table>");
       writer.write("</div>\n");

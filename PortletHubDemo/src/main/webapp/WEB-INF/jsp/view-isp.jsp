@@ -51,8 +51,8 @@ limitations under the License.
        st_dropdown = '<portlet:namespace/>-dropdown',
        selBox = '<portlet:namespace/>-selBox',
    
-       currState,
-       portletInit,
+       currState = {},
+       hub,
    
    // Set image name PRP if radio button clicked - 
    handleImgRadio = function () {
@@ -60,8 +60,8 @@ limitations under the License.
       
       if (currState.parameters.imgName !== this.value) {
          var newState = currState.clone();
-         newState.parameters.imgName = [this.value];
-         portletInit.setPortletState(newState);
+         newState.p.setValue('imgName', this.value);
+         hub.setPortletState(newState);
       }
    },
    
@@ -71,21 +71,21 @@ limitations under the License.
       
       if (currState.parameters.imgName !== this.value) {
          var newState = currState.clone();
-         newState.parameters.imgName = [this.value];
-         portletInit.setPortletState(newState);
+         newState.p.setValue('imgName', this.value);
+         hub.setPortletState(newState);
       }
    },
    
    // Handler for onStateChange event
    update = function (type, state) {
-      var oldST = ((currState === undefined) || (currState.parameters.selType === undefined)) ? undefined : currState.parameters.selType[0],
-          newST = (state.parameters.selType === undefined) ? undefined : state.parameters.selType[0],
-          newImg = (state.parameters.imgName === undefined) ? undefined : state.parameters.imgName[0];
+      var oldST = currState.p.getValue('selType'),
+          newST = state.p.getValue('selType', 'radio'),
+          newImg = state.p.getValue('imgName');
           
       console.log("ISP: state updated. type=" + type + ", selType=" + newST + ", imgName=" + newImg);
       
-      if ((currState === undefined) || (oldST !== newST)) {
-         portletInit.createResourceUrl({}).then(function (url) {
+      if (oldST !== newST) {
+         hub.createResourceUrl({}).then(function (url) {
             console.log("ISP: got url: " + url);
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange=function() {
@@ -94,7 +94,7 @@ limitations under the License.
 
                   // default is radio buttons
                   var ii, f = document.getElementById(fid);
-                  if ((newST === undefined) || (newST === 'radio')) {
+                  if (newST === 'radio') {
                      for (ii=0; ii < f.imgName.length; ii++) {
                         console.log("ISP: adding selection handler for: " + f.imgName[ii].value);
                         f.imgName[ii].onclick = handleImgRadio;
@@ -135,8 +135,8 @@ limitations under the License.
       console.log("ISP: select display type clicked: " + this.value);
       if (currState.parameters.selType !==  this.value) {
          var newState = currState.clone();
-         newState.parameters.selType = [this.value];
-         portletInit.setPortletState(newState);
+         newState.p.setValue('selType', this.value);
+         hub.setPortletState(newState);
       }
    };
    
@@ -147,8 +147,9 @@ limitations under the License.
    // Register with Portlet Hub, add listener for onStateChange event
    portlet.register(pid).then(function (pi) {
       console.log("ISP Image Selection Portlet: registered: " + pid);
-      portletInit = pi;
-      portletInit.addEventListener("portlet.onStateChange", update);
+      hub = pi;
+      currState = hub.newState();
+      hub.addEventListener("portlet.onStateChange", update);
    });
    
    

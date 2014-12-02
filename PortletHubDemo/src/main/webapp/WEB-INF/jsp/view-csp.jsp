@@ -42,34 +42,43 @@ limitations under the License.
       }
 %>
 
-<FORM id='<portlet:namespace/>-setParams'  onsubmit='return false;'>
+<form onsubmit='return false;'>
+  <table><tr>
+     <td align='left'>Enter background color (public param):</td>
+     <td>
+        <input id='<portlet:namespace/>-color' name='<%=PARAM_COLOR%>' type='text' value='<%=clr%>' size='10' maxlength='10'>
+     </td>
+     <td><div id='<portlet:namespace/>-putMsgHere'></div></td>
+  </tr></table>
+</form>
+<hr/>
+<FORM id='<portlet:namespace/>-setParams' method='POST'>
    <table><tr><td align='left'>
-
-   Enter background color (public param):
-   </td><td colspan=3>
-   <input id='<portlet:namespace/>-color' name='" + PARAM_COLOR + "' type='text' value='<%=clr%>' size='10' maxlength='10'>
-   </td><td><div id='<portlet:namespace/>-putMsgHere'>
-   </div></td></tr><tr><td>
-
    Select active foreground colors:
    </td><td>
-   <input id='<portlet:namespace/>-red' name='" + PARAM_FG_COLOR + "' value='" + PARAM_FG_RED + "' type='checkbox' <%=r%>>
-   </td><td>Red
+   <input id='<portlet:namespace/>-red' name='<%=PARAM_FG_COLOR%>' value='<%=PARAM_FG_RED%>' type='checkbox' <%=r%>>
+   Red
    </td><td>
-   <input id='<portlet:namespace/>-green'  name='" + PARAM_FG_COLOR + "' value='" + PARAM_FG_GREEN + "' type='checkbox' <%=g%>>
-   </td><td>Green
+   <input id='<portlet:namespace/>-green'  name='<%=PARAM_FG_COLOR%>' value='<%=PARAM_FG_GREEN%>' type='checkbox' <%=g%>>
+   Green
    </td><td>
-   <input id='<portlet:namespace/>-blue'  name='" + PARAM_FG_COLOR + "' value='" + PARAM_FG_BLUE + "' type='checkbox' <%=b%>>
-   </td><td>Blue
+   <input id='<portlet:namespace/>-blue'  name='<%=PARAM_FG_COLOR%>' value='<%=PARAM_FG_BLUE%>' type='checkbox' <%=b%>>
+   Blue
 
    </td></tr><tr><td>
    Enter message:
-   </td><td colspan=6>
-   <input id='<portlet:namespace/>-msg' name='" + PARAM_MSG_INPUT + "' type='text' value='' size='50' maxlength='50'>
+   </td><td colspan=3>
+   <input id='<portlet:namespace/>-msg' name='<%=PARAM_MSG_INPUT%>' type='text' value='' size='50' maxlength='50'>
    </td><td>
 
    </td></tr><tr><td>
-   <INPUT id ='<portlet:namespace/>-send' VALUE='send' TYPE='button'>
+   Form submission:
+   </td><td>
+   <input id='<portlet:namespace/>sType-url' type='radio' name='sType' value='url' checked>URL
+   </td><td>
+   <input id='<portlet:namespace/>sType-form' type='radio' name='sType' value='form'>Form
+   </td><td>
+   <INPUT id ='<portlet:namespace/>-send' VALUE='send' TYPE='submit'>
    </td></tr></table>
 </FORM>
 <p><hr/></p>
@@ -86,16 +95,18 @@ limitations under the License.
        gid = '<portlet:namespace/>-green',
        bid = '<portlet:namespace/>-blue',
        mid = '<portlet:namespace/>-msg',
+       formid = '<portlet:namespace/>-setParams',
+       sidform = '<portlet:namespace/>sType-form',
        currState,
-       portletInit,
+       hub,
 
        
    // Handler for onStateChange event
    update = function (type, state) {
-      var oldColor = ((currState === undefined) || (currState.parameters.color === undefined)) ? '#FFFFFF' : currState.parameters.color[0],
-          newColor = (state.parameters.color === undefined) ? '#FFFFFF' : state.parameters.color[0];
+      var oldColor = currState.p.getValue('color'),
+          newColor = state.p.getValue('color', '#FFFFFF');
       console.log("CSP: state updated. Type=" + type + ", color=" + newColor);
-      if ((currState === undefined) || (newColor !== oldColor)) {
+      if (newColor !== oldColor) {
          document.getElementById(msgdiv).innerHTML = '';
          document.getElementById(colorEntry).value = newColor;
       }
@@ -106,8 +117,9 @@ limitations under the License.
    // Register portlet with Portlet Hub. Add listener for onStateChange event.
    portlet.register(pid).then(function (pi) {
       console.log("CSP Color Selection Portlet: registered: " + pid);
-      portletInit = pi;
-      portletInit.addEventListener("portlet.onStateChange", update);
+      hub = pi;
+      currState = hub.newState();
+      hub.addEventListener("portlet.onStateChange", update);
    });
    
 
@@ -119,32 +131,42 @@ limitations under the License.
          document.getElementById(msgdiv).innerHTML = 'Bad color. Enter #xxxxxx or #xxx.';
       } else {
          newState = currState.clone();
-         newState.parameters.color = [newColor];
-         portletInit.setPortletState(newState);
+         newState.p.setValue('color', newColor);
+         hub.setPortletState(newState);
       }
    };
    
 
    // Handler for 'send' button click. Perform partial action.
-   document.getElementById(sendbtn).onclick = function () {
-      var parms = {}, clrs = [];
-      console.log("CSP: sending message.");
-      parms.action = ['send'];
-      if (document.getElementById(rid).checked) {
-         clrs.push("red");
-      } 
-      if (document.getElementById(gid).checked) {
-         clrs.push("green");
-      } 
-      if (document.getElementById(bid).checked) {
-         clrs.push("blue");
-      } 
-      if (clrs.length > 0) {
-         parms.fgcolor = clrs;
+   document.getElementById(formid).addEventListener('submit', function (event) {
+      var parms, clrs = [], fel, submitForm = document.getElementById(sidform).checked;
+      
+      console.log("CSP: sending message. submitForm=" + submitForm);
+      
+      // decide how form is to be sent -
+      if (submitForm) {
+         fel = this;
+         hub.action(fel);
+      } else  {
+         parms = hub.newParameters();
+         parms.setValue('action', 'send');
+         if (document.getElementById(rid).checked) {
+            clrs.push("red");
+         } 
+         if (document.getElementById(gid).checked) {
+            clrs.push("green");
+         } 
+         if (document.getElementById(bid).checked) {
+            clrs.push("blue");
+         } 
+         if (clrs.length > 0) {
+            parms.setValue('fgcolor', clrs);
+         }
+         parms.setValue('imsg', document.getElementById(mid).value);
+         hub.action(parms);
       }
-      parms.imsg = [document.getElementById(mid).value];
-      portletInit.action(parms);
-   };
+      event.preventDefault();
+   });
       
 }());
 </script>

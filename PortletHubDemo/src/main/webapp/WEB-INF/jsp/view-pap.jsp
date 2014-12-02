@@ -44,33 +44,29 @@ limitations under the License.
        paButton = '<portlet:namespace/>-doPA',
    
        state,
-       actparms = {},
-       portletInit,
+       actparms,
+       hub,
    
    // Handler for onStateChange event
    update = function (type, s) {
       console.log("PAP: state updated. Event type = " + type);
       
-      if (state) {
-         // change background color for message box
-         if (state.parameters.color !== s.parameters.color) {
-            document.getElementById(resdiv).style.background = s.parameters.color;
-         }
+      // change background color for message box
+      if (state.p.getValue('color') !== s.p.getValue('color')) {
+         document.getElementById(resdiv).style.background = s.p.getValue('color');
       }
       state = s;
    };
    
    // Handler for "partial action" button. Perform partial action sequence.
    document.getElementById(paButton).onclick = function () {
-      var xhr = new XMLHttpRequest(), vals, pagestate = null, markup;
+      var xhr = new XMLHttpRequest(), vals, pagestate = null, markup; 
       console.log("PAP: Partial action button clicked.");
       
       // Add the render parameter counter as action parameter
-      if (state.parameters.numActions) {
-         actparms.numActions = state.parameters.numActions;
-      }
+      actparms.setValue('numActions', state.p.getValue('numActions'));
       
-      portletInit.startPartialAction(actparms).then(function (pai) {
+      hub.startPartialAction(actparms).then(function (pai) {
          
          console.log("PAP: got partial action init object. URL: " + pai.url);
          
@@ -101,8 +97,10 @@ limitations under the License.
    // Register portlet with Portlet Hub; add onStateChange listener 
    portlet.register(pid).then(function (pi) {
       console.log("PAP: registered: " + pid);
-      portletInit = pi;
-      portletInit.addEventListener("portlet.onStateChange", update);
+      hub = pi;
+      state = hub.newState();
+      actparms = hub.newParameters();
+      hub.addEventListener("portlet.onStateChange", update);
    });
    
 }());

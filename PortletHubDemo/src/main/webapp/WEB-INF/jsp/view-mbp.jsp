@@ -48,16 +48,16 @@ limitations under the License.
        clrButton = '<portlet:namespace/>-clear',
    
        state,
-       resparms = {},
-       cacheability = 'cacheLevelPage',
-       portletInit,
+       resparms,
+       cacheability,
+       hub,
    
    // Handler for onStateChange event
    update = function (type, s) {
       console.log("MBP: state updated. Event type = " + type);
       state = s;
       
-      portletInit.createResourceUrl(resparms, cacheability).then(function (url) {
+      hub.createResourceUrl(resparms, cacheability).then(function (url) {
          var xhr = new XMLHttpRequest();
          console.log("MBP: got url: " + url);
          xhr.onreadystatechange = function () {
@@ -73,14 +73,16 @@ limitations under the License.
    // Handler for "clear" button. execute an action which clears the stored messages
    document.getElementById(clrButton).onclick = function () {
       console.log("MBP: clear button clicked. ");
-      portletInit.action();
+      hub.action();
    };
    
    // Register portlet with Portlet Hub; add onStateChange listener 
    portlet.register(pid).then(function (pi) {
       console.log("MBP: Message Box portlet registered: " + pid);
-      portletInit = pi;
-      portletInit.addEventListener("portlet.onStateChange", update);
+      hub = pi;
+      resparms = hub.newParameters();
+      cacheability = hub.constants.PAGE;
+      hub.addEventListener("portlet.onStateChange", update);
    });
    
 }());

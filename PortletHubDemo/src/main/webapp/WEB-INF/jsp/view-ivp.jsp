@@ -31,9 +31,9 @@ limitations under the License.
    <table><tr><td align='left'>
    Cacheability setting:
    </td><td>
-   <input id='<portlet:namespace/>-page' type='radio' name='cacheability' value='cacheLevelPage'>Page
-   <input id='<portlet:namespace/>-portlet' type='radio' name='cacheability' value='cacheLevelPortlet'>Portlet
-   <input id='<portlet:namespace/>-full' type='radio' name='cacheability' value='cacheLevelFull'>Full
+   <input id='<portlet:namespace/>-page' type='radio' name='cacheability' value='PAGE'>Page
+   <input id='<portlet:namespace/>-portlet' type='radio' name='cacheability' value='PORTLET'>Portlet
+   <input id='<portlet:namespace/>-full' type='radio' name='cacheability' value='FULL'>Full
    </td></tr><tr><td>
    Set border (resource parameter)
    </td><td>
@@ -58,14 +58,14 @@ limitations under the License.
        cntr = 1,
        
        resparms = {},
-       cacheability = 'cacheLevelPage',
-       portletInit,
+       cacheability,
+       hub,
    
    // Update function called by the Portlet Hub when an onStatechange event occurs. 
    update = function (type, state) {
       console.log("IVP: state updated. event type=" + type);
       
-      portletInit.createResourceUrl(resparms, cacheability).then(function (url) {
+      hub.createResourceUrl(resparms, cacheability).then(function (url) {
          var brdr = (resparms.border === undefined) ? undefined : resparms.border[0],
              xhr = new XMLHttpRequest();
          console.log("IVP: got url: " + url + ", res parm border=" + brdr);
@@ -81,9 +81,10 @@ limitations under the License.
    
    // Handler for cacheability radio buttons
    handleCA = function () {
-      console.log("IVP: cacheability button clicked: " + this.value);
-      if (cacheability !== this.value) {
-         cacheability = this.value;
+      var c = hub.constants[this.value];
+      console.log("IVP: cacheability button clicked: " + this.value + ", corresponding to constant value " + c);
+      if (cacheability !== c) {
+         cacheability = c;
          update();
       }
    };
@@ -98,9 +99,9 @@ limitations under the License.
    document.getElementById(border).onclick = function () {
       console.log("IVP: border checked: " + this.checked);
       if (this.checked) {
-         resparms.border = ['#00F'];
+         resparms.setValue('border', '#00F');;
       } else {
-         resparms = {};
+         resparms.remove('border');
       }
       update();
    };
@@ -109,8 +110,10 @@ limitations under the License.
    // the onStateChange event
    portlet.register(pid).then(function (pi) {
       console.log("IVP: registered: " + pid);
-      portletInit = pi;
-      portletInit.addEventListener("portlet.onStateChange", update);
+      hub = pi;
+      resparms = hub.newParameters();
+      cacheability = hub.constants.PAGE;
+      hub.addEventListener("portlet.onStateChange", update);
    });
    
    // Simple counter for demonstrating that page hasn't been refreshed.
