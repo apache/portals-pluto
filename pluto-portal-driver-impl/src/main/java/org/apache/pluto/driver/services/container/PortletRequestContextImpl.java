@@ -218,6 +218,19 @@ public class PortletRequestContextImpl implements PortletRequestContext {
             }
          }
       }
+      if (LOGGER.isLoggable(Level.FINE)) {
+         StringBuffer sb = new StringBuffer();
+         sb.append("Dump private Parameter Map:");
+         for (String k : parameters.keySet()) {
+            sb.append("\nName: " + k + ", Values: ");
+            String sep = "";
+            for (String v : parameters.get(k)) {
+               sb.append(sep + v);
+               sep = ", ";
+            }
+         }
+         LOGGER.fine(sb.toString());
+      }
       return parameters;
    }
 
@@ -225,10 +238,15 @@ public class PortletRequestContextImpl implements PortletRequestContext {
     * Looks for multipart form data on an action or serveResource request, and decodes
     * it into a parameter map if found. (doesn't handle file upload or anything like that) 
     * 
+    * NOTE!! : At the current time, this method really only outputs debug info, as it
+    * seems that the servlet container automatically interprets multipart form data
+    * in the same manner that it interprets URL encoded form data.
+    * 
     * @return A Map containing parameter values extracted from a multipart form
     */
    private Map<String, String[]> decodeMultipartForm() {
       Map<String, String[]> parms = new HashMap<String, String[]>();
+      Map<String, String[]> servletMap = servletRequest.getParameterMap();
       String ct = servletRequest.getContentType();
 
       if (LOGGER.isLoggable(Level.FINE)) {
@@ -243,14 +261,26 @@ public class PortletRequestContextImpl implements PortletRequestContext {
                LOGGER.fine("There are " + parts.size() + " parts to process.");
             }
             
+            StringBuilder sb = new StringBuilder();
             for (Part p : parts) {
                if (LOGGER.isLoggable(Level.FINE)) {
-                  StringBuilder sb = new StringBuilder();
                   sb.append("\nPart name: " + p.getName());
                   sb.append(", size: " + p.getSize());
                   sb.append(", type: " + p.getContentType());
-                  LOGGER.fine(sb.toString());
+                  sb.append(", in servletMap=" + servletMap.containsKey(p.getName()));
+                  Collection<String> hn = p.getHeaderNames();
+                  if (hn != null) {
+                     for (String h : hn) {
+                        sb.append(", hdr==" + h + "==");
+                     }
+                  } else {
+                     sb.append(", hdrNames=" + hn);
+                  }
+                  sb.append(", cdHdr==" + p.getHeader("content-disposition") + "==");
                }
+            }
+            if (LOGGER.isLoggable(Level.FINE)) {
+               LOGGER.fine(sb.toString());
             }
 
          } catch (Exception e) {
