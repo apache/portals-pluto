@@ -41,12 +41,12 @@
           <artifactId>pluto-container-api</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>javax.servlet</groupId>
-          <artifactId>jsp-api</artifactId>
+          <groupId>org.apache.tomcat</groupId>
+          <artifactId>tomcat-jsp-api</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>javax.servlet</groupId>
-          <artifactId>servlet-api</artifactId>
+          <groupId>org.apache.tomcat</groupId>
+          <artifactId>tomcat-servlet-api</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.apache.portals</groupId>
@@ -66,12 +66,12 @@
       <scope>compile</scope>
       <exclusions>
         <exclusion>
-          <groupId>javax.servlet</groupId>
-          <artifactId>jsp-api</artifactId>
+          <groupId>org.apache.tomcat</groupId>
+          <artifactId>tomcat-jsp-api</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>javax.servlet</groupId>
-          <artifactId>servlet-api</artifactId>
+          <groupId>org.apache.tomcat</groupId>
+          <artifactId>tomcat-servlet-api</artifactId>
         </exclusion>
         <exclusion>
           <groupId>xml-apis</groupId>
@@ -87,12 +87,12 @@
       <scope>compile</scope>
       <exclusions>
         <exclusion>
-          <groupId>javax.servlet</groupId>
-          <artifactId>jsp-api</artifactId>
+          <groupId>org.apache.tomcat</groupId>
+          <artifactId>tomcat-jsp-api</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>javax.servlet</groupId>
-          <artifactId>servlet-api</artifactId>
+          <groupId>org.apache.tomcat</groupId>
+          <artifactId>tomcat-servlet-api</artifactId>
         </exclusion>
         <exclusion>
           <groupId>xml-apis</groupId>
@@ -102,13 +102,13 @@
     </dependency>
 
     <dependency>
-       <groupId>javax.servlet</groupId>
-	   <artifactId>jsp-api</artifactId>
+       <groupId>org.apache.tomcat</groupId>
+	   <artifactId>tomcat-jsp-api</artifactId>
 	   <scope>provided</scope>
 	 </dependency>
     <dependency>
-       <groupId>javax.servlet</groupId>
-       <artifactId>javax.servlet-api</artifactId>
+       <groupId>org.apache.tomcat</groupId>
+       <artifactId>tomcat-servlet-api</artifactId>
        <scope>provided</scope>
     </dependency>
     <dependency>

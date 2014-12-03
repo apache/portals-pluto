@@ -257,10 +257,11 @@ generate mailto links. -->
     <javax.portlet.version.major>2</javax.portlet.version.major>
     <javax.portlet.version.minor>0</javax.portlet.version.minor>
     <portals.portlet2-api-spec.version>${project.version}</portals.portlet2-api-spec.version>
-    <servlet-api.version>3.0.1</servlet-api.version>
-    <jsp-api.version>2.0</jsp-api.version>
-    <jstl.version>1.1.2</jstl.version>
-    <taglibs.standard.version>1.1.2</taglibs.standard.version>
+    <servlet-api.version>7.0.50</servlet-api.version>
+    <jsp-api.version>7.0.50</jsp-api.version>
+    <jstl.version>7.0.50</jstl.version>
+    <el-api.version>7.0.50</el-api.version>
+    <taglibs.standard.version>1.2.1</taglibs.standard.version>
     <jaxb.version>2.1</jaxb.version>
     <jaxb-impl.version>2.1.9</jaxb-impl.version>
     <stax.impl.version>1.2.0</stax.impl.version>
@@ -323,8 +324,8 @@ TODO: Check if we need all of them. -->
         <version>${portals.portlet2-api-spec.version}</version>
       </dependency>
       <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-servlet-api</artifactId>
         <version>${servlet-api.version}</version>
       </dependency>
 
@@ -415,18 +416,28 @@ TODO: Check if we need all of them. -->
         <version>${maven.version}</version>
       </dependency>
       <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>jsp-api</artifactId>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-jsp-api</artifactId>
         <version>${jsp-api.version}</version>
       </dependency>
       <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>jstl</artifactId>
-        <version>${jstl.version}</version>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-el-api</artifactId>
+        <version>${el-api.version}</version>
       </dependency>
       <dependency>
-        <groupId>taglibs</groupId>
-        <artifactId>standard</artifactId>
+        <groupId>org.apache.taglibs</groupId>
+        <artifactId>taglibs-standard-spec</artifactId>
+        <version>${taglibs.standard.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.taglibs</groupId>
+        <artifactId>taglibs-standard-impl</artifactId>
+        <version>${taglibs.standard.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.taglibs</groupId>
+        <artifactId>taglibs-standard-jstlel</artifactId>
         <version>${taglibs.standard.version}</version>
       </dependency>
       <dependency>
