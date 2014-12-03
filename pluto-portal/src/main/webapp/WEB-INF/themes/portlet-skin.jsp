@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --%>
 <%@ taglib uri="http://portals.apache.org/pluto" prefix="pluto" %>
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!-- Use pluto portlet tag to render the portlet -->
 <pluto:portlet portletId="${portlet}">

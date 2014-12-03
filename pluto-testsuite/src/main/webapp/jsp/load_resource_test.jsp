@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --%>
 <%@taglib prefix="portlet" uri="http://java.sun.com/portlet_2_0" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <portlet:defineObjects />
 <TABLE style="font-size: -1">
 <TR><TH colspan="2" style="background-color:blue;color:white;">MANUAL TEST</TH></TR>
