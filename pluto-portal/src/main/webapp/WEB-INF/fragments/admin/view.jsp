@@ -16,6 +16,7 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
+<%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div>

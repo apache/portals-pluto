@@ -17,6 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --%>
 
+<%@ page isELIgnored="false" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="javax.servlet.jsp.jstl.core.LoopTagStatus" %>
 <%@ page import="org.apache.pluto.testsuite.TestConfig" %>

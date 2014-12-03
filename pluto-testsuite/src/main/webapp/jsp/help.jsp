@@ -16,6 +16,7 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
+<%@ page isELIgnored="false" %>
 <TABLE style="border-colapse: false;padding: 4px 4px;border-spacing: 3px 4px;">
 <TR><TH colspan="2">Test Portlet Help Page</TH></TR>
 <TR><TD colspan="2">Color Code Key</TH></TR>

@@ -17,9 +17,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --%>
 
+<%@ page isELIgnored="false" %>
 <%@ page import="org.apache.pluto.testsuite.TestResult" %>
 
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%
