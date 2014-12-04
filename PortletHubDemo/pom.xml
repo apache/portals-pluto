@@ -36,6 +36,16 @@
          <scope>provided</scope>
       </dependency>
       <dependency>
+          <groupId>org.apache.taglibs</groupId>
+          <artifactId>taglibs-standard-impl</artifactId>
+          <scope>provided</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.taglibs</groupId>
+          <artifactId>taglibs-standard-jstlel</artifactId>
+          <scope>provided</scope>
+      </dependency>
+      <dependency>
          <groupId>org.apache.portals.pluto</groupId>
          <artifactId>pluto-taglib</artifactId>
          <version>2.1.0-M3</version>
@@ -73,24 +83,21 @@
          </activation>
     
          <dependencies>
-                <dependency>
-                    <groupId>org.apache.taglibs</groupId>
-                    <artifactId>taglibs-standard-spec</artifactId>
-                    <scope>compile</scope>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.apache.tomcat</groupId>
-                            <artifactId>tomcat-jsp-api</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
-<!--                
-                <dependency>
-                    <groupId>taglibs</groupId>
-                    <artifactId>standard</artifactId>
-                    <scope>compile</scope>
-                </dependency>
--->                
+            <dependency>
+                <groupId>org.apache.taglibs</groupId>
+                <artifactId>taglibs-standard-spec</artifactId>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.taglibs</groupId>
+                <artifactId>taglibs-standard-impl</artifactId>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.taglibs</groupId>
+                <artifactId>taglibs-standard-jstlel</artifactId>
+                <scope>compile</scope>
+            </dependency>
          </dependencies>
          
          <build>
