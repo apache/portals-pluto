@@ -42,7 +42,7 @@ limitations under the License.
       }
 %>
 
-<form onsubmit='return false;'>
+<form onsubmit='return false;' enctype='multipart/form-data'>
   <table><tr>
      <td align='left'>Enter background color (public param):</td>
      <td>
@@ -52,7 +52,7 @@ limitations under the License.
   </tr></table>
 </form>
 <hr/>
-<FORM id='<portlet:namespace/>-setParams' method='POST'>
+<FORM id='<portlet:namespace/>-setParams' method='POST' enctype='multipart/form-data'>
    <table><tr><td align='left'>
    Select active foreground colors:
    </td><td>
@@ -137,7 +137,7 @@ limitations under the License.
    };
    
 
-   // Handler for 'send' button click. Perform partial action.
+   // Handler for 'send' button click. Perform Ajax action.
    document.getElementById(formid).addEventListener('submit', function (event) {
       var parms, clrs = [], fel, submitForm = document.getElementById(sidform).checked;
       

@@ -24,7 +24,7 @@ limitations under the License.
 
 
 <h3>Image Selector</h3><hr/>
-<FORM id='<portlet:namespace/>-setParams' onsubmit='return false;'>
+<FORM id='<portlet:namespace/>-setParams' onsubmit='return false;' enctype='multipart/form-data'>
    <table><tr><td align='left'>
    Selection type (private param):
    </td><td>
