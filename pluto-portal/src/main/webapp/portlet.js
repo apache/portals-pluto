@@ -821,15 +821,37 @@ var portlet = portlet || {};
     */
    updatePageState = function (upids) {
       var ii;
-      
+
       if (upids.length === 0) {
          busy = false;
       } else {
-      for (ii = 0; ii < upids.length; ii++) {
-         _updateStateForPortlet(upids[ii]);
-      }
+         for (ii = 0; ii < upids.length; ii++) {
+            _updateStateForPortlet(upids[ii]);
+         }
       }
 
+   },
+
+   /**
+    * Accepts an object containing changed portlet IDs. This 
+    * function is meant to be used by the Portlet Hub impl in order 
+    * to initiate an unsolicited state update for the input list of 
+    * portlet IDs.
+    *
+    * @param    {string}   upids  array of portlet IDs to be updated 
+    * @private
+    */
+   updatePageStateAsynch = function (upids) {
+      
+      function update () {
+         if (busy) {
+            delay(update, 20);
+         } else {
+            busy = true;
+            updatePageState(upids);
+         }
+      }
+      update ();
    },
 
    /**
@@ -1146,7 +1168,7 @@ var portlet = portlet || {};
        * functions as passed in as an argument
        */
       return portlet.impl
-            .register(portletId)
+            .register(portletId, updatePageStateAsynch)
             .then(
                   function(portletImpl) {
 

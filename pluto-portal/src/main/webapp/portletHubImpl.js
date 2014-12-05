@@ -47,6 +47,16 @@ var portlet = portlet || {};
     */
    pageState,
    
+   /**
+    * Callback function provided to the portlet hub to allow the the implementation
+    * to initiate an unsolicited portlet state update for an array of portlet IDs.
+    * @param   {string[]}  pid      An array of portlet IDs
+    * @returns {void}
+    * @function
+    * @private
+    */
+   updatePageStateAsynch,
+   
    
    /**
     * Determines if the specified portlet ID is present.
@@ -288,6 +298,18 @@ var portlet = portlet || {};
    },
    
    /**
+    * Called when the page state has been updated to allow the
+    * browser history to be taken care of.
+    */
+   updateHistory = function (pid) {
+      var url = "x";
+      getUrl('RENDER', pid, {}).then(function (url) {
+         console.log("Updating history. URL=" + url);
+         history.pushState(pageState, "", url);
+      });
+   },
+   
+   /**
     * sets state for the portlet. returns
     * array of IDs for portlets that were affected by the change, 
     * taking into account the public render parameters.
@@ -333,6 +355,8 @@ var portlet = portlet || {};
       // update state for the initiating portlet
       pageState[pid].state = state;
       upids.push(pid);
+      
+      updateHistory(pid);
 
       
       // Use Promise to allow for potential server communication - 
@@ -392,7 +416,7 @@ var portlet = portlet || {};
     * @private 
     */
    updatePageStateFromString = function (ustr, pid) {
-      var states, tpid, state, upids = [];
+      var states, tpid, state, upids = [], stateUpdated = false;
 
       states = decodeUpdateString(ustr, pid);
 
@@ -402,7 +426,12 @@ var portlet = portlet || {};
             state = states[tpid];
             pageState[tpid].state = state;
             upids.push(tpid);
+            stateUpdated = true;
          }
+      }
+      
+      if (stateUpdated) {
+         updateHistory(pid);
       }
 
       return upids;
@@ -722,13 +751,15 @@ var portlet = portlet || {};
     * @private
     */
    portlet.impl = portlet.impl || {};
-   portlet.impl.register = function (pid) {
+   portlet.impl.register = function (pid, updateFunction) {
 
       // take care of moc data initialization      
       if (!isInitialized) {
          pageState = portlet.impl.getInitData();
          isInitialized = true;
       }
+      
+      updatePageStateAsynch = updateFunction;
 
       // stubs for accessing data for this portlet
       var stubs = {
