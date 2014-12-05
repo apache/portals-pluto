@@ -127,7 +127,7 @@ limitations under the License.
    document.getElementById(colorEntry).onchange = function () {
       var newColor = this.value, newState;
       console.log("CSP: entry field updated. color=" + newColor);
-      if ((newColor === undefined) || (newColor === null) || !newColor.match("^#(?:[A-Fa-f0-9]{3}){1,2}$")) {
+      if ((newColor === undefined) || (newColor === null) || !newColor.match(/^#(?:[A-Fa-f0-9]{3}){1,2}$/)) {
          document.getElementById(msgdiv).innerHTML = 'Bad color. Enter #xxxxxx or #xxx.';
       } else {
          newState = currState.clone();
