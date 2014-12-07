@@ -76,10 +76,38 @@ limitations under the License.
       }
    },
    
+   // function to select the proper image depending on radio button or dropdown display
+   selectImage = function (seltype, imgName) {
+      var ii, f = document.getElementById(fid);
+      
+      if (!imgName) {
+         imgName = 'default';
+      }
+      
+      if (seltype === 'radio') {
+         for (ii=0; ii < f.imgName.length; ii++) {
+            if (f.imgName[ii].value === imgName) {
+               console.log("ISP: image clicked: " + imgName);
+               f.imgName[ii].checked = true;
+            } else {
+               f.imgName[ii].checked = false;
+            }
+         }
+      } else {
+         for (ii=0; ii < f.imgName.length; ii++) {
+            if (f.imgName[ii].value === imgName) {
+               console.log("ISP: image selected: " + imgName);
+               f.imgName[ii].selected = true;
+            }
+         }
+      }
+   },
+   
    // Handler for onStateChange event
    update = function (type, state) {
       var oldST = currState.p.getValue('selType'),
           newST = state.p.getValue('selType', 'radio'),
+          oldImg = currState.p.getValue('imgName'),
           newImg = state.p.getValue('imgName');
           
       console.log("ISP: state updated. type=" + type + ", selType=" + newST + ", imgName=" + newImg);
@@ -98,27 +126,20 @@ limitations under the License.
                      for (ii=0; ii < f.imgName.length; ii++) {
                         console.log("ISP: adding selection handler for: " + f.imgName[ii].value);
                         f.imgName[ii].onclick = handleImgRadio;
-                        if (f.imgName[ii].value === newImg) {
-                           console.log("ISP: image clicked: " + newImg);
-                           f.imgName[ii].clicked = true;
-                        }
                      }
                   } else if (newST === 'dropdown') {
                      console.log("ISP: adding selection handler to dropdown list element: " + selBox);
                      document.getElementById(selBox).onchange = handleImgDropdown;
-                     for (ii=0; ii < f.imgName.length; ii++) {
-                        if (f.imgName[ii].value === newImg) {
-                           console.log("ISP: image selected: " + newImg);
-                           f.imgName[ii].selected = true;
-                        }
-                     }
                   }
-
+				  selectImage(newST, newImg);
                }
             };
             xhr.open("GET",url,true);
             xhr.send();
          });
+      } else {
+         // make sure image is selected according to parameter setting. 
+         selectImage(newST, newImg);
       }
 
       if (newST === 'dropdown') {

@@ -49,11 +49,12 @@ limitations under the License.
    
    // Handler for onStateChange event
    update = function (type, s) {
+      var nc = s.p.getValue('color', '#E0E0E0');
       console.log("PAP: state updated. Event type = " + type);
       
       // change background color for message box
-      if (state.p.getValue('color') !== s.p.getValue('color')) {
-         document.getElementById(resdiv).style.background = s.p.getValue('color');
+      if (state.p.getValue('color') !== nc) {
+         document.getElementById(resdiv).style.background = nc;
       }
       state = s;
    };

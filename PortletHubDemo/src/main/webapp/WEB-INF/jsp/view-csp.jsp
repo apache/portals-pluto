@@ -74,9 +74,9 @@ limitations under the License.
    </td></tr><tr><td>
    Form submission:
    </td><td>
-   <input id='<portlet:namespace/>sType-url' type='radio' name='sType' value='url' checked>URL
+   <input id='<portlet:namespace/>sType-url' type='radio' name='<%=PARAM_SUBTYPE%>' value='<%=PARAM_SUBTYPE_URL%>' checked>URL
    </td><td>
-   <input id='<portlet:namespace/>sType-form' type='radio' name='sType' value='form'>Form
+   <input id='<portlet:namespace/>sType-form' type='radio' name='<%=PARAM_SUBTYPE%>' value='<%=PARAM_SUBTYPE_FORM%>'>Form
    </td><td>
    <INPUT id ='<portlet:namespace/>-send' VALUE='send' TYPE='submit'>
    </td></tr></table>
@@ -90,12 +90,12 @@ limitations under the License.
    var pid = '<portlet:namespace/>',
        colorEntry = '<portlet:namespace/>-color',
        msgdiv = '<portlet:namespace/>-putMsgHere',
-       sendbtn = '<portlet:namespace/>-send',
        rid = '<portlet:namespace/>-red',
        gid = '<portlet:namespace/>-green',
        bid = '<portlet:namespace/>-blue',
        mid = '<portlet:namespace/>-msg',
        formid = '<portlet:namespace/>-setParams',
+       sidurl = '<portlet:namespace/>sType-url',
        sidform = '<portlet:namespace/>sType-form',
        currState,
        hub,
@@ -103,13 +103,42 @@ limitations under the License.
        
    // Handler for onStateChange event
    update = function (type, state) {
-      var oldColor = currState.p.getValue('color'),
-          newColor = state.p.getValue('color', '#FFFFFF');
+      var oldColor = currState.p.getValue('<%=PARAM_COLOR%>'),
+      
+          // use getValue with default value that is used if the parameter is not set
+          newColor = state.p.getValue('<%=PARAM_COLOR%>', '#FFFFFF'),
+          subtype = state.p.getValue('<%=PARAM_SUBTYPE%>', '<%=PARAM_SUBTYPE_URL%>'),
+          msg = state.p.getValue('<%=PARAM_MSG_INPUT%>', ''),
+          
+          fgcolor = state.p.getValues('<%=PARAM_FG_COLOR%>'),
+          clr = {red: false, green: false, blue: false}, ii;
+      
       console.log("CSP: state updated. Type=" + type + ", color=" + newColor);
+      
       if (newColor !== oldColor) {
          document.getElementById(msgdiv).innerHTML = '';
          document.getElementById(colorEntry).value = newColor;
       }
+      
+      // make sure controls are set according to parameters
+      
+      if (subtype === '<%=PARAM_SUBTYPE_URL%>') {
+         document.getElementById(sidurl).checked = true;
+      } else {
+         document.getElementById(sidform).checked = true;
+      }
+       
+      if (fgcolor) {
+         for (ii = 0; ii < fgcolor.length; ii++) {
+            clr[fgcolor[ii]] = true;
+         }
+      } 
+      document.getElementById(rid).checked = clr.red;
+      document.getElementById(gid).checked = clr.green;
+      document.getElementById(bid).checked = clr.blue;
+
+      document.getElementById(mid).value = msg;
+
       currState = state;
    };
    
@@ -151,18 +180,18 @@ limitations under the License.
          parms = hub.newParameters();
          parms.setValue('action', 'send');
          if (document.getElementById(rid).checked) {
-            clrs.push("red");
+            clrs.push("<%=PARAM_FG_RED%>");
          } 
          if (document.getElementById(gid).checked) {
-            clrs.push("green");
+            clrs.push("<%=PARAM_FG_GREEN%>");
          } 
          if (document.getElementById(bid).checked) {
-            clrs.push("blue");
+            clrs.push("<%=PARAM_FG_BLUE%>");
          } 
          if (clrs.length > 0) {
-            parms.setValue('fgcolor', clrs);
+            parms.setValue('<%=PARAM_FG_COLOR%>', clrs);
          }
-         parms.setValue('imsg', document.getElementById(mid).value);
+         parms.setValue('<%=PARAM_MSG_INPUT%>', document.getElementById(mid).value);
          hub.action(parms);
       }
       event.preventDefault();

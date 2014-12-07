@@ -300,12 +300,19 @@ var portlet = portlet || {};
    /**
     * Called when the page state has been updated to allow the
     * browser history to be taken care of.
+    * @param      {boolean} replace    replace the state rather than pushing
     */
-   updateHistory = function (pid) {
+   updateHistory = function (replace) {
       var url = "x";
-      getUrl('RENDER', pid, {}).then(function (url) {
-         console.log("Updating history. URL=" + url);
-         history.pushState(pageState, "", url);
+      getUrl('RENDER', null, {}).then(function (url) {
+         var token = JSON.stringify(pageState);
+         console.log("Updating history. URL =" + url + ", token length =" + token.length 
+            + ", token 30 chars =" + token.substring(0,30));
+         if (replace) {
+            history.replaceState(token, "");
+         } else {
+            history.pushState(token, "", url);
+         }
       });
    },
    
@@ -356,7 +363,7 @@ var portlet = portlet || {};
       pageState[pid].state = state;
       upids.push(pid);
       
-      updateHistory(pid);
+      updateHistory();
 
       
       // Use Promise to allow for potential server communication - 
@@ -418,7 +425,7 @@ var portlet = portlet || {};
    updatePageStateFromString = function (ustr, pid) {
       var states, tpid, state, upids = [], stateUpdated = false;
 
-      states = decodeUpdateString(ustr, pid);
+      states = decodeUpdateString(ustr);
 
       // Update states and collect IDs of affected portlets. 
       for (tpid in states) {
@@ -430,8 +437,10 @@ var portlet = portlet || {};
          }
       }
       
-      if (stateUpdated) {
-         updateHistory(pid);
+      // pid will be null or undefined when called from onpopstate routine.
+      // In that case, don't update history.
+      if (stateUpdated && pid) {
+         updateHistory();
       }
 
       return upids;
@@ -573,6 +582,11 @@ var portlet = portlet || {};
    
       var url = portlet.impl.getUrlBase(), ca = 'cacheLevelPage', parm, isAction = false,
           sep = "", name, names, vals, ii, str, id, ids, tpid, prpstrings;
+       
+      // If target portlet not defined for render URL, set it to null
+      if ((type === "RENDER") && pid === undefined) {
+         pid = null;
+      }
 
       // First add the appropriate window identifier according to URL type.
       // Note that no special window ID is added to a RENDER URL. 
@@ -624,7 +638,8 @@ var portlet = portlet || {};
 
          // add the state for the target portlet for on-action urls.
          // (Action URLs have only action parameters in the query string)
-         if (!isAction) {
+         // (for a render URL, pid can be null)
+         if (!isAction && pid !== null) {
             url += genPMWSString(pid);  // portlet mode & window state
             str = "";
             names = pageState[pid].state.parameters;
@@ -734,6 +749,18 @@ var portlet = portlet || {};
       });
 
    };
+   
+   /**
+    * Handler for history event that is fired when the back button is pressed.
+    */
+   window.onpopstate = function (ev) {
+      var upids;
+      if (ev.state) {
+         console.log("onpopstate fired. State = " + ev.state.substr(0, 30) + " ...<more>");
+         upids = updatePageStateFromString(ev.state);
+         updatePageStateAsynch(upids);
+      }
+   }
 
    
    /**
@@ -756,6 +783,7 @@ var portlet = portlet || {};
       // take care of moc data initialization      
       if (!isInitialized) {
          pageState = portlet.impl.getInitData();
+         updateHistory(true);
          isInitialized = true;
       }
       

@@ -20,6 +20,11 @@ public class Constants {
    public final static String PARAM_SELTYPE_RADIO = "radio";
    public final static String PARAM_SELTYPE_DROPDOWN = "dropdown";
    
+   // privae parameter for color selection portlet
+   public final static String PARAM_SUBTYPE = "subType";
+   public final static String PARAM_SUBTYPE_URL = "URL";
+   public final static String PARAM_SUBTYPE_FORM = "form";
+   
    public final static String PARAM_IMGNAME = "imgName";
    public final static String PARAM_COLOR = "color";
    public final static String PARAM_ERRMSG = "errmsg";

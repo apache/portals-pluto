@@ -59,11 +59,42 @@ limitations under the License.
        
        resparms = {},
        cacheability,
+       currState,
        hub,
    
    // Update function called by the Portlet Hub when an onStatechange event occurs. 
    update = function (type, state) {
+      var bo = state.p.getValue('bo'),
+          ca = state.p.getValue('ca', hub.constants.PAGE);
+      
+      currState = state;
+      
       console.log("IVP: state updated. event type=" + type);
+      
+      // set cacheability & border color according to parameters. Set controls
+      // according to parameers to enable back button support.
+      
+      resparms = hub.newParameters();
+      if (bo) {
+         resparms.setValue('border', bo);
+         document.getElementById(border).checked = true;
+      } else {
+         document.getElementById(border).checked = false;
+      }
+      
+      cacheability = ca;
+      switch (ca) {
+      case hub.constants.PAGE:
+         document.getElementById(ca_page).checked = true;
+         break;
+      case hub.constants.PORTLET:
+         document.getElementById(ca_portlet).checked = true;
+         break;
+      case hub.constants.FULL:
+         document.getElementById(ca_full).checked = true;
+         break;
+      }
+      
       
       hub.createResourceUrl(resparms, cacheability).then(function (url) {
          var brdr = (resparms.border === undefined) ? undefined : resparms.border[0],
@@ -81,11 +112,13 @@ limitations under the License.
    
    // Handler for cacheability radio buttons
    handleCA = function () {
-      var c = hub.constants[this.value];
+      var c = hub.constants[this.value], nstate;
       console.log("IVP: cacheability button clicked: " + this.value + ", corresponding to constant value " + c);
       if (cacheability !== c) {
          cacheability = c;
-         update();
+         nstate = currState.clone();
+         nstate.p.setValue('ca', c);
+         hub.setPortletState(nstate);
       }
    };
    
@@ -97,13 +130,14 @@ limitations under the License.
    // Handler for 'border' checkbox 
    document.getElementById(border).checked = false;
    document.getElementById(border).onclick = function () {
+      var nstate = currState.clone();
       console.log("IVP: border checked: " + this.checked);
       if (this.checked) {
-         resparms.setValue('border', '#00F');;
+         nstate.p.setValue('bo', '#00F');;
       } else {
-         resparms.remove('border');
+         nstate.p.remove('bo');
       }
-      update();
+      hub.setPortletState(nstate);
    };
    
    // Register this portlet with the Portlet Hub and add event listener for 
@@ -111,7 +145,6 @@ limitations under the License.
    portlet.register(pid).then(function (pi) {
       console.log("IVP: registered: " + pid);
       hub = pi;
-      resparms = hub.newParameters();
       cacheability = hub.constants.PAGE;
       hub.addEventListener("portlet.onStateChange", update);
    });

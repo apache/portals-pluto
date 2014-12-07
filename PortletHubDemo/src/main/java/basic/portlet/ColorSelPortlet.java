@@ -37,7 +37,7 @@ import javax.xml.namespace.QName;
 
 
 /**
- * A management portlet that displays the current deep link configuraion
+ * A management portlet that displays the current deep link configuration
  */
 public class ColorSelPortlet extends GenericPortlet {
 
@@ -67,20 +67,7 @@ public class ColorSelPortlet extends GenericPortlet {
 
    public void processAction(ActionRequest req, ActionResponse resp)
          throws PortletException, IOException {
-      
-      // pass the action params from the form submission as render parameters
-      resp.setRenderParameter(PARAM_ERRMSG, " "); // hack as Pluto does not support deleting parameters
-      String val = req.getParameter(PARAM_COLOR);
-      if (val != null) {
-         if (val.matches("^#(?:[A-Fa-f0-9]{3}){1,2}$")) {
-            resp.setRenderParameter(PARAM_COLOR, val);
-         } else {
-            resp.setRenderParameter(PARAM_ERRMSG, "bad color. try again.");
-         }
-      } else {
-         resp.setRenderParameter(PARAM_ERRMSG, "enter color #xxxxxx or #xxx.");
-      }
-      
+            
       String[] vals = req.getParameterValues(PARAM_FG_COLOR);
       String r = "0";
       String g = "0";
@@ -92,13 +79,23 @@ public class ColorSelPortlet extends GenericPortlet {
             if (v.equals(PARAM_FG_BLUE)) b = "F";
          }
       }
+      String clr = "#" + r + g + b;
       
+      // make sure the private parameter are all on the URL for 
+      // potential back button support
       if (vals != null) {
          resp.setRenderParameter(PARAM_FG_COLOR, vals);
       }
       
-      String clr = "#" + r + g + b;
+      String val = req.getParameter(PARAM_SUBTYPE);
+      if (val != null) {
+         resp.setRenderParameter(PARAM_SUBTYPE, val);
+      }
+      
       val = req.getParameter(PARAM_MSG_INPUT);
+      if (val != null) {
+         resp.setRenderParameter(PARAM_MSG_INPUT, val);
+      }
       
       String msg = val + DELIM + clr;
       QName qn = new QName(EVENT_NAMESPACE, EVENT_NAME);
