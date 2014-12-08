@@ -838,20 +838,23 @@ var portlet = portlet || {};
     * to initiate an unsolicited state update for the input list of 
     * portlet IDs.
     *
-    * @param    {string}   upids  array of portlet IDs to be updated 
+    * @returns {Promise}   fulfilled with the actual upddate function when
+    *                      the hub is not busy.
+    *
     * @private
     */
-   updatePageStateAsynch = function (upids) {
-      
-      function update () {
-         if (busy) {
-            delay(update, 20);
-         } else {
-            busy = true;
-            updatePageState(upids);
+   updateWhenIdle = function (upids) {
+      return new Promise (function (resolve) {
+         function update () {
+            if (busy) {
+               delay(update, 20);
+            } else {
+               busy = true;
+               resolve(updatePageState);
+            }
          }
-      }
-      update ();
+         update();
+      });
    },
 
    /**
@@ -1168,7 +1171,7 @@ var portlet = portlet || {};
        * functions as passed in as an argument
        */
       return portlet.impl
-            .register(portletId, updatePageStateAsynch)
+            .register(portletId, updateWhenIdle)
             .then(
                   function(portletImpl) {
 

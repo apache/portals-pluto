@@ -48,6 +48,13 @@ var portlet = portlet || {};
    pageState,
    
    /**
+    * Flag specifying whether history is to be processed (true if browser supports HTML5 session history APIs)
+    * @property   {boolean} doHistory
+    * @private
+    */
+    doHistory = (window.history && window.history.pushState),
+   
+   /**
     * Callback function provided to the portlet hub to allow the the implementation
     * to initiate an unsolicited portlet state update for an array of portlet IDs.
     * @param   {string[]}  pid      An array of portlet IDs
@@ -55,7 +62,7 @@ var portlet = portlet || {};
     * @function
     * @private
     */
-   updatePageStateAsynch,
+   updateWhenIdle,
    
    
    /**
@@ -298,181 +305,6 @@ var portlet = portlet || {};
    },
    
    /**
-    * Called when the page state has been updated to allow the
-    * browser history to be taken care of.
-    * @param      {boolean} replace    replace the state rather than pushing
-    */
-   updateHistory = function (replace) {
-      var url = "x";
-      getUrl('RENDER', null, {}).then(function (url) {
-         var token = JSON.stringify(pageState);
-         console.log("Updating history. URL =" + url + ", token length =" + token.length 
-            + ", token 30 chars =" + token.substring(0,30));
-         if (replace) {
-            history.replaceState(token, "");
-         } else {
-            history.pushState(token, "", url);
-         }
-      });
-   },
-   
-   /**
-    * sets state for the portlet. returns
-    * array of IDs for portlets that were affected by the change, 
-    * taking into account the public render parameters.
-    */
-   setState = function (pid, state) {
-      var pids, prps = getUpdatedPRPs(pid, state), prp, ii, tpid, upids = [], newVal, oldVal, prpNames;
-         
-      // For each updated PRP for the
-      // initiating portlet, update that PRP in the other portlets.
-      for (prp in prps) {
-         if (prps.hasOwnProperty(prp)) {
-      
-            newVal = prps[prp];
-            
-            // process each portlet ID
-            pids = getIds();
-            for (ii = 0; ii < pids.length; ii++) {
-               tpid = pids[ii];
-               
-               // don't update for initiating portlet. that's done after the loop
-               if (tpid !== pid) {
-            
-                  oldVal = getParmVal(tpid, prp);
-                  prpNames = getPRPNames(tpid);
-                  
-                  // check for public parameter and if the value has changed
-                  if ((prpNames.indexOf(prp) >= 0) && 
-                      (_isParmEqual(oldVal, newVal) === false)) {
-                  
-                     if (newVal === undefined) {
-                        delete pageState[tpid].state.parameters[prp];
-                     } else {
-                        pageState[tpid].state.parameters[prp] = newVal.slice(0);
-                     }
-                     upids.push(tpid);
-                     
-                  }
-               }
-            }
-         }
-      }
-      
-      // update state for the initiating portlet
-      pageState[pid].state = state;
-      upids.push(pid);
-      
-      updateHistory();
-
-      
-      // Use Promise to allow for potential server communication - 
-      return new Promise(function (resolve, reject) {
-         var simval = '';
-         if (pid === 'SimulateCommError' && state.parameters.SimulateError !== undefined) {
-            simval = state.parameters.SimulateError[0];
-         }
-
-         // reject promise of an error is to be simulated
-         if (simval === 'reject') {
-            reject(new Error("Simulated error occurred when setting state!"));
-         } else {
-            resolve(upids);
-         }
-      });
-   },
-
-   
-   // decodes the update strings. The update string is 
-   // a JSON object containing the entire page state. This decoder 
-   // returns an object containing the state for portlets whose 
-   // state has changed as compared to the current page state.
-   decodeUpdateString = function (ustr) {
-      var states = {}, ostate, nstate, pid, ps, npids = 0, cpids = 0;
-
-      ps = JSON.parse(ustr);
-      for (pid in ps) {
-         if (ps.hasOwnProperty(pid)) {
-            npids++;
-            nstate = ps[pid].state;
-            ostate = pageState[pid].state;
-            
-            if (!nstate || !ostate) {
-               throw new Error ("Invalid update string. ostate=" + ostate + ", nstate=" + nstate);
-            }
-            
-            if (stateChanged(nstate, pid)) {
-               states[pid] = cloneState(nstate);
-               cpids++;
-            }
-         }
-      }
-      
-      console.log("decoded state for " + npids + " portlets. # changed = " + cpids);
-      
-      return states;
-   },
-
-      
-   /**
-    * updates page state from string and returns array of portlet IDs
-    * to be updated.
-    * 
-    * @param   {string}    ustr     The 
-    * @param   {string}    pid      The portlet ID
-    * @private 
-    */
-   updatePageStateFromString = function (ustr, pid) {
-      var states, tpid, state, upids = [], stateUpdated = false;
-
-      states = decodeUpdateString(ustr);
-
-      // Update states and collect IDs of affected portlets. 
-      for (tpid in states) {
-         if (states.hasOwnProperty(tpid)) {
-            state = states[tpid];
-            pageState[tpid].state = state;
-            upids.push(tpid);
-            stateUpdated = true;
-         }
-      }
-      
-      // pid will be null or undefined when called from onpopstate routine.
-      // In that case, don't update history.
-      if (stateUpdated && pid) {
-         updateHistory();
-      }
-
-      return upids;
-   },
-   
-   
-   /**
-    * Update page state passed in after partial action. The list of 
-    * ID's of updated portlets is passed back through a promise in order
-    * to decouple the layers.
-    * 
-    * @param   {string}    ustr     The 
-    * @param   {string}    pid      The portlet ID
-    * @private 
-    */
-   updatePageState = function (ustr, pid) {
-            
-      // Use Promise to allow for potential server communication - 
-      return new Promise(function (resolve, reject) {
-         var upids;
-               
-         try {
-            upids = updatePageStateFromString(ustr, pid);
-            resolve(upids);
-         } catch (e) {
-            reject(new Error("Partial Action Action decode status: " + e.message));
-         }
-      });
-
-   },
-   
-   /**
     * Function to encode url tokens as Pluto likes it
     */
    plutoEncode = function (istr) {
@@ -693,6 +525,182 @@ var portlet = portlet || {};
          resolve(url);
       });
    },
+   
+   /**
+    * Called when the page state has been updated to allow the
+    * browser history to be taken care of.
+    * @param      {boolean} replace    replace the state rather than pushing
+    */
+   updateHistory = function (replace) {
+      if (doHistory) {
+         getUrl('RENDER', null, {}).then(function (url) {
+            var token = JSON.stringify(pageState);
+            console.log("Updating history. URL =" + url + ", token length =" + token.length 
+               + ", token 30 chars =" + token.substring(0,30));
+            if (replace) {
+               history.replaceState(token, "");
+            } else {
+               history.pushState(token, "", url);
+            }
+         });
+      }
+   },
+   
+   /**
+    * sets state for the portlet. returns
+    * array of IDs for portlets that were affected by the change, 
+    * taking into account the public render parameters.
+    */
+   setState = function (pid, state) {
+      var pids, prps = getUpdatedPRPs(pid, state), prp, ii, tpid, upids = [], newVal, oldVal, prpNames;
+         
+      // For each updated PRP for the
+      // initiating portlet, update that PRP in the other portlets.
+      for (prp in prps) {
+         if (prps.hasOwnProperty(prp)) {
+      
+            newVal = prps[prp];
+            
+            // process each portlet ID
+            pids = getIds();
+            for (ii = 0; ii < pids.length; ii++) {
+               tpid = pids[ii];
+               
+               // don't update for initiating portlet. that's done after the loop
+               if (tpid !== pid) {
+            
+                  oldVal = getParmVal(tpid, prp);
+                  prpNames = getPRPNames(tpid);
+                  
+                  // check for public parameter and if the value has changed
+                  if ((prpNames.indexOf(prp) >= 0) && 
+                      (_isParmEqual(oldVal, newVal) === false)) {
+                  
+                     if (newVal === undefined) {
+                        delete pageState[tpid].state.parameters[prp];
+                     } else {
+                        pageState[tpid].state.parameters[prp] = newVal.slice(0);
+                     }
+                     upids.push(tpid);
+                     
+                  }
+               }
+            }
+         }
+      }
+      
+      // update state for the initiating portlet
+      pageState[pid].state = state;
+      upids.push(pid);
+      
+      updateHistory();
+
+      
+      // Use Promise to allow for potential server communication - 
+      return new Promise(function (resolve, reject) {
+         var simval = '';
+         if (pid === 'SimulateCommError' && state.parameters.SimulateError !== undefined) {
+            simval = state.parameters.SimulateError[0];
+         }
+
+         // reject promise of an error is to be simulated
+         if (simval === 'reject') {
+            reject(new Error("Simulated error occurred when setting state!"));
+         } else {
+            resolve(upids);
+         }
+      });
+   },
+
+   
+   // decodes the update strings. The update string is 
+   // a JSON object containing the entire page state. This decoder 
+   // returns an object containing the state for portlets whose 
+   // state has changed as compared to the current page state.
+   decodeUpdateString = function (ustr) {
+      var states = {}, ostate, nstate, pid, ps, npids = 0, cpids = 0;
+
+      ps = JSON.parse(ustr);
+      for (pid in ps) {
+         if (ps.hasOwnProperty(pid)) {
+            npids++;
+            nstate = ps[pid].state;
+            ostate = pageState[pid].state;
+            
+            if (!nstate || !ostate) {
+               throw new Error ("Invalid update string. ostate=" + ostate + ", nstate=" + nstate);
+            }
+            
+            if (stateChanged(nstate, pid)) {
+               states[pid] = cloneState(nstate);
+               cpids++;
+            }
+         }
+      }
+      
+      console.log("decoded state for " + npids + " portlets. # changed = " + cpids);
+      
+      return states;
+   },
+
+      
+   /**
+    * updates page state from string and returns array of portlet IDs
+    * to be updated.
+    * 
+    * @param   {string}    ustr     The 
+    * @param   {string}    pid      The portlet ID
+    * @private 
+    */
+   updatePageStateFromString = function (ustr, pid) {
+      var states, tpid, state, upids = [], stateUpdated = false;
+
+      states = decodeUpdateString(ustr);
+
+      // Update states and collect IDs of affected portlets. 
+      for (tpid in states) {
+         if (states.hasOwnProperty(tpid)) {
+            state = states[tpid];
+            pageState[tpid].state = state;
+            upids.push(tpid);
+            stateUpdated = true;
+         }
+      }
+      
+      // pid will be null or undefined when called from onpopstate routine.
+      // In that case, don't update history.
+      if (stateUpdated && pid) {
+         updateHistory();
+      }
+
+      return upids;
+   },
+   
+   
+   /**
+    * Update page state passed in after partial action. The list of 
+    * ID's of updated portlets is passed back through a promise in order
+    * to decouple the layers.
+    * 
+    * @param   {string}    ustr     The 
+    * @param   {string}    pid      The portlet ID
+    * @private 
+    */
+   updatePageState = function (ustr, pid) {
+            
+      // Use Promise to allow for potential server communication - 
+      return new Promise(function (resolve, reject) {
+         var upids;
+               
+         try {
+            upids = updatePageStateFromString(ustr, pid);
+            resolve(upids);
+         } catch (e) {
+            reject(new Error("Partial Action Action decode status: " + e.message));
+         }
+      });
+
+   },
 
       
    /**
@@ -753,13 +761,16 @@ var portlet = portlet || {};
    /**
     * Handler for history event that is fired when the back button is pressed.
     */
-   window.onpopstate = function (ev) {
-      var upids;
-      if (ev.state) {
-         console.log("onpopstate fired. State = " + ev.state.substr(0, 30) + " ...<more>");
-         upids = updatePageStateFromString(ev.state);
-         updatePageStateAsynch(upids);
-      }
+   if (doHistory) {
+      window.onpopstate = function (ev) {
+         if (ev.state) {
+            console.log("onpopstate fired. State = " + ev.state.substr(0, 30) + " ...<more>");
+            updateWhenIdle().then(function (doUpdate) {
+               var upids = updatePageStateFromString(ev.state);
+               doUpdate(upids);
+            });
+         }
+      };
    }
 
    
@@ -787,7 +798,7 @@ var portlet = portlet || {};
          isInitialized = true;
       }
       
-      updatePageStateAsynch = updateFunction;
+      updateWhenIdle = updateFunction;
 
       // stubs for accessing data for this portlet
       var stubs = {
