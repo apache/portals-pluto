@@ -762,7 +762,7 @@ var portlet = portlet || {};
     * Handler for history event that is fired when the back button is pressed.
     */
    if (doHistory) {
-      window.onpopstate = function (ev) {
+      window.addEventListener('popstate', function (ev) {
          if (ev.state) {
             console.log("onpopstate fired. State = " + ev.state.substr(0, 30) + " ...<more>");
             updateWhenIdle().then(function (doUpdate) {
@@ -770,7 +770,7 @@ var portlet = portlet || {};
                doUpdate(upids);
             });
          }
-      };
+      });
    }
 
    
