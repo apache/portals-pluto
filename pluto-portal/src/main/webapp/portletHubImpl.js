@@ -720,7 +720,8 @@ var portlet = portlet || {};
          } else {
             type = "";
          }
-         if (name && !el.disabled) {
+         // we don't support file type with enctype = 'application/x-www-form-urlencoded' (hub checks for this case)
+         if (name && !el.disabled && (type !== 'FILE')) {
             if ((tag === 'SELECT') && (el.multiple === true)) {
                // multiple select boxes need to be handled differently
                for (jj = 0; jj < el.options.length; jj++) {
@@ -784,18 +785,19 @@ var portlet = portlet || {};
                }
             };
             if (element) {
-               method = element.method;      // may be GET or POST
                enctype = element.enctype;
                if (enctype === 'multipart\/form-data') {
-                  // multipart/form-data is sent using FormData 
+                  // multipart/form-data is always POSTed using FormData 
                   fd = new FormData(element);
                   console.log("ajax action: POST using FormData object: " + fd);
                   xhr.open(method, url, true);
                   xhr.send(fd);
                } else {
                   // has to be 'application\/x-www-form-urlencoded', as the hub does not support text/plain
+                  method = element.method;      // may be GET or POST
                   fstr = encodeFormAsString(element);
-                  if (method.toUpperCase() === 'GET') {
+                  if (!method || method.toUpperCase() === 'GET') {      //default method = GET
+                     // send form data as part of URL
                      if (url.indexOf('?') >= 0) {
                         url += '&' + fstr;
                      } else {
@@ -806,6 +808,8 @@ var portlet = portlet || {};
                   } else {
                      // has to be post, since we only support GET & POST
                      xhr.open(method, url, true);
+                     xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+                     xhr.setRequestHeader('Content-Length', fstr.length);
                      xhr.send(fstr);
                   }
                }
