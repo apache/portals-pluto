@@ -52,7 +52,7 @@ limitations under the License.
   </tr></table>
 </form>
 <hr/>
-<FORM id='<portlet:namespace/>-setParams' method='POST' enctype='multipart/form-data'>
+<FORM id='<portlet:namespace/>-setParams' method='POST' enctype='application/x-www-form-urlencoded'>
    <table><tr><td align='left'>
    Select active foreground colors:
    </td><td>

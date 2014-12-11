@@ -1635,6 +1635,18 @@ var portlet = portlet || {};
                             + " is of type " + type);
                   }
                }
+               
+               // if we're dealing with a form, verify method and enctype
+               
+               if (el) {
+            	   if (el.method.toUpperCase() !== 'POST' && el.method.toUpperCase() !== 'GET') {
+                       throwIllegalArgumentException("Invalid form method " + el.method + ". Allowed methods are GET & POST ");
+            	   }
+            	   // allow the default, which is 'application/x-www-form-urlencoded' encoded, and also multipart/form-data
+            	   if (el.enctype && el.enctype !== 'application\/x-www-form-urlencoded' && el.enctype !== 'multipart\/form-data') {
+                       throwIllegalArgumentException("Invalid form enctype " + el.enctype + ". Allowed: 'application\/x-www-form-urlencoded' & 'multipart\/form-data'  ");
+            	   }
+              }
          
                // everything ok, so do the action
          

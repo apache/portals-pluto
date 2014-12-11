@@ -701,6 +701,46 @@ var portlet = portlet || {};
       });
 
    },
+   
+   /**
+    * function to extract data from form and encode it as an 'application/x-www-form-urlencoded' string
+    * 
+    * @param   {HTMLFormElement}  form    Form to be submitted
+    * @private 
+    */
+   encodeFormAsString = function (form) {
+      var fstr = "", parm, parms = [], ii, jj, el, name, val, tag, type;
+      for (ii = 0; ii < form.elements.length; ii++) {
+         el = form.elements[ii];
+         name = el.name;
+         val = el.value;
+         tag = el.nodeName.toUpperCase();
+         if (tag === 'INPUT') {
+            type = el.type.toUpperCase();
+         } else {
+            type = "";
+         }
+         if (name && !el.disabled) {
+            if ((tag === 'SELECT') && (el.multiple === true)) {
+               // multiple select boxes need to be handled differently
+               for (jj = 0; jj < el.options.length; jj++) {
+                  if (el.options[jj].checked) {
+                     val = el.options[jj].value;
+                     parm = encodeURIComponent(name) + '=' + encodeURIComponent(val);
+                     parms.push(parm);
+                  }
+               }
+            } else {
+               if (((type !== 'CHECKBOX') && (type !== 'RADIO')) || (el.checked === true)) {
+                  parm = encodeURIComponent(name) + '=' + encodeURIComponent(val);
+                  parms.push(parm);
+               }
+            }
+         }
+      }
+      fstr = parms.join('&');
+      return fstr;
+   },
 
       
    /**
@@ -724,7 +764,7 @@ var portlet = portlet || {};
          // get the ajax action URL. The Pluto impl creates the URL in JS
          // therefore no error handling 
          getUrl("ACTION", pid, parms).then(function (url) {
-            var xhr, upids, fd;
+            var xhr, upids, fd, method = 'POST', enctype, fstr;
 
             console.log("ajax action URL: " + url);
             
@@ -743,12 +783,34 @@ var portlet = portlet || {};
                   }
                }
             };
-            xhr.open("POST", url, true);
             if (element) {
-               fd = new FormData(element);
-               console.log("ajax action: POST using FormData object: " + fd);
-               xhr.send(fd);
+               method = element.method;      // may be GET or POST
+               enctype = element.enctype;
+               if (enctype === 'multipart\/form-data') {
+                  // multipart/form-data is sent using FormData 
+                  fd = new FormData(element);
+                  console.log("ajax action: POST using FormData object: " + fd);
+                  xhr.open(method, url, true);
+                  xhr.send(fd);
+               } else {
+                  // has to be 'application\/x-www-form-urlencoded', as the hub does not support text/plain
+                  fstr = encodeFormAsString(element);
+                  if (method.toUpperCase() === 'GET') {
+                     if (url.indexOf('?') >= 0) {
+                        url += '&' + fstr;
+                     } else {
+                        url += '?' + fstr;
+                     }
+                     xhr.open(method, url, true);
+                     xhr.send();
+                  } else {
+                     // has to be post, since we only support GET & POST
+                     xhr.open(method, url, true);
+                     xhr.send(fstr);
+                  }
+               }
             } else {
+               xhr.open(method, url, true);
                console.log("ajax action: POST using URL with parameters");
                xhr.send();
             }
