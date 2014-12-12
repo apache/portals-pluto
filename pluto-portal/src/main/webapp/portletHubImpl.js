@@ -784,6 +784,7 @@ var portlet = portlet || {};
                   }
                }
             };
+            
             if (element) {
                enctype = element.enctype;
                if (enctype === 'multipart\/form-data') {
@@ -794,9 +795,10 @@ var portlet = portlet || {};
                   xhr.send(fd);
                } else {
                   // has to be 'application\/x-www-form-urlencoded', as the hub does not support text/plain
-                  method = element.method;      // may be GET or POST
+                  method = element.method ? element.method.toUpperCase() : 'GET';      // may be GET or POST; GET is default
                   fstr = encodeFormAsString(element);
-                  if (!method || method.toUpperCase() === 'GET') {      //default method = GET
+                  console.log("ajax action: " + method + " using urlencoded form data: " + fstr);
+                  if (method === 'GET') {   
                      // send form data as part of URL
                      if (url.indexOf('?') >= 0) {
                         url += '&' + fstr;
