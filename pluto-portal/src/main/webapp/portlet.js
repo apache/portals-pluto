@@ -1652,9 +1652,9 @@ var portlet = portlet || {};
                // if we're dealing with a form, verify method and enctype
                
                if (el) {
-                  meth = el.method.toUpperCase();
+                  meth = el.method ? el.method.toUpperCase() : undefined;
             	   
-                  if (meth !== 'POST' && meth !== 'GET') {
+                  if (meth && (meth !== 'POST') && (meth !== 'GET')) {
                        throwIllegalArgumentException("Invalid form method " + el.method + ". Allowed methods are GET & POST ");
             	   }
             	   
