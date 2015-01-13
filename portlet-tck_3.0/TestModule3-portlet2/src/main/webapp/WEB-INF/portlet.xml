@@ -20,7 +20,7 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   version="2.0" id="TestModule3_2PortletAppsTest">
+   version="2.0" id="TestModule3_2PortletAppsTest-2">
 
    <portlet>
       <portlet-name>TestModule3_Portlet2</portlet-name>
@@ -34,13 +34,24 @@
       <portlet-info>
          <title>TestModule3_Portlet2</title>
       </portlet-info>
-      <supported-public-render-parameter>testModule3PRP</supported-public-render-parameter>
+      <supported-public-render-parameter>TM3PRP</supported-public-render-parameter>
+      <supported-public-render-parameter>TM3DifferentQName</supported-public-render-parameter>
+      <supported-public-render-parameter>TM3DifferentIdentifier-a</supported-public-render-parameter>
    </portlet>
    
    <public-render-parameter>
-      <identifier>testModule3PRP</identifier>
-      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">x:testModule3PRP</qname>
+      <identifier>TM3PRP</identifier>
+      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">x:TM3PRP</qname>
+   </public-render-parameter>
+      
+   <public-render-parameter>
+      <identifier>TM3DifferentQName</identifier>
+      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">x:TM3DifferentQName-a</qname>
    </public-render-parameter>
    
-
+   <public-render-parameter>
+      <identifier>TM3DifferentIdentifier-a</identifier>
+      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">x:TM3DifferentIdentifier</qname>
+   </public-render-parameter>
+   
 </portlet-app>

@@ -29,14 +29,11 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
-import javax.portlet.PortletSession;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.tck.beans.TestCaseDetails;
-import javax.portlet.tck.beans.TestLink;
 import javax.portlet.tck.beans.TestMessage;
 import javax.portlet.tck.beans.TestResult;
+import static javax.portlet.tck.beans.TestModule3Definitions.*;
 
 /**
  * This test portlet contains several tests to generate render URLs and place them
@@ -44,16 +41,6 @@ import javax.portlet.tck.beans.TestResult;
  */
 public class TestModule3_Portlet2 implements Portlet {
    private static final String LOG_CLASS = TestModule3_Portlet2.class.getName();
-
-   // Tests defined in this portlet
-   private final static String TEST0 = "TestModule3_PublicRenderParameterTestDifferentPortletApplications";          
-
-   private final static TestCaseDetails tcd = initTests();
-   private static TestCaseDetails initTests() {
-      TestCaseDetails t = new TestCaseDetails();
-      t.put(TEST0, "A PRP set on the render URL is visible in companion portlet of different portlet application .");
-      return t;
-   }
 
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
@@ -77,17 +64,58 @@ public class TestModule3_Portlet2 implements Portlet {
       PrintWriter writer = response.getWriter();
       TestResult tr = null;
 
-      // Test: TestModule3_PublicRenderParameterTestDifferentPortletApplications
-      // The link with the public render parameter is generated 
-      // by the main portlet.
-      String parm = request.getParameter("testModule3PRP");
-      if (parm != null) {
-         // test was executed so generate results
-         tr = tcd.getTestResultSucceeded(TEST0);
-         tr.writeTo(writer);
+            
+      String test = request.getParameter(TM3PRP0);
+      if (test != null) {
+    	  
+    	  // Test: TestModule3_PublicRenderParameterTestDifferentPortletApplications
+    	  // Details: A PRP set on the render URL is visible in companion portlet of 
+    	  // a different portlet application. Same QName  & same identifier
+    	  
+    	  tr = tcd.getTestResultSucceeded(TEST0);
+    	  tr.writeTo(writer);
+         
+    	  // Test: TestModule3_PublicRenderParameterTestDifferentQName
+    	  // Details: A PRP matching identifier but differing QNames is not visible 
+    	  // in companion portlet of different portlet application
+    	  // (expected to fail)
+    	  if (test.equals(TEST1)) {
+    		  String val = request.getParameter(TM3PRP1);
+    		  if (val == null) {
+    			  tr = tcd.getTestResultSucceeded(TEST1);
+    		  } else {
+    			  tr = tcd.getTestResultFailed(TEST1);
+    		  }
+    		  tr.writeTo(writer);
+    	  } else {
+   	         TestMessage tm = new TestMessage(TEST1, "Waiting for test to be executed.");
+   	         tm.writeTo(writer);
+    	  }
+         
+    	  // Test: TestModule3_PublicRenderParameterTestDifferentIdentifier
+    	  // Details: A PRP with matching QName but differing identifier is visible in 
+    	  // a companion portlet of different portlet application
+    	  // (expected to succeed)
+    	  if (test.equals(TEST2)) {
+    		  String val = request.getParameter(TM3PRP2a);
+    		  if (val != null) {
+    			  tr = tcd.getTestResultSucceeded(TEST2);
+    		  } else {
+    			  tr = tcd.getTestResultFailed(TEST2);
+    		  }
+    		  tr.writeTo(writer);
+    	  } else {
+   	         TestMessage tm = new TestMessage(TEST2, "Waiting for test to be executed.");
+   	         tm.writeTo(writer);
+    	  }
+
       } else {
          // test not executed yet, or was not correctly executed
-         TestMessage tm = new TestMessage(TEST0, "Waiting for publicRenderParameter1 to be set.");
+         TestMessage tm = new TestMessage(TEST0, "Waiting for " + TM3PRP0 + " to be set.");
+         tm.writeTo(writer);
+         tm = new TestMessage(TEST1, "Waiting for " + TM3PRP0 + " to be set.");
+         tm.writeTo(writer);
+         tm = new TestMessage(TEST2, "Waiting for " + TM3PRP0 + " to be set.");
          tm.writeTo(writer);
       }
 

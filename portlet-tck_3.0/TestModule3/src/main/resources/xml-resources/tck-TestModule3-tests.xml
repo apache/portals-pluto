@@ -2,4 +2,6 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <entry key="TestModule3_PublicRenderParameterTestDifferentPortletApplications">TestModule3_2PortletAppsTest</entry>
+<entry key="TestModule3_PublicRenderParameterTestDifferentQName">TestModule3_2PortletAppsTest</entry>
+<entry key="TestModule3_PublicRenderParameterTestDifferentIdentifier">TestModule3_2PortletAppsTest</entry>
 </properties>
