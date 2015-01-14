@@ -37,6 +37,7 @@
       <supported-public-render-parameter>TM3PRP</supported-public-render-parameter>
       <supported-public-render-parameter>TM3DifferentQName</supported-public-render-parameter>
       <supported-public-render-parameter>TM3DifferentIdentifier</supported-public-render-parameter>
+      <supported-public-render-parameter>TM3Alias.1</supported-public-render-parameter>
    </portlet>
    
    <public-render-parameter>
@@ -52,6 +53,12 @@
    <public-render-parameter>
       <identifier>TM3DifferentIdentifier</identifier>
       <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">x:TM3DifferentIdentifier</qname>
+   </public-render-parameter>
+   
+   <public-render-parameter>
+      <identifier>TM3Alias.1</identifier>
+      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">x:TM3Alias.1</qname>
+      <alias xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">x:myAlias</alias>
    </public-render-parameter>
    
 </portlet-app>

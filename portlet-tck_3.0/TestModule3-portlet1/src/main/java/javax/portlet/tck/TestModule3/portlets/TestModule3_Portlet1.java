@@ -63,28 +63,38 @@ public class TestModule3_Portlet1 implements Portlet {
 
       PrintWriter writer = response.getWriter();
 
-      // Test: TestModule3_PublicRenderParameterTestDifferentPortletApplications
-      // This portlet generates the link. The companion portlet 
-      // displays the results.
-      
       PortletURL purl;
       TestLink tl;
-      
+
+      // Test: TestModule3_PublicRenderParameterTestDifferentPortletApplications
+      // This portlet generates the link. The companion portlet displays the results.
       purl = response.createRenderURL();
       purl.setParameter(TM3PRP0, TEST0);
       tl = new TestLink(TEST0, purl);
       tl.writeTo(writer);
-      
+
+      // Test: TestModule3_PublicRenderParameterTestDifferentQName
+      // This portlet generates the link. The companion portlet displays the results.
       purl = response.createRenderURL();
       purl.setParameter(TM3PRP0, TEST1);
       purl.setParameter(TM3PRP1, TM3PRP1);
       tl = new TestLink(TEST1, purl);
       tl.writeTo(writer);
-      
+
+      // Test: TestModule3_PublicRenderParameterTestDifferentIdentifier
+      // This portlet generates the link. The companion portlet displays the results.
       purl = response.createRenderURL();
       purl.setParameter(TM3PRP0, TEST2);
       purl.setParameter(TM3PRP2, TM3PRP2);
       tl = new TestLink(TEST2, purl);
+      tl.writeTo(writer);
+
+      // Test: TestModule3_PublicRenderParameterTestAlias
+      // This portlet generates the link. The companion portlet displays the results.
+      purl = response.createRenderURL();
+      purl.setParameter(TM3PRP0, TEST3);
+      purl.setParameter(TM3PRP3, TM3PRP3);
+      tl = new TestLink(TEST3, purl);
       tl.writeTo(writer);
 
    }
