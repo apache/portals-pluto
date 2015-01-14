@@ -38,8 +38,8 @@ public class TestModule3Definitions {
 	private static TestCaseDetails initTests() {
 		TestCaseDetails t = new TestCaseDetails();
 		t.put(TEST0, "A PRP set on the render URL is visible in companion portlet of different portlet application. Same QName & Same identifier.");
-		t.put(TEST1, "A PRP matching identifier but differing QNames is not visible in companion portlet of different portlet application .");
-		t.put(TEST2, "A PRP with matching QName but differing identifier is visible in companion portlet of different portlet application .");
+		t.put(TEST1, "A PRP matching identifier but differing QNames is not visible in companion portlet of different portlet application.");
+		t.put(TEST2, "A PRP with matching QName but differing identifier is visible in companion portlet of different portlet application.");
 		return t;
 	}
 

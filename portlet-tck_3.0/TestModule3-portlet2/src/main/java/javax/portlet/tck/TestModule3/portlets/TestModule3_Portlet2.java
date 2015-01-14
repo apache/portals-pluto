@@ -85,6 +85,7 @@ public class TestModule3_Portlet2 implements Portlet {
     			  tr = tcd.getTestResultSucceeded(TEST1);
     		  } else {
     			  tr = tcd.getTestResultFailed(TEST1);
+    			  tr.appendTcDetail("Expected value of parameter " + TM3PRP1 + ": null, Actual value: " + val);
     		  }
     		  tr.writeTo(writer);
     	  } else {
@@ -102,6 +103,7 @@ public class TestModule3_Portlet2 implements Portlet {
     			  tr = tcd.getTestResultSucceeded(TEST2);
     		  } else {
     			  tr = tcd.getTestResultFailed(TEST2);
+    			  tr.appendTcDetail("Expected value of parameter " + TM3PRP2a + ": not null, Actual value: " + val);
     		  }
     		  tr.writeTo(writer);
     	  } else {
