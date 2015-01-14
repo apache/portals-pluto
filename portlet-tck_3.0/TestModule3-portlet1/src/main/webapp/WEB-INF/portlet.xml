@@ -34,13 +34,24 @@
       <portlet-info>
          <title>TestModule3_Portlet1</title>
       </portlet-info>
-      <supported-public-render-parameter>testModule3PRP</supported-public-render-parameter>
+      <supported-public-render-parameter>TM3PRP</supported-public-render-parameter>
+      <supported-public-render-parameter>TM3DifferentQName</supported-public-render-parameter>
+      <supported-public-render-parameter>TM3DifferentIdentifier</supported-public-render-parameter>
    </portlet>
    
    <public-render-parameter>
-      <identifier>testModule3PRP</identifier>
-      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">x:testModule3PRP</qname>
+      <identifier>TM3PRP</identifier>
+      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">x:TM3PRP</qname>
    </public-render-parameter>
    
-
+   <public-render-parameter>
+      <identifier>TM3DifferentQName</identifier>
+      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">x:TM3DifferentQName</qname>
+   </public-render-parameter>
+   
+   <public-render-parameter>
+      <identifier>TM3DifferentIdentifier</identifier>
+      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">x:TM3DifferentIdentifier</qname>
+   </public-render-parameter>
+   
 </portlet-app>

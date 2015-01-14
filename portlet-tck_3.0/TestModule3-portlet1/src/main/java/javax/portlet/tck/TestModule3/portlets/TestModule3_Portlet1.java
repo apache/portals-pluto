@@ -29,13 +29,11 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
-import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.tck.beans.TestCaseDetails;
 import javax.portlet.tck.beans.TestLink;
-import javax.portlet.tck.beans.TestResult;
+import static javax.portlet.tck.beans.TestModule3Definitions.*;
 
 /**
  * This test portlet contains several tests to generate render URLs and place them
@@ -43,16 +41,6 @@ import javax.portlet.tck.beans.TestResult;
  */
 public class TestModule3_Portlet1 implements Portlet {
    private static final String LOG_CLASS = TestModule3_Portlet1.class.getName();
-
-   // Tests defined in this portlet
-   private final static String TEST0 = "TestModule3_PublicRenderParameterTestDifferentPortletApplications";          
-
-   private final static TestCaseDetails tcd = initTests();
-   private static TestCaseDetails initTests() {
-      TestCaseDetails t = new TestCaseDetails();
-      t.put(TEST0, "A PRP set on the render URL is visible in companion portlet of different portlet application .");
-      return t;
-   }
 
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
@@ -74,14 +62,29 @@ public class TestModule3_Portlet1 implements Portlet {
       }
 
       PrintWriter writer = response.getWriter();
-      TestResult tr = null;
 
       // Test: TestModule3_PublicRenderParameterTestDifferentPortletApplications
       // This portlet generates the link. The companion portlet 
       // displays the results.
-      PortletURL purl1 = response.createRenderURL();
-      purl1.setParameter("testModule3PRP", "testModule3PRP");
-      TestLink tl = new TestLink(TEST0, purl1);
+      
+      PortletURL purl;
+      TestLink tl;
+      
+      purl = response.createRenderURL();
+      purl.setParameter(TM3PRP0, TEST0);
+      tl = new TestLink(TEST0, purl);
+      tl.writeTo(writer);
+      
+      purl = response.createRenderURL();
+      purl.setParameter(TM3PRP0, TEST1);
+      purl.setParameter(TM3PRP1, TM3PRP1);
+      tl = new TestLink(TEST1, purl);
+      tl.writeTo(writer);
+      
+      purl = response.createRenderURL();
+      purl.setParameter(TM3PRP0, TEST2);
+      purl.setParameter(TM3PRP2, TM3PRP2);
+      tl = new TestLink(TEST2, purl);
       tl.writeTo(writer);
 
    }
