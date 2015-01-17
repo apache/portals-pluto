@@ -30,6 +30,12 @@ public class PortalURLParameter {
     private String name;
     private String[] values;
 
+    public PortalURLParameter(String window, String name) {
+        this.window = window;
+        this.name = name;
+        this.values = null;
+    }
+
     public PortalURLParameter(String window, String name, String value) {
         this.window = window;
         this.name = name;
@@ -60,6 +66,10 @@ public class PortalURLParameter {
 
     public String getWindowId() {
         return window;
+    }
+
+    public void setWindowId(String window) {
+        this.window = window;
     }
 
 }

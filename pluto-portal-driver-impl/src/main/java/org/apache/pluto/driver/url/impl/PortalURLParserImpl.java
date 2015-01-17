@@ -25,10 +25,14 @@ import java.util.StringTokenizer;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.pluto.driver.AttributeKeys;
+import org.apache.pluto.driver.config.DriverConfiguration;
+import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLParser;
@@ -223,7 +227,14 @@ public class PortalURLParserImpl implements PortalURLParser {
         }
         if (renderPath.length() > 0) {
            portalURL.setRenderPath(renderPath.toString());
+           
+           // test code
+           ServletContext sc = request.getServletContext();
+           DriverConfiguration dc = (DriverConfiguration) sc.getAttribute(AttributeKeys.DRIVER_CONFIG);
+           PublicRenderParameterMapper prpm = dc.getPublicRenderParameterService()
+                                                .getPRPMapper(renderPath.toString());
         }
+        
 
         // Return the portal URL.
         return portalURL;

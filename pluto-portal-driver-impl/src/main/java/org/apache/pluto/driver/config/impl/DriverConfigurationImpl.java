@@ -28,6 +28,7 @@ import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
+import org.apache.pluto.driver.services.portal.PublicRenderParameterService;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.services.portal.SupportedModesService;
 import org.apache.pluto.driver.services.portal.SupportedWindowStateService;
@@ -47,6 +48,7 @@ public class DriverConfigurationImpl
     private final RenderConfigService renderService;
     private final SupportedModesService supportedModesService;
     private final SupportedWindowStateService supportedWindowStateService;
+    private final PublicRenderParameterService publicRenderParameterService;
 
     // Container Services
     private PortletPreferencesService portletPreferencesService;
@@ -55,13 +57,15 @@ public class DriverConfigurationImpl
                                    PropertyConfigService propertyService,
                                    RenderConfigService renderService,
                                    SupportedModesService supportedModesService,
-                                   SupportedWindowStateService supportedWindowStateService) {
+                                   SupportedWindowStateService supportedWindowStateService,
+                                   PublicRenderParameterService publicRenderParameterService) {
 
         this.portalUrlParser = portalUrlParser;
         this.propertyService = propertyService;
         this.renderService = renderService;
         this.supportedModesService = supportedModesService;
         this.supportedWindowStateService = supportedWindowStateService;
+        this.publicRenderParameterService = publicRenderParameterService;
     }
 
     /**
@@ -168,6 +172,10 @@ public class DriverConfigurationImpl
     
     public RenderConfigService getRenderConfigService(){
     	return renderService;
+    }
+    
+    public PublicRenderParameterService getPublicRenderParameterService() {
+       return publicRenderParameterService;
     }
 
     public Set<PortletMode> getSupportedPortletModes(String portletId) throws PortletContainerException {
