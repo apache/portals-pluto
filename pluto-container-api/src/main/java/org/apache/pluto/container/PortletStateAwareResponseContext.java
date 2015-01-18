@@ -22,6 +22,7 @@ import java.util.Map;
 import javax.portlet.Event;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
+import javax.xml.namespace.QName;
 
 /**
  * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
@@ -37,4 +38,22 @@ public interface PortletStateAwareResponseContext extends PortletResponseContext
     Map<String, String[]> getPublicRenderParameters();
     EventProvider getEventProvider();
     List<Event> getEvents();
+    
+    /**
+     * Add a public render parameter including QName to allow for use of
+     * PRP mapping algorithm.
+     *  
+     * @param qn           QName
+     * @param identifier   Identifier for PRP
+     * @param values       values array
+     */
+    void addPublicRenderParameter(QName qn, String identifier, String[] values);
+    
+    /**
+     * Remove the PRP referred to by the QName
+     * 
+     * @param qn
+     */
+    void removePublicRenderParameter(QName qn);
+
 }

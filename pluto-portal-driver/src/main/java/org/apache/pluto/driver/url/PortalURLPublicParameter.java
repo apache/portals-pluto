@@ -19,10 +19,6 @@
 
 package org.apache.pluto.driver.url;
 
-import static java.util.logging.Level.*;
-
-import java.util.logging.Logger;
-
 import javax.xml.namespace.QName;
 
 /**
@@ -31,8 +27,6 @@ import javax.xml.namespace.QName;
  * @since  16/01/2014
  */
 public class PortalURLPublicParameter extends PortalURLParameter {
-   private static final String LOG_CLASS = PortalURLPublicParameter.class.getName();
-   private final Logger        LOGGER    = Logger.getLogger(LOG_CLASS);
    
    private QName  qname;
 

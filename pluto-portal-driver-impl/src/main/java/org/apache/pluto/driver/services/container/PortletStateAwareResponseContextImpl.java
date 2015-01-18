@@ -17,14 +17,19 @@
 package org.apache.pluto.driver.services.container;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.portlet.Event;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.namespace.QName;
 
 import org.apache.pluto.container.EventProvider;
 import org.apache.pluto.container.PortletContainer;
@@ -43,6 +48,8 @@ import org.apache.pluto.driver.url.PortalURL;
 public abstract class PortletStateAwareResponseContextImpl extends PortletResponseContextImpl implements
                 PortletStateAwareResponseContext
 {
+    private final Logger LOGGER = LoggerFactory.getLogger(PortletStateAwareResponseContextImpl.class);
+
     private List<Event> events;
     private PortletURLProviderImpl portletURLProvider;
     
@@ -130,5 +137,22 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
     public EventProvider getEventProvider()
     {
         return isClosed() ? null : new EventProviderImpl(getPortletWindow(), PlutoServices.getServices().getPortletRegistryService());
+    }
+
+    /* (non-Javadoc)
+     * @see org.apache.pluto.container.PortletStateAwareResponseContext#addPublicRenderParameter(javax.xml.namespace.QName, java.lang.String, java.lang.String[])
+     */
+    public void addPublicRenderParameter(QName qn, String identifier, String[] values) {
+       LOGGER.debug("Add PRP. QName = " + qn.toString() + ", ID = " + identifier
+             + ", values = " + Arrays.toString(values));
+       portletURLProvider.addPublicRenderParameter(qn, identifier, values);
+    }
+
+    /* (non-Javadoc)
+     * @see org.apache.pluto.container.PortletStateAwareResponseContext#removePublicRenderParameter(javax.xml.namespace.QName)
+     */
+    public void removePublicRenderParameter(QName qn) {
+       LOGGER.debug("Remove PRP. QName = " + qn.toString());
+       portletURLProvider.removePublicRenderParameter(qn);
     }
 }

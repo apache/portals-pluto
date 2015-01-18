@@ -18,25 +18,33 @@ package org.apache.pluto.driver.services.container;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
+import javax.xml.namespace.QName;
 
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
+import org.apache.pluto.driver.url.PortalURLPublicParameter;
 
 /**
  *
  */
 public class PortletURLProviderImpl implements PortletURLProvider
 {
+    private final Logger LOGGER = LoggerFactory.getLogger(PortletURLProviderImpl.class);
+
     private final PortalURL url;
     private final TYPE type;
     private final String window;
@@ -47,6 +55,10 @@ public class PortletURLProviderImpl implements PortletURLProvider
     private Map<String, String[]> renderParameters;
     private Map<String, String[]> publicRenderParameters;
     private Map<String, List<String>> properties;
+    
+    // Use a map based on QName for the PRPs in order to make them easy to address
+    private final Map<QName, PortalURLPublicParameter> qn2PRP = 
+          new HashMap<QName, PortalURLPublicParameter>();
 
     public PortletURLProviderImpl(PortalURL url, TYPE type, PortletWindow portletWindow)
     {
@@ -220,4 +232,28 @@ public class PortletURLProviderImpl implements PortletURLProvider
         }
         return properties;
     }
+
+   /* (non-Javadoc)
+    * @see org.apache.pluto.container.PortletURLProvider#addPublicRenderParameter(javax.xml.namespace.QName, java.lang.String, java.lang.String[])
+    */
+   public void addPublicRenderParameter(QName qn, String identifier, String[] values) 
+   {
+       LOGGER.debug("Add PRP. QName = " + qn.toString() + ", ID = " + identifier
+             + ", values = " + Arrays.toString(values));
+       PortalURLPublicParameter pupp = new PortalURLPublicParameter(window, identifier, qn, values);
+       qn2PRP.put(qn, pupp);
+   }
+
+   /* (non-Javadoc)
+    * @see org.apache.pluto.container.PortletURLProvider#removePublicRenderParameter(javax.xml.namespace.QName)
+    */
+   public void removePublicRenderParameter(QName qn) 
+   {
+       LOGGER.debug("Remove PRP. QName = " + qn.toString());
+       if (qn2PRP.containsKey(qn)) {
+          qn2PRP.remove(qn);
+       } else {
+          LOGGER.warn("Map does not contain designated QName");
+       }
+   }
 }

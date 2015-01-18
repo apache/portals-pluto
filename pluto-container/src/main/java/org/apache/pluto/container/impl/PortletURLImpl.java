@@ -26,6 +26,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
@@ -35,6 +38,7 @@ import javax.portlet.PortletURLGenerationListener;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+import javax.xml.namespace.QName;
 
 import org.apache.pluto.container.PortletMimeResponseContext;
 import org.apache.pluto.container.PortletResponseContext;
@@ -43,6 +47,7 @@ import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.om.portlet.CustomPortletMode;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.apache.pluto.container.om.portlet.PublicRenderParameter;
 import org.apache.pluto.container.om.portlet.Supports;
 import org.apache.pluto.container.util.ArgumentUtility;
 
@@ -52,6 +57,7 @@ import org.apache.pluto.container.util.ArgumentUtility;
  * @since 2.0
  */
 public class PortletURLImpl implements PortletURL, ResourceURL {
+    private final Logger LOGGER = LoggerFactory.getLogger(PortletURLImpl.class);
 
     private PortletResponseContext responseContext;
     private PortalContext portalContext;
@@ -138,6 +144,29 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         List<String> publicRenderParameterNames = responseContext.getPortletWindow().getPortletDefinition().getSupportedPublicRenderParameters();
         return publicRenderParameterNames.isEmpty() ? false : publicRenderParameterNames.contains(name);
     }
+    
+   private QName getQNameForPRPName(String name) {
+      QName qn = null;
+      PortletDefinition pd = responseContext.getPortletWindow().getPortletDefinition();
+      PortletApplicationDefinition pad = pd.getApplication();
+      List<? extends PublicRenderParameter> prps = pad.getPublicRenderParameters();
+      for (PublicRenderParameter prp : prps) {
+         if (name.equals(prp.getIdentifier())) {
+            qn = prp.getQName();
+            if (qn == null) {
+               String ns = pad.getDefaultNamespace();
+               String lp = prp.getName();
+               if (lp != null) {
+                  qn = new QName(ns, lp);
+               } else {
+                  LOGGER.error("Error in descriptor for " + responseContext.getPortletWindow()
+                        + " - neither QName nor Name is defined");
+               }
+            }
+         }
+      }
+      return qn;
+   }
         
     private static String[] cloneParameterValues(String[] values)
     {
@@ -251,6 +280,9 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         if (renderURL && isPublicRenderParameter(name))
         {
             urlProvider.getPublicRenderParameters().put(name, values);
+            
+            QName qn = getQNameForPRPName(name);
+            urlProvider.addPublicRenderParameter(qn, name, values);
         }
     }
 
@@ -267,6 +299,9 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         if (renderURL && isPublicRenderParameter(name))
         {
             urlProvider.getPublicRenderParameters().put(name, values);
+            
+            QName qn = getQNameForPRPName(name);
+            urlProvider.addPublicRenderParameter(qn, name, values);
         }
     }
 
@@ -318,10 +353,14 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         for (Map.Entry<String,String[]> entry : parameters.entrySet())
         {
             String[] values = cloneParameterValues(entry.getValue());
-            urlProvider.getRenderParameters().put(entry.getKey(), values);
-            if (renderURL && isPublicRenderParameter(entry.getKey()))
+            String key = entry.getKey();
+            urlProvider.getRenderParameters().put(key, values);
+            if (renderURL && isPublicRenderParameter(key))
             {
-                urlProvider.getPublicRenderParameters().put(entry.getKey(), values);
+                urlProvider.getPublicRenderParameters().put(key, values);
+                
+                QName qn = getQNameForPRPName(key);
+                urlProvider.addPublicRenderParameter(qn, key, values);
             }
         }
     }
@@ -417,6 +456,9 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         {
             urlProvider.getPublicRenderParameters().put(name, null);
             urlProvider.getRenderParameters().remove(name);
+            
+            QName qn = getQNameForPRPName(name);
+            urlProvider.removePublicRenderParameter(qn);
         }
     }
 
