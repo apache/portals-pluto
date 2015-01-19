@@ -18,12 +18,14 @@ package org.apache.pluto.driver.url;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.servlet.ServletContext;
 
 import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 
 /**
  * Created by IntelliJ IDEA.
@@ -40,6 +42,25 @@ public interface PortalURL extends Cloneable {
     void addParameter(PortalURLParameter param);
     
     void addPublicRenderParametersNew(Map<String, String[]> parameters);
+    
+    /**
+     * Adds a new public render parameter.
+     * 
+     * @param pup
+     */
+    void addPublicRenderParameter(PortalURLPublicParameter pup);
+    
+    /**
+     * Add the PRP mapper for the page being processed
+     * @param prpm
+     */
+    void setPublicRenderParameterMapper(PublicRenderParameterMapper prpm);
+    
+    /**
+     * get the PRP mapper for the page being processed
+     * @return
+     */
+    PublicRenderParameterMapper getPublicRenderParameterMapper();
 
     Collection<PortalURLParameter> getParameters();
 
@@ -98,8 +119,6 @@ public interface PortalURL extends Cloneable {
 	void setResourceWindow(String window);
 
 	PageConfig getPageConfig(ServletContext servletContext);
-
-	void addPublicParameterActionResourceParameter(String parameterName, String value);
 	
 	void setCacheability(String cacheLevel);
 	String getCacheability();

@@ -28,7 +28,10 @@ import javax.xml.namespace.QName;
  */
 public class PortalURLPublicParameter extends PortalURLParameter {
    
-   private QName  qname;
+   private final QName  qname;
+   
+   // mark if this PRP is to be removed from the current set
+   private boolean removed = false;
 
    /**
     * Constructor when no value is available
@@ -65,12 +68,42 @@ public class PortalURLPublicParameter extends PortalURLParameter {
       this.qname = qname;
    }
    
+   /**
+    * Returns the Qname
+    * @return     QName
+    */
    public QName getQName() {
       return qname;
    }
    
-   public void setQName(QName qname) {
-      this.qname = qname;
+   /**
+    * Provides the information that the public render parameter designated by this object is to be 
+    * removed from the current set.
+    *  
+    * @param removed     marks whether the PR is to be removed
+    */
+   public void setRemoved(boolean removed) {
+      this.removed = removed;
    }
-
+   
+   /**
+    * Tests whether the PRP has been removed
+    * @return
+    */
+   public boolean isRemoved() {
+      return removed;
+   }
+   
+   /**
+    * Returns a clone of the parameter
+    */
+   @Override
+   public PortalURLPublicParameter clone() {
+      // shallow clone of the values array works because strings are immutable
+      QName qn = new QName(qname.getNamespaceURI(), qname.getLocalPart(), qname.getPrefix());
+      PortalURLPublicParameter pupp =  new PortalURLPublicParameter(window, name, qn, (values == null ? values : values.clone()));
+      pupp.setRemoved(removed);
+      return pupp;
+   }
+   
 }

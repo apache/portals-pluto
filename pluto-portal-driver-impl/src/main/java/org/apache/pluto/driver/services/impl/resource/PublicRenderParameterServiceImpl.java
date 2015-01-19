@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.driver.services.portal.PageConfig;
-import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
+import org.apache.pluto.driver.services.portal.PublicRenderParameterMapperImpl;
 import org.apache.pluto.driver.services.portal.PublicRenderParameterService;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 
@@ -51,10 +51,10 @@ public class PublicRenderParameterServiceImpl implements PublicRenderParameterSe
    /* (non-Javadoc)
     * @see org.apache.pluto.driver.services.portal.PublicRenderParameterService#getPRPMapper(java.lang.String)
     */
-   public PublicRenderParameterMapper getPRPMapper(String page) {
+   public PublicRenderParameterMapperImpl getPRPMapper(String page) {
       LOGGER.fine("Getting PRP mapper for page = " + page);
       PageConfig paco = reco.getPage(page);
-      PublicRenderParameterMapper prpm = new PublicRenderParameterMapper(paco, pore);
+      PublicRenderParameterMapperImpl prpm = new PublicRenderParameterMapperImpl(paco, pore);
       return prpm;
    }
 

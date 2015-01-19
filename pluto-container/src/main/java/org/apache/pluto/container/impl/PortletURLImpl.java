@@ -458,7 +458,7 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
             urlProvider.getRenderParameters().remove(name);
             
             QName qn = getQNameForPRPName(name);
-            urlProvider.removePublicRenderParameter(qn);
+            urlProvider.removePublicRenderParameter(qn, name);
         }
     }
 

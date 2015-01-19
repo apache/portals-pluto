@@ -77,8 +77,9 @@ public interface PortletURLProvider {
      * Remove the PRP referred to by the QName
      * 
      * @param qn
+     * @param identifier   Identifier for PRP
      */
-    void removePublicRenderParameter(QName qn);
+    void removePublicRenderParameter(QName qn, String identifier);
     
     String getCacheability();
     void setCacheability(String cacheLevel);

@@ -20,8 +20,10 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,9 +58,7 @@ public class PortletURLProviderImpl implements PortletURLProvider
     private Map<String, String[]> publicRenderParameters;
     private Map<String, List<String>> properties;
     
-    // Use a map based on QName for the PRPs in order to make them easy to address
-    private final Map<QName, PortalURLPublicParameter> qn2PRP = 
-          new HashMap<QName, PortalURLPublicParameter>();
+    private final Set<PortalURLPublicParameter> prpSet = new HashSet<PortalURLPublicParameter>();
 
     public PortletURLProviderImpl(PortalURL url, TYPE type, PortletWindow portletWindow)
     {
@@ -121,6 +121,9 @@ public class PortletURLProviderImpl implements PortletURLProvider
             for (Map.Entry<String,String[]> entry : publicRenderParameters.entrySet())
             {
                 url.getNewPublicParameters().put(entry.getKey(),entry.getValue() != null ? entry.getValue() : new String[]{null});
+            }
+            for (PortalURLPublicParameter prp : prpSet) {
+               url.addPublicRenderParameter(prp);
             }
         }
         url.setResourceID(resourceID);
@@ -241,19 +244,17 @@ public class PortletURLProviderImpl implements PortletURLProvider
        LOGGER.debug("Add PRP. QName = " + qn.toString() + ", ID = " + identifier
              + ", values = " + Arrays.toString(values));
        PortalURLPublicParameter pupp = new PortalURLPublicParameter(window, identifier, qn, values);
-       qn2PRP.put(qn, pupp);
+       prpSet.add(pupp);
    }
 
    /* (non-Javadoc)
     * @see org.apache.pluto.container.PortletURLProvider#removePublicRenderParameter(javax.xml.namespace.QName)
     */
-   public void removePublicRenderParameter(QName qn) 
+   public void removePublicRenderParameter(QName qn, String identifier) 
    {
        LOGGER.debug("Remove PRP. QName = " + qn.toString());
-       if (qn2PRP.containsKey(qn)) {
-          qn2PRP.remove(qn);
-       } else {
-          LOGGER.warn("Map does not contain designated QName");
-       }
+       PortalURLPublicParameter pupp = new PortalURLPublicParameter(window, identifier, qn);
+       pupp.setRemoved(true);
+       prpSet.add(pupp);
    }
 }

@@ -149,10 +149,10 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
     }
 
     /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletStateAwareResponseContext#removePublicRenderParameter(javax.xml.namespace.QName)
+     * @see org.apache.pluto.container.PortletStateAwareResponseContext#removePublicRenderParameter(javax.xml.namespace.QName, java.lang.String)
      */
-    public void removePublicRenderParameter(QName qn) {
+    public void removePublicRenderParameter(QName qn, String id) {
        LOGGER.debug("Remove PRP. QName = " + qn.toString());
-       portletURLProvider.removePublicRenderParameter(qn);
+       portletURLProvider.removePublicRenderParameter(qn, id);
     }
 }

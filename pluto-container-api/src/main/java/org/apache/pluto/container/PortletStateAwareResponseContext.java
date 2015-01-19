@@ -53,7 +53,8 @@ public interface PortletStateAwareResponseContext extends PortletResponseContext
      * Remove the PRP referred to by the QName
      * 
      * @param qn
+     * @param identifier   Identifier for PRP
      */
-    void removePublicRenderParameter(QName qn);
+    void removePublicRenderParameter(QName qn, String identifier);
 
 }

@@ -164,7 +164,7 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
             responseContext.getRenderParameters().remove(name);
             
             QName qn = getQNameForPRPName(name);
-            responseContext.removePublicRenderParameter(qn);
+            responseContext.removePublicRenderParameter(qn, name);
         }
     }
 

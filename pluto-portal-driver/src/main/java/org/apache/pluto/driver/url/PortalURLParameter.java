@@ -26,9 +26,9 @@ package org.apache.pluto.driver.url;
 public class PortalURLParameter {
 
 
-    private String window;
-    private String name;
-    private String[] values;
+    protected final String window;
+    protected final String name;
+    protected String[] values;
 
     public PortalURLParameter(String window, String name) {
         this.window = window;
@@ -52,10 +52,6 @@ public class PortalURLParameter {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String[] getValues() {
         return values;
     }
@@ -67,9 +63,59 @@ public class PortalURLParameter {
     public String getWindowId() {
         return window;
     }
-
-    public void setWindowId(String window) {
-        this.window = window;
+    
+    @Override
+    public PortalURLParameter clone() {
+       // shallow clone works because strings are immutable
+       return new PortalURLParameter(window, name, (values == null ? values : values.clone()));
+    }
+    
+    /**
+     * For this class, "equals" means "refers to the same parameter". The parameter name & window
+     * are compared, the values are NOT compared. The combination of window ID and parameter name 
+     * must always be unique when the objects are used in collections. 
+     */
+    @Override
+    public boolean equals(Object o) {
+       boolean eq = false;
+       if (o instanceof PortalURLParameter) {
+          if (o == this) {
+             eq = true; 
+          } else {
+             PortalURLParameter pup = (PortalURLParameter) o;
+             if (equals(window, pup.window)) {
+                if (equals(name, pup.name)) {
+                   eq = true;
+                }
+             }
+          }
+       }
+       return eq;
+    }
+    
+    @Override
+    public int hashCode() {
+       int hc = 17;
+       if (window != null) {
+          hc += 37*hc + window.hashCode();
+       }
+       if (name != null) {
+          hc += 37*hc + name.hashCode();
+       }
+       return hc;
+    }
+    
+    /**
+     * helper function for comparison. 
+     */
+    protected boolean equals(Object o1, Object o2) {
+       boolean eq = false;
+       if (o1 == o2) {
+          eq = true;
+       } else if (o1 != null && o2 != null) {
+          eq = o1.equals(o2);
+       }
+       return eq;
     }
 
 }
