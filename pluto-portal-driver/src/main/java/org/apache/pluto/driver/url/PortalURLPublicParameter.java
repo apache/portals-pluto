@@ -23,6 +23,12 @@ import javax.xml.namespace.QName;
 
 /**
  * Encapsulates concrete public render parameters used with the portal URLs.
+ * 
+ * The public render parameters contain a 'removed' flag that marks whether or not the
+ * PRP has been set. If the <code>removed</code> flag is set, the PRP is considered to
+ * be inactive, or 'not set'. A newly-created PRP have the <code>removed</code> flag set. 
+ * When a value is set, the <code>removed</code> flag is automatically reset.
+ * 
  * @author msnicklous
  * @since  16/01/2014
  */
@@ -31,7 +37,7 @@ public class PortalURLPublicParameter extends PortalURLParameter {
    private final QName  qname;
    
    // mark if this PRP is to be removed from the current set
-   private boolean removed = false;
+   private boolean removed = true;
 
    /**
     * Constructor when no value is available
@@ -54,6 +60,7 @@ public class PortalURLPublicParameter extends PortalURLParameter {
    public PortalURLPublicParameter(String window, String name, QName qname, String value) {
       super(window, name, value);
       this.qname = qname;
+      removed = false;
    }
 
    /**
@@ -66,6 +73,7 @@ public class PortalURLPublicParameter extends PortalURLParameter {
    public PortalURLPublicParameter(String window, String name, QName qname, String[] values) {
       super(window, name, values);
       this.qname = qname;
+      removed = false;
    }
    
    /**
@@ -104,6 +112,15 @@ public class PortalURLPublicParameter extends PortalURLParameter {
       PortalURLPublicParameter pupp =  new PortalURLPublicParameter(window, name, qn, (values == null ? values : values.clone()));
       pupp.setRemoved(removed);
       return pupp;
+   }
+   
+   /**
+    * make sure removed flag is handled properly.
+    */
+   @Override
+   public void setValues(String[] value) {
+      super.setValues(value);
+      removed = false;
    }
    
 }

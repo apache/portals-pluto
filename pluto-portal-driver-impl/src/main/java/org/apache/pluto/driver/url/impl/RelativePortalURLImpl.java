@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -62,12 +63,10 @@ public class RelativePortalURLImpl implements PortalURL {
    private Map<String, String[]> publicParameterNew = new HashMap<String, String[]>();
    private Map<String, String[]> privateRenderParameters = new HashMap<String, String[]>();
 
-   // The public render parameters for the page currently set on the URL targeting the page to be rendered
-   private Set<PortalURLPublicParameter> currPrps = new HashSet<PortalURLPublicParameter>();
-
    // Newly made changes to the public render parameters
    private Set<PortalURLPublicParameter> newPrps = new HashSet<PortalURLPublicParameter>();
 
+   // provides the defined public render parameters and their relationships to one another for the current page 
    private PublicRenderParameterMapper prpMapper = null;
 
    /**
@@ -307,9 +306,11 @@ public class RelativePortalURLImpl implements PortalURL {
 
    public void addPublicParameterCurrent(String name, String[] values){
       publicParameterCurrent.put(name, values);
-      if (prpMapper != null) {
-         Set<PortalURLPublicParameter> mappedPRPs = prpMapper.getPRPsForId(name, values);
-         currPrps.addAll(mappedPRPs);
+      for (int ii = 0; ii < prpMapper.getNumberOfGroups(); ii++) {
+         List<PortalURLPublicParameter> prps = prpMapper.getPublicParameterGroup(ii);
+         if (prps.get(0).getName().equals(name)) {
+            prpMapper.setValues(ii, values);
+         }
       }
    }
 
@@ -392,10 +393,7 @@ public class RelativePortalURLImpl implements PortalURL {
    }
 
    public void addPublicRenderParameter(PortalURLPublicParameter pup) {
-      if (prpMapper != null) {
-         Set<PortalURLPublicParameter> mappedPRPs = prpMapper.getMappedPublicParameters(pup);
-         newPrps.addAll(mappedPRPs);
-      }
+      newPrps.add(pup);
    }
 
    public void setPublicRenderParameterMapper(PublicRenderParameterMapper prpm) {

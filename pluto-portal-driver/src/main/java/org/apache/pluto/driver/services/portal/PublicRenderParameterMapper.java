@@ -18,7 +18,7 @@
 
 package org.apache.pluto.driver.services.portal;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.xml.namespace.QName;
 
@@ -43,28 +43,26 @@ import org.apache.pluto.driver.url.PortalURLPublicParameter;
  * equals() function, which determines equality of public render parameters
  * based on comparison of the window ID and the parameter name (= PRP identifier).
  * 
+ * The public render parameters contain a 'removed' flag that marks whether or not the
+ * PRP has been set. If the <code>removed</code> flag is set, the PRP is considered to
+ * be inactive, or 'not set'. A newly-created PRP mapper will contain public render parameters
+ * whose <code>removed</code> flag is set. When a value is set, the <code>removed</code>
+ * flag is automatically reset.
+ * 
  * @author msnicklous
- * @since  16/01/2015
+ * @since  19/01/2015
  */
 public interface PublicRenderParameterMapper {
-
-   /**
-    * Returns the set of public render parameters matching the input public render parameter.
-    * The returned set will include the input PRP (providing that it is used on the page at all).
-    * 
-    * @param prp     The public render parameter to be matched
-    * @return        Set containing all matching PRPs
-    */
-   public Set<PortalURLPublicParameter> getMappedPublicParameters(PortalURLPublicParameter prp);
 
    /**
     * Returns the set of public render parameters specified by the input group index.
     * 
     * @param index   The group index
     * @return        Set containing all matching PRPs.
-    *                If no group matches the index, an empty set is returned
+    * 
+    * @throws        IndexOutOfBoundsException - if the index is out of range (index < 0 || index >= getNumberOfGroups())
     */
-   public Set<PortalURLPublicParameter> getMappedPublicParameters(int index);
+   public List<PortalURLPublicParameter> getPublicParameterGroup(int index);
    
    /**
     * Returns the number of distinct PRP groups available from the mapper.
@@ -105,14 +103,54 @@ public interface PublicRenderParameterMapper {
    public int getIndex(QName qname);
    
    /**
-    * Sets the values of all public render parameters within the specified group. 
+    * Sets the values of all public render parameters within the specified group.
+    * 
+    * Setting a value automatically resets the 'removed' flag so that the values are made available
+    * to portlets using the public render parameter in question.
     * 
     * @param index      Group index
     * @param values     Values array for the public render parameters contained in the group
     */
-   public void setValue(int index, String[] values);
+   public void setValues(int index, String[] values);
 
-   // scafolding function - to be thrown away then the URL generation is complete.
-   public Set<PortalURLPublicParameter> getPRPsForId(String id, String[] vals);
+   /**
+    * Gets the string value array that is set for all the public render parameters within  
+    * the group specified by the index.
+    * 
+    * @param index      Group index
+    * @return           String array 
+    * 
+    * @throws           IndexOutOfBoundsException - if the index is out of range (index < 0 || index >= getNumberOfGroups())
+    */
+   public String[] getValues(int index);
    
+   /**
+    * Sets the 'removed' flag for all public render parameters in the group specified by the index.
+    * 
+    * When the 'removed' flag is set, the public render parameter is considered to be not set.
+    * the value <code>null</code> will be returned to a portlet attempting to read the parameter.
+    * 
+    * @param index      Group index
+    * @param removed    <code>true</code> marks the PRP as removed. <code>false</code> resets the value to <code>null</code> and marks it as being available.
+    */
+   public void setRemoved(int index, boolean removed);
+
+   /**
+    * Gets the 'removed' flag that is set for all the public render parameters within  
+    * the group specified by the index.
+    * 
+    * @param index      Group index
+    * @return           The removed flag.  
+    * 
+    * @throws           IndexOutOfBoundsException - if the index is out of range (index < 0 || index >= getNumberOfGroups())
+    */
+   public boolean getRemoved(int index);
+   
+   /**
+    * Returns an array containing the indexes of all active PRP groups (<code>removed</code> flag
+    * is reset).
+    * 
+    * @return   an array of indexes. If no groups are active, the array will be empty.
+    */
+   public List<Integer> getActiveIndexes();
 }

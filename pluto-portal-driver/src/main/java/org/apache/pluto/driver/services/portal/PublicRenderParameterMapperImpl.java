@@ -19,10 +19,12 @@
 
 package org.apache.pluto.driver.services.portal;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,9 +48,14 @@ import org.apache.pluto.container.om.portlet.PublicRenderParameter;
  */
 public class PublicRenderParameterMapperImpl implements PublicRenderParameterMapper {
    private final Logger LOGGER = LoggerFactory.getLogger(PublicRenderParameterMapperImpl.class);
-   
+ 
    // Set of all public render parameters on the page
-   Set<PortalURLPublicParameter> prps = new HashSet<PortalURLPublicParameter>();
+   ArrayList<PortalURLPublicParameter> prpList = new ArrayList<PortalURLPublicParameter>();
+   
+   // Maps the PRP QName to a set of public render parameters
+   private final Map<QName, List<PortalURLPublicParameter>> qn2PRP =
+                     new HashMap<QName, List<PortalURLPublicParameter>>();
+   private final ArrayList<QName> qnList = new ArrayList<QName>();
    
    public PublicRenderParameterMapperImpl(PageConfig paco, PortletRegistryService pore) {
       
@@ -105,8 +112,19 @@ public class PublicRenderParameterMapperImpl implements PublicRenderParameterMap
                      LOGGER.error("Problem with PRP definition: Both QName could not be obtained.");
                   } else {
                      PortalURLPublicParameter pupp = new PortalURLPublicParameter(pid, prpId, qn);
+                     
+                     // Add to set of all PRPs for page
+                     prpList.add(pupp);
 
-                     prps.add(pupp);
+                     // Add PRP to the QName to PRP mapping
+                     if (qn2PRP.containsKey(qn)) {
+                        qn2PRP.get(qn).add(pupp);
+                     } else {
+                        List<PortalURLPublicParameter> s = new ArrayList<PortalURLPublicParameter>();
+                        s.add(pupp);
+                        qn2PRP.put(qn, s);
+                        qnList.add(qn);
+                     }
                      
                      if (isDebug) {
                         dbgstr.append("\n      Added PRP for window = " + pid + " QName = " + qn.toString()
@@ -129,47 +147,79 @@ public class PublicRenderParameterMapperImpl implements PublicRenderParameterMap
       }
    }
 
-   /**
-    * Returns set of related PRPs for the input PRP. The mapping is done on the basis of the QName. 
-    * The value arrays of all PRPs in the returned set are set to the value array in the input PRP.
-    */
-   public Set<PortalURLPublicParameter> getMappedPublicParameters(PortalURLPublicParameter prp) {
-      Set<PortalURLPublicParameter> oprps = new HashSet<PortalURLPublicParameter>();
-      for (PortalURLPublicParameter ip : prps) {
-         if (ip.getQName().equals(prp.getQName())) {
-            PortalURLPublicParameter p = ip.clone();
+   
+   public List<PortalURLPublicParameter> getPublicParameterGroup(int index) {
+      List<PortalURLPublicParameter> oprps = new ArrayList<PortalURLPublicParameter>();
+      for (PortalURLPublicParameter prp : qn2PRP.get(qnList.get(index))) {
+         PortalURLPublicParameter p = prp.clone();
+         if (!prp.isRemoved()) {
             p.setValues(prp.getValues().clone());
             oprps.add(p);
          }
       }
       if (LOGGER.isDebugEnabled()) {
-         LOGGER.debug("getMappedPublicParameters - Returning " + oprps.size() + " for window = " + prp.getWindowId() 
-               + " QName = " + prp.getQName().toString() + ", ID = " + prp.getName());
+         LOGGER.debug("getPublicParameterSet - Returning " + oprps.size() + " public render parameters");
       }
       return oprps;
    }
 
-   /**
-    * Returns the set of all PRPs with the same parameter names (IDs).
-    * Scaffolding code to be thrown away when the URL gen code is complete.
-    * 
-    * @param id
-    * @param vals
-    * @return
-    */
-   public Set<PortalURLPublicParameter> getPRPsForId(String id, String[] vals) {
-      Set<PortalURLPublicParameter> oprps = new HashSet<PortalURLPublicParameter>();
-      for (PortalURLPublicParameter ip : prps) {
-         if (ip.getName().equals(id)) {
-            PortalURLPublicParameter p = ip.clone();
-            p.setValues(vals.clone());
-            oprps.add(p);
+   public int getNumberOfGroups() {
+      return qnList.size();
+   }
+
+   public int getIndex(PortalURLPublicParameter prp) {
+      return qnList.indexOf(prp.getQName());
+   }
+
+   public int getIndex(String windowId, String identifier) {
+      PortalURLPublicParameter tmpPRP = new PortalURLPublicParameter(windowId, identifier, null);
+      int ind = prpList.indexOf(tmpPRP);
+      if (ind < 0) {
+         LOGGER.warn("Public render parameter with window ID = " + windowId + ", ID = " + identifier + " could not be found.");
+      } else {
+         QName qn = prpList.get(ind).getQName();
+         ind = qnList.indexOf(qn);
+      }
+      return ind;
+   }
+
+   public int getIndex(QName qname) {
+      return qnList.indexOf(qname);
+   }
+
+   public void setValues(int index, String[] values) {
+      List<PortalURLPublicParameter> oprps = qn2PRP.get(qnList.get(index));
+      for (PortalURLPublicParameter prp : oprps) {
+         prp.setValues(values.clone());
+      }
+   }
+
+   public String[] getValues(int index) {
+      List<PortalURLPublicParameter> oprps = qn2PRP.get(qnList.get(index));
+      return oprps.get(0).getValues().clone();
+   }
+
+   public void setRemoved(int index, boolean removed) {
+      List<PortalURLPublicParameter> oprps = qn2PRP.get(qnList.get(index));
+      for (PortalURLPublicParameter prp : oprps) {
+         prp.setRemoved(removed);
+      }
+   }
+
+   public boolean getRemoved(int index) {
+      List<PortalURLPublicParameter> oprps = qn2PRP.get(qnList.get(index));
+      return oprps.get(0).isRemoved();
+   }
+
+   public List<Integer> getActiveIndexes() {
+      ArrayList<Integer> inds = new ArrayList<Integer>();
+      for (QName qn : qnList) {
+         List<PortalURLPublicParameter> oprps = qn2PRP.get(qn);
+         if (!oprps.get(0).isRemoved()) {
+            inds.add(qnList.indexOf(qn));
          }
       }
-      if (LOGGER.isDebugEnabled()) {
-         LOGGER.debug("getPRPsForId - Returning " + oprps.size() + " for ID = " + id);
-      }
-      return oprps;
+      return inds; 
    }
 
 }
