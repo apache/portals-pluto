@@ -143,6 +143,13 @@ public class PublicRenderParameterMapperImpl implements PublicRenderParameterMap
          }
       }
       if (isDebug) {
+         dbgstr.append("\nOn page " + paco.getName() + " there are " + prpList.size()
+               + " PRPs divided into " + qnList.size() + " groups with sizes: ");
+         String prefix = "";
+         for (List<PortalURLPublicParameter> lp : qn2PRP.values()) {
+            dbgstr.append(prefix + lp.size());
+            prefix = ", ";
+         }
          LOGGER.debug(dbgstr.toString());
       }
    }
@@ -150,15 +157,16 @@ public class PublicRenderParameterMapperImpl implements PublicRenderParameterMap
    
    public List<PortalURLPublicParameter> getPublicParameterGroup(int index) {
       List<PortalURLPublicParameter> oprps = new ArrayList<PortalURLPublicParameter>();
-      for (PortalURLPublicParameter prp : qn2PRP.get(qnList.get(index))) {
+      QName qn = qnList.get(index);
+      for (PortalURLPublicParameter prp : qn2PRP.get(qn)) {
          PortalURLPublicParameter p = prp.clone();
-         if (!prp.isRemoved()) {
-            p.setValues(prp.getValues().clone());
-            oprps.add(p);
-         }
+         String[] vals = (prp.getValues() == null) ? null : prp.getValues().clone();
+         p.setValues(vals);
+         oprps.add(p);
       }
       if (LOGGER.isDebugEnabled()) {
-         LOGGER.debug("getPublicParameterSet - Returning " + oprps.size() + " public render parameters");
+         LOGGER.debug("For index: " + index + ", QName = " + qn + ", group size = "
+                + oprps.size());
       }
       return oprps;
    }
