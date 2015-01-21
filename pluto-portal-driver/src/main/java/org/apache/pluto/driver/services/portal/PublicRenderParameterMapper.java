@@ -153,4 +153,10 @@ public interface PublicRenderParameterMapper {
     * @return   an array of indexes. If no groups are active, the array will be empty.
     */
    public List<Integer> getActiveIndexes();
+   
+   /**
+    * Returns a clone of the mapper. All public render parameters contained in the mapper are cloned as well.
+    * @return
+    */
+   public PublicRenderParameterMapper clone();
 }

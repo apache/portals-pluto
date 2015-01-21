@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.driver.url.impl;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -64,7 +65,7 @@ public class RelativePortalURLImpl implements PortalURL {
    private Map<String, String[]> privateRenderParameters = new HashMap<String, String[]>();
 
    // Newly made changes to the public render parameters
-   private Set<PortalURLPublicParameter> newPrps = new HashSet<PortalURLPublicParameter>();
+//    private Set<PortalURLPublicParameter> newPrps = new HashSet<PortalURLPublicParameter>();
 
    // provides the defined public render parameters and their relationships to one another for the current page 
    private PublicRenderParameterMapper prpMapper = null;
@@ -288,6 +289,7 @@ public class RelativePortalURLImpl implements PortalURL {
       portalURL.urlParser = urlParser;
       portalURL.resourceWindow = resourceWindow;
       portalURL.publicParameterCurrent = publicParameterCurrent;
+      portalURL.prpMapper = (prpMapper == null) ? null : prpMapper.clone();
       return portalURL;
    }
    //JSR-286 methods
@@ -305,7 +307,7 @@ public class RelativePortalURLImpl implements PortalURL {
 
 
    public void addPublicParameterCurrent(String name, String[] values){
-      publicParameterCurrent.put(name, values);
+//       publicParameterCurrent.put(name, values);
       for (int ii = 0; ii < prpMapper.getNumberOfGroups(); ii++) {
          List<PortalURLPublicParameter> prps = prpMapper.getPublicParameterGroup(ii);
          if (prps.get(0).getName().equals(name)) {
@@ -317,18 +319,25 @@ public class RelativePortalURLImpl implements PortalURL {
    public Map<String, String[]> getPublicParameters() {
       Map<String,String[]> tmp = new HashMap<String, String[]>();
 
-      for (Iterator<String> iter = publicParameterCurrent.keySet().iterator(); iter.hasNext();) {
-         String paramname = iter.next();
-         if (!publicParameterNew.containsKey(paramname)){
-            String[] paramvalue = publicParameterCurrent.get(paramname);
-            tmp.put(paramname, paramvalue);
-         }
-      }
-      for (Iterator<String> iter = publicParameterNew.keySet().iterator();iter.hasNext();){
-         String paramname = iter.next();
-         String[] paramvalue = publicParameterNew.get(paramname);
-         if (paramvalue[0]!=null){
-            tmp.put(paramname, paramvalue);
+//       for (Iterator<String> iter = publicParameterCurrent.keySet().iterator(); iter.hasNext();) {
+//          String paramname = iter.next();
+//          if (!publicParameterNew.containsKey(paramname)){
+//             String[] paramvalue = publicParameterCurrent.get(paramname);
+//             tmp.put(paramname, paramvalue);
+//          }
+//       }
+//       for (Iterator<String> iter = publicParameterNew.keySet().iterator();iter.hasNext();){
+//          String paramname = iter.next();
+//          String[] paramvalue = publicParameterNew.get(paramname);
+//          if (paramvalue[0]!=null){
+//             tmp.put(paramname, paramvalue);
+//          }
+//       }
+      if (prpMapper != null) {
+         for (int ind : prpMapper.getActiveIndexes()) {
+            String name = prpMapper.getPublicParameterGroup(ind).get(0).getName();
+            String[] vals = prpMapper.getValues(ind);
+            tmp.put(name, vals);
          }
       }
       return tmp;
@@ -350,8 +359,14 @@ public class RelativePortalURLImpl implements PortalURL {
       if (LOG.isDebugEnabled()) {
          LOG.debug("Requested Page: " + requestedPageId);
       }
-      return ((DriverConfiguration) servletContext.getAttribute(
-            AttributeKeys.DRIVER_CONFIG)).getPageConfig(requestedPageId);
+      
+      DriverConfiguration dc =  ((DriverConfiguration) servletContext.getAttribute(AttributeKeys.DRIVER_CONFIG));
+      PageConfig paco = dc.getPageConfig(requestedPageId);
+      if (prpMapper == null && requestedPageId == null && paco != null) {
+         // Make sure we get a prp mapper for the default page
+         prpMapper = dc.getPublicRenderParameterService().getPRPMapper(paco.getName());
+      }
+      return paco;
    }
 
    public String getResourceWindow() {
@@ -378,22 +393,45 @@ public class RelativePortalURLImpl implements PortalURL {
             addParameter(new PortalURLParameter(param.getWindowId(), param.getName(), param.getValues()));
          }
       }
-      Map<String, String[]> newPublicParameters = url.getNewPublicParameters();
-      for (Map.Entry<String, String[]> entry : newPublicParameters.entrySet())
-      {
-         if (entry.getValue()[0] == null)
-         {
-            publicParameterCurrent.remove(entry.getKey());
-         }
-         else
-         {
-            publicParameterCurrent.put(entry.getKey(), entry.getValue());
+//       Map<String, String[]> newPublicParameters = url.getNewPublicParameters();
+//       for (Map.Entry<String, String[]> entry : newPublicParameters.entrySet())
+//       {
+//          if (entry.getValue()[0] == null)
+//          {
+//             publicParameterCurrent.remove(entry.getKey());
+//          }
+//          else
+//          {
+//             publicParameterCurrent.put(entry.getKey(), entry.getValue());
+//          }
+//       }
+      PublicRenderParameterMapper prpm = url.getPublicRenderParameterMapper();
+      List<Integer> activePrps = prpm.getActiveIndexes();
+      for (int ii = 0; ii < prpm.getNumberOfGroups(); ii++) {
+         if (activePrps.contains(ii)) {
+            prpMapper.setValues(ii, prpm.getValues(ii));
+         } else {
+            prpMapper.setRemoved(ii, true);
          }
       }
    }
 
    public void addPublicRenderParameter(PortalURLPublicParameter pup) {
-      newPrps.add(pup);
+      int ind = prpMapper.getIndex(pup);
+      if (ind >= 0) {
+         if (pup.isRemoved()) {
+            prpMapper.setRemoved(ind, true);
+         } else {
+            prpMapper.setValues(ind, pup.getValues());
+         }
+      } else {
+         StringBuilder txt = new StringBuilder("Public render parameter is not contained in mapper.");
+         txt.append(" window ID: " + pup.getWindowId());
+         txt.append(", Name: " + pup.getName());
+         txt.append(", QName: " + pup.getQName());
+         txt.append(", Values: " + Arrays.toString(pup.getValues()));
+         LOG.warn(txt.toString());
+      }
    }
 
    public void setPublicRenderParameterMapper(PublicRenderParameterMapper prpm) {

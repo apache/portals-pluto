@@ -108,8 +108,8 @@ public class PortalURLPublicParameter extends PortalURLParameter {
    @Override
    public PortalURLPublicParameter clone() {
       // shallow clone of the values array works because strings are immutable
-      QName qn = new QName(qname.getNamespaceURI(), qname.getLocalPart(), qname.getPrefix());
-      PortalURLPublicParameter pupp =  new PortalURLPublicParameter(window, name, qn, (values == null ? values : values.clone()));
+      // Note that the QNames don't need to be cloned, as the internal fields are set thru constructor and cannot be changed.
+      PortalURLPublicParameter pupp =  new PortalURLPublicParameter(window, name, qname, (values == null ? null : values.clone()));
       pupp.setRemoved(removed);
       return pupp;
    }

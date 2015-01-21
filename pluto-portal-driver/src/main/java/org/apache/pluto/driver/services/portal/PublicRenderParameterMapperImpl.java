@@ -20,6 +20,7 @@
 package org.apache.pluto.driver.services.portal;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Collection;
 import java.util.HashMap;
@@ -50,7 +51,7 @@ public class PublicRenderParameterMapperImpl implements PublicRenderParameterMap
    private final Logger LOGGER = LoggerFactory.getLogger(PublicRenderParameterMapperImpl.class);
  
    // Set of all public render parameters on the page
-   ArrayList<PortalURLPublicParameter> prpList = new ArrayList<PortalURLPublicParameter>();
+   private final ArrayList<PortalURLPublicParameter> prpList = new ArrayList<PortalURLPublicParameter>();
    
    // Maps the PRP QName to a set of public render parameters
    private final Map<QName, List<PortalURLPublicParameter>> qn2PRP =
@@ -153,6 +154,12 @@ public class PublicRenderParameterMapperImpl implements PublicRenderParameterMap
          LOGGER.debug(dbgstr.toString());
       }
    }
+   
+   /**
+    * Private constructor for cloning
+    */
+   private PublicRenderParameterMapperImpl() {
+   }
 
    
    public List<PortalURLPublicParameter> getPublicParameterGroup(int index) {
@@ -176,7 +183,11 @@ public class PublicRenderParameterMapperImpl implements PublicRenderParameterMap
    }
 
    public int getIndex(PortalURLPublicParameter prp) {
-      return qnList.indexOf(prp.getQName());
+      int ind =  qnList.indexOf(prp.getQName());
+      if (ind < 0) {
+         LOGGER.warn("PRP Qname " + prp.getQName() + " not found in " + qnList.toString());
+      }
+      return ind;
    }
 
    public int getIndex(String windowId, String identifier) {
@@ -228,6 +239,29 @@ public class PublicRenderParameterMapperImpl implements PublicRenderParameterMap
          }
       }
       return inds; 
+   }
+   
+   public PublicRenderParameterMapperImpl clone() {
+      PublicRenderParameterMapperImpl prpm = new PublicRenderParameterMapperImpl();
+      // Note that the QNames don't need to be cloned, as the internal fields are set thru constructor and cannot be changed.
+      StringBuilder dbgstr = new StringBuilder("Cloning QNames: ");
+      String prefix = "";
+      for (QName qn : qnList) {
+         prpm.qnList.add(qn);
+         prpm.qn2PRP.put(qn, new ArrayList<PortalURLPublicParameter>());
+         dbgstr.append(prefix + qn.toString());
+         prefix = ", ";
+      }
+      dbgstr.append(" / window IDs: ");
+      prefix = "";
+      for (PortalURLPublicParameter prp : prpList) {
+         prpm.prpList.add(prp);
+         prpm.qn2PRP.get(prp.getQName()).add(prp.clone());
+         dbgstr.append(prefix + prp.getWindowId());
+         prefix = ", ";
+      }
+      LOGGER.debug(dbgstr.toString());
+      return prpm;
    }
 
 }
