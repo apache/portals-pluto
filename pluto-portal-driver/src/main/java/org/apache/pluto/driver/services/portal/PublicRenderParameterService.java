@@ -36,5 +36,5 @@ public interface PublicRenderParameterService {
     * @param page    Page name
     * @return        A PRP mapper for the page
     */
-   public PublicRenderParameterMapperImpl getPRPMapper(String page);
+   public PublicRenderParameterMapper getPRPMapper(String page);
 }

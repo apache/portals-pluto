@@ -46,8 +46,8 @@ import org.apache.pluto.container.om.portlet.PublicRenderParameter;
  * @author msnicklous
  * @since  16/01/2015
  */
-public class PublicRenderParameterMapperImpl implements PublicRenderParameterMapper {
-   private final Logger LOGGER = LoggerFactory.getLogger(PublicRenderParameterMapperImpl.class);
+public class PublicRenderParameterQNameMapper implements PublicRenderParameterMapper {
+   private final Logger LOGGER = LoggerFactory.getLogger(PublicRenderParameterQNameMapper.class);
  
    // Set of all public render parameters on the page
    private final ArrayList<PortalURLPublicParameter> prpList = new ArrayList<PortalURLPublicParameter>();
@@ -58,7 +58,7 @@ public class PublicRenderParameterMapperImpl implements PublicRenderParameterMap
 
    private final ArrayList<QName> qnList = new ArrayList<QName>();
    
-   public PublicRenderParameterMapperImpl(PageConfig paco, PortletRegistryService pore) {
+   public PublicRenderParameterQNameMapper(PageConfig paco, PortletRegistryService pore) {
       
       Collection<String> pids = paco.getPortletIds();
       LOGGER.debug("Setting up the PRP mapper. There are " + pids.size() + " portlets to process.");
@@ -158,7 +158,7 @@ public class PublicRenderParameterMapperImpl implements PublicRenderParameterMap
    /**
     * Private constructor for cloning
     */
-   private PublicRenderParameterMapperImpl() {
+   private PublicRenderParameterQNameMapper() {
    }
 
    
@@ -241,8 +241,8 @@ public class PublicRenderParameterMapperImpl implements PublicRenderParameterMap
       return inds; 
    }
    
-   public PublicRenderParameterMapperImpl clone() {
-      PublicRenderParameterMapperImpl prpm = new PublicRenderParameterMapperImpl();
+   public PublicRenderParameterQNameMapper clone() {
+      PublicRenderParameterQNameMapper prpm = new PublicRenderParameterQNameMapper();
       // Note that the QNames don't need to be cloned, as the internal fields are set thru constructor and cannot be changed.
       StringBuilder dbgstr = new StringBuilder("Cloning QNames: ");
       String prefix = "";

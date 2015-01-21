@@ -34,7 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
-import org.apache.pluto.driver.services.portal.PublicRenderParameterMapperImpl;
+import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLParser;
@@ -168,31 +168,68 @@ public class PortalURLParserImpl implements PortalURLParser {
 
       ServletContext sc = request.getServletContext();
       DriverConfiguration dc = (DriverConfiguration) sc.getAttribute(AttributeKeys.DRIVER_CONFIG);
-      PublicRenderParameterMapperImpl prpm = dc.getPublicRenderParameterService()
+      PublicRenderParameterMapper prpm = dc.getPublicRenderParameterService()
             .getPRPMapper(renderPath.toString());
       portalURL.setPublicRenderParameterMapper(prpm);
       portalURL.setPortletIds(dc.getPageConfig(renderPath.toString()).getPortletIds());
       
-      // Tokenize the rest and process the tokens
       ArrayList<String> portletIds = new ArrayList<String>();
-      String[] tokens = pathInfo.split("/" + PREFIX);
-      for (String t : tokens) {
-         String type, val;
-         if (t.length() < 3) {
-            LOG.warn("Token " + t + " is too short!! ");
-            continue;
-         } else {
-            type = t.substring(0, 2);
-            val = t.substring(2);
-         }
 
-         if (type.equals(PORTLET_ID)) {
-            String[] decoded = decodeControlParameter(PREFIX + PORTLET_ID + val);
-            portletIds.add(Integer.parseInt(decoded[1]), decoded[0]);
-         } else {
-            LOG.debug("Found " + portletIds.size() + " IDs: " + Arrays.toString(portletIds.toArray()));
-            break;
-         }
+      // Tokenize the rest and process the tokens
+      if (pathInfo.length() > 2) {
+         String[] tokens = pathInfo.split("/" + PREFIX);
+         for (String t : tokens) {
+            
+            String type, val;
+            if (t.length() < 3) {
+               LOG.warn("Token " + t + " is too short!! ");
+               continue;
+            } else {
+               type = t.substring(0, 2);
+               val = t.substring(2);
+            }
+
+            // Get the portlet IDs & reference numbers
+            if (type.equals(PORTLET_ID)) {
+               String[] decoded = decodeControlParameter(PREFIX + PORTLET_ID + val);
+               portletIds.add(Integer.parseInt(decoded[1]), decoded[0]);
+            } 
+            
+            // Resource window definition: portalURL.setResourceWindow().
+            else if (type.equals(RESOURCE)) {
+               portalURL.setResourceWindow(decodeCharacters(val.split(DELIM)[0]));
+            }
+            
+            // Action window definition: portalURL.setActionWindow().
+            else if (type.equals(ACTION)) {
+               portalURL.setActionWindow(decodeCharacters(val.split(DELIM)[0]));
+            }
+            
+            // Action window definition: portalURL.setActionWindow().
+            else if (type.equals(AJAX_ACTION)) {
+               portalURL.setAjaxActionWindow(decodeCharacters(val.split(DELIM)[0]));
+            }
+            
+            // Action window definition: portalURL.setActionWindow().
+            else if (type.equals(PARTIAL_ACTION)) {
+               portalURL.setPartialActionWindow(decodeCharacters(val.split(DELIM)[0]));
+            }
+            
+            // Cacheability definition: portalURL.setCacheability().
+            else if (type.equals(CACHE_LEVEL)) {
+               portalURL.setCacheability(decodeCharacters(val.split(DELIM)[0]));
+            }
+            
+            // ResourceID definition: portalURL.setResourceID().
+            else if (type.equals(RESOURCE_ID)) {
+               portalURL.setResourceID(decodeCharacters(val.split(DELIM)[0]));
+            }
+
+          }
+      }
+
+      if (LOG.isDebugEnabled()) {
+         LOG.debug("Found " + portletIds.size() + " IDs: " + Arrays.toString(portletIds.toArray()));
       }
 
       // Now parse the remaining portion of the URL, of any.
@@ -201,32 +238,8 @@ public class PortalURLParserImpl implements PortalURLParser {
 
          String token = st.nextToken();
 
-         //        	 Resource window definition: portalURL.setResourceWindow().
-         if (token.startsWith(PREFIX + RESOURCE)) {
-            portalURL.setResourceWindow(decodeControlParameter(token)[0]);
-         }
-         // Action window definition: portalURL.setActionWindow().
-         else if (token.startsWith(PREFIX + ACTION)) {
-            portalURL.setActionWindow(decodeControlParameter(token)[0]);
-         }
-         // Action window definition: portalURL.setActionWindow().
-         else if (token.startsWith(PREFIX + AJAX_ACTION)) {
-            portalURL.setAjaxActionWindow(decodeControlParameter(token)[0]);
-         }
-         // Action window definition: portalURL.setActionWindow().
-         else if (token.startsWith(PREFIX + PARTIAL_ACTION)) {
-            portalURL.setPartialActionWindow(decodeControlParameter(token)[0]);
-         }
-         // Cacheability definition: portalURL.setCacheability().
-         else if (token.startsWith(PREFIX + CACHE_LEVEL)) {
-            portalURL.setCacheability(decodeControlParameter(token)[0]);
-         }
-         // ResourceID definition: portalURL.setResourceID().
-         else if (token.startsWith(PREFIX + RESOURCE_ID)) {
-            portalURL.setResourceID(decodeControlParameter(token)[0]);
-         }
          // Window state definition: portalURL.setWindowState().
-         else if (token.startsWith(PREFIX + WINDOW_STATE)) {
+         if (token.startsWith(PREFIX + WINDOW_STATE)) {
             String[] decoded = decodeControlParameter(token);
             portalURL.setWindowState(decoded[0], new WindowState(decoded[1]));
          }
