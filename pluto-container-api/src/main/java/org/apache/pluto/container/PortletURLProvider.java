@@ -61,7 +61,6 @@ public interface PortletURLProvider {
     boolean isSecure();
 
     Map<String, String[]> getRenderParameters();
-    Map<String, String[]> getPublicRenderParameters();
     
     /**
      * Add a public render parameter including QName to allow for use of
@@ -80,6 +79,11 @@ public interface PortletURLProvider {
      * @param identifier   Identifier for PRP
      */
     void removePublicRenderParameter(QName qn, String identifier);
+    
+    /**
+     * Clears public render parameters except those that are marked for removal.
+     */
+    void clearPublicRenderParameters();
     
     String getCacheability();
     void setCacheability(String cacheLevel);

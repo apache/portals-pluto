@@ -55,10 +55,25 @@ public class PortletURLProviderImpl implements PortletURLProvider
     private String cacheLevel;
     private String resourceID;
     private Map<String, String[]> renderParameters;
-    private Map<String, String[]> publicRenderParameters;
     private Map<String, List<String>> properties;
     
     private final Set<PortalURLPublicParameter> prpSet = new HashSet<PortalURLPublicParameter>();
+    
+    /**
+     * Returns <code>true</code> if given parameter name is a public render parameter
+     * 
+     * @param name
+     */
+    private boolean isPRP(String name) {
+       boolean found = false;
+       for (PortalURLPublicParameter prp : prpSet) {
+          if (name.equals(prp.getName())) {
+             found = true;
+             break;
+          }
+       }
+       return found;
+    }
 
     public PortletURLProviderImpl(PortalURL url, TYPE type, PortletWindow portletWindow)
     {
@@ -110,21 +125,14 @@ public class PortletURLProviderImpl implements PortletURLProvider
         {
             for (Map.Entry<String,String[]> entry : renderParameters.entrySet())
             {
-                if (publicRenderParameters == null || !publicRenderParameters.containsKey(entry.getKey()))
+                if (!isPRP(entry.getKey()))
                 {
                     url.addParameter(new PortalURLParameter(window, entry.getKey(), entry.getValue()));
                 }
             }
         }
-        if (publicRenderParameters != null)
-        {
-            for (Map.Entry<String,String[]> entry : publicRenderParameters.entrySet())
-            {
-                url.getNewPublicParameters().put(entry.getKey(),entry.getValue() != null ? entry.getValue() : new String[]{null});
-            }
-            for (PortalURLPublicParameter prp : prpSet) {
-               url.addPublicRenderParameter(prp);
-            }
+        for (PortalURLPublicParameter prp : prpSet) {
+           url.addPublicRenderParameter(prp);
         }
         url.setResourceID(resourceID);
         url.setCacheability(cacheLevel);
@@ -172,15 +180,6 @@ public class PortletURLProviderImpl implements PortletURLProvider
             renderParameters = new HashMap<String,String[]>();
         }
         return renderParameters;
-    }
-    
-    public Map<String,String[]> getPublicRenderParameters()
-    {
-        if (publicRenderParameters == null)
-        {
-            publicRenderParameters = new HashMap<String,String[]>();
-        }
-        return publicRenderParameters;
     }
     
     public String getCacheability()
@@ -256,5 +255,16 @@ public class PortletURLProviderImpl implements PortletURLProvider
        PortalURLPublicParameter pupp = new PortalURLPublicParameter(window, identifier, qn);
        pupp.setRemoved(true);
        prpSet.add(pupp);
+   }
+
+   /**
+    * Clear public render parameters except those marked for removal 
+    */
+   public void clearPublicRenderParameters() {
+      for (PortalURLPublicParameter prp : prpSet) {
+         if (!prp.isRemoved()) {
+            prpSet.remove(prp);
+         }
+      }
    }
 }

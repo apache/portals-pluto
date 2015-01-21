@@ -40,6 +40,7 @@ import org.apache.pluto.container.driver.PlutoServices;
 import org.apache.pluto.container.impl.PortletURLImpl;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURLPublicParameter;
 
 /**
  * @version $Id$
@@ -103,11 +104,6 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
         return isClosed() ? null : portletURLProvider.getPortletMode();
     }
 
-    public Map<String, String[]> getPublicRenderParameters()
-    {
-        return isClosed() ? null : portletURLProvider.getPublicRenderParameters();
-    }
-
     public Map<String, String[]> getRenderParameters()
     {
         return isClosed() ? null : portletURLProvider.getRenderParameters();
@@ -155,4 +151,12 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
        LOGGER.debug("Remove PRP. QName = " + qn.toString());
        portletURLProvider.removePublicRenderParameter(qn, id);
     }
+
+    /**
+     * Clear public render parameters except those marked for removal 
+     */
+    public void clearPublicRenderParameters() {
+       portletURLProvider.clearPublicRenderParameters();
+    }
+
 }

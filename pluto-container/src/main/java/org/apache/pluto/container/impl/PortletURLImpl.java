@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -279,8 +278,6 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         urlProvider.getRenderParameters().put(name, values);
         if (renderURL && isPublicRenderParameter(name))
         {
-            urlProvider.getPublicRenderParameters().put(name, values);
-            
             QName qn = getQNameForPRPName(name);
             urlProvider.addPublicRenderParameter(qn, name, values);
         }
@@ -298,8 +295,6 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         urlProvider.getRenderParameters().put(name, values);
         if (renderURL && isPublicRenderParameter(name))
         {
-            urlProvider.getPublicRenderParameters().put(name, values);
-            
             QName qn = getQNameForPRPName(name);
             urlProvider.addPublicRenderParameter(qn, name, values);
         }
@@ -342,13 +337,7 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         urlProvider.getRenderParameters().clear();
         if (renderURL)
         {
-            for (Iterator<Map.Entry<String,String[]>> iter = urlProvider.getPublicRenderParameters().entrySet().iterator(); iter.hasNext();)
-            {
-                if (iter.next().getValue() != null)
-                {
-                    iter.remove();
-                }
-            }
+            urlProvider.clearPublicRenderParameters();
         }
         for (Map.Entry<String,String[]> entry : parameters.entrySet())
         {
@@ -357,8 +346,6 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
             urlProvider.getRenderParameters().put(key, values);
             if (renderURL && isPublicRenderParameter(key))
             {
-                urlProvider.getPublicRenderParameters().put(key, values);
-                
                 QName qn = getQNameForPRPName(key);
                 urlProvider.addPublicRenderParameter(qn, key, values);
             }
@@ -454,7 +441,6 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         ArgumentUtility.validateNotEmpty("name", name);
         if (isPublicRenderParameter(name))
         {
-            urlProvider.getPublicRenderParameters().put(name, null);
             urlProvider.getRenderParameters().remove(name);
             
             QName qn = getQNameForPRPName(name);

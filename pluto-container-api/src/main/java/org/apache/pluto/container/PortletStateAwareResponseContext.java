@@ -35,7 +35,6 @@ public interface PortletStateAwareResponseContext extends PortletResponseContext
     WindowState getWindowState();
     void setWindowState(WindowState windowState);
     Map<String, String[]> getRenderParameters();
-    Map<String, String[]> getPublicRenderParameters();
     EventProvider getEventProvider();
     List<Event> getEvents();
     
@@ -56,5 +55,10 @@ public interface PortletStateAwareResponseContext extends PortletResponseContext
      * @param identifier   Identifier for PRP
      */
     void removePublicRenderParameter(QName qn, String identifier);
+    
+    /**
+     * Clears public render parameters except those that are marked for removal.
+     */
+    void clearPublicRenderParameters();
 
 }

@@ -41,8 +41,6 @@ public interface PortalURL extends Cloneable {
 
     void addParameter(PortalURLParameter param);
     
-    void addPublicRenderParametersNew(Map<String, String[]> parameters);
-    
     /**
      * Adds a new public render parameter.
      * 
@@ -67,8 +65,6 @@ public interface PortalURL extends Cloneable {
     public void addPublicParameterCurrent(String name, String[] values);
 
     public Map<String, String[]> getPublicParameters();
-    
-    Map<String, String[]> getNewPublicParameters();
     
     Map<String, String[]> getPrivateRenderParameters();
     

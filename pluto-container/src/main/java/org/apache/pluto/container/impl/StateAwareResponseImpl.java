@@ -19,7 +19,6 @@ package org.apache.pluto.container.impl;
 import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -160,7 +159,6 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
         checkSetStateChanged();
         if (isPublicRenderParameter(name))
         {
-            responseContext.getPublicRenderParameters().put(name, null);
             responseContext.getRenderParameters().remove(name);
             
             QName qn = getQNameForPRPName(name);
@@ -252,13 +250,7 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
         checkSetStateChanged();
         
         responseContext.getRenderParameters().clear();
-        for (Iterator<Map.Entry<String,String[]>> iter = responseContext.getPublicRenderParameters().entrySet().iterator(); iter.hasNext();)
-        {
-            if (iter.next().getValue() != null)
-            {
-                iter.remove();
-            }
-        }
+        responseContext.clearPublicRenderParameters();
         for (Map.Entry<String,String[]> entry : parameters.entrySet())
         {
             String[] values = cloneParameterValues(entry.getValue());
@@ -266,8 +258,6 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
             responseContext.getRenderParameters().put(key, values);
             if (isPublicRenderParameter(key))
             {
-                responseContext.getPublicRenderParameters().put(key, values);
-
                 QName qn = getQNameForPRPName(key);
                 responseContext.addPublicRenderParameter(qn, key, values);
             }
@@ -283,8 +273,6 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
         responseContext.getRenderParameters().put(key, values);
         if (isPublicRenderParameter(key))
         {
-            responseContext.getPublicRenderParameters().put(key, values);
-            
             QName qn = getQNameForPRPName(key);
             responseContext.addPublicRenderParameter(qn, key, values);
         }
@@ -303,8 +291,6 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
         responseContext.getRenderParameters().put(key, values);
         if (isPublicRenderParameter(key))
         {
-            responseContext.getPublicRenderParameters().put(key, values);
-
             QName qn = getQNameForPRPName(key);
             responseContext.addPublicRenderParameter(qn, key, values);
         }

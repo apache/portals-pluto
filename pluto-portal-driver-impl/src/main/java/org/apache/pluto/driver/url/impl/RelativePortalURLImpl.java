@@ -20,11 +20,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
@@ -59,13 +57,7 @@ public class RelativePortalURLImpl implements PortalURL {
    private String cacheLevel;
    private String resourceID;
 
-   private Map<String, String[]> publicParameterCurrent = new HashMap<String, String[]>();
-
-   private Map<String, String[]> publicParameterNew = new HashMap<String, String[]>();
    private Map<String, String[]> privateRenderParameters = new HashMap<String, String[]>();
-
-   // Newly made changes to the public render parameters
-//    private Set<PortalURLPublicParameter> newPrps = new HashSet<PortalURLPublicParameter>();
 
    // provides the defined public render parameters and their relationships to one another for the current page 
    private PublicRenderParameterMapper prpMapper = null;
@@ -288,26 +280,12 @@ public class RelativePortalURLImpl implements PortalURL {
       portalURL.actionWindow = actionWindow;
       portalURL.urlParser = urlParser;
       portalURL.resourceWindow = resourceWindow;
-      portalURL.publicParameterCurrent = publicParameterCurrent;
       portalURL.prpMapper = (prpMapper == null) ? null : prpMapper.clone();
       return portalURL;
    }
    //JSR-286 methods
 
-   public void addPublicRenderParametersNew(Map<String, String[]> parameters){
-      for (Iterator<String> iter=parameters.keySet().iterator(); iter.hasNext();) {
-         String key = iter.next();
-         if (publicParameterNew.containsKey(key)){
-            publicParameterNew.remove(key);
-         }
-         String[] values = parameters.get(key);
-         publicParameterNew.put(key, values);
-      }
-   }
-
-
    public void addPublicParameterCurrent(String name, String[] values){
-//       publicParameterCurrent.put(name, values);
       for (int ii = 0; ii < prpMapper.getNumberOfGroups(); ii++) {
          List<PortalURLPublicParameter> prps = prpMapper.getPublicParameterGroup(ii);
          if (prps.get(0).getName().equals(name)) {
@@ -318,21 +296,6 @@ public class RelativePortalURLImpl implements PortalURL {
 
    public Map<String, String[]> getPublicParameters() {
       Map<String,String[]> tmp = new HashMap<String, String[]>();
-
-//       for (Iterator<String> iter = publicParameterCurrent.keySet().iterator(); iter.hasNext();) {
-//          String paramname = iter.next();
-//          if (!publicParameterNew.containsKey(paramname)){
-//             String[] paramvalue = publicParameterCurrent.get(paramname);
-//             tmp.put(paramname, paramvalue);
-//          }
-//       }
-//       for (Iterator<String> iter = publicParameterNew.keySet().iterator();iter.hasNext();){
-//          String paramname = iter.next();
-//          String[] paramvalue = publicParameterNew.get(paramname);
-//          if (paramvalue[0]!=null){
-//             tmp.put(paramname, paramvalue);
-//          }
-//       }
       if (prpMapper != null) {
          for (int ind : prpMapper.getActiveIndexes()) {
             String name = prpMapper.getPublicParameterGroup(ind).get(0).getName();
@@ -341,11 +304,6 @@ public class RelativePortalURLImpl implements PortalURL {
          }
       }
       return tmp;
-   }
-
-   public Map<String, String[]> getNewPublicParameters()
-   {
-      return publicParameterNew;
    }
 
    public Map<String, String[]> getPrivateRenderParameters()
