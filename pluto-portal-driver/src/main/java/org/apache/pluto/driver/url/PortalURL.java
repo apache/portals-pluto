@@ -18,7 +18,6 @@ package org.apache.pluto.driver.url;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
@@ -46,19 +45,33 @@ public interface PortalURL extends Cloneable {
      * 
      * @param pup
      */
-    void addPublicRenderParameter(PortalURLPublicParameter pup);
+    public void addPublicRenderParameter(PortalURLPublicParameter pup);
     
     /**
      * Add the PRP mapper for the page being processed
      * @param prpm
      */
-    void setPublicRenderParameterMapper(PublicRenderParameterMapper prpm);
+    public void setPublicRenderParameterMapper(PublicRenderParameterMapper prpm);
     
     /**
      * get the PRP mapper for the page being processed
      * @return
      */
-    PublicRenderParameterMapper getPublicRenderParameterMapper();
+    public PublicRenderParameterMapper getPublicRenderParameterMapper();
+    
+    /**
+     * Stores the portlet window IDs for the portlets on the page
+     * 
+     * @param portletIds
+     */
+    public void setPortletIds(Collection<String> portletIds);
+    
+    /**
+     * Returns the portlet Ids for the portlets on the page
+     * 
+     * @return
+     */
+    public Collection<String> getPortletIds();
 
     Collection<PortalURLParameter> getParameters();
 

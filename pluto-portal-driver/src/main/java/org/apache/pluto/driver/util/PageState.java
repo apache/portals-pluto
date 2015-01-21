@@ -23,6 +23,7 @@ import static java.util.logging.Level.*;
 
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -39,6 +40,7 @@ import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
 
@@ -89,7 +91,16 @@ public class PageState {
     * @return
     */
    public Map<String, String[]> getPublicParameters() {
-      return portalUrl.getPublicParameters();
+      Map<String,String[]> tmp = new HashMap<String, String[]>();
+      PublicRenderParameterMapper prpMapper = portalUrl.getPublicRenderParameterMapper();
+      if (prpMapper != null) {
+         for (int ind : prpMapper.getActiveIndexes()) {
+            String name = prpMapper.getPublicParameterGroup(ind).get(0).getName();
+            String[] vals = prpMapper.getValues(ind);
+            tmp.put(name, vals);
+         }
+      }
+      return tmp;
    }
    
    /**

@@ -19,6 +19,8 @@ package org.apache.pluto.driver.url.impl;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -156,7 +158,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       } else {
          // parameters, etc. remain to be processed
          renderPath.append(pathInfo.substring(0, ind));
-         pathInfo = pathInfo.substring(ind+1);
+         pathInfo = pathInfo.substring(ind);
       }
 
       portalURL.setRenderPath(renderPath.toString());
@@ -169,6 +171,29 @@ public class PortalURLParserImpl implements PortalURLParser {
       PublicRenderParameterMapperImpl prpm = dc.getPublicRenderParameterService()
             .getPRPMapper(renderPath.toString());
       portalURL.setPublicRenderParameterMapper(prpm);
+      portalURL.setPortletIds(dc.getPageConfig(renderPath.toString()).getPortletIds());
+      
+      // Tokenize the rest and process the tokens
+      ArrayList<String> portletIds = new ArrayList<String>();
+      String[] tokens = pathInfo.split("/" + PREFIX);
+      for (String t : tokens) {
+         String type, val;
+         if (t.length() < 3) {
+            LOG.warn("Token " + t + " is too short!! ");
+            continue;
+         } else {
+            type = t.substring(0, 2);
+            val = t.substring(2);
+         }
+
+         if (type.equals(PORTLET_ID)) {
+            String[] decoded = decodeControlParameter(PREFIX + PORTLET_ID + val);
+            portletIds.add(Integer.parseInt(decoded[1]), decoded[0]);
+         } else {
+            LOG.debug("Found " + portletIds.size() + " IDs: " + Arrays.toString(portletIds.toArray()));
+            break;
+         }
+      }
 
       // Now parse the remaining portion of the URL, of any.
       StringTokenizer st = new StringTokenizer(pathInfo, "/", false);
@@ -270,6 +295,14 @@ public class PortalURLParserImpl implements PortalURLParser {
       if (portalURL.getRenderPath() != null) {
          buffer.append(portalURL.getRenderPath());
       }
+      
+      // Add the portletIds with references
+      ArrayList<String> pids = new ArrayList<String>();
+      for (String pid : portalURL.getPortletIds()) {
+         pids.add(pid);
+         buffer.append("/").append(encodeControlParameter(PORTLET_ID, pid, String.valueOf(pids.indexOf(pid))));
+      }
+      
       //Append the resource window definition, if it exists.
       if (portalURL.getResourceWindow() != null){
          buffer.append("/");

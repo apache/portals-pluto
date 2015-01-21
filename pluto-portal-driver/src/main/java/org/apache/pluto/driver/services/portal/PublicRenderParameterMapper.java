@@ -155,6 +155,15 @@ public interface PublicRenderParameterMapper {
    public List<Integer> getActiveIndexes();
    
    /**
+    * Returns an array containing the indexes of all indexes (= PRPs) defined for the given portlet window.
+    * 
+    * @param   wid         window ID
+    * @param   onlyActive  if true, only the active ( = set) PRPs are returned
+    * @return              a list of public render parameters for the window. If none are found, the list will be empty.
+    */
+   public List<PortalURLPublicParameter> getPRPsForWindow(String wid, boolean onlyActive);
+   
+   /**
     * Returns a clone of the mapper. All public render parameters contained in the mapper are cloned as well.
     * @return
     */

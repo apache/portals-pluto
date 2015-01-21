@@ -44,8 +44,10 @@ import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.driver.core.PortalRequestContext;
+import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
+import org.apache.pluto.driver.url.PortalURLPublicParameter;
 
 /**
  * @version $Id$
@@ -108,13 +110,6 @@ public class PortletRequestContextImpl implements PortletRequestContext {
 
    protected PortalURL getPortalURL() {
       return url;
-   }
-
-   protected boolean isPublicRenderParameter(String name) {
-      List<String> publicRenderParameterNames = window.getPortletDefinition()
-            .getSupportedPublicRenderParameters();
-      return publicRenderParameterNames.isEmpty() ? false
-            : publicRenderParameterNames.contains(name);
    }
 
    public void init(PortletConfig portletConfig, ServletContext servletContext,
@@ -313,11 +308,11 @@ public class PortletRequestContextImpl implements PortletRequestContext {
 
    public Map<String, String[]> getPublicParameterMap() {
       HashMap<String, String[]> parameters = new HashMap<String, String[]>();
-      for (Map.Entry<String, String[]> entry : url.getPublicParameters()
-            .entrySet()) {
-         if (isPublicRenderParameter(entry.getKey())) {
-            parameters.put(entry.getKey(), entry.getValue());
-         }
+      PublicRenderParameterMapper mapper = url.getPublicRenderParameterMapper();
+      // get the active PRPs only
+      List<PortalURLPublicParameter> prps = mapper.getPRPsForWindow(window.getId().getStringId(), true);
+      for (PortalURLPublicParameter prp : prps) {
+         parameters.put(prp.getName(), prp.getValues().clone());
       }
       return parameters;
    }

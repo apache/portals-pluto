@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.driver.url.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -61,6 +62,8 @@ public class RelativePortalURLImpl implements PortalURL {
 
    // provides the defined public render parameters and their relationships to one another for the current page 
    private PublicRenderParameterMapper prpMapper = null;
+   
+   private Collection<String> portletIds = new ArrayList<String>();
 
    /**
     * PortalURLParser used to construct the string
@@ -281,6 +284,7 @@ public class RelativePortalURLImpl implements PortalURL {
       portalURL.urlParser = urlParser;
       portalURL.resourceWindow = resourceWindow;
       portalURL.prpMapper = (prpMapper == null) ? null : prpMapper.clone();
+      portalURL.portletIds = portletIds;
       return portalURL;
    }
    //JSR-286 methods
@@ -351,18 +355,6 @@ public class RelativePortalURLImpl implements PortalURL {
             addParameter(new PortalURLParameter(param.getWindowId(), param.getName(), param.getValues()));
          }
       }
-//       Map<String, String[]> newPublicParameters = url.getNewPublicParameters();
-//       for (Map.Entry<String, String[]> entry : newPublicParameters.entrySet())
-//       {
-//          if (entry.getValue()[0] == null)
-//          {
-//             publicParameterCurrent.remove(entry.getKey());
-//          }
-//          else
-//          {
-//             publicParameterCurrent.put(entry.getKey(), entry.getValue());
-//          }
-//       }
       PublicRenderParameterMapper prpm = url.getPublicRenderParameterMapper();
       List<Integer> activePrps = prpm.getActiveIndexes();
       for (int ii = 0; ii < prpm.getNumberOfGroups(); ii++) {
@@ -398,5 +390,16 @@ public class RelativePortalURLImpl implements PortalURL {
 
    public PublicRenderParameterMapper getPublicRenderParameterMapper() {
       return prpMapper;
+   }
+
+   public void setPortletIds(Collection<String> portletIds) {
+      this.portletIds.addAll(portletIds);
+      if (LOG.isDebugEnabled()) {
+         LOG.debug("Stored " + this.portletIds.size() + " IDs: " + Arrays.toString(this.portletIds.toArray()));
+      }
+   }
+
+   public Collection<String> getPortletIds() {
+      return this.portletIds;
    }
 }

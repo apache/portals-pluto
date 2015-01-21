@@ -20,7 +20,6 @@
 package org.apache.pluto.driver.services.portal;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Collection;
 import java.util.HashMap;
@@ -56,6 +55,7 @@ public class PublicRenderParameterMapperImpl implements PublicRenderParameterMap
    // Maps the PRP QName to a set of public render parameters
    private final Map<QName, List<PortalURLPublicParameter>> qn2PRP =
                      new HashMap<QName, List<PortalURLPublicParameter>>();
+
    private final ArrayList<QName> qnList = new ArrayList<QName>();
    
    public PublicRenderParameterMapperImpl(PageConfig paco, PortletRegistryService pore) {
@@ -260,8 +260,32 @@ public class PublicRenderParameterMapperImpl implements PublicRenderParameterMap
          dbgstr.append(prefix + prp.getWindowId());
          prefix = ", ";
       }
-      LOGGER.debug(dbgstr.toString());
+      if (LOGGER.isDebugEnabled()) {
+         LOGGER.debug(dbgstr.toString());
+      }
       return prpm;
+   }
+
+   public List<PortalURLPublicParameter> getPRPsForWindow(String wid, boolean onlyActive) {
+      ArrayList<PortalURLPublicParameter> prps = new ArrayList<PortalURLPublicParameter>();
+      StringBuilder dbgstr = new StringBuilder("Names: ");
+      String prefix = "";
+      for (int ii = 0; ii < qnList.size(); ii++) {
+         for (PortalURLPublicParameter prp : qn2PRP.get(qnList.get(ii))) {
+            if (prp.getWindowId().equals(wid)) {
+               if ((onlyActive && !prp.isRemoved()) || !onlyActive) {
+                  prps.add(prp);
+                  dbgstr.append(prefix + prp.getName());
+                  prefix = ", ";
+               }
+               break;
+            }
+         }
+      }
+      if (LOGGER.isDebugEnabled()) {
+         LOGGER.debug("For window " + wid + " there are " + prps.size() + " parameters. " + dbgstr.toString());
+      }
+      return prps;
    }
 
 }
