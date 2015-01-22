@@ -180,49 +180,88 @@ public class PortalURLParserImpl implements PortalURLParser {
          String[] tokens = pathInfo.split("/" + PREFIX);
          for (String t : tokens) {
             
+            // vals contains the component values of the token after the type
             String type, val;
+            String[] vals;
             if (t.length() < 3) {
-               LOG.warn("Token " + t + " is too short!! ");
+               LOG.warn("Token >>" + t + "<< is too short!! ");
                continue;
             } else {
                type = t.substring(0, 2);
                val = t.substring(2);
+               vals = val.split(DELIM);
+               for (int ii = 0; ii < vals.length; ii++) {
+                  vals[ii] = decodeCharacters(vals[ii]);
+               }
+            }
+            
+            // If the first value is numeric, attempt to dereference the index to obtain the portlet ID.
+            // The code assumes that the portlet ID table in the URL appears directly after the render path. 
+            int index = -1;
+            String pid = null;
+            if ((vals[0].length() > 0) && vals[0].matches("\\d+")) {
+               try {
+                  index = Integer.parseInt(vals[0]);
+                  if ((index >= 0) && (index < portletIds.size())) {
+                     pid = portletIds.get(index);
+                  }
+               } catch (Exception e) {
+                  LOG.error("error parsing URL pid reference token. Token: " + vals[0] + ", exception: " + e.toString());
+               }
             }
 
             // Get the portlet IDs & reference numbers
             if (type.equals(PORTLET_ID)) {
-               String[] decoded = decodeControlParameter(PREFIX + PORTLET_ID + val);
-               portletIds.add(Integer.parseInt(decoded[1]), decoded[0]);
+               portletIds.add(Integer.parseInt(vals[1]), vals[0]);
+               continue;
             } 
             
-            // Resource window definition: portalURL.setResourceWindow().
-            else if (type.equals(RESOURCE)) {
-               portalURL.setResourceWindow(decodeCharacters(val.split(DELIM)[0]));
-            }
-            
-            // Action window definition: portalURL.setActionWindow().
-            else if (type.equals(ACTION)) {
-               portalURL.setActionWindow(decodeCharacters(val.split(DELIM)[0]));
-            }
-            
-            // Action window definition: portalURL.setActionWindow().
-            else if (type.equals(AJAX_ACTION)) {
-               portalURL.setAjaxActionWindow(decodeCharacters(val.split(DELIM)[0]));
-            }
-            
-            // Action window definition: portalURL.setActionWindow().
-            else if (type.equals(PARTIAL_ACTION)) {
-               portalURL.setPartialActionWindow(decodeCharacters(val.split(DELIM)[0]));
-            }
-            
             // Cacheability definition: portalURL.setCacheability().
-            else if (type.equals(CACHE_LEVEL)) {
-               portalURL.setCacheability(decodeCharacters(val.split(DELIM)[0]));
+            if (type.equals(CACHE_LEVEL)) {
+               portalURL.setCacheability(vals[0]);
+               continue;
             }
             
             // ResourceID definition: portalURL.setResourceID().
-            else if (type.equals(RESOURCE_ID)) {
-               portalURL.setResourceID(decodeCharacters(val.split(DELIM)[0]));
+            if (type.equals(RESOURCE_ID)) {
+               portalURL.setResourceID(vals[0]);
+               continue;
+            }
+            
+            // Resource window definition: portalURL.setResourceWindow().
+            if (type.equals(RESOURCE)) {
+               portalURL.setResourceWindow(pid);
+               continue;
+            }
+            
+            // Action window definition: portalURL.setActionWindow().
+            if (type.equals(ACTION)) {
+               portalURL.setActionWindow(pid);
+               continue;
+            }
+            
+            // Action window definition: portalURL.setActionWindow().
+            if (type.equals(AJAX_ACTION)) {
+               portalURL.setAjaxActionWindow(pid);
+               continue;
+            }
+            
+            // Action window definition: portalURL.setActionWindow().
+            if (type.equals(PARTIAL_ACTION)) {
+               portalURL.setPartialActionWindow(pid);
+               continue;
+            }
+
+            // Window state definition: portalURL.setWindowState().
+            if (type.equals(WINDOW_STATE)) {
+               portalURL.setWindowState(pid, new WindowState(vals[1]));
+               continue;
+            }
+            
+            // Portlet mode definition: portalURL.setPortletMode().
+            if (type.equals(PORTLET_MODE)) {
+               portalURL.setPortletMode(pid, new PortletMode(vals[1]));
+               continue;
             }
 
           }
@@ -238,18 +277,8 @@ public class PortalURLParserImpl implements PortalURLParser {
 
          String token = st.nextToken();
 
-         // Window state definition: portalURL.setWindowState().
-         if (token.startsWith(PREFIX + WINDOW_STATE)) {
-            String[] decoded = decodeControlParameter(token);
-            portalURL.setWindowState(decoded[0], new WindowState(decoded[1]));
-         }
-         // Portlet mode definition: portalURL.setPortletMode().
-         else if (token.startsWith(PREFIX + PORTLET_MODE)) {
-            String[] decoded = decodeControlParameter(token);
-            portalURL.setPortletMode(decoded[0], new PortletMode(decoded[1]));
-         }
          // Portal URL parameter: portalURL.addParameter().
-         else if(token.startsWith(PREFIX + RENDER_PARAM)) {
+         if(token.startsWith(PREFIX + RENDER_PARAM)) {
             String value = null;
             if (st.hasMoreTokens()) {
                value = st.nextToken();
@@ -313,20 +342,29 @@ public class PortalURLParserImpl implements PortalURLParser {
       ArrayList<String> pids = new ArrayList<String>();
       for (String pid : portalURL.getPortletIds()) {
          pids.add(pid);
-         buffer.append("/").append(encodeControlParameter(PORTLET_ID, pid, String.valueOf(pids.indexOf(pid))));
+         buffer.append("/").append(PREFIX).append(PORTLET_ID)
+         .append(encodeCharacters(pid)).append(DELIM).append(String.valueOf(pids.indexOf(pid)));
       }
       
       //Append the resource window definition, if it exists.
-      if (portalURL.getResourceWindow() != null){
-         buffer.append("/");
-         buffer.append(PREFIX).append(RESOURCE)
-         .append(encodeCharacters(portalURL.getResourceWindow()));
+      if (portalURL.getResourceWindow() != null) {
+         int index = pids.indexOf(portalURL.getResourceWindow());
+         if (index < 0) {
+            LOG.warn("resource window not found in portlet ID list. PID = " + portalURL.getResourceWindow());
+         } else {
+            buffer.append("/");
+            buffer.append(PREFIX).append(RESOURCE).append(String.valueOf(index));
+         }
       }
       // Append the action window definition, if it exists.
       if (portalURL.getActionWindow() != null) {
-         buffer.append("/");
-         buffer.append(PREFIX).append(ACTION)
-         .append(encodeCharacters(portalURL.getActionWindow()));
+         int index = pids.indexOf(portalURL.getActionWindow());
+         if (index < 0) {
+            LOG.warn("Action window not found in portlet ID list. PID = " + portalURL.getActionWindow());
+         } else {
+            buffer.append("/");
+            buffer.append(PREFIX).append(ACTION).append(String.valueOf(index));
+         }
       }
 
       if (portalURL.getResourceWindow() != null)
@@ -344,21 +382,28 @@ public class PortalURLParserImpl implements PortalURLParser {
       }
 
       // Append portlet mode definitions.
-      for (Iterator it = portalURL.getPortletModes().entrySet().iterator();
-            it.hasNext(); ) {
-         Map.Entry entry = (Map.Entry) it.next();
-         buffer.append("/").append(
-               encodeControlParameter(PORTLET_MODE, entry.getKey().toString(),
-                     entry.getValue().toString()));
+      for (String pid : portalURL.getPortletModes().keySet()) {
+         int index = pids.indexOf(pid);
+         PortletMode pm = portalURL.getPortletMode(pid);
+         if (index < 0) {
+            LOG.warn("Window not found in portlet ID list. PID = " + pid + ", PM = " + pm.toString());
+            LOG.warn("portlet IDs in map: " + Arrays.toString(pids.toArray()));
+         } else {
+            buffer.append("/").append(PREFIX).append(PORTLET_MODE)
+            .append(String.valueOf(index)).append(DELIM).append(encodeCharacters(pm.toString()));
+         }
       }
 
       // Append window state definitions.
-      for (Iterator it = portalURL.getWindowStates().entrySet().iterator();
-            it.hasNext(); ) {
-         Map.Entry entry = (Map.Entry) it.next();
-         buffer.append("/").append(
-               encodeControlParameter(WINDOW_STATE, entry.getKey().toString(),
-                     entry.getValue().toString()));
+      for (String pid : portalURL.getWindowStates().keySet()) {
+         int index = pids.indexOf(pid);
+         WindowState ws = portalURL.getWindowState(pid);
+         if (index < 0) {
+            LOG.warn("Window not found in portlet ID list. PID = " + pid + ", WS = " + ws.toString());
+         } else {
+            buffer.append("/").append(PREFIX).append(WINDOW_STATE)
+            .append(String.valueOf(index)).append(DELIM).append(encodeCharacters(ws.toString()));
+         }
       }
 
       // Append action and render parameters.
@@ -439,8 +484,8 @@ public class PortalURLParserImpl implements PortalURLParser {
       // Construct the string representing the portal URL.
       return buffer.toString();
    }
-
-   public static void encode(StringBuffer url){
+   
+   private static void encode(StringBuffer url){
       replaceChar(url,"|","%7C");
       replaceChar(url,"\"","%22");
    }

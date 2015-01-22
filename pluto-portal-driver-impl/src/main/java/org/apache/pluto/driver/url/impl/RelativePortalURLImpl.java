@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class RelativePortalURLImpl implements PortalURL {
    // provides the defined public render parameters and their relationships to one another for the current page 
    private PublicRenderParameterMapper prpMapper = null;
    
-   private Collection<String> portletIds = new ArrayList<String>();
+   private HashSet<String> portletIds = new HashSet<String>();
 
    /**
     * PortalURLParser used to construct the string
@@ -284,7 +285,7 @@ public class RelativePortalURLImpl implements PortalURL {
       portalURL.urlParser = urlParser;
       portalURL.resourceWindow = resourceWindow;
       portalURL.prpMapper = (prpMapper == null) ? null : prpMapper.clone();
-      portalURL.portletIds = portletIds;
+      portalURL.portletIds = new HashSet<String>(portletIds);
       return portalURL;
    }
    //JSR-286 methods
