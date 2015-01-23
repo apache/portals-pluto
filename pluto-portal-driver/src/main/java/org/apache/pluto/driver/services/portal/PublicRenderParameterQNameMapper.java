@@ -261,7 +261,7 @@ public class PublicRenderParameterQNameMapper implements PublicRenderParameterMa
          prefix = ", ";
       }
       if (LOGGER.isDebugEnabled()) {
-         LOGGER.debug(dbgstr.toString());
+//          LOGGER.debug(dbgstr.toString());       // fills log with entries.
       }
       return prpm;
    }

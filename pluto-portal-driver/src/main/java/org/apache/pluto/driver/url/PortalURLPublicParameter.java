@@ -19,6 +19,8 @@
 
 package org.apache.pluto.driver.url;
 
+import java.util.Arrays;
+
 import javax.xml.namespace.QName;
 
 /**
@@ -121,6 +123,16 @@ public class PortalURLPublicParameter extends PortalURLParameter {
    public void setValues(String[] value) {
       super.setValues(value);
       removed = false;
+   }
+   
+   @Override
+   public String toString() {
+      StringBuilder str = new StringBuilder("PRP: Window ID=");
+      str.append(window)
+         .append(", Name=").append(name)
+         .append(", Qname=").append(qname)
+         .append(", Values=").append(Arrays.toString(values));
+      return str.toString();
    }
    
 }
