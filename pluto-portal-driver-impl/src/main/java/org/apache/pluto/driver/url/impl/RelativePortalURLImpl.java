@@ -16,7 +16,6 @@
  */
 package org.apache.pluto.driver.url.impl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
