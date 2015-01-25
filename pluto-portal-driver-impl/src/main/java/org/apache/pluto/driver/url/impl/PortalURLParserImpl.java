@@ -22,6 +22,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletMode;
@@ -496,7 +497,10 @@ public class PortalURLParserImpl implements PortalURLParser {
          for (String v : values) {
             valstr.append(VALUE_DELIM).append(encodeCharacters(v));
          }
-         for (PortalURLPublicParameter prp : mapper.getPublicParameterGroup(i)) {
+         // the values for the PRP group need only appear in the URL once
+         List<PortalURLPublicParameter> prplist = mapper.getPublicParameterGroup(i);
+         if (prplist.size() > 0) {
+            PortalURLPublicParameter prp = prplist.get(0);
             int index = pids.indexOf(prp.getWindowId());
             if (index >= 0) {
                buffer.append("/").append(PREFIX).append(PUBLIC_RENDER_PARAM)
