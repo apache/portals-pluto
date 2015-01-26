@@ -43,6 +43,7 @@ import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
+import org.apache.pluto.driver.url.PortalURLPublicParameter;
 
 /**
  * @author Scott Nicklous
@@ -255,10 +256,12 @@ public class PageState {
     */
    public String toJSONString() {
       StringBuffer json = new StringBuffer(1024);
-      json.append("{\n");
+      json.append("{\"portlets\" : {\n");
       
       Collection<PortalURLParameter> pups = getParameters();
       Map<String, String[]> pubparms = getPublicParameters();
+      PublicRenderParameterMapper mapper = portalUrl.getPublicRenderParameterMapper();
+      int numGroups = mapper.getNumberOfGroups();
       
       boolean sep = false;
       for (String pid : getPortletIds()) {
@@ -287,25 +290,51 @@ public class PageState {
          
          // Add the public render parameter values for this portlet
          
-         Set<String> prpnames = getPRPNames(pid);
-         for (String prp : pubparms.keySet()) {
-            if (prpnames.contains(prp)) {
-               json.append(c1 + prp + "\" : [");
-               String c2 = "";
-               for (String val : (String[])pubparms.get(prp)) {
-                  json.append(c2 + " \"" + val + "\"");
-                  c2 = ",";
-               }
-               json.append("]");
-               c1 = ",\n            \"";
+         for (PortalURLPublicParameter prp : mapper.getPRPsForWindow(pid, true)) {
+            json.append(c1 + prp.getName() + "\" : [");
+            String c2 = "";
+            for (String val : prp.getValues()) {
+               json.append(c2 + " \"" + val + "\"");
+               c2 = ",";
             }
+            json.append("]");
+            c1 = ",\n            \"";
          }
+         
+//          Set<String> prpnames = getPRPNames(pid);
+//          for (String prp : pubparms.keySet()) {
+//             if (prpnames.contains(prp)) {
+//                json.append(c1 + prp + "\" : [");
+//                String c2 = "";
+//                for (String val : (String[])pubparms.get(prp)) {
+//                   json.append(c2 + " \"" + val + "\"");
+//                   c2 = ",";
+//                }
+//                json.append("]");
+//                c1 = ",\n            \"";
+//             }
+//          }
 
          json.append("         }, \n");
          json.append("         \"portletMode\" : \"" + getPortletMode(pid) + "\", \n");
          json.append("         \"windowState\" : \"" + getWindowState(pid) + "\"\n");
          json.append("      },\n");
-         json.append("      \"pubParms\" : [" + getPRPNamesAsString(pid) + "],\n");
+//          json.append("      \"pubParms\" : [" + getPRPNamesAsString(pid) + "],\n");
+         
+         json.append("      \"pubParms\" : {");
+         String c2 = "";
+         for (PortalURLPublicParameter prp : mapper.getPRPsForWindow(pid, false)) {
+            int group = mapper.getIndex(prp);
+            json.append(c2);
+            json.append("\"");
+            json.append(prp.getName());
+            json.append("\" : \"");
+            json.append(String.valueOf(group));
+            json.append("\"");
+            c2 = ", ";
+         }
+         json.append("},\n");
+         
          json.append("      \"allowedPM\" : [" + getPortletModesAsString(pid) + "],\n");
          json.append("      \"allowedWS\" : [" + getWindowStatesAsString(pid) + "],\n");
          json.append("      \"renderData\" : {\n");
@@ -316,7 +345,23 @@ public class PageState {
          json.append("   }");
       }
       
-      json.append("\n}");
+      json.append("\n},\n\"prpMap\" : {");
+      String sep1 = "";
+      for (int ii=0; ii < mapper.getNumberOfGroups(); ii++) {
+         json.append(sep1).append("\n   \"").append(String.valueOf(ii)).append("\" : {");
+         sep1 = ",";
+         String sep2 = "";
+         for (PortalURLPublicParameter prp : mapper.getPublicParameterGroup(ii)) {
+            json.append(sep2).append("\n      \"")
+                .append(getNameSpace(prp.getWindowId()))
+                .append("\" : \"")
+                .append(prp.getName()).append("\"");
+            sep2 = ", ";
+         }
+         json.append("   }");
+      }
+      json.append("\n}}");
+
       return json.toString();
    }
 }

@@ -38,14 +38,16 @@ var portlet = portlet || {};
    var isInitialized = false,
 
    /**
-    * The object holding the portlet data for each portlet on the page.
-    * This an object indexed by portlet ID.
+    * The object holding the portlet data for each portlet on the page along with
+    * mapping information for public render paramters. 
+    * The portlet data is indexed by portlet ID.
     * @property   {PortletData} {string}  
     *    The object holds one portlet data object for each portlet. The string
     *    property name is the portlet ID.
+    * @property   {prpMap} {"<groupIndex>" : {"pid" : "<prpName>"}}  
     * @private
     */
-   pageState,
+   pageState = {},
    
    /**
     * Flag specifying whether history is to be processed (true if browser supports HTML5 session history APIs)
@@ -74,8 +76,8 @@ var portlet = portlet || {};
     */
    isValidId = function (pid) {
       var id;
-      for (id in pageState) {
-         if (pageState.hasOwnProperty(id)) {
+      for (id in pageState.portlets) {
+         if (pageState.portlets.hasOwnProperty(id)) {
             if (pid === id) {
                return true;
             }
@@ -89,8 +91,8 @@ var portlet = portlet || {};
     */
    getIds = function () {
       var id, ids = [];
-      for (id in pageState) {
-         if (pageState.hasOwnProperty(id)) {
+      for (id in pageState.portlets) {
+         if (pageState.portlets.hasOwnProperty(id)) {
             ids.push(id);
          }
       }
@@ -101,7 +103,7 @@ var portlet = portlet || {};
     * gets parameter value
     */
    getParmVal = function (pid, name) {
-      return pageState[pid].state.parameters[name];
+      return pageState.portlets[pid].state.parameters[name];
    },
 
    /**
@@ -147,7 +149,7 @@ var portlet = portlet || {};
    stateChanged = function (nstate, pid) {
       var ostate, pname, nparm, oparm, result = false;
       
-      ostate = pageState[pid].state;
+      ostate = pageState.portlets[pid].state;
       
       if (!nstate.portletMode || !nstate.windowState || !nstate.parameters) {
          throw new Error ("Error decoding state: " + nstate);
@@ -206,17 +208,19 @@ var portlet = portlet || {};
     * gets defeined PRPs for the portlet
     */
    getPRPNames = function (pid) {
-      return pageState[pid].pubParms;
+      return pageState.portlets[pid].pubParms;
    },
    
    /**
-    * function for checking if the parameter is private
+    * function for checking if the parameter is public
     */
    isPRP = function (pid, name) {
-      var ii, result = false;
-      for (ii = 0; ii < pageState[pid].pubParms.length; ii++) {
-         if (name === pageState[pid].pubParms[ii]) {
-            result = true;
+      var prp, result = false, prps = pageState.portlets[pid].pubParms;
+      for (prp in prps) {
+         if (prps.hasOwnProperty(prp)) {
+            if (name === prp) {
+               result = true;
+            }
          }
       }
       return result;
@@ -226,7 +230,7 @@ var portlet = portlet || {};
    /**
     * Gets the updated public parameters for the given portlet
     * ID and new portlet state.
-    * Returns an object whose properties are the names of the
+    * Returns an object whose properties are the gruop indexes of the
     * updated public parameters. The values are the new public
     * parameter values.
     *
@@ -236,12 +240,14 @@ var portlet = portlet || {};
     * @private
     */
    getUpdatedPRPs = function (pid, state) {
-      var prps = {}, ii = 0, prpNames = getPRPNames(pid), name;
+      var prps = {}, prpNames = getPRPNames(pid), name, group;
 
-      for (ii = 0; ii < prpNames.length; ii++) {
-         name = prpNames[ii];
-         if (isParmInStateEqual(pid, state, name) === false) {
-            prps[name] = state.parameters[name];
+      for (name in prpNames) {
+         if (prpNames.hasOwnProperty(name)) {
+            if (isParmInStateEqual(pid, state, name) === false) {
+               group = prpNames[name];
+               prps[group] = state.parameters[name];
+            }
          }
       }
 
@@ -279,14 +285,14 @@ var portlet = portlet || {};
     * Get allowed window states for portlet
     */
    getAllowedWS = function (pid) {
-      return pageState[pid].allowedWS.slice(0);
+      return pageState.portlets[pid].allowedWS.slice(0);
    },
    
    /**
     * Get allowed portlet modes for portlet
     */
    getAllowedPM = function (pid) {
-      return pageState[pid].allowedPM.slice(0);
+      return pageState.portlets[pid].allowedPM.slice(0);
    },
    
    
@@ -294,14 +300,14 @@ var portlet = portlet || {};
     * gets render data for the portlet
     */
    getRenderData = function (pid) {
-      return pageState[pid].renderData;
+      return pageState.portlets[pid].renderData;
    },
          
    /**
     * gets state for the portlet
     */
    getState = function (pid) {
-      return pageState[pid].state;
+      return pageState.portlets[pid].state;
    },
    
    /**
@@ -354,30 +360,53 @@ var portlet = portlet || {};
 
    AJAX_ACTION = "aa",              // new for portlet spec 3
    PARTIAL_ACTION = "pa",           // new for portlet spec 3
+   
+   pidMap = {},
+   
+   /**
+    * Set up the portlet ID mapping table for URL generation
+    */
+   getPidMap = function () {
+      var pid, pids = getIds(), ii, urlmap = "";
+      
+      pidMap = {};
+      for (ii = 0; ii < pids.length; ii++) {
+         pid = pids[ii];
+         pidMap[pid] = ii;
+         urlmap += "/" + PREFIX + PORTLET_ID;
+         urlmap += plutoEncode(pageState.portlets[pid].urlpid);
+         urlmap += DELIM + ii;
+      }
+      
+      return urlmap;
+   },
 
    
    /**
     * Helper for generating parameter strings for the URL
     */
-   genParmString = function (pid, name, type) {
-      var vals, jj, sep, str = "", wid = "";
-      vals = pageState[pid].state.parameters[name];
+   genParmString = function (pid, name, type, group) {
+      var vals, jj, sep, str = "", wid = "", grpstr = "";
+      vals = pageState.portlets[pid].state.parameters[name];
       
       // If encoding a render parameter, insert the pid in Pluto internal form 
       // as opposed to namespace form -
       
-      if (type === RENDER_PARAM) {
-         wid = plutoEncode(pageState[pid].urlpid);
+      if (type === RENDER_PARAM || type === PUBLIC_RENDER_PARAM) {
+         wid = pidMap[pid];
+      }
+      
+      if (type === PUBLIC_RENDER_PARAM) {
+         grpstr = DELIM + plutoEncode(group);
       }
       
       // If values are present, encode the multivalued parameter string
       
       if (vals) {
-         sep = "";
-         str += "/" + PREFIX + type + wid + DELIM + encodeURIComponent(name) + "/";
+         sep = VALUE_DELIM;
+         str += "/" + PREFIX + type + wid + grpstr + DELIM + encodeURIComponent(name);
          for (jj=0; jj < vals.length; jj++) {
             str += sep + encodeURIComponent(vals[jj]);
-            sep = VALUE_DELIM;
          }
       }
       return str;
@@ -388,9 +417,9 @@ var portlet = portlet || {};
     * Helper for generating portlet mode & window state strings for the URL
     */
    genPMWSString = function (pid) {
-      var pm = pageState[pid].state.portletMode, 
-          ws = pageState[pid].state.windowState, 
-          wid = plutoEncode(pageState[pid].urlpid), str = "";
+      var pm = pageState.portlets[pid].state.portletMode, 
+          ws = pageState.portlets[pid].state.windowState, 
+          wid = pidMap[pid], str = "";
 
       str += "/" + PREFIX + PORTLET_MODE + wid + DELIM + encodeURIComponent(pm);
       str += "/" + PREFIX + WINDOW_STATE + wid + DELIM + encodeURIComponent(ws);
@@ -413,7 +442,9 @@ var portlet = portlet || {};
    getUrl = function (type, pid, parms, cache) {
    
       var url = portlet.impl.getUrlBase(), ca = 'cacheLevelPage', parm, isAction = false,
-          sep = "", name, names, vals, ii, str, id, ids, tpid, prpstrings;
+          sep = "", name, names, vals, ii, str, id, ids, tpid, prpstrings, group;
+          
+      url += getPidMap();
        
       // If target portlet not defined for render URL, set it to null
       if ((type === "RENDER") && pid === undefined) {
@@ -425,7 +456,7 @@ var portlet = portlet || {};
       
       if (type === "RESOURCE") {
          // If generating resource URL, add resource window & cacheability
-         url += "/" + PREFIX + RESOURCE + plutoEncode(pageState[pid].urlpid);
+         url += "/" + PREFIX + RESOURCE + pidMap[pid];
          if (cache) {
             ca = cache;
          }
@@ -433,11 +464,11 @@ var portlet = portlet || {};
       } else if (type === "ACTION") {
          // Add Ajax Action window
          isAction = true;
-         url += "/" + PREFIX + AJAX_ACTION + plutoEncode(pageState[pid].urlpid);
+         url += "/" + PREFIX + AJAX_ACTION + pidMap[pid];
       } else if (type === "PARTIAL_ACTION") {
          // Add Partial Action window
          isAction = true;
-         url += "/" + PREFIX + PARTIAL_ACTION + plutoEncode(pageState[pid].urlpid);
+         url += "/" + PREFIX + PARTIAL_ACTION + pidMap[pid];
       }
       
       // Now add the state to the URL, taking into account cacheability if
@@ -455,7 +486,7 @@ var portlet = portlet || {};
                if (id !== pid) {  // only for non-target portlets
                   url += genPMWSString(id);  // portlet mode & window state
                   str = "";
-                  names = pageState[id].state.parameters;
+                  names = pageState.portlets[id].state.parameters;
                   for (name in names) {
                      // Public render parameters are encoded separately
                      if (names.hasOwnProperty(name) && !isPRP(id, name)) {
@@ -474,7 +505,7 @@ var portlet = portlet || {};
          if (!isAction && pid !== null) {
             url += genPMWSString(pid);  // portlet mode & window state
             str = "";
-            names = pageState[pid].state.parameters;
+            names = pageState.portlets[pid].state.parameters;
             for (name in names) {
                // Public render parameters are encoded separately
                if (names.hasOwnProperty(name) && !isPRP(pid, name)) {
@@ -488,26 +519,41 @@ var portlet = portlet || {};
 
          str = "";
          prpstrings = {};
-         for (tpid in pageState) {
-            if (pageState.hasOwnProperty(tpid)) {               
-               names = pageState[tpid].pubParms;
-               for (ii=0; ii < names.length; ii++) {
-                  name = names[ii];
-                  // only need to add parameter once, since it is shared
-                  if (!prpstrings.hasOwnProperty(name)) {
-                     prpstrings[name] = genParmString(tpid, name, PUBLIC_RENDER_PARAM);
-                     str += prpstrings[name];
+         for (group in pageState.prpMap) {
+            if (pageState.prpMap.hasOwnProperty(group)) {
+               for (tpid in pageState.prpMap[group]) {
+                  if (pageState.prpMap[group].hasOwnProperty(tpid)) {
+                     name = pageState.prpMap[group][tpid];
+                     // only need to add parameter once, since it is shared
+                     if (!prpstrings.hasOwnProperty(name)) {
+                        prpstrings[name] = genParmString(tpid, name, PUBLIC_RENDER_PARAM, group);
+                        str += prpstrings[name];
+                     }
                   }
                }
             }
          }
+         
+//          for (tpid in pageState.portlets) {
+//             if (pageState.portlets.hasOwnProperty(tpid)) {               
+//                names = pageState.portlets[tpid].pubParms;
+//                for (ii=0; ii < names.length; ii++) {
+//                   name = names[ii];
+//                   // only need to add parameter once, since it is shared
+//                   if (!prpstrings.hasOwnProperty(name)) {
+//                      prpstrings[name] = genParmString(tpid, name, PUBLIC_RENDER_PARAM);
+//                      str += prpstrings[name];
+//                   }
+//                }
+//             }
+//          }
          url += str;
 
       }
 
       // Encode resource or action parameters as query string
       if (parms) {
-         str = "?"; sep = "";
+         str = ""; sep = "?";
          for (parm in parms) {
             if (parms.hasOwnProperty(parm)) {
                vals = parms[parm];
@@ -534,7 +580,7 @@ var portlet = portlet || {};
    updateHistory = function (replace) {
       if (doHistory) {
          getUrl('RENDER', null, {}).then(function (url) {
-            var token = JSON.stringify(pageState);
+            var token = JSON.stringify(pageState.portlets);
             console.log("Updating history. URL =" + url + ", token length =" + token.length 
                + ", token 30 chars =" + token.substring(0,30));
             if (replace) {
@@ -552,45 +598,61 @@ var portlet = portlet || {};
     * taking into account the public render parameters.
     */
    setState = function (pid, state) {
-      var pids, prps = getUpdatedPRPs(pid, state), prp, ii, tpid, upids = [], newVal, oldVal, prpNames;
+      var prps = getUpdatedPRPs(pid, state), group, tpid, upids = [], newVal, prpName, groupMap;
          
-      // For each updated PRP for the
+      // For each updated PRP group for the
       // initiating portlet, update that PRP in the other portlets.
-      for (prp in prps) {
-         if (prps.hasOwnProperty(prp)) {
+      for (group in prps) {
+         if (prps.hasOwnProperty(group)) {
       
-            newVal = prps[prp];
+            newVal = prps[group];
             
-            // process each portlet ID
-            pids = getIds();
-            for (ii = 0; ii < pids.length; ii++) {
-               tpid = pids[ii];
-               
-               // don't update for initiating portlet. that's done after the loop
-               if (tpid !== pid) {
-            
-                  oldVal = getParmVal(tpid, prp);
-                  prpNames = getPRPNames(tpid);
+            // access the PRP map to get the affected portlets
+            groupMap = pageState.prpMap[group];
+            for (tpid in groupMap) {
+               if (groupMap.hasOwnProperty(tpid) && (tpid !== pid)) {
+                  prpName = groupMap[tpid];
                   
-                  // check for public parameter and if the value has changed
-                  if ((prpNames.indexOf(prp) >= 0) && 
-                      (_isParmEqual(oldVal, newVal) === false)) {
-                  
-                     if (newVal === undefined) {
-                        delete pageState[tpid].state.parameters[prp];
-                     } else {
-                        pageState[tpid].state.parameters[prp] = newVal.slice(0);
-                     }
-                     upids.push(tpid);
-                     
+                  if (newVal === undefined) {
+                     delete pageState.portlets[tpid].state.parameters[prpName];
+                  } else {
+                     pageState.portlets[tpid].state.parameters[prpName] = newVal.slice(0);
                   }
+                  upids.push(tpid);
+                  
                }
             }
+            
+            // process each portlet ID
+//             pids = getIds();
+//             for (ii = 0; ii < pids.length; ii++) {
+//                tpid = pids[ii];
+//                
+//                // don't update for initiating portlet. that's done after the loop
+//                if (tpid !== pid) {
+//             
+//                   oldVal = getParmVal(tpid, prp);
+//                   prpNames = getPRPNames(tpid);
+//                   
+//                   // check for public parameter and if the value has changed
+//                   if ((prpNames.indexOf(prp) >= 0) && 
+//                       (_isParmEqual(oldVal, newVal) === false)) {
+//                   
+//                      if (newVal === undefined) {
+//                         delete pageState.portlets[tpid].state.parameters[prp];
+//                      } else {
+//                         pageState.portlets[tpid].state.parameters[prp] = newVal.slice(0);
+//                      }
+//                      upids.push(tpid);
+//                      
+//                   }
+//                }
+//             }
          }
       }
       
       // update state for the initiating portlet
-      pageState[pid].state = state;
+      pageState.portlets[pid].state = state;
       upids.push(pid);
       
       updateHistory();
@@ -619,13 +681,15 @@ var portlet = portlet || {};
    // state has changed as compared to the current page state.
    decodeUpdateString = function (ustr) {
       var states = {}, ostate, nstate, pid, ps, npids = 0, cpids = 0;
+      
+      console.log("Decoding string: >>" + ustr + "<<");
 
       ps = JSON.parse(ustr);
-      for (pid in ps) {
+      for (pid in ps.portlets) {
          if (ps.hasOwnProperty(pid)) {
             npids++;
-            nstate = ps[pid].state;
-            ostate = pageState[pid].state;
+            nstate = ps.portlets[pid].state;
+            ostate = pageState.portlets[pid].state;
             
             if (!nstate || !ostate) {
                throw new Error ("Invalid update string. ostate=" + ostate + ", nstate=" + nstate);
@@ -661,7 +725,7 @@ var portlet = portlet || {};
       for (tpid in states) {
          if (states.hasOwnProperty(tpid)) {
             state = states[tpid];
-            pageState[tpid].state = state;
+            pageState.portlets[tpid].state = state;
             upids.push(tpid);
             stateUpdated = true;
          }
