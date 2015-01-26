@@ -686,7 +686,7 @@ var portlet = portlet || {};
 
       ps = JSON.parse(ustr);
       for (pid in ps.portlets) {
-         if (ps.hasOwnProperty(pid)) {
+         if (ps.portlets.hasOwnProperty(pid)) {
             npids++;
             nstate = ps.portlets[pid].state;
             ostate = pageState.portlets[pid].state;
