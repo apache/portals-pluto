@@ -254,9 +254,9 @@ generate mailto links. -->
   -->
   <properties>
     <pluto.container.name>Pluto</pluto.container.name>
-    <javax.portlet.version.major>2</javax.portlet.version.major>
+    <javax.portlet.version.major>3</javax.portlet.version.major>
     <javax.portlet.version.minor>0</javax.portlet.version.minor>
-    <portals.portlet2-api-spec.version>${project.version}</portals.portlet2-api-spec.version>
+    <portals.portlet-api.version>${project.version}</portals.portlet-api.version>
     <servlet-api.version>7.0.50</servlet-api.version>
     <jsp-api.version>7.0.50</jsp-api.version>
     <jstl.version>7.0.50</jstl.version>
@@ -321,7 +321,7 @@ TODO: Check if we need all of them. -->
       <dependency>
         <groupId>org.apache.portals</groupId>
         <artifactId>portlet-api</artifactId>
-        <version>${portals.portlet2-api-spec.version}</version>
+        <version>${portals.portlet-api.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.tomcat</groupId>
