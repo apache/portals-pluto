@@ -24,7 +24,7 @@ import junit.framework.Assert;
 
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.PortletInfo;
-import org.apache.pluto.container.om.portlet.impl.PortletType;
+import org.apache.pluto.container.om.portlet20.impl.PortletType;
 import org.apache.pluto.driver.container.ResourceBundleFactory;
 
 /**

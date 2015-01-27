@@ -22,7 +22,7 @@ import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.Supports;
-import org.apache.pluto.container.om.portlet.impl.CustomPortletModeType;
+import org.apache.pluto.container.om.portlet20.impl.CustomPortletModeType;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.SupportedModesService;
@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;

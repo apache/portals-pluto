@@ -145,7 +145,7 @@ public class PortletAppType
     
     public PortletApplicationDefinition upgrade()
     {
-        PortletApplicationDefinition app = new org.apache.pluto.container.om.portlet.impl.PortletAppType();
+        PortletApplicationDefinition app = new org.apache.pluto.container.om.portlet20.impl.PortletAppType();
         app.setVersion(version);
         if (portlet != null)
         {

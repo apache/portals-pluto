@@ -99,7 +99,7 @@ implements PortletPreferencesService {
      * </p>
      * @return the default preferences set
      * 
-     * @see org.apache.pluto.container.om.portlet.impl.PreferenceType
+     * @see org.apache.pluto.container.om.portlet20.impl.PreferenceType
      */
     public Map<String,PortletPreference> getDefaultPreferences( PortletWindow portletWindow,
                                                               PortletRequest request )

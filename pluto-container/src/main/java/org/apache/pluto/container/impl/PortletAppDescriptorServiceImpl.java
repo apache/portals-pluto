@@ -183,7 +183,7 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
         ClassLoader containerClassLoader = PortletAppDescriptorServiceImpl.class.getClassLoader();
         try {
             jaxbContext = JAXBContext.newInstance(org.apache.pluto.container.om.portlet10.impl.ObjectFactory.class.getPackage().getName() + ":" +
-                                                  org.apache.pluto.container.om.portlet.impl.ObjectFactory.class.getPackage().getName(), 
+                                                  org.apache.pluto.container.om.portlet20.impl.ObjectFactory.class.getPackage().getName(), 
                                                   containerClassLoader);
         }
         catch (JAXBException e) {
