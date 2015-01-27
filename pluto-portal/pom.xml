@@ -50,7 +50,7 @@
         </exclusion>
         <exclusion>
           <groupId>org.apache.portals</groupId>
-          <artifactId>portlet-api_2.0_spec</artifactId>
+          <artifactId>portlet-api</artifactId>
         </exclusion>
         <exclusion>
           <groupId>xml-apis</groupId>
@@ -113,7 +113,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.portals.pluto</groupId>
-      <artifactId>portlet-api_2.0_spec</artifactId>
+      <artifactId>portlet-api</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>

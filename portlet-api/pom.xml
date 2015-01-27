@@ -30,12 +30,13 @@
     <version>2.1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>portlet-api_2.0_spec</artifactId>
+  <artifactId>portlet-api</artifactId>
   <packaging>bundle</packaging>
-  <name>Java Portlet Specification V2.0</name>
-  <description>The Java Portlet API version 2.0 developed by the Java Community Process JSR-286 Expert Group.</description>
+  <name>Java Portlet API V3.0</name>
+  <description>The Java Portlet API version 3.0 developed by the Java Community Process JSR-362 Expert Group.</description>
 
-  <url>http://portals.apache.org/portlet-spec/portlet-api-2.0</url>
+  <!-- temp values for URL & scm stuff. to be updated later -->
+  <url>http://msnicklous.github.io/portletspec3/apidocs/index.html</url>
 
   <dependencies>
     <dependency>
@@ -46,9 +47,9 @@
   </dependencies>
 
   <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/portals/portlet-spec/trunk/portlet-api_2.0_spec</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/portlet-spec/trunk/portlet-api_2.0_spec</developerConnection>
-    <url>http://svn.apache.org/viewvc/portals/portlet-spec/trunk/portlet-api_2.0_spec</url>
+    <connection>git://git.apache.org/pluto.git</connection>
+    <developerConnection>git://git.apache.org/pluto.git</developerConnection>
+    <url>http://msnicklous.github.io/portletspec3/apidocs/index.html</url>
   </scm>
 
   <build>
