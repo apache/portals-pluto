@@ -566,7 +566,7 @@ var portlet = portlet || {};
    updateHistory = function (replace) {
       if (doHistory) {
          getUrl('RENDER', null, {}).then(function (url) {
-            var token = JSON.stringify(pageState.portlets);
+            var token = JSON.stringify(pageState);
             console.log("Updating history. URL =" + url + ", token length =" + token.length 
                + ", token 30 chars =" + token.substring(0,30));
             if (replace) {
