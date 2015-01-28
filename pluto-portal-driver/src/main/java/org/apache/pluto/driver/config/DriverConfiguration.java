@@ -25,6 +25,7 @@ import javax.portlet.WindowState;
 
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletPreferencesService;
+import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PublicRenderParameterService;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
@@ -95,6 +96,8 @@ public interface DriverConfiguration {
     public Set<WindowState> getSupportedWindowStates(String portletId, String contentType) throws PortletContainerException; 
     
     public PublicRenderParameterService getPublicRenderParameterService();
+    
+    public PortletRegistryService getPortletRegistryService();
 
 //
 // Utility methods for the container

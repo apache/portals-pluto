@@ -25,6 +25,7 @@ import javax.portlet.WindowState;
 
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletPreferencesService;
+import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
@@ -49,6 +50,7 @@ public class DriverConfigurationImpl
     private final SupportedModesService supportedModesService;
     private final SupportedWindowStateService supportedWindowStateService;
     private final PublicRenderParameterService publicRenderParameterService;
+    private final PortletRegistryService portletRegistryService;
 
     // Container Services
     private PortletPreferencesService portletPreferencesService;
@@ -58,7 +60,8 @@ public class DriverConfigurationImpl
                                    RenderConfigService renderService,
                                    SupportedModesService supportedModesService,
                                    SupportedWindowStateService supportedWindowStateService,
-                                   PublicRenderParameterService publicRenderParameterService) {
+                                   PublicRenderParameterService publicRenderParameterService,
+                                   PortletRegistryService portletRegistryService) {
 
         this.portalUrlParser = portalUrlParser;
         this.propertyService = propertyService;
@@ -66,6 +69,7 @@ public class DriverConfigurationImpl
         this.supportedModesService = supportedModesService;
         this.supportedWindowStateService = supportedWindowStateService;
         this.publicRenderParameterService = publicRenderParameterService;
+        this.portletRegistryService = portletRegistryService;
     }
 
     /**
@@ -176,6 +180,10 @@ public class DriverConfigurationImpl
     
     public PublicRenderParameterService getPublicRenderParameterService() {
        return publicRenderParameterService;
+    }
+    
+    public PortletRegistryService getPortletRegistryService() {
+       return portletRegistryService;
     }
 
     public Set<PortletMode> getSupportedPortletModes(String portletId) throws PortletContainerException {

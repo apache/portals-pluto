@@ -21,6 +21,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
@@ -167,16 +169,40 @@ public class PortalURLParserImpl implements PortalURLParser {
          LOG.debug("Parse: renderPath: " + renderPath.toString() + ",  pathInfo: " + pathInfo);
       }
 
+      // Set up public render parameter mapper & portlet ID list
+      
       ServletContext sc = request.getServletContext();
       DriverConfiguration dc = (DriverConfiguration) sc.getAttribute(AttributeKeys.DRIVER_CONFIG);
       PublicRenderParameterMapper prpm = dc.getPublicRenderParameterService()
             .getPRPMapper(renderPath.toString());
       portalURL.setPublicRenderParameterMapper(prpm);
-      portalURL.setPortletIds(dc.getPageConfig(renderPath.toString()).getPortletIds());
+      Collection<String> pids = dc.getPageConfig(renderPath.toString()).getPortletIds();
+      portalURL.setPortletIds(pids);
 
-      ArrayList<String> portletIds = new ArrayList<String>();
+      // Extract the version info for the portlets on the page and store in URL
+      
+      StringBuilder vstr = new StringBuilder();
+      if (LOG.isDebugEnabled()) {
+         vstr.append("Portlet Versions: ");
+      }
+      for (String pid : pids) {
+         String appName = PortletWindowConfig.fromId(pid).getContextPath();
+         try {
+            String pv = dc.getPortletRegistryService().getPortletApplication(appName).getVersion();
+            portalURL.setVersion(pid, pv);
+            if (LOG.isDebugEnabled()) {
+               vstr.append(pid).append(" = ").append(pv).append(", ");
+            }
+         } catch (Exception e) {
+            LOG.error("Portlet application definition could not be retrieved for " + appName);
+         }
+      }
+      if (LOG.isDebugEnabled()) {
+         LOG.debug(vstr.toString());
+      }
 
       // Tokenize the rest and process the tokens
+      ArrayList<String> portletIds = new ArrayList<String>();
       if (pathInfo.length() > 2) {
          String[] tokens = pathInfo.split("/" + PREFIX);
          for (String t : tokens) {

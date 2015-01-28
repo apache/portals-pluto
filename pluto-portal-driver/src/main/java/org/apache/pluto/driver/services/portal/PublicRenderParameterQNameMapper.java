@@ -64,9 +64,9 @@ public class PublicRenderParameterQNameMapper implements PublicRenderParameterMa
       LOGGER.debug("Setting up the PRP mapper. There are " + pids.size() + " portlets to process.");
 
       StringBuilder dbgstr = new StringBuilder(1024);
-      boolean isDebug = LOGGER.isDebugEnabled();
+      boolean isTrace = LOGGER.isTraceEnabled();
       for (String pid : pids) {
-         if (isDebug) {
+         if (isTrace) {
             dbgstr.append("\n  Processing portlet id = " + pid);
          }
          
@@ -82,7 +82,7 @@ public class PublicRenderParameterQNameMapper implements PublicRenderParameterMa
             pad = pore.getPortletApplication(cxtpa);
             pd = pore.getPortlet(cxtpa, portletName);
 
-            if (isDebug) {
+            if (isTrace) {
                dbgstr.append("\n    For context: " + cxtpa + ", App name is " 
                      + pad.getName() + ", portlet name is " + pd.getPortletName());
             }
@@ -127,7 +127,7 @@ public class PublicRenderParameterQNameMapper implements PublicRenderParameterMa
                         qnList.add(qn);
                      }
                      
-                     if (isDebug) {
+                     if (isTrace) {
                         dbgstr.append("\n      Added PRP for window = " + pid + " QName = " + qn.toString()
                               + ", ID = " + prpId);
                      }
@@ -143,7 +143,7 @@ public class PublicRenderParameterQNameMapper implements PublicRenderParameterMa
             }
          }
       }
-      if (isDebug) {
+      if (isTrace) {
          dbgstr.append("\nOn page " + paco.getName() + " there are " + prpList.size()
                + " PRPs divided into " + qnList.size() + " groups with sizes: ");
          String prefix = "";
@@ -151,7 +151,7 @@ public class PublicRenderParameterQNameMapper implements PublicRenderParameterMa
             dbgstr.append(prefix + lp.size());
             prefix = ", ";
          }
-         LOGGER.debug(dbgstr.toString());
+         LOGGER.trace(dbgstr.toString());
       }
    }
    
@@ -171,8 +171,8 @@ public class PublicRenderParameterQNameMapper implements PublicRenderParameterMa
          p.setValues(vals);
          oprps.add(p);
       }
-      if (LOGGER.isDebugEnabled()) {
-         LOGGER.debug("For index: " + index + ", QName = " + qn + ", group size = "
+      if (LOGGER.isTraceEnabled()) {
+         LOGGER.trace("For index: " + index + ", QName = " + qn + ", group size = "
                 + oprps.size());
       }
       return oprps;
@@ -260,8 +260,8 @@ public class PublicRenderParameterQNameMapper implements PublicRenderParameterMa
          dbgstr.append(prefix + prp.getWindowId());
          prefix = ", ";
       }
-      if (LOGGER.isDebugEnabled()) {
-//          LOGGER.debug(dbgstr.toString());       // fills log with entries.
+      if (LOGGER.isTraceEnabled()) {
+//          LOGGER.trace(dbgstr.toString());       // fills log with entries.
       }
       return prpm;
    }
@@ -282,8 +282,8 @@ public class PublicRenderParameterQNameMapper implements PublicRenderParameterMa
             }
          }
       }
-      if (LOGGER.isDebugEnabled()) {
-         LOGGER.debug("For window " + wid + " there are " + prps.size() + " parameters. " + dbgstr.toString());
+      if (LOGGER.isTraceEnabled()) {
+         LOGGER.trace("For window " + wid + " there are " + prps.size() + " parameters. " + dbgstr.toString());
       }
       return prps;
    }

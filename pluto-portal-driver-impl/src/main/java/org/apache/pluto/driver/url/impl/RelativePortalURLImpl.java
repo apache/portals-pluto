@@ -64,6 +64,8 @@ public class RelativePortalURLImpl implements PortalURL {
    private PublicRenderParameterMapper prpMapper = null;
    
    private HashSet<String> portletIds = new HashSet<String>();
+   private HashMap<String, String> versionMap = new HashMap<String, String>(); 
+   private HashMap<String, Boolean> v3Map = new HashMap<String, Boolean>(); 
 
    /**
     * PortalURLParser used to construct the string
@@ -285,6 +287,8 @@ public class RelativePortalURLImpl implements PortalURL {
       portalURL.resourceWindow = resourceWindow;
       portalURL.prpMapper = (prpMapper == null) ? null : prpMapper.clone();
       portalURL.portletIds = new HashSet<String>(portletIds);
+      portalURL.versionMap = new HashMap<String, String>(versionMap);
+      portalURL.v3Map = new HashMap<String, Boolean>(v3Map);
       return portalURL;
    }
    //JSR-286 methods
@@ -401,5 +405,18 @@ public class RelativePortalURLImpl implements PortalURL {
 
    public Collection<String> getPortletIds() {
       return this.portletIds;
+   }
+
+   public void setVersion(String portletId, String version) {
+      versionMap.put(portletId, version);
+      v3Map.put(portletId, (version.equals("3.0")));
+   }
+
+   public String getVersion(String portletId) {
+      return versionMap.get(portletId);
+   }
+
+   public boolean isVersion3(String portletId) {
+      return v3Map.get(portletId);
    }
 }

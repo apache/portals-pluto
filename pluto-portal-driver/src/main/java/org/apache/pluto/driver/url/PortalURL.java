@@ -72,6 +72,27 @@ public interface PortalURL extends Cloneable {
      * @return
      */
     public Collection<String> getPortletIds();
+    
+    /**
+     * Sets the version for the given portlet ID
+     * @param portletId
+     * @param version
+     */
+    public void setVersion(String portletId, String version);
+    
+    /**
+     * gets the version for the given portlet ID
+     * @param portletId
+     * @return
+     */
+    public String getVersion(String portletId);
+    
+    /**
+     * Returns <code>true</code> if the given portlet ID refers to a version 3 portlet
+     * @param portletId
+     * @return
+     */
+    public boolean isVersion3(String portletId);
 
     Collection<PortalURLParameter> getParameters();
 
