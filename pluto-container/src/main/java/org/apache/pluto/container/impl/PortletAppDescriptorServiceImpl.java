@@ -91,6 +91,10 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
                 {
                     adjustedNamespaceURI = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd";
                 }
+                else if ("3.0".equals(version))
+                {
+                    adjustedNamespaceURI = "http://java.sun.com/xml/ns/portlet/portlet-app_3_0.xsd";
+                }
             }
             return eventCode;
         }
@@ -183,7 +187,8 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
         ClassLoader containerClassLoader = PortletAppDescriptorServiceImpl.class.getClassLoader();
         try {
             jaxbContext = JAXBContext.newInstance(org.apache.pluto.container.om.portlet10.impl.ObjectFactory.class.getPackage().getName() + ":" +
-                                                  org.apache.pluto.container.om.portlet20.impl.ObjectFactory.class.getPackage().getName(), 
+                                                  org.apache.pluto.container.om.portlet20.impl.ObjectFactory.class.getPackage().getName() + ":" +
+                                                  org.apache.pluto.container.om.portlet30.impl.ObjectFactory.class.getPackage().getName(), 
                                                   containerClassLoader);
         }
         catch (JAXBException e) {

@@ -77,27 +77,27 @@ limitations under the License.
    },
    
    // function to select the proper image depending on radio button or dropdown display
-   selectImage = function (seltype, imgName) {
+   selectImage = function (seltype, photo) {
       var ii, f = document.getElementById(fid);
       
-      if (!imgName) {
-         imgName = 'default';
+      if (!photo) {
+         photo = 'default';
       }
       
       if (seltype === 'radio') {
-         for (ii=0; ii < f.imgName.length; ii++) {
-            if (f.imgName[ii].value === imgName) {
-               console.log("ISP: image clicked: " + imgName);
-               f.imgName[ii].checked = true;
+         for (ii=0; ii < f.photo.length; ii++) {
+            if (f.photo[ii].value === photo) {
+               console.log("ISP: image clicked: " + photo);
+               f.photo[ii].checked = true;
             } else {
-               f.imgName[ii].checked = false;
+               f.photo[ii].checked = false;
             }
          }
       } else {
-         for (ii=0; ii < f.imgName.length; ii++) {
-            if (f.imgName[ii].value === imgName) {
-               console.log("ISP: image selected: " + imgName);
-               f.imgName[ii].selected = true;
+         for (ii=0; ii < f.photo.length; ii++) {
+            if (f.photo[ii].value === photo) {
+               console.log("ISP: image selected: " + photo);
+               f.photo[ii].selected = true;
             }
          }
       }
@@ -123,9 +123,9 @@ limitations under the License.
                   // default is radio buttons
                   var ii, f = document.getElementById(fid);
                   if (newST === 'radio') {
-                     for (ii=0; ii < f.imgName.length; ii++) {
-                        console.log("ISP: adding selection handler for: " + f.imgName[ii].value);
-                        f.imgName[ii].onclick = handleImgRadio;
+                     for (ii=0; ii < f.photo.length; ii++) {
+                        console.log("ISP: adding selection handler for: " + f.photo[ii].value);
+                        f.photo[ii].onclick = handleImgRadio;
                      }
                   } else if (newST === 'dropdown') {
                      console.log("ISP: adding selection handler to dropdown list element: " + selBox);

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.container.om.portlet20.impl;
+package org.apache.pluto.container.om.portlet30.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -117,7 +117,7 @@ public class PortletAppType implements PortletApplicationDefinition
     @XmlElement(name = "container-runtime-option")
     protected List<ContainerRuntimeOptionType> containerRuntimeOption;
     @XmlAttribute(required = true)
-    protected String version = JSR_286_VERSION;
+    protected String version = JSR_362_VERSION;
     
     @XmlTransient
     protected String name;
@@ -524,8 +524,8 @@ public class PortletAppType implements PortletApplicationDefinition
     public void setVersion(String value)
     {
         if (JSR_168_VERSION.equals(value) 
-           || JSR_286_VERSION.equals(value)
-           || JSR_362_VERSION.equals(value))
+            || JSR_286_VERSION.equals(value) 
+            || JSR_362_VERSION.equals(value))
         {
             version = value;
         }

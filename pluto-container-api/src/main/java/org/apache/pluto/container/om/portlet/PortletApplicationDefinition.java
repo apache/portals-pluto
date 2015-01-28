@@ -26,6 +26,7 @@ public interface PortletApplicationDefinition {
 
     String JSR_168_VERSION = "1.0";
     String JSR_286_VERSION = "2.0";
+    String JSR_362_VERSION = "3.0";
 
     String getName();
     void setName(String name);
