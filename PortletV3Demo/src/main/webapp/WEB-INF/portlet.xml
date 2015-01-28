@@ -1,0 +1,129 @@
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" 
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+           xmlns:rp="http://www.apache.org/portals/pluto/pub-render-params/ResourcePortlet"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" 
+             version="2.0"
+    		id="v3.demo.portlet">
+   <portlet>
+      <portlet-name>V3ImageViewer</portlet-name>
+      <display-name>V3 Image Viewer Portlet</display-name>
+      
+      <portlet-class>basic.portlet.ResourcePortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>V3 Image Viewer Portlet</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>photo</supported-public-render-parameter>
+      <supported-public-render-parameter>color</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>MessageBoxPortlet</portlet-name>
+      <display-name>Message Box Portlet</display-name>
+      
+      <portlet-class>basic.portlet.MessageBoxPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>PH Message Box Portlet</title>
+      </portlet-info>
+
+      <supported-processing-event>
+         <qname>rp:Message</qname>
+      </supported-processing-event>
+
+      <supported-public-render-parameter>color</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>V3ImageSelector</portlet-name>
+      <display-name>Image Selection Portlet - alt PRP name</display-name>
+      
+      <portlet-class>basic.portlet.ImageSelPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>Image Selection Portlet - alt PRP name</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>photo</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>V3ColorSelector</portlet-name>
+      <display-name>Color Selection Portlet - alt QName</display-name>
+      
+      <portlet-class>basic.portlet.ColorSelPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+         <portlet-mode>HELP</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>Color Selection Portlet - alt QName</title>
+      </portlet-info>
+
+      <supported-publishing-event>
+         <qname>rp:Message</qname>
+      </supported-publishing-event>
+      <supported-public-render-parameter>color</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PartialActionPortlet</portlet-name>
+      <display-name>Partial Action Portlet</display-name>
+      
+      <portlet-class>basic.portlet.PartialActionPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>PH Partial Action Portlet</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>color</supported-public-render-parameter>
+   </portlet>
+   
+   <event-definition>
+      <qname>rp:Message</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+   
+   <public-render-parameter>
+      <identifier>photo</identifier>
+      <qname>rp:ph-imgName</qname>
+   </public-render-parameter>
+   <public-render-parameter>
+      <identifier>color</identifier>
+      <qname>rp:alt-color</qname>
+   </public-render-parameter>
+ </portlet-app>

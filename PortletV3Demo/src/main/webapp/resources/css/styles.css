@@ -1,0 +1,16 @@
+.emphasis {
+   font-style: italic;
+   font-size: 1.3em;
+}
+
+.basicJSFApp {
+   padding: 5px;
+   background-color: #DDFFDD;
+   border: thin solid #66DD66;
+}
+
+.infoBox {
+   padding: 5px;
+   background-color: #DDDDFF;
+   border: thin solid #6666DD;
+}
