@@ -525,28 +525,14 @@ var portlet = portlet || {};
                   if (pageState.prpMap[group].hasOwnProperty(tpid)) {
                      name = pageState.prpMap[group][tpid];
                      // only need to add parameter once, since it is shared
-                     if (!prpstrings.hasOwnProperty(name)) {
-                        prpstrings[name] = genParmString(tpid, name, PUBLIC_RENDER_PARAM, group);
-                        str += prpstrings[name];
+                     if (!prpstrings.hasOwnProperty(group)) {
+                        prpstrings[group] = genParmString(tpid, name, PUBLIC_RENDER_PARAM, group);
+                        str += prpstrings[group];
                      }
                   }
                }
             }
          }
-         
-//          for (tpid in pageState.portlets) {
-//             if (pageState.portlets.hasOwnProperty(tpid)) {               
-//                names = pageState.portlets[tpid].pubParms;
-//                for (ii=0; ii < names.length; ii++) {
-//                   name = names[ii];
-//                   // only need to add parameter once, since it is shared
-//                   if (!prpstrings.hasOwnProperty(name)) {
-//                      prpstrings[name] = genParmString(tpid, name, PUBLIC_RENDER_PARAM);
-//                      str += prpstrings[name];
-//                   }
-//                }
-//             }
-//          }
          url += str;
 
       }
@@ -580,7 +566,7 @@ var portlet = portlet || {};
    updateHistory = function (replace) {
       if (doHistory) {
          getUrl('RENDER', null, {}).then(function (url) {
-            var token = JSON.stringify(pageState.portlets);
+            var token = JSON.stringify(pageState);
             console.log("Updating history. URL =" + url + ", token length =" + token.length 
                + ", token 30 chars =" + token.substring(0,30));
             if (replace) {
@@ -622,32 +608,6 @@ var portlet = portlet || {};
                   
                }
             }
-            
-            // process each portlet ID
-//             pids = getIds();
-//             for (ii = 0; ii < pids.length; ii++) {
-//                tpid = pids[ii];
-//                
-//                // don't update for initiating portlet. that's done after the loop
-//                if (tpid !== pid) {
-//             
-//                   oldVal = getParmVal(tpid, prp);
-//                   prpNames = getPRPNames(tpid);
-//                   
-//                   // check for public parameter and if the value has changed
-//                   if ((prpNames.indexOf(prp) >= 0) && 
-//                       (_isParmEqual(oldVal, newVal) === false)) {
-//                   
-//                      if (newVal === undefined) {
-//                         delete pageState.portlets[tpid].state.parameters[prp];
-//                      } else {
-//                         pageState.portlets[tpid].state.parameters[prp] = newVal.slice(0);
-//                      }
-//                      upids.push(tpid);
-//                      
-//                   }
-//                }
-//             }
          }
       }
       
