@@ -29,7 +29,8 @@ import java.util.Map;
 
 
 /**
- * The <CODE>PortletSession</CODE> interface provides a way to identify a user
+ * <span class="changed_modified_3_0">The</span> 
+ * <CODE>PortletSession</CODE> interface provides a way to identify a user
  * across more than one request and to store transient information about that user.
  * <p>
  * A <code>PortletSession</code> is created per user client per portlet application.
@@ -102,7 +103,8 @@ public interface PortletSession
 
   
   /**
-   * Returns the object bound with the specified name in this session, 
+   * <span class="changed_modified_3_0">Returns</span> 
+   * the object bound with the specified name in this session, 
    * or <code>null</code> if no object is bound under the name in the given scope.
    *
    * @param name		a string specifying the name of the object
@@ -111,9 +113,11 @@ public interface PortletSession
    * @return			the object with the specified name
    *
    * @exception java.lang.IllegalStateException	if this method is called on an
-   *					invalidated session, or the scope is unknown to the container.
+   *					invalidated session.
+   *       <span class="changed_deleted_3_0">, or the scope is unknown to the container</span>
    * @exception  java.lang.IllegalArgumentException 
-   *                            if name is <code>null</code>.
+   *                            if name is <code>null</code>,
+   *                            <span class="changed_added_3_0">or if the scope is unknown to the container</span>.
    */
 
   public java.lang.Object getAttribute(java.lang.String name,int scope);
@@ -138,7 +142,8 @@ public interface PortletSession
 
 
   /**
-   * Returns an <code>Enumeration</code> of String objects containing the names of 
+   * <span class="changed_modified_3_0">Returns</span>
+   * an <code>Enumeration</code> of String objects containing the names of 
    * all the objects bound to this session in the given scope, or an
    * empty <code>Enumeration</code> if no attributes are available in the
    * given scope.
@@ -152,7 +157,10 @@ public interface PortletSession
    *                            if no attributes are available in the given scope.
    *
    * @exception java.lang.IllegalStateException	if this method is called on an
-   *					invalidated session, or the scope is unknown to the container.      
+   *					invalidated session.
+   *       <span class="changed_deleted_3_0">, or the scope is unknown to the container</span>
+   * @exception  java.lang.IllegalArgumentException 
+   *       <span class="changed_added_3_0">if the scope is unknown to the container</span>.
    */
   
   public java.util.Enumeration<String> getAttributeNames(int scope);
@@ -270,7 +278,8 @@ public interface PortletSession
 
 
   /**
-   * Removes the object bound with the specified name and the given scope from
+   * <span class="changed_modified_3_0">Removes</span> 
+   * the object bound with the specified name and the given scope from
    * this session. If the session does not have an object
    * bound with the specified name, this method does nothing.
    * 
@@ -282,7 +291,8 @@ public interface PortletSession
    *                   if this method is called on a
    *                   session which has been invalidated
    * @exception  java.lang.IllegalArgumentException 
-   *                            if name is <code>null</code>.
+   *                            if name is <code>null</code>,
+   *                            <span class="changed_added_3_0">or if the scope is unknown to the container</span>.
    */
   
   public void removeAttribute(String name, int scope) ;
@@ -348,7 +358,7 @@ public interface PortletSession
    * @exception java.lang.IllegalStateException	if this method is called on a
    *					session which has been invalidated
    * @exception  java.lang.IllegalArgumentException 
-   *                            if name is <code>null</code> or scope is unknown to the container.
+   *                            if name is <code>null</code> or if the scope is unknown to the container.
    */
   
   public void setAttribute(java.lang.String name, java.lang.Object value, int scope);
@@ -393,7 +403,8 @@ public interface PortletSession
   public Map<String, Object> getAttributeMap();  
 
   /** 
-   * Returns a <code>Map</code> of the session attributes in
+   * <span class="changed_modified_3_0">Returns</span> 
+   * a <code>Map</code> of the session attributes in
    * the given session scope.
    * <p>
    * The keys are of type <code>String</code> and the values in the 
@@ -408,6 +419,8 @@ public interface PortletSession
    *             if no session attributes exist. The keys in the
    *             map are of type String, the values of type
    *             Object.
+   * @exception  java.lang.IllegalArgumentException 
+   *            <span class="changed_added_3_0">if the scope is unknown to the container.</span>
    *  @since 2.0
    */
   public Map<String, Object> getAttributeMap(int scope);  

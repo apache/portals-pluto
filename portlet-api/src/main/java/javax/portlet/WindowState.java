@@ -28,7 +28,8 @@ import java.util.Locale;
 
 
 /**
- * The <CODE>WindowState</CODE> class represents
+ * <span class="changed_modified_3_0">The</span>
+ * <CODE>WindowState</CODE> class represents
  * the possible window states that a portlet window can assume.
  * <P>
  * This class defines a standard set of the most basic portlet window states.
@@ -40,6 +41,19 @@ import java.util.Locale;
 
 public class WindowState
 {
+
+  /**
+    * <div class="changed_added_3_0">
+    * The window state <code>UNDEFINED</code> is returned by the 
+    * <code>getWindowState</code> method when the window state is not available.
+    * <p>
+    * This mode may not be used to set the window state 
+    * in the <code>setWindowState</code> method.
+    * <p>
+    * The string value for this mode is <code>"undefined"</code>.
+    * </div>
+    */
+   public final static WindowState UNDEFINED = new WindowState ("undefined");
 
   /**
    * The <code>NORMAL</code> window state indicates that a portlet 

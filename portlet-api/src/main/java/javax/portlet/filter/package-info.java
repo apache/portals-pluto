@@ -17,7 +17,7 @@
  */
 
 /**
- * The javax.portlet.filter package defines the filter APIs for the Java Portlet Specification.
+ * <span class="changed_modified_3_0">The</span> javax.portlet.filter package defines the filter APIs for the Java Portlet Specification.
  */
 
 package javax.portlet.filter;

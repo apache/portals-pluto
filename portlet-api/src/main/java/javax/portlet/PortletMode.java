@@ -28,7 +28,8 @@ import java.util.Locale;
 
 
 /**
- * The <CODE>PortletMode</CODE> class represents
+ * <span class="changed_modified_3_0">The</span>
+ * <CODE>PortletMode</CODE> class represents
  * the possible modes that a portlet can assume.
  * <P>
  * A portlet mode indicates the function a portlet is performing.
@@ -48,6 +49,19 @@ import java.util.Locale;
  */
 public class PortletMode
 {
+
+  /**
+   * <div class="changed_added_3_0">
+   * The portlet mode <code>UNDEFINED</code> is returned by the 
+   * <code>getPortletMode</code> method when the portlet mode is not available.
+   * <p>
+   * This mode may not be used to set the portlet mode 
+   * in the <code>setPortletMode</code> method.
+   * <p>
+   * The string value for this mode is <code>"undefined"</code>.
+   * </div>
+   */
+  public final static PortletMode UNDEFINED = new PortletMode ("undefined");
 
   /**
    * The expected functionality for a portlet in <code>VIEW</code> portlet mode 

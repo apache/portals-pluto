@@ -25,7 +25,8 @@
 package javax.portlet;
 
 /**
- * The <code>CacheControl</code> interface represents cache settings
+ * <span class="changed_modified_3_0">The</span> 
+ * <code>CacheControl</code> interface represents cache settings
  * for a piece of markup. The settings are only valid for the current
  * request.
  *
@@ -34,19 +35,25 @@ package javax.portlet;
 public interface CacheControl {
 
     /**
-     * Get the currently set expiration time.
-     * If no expiration time is set on this response the
-     * default defined in the portlet deployment descriptor
-     * with the <code>expiration-cache<code> tag is returned,
-     * or <code>0</code> if no default is defined.
+     * <span class="changed_modified_3_0">Get</span>
+     * the currently set expiration time. 
+     * <span class="changed_modified_3_0"> 
+     * If no expiration time has been 
+     * explicitly set on this response, the default defined in the portlet 
+     * deployment descriptor with the <code>expiration-cache</code> tag is returned; If
+     * no default value is provided in the portlet deployment descriptor, 
+     * 0 is returned.
+     * </span>
      * <p>
      * This call returns the same value as the
      * <code>getProperty(EXPIRATION_CACHE)</code>
      * call.
      * 
-     * @return  the currently set expiration time in seconds,
-     *          or <code>0</code> if no expiration time
-     *          is set.
+     * @return  the currently set expiration time in seconds;
+     * <span class="changed_modified_3_0"> 
+     *          0 indicates caching is disabled for this portlet;
+     *          -1 indicates the cache does not expire.
+     * </span>          
      */
     public int getExpirationTime();
     
@@ -105,14 +112,14 @@ public interface CacheControl {
     
     /**
      * Returns the ETag for the current response that is
-     * used as validation tag, or <code>null</null>
+     * used as validation tag, or <code>null</code>
      * if no ETag is set on the response.
      * <p>
      * This call is equivalent to calling
      * <code>getProperty(ETAG)</code>.
      * 
      * @return  the ETag for the current response that is
-     *          used as validation tag, or <code>null</null>
+     *          used as validation tag, or <code>null</code>
      *          if no ETag is set.
      */
     public String getETag();

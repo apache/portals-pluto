@@ -56,7 +56,7 @@ public interface ResourceServingPortlet {
      * @exception  UnavailableException     
      *                   if the portlet is unavailable to perform render at this time
      * @exception  PortletSecurityException  
-     *                   if the portlet cannot fullfill this request because of security reasons
+     *                   if the portlet cannot fulfill this request due to security reasons
      * @exception  java.io.IOException
      *              if the streaming causes an I/O problem
      */

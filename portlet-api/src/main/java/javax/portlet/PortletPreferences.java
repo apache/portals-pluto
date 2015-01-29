@@ -27,7 +27,8 @@ package javax.portlet;
 
 
 /**
- * The <CODE>PortletPreferences</CODE> interface allows the portlet to store
+ * <span class="changed_modified_3_0">The</span> 
+ * <CODE>PortletPreferences</CODE> interface allows the portlet to store
  * configuration data. It is not the
  * purpose of this interface to replace general purpose databases.
  * <p>
@@ -170,8 +171,8 @@ public interface PortletPreferences
 
 
   /**
-   * Associates the specified String array value with the specified key in this
-   * preference.
+   * <span class="changed_modified_3_0">Sets a  
+   * multi-valued String preference for the specified key.</span>
    * <p>
    * The key cannot be <code>null</code>, but <code>null</code> values
    * in the values parameter are allowed.
@@ -192,7 +193,7 @@ public interface PortletPreferences
    * @see #setValue(String,String)
    */
 
-  public void setValues(String key, String[] values) throws ReadOnlyException;
+  public void setValues(String key, String... values) throws ReadOnlyException;
 
 
   /**

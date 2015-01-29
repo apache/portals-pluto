@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+  <HEAD>
+    <TITLE>Portlet Specification 3.0 Interface Working Document</TITLE>
+  </HEAD>
+  <BODY>
+    This document provides the interface descriptions for the JSR 362 Portlet Specification 3.0 Working Document.
+    <P>The interfaces described here are not normative and are subject to change at any time.</P>
+    <p>Color coding for description changes in Version 3.0:
+    <span class="changed_modified_3_0">Changed text</span> ::  
+    <span class="changed_added_3_0">Added text</span> :: 
+    <span class="changed_deleted_3_0">Deleted text</span> 
+    as compared to Version 2.0.
+    </p>
+    <p>Change History:</p>
+    <!-- change class below to "indexContainer" to activate color changebars in the change history -->
+    <div class="indexContainer-not">
+    <ul>
+    <li>20141204: Updates for the
+    <a href="../jsdoc/index.html" target="_top">Portlet Hub Ajax support</a>.
+    Updated the following data structures:
+    <a href="../jsdoc/global.html#PortletConstants">PortletConstants</a>, 
+    <a href="../jsdoc/global.html#PortletParameters">PortletParameters</a>, and
+    <a href="../jsdoc/global.html#PortletState">PortletState</a>. 
+    <br>Added the following Portlet Hub methods and members: 
+    <a href="../jsdoc/PortletInit.html#constants">constants</a>, 
+    <a href="../jsdoc/PortletInit.html#newParameters">newParameters</a>, 
+    <a href="../jsdoc/PortletInit.html#newState">newState</a>. 
+    <br>
+    Added {@link javax.portlet.ResourceRequest#getPageState ResourceRequest#getPageState()} method
+    in support of the Portlet Hub partial action processing sequence.
+    </li>
+    <li>20140603: Resolved PORTLETSPEC3-43: Renamed some methods to reduce redundancy. See:
+    {@link javax.portlet.PortletParameters#getNames getNames()},
+    {@link javax.portlet.PortletParameters#getValue getValue},
+    {@link javax.portlet.PortletParameters#getValues getValues},
+    {@link javax.portlet.MutablePortletParameters#setValue(String, String) setValue(String, String)},
+    {@link javax.portlet.MutablePortletParameters#getNames getNames()}, and
+    {@link javax.portlet.MutablePortletParameters#setValues(String, String...) setValues(String, String...)}.
+    </li>
+    <li>20140527: Resolved PORTLETSPEC3-41: Some updates to the parameter handling proposal. See:
+    {@link javax.portlet.RenderURL#setFragmentIdentifier setFragmentIdentifier}, 
+    {@link javax.portlet.RenderURL#getFragmentIdentifier getFragmentIdentifier},
+    {@link javax.portlet.BaseURL#append(Appendable) append(Appendable)},
+    {@link javax.portlet.BaseURL#append(Appendable, boolean) append(Appendable, boolean)}
+    {@link javax.portlet.MutablePortletParameters#add add(PortletParameters)},
+    {@link javax.portlet.MutablePortletParameters#getNames getNames()}, and
+    {@link javax.portlet.MutablePortletParameters#setValues(String, String...) setValues(String, String...)}.
+    </li>
+    <li>20140526: 1st run integration of the 
+    <a href="../jsdoc/index.html" target="_top">Portlet Hub JavaScript documentation</a> 
+     into the API description.
+    The Portlet Hub was created using 
+    <a href="../surefire-report.html" target="_top">Jasmine JavaScript test cases</a>.
+    </li>
+    <li>20140512: Resolved PORTLETSPEC3-11: Integrated new parameter handling concept. Deprecated JSR 286 parameter handling methods.
+    <br>
+    <span style="font-weight:bold;">Added:</span> {@link javax.portlet.Mutable}, 
+    {@link javax.portlet.PortletParameters}, {@link javax.portlet.MutablePortletParameters},
+    {@link javax.portlet.RenderParameters}, {@link javax.portlet.MutableRenderParameters},
+    {@link javax.portlet.ResourceParameters}, {@link javax.portlet.MutableResourceParameters},
+    {@link javax.portlet.ActionParameters}, {@link javax.portlet.MutableActionParameters},
+    {@link javax.portlet.PortletState}, {@link javax.portlet.MutablePortletState},  
+    {@link javax.portlet.ActionURL}, {@link javax.portlet.RenderURL}.
+    <br>  
+    <span style="font-weight:bold;">Updated:</span> {@link javax.portlet.BaseURL}, {@link javax.portlet.PortletURL},
+    {@link javax.portlet.ResourceURL}, {@link javax.portlet.ActionURL},
+    {@link javax.portlet.PortletRequest}, {@link javax.portlet.ResourceRequest},  {@link javax.portlet.ActionRequest},
+    {@link javax.portlet.PortletResponse}, {@link javax.portlet.ResourceResponse},  {@link javax.portlet.MimeResponse},
+    {@link javax.portlet.filter.ActionRequestWrapper}, {@link javax.portlet.filter.ActionResponseWrapper}, {@link javax.portlet.filter.EventResponseWrapper},
+    {@link javax.portlet.filter.PortletRequestWrapper}, {@link javax.portlet.filter.RenderResponseWrapper}, {@link javax.portlet.filter.ResourceRequestWrapper},
+    {@link javax.portlet.filter.ResourceResponseWrapper}
+    <br>
+    <span style="font-weight:bold;">Moved</span> the following methods to {@link javax.portlet.RenderURL}, as they are not useful on other types of URL:
+    {@link javax.portlet.RenderURL#setFragmentIdentifier setFragmentIdentifier} and 
+    {@link javax.portlet.RenderURL#getFragmentIdentifier getFragmentIdentifier}
+    <p>
+    See <a href="doc-files/PortletState.pdf" target="_blank">Diagram</a>.           
+    </li>
+    <li>20130829: PORTLETSPEC3-16: Added methods to GenericPortlet to allow annotation handling to be extended: 
+    {@link javax.portlet.GenericPortlet#dispatchAnnotatedActionMethod dispatchAnnotatedActionMethod},
+    {@link javax.portlet.GenericPortlet#dispatchAnnotatedEventMethod dispatchAnnotatedEventMethod},  and
+    {@link javax.portlet.GenericPortlet#dispatchAnnotatedRenderMethod dispatchAnnotatedRenderMethod}.
+    </li>
+    <li>20130829: PORTLETSPEC3-32: Changes in public render parameter handling on action URL. See
+    method descriptions 
+    {@link javax.portlet.MimeResponse#createActionURL() createActionURL()} and
+    {@link javax.portlet.MimeResponse#createActionURL(ParameterCopyOption) createActionURL(ParameterCopyOption)}.
+    See updated spec description
+    <a href="https://java.net/projects/portletspec3/pages/PortletURLs#PORTLETSPEC3-32"> 
+    portlet URLs
+    </a>.
+    </li>
+    <li>20130829: PORTLETSPEC3-30: Added new URL create methods to MimeResponse:
+    {@link javax.portlet.MimeResponse#createRenderURL(ParameterCopyOption) createRenderURL(ParameterCopyOption)} and
+    {@link javax.portlet.MimeResponse#createActionURL(ParameterCopyOption) createActionURL(ParameterCopyOption)}.
+    Updated 
+    {@link javax.portlet.filter.RenderResponseWrapper RenderResponseWrapper} and
+    {@link javax.portlet.filter.ResourceResponseWrapper ResourceResponseWrapper}
+    accordingly.
+    </li>
+    <li>20130828: PORTLETSPEC3-13: Added several methods to BaseURL:
+    {@link javax.portlet.BaseURL#setAuthenticated setAuthenticated},
+    {@link javax.portlet.BaseURL#getAuthenticated getAuthenticated},
+    {@link javax.portlet.RenderURL#setFragmentIdentifier setFragmentIdentifier} and 
+    {@link javax.portlet.RenderURL#getFragmentIdentifier getFragmentIdentifier}.
+    See 
+    <a href="https://java.net/projects/portletspec3/pages/PortletURLs#PORTLETSPEC3-13"> 
+    portlet URLs
+    </a>.
+    </li>
+    <li>
+    20130827: Added link to wiki article to resolution of PORTLETSPEC3-18.
+    </li>
+    <li>20130826: Resolved PORTLETSPEC3-18: Added methods
+    {@link javax.portlet.PortletConfig#getPortletModes PortletConfig.getPortletModes()} and
+    {@link javax.portlet.PortletConfig#getWindowStates PortletConfig.getWindowStates()}.
+    See 
+    <a href="https://java.net/projects/portletspec3/pages/PortletConfiguration#PORTLETSPEC3-18"> 
+    portlet configuration description.
+    </a>
+    </li>
+    <li>20130826: Resolved PORTLETSPEC3-28: Added methods
+    {@link javax.portlet.ResourceResponse#setStatus ResourceResponse.setStatus(int sc)} and
+    {@link javax.portlet.filter.ResourceResponseWrapper#setStatus ResourceResponseWrapper.setStatus(int sc)}.
+    </li>
+    <li>20130825: Resolved PORTLETSPEC3-22: Changed String array parameter to vararg parameter on 
+    {@link javax.portlet.BaseURL#setParameter(String, String...) BaseURL.setParameter},
+    {@link javax.portlet.StateAwareResponse#setRenderParameter(String, String...) StateAwareResponse.setRenderParameter}, and
+    {@link javax.portlet.PortletPreferences#setValues(String, String...) PortletPreferences.setValues}.
+    </li>
+    <li>20130824: Resolved PORTLETSPEC3-24: Allow 
+    {@link javax.portlet.GenericPortlet#doHeaders(RenderRequest, RenderResponse) GenericPortlet.doHeaders}
+    to throw a PortletException or IOException. 
+    </li>
+    <li>20130823: Resolved PORTLETSPEC3-21: Added methods 
+    {@link javax.portlet.BaseURL#append(Appendable) BaseURL.write(Appendable)}
+    and 
+    {@link javax.portlet.BaseURL#append(Appendable, boolean) BaseURL.write(Appendable, boolean)}
+    to BaseURL. See
+    <a href="https://java.net/projects/portletspec3/pages/PortletURLs#PORTLETSPEC3-21"> 
+    Portlet URLs
+    </a>.
+    </li>
+    <li>20130822: Resolved PORTLETSPEC3-27: Clarified 
+    {@link javax.portlet.ResourceRequest#getPortletMode ResourceRequest.getPortletMode}
+    and 
+    {@link javax.portlet.ResourceRequest#getWindowState ResourceRequest.getWindowState} 
+    behavior when the cache level is set to FULL by returning
+    {@link javax.portlet.PortletMode#UNDEFINED} and {@link javax.portlet.WindowState#UNDEFINED}, respectively.
+    </li>
+    <li>20130822: Resolved PORTLETSPEC3-35: Added exception and clarified description in method 
+    {@link javax.portlet.MimeResponse#setContentType MimeResponse.setContentType}. 
+    </li>
+    <li>20130821: Colorized older changes. All changes are now colorized and linked from the change history. 
+    Uncolorized the change history.
+    </li>
+    <li>20130820: Resolved PORTLETSPEC3-26: Clarifications about when header information can be set in the following methods:
+    {@link javax.portlet.ResourceResponse#HTTP_STATUS_CODE HTTP_STATUS_CODE}, 
+    {@link javax.portlet.ResourceResponse#setLocale setLocale}, and 
+    {@link javax.portlet.ResourceResponse#setContentLength setContentLength}.
+    </li>
+    <li>20130818: Resolved PORTLETSPEC3-23: Fixed issue involving exceptions in annotated methods in GenericPortlet.java (code fix only - no javadoc changes)  
+    <li>20130817: Resolved PORTLETSPEC3-20: Clarified behavior when scope is unknown in several  
+    {@link javax.portlet.PortletSession} methods: 
+    {@link javax.portlet.PortletSession#getAttribute(String, int) getAttribute}, 
+    {@link javax.portlet.PortletSession#getAttributeNames(int) getAttributeNames}, 
+    {@link javax.portlet.PortletSession#removeAttribute(String, int) removeAttribute}, and 
+    {@link javax.portlet.PortletSession#getAttributeMap(int) getAttributeMap}. 
+    </li>
+    <li>20130816: Resolved PORTLETSPEC3-17: Changed method signature to allow subtypes of PortletMode in 
+    {@link javax.portlet.RenderResponse#setNextPossiblePortletModes RenderResponse.setNextPossiblePortletModes}. 
+    </li>
+    <li>20130815: Resolved PORTLETSPEC3-15: Fixed issue involving annotations in GenericPortlet.java (code fix only - no javadoc changes)  
+    <li>20130813: Resolved PORTLETSPEC3-8: Clarifications about behavior of the parameter map in 
+    {@link javax.portlet.StateAwareResponse#getRenderParameterMap() StateAwareResponse.getRenderParameterMap()}, 
+    {@link javax.portlet.BaseURL#getParameterMap() BaseURL.getParameterMap()}, 
+    </li>
+    <li>20130730: Resolved PORTLETSPEC3-9: Clarifications in the {@link javax.portlet.MimeResponse MimeResponse} URL creation methods 
+    {@link javax.portlet.MimeResponse#createRenderURL() createRenderURL()}, 
+    {@link javax.portlet.MimeResponse#createActionURL() createActionURL()}, and 
+    {@link javax.portlet.MimeResponse#createResourceURL() createResourceURL()}
+    </li>
+    <li>20130726: Resolved PORTLETSPEC3-10 and PORTLETSPEC3-25: Reworked parameter setting methods in 
+    {@link javax.portlet.StateAwareResponse} and
+    {@link javax.portlet.BaseURL} to improve clarity.
+    </li>
+    <li>20130726: Resolved PORTLETSPEC3-7: Clarification about setting parameters in
+    {@link javax.portlet.StateAwareResponse#setRenderParameters(Map)} and
+    {@link javax.portlet.BaseURL#setParameters(Map)}.
+    </li>
+    <li>20130717: Resolved PORTLETSPEC3-3: Clarification in CacheControl about           
+    {@link javax.portlet.CacheControl#getExpirationTime getExpirationTime()}.
+    </li>
+    <li>20130717: Resolved PORTLETSPEC3-4: Clarification in PortletRequest about          
+    {@link javax.portlet.PortletRequest#getPortletSession() getPortletSession()}
+    </li>
+    <li>20130717: Resolved PORTLETSPEC3-5: Clarification in
+    {@link javax.portlet.PortletRequest#getPrivateParameterMap getPrivateParametermap()}
+    about private render parameters   
+    </li>
+    <li>20130715: Initial version</li>
+    </ul>
+    </div>
+  </BODY>
+</HTML>
