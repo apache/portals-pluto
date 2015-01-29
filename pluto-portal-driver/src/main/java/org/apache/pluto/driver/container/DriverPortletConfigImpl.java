@@ -16,14 +16,20 @@
  */
 package org.apache.pluto.driver.container;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.portlet.PortalContext;
 import javax.portlet.PortletContext;
+import javax.portlet.PortletMode;
+import javax.portlet.WindowState;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.driver.DriverPortletConfig;
+import org.apache.pluto.container.driver.PlutoServices;
 import org.apache.pluto.container.impl.AbstractPortletConfigImpl;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 
@@ -47,4 +53,14 @@ public class DriverPortletConfigImpl extends AbstractPortletConfigImpl implement
         }
         return bundles.getResourceBundle(locale);
     }
+
+   public Enumeration<PortletMode> getPortletModes() {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public Enumeration<WindowState> getWindowStates() {
+      // TODO Auto-generated method stub
+      return null;
+   }
 }

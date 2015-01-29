@@ -26,7 +26,8 @@ package javax.portlet;
 
 
 /**
- * The <CODE>EventResponse</CODE> interface represents the portlet
+ * <span class="changed_modified_3_0">The</span> 
+ * <CODE>EventResponse</CODE> interface represents the portlet
  * response to an event request.
  * It extends the <CODE>StateAwareResponse</CODE> interface.<br>
  * The portlet container creates an <CODE>EventResponse</CODE> object and 
@@ -56,7 +57,10 @@ public interface EventResponse extends StateAwareResponse {
      *                   with by the portlet container for the current
      *                   <code>processEvent</code> call, must not be 
      *                   <code>null</code>.
+    * @deprecated As of version 3.0. Use {@link StateAwareResponse#getRenderParameters()} instead.
      */
+
+   @Deprecated
     public void setRenderParameters(EventRequest request);
 
 }

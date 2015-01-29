@@ -27,16 +27,19 @@ package javax.portlet;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.xml.namespace.QName;
 
 /**
- * The <CODE>GenericPortlet</CODE> class provides a default implementation for
+ * <span class="changed_modified_3_0">The</span>
+ * <CODE>GenericPortlet</CODE> class provides a default implementation for
  * the <CODE>Portlet</CODE> interface.
  * <p>
  * It provides an abstract class to be subclassed to create portlets. A subclass
@@ -156,7 +159,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 * <code>RenderResponse.createActionURL()</code> method.
 	 * <p>
 	 * The default implementation tries to dispatch to a method
-	 * annotated with <code>@ProcessAction</name> that matches the action parameter 
+	 * annotated with <code>@ProcessAction</code> that matches the action parameter 
 	 * value <code>ActionRequest.ACTION_NAME</code> or, if no
 	 * such method is found throws a <code>PortletException</code>.<br>
  	 * Note that the annotated methods needs to be public in order
@@ -168,18 +171,19 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 * @param response
 	 *            the action response
 	 * @exception PortletException
-	 *                if the portlet cannot fulfilling the request
+	 *                if the portlet cannot fulfill the request
 	 * @exception UnavailableException
 	 *                if the portlet is unavailable to process the action at
 	 *                this time
 	 * @exception PortletSecurityException
-	 *                if the portlet cannot fullfill this request because of
+	 *                if the portlet cannot fulfill this request due to
 	 *                security reasons
 	 * @exception java.io.IOException
 	 *                if the streaming causes an I/O problem
 	 */
 	public void processAction(ActionRequest request, ActionResponse response) throws PortletException,
 			java.io.IOException {
+		@SuppressWarnings("deprecation")
 		String action = request.getParameter(ActionRequest.ACTION_NAME);
 
 		try {
@@ -190,6 +194,15 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 				return;
 			}
 		} catch (Exception e) {
+         // PORTLETSPEC3-23 : Allow annotated methods to throw PortletException and IOException
+         if (e instanceof InvocationTargetException) {
+            Throwable th = e.getCause();
+            if (th != null) {
+               if (th instanceof IOException) throw (IOException)th;
+               if (th instanceof PortletException) throw (PortletException)th;
+               if (th instanceof RuntimeException) throw (RuntimeException)th;
+            }
+         }
 			throw new PortletException(e);
 		}
 
@@ -217,12 +230,12 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 *            the render response
 	 * 
 	 * @exception PortletException
-	 *                if the portlet cannot fulfilling the request
+	 *                if the portlet cannot fulfill the request
 	 * @exception UnavailableException
 	 *                if the portlet is unavailable to perform render at this
 	 *                time
 	 * @exception PortletSecurityException
-	 *                if the portlet cannot fullfill this request because of
+	 *                if the portlet cannot fulfill this request due to
 	 *                security reasons
 	 * @exception java.io.IOException
 	 *                if the streaming causes an I/O problem
@@ -284,9 +297,11 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	/**
 	 * The default implementation of this method routes the render request to:
 	 * <ol>
-	 * <li>method annotated with <code>@RenderMode</name> and the name of the
-	 *       portlet mode</li>
-	 *   <li>a set of helper methods depending on the current portlet mode the portlet
+	 * <li>
+	 * method annotated with <code>@RenderMode</code> and the name of the portlet mode
+	 * </li>
+	 * <li>
+	 * a set of helper methods depending on the current portlet mode the portlet
 	 * 		 is currently in. These methods are:
 	 * 		<ul>
 	 * 			<li><code>doView</code> for handling <code>view</code> requests</li>
@@ -294,8 +309,8 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 * 			<li><code>doHelp</code> for handling <code>help</code> requests</li>
 	 * 		</ul>
 	 *	</li>
-	 * </ul> 
-	 * <P>
+	 * </ol>
+	 * <p>
 	 * If the window state of this portlet is <code>minimized</code>, this
 	 * method does not invoke any of the portlet mode rendering methods.
 	 * <p>
@@ -310,12 +325,12 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 *            the render response
 	 * 
 	 * @exception PortletException
-	 *                if the portlet cannot fulfilling the request
+	 *                if the portlet cannot fulfill the request
 	 * @exception UnavailableException
 	 *                if the portlet is unavailable to perform render at this
 	 *                time
 	 * @exception PortletSecurityException
-	 *                if the portlet cannot fullfill this request because of
+	 *                if the portlet cannot fulfill this request due to
 	 *                security reasons
 	 * @exception java.io.IOException
 	 *                if the streaming causes an I/O problem
@@ -340,6 +355,15 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 					return;
 				}
 			} catch (Exception e) {
+			   // PORTLETSPEC3-23 : Allow annotated methods to throw PortletException and IOException
+			   if (e instanceof InvocationTargetException) {
+			      Throwable th = e.getCause();
+			      if (th != null) {
+			         if (th instanceof IOException) throw (IOException)th;
+			         if (th instanceof PortletException) throw (PortletException)th;
+			         if (th instanceof RuntimeException) throw (RuntimeException)th;
+			      }
+			   }
 				throw new PortletException(e);
 			}
 
@@ -367,12 +391,12 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 *            the render response
 	 * 
 	 * @exception PortletException
-	 *                if the portlet cannot fulfilling the request
+	 *                if the portlet cannot fulfill the request
 	 * @exception UnavailableException
 	 *                if the portlet is unavailable to perform render at this
 	 *                time
 	 * @exception PortletSecurityException
-	 *                if the portlet cannot fullfill this request because of
+	 *                if the portlet cannot fulfill this request due to
 	 *                security reasons
 	 * @exception java.io.IOException
 	 *                if the streaming causes an I/O problem
@@ -393,12 +417,12 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 *            the render response
 	 * 
 	 * @exception PortletException
-	 *                if the portlet cannot fulfilling the request
+	 *                if the portlet cannot fulfill the request
 	 * @exception UnavailableException
 	 *                if the portlet is unavailable to perform render at this
 	 *                time
 	 * @exception PortletSecurityException
-	 *                if the portlet cannot fullfill this request because of
+	 *                if the portlet cannot fulfill this request due to
 	 *                security reasons
 	 * @exception java.io.IOException
 	 *                if the streaming causes an I/O problem
@@ -419,12 +443,12 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 *            the render response
 	 * 
 	 * @exception PortletException
-	 *                if the portlet cannot fulfilling the request
+	 *                if the portlet cannot fulfill the request
 	 * @exception UnavailableException
 	 *                if the portlet is unavailable to perform render at this
 	 *                time
 	 * @exception PortletSecurityException
-	 *                if the portlet cannot fullfill this request because of
+	 *                if the portlet cannot fulfill this request due to
 	 *                security reasons
 	 * @exception java.io.IOException
 	 *                if the streaming causes an I/O problem
@@ -613,7 +637,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 
 	/**
 	 * The default implementation tries to dispatch to a method
-	 * annotated with <code>@ProcessEvent</name> that matches the 
+	 * annotated with <code>@ProcessEvent</code> that matches the 
 	 * event name or, if no
 	 * such method is found just sets the current render parameters on
 	 * the response.<br>
@@ -624,6 +648,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 *      javax.portlet.EventResponse)
 	 * @since 2.0
 	 */
+	@SuppressWarnings("deprecation")
 	public void processEvent(EventRequest request, EventResponse response) throws PortletException, IOException {
 		String eventName = request.getEvent().getQName().toString();
 
@@ -651,6 +676,15 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 				}
 			}
 		} catch (Exception e) {
+         // PORTLETSPEC3-23 : Allow annotated methods to throw PortletException and IOException
+         if (e instanceof InvocationTargetException) {
+            Throwable th = e.getCause();
+            if (th != null) {
+               if (th instanceof IOException) throw (IOException)th;
+               if (th instanceof PortletException) throw (PortletException)th;
+               if (th instanceof RuntimeException) throw (RuntimeException)th;
+            }
+         }
 			throw new PortletException(e);
 		}
 
@@ -659,7 +693,8 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	}
 
 	/**
-	 * Used by the render method to set the response properties and headers.
+    * <span class="changed_modified_3_0">Used</span>
+	 * by the render method to set the response properties and headers.
 	 * <p>
 	 * The portlet should override this method and set its response header using
 	 * this method in order to ensure that they are set before anything is
@@ -669,9 +704,21 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 * 
 	 * @param request  the render request
 	 * @param response the render response
+    * 
+    * @exception PortletException
+    *                <span class="changed_added_3_0">if the portlet cannot fulfill the request</span>
+    * @exception UnavailableException
+    *                <span class="changed_added_3_0">if the portlet is unavailable to perform render at this
+    *                time</span>
+    * @exception PortletSecurityException
+    *                <span class="changed_added_3_0">if the portlet cannot fulfill this request due to
+    *                security reasons</span>
+    * @exception java.io.IOException
+    *                <span class="changed_added_3_0">if the streaming causes an I/O problem</span>
 	 * @since 2.0
 	 */
-	protected void doHeaders(RenderRequest request, RenderResponse response) {
+	protected void doHeaders(RenderRequest request, RenderResponse response) 
+	      throws PortletException, java.io.IOException {
 		return;
 	}
 
@@ -734,6 +781,262 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 		return config.getDefaultNamespace();
 	}
 
+	// -------------------------------------------------------------------------
+   // V 3.0 additions
+   // -------------------------------------------------------------------------
+
+
+	  /**
+	   * <div class="changed_added_3_0"> 
+	   * Returns an <code>Enumeration</code> of PortletMode objects that are defined
+	   * in the portlet descriptor for the portlet and supported by the portlet container. 
+	   * <p>
+	   * Note that a supported portlet mode may not be allowed in all situations
+	   * due to security or other reasons. To
+	   * determine whether a portlet mode is allowed during a request, use the
+	   * {@link PortletRequest#isPortletModeAllowed(PortletMode)} method.   
+	   * </div>
+	   *
+	   * @since 3.0
+	   * 
+	   * @see PortletMode
+	   * @see PortletRequest#isPortletModeAllowed(PortletMode)
+	   * 
+	   * @return      an <code>Enumeration</code> of <code>PortletMode</code> 
+	   *        objects containing the defined and supported portlet modes.
+	   */
+	  public java.util.Enumeration<PortletMode> getPortletModes() {
+	      if (config == null)
+	         throw new java.lang.IllegalStateException(
+	               "Config is null, please ensure that your init(config) method calls super.init(config)");
+	      return config.getPortletModes();
+	  }
+
+
+	  /**
+	   * <div class="changed_added_3_0"> 
+	   * Returns an <code>Enumeration</code> of WindowState objects that are defined
+	   * in the portlet descriptor for the portlet and supported by the portlet container. 
+	   * <p>
+	   * Note that a supported window state may not be allowed in all situations
+	   * due to security or other reasons. To
+	   * determine whether a window state is allowed during a request, use the
+	   * {@link PortletRequest#isWindowStateAllowed(WindowState)} method.   
+	   * </div>
+	   *
+	   * @since 3.0
+	   * 
+	   * @see WindowState
+	   * @see PortletRequest#isWindowStateAllowed(WindowState)
+	   * 
+	   * @return      an <code>Enumeration</code> of <code>WindowState</code> 
+	   *        objects containing the defined and supported window states.
+	   */
+	  public java.util.Enumeration<WindowState> getWindowStates() {
+        if (config == null)
+           throw new java.lang.IllegalStateException(
+                 "Config is null, please ensure that your init(config) method calls super.init(config)");
+        return config.getWindowStates();
+	  }
+
+	
+	/**
+	 * <div class="changed_added_3_0">
+	 * Dispatches an action request to an annotated action method.
+	 * <p>
+	 * Retrieves an action method annotated with the provided name and
+	 * invokes it. Returns <code>true</code> if the method could be 
+	 * successfully located and invoked, and <code>false</code> if no
+	 * annotated action method by that name could be found.
+	 * <p>
+	 * This method allows a portlet to extend annotation processing 
+	 * for the action method. 
+	 * </div>
+	 * 
+	 * @param name      Annotation name
+	 * @param request   Action request
+	 * @param response  Action response
+    * 
+    * @return 
+    *    <code>true</code>, if the request was dispatched,
+    *    <code>false</code>, if no annotated method matching the specified action 
+    *                        method name could be found.
+    *
+    * @exception PortletException
+    *                if the portlet cannot fulfill the request
+    * @exception UnavailableException
+    *                if the portlet is unavailable to process the action at
+    *                this time
+    * @exception PortletSecurityException
+    *                if the portlet cannot fulfill this request due to
+    *                security reasons
+    * @exception java.io.IOException
+    *                if the streaming causes an I/O problem
+    * 
+    * @see #processAction(ActionRequest, ActionResponse)
+    */
+	protected boolean dispatchAnnotatedActionMethod(String name, ActionRequest request, 
+	      ActionResponse response) throws PortletException, java.io.IOException {
+	   
+	   boolean methodInvoked = false;
+	   
+      try {
+         // check if action is cached
+         Method actionMethod = processActionHandlingMethodsMap.get(name);
+         if (actionMethod != null) {
+            actionMethod.invoke(this, request, response);
+            methodInvoked = true;
+         }
+      } catch (Exception e) {
+         // PORTLETSPEC3-23 : Allow annotated methods to throw PortletException and IOException
+         if (e instanceof InvocationTargetException) {
+            Throwable th = e.getCause();
+            if (th != null) {
+               if (th instanceof IOException) throw (IOException)th;
+               if (th instanceof PortletException) throw (PortletException)th;
+               if (th instanceof RuntimeException) throw (RuntimeException)th;
+            }
+         }
+         throw new PortletException(e);
+      }
+      return methodInvoked;
+	}
+
+   
+   /**
+    * <div class="changed_added_3_0">
+    * Dispatches an event request to an annotated event method.
+    * <p>
+    * Retrieves an action method annotated with the provided name and
+    * invokes it. Returns <code>true</code> if the method could be 
+    * successfully located and invoked, and <code>false</code> if no
+    * annotated event method by that name could be found.
+    * <p>
+    * This method allows a portlet to extend annotation processing 
+    * for portlet events.
+    * </div>
+    * 
+    * @param name      Annotation name
+    * @param request   Event request
+    * @param response  Event response
+    * 
+    * @return 
+    *    <code>true</code>, if the request was dispatched,
+    *    <code>false</code>, if no annotated method matching the specified event 
+    *                        method name could be found.
+    *
+    * @exception PortletException
+    *                if the portlet cannot fulfill the request
+    * @exception UnavailableException
+    *                if the portlet is unavailable to process the action at
+    *                this time
+    * @exception PortletSecurityException
+    *                if the portlet cannot fulfill this request due to
+    *                security reasons
+    * @exception java.io.IOException
+    *                if the streaming causes an I/O problem
+    * 
+    * @see #processEvent(EventRequest, EventResponse)
+    */
+   protected boolean dispatchAnnotatedEventMethod(String name, EventRequest request, 
+         EventResponse response) throws PortletException, java.io.IOException {
+      
+      boolean methodInvoked = false;
+      
+      String eventName = request.getEvent().getQName().toString();
+
+      try {
+         // check for exact match
+         Method eventMethod = processEventHandlingMethodsMap.get(eventName);
+         if (eventMethod != null) {
+            eventMethod.invoke(this, request, response);
+            methodInvoked = true;
+         }
+      } catch (Exception e) {
+         // PORTLETSPEC3-23 : Allow annotated methods to throw PortletException and IOException
+         if (e instanceof InvocationTargetException) {
+            Throwable th = e.getCause();
+            if (th != null) {
+               if (th instanceof IOException) throw (IOException)th;
+               if (th instanceof PortletException) throw (PortletException)th;
+               if (th instanceof RuntimeException) throw (RuntimeException)th;
+            }
+         }
+         throw new PortletException(e);
+      }
+
+      return methodInvoked;
+   }
+
+   
+   /**
+    * <div class="changed_added_3_0">
+    * Dispatches an render request to an annotated render method.
+    * <p>
+    * Retrieves an render method annotated with the provided name and
+    * invokes it. Returns <code>true</code> if the method could be 
+    * successfully located and invoked, and <code>false</code> if no
+    * annotated render method by that name could be found.
+    * <p>
+    * This method allows a portlet to extend annotation processing 
+    * for the render methods. 
+    * </div>
+    * 
+    * @param name      Annotation name
+    * @param request   Render request
+    * @param response  Render response
+    * 
+    * @return 
+    *    <code>true</code>, if the request was dispatched,
+    *    <code>false</code>, if no annotated method matching the specified render 
+    *                        method name could be found.
+    *
+    * @exception PortletException
+    *                if the portlet cannot fulfill the request
+    * @exception UnavailableException
+    *                if the portlet is unavailable to process the render at
+    *                this time
+    * @exception PortletSecurityException
+    *                if the portlet cannot fulfill this request due to
+    *                security reasons
+    * @exception java.io.IOException
+    *                if the streaming causes an I/O problem
+    * 
+    * @see #doDispatch(RenderRequest, RenderResponse)
+    */
+   protected boolean dispatchAnnotatedRenderMethod(String name, RenderRequest request, 
+         RenderResponse response) throws PortletException, java.io.IOException {
+      
+      boolean methodInvoked = false;
+      
+      try {
+         // check if action is cached
+         Method renderMethod = renderModeHandlingMethodsMap.get(name);
+         if (renderMethod != null) {
+            renderMethod.invoke(this, request, response);
+            methodInvoked = true;
+         }
+      } catch (Exception e) {
+         // PORTLETSPEC3-23 : Allow annotated methods to throw PortletException and IOException
+         if (e instanceof InvocationTargetException) {
+            Throwable th = e.getCause();
+            if (th != null) {
+               if (th instanceof IOException) throw (IOException)th;
+               if (th instanceof PortletException) throw (PortletException)th;
+               if (th instanceof RuntimeException) throw (RuntimeException)th;
+            }
+         }
+         throw new PortletException(e);
+      }
+      
+      return methodInvoked;
+   }
+
+   
+   // -------------------------------------------------------------------------
+   // Private Methods
+   // -------------------------------------------------------------------------
+
 	private void cacheAnnotatedMethods() {
 		// cache all annotated and visible public methods
 		for (Method method : this.getClass().getMethods()) {
@@ -743,8 +1046,10 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 					Class<? extends Annotation> annotationType = annotation.annotationType();
 					if (ProcessAction.class.equals(annotationType)) {
 						String name = ((ProcessAction) annotation).name();
-						if (name != null && name.length() > 0)
-							processActionHandlingMethodsMap.put(name, method);
+						if (name != null && name.length() > 0) {
+						   // PORTLETSPEC3-15
+							addToMap(processActionHandlingMethodsMap, name, method);
+						}
 					} else if (ProcessEvent.class.equals(annotationType)) {
 						String qname = ((ProcessEvent) annotation).qname();
 						if (qname == null || qname.length() <= 0) {
@@ -755,17 +1060,46 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 							String name = ((ProcessEvent) annotation).name();
 							if (name != null && name.length() > 0) {
 								qname = new QName(config.getDefaultNamespace(), name).toString();
-								processEventHandlingMethodsMap.put(qname, method);
+								// PORTLETSPEC3-15
+								addToMap(processEventHandlingMethodsMap, qname, method);
 							}
-						} else
-							processEventHandlingMethodsMap.put(qname, method);
+						} else {
+						   // PORTLETSPEC3-15
+							addToMap(processEventHandlingMethodsMap, qname, method);
+							}
 					} else if (RenderMode.class.equals(annotationType)) {
 						String name = ((RenderMode) annotation).name();
-						if (name != null && name.length() > 0)
-							renderModeHandlingMethodsMap.put(name.toLowerCase(), method);
+						if (name != null && name.length() > 0) {
+						   // PORTLETSPEC3-15
+							addToMap(renderModeHandlingMethodsMap, name.toLowerCase(), method);
+						}
+					}
 					}
 				}
 			}
 		}
+	
+   // PORTLETSPEC3-15: An annotation in a subclass should override the same 
+   // annotation in a superclass, however, getMethods() returns the methods in no order.
+	private void addToMap(Map<String, Method> map, String name, Method newMethod) {
+      Method mapMethod = map.get(name);
+
+      // Adds new method to map if method does not exist in map
+      // or if class of new method is subclass of class of method in map.
+	   if ((mapMethod != null) && (newMethod != null)) {
+	      
+	      // get the class hierarchy. 
+	      ArrayList<Class<?>> classHierarchy = new ArrayList<Class<?>>();
+	      for (Class<?> cls=this.getClass(); cls != null; cls=cls.getSuperclass()) {
+	         classHierarchy.add(cls);
+	      }
+	      
+	      int classLevelMap = classHierarchy.indexOf(mapMethod.getDeclaringClass());
+	      int classLevelNew = classHierarchy.indexOf(newMethod.getDeclaringClass());
+	      if (classLevelMap <= classLevelNew) {
+	         return;
+	      }
+	   }
+	   map.put(name, newMethod);
 	}
 }

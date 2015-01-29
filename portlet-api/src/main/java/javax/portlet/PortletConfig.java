@@ -28,7 +28,8 @@ package javax.portlet;
 
 
 /**
- * The <CODE>PortletConfig</CODE> interface provides the portlet with
+ * <span class="changed_modified_3_0">The</span>
+ * <CODE>PortletConfig</CODE> interface provides the portlet with
  * its configuration. The configuration holds information about the
  * portlet that is valid for all users. The configuration is retrieved
  * from the portlet definition in the deployment descriptor.
@@ -252,5 +253,50 @@ public interface PortletConfig
    *          String array (<code>String[]</code>).
    */
   public java.util.Map<String, String[]> getContainerRuntimeOptions();
+
+
+  /**
+   * <div class="changed_added_3_0"> 
+   * Returns an <code>Enumeration</code> of PortletMode objects that are defined
+   * in the portlet descriptor for the portlet and supported by the portlet container. 
+   * <p>
+   * Note that a supported portlet mode may not be allowed in all situations
+   * due to security or other reasons. To
+   * determine whether a portlet mode is allowed during a request, use the
+   * {@link PortletRequest#isPortletModeAllowed(PortletMode)} method.   
+   * </div>
+   *
+   * @since 3.0
+   * 
+   * @see PortletMode
+   * @see PortletRequest#isPortletModeAllowed(PortletMode)
+   * 
+   * @return      an <code>Enumeration</code> of <code>PortletMode</code> 
+   *        objects containing the defined and supported portlet modes.
+   */
+  public java.util.Enumeration<PortletMode> getPortletModes();
+
+
+  /**
+   * <div class="changed_added_3_0"> 
+   * Returns an <code>Enumeration</code> of WindowState objects that are defined
+   * in the portlet descriptor for the portlet and supported by the portlet container. 
+   * <p>
+   * Note that a supported window state may not be allowed in all situations
+   * due to security or other reasons. To
+   * determine whether a window state is allowed during a request, use the
+   * {@link PortletRequest#isWindowStateAllowed(WindowState)} method.   
+   * </div>
+   *
+   * @since 3.0
+   * 
+   * @see WindowState
+   * @see PortletRequest#isWindowStateAllowed(WindowState)
+   * 
+   * @return      an <code>Enumeration</code> of <code>WindowState</code> 
+   *        objects containing the defined and supported window states.
+   */
+  public java.util.Enumeration<WindowState> getWindowStates();
+  
 }
 
