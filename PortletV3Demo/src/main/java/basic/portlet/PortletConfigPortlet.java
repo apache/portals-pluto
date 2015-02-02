@@ -23,6 +23,8 @@ import static basic.portlet.Constants.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,22 +33,23 @@ import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.GenericPortlet;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.portlet.ResourceURL;
+import javax.portlet.WindowState;
+import javax.xml.namespace.QName;
 
 /**
  * A management portlet that displays the current deep link configuraion
  */
-public class PartialActionPortlet extends GenericPortlet {
+public class PortletConfigPortlet extends GenericPortlet {
 
    // Set up logging
-   private static final String LOG_CLASS = PartialActionPortlet.class.getName();
+   private static final String LOG_CLASS = PortletConfigPortlet.class.getName();
    private final Logger logger = Logger.getLogger(LOG_CLASS);
 
    protected void doView(RenderRequest req, RenderResponse resp)
@@ -57,9 +60,60 @@ public class PartialActionPortlet extends GenericPortlet {
       }
       
       resp.setContentType("text/html");
+      
+      // Get the information from the new V3.0 PortletConfig APIs through
+      // the GenericPortlet class in order to test the adapted GenericPortlet
+      // interfaces as well. Store resulting strings in request attributes
+      // for display through the JSP.
+      
+      ArrayList<String> prps = new ArrayList<String>();
+      ArrayList<String> wss = new ArrayList<String>();
+      ArrayList<String> pms = new ArrayList<String>();
+      
+      Map<String, QName> prpmap = getPublicRenderParameterDefinitions();
+      for (String prp : prpmap.keySet()) {
+         StringBuilder sb = new StringBuilder();
+         sb.append("Name: ").append(prp);
+         sb.append(", QName: ").append(prpmap.get(prp).toString());
+         prps.add(sb.toString());
+      }
+      req.setAttribute(ATTRIB_PRPS, prps);
+      
+      String mimetype = "text/html";
+      for (WindowState ws : Collections.list(getWindowStates(mimetype))) {
+         StringBuilder sb = new StringBuilder();
+         sb.append("MIME type: ").append(mimetype);
+         sb.append(", WindowState: ").append(ws.toString());
+         sb.append(", Allowed: ").append(req.isWindowStateAllowed(ws));
+         wss.add(sb.toString());
+      }
+      for (PortletMode pm : Collections.list(getPortletModes(mimetype))) {
+         StringBuilder sb = new StringBuilder();
+         sb.append("MIME type: ").append(mimetype);
+         sb.append(", PortletMode: ").append(pm.toString());
+         sb.append(", Allowed: ").append(req.isPortletModeAllowed(pm));
+         pms.add(sb.toString());
+      }
+
+      mimetype = "text/vnd.wap.wml";
+      for (WindowState ws : Collections.list(getWindowStates(mimetype))) {
+         StringBuilder sb = new StringBuilder();
+         sb.append("MIME type: ").append(mimetype);
+         sb.append(", WindowState: ").append(ws.toString());
+         wss.add(sb.toString());
+      }
+      for (PortletMode pm : Collections.list(getPortletModes(mimetype))) {
+         StringBuilder sb = new StringBuilder();
+         sb.append("MIME type: ").append(mimetype);
+         sb.append(", PortletMode: ").append(pm.toString());
+         pms.add(sb.toString());
+      }
+      
+      req.setAttribute(ATTRIB_WS, wss);
+      req.setAttribute(ATTRIB_PMS, pms);
 
       PortletRequestDispatcher rd = getPortletContext().getRequestDispatcher(
-            "/WEB-INF/jsp/view-pap.jsp");
+            "/WEB-INF/jsp/view-pcp.jsp");
       rd.include(req, resp);
 
    }
@@ -67,21 +121,6 @@ public class PartialActionPortlet extends GenericPortlet {
    @Override
    public void processAction(ActionRequest req, ActionResponse resp)
          throws PortletException, IOException {
-
-      // the only action for this portlet is to increment the execition counter
-
-      String val = req.getParameter(PARAM_NUM_ACTIONS);
-      int na = 1;
-      if (val != null) {
-         try {
-            na = Integer.parseInt(val) + 1;
-         } catch (Exception e) {}
-      }
-      
-      String actionName = req.getParameter("action");
-      logger.fine("PAP: executing partial action. action number = " + na + ", name =  " + actionName);
-
-      resp.setRenderParameter(PARAM_NUM_ACTIONS, Integer.toString(na));
    }
    
    @Override
@@ -92,23 +131,9 @@ public class PartialActionPortlet extends GenericPortlet {
    /* (non-Javadoc)
     * @see javax.portlet.GenericPortlet#serveResource(javax.portlet.ResourceRequest, javax.portlet.ResourceResponse)
     */
-   @SuppressWarnings("unchecked")
    @Override
    public void serveResource(ResourceRequest req, ResourceResponse resp)
          throws PortletException, IOException {
-      
-      resp.setContentType("text/html");
-      PrintWriter writer = resp.getWriter();
-
-      String num = req.getParameter(PARAM_NUM_ACTIONS);
-      num = (num == null) ? "error" : num;
-      
-      String pageState = req.getPageState();
-      
-      writer.write("<p>Partial Action has been executed " + num + " times.</p>\n");
-      writer.write(";#delimiter#;");
-      writer.write(pageState);
-      
    }
 
 }

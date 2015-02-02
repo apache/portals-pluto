@@ -24,6 +24,10 @@
 
 package javax.portlet;
 
+import java.util.Map;
+
+import javax.xml.namespace.QName;
+
 
 
 
@@ -258,45 +262,79 @@ public interface PortletConfig
   /**
    * <div class="changed_added_3_0"> 
    * Returns an <code>Enumeration</code> of PortletMode objects that are defined
-   * in the portlet descriptor for the portlet and supported by the portlet container. 
+   * for the portlet for the given MIME type. 
    * <p>
    * Note that a supported portlet mode may not be allowed in all situations
    * due to security or other reasons. To
    * determine whether a portlet mode is allowed during a request, use the
-   * {@link PortletRequest#isPortletModeAllowed(PortletMode)} method.   
+   * {@link PortletRequest#isPortletModeAllowed(PortletMode)} method. 
+   * To determine which portlet modes are supported by the portal, use
+   * {@link PortalContext#getSupportedPortletModes()}  
    * </div>
+   * 
+   * @param mimeType    MIME type
    *
    * @since 3.0
    * 
    * @see PortletMode
    * @see PortletRequest#isPortletModeAllowed(PortletMode)
+   * @see PortalContext#getSupportedPortletModes()
    * 
    * @return      an <code>Enumeration</code> of <code>PortletMode</code> 
    *        objects containing the defined and supported portlet modes.
    */
-  public java.util.Enumeration<PortletMode> getPortletModes();
+  public java.util.Enumeration<PortletMode> getPortletModes(String mimeType);
 
 
   /**
    * <div class="changed_added_3_0"> 
    * Returns an <code>Enumeration</code> of WindowState objects that are defined
-   * in the portlet descriptor for the portlet and supported by the portlet container. 
+   * for the portlet for the given MIME type. 
    * <p>
    * Note that a supported window state may not be allowed in all situations
    * due to security or other reasons. To
    * determine whether a window state is allowed during a request, use the
-   * {@link PortletRequest#isWindowStateAllowed(WindowState)} method.   
+   * {@link PortletRequest#isWindowStateAllowed(WindowState)} method. 
+   * To determine which window states are supported by the portal, use
+   * {@link PortalContext#getSupportedWindowStates()}. 
    * </div>
+   * 
+   * @param mimeType    MIME type
    *
    * @since 3.0
    * 
    * @see WindowState
    * @see PortletRequest#isWindowStateAllowed(WindowState)
+   * @see PortalContext#getSupportedWindowStates()
    * 
    * @return      an <code>Enumeration</code> of <code>WindowState</code> 
    *        objects containing the defined and supported window states.
    */
-  public java.util.Enumeration<WindowState> getWindowStates();
+  public java.util.Enumeration<WindowState> getWindowStates(String mimeType);
+
+
+  /**
+   * <div class="changed_added_3_0"> 
+   * Returns a Map of public render parameter names to their qualified names.
+   * The names are the values returned by the 
+   * {@link PortletConfig#getPublicRenderParameterNames()} method.
+   * The values are the <code>QName</code> values associated with the public 
+   * render parameter. 
+   * <p>
+   * If the public render parameter is specified in the portlet descriptor
+   * using the <code>&lt.name&gt.</code> tag rather than the 
+   * <code>&lt.qname&gt.</code> tag, the QName is built from the default namespace
+   * from the deployment descriptor
+   * together with the value from the <code>&lt.name&gt.</code> tag.
+   * </div>
+   * 
+   * @since 3.0
+   * 
+   * @see PortletConfig#getPublicRenderParameterNames()
+   * 
+   * @return      an <code>Map</code> of <code>String</code> to <code>QName</code> 
+   */
+  public Map<String, QName> getPublicRenderParameterDefinitions();
   
 }
 

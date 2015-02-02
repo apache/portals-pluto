@@ -22,7 +22,6 @@ import static basic.portlet.Constants.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,14 +30,12 @@ import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.GenericPortlet;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.portlet.ResourceURL;
 
 /**
  * A management portlet that displays the current deep link configuraion
@@ -92,7 +89,6 @@ public class PartialActionPortlet extends GenericPortlet {
    /* (non-Javadoc)
     * @see javax.portlet.GenericPortlet#serveResource(javax.portlet.ResourceRequest, javax.portlet.ResourceResponse)
     */
-   @SuppressWarnings("unchecked")
    @Override
    public void serveResource(ResourceRequest req, ResourceResponse resp)
          throws PortletException, IOException {

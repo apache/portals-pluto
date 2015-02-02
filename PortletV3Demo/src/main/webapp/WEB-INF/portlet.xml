@@ -94,24 +94,88 @@
    </portlet>
 
    <portlet>
-      <portlet-name>PartialActionPortlet</portlet-name>
-      <display-name>Partial Action Portlet</display-name>
+      <portlet-name>PortletConfigPortlet1</portlet-name>
+      <display-name>Portlet Config Portlet #1</display-name>
       
-      <portlet-class>basic.portlet.PartialActionPortlet</portlet-class>
+      <portlet-class>basic.portlet.PortletConfigPortlet</portlet-class>
 
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>VIEW</portlet-mode>
+         <portlet-mode>HELP</portlet-mode>
+         <portlet-mode>EDIT</portlet-mode>
+         <portlet-mode>MyMode_nonPortalManaged_1</portlet-mode>
+         <portlet-mode>MyMode_nonPortalManaged_2</portlet-mode>
+         <portlet-mode>MyMode_PortalManaged_3</portlet-mode>
+         <window-state>TestWindowState_1</window-state>
+         <window-state>TestWindowState_2</window-state>
+      </supports>
+      
+      <supports>
+         <mime-type>text/vnd.wap.wml</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+         <portlet-mode>MyMode_nonPortalManaged_1</portlet-mode>
       </supports>
 
       <supported-locale>en</supported-locale>        
 
       <portlet-info>
-         <title>PH Partial Action Portlet</title>
+         <title>Portlet Config Portlet #1</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>color</supported-public-render-parameter>
+      <supported-public-render-parameter>photo</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletConfigPortlet2</portlet-name>
+      <display-name>Portlet Config Portlet #2</display-name>
+      
+      <portlet-class>basic.portlet.PortletConfigPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>HELP</portlet-mode>
+         <portlet-mode>MyMode_nonPortalManaged_1</portlet-mode>
+         <window-state>TestWindowState_1</window-state>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>Portlet Config Portlet #2</title>
       </portlet-info>
 
       <supported-public-render-parameter>color</supported-public-render-parameter>
    </portlet>
+
+	<custom-portlet-mode>
+		<description>Test mode #1</description>
+		<portlet-mode>MyMode_nonPortalManaged_1</portlet-mode>
+		<portal-managed>false</portal-managed>
+	</custom-portlet-mode>
+
+	<custom-portlet-mode>
+		<description>Test mode #2</description>
+		<portlet-mode>MyMode_nonPortalManaged_2</portlet-mode>
+		<portal-managed>false</portal-managed>
+	</custom-portlet-mode>
+
+	<custom-portlet-mode>
+		<description>Test mode #3</description>
+		<portlet-mode>MyMode_PortalManaged_3</portlet-mode>
+		<portal-managed>true</portal-managed>
+	</custom-portlet-mode>
+
+	<custom-window-state>
+		<description>Test window State #1</description>
+		<window-state>TestWindowState_1</window-state>
+	</custom-window-state>
+
+	<custom-window-state>
+		<description>Test window State #2</description>
+		<window-state>TestWindowState_2</window-state>
+	</custom-window-state>
    
    <event-definition>
       <qname>rp:Message</qname>

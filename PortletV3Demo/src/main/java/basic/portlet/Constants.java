@@ -50,4 +50,9 @@ public class Constants {
    public final static String EVENT_NAME = "Message";
    
    public final static String DELIM = ";%;";
+   
+   // For PortletConfig portlet
+   public final static String ATTRIB_PRPS = "prps";
+   public final static String ATTRIB_PMS = "portletModes";
+   public final static String ATTRIB_WS = "windowStates";
 }

@@ -22,7 +22,7 @@ import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.Supports;
-import org.apache.pluto.container.om.portlet20.impl.CustomPortletModeType;
+import org.apache.pluto.container.om.portlet.CustomPortletMode;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.SupportedModesService;
@@ -113,13 +113,13 @@ public class SupportedModesServiceImpl implements SupportedModesService
                 throw new PortletContainerException("Optional Portlet Registry Service not found.");
             }
             PortletApplicationDefinition ctx = portletRegistry.getPortletApplication(applicationName);
-            Iterator i = ctx.getPortlets().iterator();
+            Iterator<? extends PortletDefinition> i = ctx.getPortlets().iterator();
             while (i.hasNext())
             {
                 PortletDefinition dd = (PortletDefinition) i.next();
                 if (portletName.equals(dd.getPortletName()))
                 {
-                    Iterator i2 = dd.getSupports().iterator();
+                    Iterator<? extends Supports> i2 = dd.getSupports().iterator();
                     while (i2.hasNext())
                     {
                         Supports sd = (Supports) i2.next();
@@ -129,7 +129,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
                                 return true;
                         } else
                         {
-                            Iterator pd = sd.getPortletModes().iterator();
+                            Iterator<String> pd = sd.getPortletModes().iterator();
                             while (pd.hasNext())
                             {
                                 if (mode.equalsIgnoreCase((String) pd.next()))
@@ -158,7 +158,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
         // Add the PortletModes supported by the portal to the
         // supportedPortletModesByPortal set.
         LOG.debug("Loading supported portal modes...");
-        Iterator modes = propertyService.getSupportedPortletModes().iterator();
+        Iterator<String> modes = propertyService.getSupportedPortletModes().iterator();
         while (modes.hasNext())
         {
             String mode = (String) modes.next();
@@ -181,10 +181,10 @@ public class SupportedModesServiceImpl implements SupportedModesService
         try
         {
             PortletApplicationDefinition portletApp = portletRegistry.getPortletApplication(applicationName);
-            Iterator customModes = portletApp.getCustomPortletModes().iterator();
+            Iterator<? extends CustomPortletMode> customModes = portletApp.getCustomPortletModes().iterator();
             while (customModes.hasNext())
             {
-                CustomPortletModeType customMode = (CustomPortletModeType) customModes.next();
+                CustomPortletMode customMode = (CustomPortletMode) customModes.next();
                 boolean isPortletManagedMode = !customMode.isPortalManaged();
                 if (isPortletManagedMode && customMode.getPortletMode().equalsIgnoreCase(mode))
                 {
@@ -226,13 +226,13 @@ public class SupportedModesServiceImpl implements SupportedModesService
             throw new PortletContainerException("Optional Portlet Registry Service not found.");
         }
         PortletApplicationDefinition portletApp = portletRegistry.getPortletApplication(applicationName);
-        Iterator i = portletApp.getPortlets().iterator();
+        Iterator<? extends PortletDefinition> i = portletApp.getPortlets().iterator();
         while (i.hasNext())
         {
             PortletDefinition dd = (PortletDefinition) i.next();
             if (portletName.equals(dd.getPortletName()))
             {
-                Iterator i2 = dd.getSupports().iterator();
+                Iterator<? extends Supports> i2 = dd.getSupports().iterator();
                 while (i2.hasNext())
                 {
                     Supports sd = (Supports) i2.next();

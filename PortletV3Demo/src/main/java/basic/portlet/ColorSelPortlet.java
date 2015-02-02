@@ -21,14 +21,12 @@ package basic.portlet;
 import static basic.portlet.Constants.*;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
