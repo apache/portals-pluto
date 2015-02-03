@@ -97,7 +97,7 @@ public class RenderResponseImpl extends MimeResponseImpl implements RenderRespon
         super.setContentType(contentType);
     }
     
-    public void setNextPossiblePortletModes(Collection<PortletMode> portletModes)
+    public void setNextPossiblePortletModes(Collection<? extends PortletMode> portletModes)
     {
         ArgumentUtility.validateNotNull("portletModes", portletModes);
         if (portletModes.isEmpty())

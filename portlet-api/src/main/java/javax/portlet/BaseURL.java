@@ -25,17 +25,47 @@
 package javax.portlet;
 
 /**
- * The <CODE>BaseURL</CODE> defines the basic capabilities
- * of a portlet URL pointing back to the portlet.
- *
+ * <div class="changed_modified_3_0">The
+ * <CODE>BaseURL</CODE> defines the basic capabilities of a portlet URL
+ * pointing back to the portlet.
+ * <p>
+ * If the portlet state is modified through this interface, the changes take
+ * effect when the URL containing the modifications is triggered.
+ * </div>
+ * @see   MutablePortletState
  * @since 2.0
  */
 public interface BaseURL {
 
     /**
-     * Sets the given String parameter to this URL. 
+    * <span class="changed_modified_3_0">Sets</span> 
+    * the given String parameter on this URL. 
      * <p>
-     * This method replaces all parameters with the given key.
+    * This method replaces all parameter values with the given key, 
+    * <span class="changed_added_3_0">as allowed 
+    * according to the rules for the URL.</span>
+    * <div class="changed_added_3_0"> 
+    * <ul>
+    * <li>
+    * <code>RenderURL</code> - Both public and private parameters can be set. 
+    * </li>
+    * <li>
+    * <code>ActionURL</code> - Action parameters (private parameters) are set as described. 
+    * Public render parameters 
+    * remain unchanged. If an action parameter has the same name as a public 
+    * render parameter, both the action parameter value and the public render parameter
+    * value will be available during processing of the action request.
+    * </li>
+    * <li>
+    * <code>ResourceURL</code> - Resource parameters are set. Public 
+    * and private render parameters that were attached to the URL when it was created 
+    * remain unchanged. 
+    * If a resource parameter has the same name as a public or private 
+    * render parameter, both the resource parameter value and the public or private 
+    * render parameter value will be available during processing of the resource request.
+    * </li>
+    * </ul>
+    * </div>
      * <p>
      * The <code>PortletURL</code> implementation 'x-www-form-urlencoded' encodes
      * all  parameter names and values. Developers should not encode them.
@@ -45,6 +75,10 @@ public interface BaseURL {
      * <p>
      * A parameter value of <code>null</code> indicates that this
      * parameter should be removed.
+    * <span class="changed_added_3_0">However, an empty string value ("") is allowed.</span>
+    * <p>
+    * <span class="changed_added_3_0">A public render parameter cannot be removed by 
+    * setting its value to <code>null</code>.</span>
      *
      * @param   name
      *          the parameter name
@@ -52,22 +86,60 @@ public interface BaseURL {
      *          the parameter value
      *
      * @exception  java.lang.IllegalArgumentException 
-     *                            if name is <code>null</code>.
+    *                            if name is <code>null</code>;
+    *                            <span class="changed_added_3_0">if an attempt is made to set a public 
+    *                            render parameter to <code>null</code>.</span> 
+    * @deprecated As of version 3.0. Use {@link PortletURL#getRenderParameters()},
+    * {@link ResourceURL#getResourceParameters()},
+    * or {@link ActionURL#getActionParameters()} as required.
      */
 
+   @Deprecated
     public void setParameter (String name, String value);
 
 
     /**
-     * Sets the given String array parameter to this URL. 
+    * <span class="changed_modified_3_0">Sets
+    * a multi-valued String parameter on</span> this URL. 
+    * <div class="changed_added_3_0"> 
      * <p>
-     * This method replaces all parameters with the given key.
+    * This method replaces all parameter values with the given key
+    * according to the rules for the URL. 
+    * <ul>
+    * <li>
+    * <code>RenderURL</code> - Both public and private parameters can be set. 
+    * </li>
+    * <li>
+    * <code>ActionURL</code> - Action parameters (private parameters) are set as described. 
+    * Public render parameters 
+    * remain unchanged. If an action parameter has the same name as a public 
+    * render parameter, both the action parameter value and the public render parameter
+    * value will be available during processing of the action request.
+    * </li>
+    * <li>
+    * <code>ResourceURL</code> - Resource parameters are set. Public 
+    * and private render parameters that were attached to the URL when it was created 
+    * remain unchanged. 
+    * If a resource parameter has the same name as a public or private 
+    * render parameter, both the resource parameter value and the public or private 
+    * render parameter value will be available during processing of the resource request.
+    * </li>
+    * </ul>
+    * </div>
      * <p>
      * The <code>PortletURL</code> implementation 'x-www-form-urlencoded' encodes
      * all  parameter names and values. Developers should not encode them.
      * <p>
      * A portlet container may prefix the attribute names internally 
      * in order to preserve a unique namespace for the portlet.
+    * <div class="changed_added_3_0"> 
+    * <p>
+    * A values parameter of <code>null</code> indicates that this
+    * parameter should be removed. 
+    * <p>
+    * If the values parameter is not null, no element of the values array may be null. 
+    * However, an empty string value ("") is allowed.
+    * </div>
      *
      * @param   name
      *          the parameter name
@@ -75,16 +147,56 @@ public interface BaseURL {
      *          the parameter values
      *
      * @exception  java.lang.IllegalArgumentException 
-     *                            if name is <code>null</code>.
+    *                            if name is <code>null</code>; 
+    *      <span class="changed_added_3_0">if an element of the values array is <code>null</code>; 
+    *      if an attempt is made to set a public render parameter to <code>null</code>.</span>
+    *       
+    * @deprecated As of version 3.0. Use {@link PortletURL#getRenderParameters()},
+    * {@link ResourceURL#getResourceParameters()},
+    * or {@link ActionURL#getActionParameters()} as required.
      */
 
-    public void setParameter (String name, String[] values);
+   @Deprecated
+   public void setParameter (String name, String... values);
 
 
     /**
-     * Sets a parameter map for this URL.
+    * <span class="changed_modified_3_0">Sets</span> 
+    * a parameter map for this URL.
      * <p>
-     * All previously set parameters are cleared.
+    * <span class="changed_deleted_3_0">All previously set parameters are cleared.</span>
+    * <div class="changed_added_3_0"> 
+    * <p> 
+    * This method can be used to set both public and private render parameters 
+    * according to the rules for the URL. 
+    * <ul>
+    * <li>
+    * <code>RenderURL</code> - Both public and private parameters can be set. 
+    * </li>
+    * <li>
+    * <code>ActionURL</code> - Action parameters are set. Public render parameters 
+    * remain unchanged. If an action parameter has the same name as a public 
+    * render parameter, both the action parameter value and the public render parameter
+    * value will be available during processing of the action request.
+    * </li>
+    * <li>
+    * <code>ResourceURL</code> - Resource parameters are set. Public 
+    * and private render parameters that were attached to the URL when it was created 
+    * remain unchanged. 
+    * If a resource parameter has the same name as a public or private 
+    * render parameter, both the resource parameter value and the public or private 
+    * render parameter value will be available during processing of the resource request.
+    * </li>
+    * </ul>
+    * <p>
+    * These parameters will be accessible through the portlet request initiated through
+    * the URL.
+    * <p>
+    * Any previously set private render parameter that is not contained in the new map
+    * is removed. However, public render parameters cannot be removed by excluding
+    * them from the map. Public render parameters that are not included in the map
+    * remain unchanged.
+    * </div>
      * <p>
      * The <code>PortletURL</code> implementation 'x-www-form-urlencoded' encodes
      * all  parameter names and values. Developers should not encode them.
@@ -92,26 +204,36 @@ public interface BaseURL {
      * A portlet container may prefix the attribute names internally, 
      * in order to preserve a unique namespace for the portlet.
      *
-     * @param  parameters   Map containing parameter names for 
-     *                      the render phase as 
-     *                      keys and parameter values as map 
-     *                      values. The keys in the parameter
-     *                      map must be of type String. The values 
-     *                      in the parameter map must be of type
-     *                      String array (<code>String[]</code>).
+    * @param parameters
+    * <span class="changed_modified_3_0">
+    * Map containing parameter names for the render phase as keys and
+    * parameter values as map values. The keys in the parameter map must be of type
+    * String and may not be null or the empty string (""). The values in the parameter
+    * map must be of type String array (<code>String[]</code>). 
+    * Neither the values array nor any of
+    * its elements may be null; however, the empty string ("") is allowed as an array element.
+    * </span>
      *
      * @exception   java.lang.IllegalArgumentException 
-     *                      if parameters is <code>null</code>, if
-     *                      any of the keys in the Map are <code>null</code>, 
-     *                      if any of the keys is not a String, or if any of 
-     *                      the values is not a String array.
+    *                <span class="changed_modified_3_0">
+    *                if parameters is <code>null</code>, if any of the
+    *                keys in the Map are <code>null</code>, if any of
+    *                the keys is not a String, if any of the values is not a
+    *                String array, or if any of the String array elements
+    *                are null. 
+    *                </span>
+    *                
+    * @deprecated As of version 3.0. Use {@link PortletURL#getRenderParameters()},
+    * {@link ResourceURL#getResourceParameters()},
+    * or {@link ActionURL#getActionParameters()} as required.
      */
 
+   @Deprecated
     public void setParameters(java.util.Map<String, String[]> parameters);
 
 
     /**
-     * Indicated the security setting for this URL. 
+    * Indicates the security setting for this URL. 
      * <p>
      * Secure set to <code>true</code> indicates that the portlet requests
      * a secure connection between the client and the portlet window for
@@ -148,13 +270,18 @@ public interface BaseURL {
     public String toString ();
     
     /** 
-     * Returns a <code>Map</code> of the parameters 
-     * currently set on this portlet URL via the 
-     * <code>setParameter</code> or <code>setParameters</code>
-     * methods.
+    * <span class="changed_modified_3_0">Returns</span> a
+    * <code>Map</code> of the parameters currently set on this portlet
+    * URL.
      * <p>
      * The values in the returned <code>Map</code> are from type
      * String array (<code>String[]</code>).
+    * <p class="changed_added_3_0">
+    * The contents of the returned map are immutable in the sense that modifying the map 
+    * does not directly affect the render parameters. In order to set the 
+    * parameters using the modified map, 
+    * the {@link BaseURL#setParameters(Map)} method must be used.
+    * </p>
      * <p>
      * If no parameters exist this method returns an empty <code>Map</code>.
      *             
@@ -165,8 +292,13 @@ public interface BaseURL {
      *             String array (<code>String[]</code>).
      *
      * @since 2.0
+    * 
+    * @deprecated As of version 3.0. Use {@link PortletURL#getRenderParameters()},
+    * {@link ResourceURL#getResourceParameters()},
+    * or {@link ActionURL#getActionParameters()} as required.
      */
 
+   @Deprecated
     public java.util.Map<String, String[]> getParameterMap();
 
     /**
@@ -180,7 +312,7 @@ public interface BaseURL {
      * non-escaped URLs use {@link #write(java.io.Writer, boolean)}.
      *  
      * @param out  the writer to write the portlet URL to
-     * @throws java.io.IOException  if an I/O error occured while writing the URL
+    * @throws java.io.IOException  if an I/O error occurred while writing the URL
      *
      * @since 2.0
      */

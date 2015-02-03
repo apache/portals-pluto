@@ -176,10 +176,10 @@ public class RenderResponseWrapper extends PortletResponseWrapper implements Ren
     }
 
     /**
-     *  The default behavior of this method is to call 
+     *  <span class="changed_modified_3_0">The</span> default behavior of this method is to call 
      * <code>setNextPossiblePortletModes()</code> on the wrapped response object.
      */
-    public void setNextPossiblePortletModes(Collection<PortletMode> portletModes) {
+    public void setNextPossiblePortletModes(Collection<? extends PortletMode> portletModes) {
         response.setNextPossiblePortletModes(portletModes);
     }
 
