@@ -28,19 +28,26 @@ import java.util.Locale;
 
 
 /**
- * The <CODE>PortletRequest</CODE> defines the base interface to provide client
- * request information to a portlet. The portlet container uses two specialized
- * versions of this interface when invoking a portlet, <CODE>ActionRequest</CODE>
- * and <CODE>RenderRequest</CODE>. The portlet container creates these objects and 
- * passes them as  arguments to the portlet's <CODE>processAction</CODE> and
- * <CODE>render</CODE> methods.
+ * <div class="changed_modified_3_0">The
+ * <CODE>PortletRequest</CODE> defines the base interface to provide client
+ * request information to a portlet. The portlet container uses specialized
+ * versions of this interface when invoking a portlet. 
+ * The portlet container creates these objects and 
+ * passes them as arguments to the corresponding request processing methods.
+ * <p>
+ * The <code>PortletRequest</code> also provides access to the portlet state.
+ * </div>
  * 
+ * @see PortletState
  * @see ActionRequest
+ * @see EventRequest
  * @see RenderRequest
+ * @see ResourceRequest
  */
 public interface PortletRequest
 {
     
+   
   /** Used to retrieve user information attributes with the 
    * <code>getAttribute</code> call. The user information is returned 
    * as a <code>Map</code> object. The portlet must define the 
@@ -285,6 +292,7 @@ public interface PortletRequest
   public static final String ACTION_SCOPE_ID = "javax.portlet.as";
   
   
+  
   /**
    * Returns true, if the given window state is valid
    * to be set for this portlet in the context
@@ -300,7 +308,7 @@ public interface PortletRequest
   public boolean isWindowStateAllowed(WindowState state);
 
 
-/**
+ /**
    * Returns true, if the given portlet mode is a valid
    * one to set for this portlet  in the context
    * of the current request.
@@ -343,11 +351,19 @@ public interface PortletRequest
 
 
   /**
-   * Returns the current portlet session or, if there is no current session,
+   * <span class="changed_modified_3_0">Returns</span> 
+   * the current portlet session or, if there is no current session,
    * creates one and returns the new session.
    *  <p>
    * Creating a new portlet session will result in creating
-   * a new <code>HttpSession</code> on which the portlet session is based on.
+   * a new <code>HttpSession</code> on which the portlet session is based.
+   * <p>
+   * <span class="changed_added_3_0"> 
+   * To make sure the session is properly maintained, you must call this method before 
+   * the response is committed. If the container is using cookies to maintain session 
+   * integrity and is asked to create a new session when the response is committed, 
+   * an <code>IllegalStateException</code> is thrown.
+   * </span>
    *
    * @return the portlet session
    */
@@ -356,7 +372,8 @@ public interface PortletRequest
 
 
   /**
-   * Returns the current portlet session or, if there is no current session
+   * <span class="changed_modified_3_0">Returns</span> 
+   * the current portlet session or, if there is no current session
    * and the given flag is <CODE>true</CODE>, creates one and returns
    * the new session.
    * <P>
@@ -364,7 +381,14 @@ public interface PortletRequest
    * portlet session, this method returns <CODE>null</CODE>.
    *  <p>
    * Creating a new portlet session will result in creating
-   * a new <code>HttpSession</code> on which the portlet session is based on.
+   * a new <code>HttpSession</code> on which the portlet session is based.
+   * <p>
+   * <span class="changed_added_3_0"> 
+   * To make sure the session is properly maintained, you must call this method before 
+   * the response is committed. If the container is using cookies to maintain session 
+   * integrity and is asked to create a new session when the response is committed, 
+   * an <code>IllegalStateException</code> is thrown.
+   * </span>
    * 
    * @param create
    *               <CODE>true</CODE> to create a new session, <BR>
@@ -615,8 +639,10 @@ public interface PortletRequest
    * @exception  java.lang.IllegalArgumentException 
    *                            if name is <code>null</code>.
    *
+   * @deprecated As of version 3.0. Use {@link #getRenderParameters()} instead.
    */
   
+  @Deprecated
   public String getParameter(String name);
 
 
@@ -636,8 +662,10 @@ public interface PortletRequest
    * 			the name of a request parameter; or an 
    *			empty <code>Enumeration</code> if the
    *			request has no parameters.
+   * @deprecated As of version 3.0. Use {@link #getRenderParameters()} instead.
    */
 
+  @Deprecated
   public java.util.Enumeration<String> getParameterNames();
 
 
@@ -662,13 +690,18 @@ public interface PortletRequest
    * @exception  java.lang.IllegalArgumentException 
    *                            if name is <code>null</code>.
    *
+   * @deprecated As of version 3.0. Use {@link #getRenderParameters()} instead.
    */
 
+  @Deprecated
   public String[] getParameterValues(String name);
 
 
   /** 
-   * Returns a <code>Map</code> of the parameters of this request.
+   * <span class="changed_modified_3_0">Returns</span> 
+   * a <code>Map</code> of 
+   * <span class="changed_modified_3_0">all public and private parameters</span> 
+   * of this request.
    * Request parameters are extra information sent with the request.  
    * The returned parameters are "x-www-form-urlencoded" decoded.
    * <p>
@@ -682,8 +715,11 @@ public interface PortletRequest
    *             if no parameters exist. The keys in the parameter
    *             map are of type String. The values in the parameter map are of type
    *             String array (<code>String[]</code>).
+   *             
+   * @deprecated As of version 3.0. Use {@link #getRenderParameters()} instead.
    */
 
+  @Deprecated
   public java.util.Map<String, String[]> getParameterMap();
 
 
@@ -897,13 +933,18 @@ public interface PortletRequest
    * @since 2.0
    * @return  array of cookie properties, or 
    *          <code>null</code> if no cookies exist.
-   * @see MimeResponse#addProperty(Cookie) 
+   * @see PortletResponse#addProperty(Cookie) 
    */
   public javax.servlet.http.Cookie[] getCookies();
   
+  
   /**
+   * <span class="changed_modified_3_0"> 
    * Returns a <code>Map</code> of the private parameters of this request.
-   * Private parameters are not shared with other portlets or components.  
+   * Private parameters are all those not declared to be public parameters 
+   * in the portlet deployment descriptor. They are not shared with other 
+   * portlets or components.
+   * </span>
    * The returned parameters are "x-www-form-urlencoded" decoded.
    * <p>
    * The values in the returned <code>Map</code> are from type
@@ -917,12 +958,16 @@ public interface PortletRequest
    *             if no private parameters exist. The keys in the parameter
    *             map are of type String. The values in the parameter map are of type
    *             String array (<code>String[]</code>).
+   *             
+   * @deprecated As of version 3.0. Use {@link #getRenderParameters()} instead.
    */
+
+  @Deprecated
   public java.util.Map<String, String[]> getPrivateParameterMap();
   
   /**
    * Returns a <code>Map</code> of the public parameters of this request.
-   * Public parameters may be shared with other portlets or components and
+   * Public parameters may be shared with other portlets or components as
    * defined in the portlet deployment descriptor with the 
    * <code>supported-public-render-parameter</code> element.  
    * The returned parameters are "x-www-form-urlencoded" decoded.
@@ -938,7 +983,11 @@ public interface PortletRequest
    *             if no public parameters exist. The keys in the parameter
    *             map are of type String. The values in the parameter map are of type
    *             String array (<code>String[]</code>).
+   *             
+   * @deprecated As of version 3.0. Use {@link #getRenderParameters()} instead.
    */
+
+  @Deprecated
   public java.util.Map<String, String[]> getPublicParameterMap();
 
 }

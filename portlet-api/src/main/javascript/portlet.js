@@ -833,6 +833,31 @@ var portlet = portlet || {};
    },
 
    /**
+    * Accepts an object containing changed portlet IDs. This 
+    * function is meant to be used by the Portlet Hub impl in order 
+    * to initiate an unsolicited state update for the input list of 
+    * portlet IDs.
+    *
+    * @returns {Promise}   fulfilled with the actual upddate function when
+    *                      the hub is not busy.
+    *
+    * @private
+    */
+   updateWhenIdle = function (upids) {
+      return new Promise (function (resolve) {
+         function update () {
+            if (busy) {
+               delay(update, 20);
+            } else {
+               busy = true;
+               resolve(updatePageState);
+            }
+         }
+         update();
+      });
+   },
+
+   /**
     * Updates the portlet state, taking the public render
     * parameters into account.
     * The portlet client requesting the change, represented
@@ -1146,7 +1171,7 @@ var portlet = portlet || {};
        * functions as passed in as an argument
        */
       return portlet.impl
-            .register(portletId)
+            .register(portletId, updateWhenIdle)
             .then(
                   function(portletImpl) {
 
@@ -1541,9 +1566,22 @@ var portlet = portlet || {};
              * an HTML form to be submitted.
              * The portlet hub will use this form to execute the action.
              * <p>
+             * If the form element is specified, the encoding type must be 
+             * 'application/x-www-form-urlencoded' or 'multipart/form-data'.
+             * The encoding type 'text/plain' is not supported.
+             * <p>
+             * If the encoding type is 'multipart/form-data', the submission method
+             * must be 'POST'.
+             * Form 'INPUT' elements of type 'FILE' are supported. 
+             * <p>
+             * If the encoding type is 'application/x-www-form-urlencoded', the submission method
+             * can be either 'GET' or 'POST'.
+             * However, form 'INPUT' elements of type 'FILE' are not supported. 
+             * <p>
              * Specification of <code>element</code> is optional.
              * If the <code>element</code> is not specified, the portlet hub will
-             * submit the action to the server in an appropriate manner.
+             * submit the action to the server by executing a 'POST' with an action
+             * URL containing any action parameters provided.
              * <p>
              * A portlet action is a blocking operation.
              * To allow for orderly state transitions, the portlet hub does not allow
@@ -1579,7 +1617,7 @@ var portlet = portlet || {};
              * @memberOf   PortletInit
              */
             action : function (actParams, element) {
-               var ii, arg, type, parms = null, el = null;
+               var ii, arg, type, parms = null, el = null, meth;
          
                console.log("Executing action for portlet: " + portletId);
                // check arguments. make sure there is a maximum of two
@@ -1610,6 +1648,35 @@ var portlet = portlet || {};
                             + " is of type " + type);
                   }
                }
+               
+               // if we're dealing with a form, verify method and enctype
+               
+               if (el) {
+                  meth = el.method ? el.method.toUpperCase() : undefined;
+            	   
+                  if (meth && (meth !== 'POST') && (meth !== 'GET')) {
+                       throwIllegalArgumentException("Invalid form method " + el.method + ". Allowed methods are GET & POST ");
+            	   }
+            	   
+            	   // allow the default, which is 'application/x-www-form-urlencoded' encoded, and also multipart/form-data
+            	   if (el.enctype && el.enctype !== 'application\/x-www-form-urlencoded' && el.enctype !== 'multipart\/form-data') {
+                       throwIllegalArgumentException("Invalid form enctype " + el.enctype + ". Allowed: 'application\/x-www-form-urlencoded' & 'multipart\/form-data'  ");
+            	   }
+            	   
+                  if (el.enctype && (el.enctype === 'multipart\/form-data') && (meth !== 'POST')) {
+                     throwIllegalArgumentException("Invalid method with multipart/form-data. Must be POST.");
+                  }
+                  
+                  // if the data is supposed to be urlencoded, we don't suport FILE element
+                  if (!el.enctype || (el.enctype === 'application\/x-www-form-urlencoded')) {
+                     for (ii = 0; ii < el.elements.length; ii++) {
+                        if (el.elements[ii].nodeName.toUpperCase() === 'INPUT'
+                            && el.elements[ii].type.toUpperCase() === 'FILE') {
+                           throwIllegalArgumentException("Must use enctype = 'multipart/form-data' with input type FILE.");
+                        }
+                     }
+                  }
+              }
          
                // everything ok, so do the action
          

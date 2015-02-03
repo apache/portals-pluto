@@ -25,7 +25,8 @@
 package javax.portlet;
 
 /**
- * The <code>ResourceRequest</code> interface represents the request
+ * <span class="changed_modified_3_0">The</span>
+ * <code>ResourceRequest</code> interface represents the request
  * send to the portlet for rendering resources.
  * 
  * It extends the ClientDataRequest interface and provides resource request
@@ -85,21 +86,6 @@ public interface ResourceRequest extends ClientDataRequest {
     public String getResourceID();
     
     /**
-     * Returns a <code>String</code> representing the current page state.
-     * 
-     * The content of the returned value is unspecified. It is to be passed to the
-     * Portlet Hub in order to conclude a Partial Action processing sequence. 
-     * <code>null</code> is a valid return value.
-     * 
-     * This call is only valid during Partial Action processing. If called at other times,
-     * the returned value is unspecified.
-     * 
-     * @return String to be passed to the Portlet Hub to conclude a Partial Action
-     *         processing sequence.
-     */
-    public String getPageState();
- 
-    /**
      * Returns a <code>Map</code> of the private render parameters of this request.
      * Private parameters are not shared with other portlets or components.  
      * The returned parameters are "x-www-form-urlencoded" decoded.
@@ -118,9 +104,34 @@ public interface ResourceRequest extends ClientDataRequest {
      *             if no private parameters exist. The keys in the parameter
      *             map are of type String. The values in the parameter map are of type
      *             String array (<code>String[]</code>).
+    *             
+    * @deprecated As of version 3.0. Use {@link PortletRequest#getRenderParameters()} instead.
      */
+
+   @Deprecated
     public java.util.Map<String, String[]> getPrivateRenderParameterMap();
     
+   /**
+    * <div class="changed_added_3_0">
+    * Returns a <code>String</code> representing the current page state.
+    * <p>
+    * The content of the returned value is unspecified. It is to be passed to the
+    * Portlet Hub in order to conclude a Partial Action processing sequence. 
+    * <code>null</code> is a valid return value.
+    * <p>
+    * This call is only valid during Partial Action processing. If called at other times,
+    * the returned value is unspecified.
+    * <p>
+    * The Partial Action processing sequence provides support for infrastructure components
+    * such as a JSF Portlet Bridge to obtain page state information for use by the
+    * JavaScript Portlet Hub component.
+    * </div>
+    * 
+    * @return String to be passed to the Portlet Hub to conclude a Partial Action
+    *         processing sequence.
+    */
+   public String getPageState();
+
     /**
      * Returns the portal preferred content type for the response.
      * <p>
@@ -155,5 +166,45 @@ public interface ResourceRequest extends ClientDataRequest {
      * @return  the cache level of this resource request.
      */
 	public String getCacheability();
+
+
+   /**
+    * <span class="changed_modified_3_0">Returns</span> 
+    * the current portlet mode of the portlet.
+    * <div class="changed_added_3_0">
+    * <p>
+    * If called during a request where the cache level is set to 
+    * <code>ResourceURL.FULL</code>, the portlet mode will not
+    * be available. 
+    * </div>
+    *
+    * @return   the portlet mode.
+    * <span class="changed_added_3_0">
+    *           The portlet mode UNDEFINED will be returned if the cache level is
+    *           set to <code>ResourceURL.FULL</code>.  
+    * </span>
+    */
+
+   public PortletMode getPortletMode ();
+
+
+   /**
+    * <span class="changed_modified_3_0">Returns</span> 
+    * the current window state of the portlet.
+    * <div class="changed_added_3_0">
+    * <p>
+    * If called during a request where the cache level is set to 
+    * <code>ResourceURL.FULL</code>, the window state will not
+    * be available. 
+    * </div>
+    *
+    * @return   the window state.
+    * <span class="changed_added_3_0">
+    *           The window state UNDEFINED will be returned if the cache level is
+    *           set to <code>ResourceURL.FULL</code>.  
+    * </span>
+    */
+
+   public WindowState getWindowState ();
 
 }
