@@ -291,28 +291,6 @@ public class RelativePortalURLImpl implements PortalURL {
       portalURL.v3Map = new HashMap<String, Boolean>(v3Map);
       return portalURL;
    }
-   //JSR-286 methods
-
-   public void addPublicParameterCurrent(String name, String[] values){
-      for (int ii = 0; ii < prpMapper.getNumberOfGroups(); ii++) {
-         List<PortalURLPublicParameter> prps = prpMapper.getPublicParameterGroup(ii);
-         if (prps.get(0).getName().equals(name)) {
-            prpMapper.setValues(ii, values);
-         }
-      }
-   }
-
-   public Map<String, String[]> getPublicParameters() {
-      Map<String,String[]> tmp = new HashMap<String, String[]>();
-      if (prpMapper != null) {
-         for (int ind : prpMapper.getActiveIndexes()) {
-            String name = prpMapper.getPublicParameterGroup(ind).get(0).getName();
-            String[] vals = prpMapper.getValues(ind);
-            tmp.put(name, vals);
-         }
-      }
-      return tmp;
-   }
 
    public Map<String, String[]> getPrivateRenderParameters()
    {

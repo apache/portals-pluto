@@ -50,6 +50,7 @@ public class PortalURLPublicParameter extends PortalURLParameter {
    public PortalURLPublicParameter(String window, String name, QName qname) {
       super(window, name);
       this.qname = qname;
+      this.type = PARAM_TYPE_PUBLIC;
    }
 
    /**
@@ -63,6 +64,7 @@ public class PortalURLPublicParameter extends PortalURLParameter {
       super(window, name, value);
       this.qname = qname;
       removed = false;
+      this.type = PARAM_TYPE_PUBLIC;
    }
 
    /**
@@ -76,6 +78,7 @@ public class PortalURLPublicParameter extends PortalURLParameter {
       super(window, name, values);
       this.qname = qname;
       removed = false;
+      this.type = PARAM_TYPE_PUBLIC;
    }
    
    /**

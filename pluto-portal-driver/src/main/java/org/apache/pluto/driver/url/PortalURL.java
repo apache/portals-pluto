@@ -95,10 +95,6 @@ public interface PortalURL extends Cloneable {
     public boolean isVersion3(String portletId);
 
     Collection<PortalURLParameter> getParameters();
-
-    public void addPublicParameterCurrent(String name, String[] values);
-
-    public Map<String, String[]> getPublicParameters();
     
     Map<String, String[]> getPrivateRenderParameters();
     

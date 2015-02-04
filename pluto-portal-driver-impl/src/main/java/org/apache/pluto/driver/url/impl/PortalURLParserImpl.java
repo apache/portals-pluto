@@ -71,8 +71,10 @@ public class PortalURLParserImpl implements PortalURLParser {
    private static final String PORTLET_MODE = "pm";
    private static final String VALUE_DELIM = "0x0";
 
-   private static final String AJAX_ACTION = "aa";      // new for portlet spec 3
-   private static final String PARTIAL_ACTION = "pa";   // new for portlet spec 3
+   private static final String AJAX_ACTION = "aa";       // new for portlet spec 3
+   private static final String PARTIAL_ACTION = "pa";    // new for portlet spec 3
+   private static final String ACTION_PARAM = "av";      // new for portlet spec 3
+   private static final String RESOURCE_PARAM = "rv";    // new for portlet spec 3
 
 
    //This is a list of characters that need to be encoded  to be protected
@@ -326,10 +328,23 @@ public class PortalURLParserImpl implements PortalURLParser {
                LOG.debug(dbgstr.toString());
             }
 
-
             // Portal URL parameter: portalURL.addParameter().
             if(type.equals(RENDER_PARAM)) {
                portalURL.addParameter(new PortalURLParameter(pid, paramName, paramValues));
+               continue;
+            }
+
+            // Portal URL parameter: portalURL.addParameter().
+            if(type.equals(ACTION_PARAM)) {
+               portalURL.addParameter(new PortalURLParameter(pid, paramName, paramValues, 
+                     PortalURLParameter.PARAM_TYPE_ACTION));
+               continue;
+            }
+
+            // Portal URL parameter: portalURL.addParameter().
+            if(type.equals(RESOURCE_PARAM)) {
+               portalURL.addParameter(new PortalURLParameter(pid, paramName, paramValues,
+                     PortalURLParameter.PARAM_TYPE_RESOURCE));
                continue;
             }
 
@@ -486,7 +501,14 @@ public class PortalURLParserImpl implements PortalURLParser {
                && param.getValues().length > 0) {
             String valueString = encodeMultiValues(param.getValues());
             if (valueString.length() > 0) {
-               buffer.append("/").append(PREFIX).append(RENDER_PARAM)
+               String ptype = RENDER_PARAM;
+               if (param.getType().equals(PortalURLParameter.PARAM_TYPE_ACTION)) {
+                  ptype = ACTION_PARAM;
+               } else 
+                  if (param.getType().equals(PortalURLParameter.PARAM_TYPE_RESOURCE)) {
+                  ptype = RESOURCE_PARAM;
+               }
+              buffer.append("/").append(PREFIX).append(ptype)
                .append(String.valueOf(index)).append(DELIM).append(encodeCharacters(param.getName()))
                .append(VALUE_DELIM).append(valueString);
             }
