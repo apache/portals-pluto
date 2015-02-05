@@ -126,7 +126,7 @@ public class PortalURLParameter {
    }
 
    /**
-    * For this class, "equals" means "refers to the same parameter". The parameter name & window
+    * For this class, "equals" means "refers to the same parameter". The parameter type, name & window
     * are compared, the values are NOT compared. The combination of window ID and parameter name 
     * must always be unique when the objects are used in collections. 
     */
@@ -140,7 +140,9 @@ public class PortalURLParameter {
             PortalURLParameter pup = (PortalURLParameter) o;
             if (equals(window, pup.window)) {
                if (equals(name, pup.name)) {
-                  eq = true;
+                  if (equals(type, pup.type)) {
+                     eq = true;
+                  }
                }
             }
          }
