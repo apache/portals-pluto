@@ -1,6 +1,6 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_3_0.xsd" 
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-           xmlns:rp="http://www.apache.org/portals/pluto/pub-render-params/ResourcePortlet"
+             xmlns:rp="http://www.apache.org/portals/pluto/pub-render-params/ResourcePortlet"
              xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_3_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_3_0.xsd" 
              version="3.0"
     		id="ph.resource.portlet">

@@ -46,8 +46,5 @@ public class Constants {
    public final static String PARAM_NUM_MSGS = "numMsgs";
    public final static String ATTRIB_MSGS = "msgs";
    
-   public final static String EVENT_NAMESPACE = "http://www.apache.org/portals/pluto/pub-render-params/ResourcePortlet";
-   public final static String EVENT_NAME = "Message";
-   
    public final static String DELIM = ";%;";
 }

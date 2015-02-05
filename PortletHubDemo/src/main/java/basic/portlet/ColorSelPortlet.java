@@ -21,6 +21,9 @@ package basic.portlet;
 import static basic.portlet.Constants.*;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -40,12 +43,16 @@ import javax.xml.namespace.QName;
 public class ColorSelPortlet extends GenericPortlet {
 
    // Set up logging
+   private static final String LOG_CLASS = ColorSelPortlet.class.getName();
+   private final Logger logger = Logger.getLogger(LOG_CLASS);
+
    // private static final String LOG_CLASS = ColorSelPortlet.class.getName();
    // private final Logger logger = Logger.getLogger(LOG_CLASS);
 
    protected void doView(RenderRequest req, RenderResponse resp)
          throws PortletException, IOException {
 
+      logger.fine("Doing view.");
       
       resp.setContentType("text/html");
 
@@ -85,20 +92,32 @@ public class ColorSelPortlet extends GenericPortlet {
          resp.setRenderParameter(PARAM_FG_COLOR, vals);
       }
       
-      String val = req.getParameter(PARAM_SUBTYPE);
-      if (val != null) {
-         resp.setRenderParameter(PARAM_SUBTYPE, val);
+      String subType = req.getParameter(PARAM_SUBTYPE);
+      if (subType != null) {
+         resp.setRenderParameter(PARAM_SUBTYPE, subType);
       }
       
-      val = req.getParameter(PARAM_MSG_INPUT);
-      if (val != null) {
-         resp.setRenderParameter(PARAM_MSG_INPUT, val);
+      String text = req.getParameter(PARAM_MSG_INPUT);
+      if (text != null) {
+         resp.setRenderParameter(PARAM_MSG_INPUT, text);
       }
       
-      String msg = val + DELIM + clr;
-      QName qn = new QName(EVENT_NAMESPACE, EVENT_NAME);
-      resp.setEvent(qn, msg);
+      String msg = text + DELIM + clr;
+
+      // there should only be one publishing event, so take the first QName
+      Enumeration<QName> eqn = getPublishingEventQNames();
+      if (eqn.hasMoreElements()) {
+         QName qn = eqn.nextElement(); 
+         resp.setEvent(qn, msg);
+         logger.fine("Firing event with QName: " + qn.toString());
+      } else {
+         logger.warning("No publishing event QName available. Check portlet deployment descriptor.");
+      }
       
+      StringBuilder sb = new StringBuilder("Color: ").append(Arrays.toString(vals));
+      sb.append(", Submission type: ").append(subType);
+      sb.append(", Text: ").append(text);
+      logger.fine(sb.toString());
    }
 
 }

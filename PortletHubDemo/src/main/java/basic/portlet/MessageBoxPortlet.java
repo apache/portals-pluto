@@ -103,7 +103,7 @@ public class MessageBoxPortlet extends GenericPortlet {
          msgs.clear();
       }
       
-      logger.fine("MBP: Processing message event. Current # messages = " + msgs.size());
+      logger.fine("Processing message event. Current # messages = " + msgs.size());
 
       try {
          // Both pieces of info are transported in a delimted string rather than 
@@ -161,6 +161,8 @@ public class MessageBoxPortlet extends GenericPortlet {
          writer.write(msg);
       }
 
+      int n = msgs.size();
+      logger.fine("Served messages. latest message: " + (n > 0 ? msgs.get(n-1) : "null"));
    }
 
 }
