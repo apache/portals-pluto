@@ -55,11 +55,13 @@ limitations under the License.
     <display-name>Pluto Portal Driver</display-name>
     <servlet-name>plutoPortalDriver</servlet-name>
     <servlet-class>org.apache.pluto.driver.PortalDriverServlet</servlet-class>
+<!--  we'll probably want to implement multipart support in a different manner.   
     <multipart-config>
         <max-file-size>10485760</max-file-size>
         <max-request-size>20971520</max-request-size>
         <file-size-threshold>5242880</file-size-threshold>
     </multipart-config>
+-->
   </servlet>
 
   <servlet>

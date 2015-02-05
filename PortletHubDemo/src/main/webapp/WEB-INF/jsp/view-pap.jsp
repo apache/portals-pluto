@@ -33,7 +33,7 @@ limitations under the License.
 <h3>Partial Action Portlet</h3>
 <hr/>
 <p>This portlet exercises the Partial Action execution path.</p>
-<form onsubmit='return false;' enctype='multipart/form-data'><input id='<portlet:namespace/>-doPA' type='submit' name='action' value='Do Partial Action' /></form>
+<form onsubmit='return false;' enctype='application/x-www-form-urlencoded'><input id='<portlet:namespace/>-doPA' type='submit' name='action' value='Do Partial Action' /></form>
 <div id='<portlet:namespace/>-responseDiv' style="<%=style.toString()%>"></div>
    
 <script>

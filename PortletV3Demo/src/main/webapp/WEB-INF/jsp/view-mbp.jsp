@@ -33,7 +33,7 @@ limitations under the License.
 <div style='clear:both;'>
 <div style='float:left;'><h3>Message Box Portlet</h3></div>
 <div style='float:right;'>
-<form   onsubmit='return false;'><input id='<portlet:namespace/>-clear' type='submit' name='action' value='clear' /></form>
+<form   onsubmit='return false;' enctype='application/x-www-form-urlencoded'><input id='<portlet:namespace/>-clear' type='submit' name='action' value='clear' /></form>
 </div>
 </div><div style='clear:both;'><hr/>
 <p>Messages that arrive via events from other portlets are displayed in this box.</p>

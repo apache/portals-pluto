@@ -27,7 +27,7 @@ limitations under the License.
 <div id=<portlet:namespace/>-counter style='float:right; font-size:250%; color:#0B0;'>1</div>
 </div><div style='clear:both;'><hr/>
       
-<FORM id='<portlet:namespace/>-setParams'  onsubmit='return false;' enctype='multipart/form-data'>
+<FORM id='<portlet:namespace/>-setParams'  onsubmit='return false;' enctype='application/x-www-form-urlencoded'>
    <table><tr><td align='left'>
    Cacheability setting:
    </td><td>

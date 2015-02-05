@@ -42,7 +42,7 @@ limitations under the License.
       }
 %>
 
-<form onsubmit='return false;' enctype='multipart/form-data'>
+<form onsubmit='return false;' enctype='application/x-www-form-urlencoded'>
   <table><tr>
      <td align='left'>Enter background color (public param):</td>
      <td>
