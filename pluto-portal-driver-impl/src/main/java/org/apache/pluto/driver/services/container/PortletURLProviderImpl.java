@@ -37,6 +37,7 @@ import javax.xml.namespace.QName;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURL.URLType;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLPublicParameter;
 
@@ -87,14 +88,13 @@ public class PortletURLProviderImpl implements PortletURLProvider
         PortalURL url = this.url.clone();
         if (PortletURLProvider.TYPE.ACTION == type)
         {
-            url.setActionWindow(window);
-            url.setResourceWindow(null);
-            url.clearParameters(window);
+           url.setTargetWindow(window);
+           url.setType(URLType.Action);
         }
         else if (PortletURLProvider.TYPE.RESOURCE == type)
         {
-            url.setActionWindow(null);
-            url.setResourceWindow(window);
+           url.setTargetWindow(window);
+           url.setType(URLType.Resource);
             if (!ResourceURL.FULL.equals(cacheLevel))
             {
                 for (PortalURLParameter parm : url.getParameters())
@@ -109,8 +109,8 @@ public class PortletURLProviderImpl implements PortletURLProvider
         }
         else
         {
-            url.setResourceWindow(null);
-            url.setActionWindow(null);
+            url.setTargetWindow(window);
+            url.setType(URLType.Render);
             url.clearParameters(window);
         }
         if (portletMode != null)

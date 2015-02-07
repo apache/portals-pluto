@@ -34,123 +34,139 @@ import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
  * To change this template use File | Settings | File Templates.
  */
 public interface PortalURL extends Cloneable {
-    void setRenderPath(String renderPath);
 
-    String getRenderPath();
+   enum URLType {
+      Render,
+      Action,
+      Resource,
+      AjaxAction,
+      PartialAction,
+      Portal;
+   }
+   
+   /**
+    * Sets the URL type
+    * @param type
+    */
+   public void setType(URLType type);
+   
+   /**
+    * Returns the URL Type
+    * @return
+    */
+   public URLType getType();
+   
+   /**
+    * Sets the target window ID for this URL
+    * @param windowId
+    */
+   public void setTargetWindow(String windowId);
+   
+   /**
+    * returns the target window. May be null.
+    * @return
+    */
+   public String getTargetWindow();
 
-    void addParameter(PortalURLParameter param);
-    
-    /**
-     * Adds a new public render parameter.
-     * 
-     * @param pup
-     */
-    public void addPublicRenderParameter(PortalURLPublicParameter pup);
-    
-    /**
-     * Add the PRP mapper for the page being processed
-     * @param prpm
-     */
-    public void setPublicRenderParameterMapper(PublicRenderParameterMapper prpm);
-    
-    /**
-     * get the PRP mapper for the page being processed
-     * @return
-     */
-    public PublicRenderParameterMapper getPublicRenderParameterMapper();
-    
-    /**
-     * Stores the portlet window IDs for the portlets on the page
-     * 
-     * @param portletIds
-     */
-    public void setPortletIds(Collection<String> portletIds);
-    
-    /**
-     * Returns the portlet Ids for the portlets on the page
-     * 
-     * @return
-     */
-    public Collection<String> getPortletIds();
-    
-    /**
-     * Sets the version for the given portlet ID
-     * @param portletId
-     * @param version
-     */
-    public void setVersion(String portletId, String version);
-    
-    /**
-     * gets the version for the given portlet ID
-     * @param portletId
-     * @return
-     */
-    public String getVersion(String portletId);
-    
-    /**
-     * Returns <code>true</code> if the given portlet ID refers to a version 3 portlet
-     * @param portletId
-     * @return
-     */
-    public boolean isVersion3(String portletId);
+   void setRenderPath(String renderPath);
 
-    Collection<PortalURLParameter> getParameters();
-    
-    Map<String, String[]> getPrivateRenderParameters();
-    
-    void setActionWindow(String actionWindow);
+   String getRenderPath();
 
-    String getActionWindow();
-    
-    // Ajax action & partial action for portlet spec 3
-    
-    void setAjaxActionWindow(String window);
+   void addParameter(PortalURLParameter param);
 
-    String getAjaxActionWindow();
-    
-    void setPartialActionWindow(String window);
+   /**
+    * Adds a new public render parameter.
+    * 
+    * @param pup
+    */
+   public void addPublicRenderParameter(PortalURLPublicParameter pup);
 
-    String getPartialActionWindow();
+   /**
+    * Add the PRP mapper for the page being processed
+    * @param prpm
+    */
+   public void setPublicRenderParameterMapper(PublicRenderParameterMapper prpm);
 
-    Map<String, PortletMode> getPortletModes();
+   /**
+    * get the PRP mapper for the page being processed
+    * @return
+    */
+   public PublicRenderParameterMapper getPublicRenderParameterMapper();
 
-    PortletMode getPortletMode(String windowId);
+   /**
+    * Stores the portlet window IDs for the portlets on the page
+    * 
+    * @param portletIds
+    */
+   public void setPortletIds(Collection<String> portletIds);
 
-    void setPortletMode(String windowId, PortletMode portletMode);
+   /**
+    * Returns the portlet Ids for the portlets on the page
+    * 
+    * @return
+    */
+   public Collection<String> getPortletIds();
 
-    Map<String, WindowState> getWindowStates();
+   /**
+    * Sets the version for the given portlet ID
+    * @param portletId
+    * @param version
+    */
+   public void setVersion(String portletId, String version);
 
-    WindowState getWindowState(String windowId);
+   /**
+    * gets the version for the given portlet ID
+    * @param portletId
+    * @return
+    */
+   public String getVersion(String portletId);
 
-    void setWindowState(String windowId, WindowState windowState);
+   /**
+    * Returns <code>true</code> if the given portlet ID refers to a version 3 portlet
+    * @param portletId
+    * @return
+    */
+   public boolean isVersion3(String portletId);
 
-    void clearParameters(String windowId);
+   Collection<PortalURLParameter> getParameters();
 
-    /**
-     * 
-     * @deprecated use toURL(boolean) instead
-     */
-    String toString();
-    
-    String toURL(boolean absolute);
+   Map<String, String[]> getPrivateRenderParameters();
 
-    String getServerURI();
+   Map<String, PortletMode> getPortletModes();
 
-    String getServletPath();
+   PortletMode getPortletMode(String windowId);
 
-    PortalURL clone();
+   void setPortletMode(String windowId, PortletMode portletMode);
 
-    String getResourceWindow();
+   Map<String, WindowState> getWindowStates();
 
-	void setResourceWindow(String window);
+   WindowState getWindowState(String windowId);
 
-	PageConfig getPageConfig(ServletContext servletContext);
-	
-	void setCacheability(String cacheLevel);
-	String getCacheability();
-	
-	void setResourceID(String resourceID);
-	String getResourceID();
-	
-	void merge(PortalURL url, String windowId);	
+   void setWindowState(String windowId, WindowState windowState);
+
+   void clearParameters(String windowId);
+
+   /**
+    * 
+    * @deprecated use toURL(boolean) instead
+    */
+   String toString();
+
+   String toURL(boolean absolute);
+
+   String getServerURI();
+
+   String getServletPath();
+
+   PortalURL clone();
+
+   PageConfig getPageConfig(ServletContext servletContext);
+
+   void setCacheability(String cacheLevel);
+   String getCacheability();
+
+   void setResourceID(String resourceID);
+   String getResourceID();
+
+   void merge(PortalURL url, String windowId);	
 }

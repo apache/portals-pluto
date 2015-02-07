@@ -159,6 +159,9 @@ public class PortalURLParameter {
       if (name != null) {
          hc += 37*hc + name.hashCode();
       }
+      if (type != null) {
+         hc += 37*hc + type.hashCode();
+      }
       return hc;
    }
 

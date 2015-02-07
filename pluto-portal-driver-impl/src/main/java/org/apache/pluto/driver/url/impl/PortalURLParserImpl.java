@@ -38,6 +38,7 @@ import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURL.URLType;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLParser;
 import org.apache.pluto.driver.url.PortalURLPublicParameter;
@@ -60,8 +61,6 @@ public class PortalURLParserImpl implements PortalURLParser {
    private static final String PREFIX = "__";
    private static final String DELIM = "_";
    private static final String PORTLET_ID = "pd";
-   private static final String ACTION = "ac";
-   private static final String RESOURCE = "rs";
    private static final String RESOURCE_ID = "ri";
    private static final String CACHE_LEVEL = "cl";
    private static final String RENDER_PARAM = "rp";
@@ -71,8 +70,12 @@ public class PortalURLParserImpl implements PortalURLParser {
    private static final String PORTLET_MODE = "pm";
    private static final String VALUE_DELIM = "0x0";
 
+   private static final String ACTION = "ac";
+   private static final String RESOURCE = "rs";
    private static final String AJAX_ACTION = "aa";       // new for portlet spec 3
    private static final String PARTIAL_ACTION = "pa";    // new for portlet spec 3
+   private static final String RENDER = "re";            // new for portlet spec 3
+   
    private static final String ACTION_PARAM = "av";      // new for portlet spec 3
    private static final String RESOURCE_PARAM = "rv";    // new for portlet spec 3
 
@@ -130,7 +133,7 @@ public class PortalURLParserImpl implements PortalURLParser {
 
       String urlBase = request.getScheme()+"://" + request.getServerName() + ":" + request.getServerPort();
       // Construct portal URL using info retrieved from servlet request.
-      PortalURL portalURL =  new RelativePortalURLImpl(urlBase, contextPath, servletName, this);
+      PortalURL portalURL =  new RelativePortalURLImpl(urlBase, contextPath, servletName, this, request);
 
       // Support added for filter.  Should we seperate into a different impl?
       String pathInfo = request.getPathInfo();
@@ -139,7 +142,7 @@ public class PortalURLParserImpl implements PortalURLParser {
             int idx = servletName.indexOf(".jsp")+".jsp".length();
             pathInfo = servletName.substring(idx);
             servletName = servletName.substring(0, idx);
-            portalURL = new RelativePortalURLImpl(urlBase, contextPath, servletName, this);
+            portalURL = new RelativePortalURLImpl(urlBase, contextPath, servletName, this, request);
          } else {
             return portalURL;
          }
@@ -259,25 +262,36 @@ public class PortalURLParserImpl implements PortalURLParser {
 
             // Resource window definition: portalURL.setResourceWindow().
             if (type.equals(RESOURCE)) {
-               portalURL.setResourceWindow(pid);
+               portalURL.setTargetWindow(pid);
+               portalURL.setType(URLType.Resource);
+               continue;
+            }
+
+            // Render window definition: portalURL.setResourceWindow().
+            if (type.equals(RENDER)) {
+               portalURL.setTargetWindow(pid);
+               portalURL.setType(URLType.Render);
                continue;
             }
 
             // Action window definition: portalURL.setActionWindow().
             if (type.equals(ACTION)) {
-               portalURL.setActionWindow(pid);
+               portalURL.setTargetWindow(pid);
+               portalURL.setType(URLType.Action);
                continue;
             }
 
-            // Action window definition: portalURL.setActionWindow().
+            // Ajax Action window definition: portalURL.setActionWindow().
             if (type.equals(AJAX_ACTION)) {
-               portalURL.setAjaxActionWindow(pid);
+               portalURL.setTargetWindow(pid);
+               portalURL.setType(URLType.AjaxAction);
                continue;
             }
 
-            // Action window definition: portalURL.setActionWindow().
+            // Partial Action window definition: portalURL.setActionWindow().
             if (type.equals(PARTIAL_ACTION)) {
-               portalURL.setPartialActionWindow(pid);
+               portalURL.setTargetWindow(pid);
+               portalURL.setType(URLType.PartialAction);
                continue;
             }
 
@@ -387,6 +401,7 @@ public class PortalURLParserImpl implements PortalURLParser {
    public String toString(PortalURL portalURL) {
 
       StringBuilder buffer = new StringBuilder();
+      String targetWindow = portalURL.getTargetWindow();
 
       // Append the server URI and the servlet path.
       buffer.append(portalURL.getServletPath().startsWith("/")?"":"/")
@@ -406,27 +421,39 @@ public class PortalURLParserImpl implements PortalURLParser {
       }
 
       //Append the resource window definition, if it exists.
-      if (portalURL.getResourceWindow() != null) {
-         int index = pids.indexOf(portalURL.getResourceWindow());
+      if (portalURL.getType() == URLType.Resource) {
+         int index = pids.indexOf(targetWindow);
          if (index < 0) {
-            LOG.warn("resource window not found in portlet ID list. PID = " + portalURL.getResourceWindow());
+            LOG.warn("resource window not found in portlet ID list. PID = " + targetWindow);
          } else {
             buffer.append("/");
             buffer.append(PREFIX).append(RESOURCE).append(String.valueOf(index));
          }
       }
-      // Append the action window definition, if it exists.
-      if (portalURL.getActionWindow() != null) {
-         int index = pids.indexOf(portalURL.getActionWindow());
+
+      //Append the render window definition, if it exists.
+      if (portalURL.getType() == URLType.Render) {
+         int index = pids.indexOf(targetWindow);
          if (index < 0) {
-            LOG.warn("Action window not found in portlet ID list. PID = " + portalURL.getActionWindow());
+            LOG.warn("render window not found in portlet ID list. PID = " + targetWindow);
+         } else {
+            buffer.append("/");
+            buffer.append(PREFIX).append(RENDER).append(String.valueOf(index));
+         }
+      }
+      
+      // Append the action window definition, if it exists.
+      if (portalURL.getType() == URLType.Action) {
+         int index = pids.indexOf(targetWindow);
+         if (index < 0) {
+            LOG.warn("Action window not found in portlet ID list. PID = " + targetWindow);
          } else {
             buffer.append("/");
             buffer.append(PREFIX).append(ACTION).append(String.valueOf(index));
          }
       }
 
-      if (portalURL.getResourceWindow() != null)
+      if (portalURL.getType() == URLType.Resource)
       {
          if (portalURL.getCacheability() != null)
          {
@@ -480,10 +507,9 @@ public class PortalURLParserImpl implements PortalURLParser {
          }
 
          // Encode action params in the query appended at the end of the URL.
-         if (portalURL.getActionWindow() != null
-               && portalURL.getActionWindow().equals(param.getWindowId())
-               || (portalURL.getResourceWindow() != null
-               && portalURL.getResourceWindow().equals(param.getWindowId()))) {
+         if (targetWindow.equals(param.getWindowId()) &&
+               (portalURL.getType() == URLType.Action
+               || portalURL.getType() == URLType.Resource)) {
             for (int i = 0; i < param.getValues().length; i++) {
                // FIX for PLUTO-247
                if ( firstParam ) {
@@ -518,7 +544,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       encode(buffer);
 
       // Add the private render parameters
-      if (portalURL.getResourceWindow() != null)
+      if (portalURL.getType() == URLType.Resource)
       {
          Map<String, String[]> privateParamList = portalURL.getPrivateRenderParameters();
          if (privateParamList!=null){

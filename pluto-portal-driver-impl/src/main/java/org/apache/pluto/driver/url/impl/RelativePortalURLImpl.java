@@ -28,6 +28,7 @@ import java.util.Map;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,10 +52,6 @@ public class RelativePortalURLImpl implements PortalURL {
    private String urlBase;
    private String servletPath;
    private String renderPath;
-   private String actionWindow;
-   private String ajaxActionWindow;
-   private String partialActionWindow;
-   private String resourceWindow;
    private String cacheLevel;
    private String resourceID;
 
@@ -72,6 +69,11 @@ public class RelativePortalURLImpl implements PortalURL {
     * representation of this portal url.
     */
    private PortalURLParser urlParser;
+   
+   // The servlet request for delyed parsing of the servlet parameters
+   HttpServletRequest servletRequest;
+   // marks whether the servlet request parameters have been processed.
+   boolean reqParamsProcessed = false;
 
    /** The window states: key is the window ID, value is WindowState. */
    private Map<String, WindowState> windowStates = new HashMap<String, WindowState>();
@@ -79,7 +81,11 @@ public class RelativePortalURLImpl implements PortalURL {
    private Map<String, PortletMode> portletModes = new HashMap<String, PortletMode>();
 
    /** Parameters of the portlet windows. */
-   private Map<String, PortalURLParameter> parameters = new HashMap<String, PortalURLParameter>();
+   private HashSet<PortalURLParameter> parameters = new HashSet<PortalURLParameter>();
+   
+   // Target window & type of URL
+   URLType type = URLType.Portal;      // initially just addresses the portal in general
+   String targetWindow = null;
 
    /**
     * Constructs a PortalURLImpl instance using customized port.
@@ -88,13 +94,15 @@ public class RelativePortalURLImpl implements PortalURL {
     * @param servletName  the servlet name.
     * @param urlParser    the {@link PortalURLParser} used to construct a string representation of the url.
     */
-   public RelativePortalURLImpl(String urlBase, String contextPath, String servletName, PortalURLParser urlParser) {
+   public RelativePortalURLImpl(String urlBase, String contextPath, String servletName, 
+         PortalURLParser urlParser, HttpServletRequest req) {
       this.urlBase = urlBase;
       StringBuffer buffer = new StringBuffer();
       buffer.append(contextPath);
       buffer.append(servletName);
       servletPath = buffer.toString();
       this.urlParser = urlParser;
+      this.servletRequest = req;
    }
 
    /**
@@ -103,6 +111,59 @@ public class RelativePortalURLImpl implements PortalURL {
     */
    private RelativePortalURLImpl() {
       // Do nothing.
+   }
+   
+   // reading of the servlet request parameters is delayed until the first time
+   // the parameters are read in order to allow a portlet to potentially set
+   // the character encoding during processAction or serveResource.
+   
+   private void handleReqParams() {
+      if (!reqParamsProcessed && servletRequest != null 
+            && targetWindow != null && type != URLType.Portal) {
+         reqParamsProcessed = true;
+         
+         try {
+            servletRequest.setCharacterEncoding("UTF-8"); // in case it hasn't already been set
+         } catch(Exception e) {}
+         
+         Map<String, String []> parms = servletRequest.getParameterMap();
+         if (!parms.isEmpty()) {
+            
+            // choose the parameter type. Query or POST parameters always target the 
+            // target window, never the general page.
+            
+            String ptype = PortalURLParameter.PARAM_TYPE_RENDER;
+            if (type == URLType.Action || type == URLType.AjaxAction 
+                  || type == URLType.PartialAction) {
+               ptype = PortalURLParameter.PARAM_TYPE_ACTION;
+            } else if (type == URLType.Resource) {
+               ptype = PortalURLParameter.PARAM_TYPE_RESOURCE;
+            }
+            
+            // The semantics is a query or POST parameter overwrites a 
+            // parameter of the same windowId, type and name encoded in the URL.
+            
+            for (String parm : parms.keySet()) {
+               
+               // If it's a render request & target window is set, the parameter might be public
+               if (type == URLType.Render && targetWindow != null) {
+                  int index = prpMapper.getIndex(targetWindow, parm);
+                  if (index >= 0 ) {
+                     prpMapper.setValues(index, parms.get(parm));
+                     continue;
+                  }
+               }
+               
+               // handle private parameter
+               
+               PortalURLParameter pup = new PortalURLParameter(targetWindow, parm, parms.get(parm), ptype);
+               if (parameters.contains(pup)) {
+                  parameters.remove(pup);       // remove the old values
+                  parameters.add(pup);          // add the new values
+               }
+            }
+         }
+      }
    }
 
    // Public Methods ----------------------------------------------------------
@@ -116,35 +177,12 @@ public class RelativePortalURLImpl implements PortalURL {
    }
 
    public void addParameter(PortalURLParameter param) {
-      parameters.put(param.getWindowId() + param.getName(), param);
+      parameters.add(param);
    }
 
    public Collection<PortalURLParameter> getParameters() {
-      return parameters.values();
-   }
-
-   public void setActionWindow(String actionWindow) {
-      this.actionWindow = actionWindow;
-   }
-
-   public String getActionWindow() {
-      return actionWindow;
-   }
-
-   public void setAjaxActionWindow(String window) {
-      this.ajaxActionWindow = window;
-   }
-
-   public String getAjaxActionWindow() {
-      return ajaxActionWindow;
-   }
-
-   public void setPartialActionWindow(String window) {
-      this.partialActionWindow = window;
-   }
-
-   public String getPartialActionWindow() {
-      return partialActionWindow;
+      handleReqParams();
+      return parameters;
    }
 
    public Map<String, PortletMode> getPortletModes() {
@@ -194,13 +232,9 @@ public class RelativePortalURLImpl implements PortalURL {
     * @param windowId  the window ID.
     */
    public void clearParameters(String windowId) {
-      for (Iterator<Map.Entry<String, PortalURLParameter>> it = parameters.entrySet().iterator(); it.hasNext(); ) {
-         Map.Entry<String, PortalURLParameter> entry = it.next();
-         PortalURLParameter param = entry.getValue();
-         if (param.getWindowId()!=null){
-            if (param.getWindowId().equals(windowId)) {
-               it.remove();
-            }
+      for (PortalURLParameter p : parameters) {
+         if (p.getWindowId().equals(windowId)) {
+            parameters.remove(p);
          }
       }
    }
@@ -275,25 +309,28 @@ public class RelativePortalURLImpl implements PortalURL {
    public synchronized PortalURL clone() {
       RelativePortalURLImpl portalURL = new RelativePortalURLImpl();
       portalURL.servletPath = this.servletPath;
-      portalURL.parameters = new HashMap<String, PortalURLParameter>(parameters);
+      portalURL.parameters = new HashSet<PortalURLParameter>(parameters);
       portalURL.privateRenderParameters = new HashMap<String, String[]>(privateRenderParameters);
       portalURL.portletModes = new HashMap<String, PortletMode>(portletModes);
       portalURL.windowStates = new HashMap<String, WindowState>(windowStates);
       portalURL.cacheLevel = cacheLevel;
       portalURL.resourceID = resourceID;
       portalURL.renderPath = renderPath;
-      portalURL.actionWindow = actionWindow;
       portalURL.urlParser = urlParser;
-      portalURL.resourceWindow = resourceWindow;
       portalURL.prpMapper = (prpMapper == null) ? null : prpMapper.clone();
       portalURL.portletIds = new HashSet<String>(portletIds);
       portalURL.versionMap = new HashMap<String, String>(versionMap);
       portalURL.v3Map = new HashMap<String, Boolean>(v3Map);
+      portalURL.servletRequest = servletRequest;
+      portalURL.reqParamsProcessed = reqParamsProcessed;
+      portalURL.type = type;
+      portalURL.targetWindow = targetWindow;
       return portalURL;
    }
 
    public Map<String, String[]> getPrivateRenderParameters()
    {
+      handleReqParams();
       return privateRenderParameters;
    }
 
@@ -313,18 +350,10 @@ public class RelativePortalURLImpl implements PortalURL {
       return paco;
    }
 
-   public String getResourceWindow() {
-      return resourceWindow;
-   }
-
-   public void setResourceWindow(String resourceWindow) {
-      this.resourceWindow = resourceWindow;
-   }
-
    public synchronized void merge(PortalURL url, String windowId)
    {
-      actionWindow = url.getActionWindow();
-      resourceWindow = url.getResourceWindow();
+      type = url.getType();
+      targetWindow = url.getTargetWindow();
       setPortletMode(windowId, url.getPortletMode(windowId));
       setWindowState(windowId, url.getWindowState(windowId));
       setCacheability(url.getCacheability());
@@ -396,5 +425,33 @@ public class RelativePortalURLImpl implements PortalURL {
 
    public boolean isVersion3(String portletId) {
       return v3Map.get(portletId);
+   }
+
+   /* (non-Javadoc)
+    * @see org.apache.pluto.driver.url.PortalURL#setType(org.apache.pluto.driver.url.PortalURL.URLType)
+    */
+   public void setType(URLType type) {
+      this.type = type;
+   }
+
+   /* (non-Javadoc)
+    * @see org.apache.pluto.driver.url.PortalURL#getType()
+    */
+   public URLType getType() {
+      return type;
+   }
+
+   /* (non-Javadoc)
+    * @see org.apache.pluto.driver.url.PortalURL#setTargetWindow(java.lang.String)
+    */
+   public void setTargetWindow(String windowId) {
+      targetWindow = windowId;
+   }
+
+   /* (non-Javadoc)
+    * @see org.apache.pluto.driver.url.PortalURL#getTargetWindow()
+    */
+   public String getTargetWindow() {
+      return targetWindow;
    }
 }
