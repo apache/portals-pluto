@@ -127,10 +127,15 @@ public interface PortalURL extends Cloneable {
     * @return
     */
    public boolean isVersion3(String portletId);
+   
+   /**
+    *  To allow delayed reading of the servlet request parameters until the first time
+    *  the parameters are read in order to allow a portlet to potentially set   
+    *  the character encoding during processAction or serveResource.            
+    */
+   public void handleServletRequestParams();
 
    Collection<PortalURLParameter> getParameters();
-
-   Map<String, String[]> getPrivateRenderParameters();
 
    Map<String, PortletMode> getPortletModes();
 
@@ -168,5 +173,10 @@ public interface PortalURL extends Cloneable {
    void setResourceID(String resourceID);
    String getResourceID();
 
-   void merge(PortalURL url, String windowId);	
+   void merge(PortalURL url, String windowId);
+
+   /**
+    * @param window
+    */
+   public void clearResourceParameters(String window);	
 }

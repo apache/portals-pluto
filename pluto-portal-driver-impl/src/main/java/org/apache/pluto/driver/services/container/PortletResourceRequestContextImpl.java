@@ -52,7 +52,7 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
 
     public Map<String, String[]> getPrivateRenderParameterMap()
     {
-        return getPortalURL().getPrivateRenderParameters();
+        return paramFactory.getResourceRenderParameterMap(window.getId().getStringId());
     }
 
     public String getResourceID()

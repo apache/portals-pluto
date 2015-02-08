@@ -95,17 +95,7 @@ public class PortletURLProviderImpl implements PortletURLProvider
         {
            url.setTargetWindow(window);
            url.setType(URLType.Resource);
-            if (!ResourceURL.FULL.equals(cacheLevel))
-            {
-                for (PortalURLParameter parm : url.getParameters())
-                {
-                    if (window.equals(parm.getWindowId()))
-                    {
-                        url.getPrivateRenderParameters().put(parm.getName(), parm.getValues());
-                    }                            
-                }
-            }
-            url.clearParameters(window);
+           url.clearResourceParameters(window);
         }
         else
         {

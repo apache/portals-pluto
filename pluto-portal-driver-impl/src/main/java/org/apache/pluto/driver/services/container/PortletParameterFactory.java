@@ -18,6 +18,8 @@
 
 package org.apache.pluto.driver.services.container;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,44 +45,90 @@ public class PortletParameterFactory {
    
    PortalURL url;
    
+   HashMap<String, ArrayList<PortalURLParameter>> wid2Render;
+   HashMap<String, ArrayList<PortalURLParameter>> wid2Action;
+   HashMap<String, ArrayList<PortalURLParameter>> wid2Resource;
+   
    public PortletParameterFactory(PortalURL url) {
       this.url = url;
    }
+   
+   private void addParam(Map<String, ArrayList<PortalURLParameter>> map, PortalURLParameter parm) {
+      String wid = parm.getWindowId();
+      if (!map.keySet().contains(wid)) {
+         map.put(wid, new ArrayList<PortalURLParameter>());
+      }
+      map.get(wid).add(parm);
+   }
+   
+   /**
+    * process the URL parameters. Do this as late as possible so that 
+    * the servlet rquest parameters get handled properly.
+    */
+   private void processParams() {
+      wid2Render = new HashMap<String, ArrayList<PortalURLParameter>>();
+      wid2Action = new HashMap<String, ArrayList<PortalURLParameter>>();
+      wid2Resource = new HashMap<String, ArrayList<PortalURLParameter>>();
+      
+      //Make sure the servlet request parameters are processed
+      url.handleServletRequestParams();
+      
+      for (PortalURLParameter parm : url.getParameters()) {
+         if (parm.getType().equals(PortalURLParameter.PARAM_TYPE_ACTION)) {
+            addParam(wid2Action, parm);
+         } else if (parm.getType().equals(PortalURLParameter.PARAM_TYPE_RESOURCE)) {
+            addParam(wid2Resource, parm);
+         } else {
+            addParam(wid2Render, parm);
+         }
+      }
 
+   }
+
+   /**
+    * This V2.0 method returns the private parameters for the given window ID.
+    * In the case of a render URL, it returns only the private render parameters.
+    * 
+    * In the case of an action or resource URL, it returns the action or resource 
+    * parameters combined with the render parameters, with the action or resource
+    * parameters taking precedence.
+    * 
+    * Note that the  latter circumstance will only occur with V3.0 portlets.
+    *  
+    * @param windowId
+    * @return
+    */
    public Map<String, String[]> getPrivateParameterMap(String windowId) {
       HashMap<String, String[]> parameters = new HashMap<String, String[]>();
-//       if (useRequestParameters) {
-//          parameters.putAll(servletRequest.getParameterMap());
-//       }
-//       for (Map.Entry<String, String[]> entry : getPrivateRenderParameterMap()
-//             .entrySet()) {
-//          String[] values = parameters.get(entry.getKey());
-//          if (values == null) {
-//             parameters.put(entry.getKey(), entry.getValue());
-//          } else {
-//             String[] copy = new String[values.length + entry.getValue().length];
-//             System.arraycopy(values, 0, copy, 0, values.length);
-//             System.arraycopy(entry.getValue(), 0, copy, values.length,
-//                   entry.getValue().length);
-//             parameters.put(entry.getKey(), copy);
-//          }
-//       }
-      for (PortalURLParameter parm : url.getParameters()) {
-         if (windowId.equals(parm.getWindowId()) 
-               && PortalURLParameter.PARAM_TYPE_RENDER.equals(parm.getType())) {
-            String[] values = parameters.get(parm.getName());
-            if (values == null) {
-               parameters.put(parm.getName(), parm.getValues());
+      processParams();
+
+      // get the action or resource parameters
+      
+      if (wid2Action.containsKey(windowId)) {
+         for (PortalURLParameter parm : wid2Action.get(windowId)) {
+            parameters.put(parm.getName(), parm.getValues().clone());
+         }
+      } else if (wid2Resource.containsKey(windowId)) {
+         for (PortalURLParameter parm : wid2Resource.get(windowId)) {
+            parameters.put(parm.getName(), parm.getValues().clone());
+         }
+      }
+      
+      // Now merge in the render parameters
+      
+      if (wid2Render.containsKey(windowId)) {
+         for (PortalURLParameter parm : wid2Render.get(windowId)) {
+            if (parameters.containsKey(parm.getName())) {
+               ArrayList<String> vals = 
+                     new ArrayList<String>(Arrays.asList(parameters.get(parm.getName())));
+               vals.addAll(Arrays.asList(parm.getValues()));
+               parameters.put(parm.getName(), (String[])vals.toArray());
             } else {
-               String[] copy = new String[values.length
-                     + parm.getValues().length];
-               System.arraycopy(values, 0, copy, 0, values.length);
-               System.arraycopy(parm.getValues(), 0, copy, values.length,
-                     parm.getValues().length);
-               parameters.put(parm.getName(), copy);
+               parameters.put(parm.getName(), parm.getValues().clone());
             }
          }
       }
+
       if (isDebug) {
          StringBuffer sb = new StringBuffer();
          sb.append("Dump private Parameter Map:");
@@ -97,14 +145,47 @@ public class PortletParameterFactory {
       return parameters;
    }
    
+   /**
+    * Returns the active (= have been set) public render parameters for the
+    * given window ID.
+    *  
+    * @param windowId
+    * @return
+    */
    public Map<String, String[]> getPublicParameterMap(String windowId) {
       HashMap<String, String[]> parameters = new HashMap<String, String[]>();
+      
+      //Make sure the servlet request parameters are processed
+      url.handleServletRequestParams();
+
       PublicRenderParameterMapper mapper = url.getPublicRenderParameterMapper();
+      
       // get the active PRPs only
+      
       List<PortalURLPublicParameter> prps = mapper.getPRPsForWindow(windowId, true);
       for (PortalURLPublicParameter prp : prps) {
          parameters.put(prp.getName(), prp.getValues().clone());
       }
+      return parameters;
+   }
+
+   /**
+    * This is a V2 method to get the private render parameter map during
+    * a resource request.
+    * 
+    * @return
+    */
+   public Map<String, String[]> getResourceRenderParameterMap(String windowId) {
+      HashMap<String, String[]> parameters = new HashMap<String, String[]>();
+
+      processParams();
+      
+      if (wid2Render.containsKey(windowId)) {
+         for (PortalURLParameter parm : wid2Render.get(windowId)) {
+            parameters.put(parm.getName(), parm.getValues().clone());
+         }
+      }
+      
       return parameters;
    }
 

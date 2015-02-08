@@ -117,7 +117,7 @@ public class RelativePortalURLImpl implements PortalURL {
    // the parameters are read in order to allow a portlet to potentially set
    // the character encoding during processAction or serveResource.
    
-   private void handleReqParams() {
+   public void handleServletRequestParams() {
       if (!reqParamsProcessed && servletRequest != null 
             && targetWindow != null && type != URLType.Portal) {
          reqParamsProcessed = true;
@@ -181,7 +181,6 @@ public class RelativePortalURLImpl implements PortalURL {
    }
 
    public Collection<PortalURLParameter> getParameters() {
-      handleReqParams();
       return parameters;
    }
 
@@ -328,12 +327,6 @@ public class RelativePortalURLImpl implements PortalURL {
       return portalURL;
    }
 
-   public Map<String, String[]> getPrivateRenderParameters()
-   {
-      handleReqParams();
-      return privateRenderParameters;
-   }
-
 
    public PageConfig getPageConfig(ServletContext servletContext) {
       String requestedPageId = getRenderPath();
@@ -453,5 +446,17 @@ public class RelativePortalURLImpl implements PortalURL {
     */
    public String getTargetWindow() {
       return targetWindow;
+   }
+
+   /* (non-Javadoc)
+    * @see org.apache.pluto.driver.url.PortalURL#clearResourceParameters(java.lang.String)
+    */
+   public void clearResourceParameters(String window) {
+      for (PortalURLParameter pup : parameters) {
+         if (pup.getType().equals(PortalURLParameter.PARAM_TYPE_RESOURCE) 
+               && pup.getWindowId().equals(window)) {
+            parameters.remove(pup);
+         }
+      }
    }
 }

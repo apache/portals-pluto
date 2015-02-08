@@ -23,9 +23,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.portlet.PortletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
@@ -38,29 +35,25 @@ import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.driver.url.PortalURLParameter;
 
 /**
  * @version $Id$
  *
  */
 public class PortletRequestContextImpl implements PortletRequestContext {
-   private static final String LOG_CLASS = PortletRequestContextImpl.class
-                                               .getName();
-   private final Logger        LOGGER    = Logger.getLogger(LOG_CLASS);
 
    private PortletContainer    container;
    private HttpServletRequest  containerRequest;
    private HttpServletResponse containerResponse;
    private HttpServletRequest  servletRequest;
    private HttpServletResponse servletResponse;
-   private PortletWindow       window;
    private PortalURL           url;
-   private PortletParameterFactory paramFactory;
    private PortletConfig       portletConfig;
    private ServletContext      servletContext;
    private Cookie              cookies[];
-   private boolean             useRequestParameters;
+
+   protected PortletWindow       window;
+   protected PortletParameterFactory paramFactory;
 
    public PortletRequestContextImpl(PortletContainer container,
          HttpServletRequest containerRequest,
@@ -70,7 +63,6 @@ public class PortletRequestContextImpl implements PortletRequestContext {
       this.containerRequest = containerRequest;
       this.containerResponse = containerResponse;
       this.window = window;
-      this.useRequestParameters = useRequestParameters;
       this.url = PortalRequestContext.getContext(containerRequest)
             .createPortalURL();
       this.paramFactory = new PortletParameterFactory(url);
