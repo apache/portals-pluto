@@ -35,6 +35,7 @@ import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortletParameterFactory;
 
 /**
  * @version $Id$
@@ -65,7 +66,7 @@ public class PortletRequestContextImpl implements PortletRequestContext {
       this.window = window;
       this.url = PortalRequestContext.getContext(containerRequest)
             .createPortalURL();
-      this.paramFactory = new PortletParameterFactory(url);
+      this.paramFactory = url.getPortletParameterFactory();
    }
 
    protected boolean isReservedAttributeName(String name) {

@@ -16,7 +16,7 @@
  *  under the License.
  */
 
-package org.apache.pluto.driver.services.container;
+package org.apache.pluto.driver.url;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,9 +25,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
-import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.driver.url.PortalURLParameter;
-import org.apache.pluto.driver.url.PortalURLPublicParameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,7 +119,7 @@ public class PortletParameterFactory {
                ArrayList<String> vals = 
                      new ArrayList<String>(Arrays.asList(parameters.get(parm.getName())));
                vals.addAll(Arrays.asList(parm.getValues()));
-               parameters.put(parm.getName(), (String[])vals.toArray());
+               parameters.put(parm.getName(), vals.toArray(new String[0]));
             } else {
                parameters.put(parm.getName(), parm.getValues().clone());
             }

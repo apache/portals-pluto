@@ -44,6 +44,8 @@ public interface PortalURL extends Cloneable {
       Portal;
    }
    
+   public PortletParameterFactory getPortletParameterFactory();
+   
    /**
     * Sets the URL type
     * @param type
@@ -73,6 +75,18 @@ public interface PortalURL extends Cloneable {
    String getRenderPath();
 
    void addParameter(PortalURLParameter param);
+   
+   /**
+    * Removes the given parameter
+    * @param param
+    */
+   public void removeParameter(PortalURLParameter param);
+   
+   /**
+    * Removes the given public render parameter
+    * @param param
+    */
+   public void removePublicRenderParameter(PortalURLPublicParameter param);
 
    /**
     * Adds a new public render parameter.

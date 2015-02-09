@@ -48,19 +48,11 @@ public class PortalURLParameter {
    protected String[] values;
    protected String type;
 
-   // Constructor for use by extending classes
+   // Constructors for use by extending classes
    protected PortalURLParameter(String window, String name) {
       this.window = window;
       this.name = name;
       this.values = null;
-   }
-
-   // Create a new render parameter
-   public PortalURLParameter(String window, String name, String value) {
-      this.window = window;
-      this.name = name;
-      this.values = new String[]{value};
-      this.type = PARAM_TYPE_RENDER;
    }
 
    // Create a new parameter of specified type
@@ -69,17 +61,6 @@ public class PortalURLParameter {
       this.name = name;
       this.values = values;
       this.type = PARAM_TYPE_RENDER;
-   }
-
-   // Create a new parameter of specified type
-   public PortalURLParameter(String window, String name, String value, String type) {
-      this.window = window;
-      this.name = name;
-      this.values = new String[]{value};
-      this.type = type;
-      if (!allowedTypes.contains(type)) {
-         LOGGER.warn("Parameter type: " + type + " is not in allowed set: " + allowedTypes.toString());
-      }
    }
 
    public PortalURLParameter(String window, String name, String[] values, String type) {
@@ -122,7 +103,7 @@ public class PortalURLParameter {
    @Override
    public PortalURLParameter clone() {
       // shallow clone works because strings are immutable
-      return new PortalURLParameter(window, name, (values == null ? values : values.clone()));
+      return new PortalURLParameter(window, name, (values == null ? values : values.clone()), type);
    }
 
    /**

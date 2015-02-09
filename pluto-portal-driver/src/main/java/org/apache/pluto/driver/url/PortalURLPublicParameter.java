@@ -54,20 +54,6 @@ public class PortalURLPublicParameter extends PortalURLParameter {
    }
 
    /**
-    * Constructor with single value
-    * @param window
-    * @param name
-    * @param qname
-    * @param value
-    */
-   public PortalURLPublicParameter(String window, String name, QName qname, String value) {
-      super(window, name, value);
-      this.qname = qname;
-      removed = false;
-      this.type = PARAM_TYPE_PUBLIC;
-   }
-
-   /**
     * Constructor with multiple values
     * @param window
     * @param name

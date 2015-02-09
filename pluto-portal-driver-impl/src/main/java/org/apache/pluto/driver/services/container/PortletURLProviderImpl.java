@@ -47,13 +47,14 @@ import org.apache.pluto.driver.url.PortalURLPublicParameter;
 public class PortletURLProviderImpl implements PortletURLProvider
 {
     private final Logger LOGGER = LoggerFactory.getLogger(PortletURLProviderImpl.class);
+    private final boolean isDebug = LOGGER.isDebugEnabled();
 
     private final PortalURL url;
     private final TYPE type;
     private final String window;
     private PortletMode portletMode;
     private WindowState windowState;
-    private String cacheLevel;
+    private String cacheLevel = ResourceURL.PAGE;     // default
     private String resourceID;
     private Map<String, String[]> renderParameters;
     private Map<String, List<String>> properties;
@@ -78,14 +79,13 @@ public class PortletURLProviderImpl implements PortletURLProvider
 
     public PortletURLProviderImpl(PortalURL url, TYPE type, PortletWindow portletWindow)
     {
-        this.url = url;
+        this.url = url.clone();
         this.type = type;
         this.window = portletWindow.getId().getStringId();
     }
     
     public PortalURL apply()
     {
-        PortalURL url = this.url.clone();
         if (PortletURLProvider.TYPE.ACTION == type)
         {
            url.setTargetWindow(window);
@@ -230,10 +230,15 @@ public class PortletURLProviderImpl implements PortletURLProvider
     */
    public void addPublicRenderParameter(QName qn, String identifier, String[] values) 
    {
-       LOGGER.debug("Add PRP. QName = " + qn.toString() + ", ID = " + identifier
-             + ", values = " + Arrays.toString(values));
-       PortalURLPublicParameter pupp = new PortalURLPublicParameter(window, identifier, qn, values);
-       prpSet.add(pupp);
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder("Add PRP. QName = ");
+         txt.append(qn.toString())
+         .append(", ID = ").append(identifier)
+         .append(", values = ").append(Arrays.toString(values));
+         LOGGER.debug(txt.toString());
+      }
+      PortalURLPublicParameter pupp = new PortalURLPublicParameter(window, identifier, qn, values);
+      prpSet.add(pupp);
    }
 
    /* (non-Javadoc)
@@ -241,10 +246,12 @@ public class PortletURLProviderImpl implements PortletURLProvider
     */
    public void removePublicRenderParameter(QName qn, String identifier) 
    {
-       LOGGER.debug("Remove PRP. QName = " + qn.toString());
-       PortalURLPublicParameter pupp = new PortalURLPublicParameter(window, identifier, qn);
-       pupp.setRemoved(true);
-       prpSet.add(pupp);
+      if (isDebug) {
+         LOGGER.debug("Remove PRP. QName = " + qn.toString());
+      }
+      PortalURLPublicParameter pupp = new PortalURLPublicParameter(window, identifier, qn);
+      pupp.setRemoved(true);
+      prpSet.add(pupp);
    }
 
    /**

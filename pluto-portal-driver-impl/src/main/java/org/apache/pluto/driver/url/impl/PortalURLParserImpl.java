@@ -140,7 +140,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       // Construct portal URL using info retrieved from servlet request.
       PortalURL portalURL =  new RelativePortalURLImpl(urlBase, contextPath, servletName, this, request);
 
-      // Support added for filter.  Should we seperate into a different impl?
+      // Support added for filter.  Should we separate into a different impl?
       String pathInfo = request.getPathInfo();
       if (pathInfo == null) {
          if(servletName.contains(".jsp") && !servletName.endsWith(".jsp")) {
@@ -330,19 +330,25 @@ public class PortalURLParserImpl implements PortalURLParser {
             }
 
             String[] pVals = values.split(VALUE_DELIM);
-            String[] paramValues = null;
-            String paramName = null;
-            if (pVals.length > 2) {
-               for (int i = 0; i < pVals.length;i++){
+            String[] paramValues = new String[0];
+            String paramName = "";
+            if (pVals.length > 1) {
+               for (int i = 0; i < pVals.length; i++){
                   if (pVals[i].equals(VALUE_NULL)) {
                      pVals[i] = null;
                   } else {
                      pVals[i] = urlDecode(pVals[i]);
                   }
                }
+            }
+            
+            if (pVals.length <= 1 || pVals[0] == null) {
+               LOG.warn("Bad parameter token: " + values);
+            } else {
                paramName = pVals[0];
                paramValues = Arrays.copyOfRange(pVals, 1, pVals.length);
             }
+            
             if (LOG.isDebugEnabled()) {
                dbgstr.append(", paramName=").append(paramName);
                dbgstr.append(", paramValues=").append(Arrays.toString(paramValues));
@@ -385,6 +391,12 @@ public class PortalURLParserImpl implements PortalURLParser {
          }
       }
 
+      // If we're dealing with a render request (with or without target portlet),
+      // we can parse the servlet request parameters directly.
+      if (portalURL.getType() == URLType.Render || portalURL.getType() == URLType.Portal) {
+         portalURL.handleServletRequestParams();
+      }
+      
       if (LOG.isDebugEnabled()) {
          LOG.debug("Found " + portletIds.size() + " IDs: " + Arrays.toString(portletIds.toArray()));
       }
@@ -582,7 +594,7 @@ public class PortalURLParserImpl implements PortalURLParser {
                buffer.append("/").append(PREFIX).append(PUBLIC_RENDER_PARAM)
                .append(String.valueOf(index)).append(DELIM)
                .append(String.valueOf(i)).append(DELIM)
-               .append(urlEncode(prp.getName()))
+               .append(urlEncode(prp.getName())).append(VALUE_DELIM)
                .append(valstr);
             } else {
                LOG.warn("window ID not on page for public render parameter: " + prp.toString());
