@@ -115,6 +115,7 @@ public class RelativePortalURLImpl implements PortalURL {
       servletPath = buffer.toString();
       this.urlParser = urlParser;
       this.servletRequest = req;
+      this.cloneId = (++cloneCtr) + 10000;
    }
 
    /**
@@ -382,7 +383,12 @@ public class RelativePortalURLImpl implements PortalURL {
       portalURL.targetWindow = targetWindow;
       portalURL.cloneId = ++cloneCtr;
       if (isDebug) {
-         LOG.debug("Created clone ID= " + portalURL.cloneId + " from URL with clone ID= " +this.cloneId);
+         long tid = Thread.currentThread().getId();
+         StringBuilder txt = new StringBuilder();
+         txt.append("Created clone ID= ").append(portalURL.cloneId);
+         txt.append(" from URL with clone ID= ").append(this.cloneId);
+         txt.append(". ThreadId=").append(tid);
+         LOG.debug(txt.toString());
       }
       return portalURL;
    }
@@ -407,10 +413,12 @@ public class RelativePortalURLImpl implements PortalURL {
    public synchronized void merge(PortalURL url, String windowId) {
       if (isDebug) {
          if (url.getClass().isInstance(this)) {
+            long tid = Thread.currentThread().getId();
             RelativePortalURLImpl turl = (RelativePortalURLImpl) url;
             StringBuilder txt = new StringBuilder();
             txt.append("Merging URL with clone ID= ").append(turl.cloneId);
             txt.append(" into URL with clone ID= ").append(cloneId);
+            txt.append(". ThreadId=").append(tid);
             LOG.debug(txt.toString());
          }
       }
