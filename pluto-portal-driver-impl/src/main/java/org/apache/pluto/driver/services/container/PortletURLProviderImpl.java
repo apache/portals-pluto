@@ -47,8 +47,8 @@ import org.apache.pluto.driver.url.PortletParameterFactory;
  *
  */
 public class PortletURLProviderImpl implements PortletURLProvider {
-   private final Logger   LOGGER     = LoggerFactory.getLogger(PortletURLProviderImpl.class);
-   private final boolean  isDebug    = LOGGER.isDebugEnabled();
+   private static final Logger   LOGGER     = LoggerFactory.getLogger(PortletURLProviderImpl.class);
+   private static final boolean  isDebug    = LOGGER.isDebugEnabled();
 
    private final PortalURL                     url;
    private final PublicRenderParameterMapper   prpMapper;
@@ -65,6 +65,13 @@ public class PortletURLProviderImpl implements PortletURLProvider {
 
    private final Set<PortalURLPublicParameter> prpSet     = new HashSet<PortalURLPublicParameter>();
 
+   // Hack: called to force class loading in Container thread
+   protected static final void load() {
+      if (isDebug) {
+         LOGGER.debug("Loaded.");
+      }
+   };
+   
    public PortletURLProviderImpl(PortalURL url, TYPE type,
          PortletWindow portletWindow) {
       this.url = url.clone();
@@ -81,17 +88,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
          txt.append(", target=").append(url.getTargetWindow());
          LOGGER.debug(txt.toString());
       }
-   }
-   
-   public String logSomething() {
-      LOGGER.debug("Here is a debug message from " + this.getClass().getCanonicalName());
-      LOGGER.warn("Here is a message from " + this.getClass().getCanonicalName());
-      LOGGER.error("Here is a 'debug' !string, how is that?");
-      StringBuilder txt = new StringBuilder();
-      txt.append("Info about logger. isDebug=").append(isDebug);
-      txt.append(", Name=").append(LOGGER.getName());
-      txt.append(", Root Logger Name=").append(LOGGER.ROOT_LOGGER_NAME);
-      return txt.toString();
    }
 
    /**

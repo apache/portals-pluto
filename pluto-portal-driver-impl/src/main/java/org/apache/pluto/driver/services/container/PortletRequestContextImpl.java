@@ -52,6 +52,11 @@ public class PortletRequestContextImpl implements PortletRequestContext {
    private PortletConfig       portletConfig;
    private ServletContext      servletContext;
    private Cookie              cookies[];
+   
+   // Nasty trick to make sure the URL provider is loaded first by the container classloader
+   static {
+      PortletURLProviderImpl.load();
+   }
 
    protected PortletWindow       window;
    protected PortletParameterFactory paramFactory;

@@ -61,16 +61,10 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
                                                 HttpServletResponse containerResponse, PortletWindow window)
     {
         super(container, containerRequest, containerResponse, window);
-        if (isDebug) {
-           LOGGER.debug("Creating PortletURLProviderImpl.");
-        }
-        
         this.portletURLProvider = new PortletURLProviderImpl(getPortalURL(), PortletURLProvider.TYPE.RENDER, window);
         
         if (isDebug) {
-           LOGGER.debug("Done! created PortletURLProviderImpl.");
-           String txt = portletURLProvider.logSomething();
-           LOGGER.debug("URL Provider said: " + txt);
+           LOGGER.debug("Initialized.");
         }
     }
     
@@ -84,19 +78,26 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
     {
         if (!isClosed())
         {
-            super.close();
-            if (isDebug) {
-               LOGGER.debug("Filtering the URL.");
-            }
-            new PortletURLImpl(this, portletURLProvider).filterURL();
-            if (isDebug) {
-               LOGGER.debug("Applying the changes.");
-            }
+           super.close();
+
+           if (isDebug) {
+              LOGGER.debug("Filtering the URL.");
+           }
+
+           new PortletURLImpl(this, portletURLProvider).filterURL();
+
+           if (isDebug) {
+              LOGGER.debug("Applying the changes.");
+           }
+
            PortalURL url = portletURLProvider.apply();
+           
            if (isDebug) {
               LOGGER.debug("Merging.");
            }
+           
            PortalRequestContext.getContext(getServletRequest()).mergePortalURL(url, getPortletWindow().getId().getStringId());
+           
            if (isDebug) {
               LOGGER.debug("exiting.");
            }
