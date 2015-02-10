@@ -58,7 +58,8 @@ public class RelativePortalURLImpl implements PortalURL {
    private String                      cacheLevel;
    private String                      resourceID;
 
-   private boolean                     isClone            = false;
+   private int                         cloneId        = 0;
+   private static int                  cloneCtr       = 0;
 
    // provides the defined public render parameters and their relationships to
    // one another for the current page
@@ -89,14 +90,9 @@ public class RelativePortalURLImpl implements PortalURL {
 
    // Target window & type of URL
    URLType                             type               = URLType.Portal;                             // initially
-                                                                                                         // just
-                                                                                                         // addresses
-                                                                                                         // the
-                                                                                                         // portal
-                                                                                                         // in
-                                                                                                         // general
    String                              targetWindow       = null;
 
+   
    /**
     * Constructs a PortalURLImpl instance using customized port.
     * 
@@ -172,11 +168,10 @@ public class RelativePortalURLImpl implements PortalURL {
                   if (index >= 0) {
                      prpMapper.setValues(index, parms.get(parm));
                      if (isDebug) {
-                        StringBuilder txt = new StringBuilder(
-                              "Added public parameter: ");
+                        StringBuilder txt = new StringBuilder("Added public parameter: ");
                         txt.append(parm).append(", Values: ")
-                              .append(Arrays.toString(parms.get(parm)));
-                        txt.append(", isClone: " + isClone);
+                           .append(Arrays.toString(parms.get(parm)));
+                        txt.append(", Clone ID: " + cloneId);
                         LOG.debug(txt.toString());
                      }
                      continue;
@@ -192,11 +187,10 @@ public class RelativePortalURLImpl implements PortalURL {
                }
                parameters.add(pup); // add the new values
                if (isDebug) {
-                  StringBuilder txt = new StringBuilder(
-                        "Added private parameter: ");
-                  txt.append(parm).append(", Values: ")
-                        .append(Arrays.toString(parms.get(parm)));
-                  txt.append(", isClone: " + isClone);
+                  StringBuilder txt = new StringBuilder("Added private parameter: ");
+                  txt.append(parm).append(", Values: ").append(Arrays.toString(parms.get(parm)));
+                  txt.append(parm).append(", Type: ").append(ptype);
+                  txt.append(", Clone ID: " + cloneId);
                   LOG.debug(txt.toString());
                }
             }
@@ -217,13 +211,14 @@ public class RelativePortalURLImpl implements PortalURL {
    public void addParameter(PortalURLParameter param) {
       if (isDebug) {
          StringBuilder txt = new StringBuilder(
-               "Setting public render parameter: ");
+               "Setting private parameter: ");
          txt.append(" window ID: " + param.getWindowId());
          txt.append(", Name: " + param.getName());
          String vals = (param.getValues() == null) ? "null" : Arrays
                .toString(param.getValues());
          txt.append(", Values: " + vals);
-         txt.append(", isClone: " + isClone);
+         txt.append(", Type: " + param.getType());
+         txt.append(", Clone ID: " + cloneId);
          LOG.debug(txt.toString());
       }
       parameters.add(param);
@@ -294,8 +289,8 @@ public class RelativePortalURLImpl implements PortalURL {
          }
       }
       if (isDebug) {
-         StringBuilder txt = new StringBuilder("clearParameters Removing ");
-         txt.append(rem.size()).append(" elements.");
+         StringBuilder txt = new StringBuilder("Removing ");
+         txt.append(rem.size()).append(" elements. Window ID: ").append(windowId);
          LOG.debug(txt.toString());
       }
       parameters.removeAll(rem);
@@ -385,7 +380,10 @@ public class RelativePortalURLImpl implements PortalURL {
       portalURL.reqParamsProcessed = reqParamsProcessed;
       portalURL.type = type;
       portalURL.targetWindow = targetWindow;
-      portalURL.isClone = true;
+      portalURL.cloneId = ++cloneCtr;
+      if (isDebug) {
+         LOG.debug("Created clone ID= " + portalURL.cloneId + " from URL with clone ID= " +this.cloneId);
+      }
       return portalURL;
    }
 
@@ -407,6 +405,15 @@ public class RelativePortalURLImpl implements PortalURL {
    }
 
    public synchronized void merge(PortalURL url, String windowId) {
+      if (isDebug) {
+         if (url.getClass().isInstance(this)) {
+            RelativePortalURLImpl turl = (RelativePortalURLImpl) url;
+            StringBuilder txt = new StringBuilder();
+            txt.append("Merging URL with clone ID= ").append(turl.cloneId);
+            txt.append(" into URL with clone ID= ").append(cloneId);
+            LOG.debug(txt.toString());
+         }
+      }
       type = url.getType();
       targetWindow = url.getTargetWindow();
       setPortletMode(windowId, url.getPortletMode(windowId));
@@ -547,8 +554,8 @@ public class RelativePortalURLImpl implements PortalURL {
          }
       }
       if (isDebug) {
-         StringBuilder txt = new StringBuilder("clearResourceParameters Removing ");
-         txt.append(rem.size()).append(" elements.");
+         StringBuilder txt = new StringBuilder("Removing ");
+         txt.append(rem.size()).append(" elements. Window ID: ").append(window);
          LOG.debug(txt.toString());
       }
       parameters.removeAll(rem);

@@ -67,6 +67,7 @@ public abstract class PortletRequestImpl implements PortletRequest
     public static final String ACCEPT_LANGUAGE = "Accept-Language";
 
     private static final Logger LOG = LoggerFactory.getLogger(PortletRequestImpl.class);
+    private static boolean isDebug = LOG.isDebugEnabled();
 
     private static final StringManager EXCEPTIONS =
         StringManager.getManager(PortletRequestImpl.class.getPackage().getName());
@@ -172,6 +173,12 @@ public abstract class PortletRequestImpl implements PortletRequest
                     parameters.put(entry.getKey(), copy);
                 }
             }
+        }
+        if (isDebug) {
+           StringBuilder txt = new StringBuilder("initParameterMap Returning ");
+           txt.append(publicParameters.size()).append(" public and ")
+              .append(parameters.size()).append(" total parameters.");
+           LOG.debug(txt.toString());
         }
         return parameters;
     }

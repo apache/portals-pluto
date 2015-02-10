@@ -48,43 +48,46 @@ import org.apache.pluto.container.util.ArgumentUtility;
 public abstract class StateAwareResponseImpl extends PortletResponseImpl implements StateAwareResponse
 {
    private final Logger LOGGER = LoggerFactory.getLogger(StateAwareResponseImpl.class);
+   private final boolean isDebug = LOGGER.isDebugEnabled();
    
     private PortletStateAwareResponseContext responseContext;
+    private final String windowId;
     
 	public StateAwareResponseImpl(PortletStateAwareResponseContext responseContext)
 	{
 		super(responseContext);
 		this.responseContext = responseContext;
+		this.windowId = responseContext.getPortletWindow().getId().getStringId();
 	}
 	
-    private boolean isPublicRenderParameter(String name)
-    {
-        List<String> publicRenderParameterNames = responseContext.getPortletWindow().getPortletDefinition().getSupportedPublicRenderParameters();
-        return publicRenderParameterNames.isEmpty() ? false : publicRenderParameterNames.contains(name);
-    }
-    
-   private QName getQNameForPRPName(String name) {
-      QName qn = null;
-      PortletDefinition pd = responseContext.getPortletWindow().getPortletDefinition();
-      PortletApplicationDefinition pad = pd.getApplication();
-      List<? extends PublicRenderParameter> prps = pad.getPublicRenderParameters();
-      for (PublicRenderParameter prp : prps) {
-         if (name.equals(prp.getIdentifier())) {
-            qn = prp.getQName();
-            if (qn == null) {
-               String ns = pad.getDefaultNamespace();
-               String lp = prp.getName();
-               if (lp != null) {
-                  qn = new QName(ns, lp);
-               } else {
-                  LOGGER.error("Error in descriptor for " + responseContext.getPortletWindow()
-                        + " - neither QName nor Name is defined");
-               }
-            }
-         }
-      }
-      return qn;
-   }
+//     private boolean isPublicRenderParameter(String name)
+//     {
+//         List<String> publicRenderParameterNames = responseContext.getPortletWindow().getPortletDefinition().getSupportedPublicRenderParameters();
+//         return publicRenderParameterNames.isEmpty() ? false : publicRenderParameterNames.contains(name);
+//     }
+//     
+//    private QName getQNameForPRPName(String name) {
+//       QName qn = null;
+//       PortletDefinition pd = responseContext.getPortletWindow().getPortletDefinition();
+//       PortletApplicationDefinition pad = pd.getApplication();
+//       List<? extends PublicRenderParameter> prps = pad.getPublicRenderParameters();
+//       for (PublicRenderParameter prp : prps) {
+//          if (name.equals(prp.getIdentifier())) {
+//             qn = prp.getQName();
+//             if (qn == null) {
+//                String ns = pad.getDefaultNamespace();
+//                String lp = prp.getName();
+//                if (lp != null) {
+//                   qn = new QName(ns, lp);
+//                } else {
+//                   LOGGER.error("Error in descriptor for " + responseContext.getPortletWindow()
+//                         + " - neither QName nor Name is defined");
+//                }
+//             }
+//          }
+//       }
+//       return qn;
+//    }
         
 	private static String[] cloneParameterValues(String[] values)
 	{
@@ -157,12 +160,11 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
     {
         ArgumentUtility.validateNotEmpty("name", name);
         checkSetStateChanged();
-        if (isPublicRenderParameter(name))
+        if (responseContext.isPublicRenderParameter(windowId, name))
         {
             responseContext.getRenderParameters().remove(name);
             
-            QName qn = getQNameForPRPName(name);
-            responseContext.removePublicRenderParameter(qn, name);
+            responseContext.removePublicRenderParameter(windowId, name);
         }
     }
 
@@ -250,16 +252,14 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
         checkSetStateChanged();
         
         responseContext.getRenderParameters().clear();
-        responseContext.clearPublicRenderParameters();
         for (Map.Entry<String,String[]> entry : parameters.entrySet())
         {
             String[] values = cloneParameterValues(entry.getValue());
             String key = entry.getKey();
             responseContext.getRenderParameters().put(key, values);
-            if (isPublicRenderParameter(key))
+            if (responseContext.isPublicRenderParameter(windowId, key))
             {
-                QName qn = getQNameForPRPName(key);
-                responseContext.addPublicRenderParameter(qn, key, values);
+                responseContext.addPublicRenderParameter(windowId, key, values);
             }
         }
     }
@@ -271,10 +271,9 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
         checkSetStateChanged();
         String[] values = new String[]{value};
         responseContext.getRenderParameters().put(key, values);
-        if (isPublicRenderParameter(key))
+        if (responseContext.isPublicRenderParameter(windowId, key))
         {
-            QName qn = getQNameForPRPName(key);
-            responseContext.addPublicRenderParameter(qn, key, values);
+            responseContext.addPublicRenderParameter(windowId, key, values);
         }
     }
     
@@ -289,10 +288,9 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
         }
         checkSetStateChanged();
         responseContext.getRenderParameters().put(key, values);
-        if (isPublicRenderParameter(key))
+        if (responseContext.isPublicRenderParameter(windowId, key))
         {
-            QName qn = getQNameForPRPName(key);
-            responseContext.addPublicRenderParameter(qn, key, values);
+            responseContext.addPublicRenderParameter(windowId, key, values);
         }
     }
 }

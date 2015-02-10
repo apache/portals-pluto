@@ -251,7 +251,7 @@ public class PortletContainerImpl implements PortletContainer
 
         String location = null;
         String logtxt = "Portlet action";
-        if (isRedirect) {
+        if (!isRedirect) {
            logtxt = "Portlet Ajax or Partial action";
         }
 

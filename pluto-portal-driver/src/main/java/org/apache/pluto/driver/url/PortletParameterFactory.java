@@ -163,6 +163,11 @@ public class PortletParameterFactory {
       for (PortalURLPublicParameter prp : prps) {
          parameters.put(prp.getName(), prp.getValues().clone());
       }
+      
+      if (isDebug) {
+         LOGGER.debug("getPublicParameterMap returning " + parameters.size() + " parameters.");
+      }
+      
       return parameters;
    }
 
