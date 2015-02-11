@@ -190,7 +190,7 @@ public class RelativePortalURLImpl implements PortalURL {
                if (isDebug) {
                   StringBuilder txt = new StringBuilder("Added private parameter: ");
                   txt.append(parm).append(", Values: ").append(Arrays.toString(parms.get(parm)));
-                  txt.append(parm).append(", Type: ").append(ptype);
+                  txt.append(", Type: ").append(ptype);
                   txt.append(", Clone ID: " + cloneId);
                   LOG.debug(txt.toString());
                }

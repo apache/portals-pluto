@@ -86,7 +86,20 @@ public class PortletURLProviderImpl implements PortletURLProvider {
          txt.append(", URL target=").append(url.getTargetWindow());
          LOGGER.debug(txt.toString());
       }
-      
+
+      if (isTrace) {
+         StringBuilder txt = new StringBuilder("Before clearing parameters for window: ");
+         txt.append(window);
+         for (PortalURLParameter p : this.url.getParameters()) {
+            if (p.getWindowId().equals(window)) {
+               txt.append("\nName: ").append(p.getName());
+               txt.append(", Type: ").append(p.getType());
+               txt.append(", Values: ").append(Arrays.toString(p.getValues()));
+            }
+         }
+         LOGGER.debug(txt.toString());
+      }
+
       this.url.setTargetWindow(window);
       switch (type) {
       case ACTION:
@@ -117,6 +130,19 @@ public class PortletURLProviderImpl implements PortletURLProvider {
          txt.append("type=").append(type);
          txt.append(", URL type=").append(url.getType());
          txt.append(", target=").append(url.getTargetWindow());
+         LOGGER.debug(txt.toString());
+      }
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder("URL Parameters for window: ");
+         txt.append(window);
+         for (PortalURLParameter p : url.getParameters()) {
+            if (p.getWindowId().equals(window)) {
+               txt.append("\nName: ").append(p.getName());
+               txt.append(", Type: ").append(p.getType());
+               txt.append(", Values: ").append(Arrays.toString(p.getValues()));
+            }
+         }
          LOGGER.debug(txt.toString());
       }
       return url;

@@ -102,16 +102,15 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
       if (LOG.isDebugEnabled()) {
          Map<String, String[]> pmap = super.getParameterMap();
          StringBuffer txt = new StringBuffer(1024);
-         txt.append("Resource Request parameter map dump:\n");
+         txt.append("Resource Request parameter map dump:");
          for (String n : pmap.keySet()) {
-            txt.append("Name: " + n + ", Values: ");
+            txt.append("\nName: " + n + ", Values: ");
             String[] vals = pmap.get(n);
             String sep = "";
             for (String v : vals) {
                txt.append(sep + v);
                sep = ", ";
             }
-            txt.append("\n");
          }
          LOG.debug(txt.toString());
       }

@@ -21,10 +21,12 @@ package org.apache.pluto.driver.url;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
+import org.apache.pluto.driver.url.PortalURL.URLType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +47,13 @@ public class PortletParameterFactory {
    HashMap<String, ArrayList<PortalURLParameter>> wid2Render;
    HashMap<String, ArrayList<PortalURLParameter>> wid2Action;
    HashMap<String, ArrayList<PortalURLParameter>> wid2Resource;
+   
+   static final HashSet<PortalURL.URLType> actionTypes = new HashSet<PortalURL.URLType>();
+   static {
+      actionTypes.add(URLType.Action);
+      actionTypes.add(URLType.AjaxAction);
+      actionTypes.add(URLType.PartialAction);
+   }
    
    public PortletParameterFactory(PortalURL url) {
       this.url = url;
@@ -95,6 +104,8 @@ public class PortletParameterFactory {
    public Map<String, String[]> getPrivateParameterMap(String windowId) {
       HashMap<String, String[]> parameters = new HashMap<String, String[]>();
       processParams();
+      
+      boolean isV3 = url.isVersion3(windowId);
 
       // get the action or resource parameters
       
@@ -108,17 +119,19 @@ public class PortletParameterFactory {
          }
       }
       
-      // Now merge in the render parameters
-      
-      if (wid2Render.containsKey(windowId)) {
-         for (PortalURLParameter parm : wid2Render.get(windowId)) {
-            if (parameters.containsKey(parm.getName())) {
-               ArrayList<String> vals = 
-                     new ArrayList<String>(Arrays.asList(parameters.get(parm.getName())));
-               vals.addAll(Arrays.asList(parm.getValues()));
-               parameters.put(parm.getName(), vals.toArray(new String[0]));
-            } else {
-               parameters.put(parm.getName(), parm.getValues().clone());
+      // Now merge in the render parameters if we're not dealing with a V2 action
+
+      if (isV3 || !actionTypes.contains(url.getType())) {
+         if (wid2Render.containsKey(windowId)) {
+            for (PortalURLParameter parm : wid2Render.get(windowId)) {
+               if (parameters.containsKey(parm.getName())) {
+                  ArrayList<String> vals = 
+                        new ArrayList<String>(Arrays.asList(parameters.get(parm.getName())));
+                  vals.addAll(Arrays.asList(parm.getValues()));
+                  parameters.put(parm.getName(), vals.toArray(new String[0]));
+               } else {
+                  parameters.put(parm.getName(), parm.getValues().clone());
+               }
             }
          }
       }
