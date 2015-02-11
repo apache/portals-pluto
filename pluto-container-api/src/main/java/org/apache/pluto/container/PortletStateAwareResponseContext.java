@@ -17,13 +17,11 @@
 package org.apache.pluto.container;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.Event;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
-import javax.xml.namespace.QName;
 
 /**
  * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
@@ -35,27 +33,8 @@ public interface PortletStateAwareResponseContext extends PortletResponseContext
     void setPortletMode(PortletMode portletMode);
     WindowState getWindowState();
     void setWindowState(WindowState windowState);
-    Map<String, String[]> getRenderParameters();
     EventProvider getEventProvider();
     List<Event> getEvents();
-    
-    /**
-     * Add a public render parameter including QName to allow for use of
-     * PRP mapping algorithm.
-     *  
-     * @param qn           QName
-     * @param identifier   Identifier for PRP
-     * @param values       values array
-     */
-    void addPublicRenderParameter(QName qn, String identifier, String[] values);
-    
-    /**
-     * Remove the PRP referred to by the QName
-     * 
-     * @param qn
-     * @param identifier   Identifier for PRP
-     */
-    void removePublicRenderParameter(QName qn, String identifier);
     
     /**
      * Add a public render parameter for given window ID and parameter name
@@ -89,7 +68,7 @@ public interface PortletStateAwareResponseContext extends PortletResponseContext
      * @param windowId
      * @return
      */
-    Set<String> getParameterNames(String windowId);
+    Set<String> getPrivateParameterNames(String windowId);
     
     /**
      * Gets the values array for the given window ID and private parameter name

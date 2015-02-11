@@ -115,7 +115,7 @@ public interface PublicRenderParameterMapper {
 
    /**
     * Gets the string value array that is set for all the public render parameters within  
-    * the group specified by the index.
+    * the group specified by the index. Returns null if the PRP is marked as removed.
     * 
     * @param index      Group index
     * @return           String array 

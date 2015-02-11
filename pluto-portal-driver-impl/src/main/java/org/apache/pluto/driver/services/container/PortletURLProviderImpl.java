@@ -32,7 +32,6 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
-import javax.xml.namespace.QName;
 
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
@@ -41,7 +40,6 @@ import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURL.URLType;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLPublicParameter;
-import org.apache.pluto.driver.url.PortletParameterFactory;
 
 /**
  *
@@ -49,18 +47,20 @@ import org.apache.pluto.driver.url.PortletParameterFactory;
 public class PortletURLProviderImpl implements PortletURLProvider {
    private static final Logger   LOGGER     = LoggerFactory.getLogger(PortletURLProviderImpl.class);
    private static final boolean  isDebug    = LOGGER.isDebugEnabled();
+   private static final boolean  isTrace    = LOGGER.isTraceEnabled();
+   
+   private final static HashMap<PortalURL.URLType, String> urlTypeMap  = 
+         new HashMap<PortalURL.URLType, String>();
+   static {
+      urlTypeMap.put(URLType.Action, PortalURLParameter.PARAM_TYPE_ACTION);
+      urlTypeMap.put(URLType.Render, PortalURLParameter.PARAM_TYPE_RENDER);
+      urlTypeMap.put(URLType.Resource, PortalURLParameter.PARAM_TYPE_RESOURCE);
+   }
 
    private final PortalURL                     url;
-   private final PublicRenderParameterMapper   prpMapper;
-   private final PortletParameterFactory       parmFactory;
 
    private final TYPE                          type;
    private final String                        window;
-   private PortletMode                         portletMode;
-   private WindowState                         windowState;
-   private String                              cacheLevel = ResourceURL.PAGE;                            // default
-   private String                              resourceID;
-   private Map<String, String[]>               renderParameters;
    private Map<String, List<String>>           properties;
 
    private final Set<PortalURLPublicParameter> prpSet     = new HashSet<PortalURLPublicParameter>();
@@ -78,51 +78,39 @@ public class PortletURLProviderImpl implements PortletURLProvider {
       this.type = type;
       this.window = portletWindow.getId().getStringId();
 
-      parmFactory = url.getPortletParameterFactory();
-      prpMapper = url.getPublicRenderParameterMapper();
-
       if (isDebug) {
-         StringBuilder txt = new StringBuilder("Constructed PortalURLProviderImpl. ");
+         StringBuilder txt = new StringBuilder("Constructing PortalURLProviderImpl. ");
          txt.append("type=").append(type);
          txt.append(", URL type=").append(url.getType());
-         txt.append(", target=").append(url.getTargetWindow());
+         txt.append(", target=").append(window);
+         txt.append(", URL target=").append(url.getTargetWindow());
          LOGGER.debug(txt.toString());
       }
-   }
-
-   /**
-    * Returns <code>true</code> if given parameter name is a public render
-    * parameter
-    * 
-    * @param name
-    */
-   private boolean isPRP(String name) {
-      boolean found = false;
-      for (PortalURLPublicParameter prp : prpSet) {
-         if (name.equals(prp.getName())) {
-            found = true;
-            break;
-         }
+      
+      this.url.setTargetWindow(window);
+      switch (type) {
+      case ACTION:
+         this.url.setType(URLType.Action);
+         break;
+      case RESOURCE:
+         this.url.setType(URLType.Resource);
+         this.url.clearResourceParameters(window);
+         this.url.setCacheability(ResourceURL.PAGE);
+         break;
+      default:
+         this.url.setType(URLType.Render);
+         this.url.clearParameters(window);
       }
-      return found;
+
+      if (isTrace) {
+         StringBuilder txt = new StringBuilder("Constructed PortalURLProviderImpl, set type. ");
+         txt.append("new URL type=").append(this.url.getType());
+         LOGGER.debug(txt.toString());
+      }
+
    }
 
    public PortalURL apply() {
-
-      url.setTargetWindow(window);
-      switch (type) {
-      case ACTION:
-         url.setType(URLType.Action);
-         break;
-      case RESOURCE:
-         url.setType(URLType.Resource);
-         url.clearResourceParameters(window);
-         url.setCacheability(ResourceURL.PAGE);
-         break;
-      default:
-         url.setType(URLType.Render);
-         url.clearParameters(window);
-      }
 
       if (isDebug) {
          StringBuilder txt = new StringBuilder("apply URL values: ");
@@ -130,17 +118,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
          txt.append(", URL type=").append(url.getType());
          txt.append(", target=").append(url.getTargetWindow());
          LOGGER.debug(txt.toString());
-      }
-      if (renderParameters != null) {
-         for (Map.Entry<String, String[]> entry : renderParameters.entrySet()) {
-            if (!isPRP(entry.getKey())) {
-               url.addParameter(new PortalURLParameter(window, entry.getKey(),
-                     entry.getValue()));
-            }
-         }
-      }
-      for (PortalURLPublicParameter prp : prpSet) {
-         url.addPublicRenderParameter(prp);
       }
       return url;
    }
@@ -171,13 +148,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
 
    public boolean isSecure() {
       return false;
-   }
-
-   public Map<String, String[]> getRenderParameters() {
-      if (renderParameters == null) {
-         renderParameters = new HashMap<String, String[]>();
-      }
-      return renderParameters;
    }
 
    public String getCacheability() {
@@ -223,45 +193,8 @@ public class PortletURLProviderImpl implements PortletURLProvider {
       return properties;
    }
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see
-    * org.apache.pluto.container.PortletURLProvider#addPublicRenderParameter
-    * (javax.xml.namespace.QName, java.lang.String, java.lang.String[])
-    */
-   public void addPublicRenderParameter(QName qn, String identifier,
-         String[] values) {
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder("Add PRP. QName = ");
-         txt.append(qn.toString()).append(", ID = ").append(identifier)
-               .append(", values = ").append(Arrays.toString(values));
-         LOGGER.debug(txt.toString());
-      }
-      PortalURLPublicParameter pupp = new PortalURLPublicParameter(window,
-            identifier, qn, values);
-      prpSet.add(pupp);
-   }
-
-   /*
-    * (non-Javadoc)
-    * 
-    * @see
-    * org.apache.pluto.container.PortletURLProvider#removePublicRenderParameter
-    * (javax.xml.namespace.QName)
-    */
-   public void removePublicRenderParameter(QName qn, String identifier) {
-      if (isDebug) {
-         LOGGER.debug("Remove PRP. QName = " + qn.toString());
-      }
-      PortalURLPublicParameter pupp = new PortalURLPublicParameter(window,
-            identifier, qn);
-      pupp.setRemoved(true);
-      prpSet.add(pupp);
-   }
-
-   public void addPublicRenderParameter(String windowId, String name,
-         String[] values) {
+   public void addPublicRenderParameter(String windowId, String name, String[] values) {
+      PublicRenderParameterMapper prpMapper = url.getPublicRenderParameterMapper();
       if (isDebug) {
          StringBuilder txt = new StringBuilder("Add PRP. Window: ");
          txt.append(windowId).append(", name: ").append(name)
@@ -281,6 +214,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
    }
 
    public void removePublicRenderParameter(String windowId, String name) {
+      PublicRenderParameterMapper prpMapper = url.getPublicRenderParameterMapper();
       if (isDebug) {
          StringBuilder txt = new StringBuilder("Remove PRP. Window: ");
          txt.append(windowId).append(", name: ").append(name);
@@ -290,15 +224,15 @@ public class PortletURLProviderImpl implements PortletURLProvider {
       if (index >= 0) {
          prpMapper.setRemoved(index, true);
       } else {
-         StringBuilder txt = new StringBuilder(
-               "Public render parameter for window: ");
+         StringBuilder txt = new StringBuilder("Public render parameter for window: ");
          txt.append(windowId).append(", name: ").append(name)
-               .append(" not found in mapper");
+            .append(" not found in mapper");
          LOGGER.warn(txt.toString());
       }
    }
 
    public boolean isPublicRenderParameter(String windowId, String name) {
+      PublicRenderParameterMapper prpMapper = url.getPublicRenderParameterMapper();
       if (isDebug) {
          StringBuilder txt = new StringBuilder(
                "isPublicRenderParameter Window: ");
@@ -320,23 +254,114 @@ public class PortletURLProviderImpl implements PortletURLProvider {
       }
    }
 
-   public Set<String> getParameterNames(String windowId) {
-      // TODO Auto-generated method stub
-      return null;
+   // This method is for V2 compatibility. It always returns the private 
+   // parameter names for the active URL type - Render parameters for a render URL,
+   // Action parameters for an action URL, and resouce parameters for a Resource URL.
+   public Set<String> getPrivateParameterNames(String windowId) {
+      HashSet<String> names = new HashSet<String>();
+      String type = urlTypeMap.get(url.getType());
+      
+      for (PortalURLParameter p : url.getParameters()) {
+         if (p.getWindowId().equals(windowId) && p.getType().equals(type)) {
+            names.add(p.getName());
+         }
+      }
+
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Window ID: ").append(windowId);
+         txt.append(", URL / Parameter type: ").append(type);
+         txt.append(", names: ").append(names.toString());
+         LOGGER.debug(txt.toString());
+      }
+
+      return names;
    }
 
+   // This method is for V2 compatibility. It always returns the private 
+   // parameter values for the active URL type - Render parameters for a render URL,
+   // Action parameters for an action URL, and resouce parameters for a Resource URL.
    public String[] getParameterValues(String windowId, String name) {
-      // TODO Auto-generated method stub
-      return null;
+      PublicRenderParameterMapper prpMapper = url.getPublicRenderParameterMapper();
+      String type = urlTypeMap.get(url.getType());
+      String[] vals = null;
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder("Setting ");
+         txt.append("name: ").append(name);
+         txt.append(", URL / Parameter type: ").append(type);
+         txt.append(", window ID: ").append(windowId);
+         LOGGER.debug(txt.toString());
+      }
+      
+      if (isPublicRenderParameter(windowId, name)) {
+         int index = prpMapper.getIndex(windowId, name);
+         if (index >= 0) {
+            vals = prpMapper.getValues(index).clone();
+         } else {
+            LOGGER.debug("Public render parameter name not found in index.");
+         }
+      } else {
+         for (PortalURLParameter p : url.getParameters()) {
+            if (p.getWindowId().equals(windowId)
+               && p.getName().equals(name) && p.getType().equals(type)) {
+               vals = p.getValues().clone();
+            }
+         }
+      }
+      
+      return vals;
    }
 
+   /**
+    * Sets a parameter. This method sets a parameter
+    * of type corresponding to the URL type - Action parameter for an Action URL, etc.
+    * V2 compatibility method.
+    */
    public void setParameter(String windowId, String name, String[] values) {
-      // TODO Auto-generated method stub
-
+      String type = urlTypeMap.get(url.getType());
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder("Setting ");
+         txt.append("name: ").append(name);
+         txt.append(", values: ").append(Arrays.toString(values));
+         txt.append(", type: ").append(type);
+         txt.append(", window ID: ").append(windowId);
+         LOGGER.debug(txt.toString());
+      }
+      
+      if (url.getType() == URLType.Render && isPublicRenderParameter(windowId, name)) {
+         addPublicRenderParameter(windowId, name, values);
+      } else {
+         if (urlTypeMap.containsKey(url.getType())) {
+            PortalURLParameter pup = new PortalURLParameter(windowId, name, values, type);
+            url.setParameter(pup);
+         } else {
+            LOGGER.warn("Unsupported URL / Parameter type: " + url.getType());
+         }
+      }
    }
 
+   /**
+    * Remove parameter. If the parameter is a public render parameter, 
+    * an <code>IllegalArgumentException</code> is thrown. This method removes a parameter
+    * of type corresponding to the URL type - Action parameter for an Action URL, etc. 
+    * (V3 Spec errata)
+    */
    public void removeParameter(String windowId, String name) {
-      // TODO Auto-generated method stub
-
+      String type = urlTypeMap.get(url.getType());
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder("Removing ");
+         txt.append("name: ").append(name);
+         txt.append(", type: ").append(type);
+         txt.append(", window ID: ").append(windowId);
+         LOGGER.debug(txt.toString());
+      }
+      if (isPublicRenderParameter(windowId, name)) {
+         throw new IllegalArgumentException("Cannot set a public render parameter to null. Parameter name: " + name);
+      } else {
+         PortalURLParameter pup = new PortalURLParameter(windowId, name, null, type);
+         url.removeParameter(pup);
+      }
    }
 }

@@ -17,10 +17,8 @@
 package org.apache.pluto.driver.services.container;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -31,7 +29,6 @@ import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.namespace.QName;
 
 import org.apache.pluto.container.EventProvider;
 import org.apache.pluto.container.PortletContainer;
@@ -42,7 +39,6 @@ import org.apache.pluto.container.driver.PlutoServices;
 import org.apache.pluto.container.impl.PortletURLImpl;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.driver.url.PortalURLPublicParameter;
 
 /**
  * @version $Id$
@@ -130,11 +126,6 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
         return isClosed() ? null : portletURLProvider.getPortletMode();
     }
 
-    public Map<String, String[]> getRenderParameters()
-    {
-        return isClosed() ? null : portletURLProvider.getRenderParameters();
-    }
-
     public WindowState getWindowState()
     {
         return isClosed() ? null : portletURLProvider.getWindowState();
@@ -161,33 +152,6 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
         return isClosed() ? null : new EventProviderImpl(getPortletWindow(), PlutoServices.getServices().getPortletRegistryService());
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletStateAwareResponseContext#addPublicRenderParameter(javax.xml.namespace.QName, java.lang.String, java.lang.String[])
-     */
-    public void addPublicRenderParameter(QName qn, String identifier, String[] values) {
-       if (isDebug) {
-          StringBuilder txt = new StringBuilder("Add PRP. QName = ");
-          txt.append(qn.toString())
-             .append(", ID = ").append(identifier)
-             .append(", values = ").append(Arrays.toString(values));
-          LOGGER.debug(txt.toString());
-       }
-       if (!isClosed()) {
-          portletURLProvider.addPublicRenderParameter(qn, identifier, values);
-       }
-    }
-
-    /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletStateAwareResponseContext#removePublicRenderParameter(javax.xml.namespace.QName, java.lang.String)
-     */
-    public void removePublicRenderParameter(QName qn, String id) {
-       if (isDebug) {
-          LOGGER.debug("Remove PRP. QName = " + qn.toString());
-       }
-       if (!isClosed()) {
-          portletURLProvider.removePublicRenderParameter(qn, id);
-       }
-    }
     
     /**
      * Add a public render parameter for given window ID and parameter name
@@ -235,10 +199,10 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
      * @param windowId
      * @return
      */
-    public Set<String> getParameterNames(String windowId) {
+    public Set<String> getPrivateParameterNames(String windowId) {
        Set<String> pns = new HashSet<String>();
        if (!isClosed()) {
-          pns = portletURLProvider.getParameterNames(windowId);
+          pns = portletURLProvider.getPrivateParameterNames(windowId);
        }
        return pns;
     }

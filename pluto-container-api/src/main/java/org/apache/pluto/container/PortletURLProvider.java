@@ -25,7 +25,6 @@ import java.util.Set;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.WindowState;
-import javax.xml.namespace.QName;
 
 /**
  * Defines the interface used by the portlet container to create Portlet URLs.
@@ -60,26 +59,6 @@ public interface PortletURLProvider {
 
     void setSecure(boolean secure) throws PortletSecurityException;
     boolean isSecure();
-
-    Map<String, String[]> getRenderParameters();
-    
-    /**
-     * Add a public render parameter including QName to allow for use of
-     * PRP mapping algorithm.
-     *  
-     * @param qn           QName
-     * @param identifier   Identifier for PRP
-     * @param values       values array
-     */
-    void addPublicRenderParameter(QName qn, String identifier, String[] values);
-    
-    /**
-     * Remove the PRP referred to by the QName
-     * 
-     * @param qn
-     * @param identifier   Identifier for PRP
-     */
-    void removePublicRenderParameter(QName qn, String identifier);
     
     /**
      * Add a public render parameter for given window ID and parameter name
@@ -118,7 +97,7 @@ public interface PortletURLProvider {
      * @param windowId
      * @return
      */
-    Set<String> getParameterNames(String windowId);
+    Set<String> getPrivateParameterNames(String windowId);
     
     /**
      * Gets the values array for the given window ID and private parameter name

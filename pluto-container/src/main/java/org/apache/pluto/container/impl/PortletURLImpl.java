@@ -24,6 +24,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +57,8 @@ import org.apache.pluto.container.util.ArgumentUtility;
  * @since 2.0
  */
 public class PortletURLImpl implements PortletURL, ResourceURL {
-    private final Logger LOGGER = LoggerFactory.getLogger(PortletURLImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PortletURLImpl.class);
+    private static final boolean isDebug = LOGGER.isDebugEnabled();
 
     private PortletResponseContext responseContext;
     private PortalContext portalContext;
@@ -64,13 +66,28 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
     private String cacheLevel = ResourceURL.PAGE;
     private boolean filtering;
     private boolean renderURL;
+    private final String windowId;
+
+    // Called to force class loading in Container thread
+    public static final void load() {
+       if (isDebug) {
+          LOGGER.debug("Loaded.");
+       }
+    };
     
     public PortletURLImpl(PortletResponseContext responseContext, PortletURLProvider urlProvider)
     {
         this.responseContext = responseContext;
         this.portalContext = responseContext.getContainer().getContainerServices().getPortalContext();
+        this.windowId = responseContext.getPortletWindow().getId().getStringId();
         this.urlProvider = urlProvider;
         renderURL = PortletURLProvider.TYPE.RENDER == urlProvider.getType();
+        if (isDebug) {
+           StringBuilder txt = new StringBuilder();
+           txt.append("URL provider type=").append(urlProvider.getType());
+           txt.append(", isRender=").append(renderURL);
+           LOGGER.debug(txt.toString());
+        }
     }
     
     public PortletURLImpl(PortletMimeResponseContext responseContext, PortletURLProvider.TYPE type)
@@ -138,68 +155,6 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         return false;
     }
     
-    private boolean isPublicRenderParameter(String name)
-    {
-        List<String> publicRenderParameterNames = responseContext.getPortletWindow().getPortletDefinition().getSupportedPublicRenderParameters();
-        return publicRenderParameterNames.isEmpty() ? false : publicRenderParameterNames.contains(name);
-    }
-    
-   private QName getQNameForPRPName(String name) {
-      QName qn = null;
-      PortletDefinition pd = responseContext.getPortletWindow().getPortletDefinition();
-      PortletApplicationDefinition pad = pd.getApplication();
-      List<? extends PublicRenderParameter> prps = pad.getPublicRenderParameters();
-      for (PublicRenderParameter prp : prps) {
-         if (name.equals(prp.getIdentifier())) {
-            qn = prp.getQName();
-            if (qn == null) {
-               String ns = pad.getDefaultNamespace();
-               String lp = prp.getName();
-               if (lp != null) {
-                  qn = new QName(ns, lp);
-               } else {
-                  LOGGER.error("Error in descriptor for " + responseContext.getPortletWindow()
-                        + " - neither QName nor Name is defined");
-               }
-            }
-         }
-      }
-      return qn;
-   }
-        
-    private static String[] cloneParameterValues(String[] values)
-    {
-        int count = 0;
-        for (String s : values)
-        {
-            if (s != null)
-            {
-                count++;
-            }
-        }
-        if (count == 0)
-        {
-            return null;
-        }
-        else if (count < values.length)
-        {
-            String[] copy = new String[count];
-            count = 0;
-            for (String s : values)
-            {
-                if (s != null)
-                {
-                    copy[count++] = s;
-                }
-            }
-            return copy;
-        }
-        else
-        {
-            return values.clone();
-        }
-    }
-    
     public void filterURL()
     {
         if (filtering)
@@ -254,101 +209,59 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
 
     public Map<String, String[]> getParameterMap()
     {
-        Map<String, String[]> parameters = urlProvider.getRenderParameters();
-        if (parameters.isEmpty())
-        {
-            parameters = Collections.emptyMap();
-        }
-        else
-        {
-            parameters = new HashMap<String,String[]>(parameters);
-            for (Map.Entry<String,String[]> entry : parameters.entrySet())
-            {
-                entry.setValue(entry.getValue().clone());
-            }
-        }
-        return parameters;
+       Map<String, String[]> parameters = new HashMap<String, String[]>();
+       Set<String> names = urlProvider.getPrivateParameterNames(windowId);
+       for (String name : names) {
+          String[] vals = urlProvider.getParameterValues(windowId, name);
+          parameters.put(name, vals);
+       }
+       return parameters;
     }
 
     public void setParameter(String name, String value)
     {
         ArgumentUtility.validateNotEmpty("name", name);
-        ArgumentUtility.validateNotNull("value", value);
-        String[] values = new String[]{value};
-        urlProvider.getRenderParameters().put(name, values);
-        if (renderURL && isPublicRenderParameter(name))
-        {
-            QName qn = getQNameForPRPName(name);
-            urlProvider.addPublicRenderParameter(qn, name, values);
+        if (value == null) {
+           urlProvider.removeParameter(windowId, name);
+        } else {
+           String[] values = new String[] { value };
+           urlProvider.setParameter(windowId, name, values);
         }
     }
 
-    public void setParameter(String name, String[] values)
+    public void setParameter(String name, String... values)
     {
         ArgumentUtility.validateNotEmpty("name", name);
         ArgumentUtility.validateNotNull("values", values);
-        values = cloneParameterValues(values);
-        if (values == null )            
-        {
-            throw new IllegalStateException("Illegal Argument: values array is empty or contains only null values");
-        }
-        urlProvider.getRenderParameters().put(name, values);
-        if (renderURL && isPublicRenderParameter(name))
-        {
-            QName qn = getQNameForPRPName(name);
-            urlProvider.addPublicRenderParameter(qn, name, values);
+        if (values == null) {
+           urlProvider.removeParameter(windowId, name);
+        } else {
+           urlProvider.setParameter(windowId, name, values.clone());
         }
     }
 
     public void setParameters(Map<String, String[]> parameters)
     {
         ArgumentUtility.validateNotNull("parameters", parameters);
-        
+
         // validate map first
-        boolean emptyValuesArray;
-        for (Map.Entry<? extends Object, ? extends Object> entry : parameters.entrySet())
-        {
-            if (entry.getKey() == null || entry.getValue() == null)
-            {
-                throw new IllegalArgumentException("parameters map contains a null key or value entry");
-            }
-            if (!(entry.getKey() instanceof String))
-            {
-                throw new IllegalArgumentException("parameters map contains a key which is not of type String");
-            }
-            if (!(entry.getValue() instanceof String[]))
-            {
-                throw new IllegalArgumentException("parameters map contains a value which is not of type String[]");
-            }
-            emptyValuesArray = true;
-            for (String s : (String[])entry.getValue())
-            {
-                if (s != null)
-                {
-                    emptyValuesArray = false;
-                    break;
-                }
-            }
-            if (emptyValuesArray)
-            {
-                throw new IllegalStateException("parameters map contains a values array which is empty or contains only null values");
-            }
+        for (String key : parameters.keySet()) {
+           String[] vals = parameters.get(key);
+           if (key == null || vals == null) {
+              throw new IllegalArgumentException("parameters map contains a null key or values array");
+           }
         }
-        urlProvider.getRenderParameters().clear();
-        if (renderURL)
-        {
-            urlProvider.clearPublicRenderParameters();
+
+        // Remove the parameters that are gone
+        Set<String> currNames = urlProvider.getPrivateParameterNames(windowId);
+        currNames.removeAll(parameters.keySet());
+        for (String name : currNames) {
+           urlProvider.removeParameter(windowId, name);
         }
-        for (Map.Entry<String,String[]> entry : parameters.entrySet())
-        {
-            String[] values = cloneParameterValues(entry.getValue());
-            String key = entry.getKey();
-            urlProvider.getRenderParameters().put(key, values);
-            if (renderURL && isPublicRenderParameter(key))
-            {
-                QName qn = getQNameForPRPName(key);
-                urlProvider.addPublicRenderParameter(qn, key, values);
-            }
+        
+        // Now set the new values
+        for (String key : parameters.keySet()) {
+           urlProvider.setParameter(windowId, key, parameters.get(key));
         }
     }
 
@@ -439,13 +352,7 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
     public void removePublicRenderParameter(String name)
     {
         ArgumentUtility.validateNotEmpty("name", name);
-        if (isPublicRenderParameter(name))
-        {
-            urlProvider.getRenderParameters().remove(name);
-            
-            QName qn = getQNameForPRPName(name);
-            urlProvider.removePublicRenderParameter(qn, name);
-        }
+        urlProvider.removePublicRenderParameter(windowId, name);
     }
 
     // ResourceURL impl ------------------------------------------------------------    

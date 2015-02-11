@@ -19,8 +19,8 @@ package org.apache.pluto.container.impl;
 import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,262 +35,153 @@ import javax.xml.namespace.QName;
 
 import org.apache.pluto.container.PortletStateAwareResponseContext;
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.container.om.portlet.PortletDefinition;
-import org.apache.pluto.container.om.portlet.PublicRenderParameter;
 import org.apache.pluto.container.util.ArgumentUtility;
 
 /**
  * Implementation of JSR-286 <code>StateAwareResponse</code>.
- *
+ * 
  * @since 2.0
  */
-public abstract class StateAwareResponseImpl extends PortletResponseImpl implements StateAwareResponse
-{
-   private final Logger LOGGER = LoggerFactory.getLogger(StateAwareResponseImpl.class);
+public abstract class StateAwareResponseImpl extends PortletResponseImpl
+      implements StateAwareResponse {
+   private final Logger  LOGGER  = LoggerFactory.getLogger(StateAwareResponseImpl.class);
+   @SuppressWarnings("unused")
    private final boolean isDebug = LOGGER.isDebugEnabled();
-   
-    private PortletStateAwareResponseContext responseContext;
-    private final String windowId;
-    
-	public StateAwareResponseImpl(PortletStateAwareResponseContext responseContext)
-	{
-		super(responseContext);
-		this.responseContext = responseContext;
-		this.windowId = responseContext.getPortletWindow().getId().getStringId();
-	}
-	
-//     private boolean isPublicRenderParameter(String name)
-//     {
-//         List<String> publicRenderParameterNames = responseContext.getPortletWindow().getPortletDefinition().getSupportedPublicRenderParameters();
-//         return publicRenderParameterNames.isEmpty() ? false : publicRenderParameterNames.contains(name);
-//     }
-//     
-//    private QName getQNameForPRPName(String name) {
-//       QName qn = null;
-//       PortletDefinition pd = responseContext.getPortletWindow().getPortletDefinition();
-//       PortletApplicationDefinition pad = pd.getApplication();
-//       List<? extends PublicRenderParameter> prps = pad.getPublicRenderParameters();
-//       for (PublicRenderParameter prp : prps) {
-//          if (name.equals(prp.getIdentifier())) {
-//             qn = prp.getQName();
-//             if (qn == null) {
-//                String ns = pad.getDefaultNamespace();
-//                String lp = prp.getName();
-//                if (lp != null) {
-//                   qn = new QName(ns, lp);
-//                } else {
-//                   LOGGER.error("Error in descriptor for " + responseContext.getPortletWindow()
-//                         + " - neither QName nor Name is defined");
-//                }
-//             }
-//          }
-//       }
-//       return qn;
-//    }
-        
-	private static String[] cloneParameterValues(String[] values)
-	{
-	    int count = 0;
-	    for (String s : values)
-	    {
-	        if (s != null)
-	        {
-	            count++;
-	        }
-	    }
-	    if (count == 0)
-	    {
-	        return null;
-	    }
-	    else if (count < values.length)
-	    {
-	        String[] copy = new String[count];
-	        count = 0;
-	        for (String s : values)
-	        {
-	            if (s != null)
-	            {
-	                copy[count++] = s;
-	            }
-	        }
-	        return copy;
-	    }
-	    else
-	    {
-	        return values.clone();
-	    }
-	}
-	
-	protected abstract void checkSetStateChanged();
-	
-    protected boolean isWindowStateAllowed(WindowState state)
-    {
-        Enumeration<WindowState> supportedStates = getPortalContext().getSupportedWindowStates();
-        while (supportedStates.hasMoreElements()) {
-            if (supportedStates.nextElement().equals(state))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public PortletMode getPortletMode()
-    {
-        return responseContext.getPortletMode();
-    }
 
-    public Map<String, String[]> getRenderParameterMap()
-    {
-        Map<String, String[]> parameters = new HashMap<String, String[]>(responseContext.getRenderParameters());
-        for (Map.Entry<String,String[]> entry : parameters.entrySet())
-        {
-            entry.setValue(entry.getValue().clone());
-        }
-        return parameters;
-    }
-    
-    public WindowState getWindowState()
-    {
-        return responseContext.getWindowState();
-    }
-    
-    public void removePublicRenderParameter(String name)
-    {
-        ArgumentUtility.validateNotEmpty("name", name);
-        checkSetStateChanged();
-        if (responseContext.isPublicRenderParameter(windowId, name))
-        {
-            responseContext.getRenderParameters().remove(name);
-            
-            responseContext.removePublicRenderParameter(windowId, name);
-        }
-    }
+   private PortletStateAwareResponseContext responseContext;
+   private final String                     windowId;
 
-	public void setEvent(QName qname, Serializable value)
-	{
-        ArgumentUtility.validateNotNull("qname", qname);
-        Event event = responseContext.getEventProvider().createEvent(qname, value);
-        if (event != null)
-        {
-            responseContext.getEvents().add(event);
-        }
-	}
+   public StateAwareResponseImpl(PortletStateAwareResponseContext responseContext) {
+      super(responseContext);
+      this.responseContext = responseContext;
+      this.windowId = responseContext.getPortletWindow().getId().getStringId();
+   }
 
-	public void setEvent(String name, Serializable value)
-	{
-	    PortletWindow window = getPortletWindow();
-        String defaultNamespace;
-        defaultNamespace = window.getPortletDefinition().getApplication().getDefaultNamespace();
-        QName qname = new QName(defaultNamespace, name);
-        setEvent(qname, value);
-	}
+   protected abstract void checkSetStateChanged();
 
-    public void setPortletMode(PortletMode portletMode) throws PortletModeException 
-    {
-        ArgumentUtility.validateNotNull("portletMode", portletMode);
-        if (isPortletModeAllowed(portletMode))
-        {
-            checkSetStateChanged();
-            responseContext.setPortletMode(portletMode);
-        }
-        else 
-        {
-            throw new PortletModeException("Can't set this PortletMode", portletMode);
-        }
-    }
+   protected boolean isWindowStateAllowed(WindowState state) {
+      Enumeration<WindowState> supportedStates = getPortalContext()
+            .getSupportedWindowStates();
+      while (supportedStates.hasMoreElements()) {
+         if (supportedStates.nextElement().equals(state)) {
+            return true;
+         }
+      }
+      return false;
+   }
 
-    public void setWindowState(WindowState windowState) throws WindowStateException
-    {
-        ArgumentUtility.validateNotNull("windowState", windowState);
-        if (isWindowStateAllowed(windowState))
-        {
-            checkSetStateChanged();
-            responseContext.setWindowState(windowState);
-        }
-        else 
-        {
-            throw new WindowStateException("Can't set this WindowState", windowState);
-        }
-    }
-	    
-    public void setRenderParameters(java.util.Map<String, String[]> parameters)
-    {
-        ArgumentUtility.validateNotNull("parameters", parameters);
-        
-        // validate map first
-        boolean emptyValuesArray;
-        for (Map.Entry<? extends Object, ? extends Object> entry : parameters.entrySet())
-        {
-            if (entry.getKey() == null || entry.getValue() == null)
-            {
-                throw new IllegalArgumentException("parameters map contains a null key or value entry");
-            }
-            if (!(entry.getKey() instanceof String))
-            {
-                throw new IllegalArgumentException("parameters map contains a key which is not of type String");
-            }
-            if (!(entry.getValue() instanceof String[]))
-            {
-                throw new IllegalArgumentException("parameters map contains a value which is not of type String[]");
-            }
-            emptyValuesArray = true;
-            for (String s : (String[])entry.getValue())
-            {
-                if (s != null)
-                {
-                    emptyValuesArray = false;
-                    break;
-                }
-            }
-            if (emptyValuesArray)
-            {
-                throw new IllegalStateException("parameters map contains a values array which is empty or contains only null values");
-            }
-        }
-        checkSetStateChanged();
-        
-        responseContext.getRenderParameters().clear();
-        for (Map.Entry<String,String[]> entry : parameters.entrySet())
-        {
-            String[] values = cloneParameterValues(entry.getValue());
-            String key = entry.getKey();
-            responseContext.getRenderParameters().put(key, values);
-            if (responseContext.isPublicRenderParameter(windowId, key))
-            {
-                responseContext.addPublicRenderParameter(windowId, key, values);
-            }
-        }
-    }
-    
-    public void setRenderParameter(String key, String value)
-    {
-        ArgumentUtility.validateNotEmpty("key", key);
-        ArgumentUtility.validateNotNull("value", value);
-        checkSetStateChanged();
-        String[] values = new String[]{value};
-        responseContext.getRenderParameters().put(key, values);
-        if (responseContext.isPublicRenderParameter(windowId, key))
-        {
-            responseContext.addPublicRenderParameter(windowId, key, values);
-        }
-    }
-    
-    public void setRenderParameter(String key, String[] values)
-    {
-        ArgumentUtility.validateNotEmpty("key", key);
-        ArgumentUtility.validateNotNull("values", values);
-        values = cloneParameterValues(values);
-        if (values == null )            
-        {
-            throw new IllegalStateException("Illegal Argument: values array is empty or contains only null values");
-        }
-        checkSetStateChanged();
-        responseContext.getRenderParameters().put(key, values);
-        if (responseContext.isPublicRenderParameter(windowId, key))
-        {
-            responseContext.addPublicRenderParameter(windowId, key, values);
-        }
-    }
+   public PortletMode getPortletMode() {
+      return responseContext.getPortletMode();
+   }
+
+   public Map<String, String[]> getRenderParameterMap() {
+      Map<String, String[]> parameters = new HashMap<String, String[]>();
+      Set<String> names = responseContext.getPrivateParameterNames(windowId);
+      for (String name : names) {
+         String[] vals = responseContext.getParameterValues(windowId, name);
+         parameters.put(name, vals);
+      }
+      return parameters;
+   }
+
+   public WindowState getWindowState() {
+      return responseContext.getWindowState();
+   }
+
+   public void removePublicRenderParameter(String name) {
+      ArgumentUtility.validateNotEmpty("name", name);
+      checkSetStateChanged();
+      responseContext.removePublicRenderParameter(windowId, name);
+   }
+
+   public void setEvent(QName qname, Serializable value) {
+      ArgumentUtility.validateNotNull("qname", qname);
+      Event event = responseContext.getEventProvider()
+            .createEvent(qname, value);
+      if (event != null) {
+         responseContext.getEvents().add(event);
+      }
+   }
+
+   public void setEvent(String name, Serializable value) {
+      PortletWindow window = getPortletWindow();
+      String defaultNamespace;
+      defaultNamespace = window.getPortletDefinition().getApplication()
+            .getDefaultNamespace();
+      QName qname = new QName(defaultNamespace, name);
+      setEvent(qname, value);
+   }
+
+   public void setPortletMode(PortletMode portletMode)
+         throws PortletModeException {
+      ArgumentUtility.validateNotNull("portletMode", portletMode);
+      if (isPortletModeAllowed(portletMode)) {
+         checkSetStateChanged();
+         responseContext.setPortletMode(portletMode);
+      } else {
+         throw new PortletModeException("Can't set this PortletMode",
+               portletMode);
+      }
+   }
+
+   public void setWindowState(WindowState windowState)
+         throws WindowStateException {
+      ArgumentUtility.validateNotNull("windowState", windowState);
+      if (isWindowStateAllowed(windowState)) {
+         checkSetStateChanged();
+         responseContext.setWindowState(windowState);
+      } else {
+         throw new WindowStateException("Can't set this WindowState",
+               windowState);
+      }
+   }
+
+   public void setRenderParameters(java.util.Map<String, String[]> parameters) {
+      ArgumentUtility.validateNotNull("parameters", parameters);
+
+      // validate map first
+      for (String key : parameters.keySet()) {
+         String[] vals = parameters.get(key);
+         if (key == null || vals == null) {
+            throw new IllegalArgumentException("parameters map contains a null key or values array");
+         }
+      }
+      
+      // Throws exception if state change no longer allowed (for example, after a forward)
+      checkSetStateChanged();
+
+      // Remove the parameters that are gone
+      Set<String> currNames = responseContext.getPrivateParameterNames(windowId);
+      currNames.removeAll(parameters.keySet());
+      for (String name : currNames) {
+         responseContext.removeParameter(windowId, name);
+      }
+      
+      // Now set the new values
+      for (String key : parameters.keySet()) {
+         responseContext.setParameter(windowId, key, parameters.get(key));
+      }
+   }
+
+   public void setRenderParameter(String key, String value) {
+      ArgumentUtility.validateNotEmpty("key", key);
+      checkSetStateChanged();
+      if (value == null) {
+         responseContext.removeParameter(windowId, key);
+      } else {
+         String[] values = new String[] { value };
+         responseContext.setParameter(windowId, key, values);
+      }
+   }
+
+   public void setRenderParameter(String key, String... values) {
+      ArgumentUtility.validateNotEmpty("key", key);
+      ArgumentUtility.validateNotNull("values", values);
+      checkSetStateChanged();
+      if (values == null) {
+         responseContext.removeParameter(windowId, key);
+      } else {
+         responseContext.setParameter(windowId, key, values.clone());
+      }
+   }
 }

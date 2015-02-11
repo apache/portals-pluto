@@ -218,8 +218,12 @@ public class PublicRenderParameterQNameMapper implements PublicRenderParameterMa
    }
 
    public String[] getValues(int index) {
+      String[] vals = null;
       List<PortalURLPublicParameter> oprps = qn2PRP.get(qnList.get(index));
-      return oprps.get(0).getValues().clone();
+      if (!oprps.get(0).isRemoved()) {
+         vals = oprps.get(0).getValues().clone();
+      }
+      return vals;
    }
 
    public void setRemoved(int index, boolean removed) {

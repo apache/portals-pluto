@@ -67,9 +67,6 @@ public class PortletParameterFactory {
       wid2Action = new HashMap<String, ArrayList<PortalURLParameter>>();
       wid2Resource = new HashMap<String, ArrayList<PortalURLParameter>>();
       
-      //Make sure the servlet request parameters are processed
-      url.handleServletRequestParams();
-      
       for (PortalURLParameter parm : url.getParameters()) {
          if (parm.getType().equals(PortalURLParameter.PARAM_TYPE_ACTION)) {
             addParam(wid2Action, parm);
@@ -151,9 +148,6 @@ public class PortletParameterFactory {
     */
    public Map<String, String[]> getPublicParameterMap(String windowId) {
       HashMap<String, String[]> parameters = new HashMap<String, String[]>();
-      
-      //Make sure the servlet request parameters are processed
-      url.handleServletRequestParams();
 
       PublicRenderParameterMapper mapper = url.getPublicRenderParameterMapper();
       

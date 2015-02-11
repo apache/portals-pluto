@@ -138,7 +138,7 @@ public class PortalURLParserImpl implements PortalURLParser {
 
       String urlBase = request.getScheme()+"://" + request.getServerName() + ":" + request.getServerPort();
       // Construct portal URL using info retrieved from servlet request.
-      PortalURL portalURL =  new RelativePortalURLImpl(urlBase, contextPath, servletName, this, request);
+      RelativePortalURLImpl portalURL =  new RelativePortalURLImpl(urlBase, contextPath, servletName, this, request);
 
       // Support added for filter.  Should we separate into a different impl?
       String pathInfo = request.getPathInfo();
@@ -411,7 +411,7 @@ public class PortalURLParserImpl implements PortalURLParser {
     * @param portalURL  the portal URL to convert.
     * @return a URL string representing the portal URL.
     */
-   public String toString(PortalURL portalURL) {
+   public String toString(RelativePortalURLImpl portalURL) {
 
       StringBuilder buffer = new StringBuilder();
       String targetWindow = portalURL.getTargetWindow();
@@ -687,6 +687,14 @@ public class PortalURLParserImpl implements PortalURLParser {
          }
       }
       return buffer.toString();
+   }
+
+   /**
+    * This parser is completely married to the URL impl anyway, so let it
+    * blow up if someone tries to use a different URL impl.
+    */
+   public String toString(PortalURL portalURL) {
+      return toString((RelativePortalURLImpl) portalURL);
    }
 
 //    /**

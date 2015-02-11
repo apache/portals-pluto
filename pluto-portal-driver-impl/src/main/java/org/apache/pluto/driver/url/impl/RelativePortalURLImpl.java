@@ -48,9 +48,9 @@ import org.apache.pluto.driver.url.PortletParameterFactory;
  */
 public class RelativePortalURLImpl implements PortalURL {
 
-   private static final Logger         LOG                = LoggerFactory
-                                                                .getLogger(RelativePortalURLImpl.class);
-   private static final boolean        isDebug            = LOG.isDebugEnabled();
+   private static final Logger   LOG      = LoggerFactory.getLogger(RelativePortalURLImpl.class);
+   private static final boolean  isDebug  = LOG.isDebugEnabled();
+   private static final boolean  isTrace  = LOG.isTraceEnabled();
 
    private String                      urlBase;
    private String                      servletPath;
@@ -131,7 +131,7 @@ public class RelativePortalURLImpl implements PortalURL {
    // the parameters are read in order to allow a portlet to potentially set
    // the character encoding during processAction or serveResource.
 
-   public void handleServletRequestParams() {
+   protected void handleServletRequestParams() {
       if (!reqParamsProcessed && servletRequest != null && targetWindow != null
             && type != URLType.Portal) {
          reqParamsProcessed = true;
@@ -209,23 +209,51 @@ public class RelativePortalURLImpl implements PortalURL {
       return renderPath;
    }
 
-   public void addParameter(PortalURLParameter param) {
+   protected void addParameter(PortalURLParameter param) {
       if (isDebug) {
          StringBuilder txt = new StringBuilder(
-               "Setting private parameter: ");
+               "Adding private parameter: ");
          txt.append(" window ID: " + param.getWindowId());
          txt.append(", Name: " + param.getName());
-         String vals = (param.getValues() == null) ? "null" : Arrays
-               .toString(param.getValues());
+         String vals = (param.getValues() == null) 
+               ? "null" : Arrays.toString(param.getValues());
          txt.append(", Values: " + vals);
          txt.append(", Type: " + param.getType());
          txt.append(", Clone ID: " + cloneId);
          LOG.debug(txt.toString());
       }
+      
+      // If present, remove old value before adding new
+      if (parameters.contains(param)) {
+         parameters.remove(param);
+      }
+      parameters.add(param);
+   }
+
+   public void setParameter(PortalURLParameter param) {
+      handleServletRequestParams();
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder(
+               "Setting private parameter: ");
+         txt.append(" window ID: " + param.getWindowId());
+         txt.append(", Name: " + param.getName());
+         String vals = (param.getValues() == null) 
+               ? "null" : Arrays.toString(param.getValues());
+         txt.append(", Values: " + vals);
+         txt.append(", Type: " + param.getType());
+         txt.append(", Clone ID: " + cloneId);
+         LOG.debug(txt.toString());
+      }
+      
+      // If present, remove old value before adding new
+      if (parameters.contains(param)) {
+         parameters.remove(param);
+      }
       parameters.add(param);
    }
 
    public Collection<PortalURLParameter> getParameters() {
+      handleServletRequestParams();
       return parameters;
    }
 
@@ -365,23 +393,34 @@ public class RelativePortalURLImpl implements PortalURL {
     */
    public synchronized PortalURL clone() {
       RelativePortalURLImpl portalURL = new RelativePortalURLImpl();
+
+      portalURL.urlBase = this.urlBase;
       portalURL.servletPath = this.servletPath;
-      portalURL.parameters = new HashSet<PortalURLParameter>(parameters);
-      portalURL.portletModes = new HashMap<String, PortletMode>(portletModes);
-      portalURL.windowStates = new HashMap<String, WindowState>(windowStates);
+      portalURL.renderPath = renderPath;
       portalURL.cacheLevel = cacheLevel;
       portalURL.resourceID = resourceID;
-      portalURL.renderPath = renderPath;
-      portalURL.urlParser = urlParser;
+
       portalURL.prpMapper = (prpMapper == null) ? null : prpMapper.clone();
       portalURL.portletIds = new HashSet<String>(portletIds);
       portalURL.versionMap = new HashMap<String, String>(versionMap);
       portalURL.v3Map = new HashMap<String, Boolean>(v3Map);
+
+      portalURL.urlParser = urlParser;
       portalURL.servletRequest = servletRequest;
       portalURL.reqParamsProcessed = reqParamsProcessed;
+
+      portalURL.windowStates = new HashMap<String, WindowState>(windowStates);
+      portalURL.portletModes = new HashMap<String, PortletMode>(portletModes);
+
+      for (PortalURLParameter p : parameters) {
+         portalURL.parameters.add(p.clone());
+      }
+
       portalURL.type = type;
       portalURL.targetWindow = targetWindow;
+
       portalURL.cloneId = ++cloneCtr;
+
       if (isDebug) {
          long tid = Thread.currentThread().getId();
          StringBuilder txt = new StringBuilder();
@@ -431,8 +470,7 @@ public class RelativePortalURLImpl implements PortalURL {
       clearParameters(windowId);
       for (PortalURLParameter param : url.getParameters()) {
          if (windowId.equals(param.getWindowId())) {
-            addParameter(new PortalURLParameter(param.getWindowId(),
-                  param.getName(), param.getValues()));
+            addParameter(param.clone());
          }
       }
       PublicRenderParameterMapper prpm = url.getPublicRenderParameterMapper();
@@ -447,6 +485,7 @@ public class RelativePortalURLImpl implements PortalURL {
    }
 
    public void addPublicRenderParameter(PortalURLPublicParameter pup) {
+      handleServletRequestParams();
       if (isDebug) {
          StringBuilder txt = new StringBuilder(
                "Setting public render parameter: ");
@@ -479,6 +518,7 @@ public class RelativePortalURLImpl implements PortalURL {
    }
 
    public PublicRenderParameterMapper getPublicRenderParameterMapper() {
+      handleServletRequestParams();
       return prpMapper;
    }
 
@@ -515,6 +555,15 @@ public class RelativePortalURLImpl implements PortalURL {
     * url.PortalURL.URLType)
     */
    public void setType(URLType type) {
+      if (isTrace) {
+         long tid = Thread.currentThread().getId();
+         StringBuilder txt = new StringBuilder();
+         txt.append("old type= ").append(this.type);
+         txt.append(", new type= ").append(type);
+         txt.append(", clone ID= ").append(cloneId);
+         txt.append(". ThreadId=").append(tid);
+         LOG.debug(txt.toString());
+      }
       this.type = type;
    }
 
@@ -524,6 +573,14 @@ public class RelativePortalURLImpl implements PortalURL {
     * @see org.apache.pluto.driver.url.PortalURL#getType()
     */
    public URLType getType() {
+      if (isTrace) {
+         long tid = Thread.currentThread().getId();
+         StringBuilder txt = new StringBuilder();
+         txt.append("type= ").append(this.type);
+         txt.append(", clone ID= ").append(cloneId);
+         txt.append(". ThreadId=").append(tid);
+         LOG.debug(txt.toString());
+      }
       return type;
    }
 
@@ -554,6 +611,7 @@ public class RelativePortalURLImpl implements PortalURL {
     * .String)
     */
    public void clearResourceParameters(String window) {
+      handleServletRequestParams();
       HashSet<PortalURLParameter> rem = new HashSet<PortalURLParameter>();
       for (PortalURLParameter pup : parameters) {
          if (pup.getType().equals(PortalURLParameter.PARAM_TYPE_RESOURCE)
@@ -570,10 +628,12 @@ public class RelativePortalURLImpl implements PortalURL {
    }
 
    public PortletParameterFactory getPortletParameterFactory() {
+      handleServletRequestParams();
       return new PortletParameterFactory(this);
    }
 
    public void removeParameter(PortalURLParameter param) {
+      handleServletRequestParams();
       if (isDebug) {
          StringBuilder txt = new StringBuilder(
                "Removing private render parameter: ");
@@ -589,6 +649,7 @@ public class RelativePortalURLImpl implements PortalURL {
    }
 
    public void removePublicRenderParameter(PortalURLPublicParameter param) {
+      handleServletRequestParams();
       if (isDebug) {
          StringBuilder txt = new StringBuilder(
                "Removing public render parameter: ");

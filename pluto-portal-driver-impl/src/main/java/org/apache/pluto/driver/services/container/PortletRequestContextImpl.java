@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.impl.PortletURLImpl;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortletParameterFactory;
@@ -54,8 +55,10 @@ public class PortletRequestContextImpl implements PortletRequestContext {
    private Cookie              cookies[];
    
    // Nasty trick to make sure the URL provider is loaded first by the container classloader
+   // so that the logs from these classes land in the Pluto log file.
    static {
       PortletURLProviderImpl.load();
+      PortletURLImpl.load();
    }
 
    protected PortletWindow       window;
