@@ -135,19 +135,11 @@ public abstract class PortletRequestImpl implements PortletRequest
 
     protected static Map<String, String[]> cloneParameterMap(Map<String, String[]> map)
     {
-        if (!map.isEmpty())
-        {
-            Map<String, String[]> result = new HashMap<String, String[]>(map.size());
-            for (Map.Entry<String,String[]> entry : map.entrySet())
-            {
-                if (entry.getValue() != null)
-                {
-                    result.put(entry.getKey(), entry.getValue().clone());
-                }
-            }
-            return Collections.unmodifiableMap(result);
-        }
-        return Collections.emptyMap();
+       Map<String, String[]> newMap = new HashMap<String, String[]>();
+       for (String pn : map.keySet()) {
+          newMap.put(pn, map.get(pn).clone());
+       }
+       return newMap;
     }
 
     protected Map<String, String[]> initParameterMap()
