@@ -87,7 +87,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
          LOGGER.debug(txt.toString());
       }
 
-      if (isTrace) {
+      if (isDebug) {
          StringBuilder txt = new StringBuilder("Before clearing parameters for window: ");
          txt.append(window);
          for (PortalURLParameter p : this.url.getParameters()) {
@@ -96,6 +96,15 @@ public class PortletURLProviderImpl implements PortletURLProvider {
                txt.append(", Type: ").append(p.getType());
                txt.append(", Values: ").append(Arrays.toString(p.getValues()));
             }
+         }
+         txt.append("\nActive Public Render Parameters:");
+         PublicRenderParameterMapper mapper = this.url.getPublicRenderParameterMapper();
+         List<PortalURLPublicParameter> pups = mapper.getPRPsForWindow(window, false);
+         for (PortalURLPublicParameter p : pups) {
+            txt.append("\nName: ").append(p.getName());
+            txt.append(", Type: ").append(p.getType());
+            txt.append(", isRemoved: ").append(p.isRemoved());
+            txt.append(", Values: ").append(Arrays.toString(p.getValues()));
          }
          LOGGER.debug(txt.toString());
       }
@@ -142,6 +151,15 @@ public class PortletURLProviderImpl implements PortletURLProvider {
                txt.append(", Type: ").append(p.getType());
                txt.append(", Values: ").append(Arrays.toString(p.getValues()));
             }
+         }
+         txt.append("\nActive Public Render Parameters:");
+         PublicRenderParameterMapper mapper = this.url.getPublicRenderParameterMapper();
+         List<PortalURLPublicParameter> pups = mapper.getPRPsForWindow(window, false);
+         for (PortalURLPublicParameter p : pups) {
+            txt.append("\nName: ").append(p.getName());
+            txt.append(", Type: ").append(p.getType());
+            txt.append(", isRemoved: ").append(p.isRemoved());
+            txt.append(", Values: ").append(Arrays.toString(p.getValues()));
          }
          LOGGER.debug(txt.toString());
       }

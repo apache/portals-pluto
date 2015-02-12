@@ -82,7 +82,8 @@ public class EventCoordinationServiceImpl implements EventCoordinationService
         DriverConfiguration driverConfig = (DriverConfiguration) containerServletContext
                 .getAttribute(AttributeKeys.DRIVER_CONFIG);
 
-        PortalURL portalURL = PortalURLParserImpl.getParser().parse(request);
+        // PortalURL portalURL = PortalURLParserImpl.getParser().parse(request);
+        PortalURL portalURL = PortalRequestContext.getContext(request).createPortalURL();
 
 //      Map<String, PortletWindowThread> portletWindowThreads = new HashMap<String, PortletWindowThread>();
 

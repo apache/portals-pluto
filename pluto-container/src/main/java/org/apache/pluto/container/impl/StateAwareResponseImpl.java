@@ -176,7 +176,6 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl
 
    public void setRenderParameter(String key, String... values) {
       ArgumentUtility.validateNotEmpty("key", key);
-      ArgumentUtility.validateNotNull("values", values);
       checkSetStateChanged();
       if (values == null) {
          responseContext.removeParameter(windowId, key);

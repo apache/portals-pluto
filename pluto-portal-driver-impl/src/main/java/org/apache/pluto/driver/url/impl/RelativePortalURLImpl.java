@@ -116,6 +116,9 @@ public class RelativePortalURLImpl implements PortalURL {
       this.urlParser = urlParser;
       this.servletRequest = req;
       this.cloneId = (++cloneCtr) + 10000;
+      if (isDebug) {
+         LOG.debug("Constructed URL, clone ID: " + cloneId);
+      }
    }
 
    /**
@@ -362,6 +365,13 @@ public class RelativePortalURLImpl implements PortalURL {
       String result = urlParser.toString(this);
       if (absolute) {
          return urlBase + result;
+      }
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Clone ID: ").append(cloneId)
+            .append(", absolute: ").append(absolute)
+            .append(", URL: ").append(result);
+         LOG.debug(txt.toString());
       }
       return result;
    }

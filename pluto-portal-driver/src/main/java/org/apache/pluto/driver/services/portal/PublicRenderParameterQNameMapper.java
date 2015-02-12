@@ -260,17 +260,23 @@ public class PublicRenderParameterQNameMapper implements PublicRenderParameterMa
          dbgstr.append(prefix + qn.toString());
          prefix = ", ";
       }
+
       dbgstr.append(" / window IDs: ");
       prefix = "";
+      
       for (PortalURLPublicParameter prp : prpList) {
-         prpm.prpList.add(prp);
-         prpm.qn2PRP.get(prp.getQName()).add(prp.clone());
+         PortalURLPublicParameter newPrp = prp.clone();
+         prpm.prpList.add(newPrp);
+         prpm.qn2PRP.get(newPrp.getQName()).add(newPrp);
+         
          dbgstr.append(prefix + prp.getWindowId());
          prefix = ", ";
       }
+      
       if (isTrace) {
 //          LOGGER.trace(dbgstr.toString());       // fills log with entries.
       }
+      
       return prpm;
    }
 

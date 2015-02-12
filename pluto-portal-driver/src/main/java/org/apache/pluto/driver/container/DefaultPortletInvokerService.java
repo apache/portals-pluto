@@ -128,7 +128,7 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
     public void event(PortletRequestContext context, EventRequest request, EventResponse response, FilterManager filterManager)
     throws IOException, PortletException, PortletContainerException {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Performing Render Invocation");
+            LOG.debug("Performing Event Invocation");
         }
         invoke(context, request, response, filterManager, PortletInvokerService.METHOD_EVENT);
     }
