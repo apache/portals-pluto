@@ -49,6 +49,7 @@ public class PortalURLParserImpl implements PortalURLParser {
 
    /** Logger. */
    private static final Logger LOG = LoggerFactory.getLogger(PortalURLParserImpl.class);
+   boolean isDebug = LOG.isDebugEnabled();
 
    /** The singleton parser instance. */
    private static final PortalURLParser PARSER = new PortalURLParserImpl();
@@ -71,7 +72,9 @@ public class PortalURLParserImpl implements PortalURLParser {
    // See RFC 3986 & URLEncoder documentation.
    private static final String VALUE_DELIM = ":";
    private static final String VALUE_NULL = ",";
+   private static final String VALUE_ARRAY_EMPTY = "@";
    private static final String DELIM = ";";
+   private static final String TOKEN_DELIM = "/";
 
    private static final String ACTION = "ac";
    private static final String RESOURCE = "rs";
@@ -82,23 +85,6 @@ public class PortalURLParserImpl implements PortalURLParser {
    private static final String ACTION_PARAM = "av";      // new for portlet spec 3
    private static final String RESOURCE_PARAM = "rv";    // new for portlet spec 3
 
-
-//    //This is a list of characters that need to be encoded  to be protected
-//    //The ? is necessary to protect URI's with a query portion that is being passed as a parameter
-//    private static final String[][] ENCODINGS = new String[][] {
-//       new String[] { "_",  "0x1" },
-//       new String[] { ".",  "0x2" },
-//       new String[] { "/",  "0x3" },
-//       new String[] { "\r", "0x4" },
-//       new String[] { "\n", "0x5" },
-//       new String[] { "<",  "0x6" },
-//       new String[] { ">",  "0x7" },
-//       new String[] { " ",  "0x8" },
-//       new String[] { "#",  "0x9" },
-//       new String[] { "?",  "0xa" },
-//       new String[] { "\\", "0xb" },
-//       new String[] { "%",  "0xc" },
-//    };
 
    // Constructor -------------------------------------------------------------
 
@@ -131,7 +117,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       String contextPath = request.getContextPath();
       String servletName = request.getServletPath();
 
-      if (LOG.isDebugEnabled()) {
+      if (isDebug) {
          LOG.debug("Parsing. Context Path: " + contextPath + ", Servlet Name: " + servletName + ", Request URI: " + reqURI);
       }
 
@@ -148,22 +134,20 @@ public class PortalURLParserImpl implements PortalURLParser {
             pathInfo = servletName.substring(idx);
             servletName = servletName.substring(0, idx);
             portalURL = new RelativePortalURLImpl(urlBase, contextPath, servletName, this, request);
-            if (LOG.isDebugEnabled()) {
+            if (isDebug) {
                LOG.debug("Constructed new URL due to JSP processing. pathInfo: " + pathInfo);
             }
          }
       }
       
       // we want to work with the untranslated path info, so extract it from the URI.
-      // chop off query string and fragment identifier.
+      // chop off query string.
       String prefix = contextPath + servletName;
       int qi = reqURI.indexOf("?");
-      int hi = reqURI.indexOf("#");
-      int last = (qi > 0 && hi > 0) ? Math.min(qi, hi) : Math.max(qi, hi);
-      last = (last < 0) ? reqURI.length() : last;
-      pathInfo = reqURI.substring(prefix.length(), last);
+      qi = (qi < 0) ? reqURI.length() : qi;
+      pathInfo = reqURI.substring(prefix.length(), qi);
 
-      if (LOG.isDebugEnabled()) {
+      if (isDebug) {
          LOG.debug("Parsing request pathInfo: " + pathInfo);
       }
 
@@ -173,7 +157,7 @@ public class PortalURLParserImpl implements PortalURLParser {
          renderPath.append('/');
       }
 
-      int ind = pathInfo.indexOf("/" + PREFIX);
+      int ind = pathInfo.indexOf(TOKEN_DELIM + PREFIX);
       if (ind < 0) {
          // there are no parameters to process
          renderPath.append(urlDecode(pathInfo));
@@ -185,7 +169,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       }
 
       portalURL.setRenderPath(renderPath.toString());
-      if (LOG.isDebugEnabled()) {
+      if (isDebug) {
          LOG.debug("Parse: renderPath: " + renderPath.toString() + ",  pathInfo: " + pathInfo);
       }
 
@@ -204,7 +188,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       // Extract the version info for the portlets on the page and store in URL
       
       StringBuilder vstr = new StringBuilder();
-      if (LOG.isDebugEnabled()) {
+      if (isDebug) {
          vstr.append("Portlet Versions: ");
       }
       for (String pid : pids) {
@@ -212,21 +196,21 @@ public class PortalURLParserImpl implements PortalURLParser {
          try {
             String pv = dc.getPortletRegistryService().getPortletApplication(appName).getVersion();
             portalURL.setVersion(pid, pv);
-            if (LOG.isDebugEnabled()) {
+            if (isDebug) {
                vstr.append(pid).append(" = ").append(pv).append(", ");
             }
          } catch (Exception e) {
             LOG.error("Portlet application definition could not be retrieved for " + appName);
          }
       }
-      if (LOG.isDebugEnabled()) {
+      if (isDebug) {
          LOG.debug(vstr.toString());
       }
 
       // Tokenize the rest and process the tokens
       ArrayList<String> portletIds = new ArrayList<String>();
       if (pathInfo.length() > 2) {
-         String[] tokens = pathInfo.split("/" + PREFIX);
+         String[] tokens = pathInfo.split(TOKEN_DELIM + PREFIX);
          for (String t : tokens) {
 
             // vals contains the component values of the token after the type
@@ -324,7 +308,7 @@ public class PortalURLParserImpl implements PortalURLParser {
             // The remaining types deal with parameters, so extract the
             // parameter name and values.
             StringBuilder dbgstr = new StringBuilder();
-            if (LOG.isDebugEnabled()) {
+            if (isDebug) {
                dbgstr.append("Decoding parameter: window ID=").append(pid)
                      .append(", name/value=").append(vals[1]);
             }
@@ -338,10 +322,14 @@ public class PortalURLParserImpl implements PortalURLParser {
                }
             }
 
-            String[] pVals = values.split(VALUE_DELIM);
+            String[] pVals = values.split(VALUE_DELIM, -1);
             String[] paramValues = new String[0];
             String paramName = "";
+            boolean isEmptyArray = false;
             if (pVals.length > 1) {
+               if (pVals.length == 2 && pVals[1].equals(VALUE_ARRAY_EMPTY)) {
+                  isEmptyArray = true;
+               }
                for (int i = 0; i < pVals.length; i++){
                   if (pVals[i].equals(VALUE_NULL)) {
                      pVals[i] = null;
@@ -351,15 +339,20 @@ public class PortalURLParserImpl implements PortalURLParser {
                }
             }
             
-            if (pVals.length <= 1 || pVals[0] == null) {
+            if (pVals.length == 0 || pVals[0] == null) {
                LOG.warn("Bad parameter token: " + values);
             } else {
                paramName = pVals[0];
-               paramValues = Arrays.copyOfRange(pVals, 1, pVals.length);
+               if (isEmptyArray) {
+                  paramValues = new String[0];
+               } else {
+                  paramValues = Arrays.copyOfRange(pVals, 1, pVals.length);
+               }
             }
             
-            if (LOG.isDebugEnabled()) {
+            if (isDebug) {
                dbgstr.append(", paramName=").append(paramName);
+               dbgstr.append(", Values length=").append(paramValues.length);
                dbgstr.append(", paramValues=").append(Arrays.toString(paramValues));
                LOG.debug(dbgstr.toString());
             }
@@ -406,7 +399,7 @@ public class PortalURLParserImpl implements PortalURLParser {
          portalURL.handleServletRequestParams();
       }
       
-      if (LOG.isDebugEnabled()) {
+      if (isDebug) {
          LOG.debug("Found " + portletIds.size() + " IDs: " + Arrays.toString(portletIds.toArray()));
       }
 
@@ -429,7 +422,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       portalURL.handleServletRequestParams();
 
       // Append the server URI and the servlet path.
-      buffer.append(portalURL.getServletPath().startsWith("/")?"":"/")
+      buffer.append(portalURL.getServletPath().startsWith(TOKEN_DELIM)?"":TOKEN_DELIM)
       .append(portalURL.getServletPath());
 
       // Start the pathInfo with the path to the render URL (page).
@@ -441,7 +434,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       ArrayList<String> pids = new ArrayList<String>();
       for (String pid : portalURL.getPortletIds()) {
          pids.add(pid);
-         buffer.append("/").append(PREFIX).append(PORTLET_ID);
+         buffer.append(TOKEN_DELIM).append(PREFIX).append(PORTLET_ID);
          try {
             buffer.append(URLEncoder.encode(pid, "UTF-8"));
          } catch(Exception e) {
@@ -461,7 +454,7 @@ public class PortalURLParserImpl implements PortalURLParser {
                .append(Arrays.toString(pids.toArray()));
             LOG.warn(txt.toString());
          } else {
-            buffer.append("/");
+            buffer.append(TOKEN_DELIM);
             buffer.append(PREFIX).append(RESOURCE).append(String.valueOf(index));
          }
       }
@@ -477,7 +470,7 @@ public class PortalURLParserImpl implements PortalURLParser {
                .append(Arrays.toString(pids.toArray()));
             LOG.warn(txt.toString());
          } else {
-            buffer.append("/");
+            buffer.append(TOKEN_DELIM);
             buffer.append(PREFIX).append(RENDER).append(String.valueOf(index));
          }
       }
@@ -493,7 +486,7 @@ public class PortalURLParserImpl implements PortalURLParser {
                .append(Arrays.toString(pids.toArray()));
             LOG.warn(txt.toString());
          } else {
-            buffer.append("/");
+            buffer.append(TOKEN_DELIM);
             buffer.append(PREFIX).append(ACTION).append(String.valueOf(index));
          }
       }
@@ -501,12 +494,12 @@ public class PortalURLParserImpl implements PortalURLParser {
       String reswin = null;
       if (portalURL.getType() == URLType.Resource) {
          if (portalURL.getCacheability() != null) {
-            buffer.append("/");
+            buffer.append(TOKEN_DELIM);
             buffer.append(PREFIX).append(CACHE_LEVEL)
                   .append(urlEncode(portalURL.getCacheability()));
          }
          if (portalURL.getResourceID() != null) {
-            buffer.append("/");
+            buffer.append(TOKEN_DELIM);
             buffer.append(PREFIX).append(RESOURCE_ID)
                   .append(urlEncode(portalURL.getResourceID()));
          }
@@ -538,7 +531,7 @@ public class PortalURLParserImpl implements PortalURLParser {
                .append(", Portlet IDs in map: ").append(Arrays.toString(pids.toArray()));
             LOG.warn(txt.toString());
          } else {
-            buffer.append("/").append(PREFIX).append(PORTLET_MODE)
+            buffer.append(TOKEN_DELIM).append(PREFIX).append(PORTLET_MODE)
             .append(String.valueOf(index)).append(DELIM).append(urlEncode(pm.toString()));
          }
       }
@@ -559,7 +552,7 @@ public class PortalURLParserImpl implements PortalURLParser {
                .append(", Portlet IDs in map: ").append(Arrays.toString(pids.toArray()));
             LOG.warn(txt.toString());
          } else {
-            buffer.append("/").append(PREFIX).append(WINDOW_STATE)
+            buffer.append(TOKEN_DELIM).append(PREFIX).append(WINDOW_STATE)
             .append(String.valueOf(index)).append(DELIM).append(urlEncode(ws.toString()));
          }
       }
@@ -579,20 +572,17 @@ public class PortalURLParserImpl implements PortalURLParser {
          }
 
          // Encode render params as a part of the URL.
-         if (param.getName() != null && param.getValues() != null
-               && param.getValues().length > 0) {
+         if (param.getName() != null && param.getValues() != null) {
             String valueString = encodeMultiValues(param.getValues());
-            if (valueString.length() > 0) {
-               String ptype = RENDER_PARAM;
-               if (param.getType().equals(PortalURLParameter.PARAM_TYPE_ACTION)) {
-                  ptype = ACTION_PARAM;
-               } else if (param.getType().equals(PortalURLParameter.PARAM_TYPE_RESOURCE)) {
-                  ptype = RESOURCE_PARAM;
-               }
-               buffer.append("/").append(PREFIX).append(ptype)
-               .append(String.valueOf(index)).append(DELIM).append(urlEncode(param.getName()))
-               .append(VALUE_DELIM).append(valueString);
+            String ptype = RENDER_PARAM;
+            if (param.getType().equals(PortalURLParameter.PARAM_TYPE_ACTION)) {
+               ptype = ACTION_PARAM;
+            } else if (param.getType().equals(PortalURLParameter.PARAM_TYPE_RESOURCE)) {
+               ptype = RESOURCE_PARAM;
             }
+            buffer.append(TOKEN_DELIM).append(PREFIX).append(ptype)
+            .append(String.valueOf(index)).append(DELIM).append(urlEncode(param.getName()))
+            .append(VALUE_DELIM).append(valueString);
          }
       }
 
@@ -620,7 +610,7 @@ public class PortalURLParserImpl implements PortalURLParser {
             PortalURLPublicParameter prp = prplist.get(0);
             int index = pids.indexOf(prp.getWindowId());
             if (index >= 0) {
-               buffer.append("/").append(PREFIX).append(PUBLIC_RENDER_PARAM)
+               buffer.append(TOKEN_DELIM).append(PREFIX).append(PUBLIC_RENDER_PARAM)
                .append(String.valueOf(index)).append(DELIM)
                .append(String.valueOf(i)).append(DELIM)
                .append(urlEncode(prp.getName())).append(VALUE_DELIM)
@@ -680,14 +670,18 @@ public class PortalURLParserImpl implements PortalURLParser {
     */
    private String encodeMultiValues(String[] values) {
       StringBuilder buffer = new StringBuilder();
-      for (int i = 0; i < values.length; i++) {
-         if (values[i] == null) {
-            buffer.append(VALUE_NULL);
-         } else {
-            buffer.append(urlEncode(values[i]));
-         }
-         if (i + 1 < values.length) {
-            buffer.append(VALUE_DELIM);
+      if (values.length == 0) {
+         buffer.append(VALUE_ARRAY_EMPTY);
+      } else {
+         for (int i = 0; i < values.length; i++) {
+            if (values[i] == null) {
+               buffer.append(VALUE_NULL);
+            } else {
+               buffer.append(urlEncode(values[i]));
+            }
+            if (i + 1 < values.length) {
+               buffer.append(VALUE_DELIM);
+            }
          }
       }
       return buffer.toString();
