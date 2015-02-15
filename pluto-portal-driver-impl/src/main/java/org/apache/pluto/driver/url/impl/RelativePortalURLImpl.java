@@ -212,49 +212,6 @@ public class RelativePortalURLImpl implements PortalURL {
       return renderPath;
    }
 
-   protected void addParameter(PortalURLParameter param) {
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder(
-               "Adding private parameter: ");
-         txt.append(" window ID: " + param.getWindowId());
-         txt.append(", Name: " + param.getName());
-         String vals = (param.getValues() == null) 
-               ? "null" : Arrays.toString(param.getValues());
-         txt.append(", Values: " + vals);
-         txt.append(", Type: " + param.getType());
-         txt.append(", Clone ID: " + cloneId);
-         LOG.debug(txt.toString());
-      }
-      
-      // If present, remove old value before adding new
-      if (parameters.contains(param)) {
-         parameters.remove(param);
-      }
-      parameters.add(param);
-   }
-
-   public void setParameter(PortalURLParameter param) {
-      handleServletRequestParams();
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder(
-               "Setting private parameter: ");
-         txt.append(" window ID: " + param.getWindowId());
-         txt.append(", Name: " + param.getName());
-         String vals = (param.getValues() == null) 
-               ? "null" : Arrays.toString(param.getValues());
-         txt.append(", Values: " + vals);
-         txt.append(", Type: " + param.getType());
-         txt.append(", Clone ID: " + cloneId);
-         LOG.debug(txt.toString());
-      }
-      
-      // If present, remove old value before adding new
-      if (parameters.contains(param)) {
-         parameters.remove(param);
-      }
-      parameters.add(param);
-   }
-
    public Collection<PortalURLParameter> getParameters() {
       handleServletRequestParams();
       return parameters;
@@ -305,27 +262,6 @@ public class RelativePortalURLImpl implements PortalURL {
     */
    public void setWindowState(String windowId, WindowState windowState) {
       this.windowStates.put(windowId, windowState);
-   }
-
-   /**
-    * Clear parameters of the specified window.
-    * 
-    * @param windowId
-    *           the window ID.
-    */
-   public void clearParameters(String windowId) {
-      HashSet<PortalURLParameter> rem = new HashSet<PortalURLParameter>();
-      for (PortalURLParameter p : parameters) {
-         if (p.getWindowId().equals(windowId)) {
-            rem.add(p);
-         }
-      }
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder("Removing ");
-         txt.append(rem.size()).append(" elements. Window ID: ").append(windowId);
-         LOG.debug(txt.toString());
-      }
-      parameters.removeAll(rem);
    }
 
    public void setCacheability(String cacheLevel) {
@@ -431,7 +367,7 @@ public class RelativePortalURLImpl implements PortalURL {
 
       portalURL.cloneId = ++cloneCtr;
 
-      if (isDebug) {
+      if (isTrace) {
          long tid = Thread.currentThread().getId();
          StringBuilder txt = new StringBuilder();
          txt.append("Created clone ID= ").append(portalURL.cloneId);
@@ -444,7 +380,7 @@ public class RelativePortalURLImpl implements PortalURL {
 
    public PageConfig getPageConfig(ServletContext servletContext) {
       String requestedPageId = getRenderPath();
-      if (isDebug) {
+      if (isTrace) {
          LOG.debug("Requested Page: " + requestedPageId);
       }
 
@@ -459,82 +395,9 @@ public class RelativePortalURLImpl implements PortalURL {
       return paco;
    }
 
-   public synchronized void merge(PortalURL url, String windowId) {
-      if (isDebug) {
-         if (url.getClass().isInstance(this)) {
-            long tid = Thread.currentThread().getId();
-            RelativePortalURLImpl turl = (RelativePortalURLImpl) url;
-            StringBuilder txt = new StringBuilder();
-            txt.append("Merging URL with clone ID= ").append(turl.cloneId);
-            txt.append(" into URL with clone ID= ").append(cloneId);
-            txt.append(". ThreadId=").append(tid);
-            LOG.debug(txt.toString());
-         }
-      }
-      type = url.getType();
-      targetWindow = url.getTargetWindow();
-      setPortletMode(windowId, url.getPortletMode(windowId));
-      setWindowState(windowId, url.getWindowState(windowId));
-      setCacheability(url.getCacheability());
-      setResourceID(url.getResourceID());
-      clearParameters(windowId);
-      for (PortalURLParameter param : url.getParameters()) {
-         if (windowId.equals(param.getWindowId())) {
-            addParameter(param.clone());
-         }
-      }
-      PublicRenderParameterMapper prpm = url.getPublicRenderParameterMapper();
-      List<Integer> activePrps = prpm.getActiveIndexes();
-      for (int ii = 0; ii < prpm.getNumberOfGroups(); ii++) {
-         if (activePrps.contains(ii)) {
-            prpMapper.setValues(ii, prpm.getValues(ii));
-         } else {
-            prpMapper.setRemoved(ii, true);
-         }
-      }
-   }
-
-   public void addPublicRenderParameter(PortalURLPublicParameter pup) {
-      handleServletRequestParams();
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder(
-               "Setting public render parameter: ");
-         txt.append(" window ID: " + pup.getWindowId());
-         txt.append(", Name: " + pup.getName());
-         txt.append(", QName: " + pup.getQName());
-         txt.append(", Values: " + Arrays.toString(pup.getValues()));
-         LOG.debug(txt.toString());
-      }
-      int ind = prpMapper.getIndex(pup);
-      if (ind >= 0) {
-         if (pup.isRemoved()) {
-            prpMapper.setRemoved(ind, true);
-         } else {
-            prpMapper.setValues(ind, pup.getValues());
-         }
-      } else {
-         StringBuilder txt = new StringBuilder(
-               "Public render parameter is not contained in mapper.");
-         txt.append(" window ID: " + pup.getWindowId());
-         txt.append(", Name: " + pup.getName());
-         txt.append(", QName: " + pup.getQName());
-         txt.append(", Values: " + Arrays.toString(pup.getValues()));
-         LOG.warn(txt.toString());
-      }
-   }
-
-   public void setPublicRenderParameterMapper(PublicRenderParameterMapper prpm) {
-      prpMapper = prpm;
-   }
-
-   public PublicRenderParameterMapper getPublicRenderParameterMapper() {
-      handleServletRequestParams();
-      return prpMapper;
-   }
-
    public void setPortletIds(Collection<String> portletIds) {
       this.portletIds.addAll(portletIds);
-      if (isDebug) {
+      if (isTrace) {
          LOG.debug("Stored " + this.portletIds.size() + " IDs: "
                + Arrays.toString(this.portletIds.toArray()));
       }
@@ -613,6 +476,27 @@ public class RelativePortalURLImpl implements PortalURL {
       return targetWindow;
    }
 
+   /**
+    * Clear parameters of the specified window.
+    * 
+    * @param windowId
+    *           the window ID.
+    */
+   public void clearParameters(String windowId) {
+      HashSet<PortalURLParameter> rem = new HashSet<PortalURLParameter>();
+      for (PortalURLParameter p : parameters) {
+         if (p.getWindowId().equals(windowId)) {
+            rem.add(p);
+         }
+      }
+      if (isTrace) {
+         StringBuilder txt = new StringBuilder("Removing ");
+         txt.append(rem.size()).append(" elements. Window ID: ").append(windowId);
+         LOG.debug(txt.toString());
+      }
+      parameters.removeAll(rem);
+   }
+
    /*
     * (non-Javadoc)
     * 
@@ -629,7 +513,7 @@ public class RelativePortalURLImpl implements PortalURL {
             rem.add(pup);
          }
       }
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("Removing ");
          txt.append(rem.size()).append(" elements. Window ID: ").append(window);
          LOG.debug(txt.toString());
@@ -637,9 +521,61 @@ public class RelativePortalURLImpl implements PortalURL {
       parameters.removeAll(rem);
    }
 
+   protected void addParameter(PortalURLParameter param) {
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder(
+               "Adding private parameter: ");
+         txt.append(" window ID: " + param.getWindowId());
+         txt.append(", Name: " + param.getName());
+         String vals = (param.getValues() == null) 
+               ? "null" : Arrays.toString(param.getValues());
+         txt.append(", Values: " + vals);
+         txt.append(", Type: " + param.getType());
+         txt.append(", Clone ID: " + cloneId);
+         LOG.debug(txt.toString());
+      }
+      
+      // If present, remove old value before adding new
+      if (parameters.contains(param)) {
+         parameters.remove(param);
+      }
+      parameters.add(param);
+   }
+
+   public void setParameter(PortalURLParameter param) {
+      handleServletRequestParams();
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder(
+               "Setting private parameter: ");
+         txt.append(" window ID: " + param.getWindowId());
+         txt.append(", Name: " + param.getName());
+         String vals = (param.getValues() == null) 
+               ? "null" : Arrays.toString(param.getValues());
+         txt.append(", Values: " + vals);
+         txt.append(", Type: " + param.getType());
+         txt.append(", Clone ID: " + cloneId);
+         LOG.debug(txt.toString());
+      }
+      
+      // If present, remove old value before adding new
+      if (parameters.contains(param)) {
+         parameters.remove(param);
+      }
+      parameters.add(param);
+   }
+
    public PortletParameterFactory getPortletParameterFactory() {
       handleServletRequestParams();
       return new PortletParameterFactory(this);
+   }
+
+   public void setPublicRenderParameterMapper(PublicRenderParameterMapper prpm) {
+      prpMapper = prpm;
+   }
+
+   public PublicRenderParameterMapper getPublicRenderParameterMapper() {
+      handleServletRequestParams();
+      return prpMapper;
    }
 
    public void removeParameter(PortalURLParameter param) {

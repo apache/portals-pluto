@@ -89,13 +89,6 @@ public interface PortalURL extends Cloneable {
    public void removePublicRenderParameter(PortalURLPublicParameter param);
 
    /**
-    * Adds a new public render parameter.
-    * 
-    * @param pup
-    */
-   public void addPublicRenderParameter(PortalURLPublicParameter pup);
-
-   /**
     * Add the PRP mapper for the page being processed
     * @param prpm
     */
@@ -179,8 +172,6 @@ public interface PortalURL extends Cloneable {
 
    void setResourceID(String resourceID);
    String getResourceID();
-
-   void merge(PortalURL url, String windowId);
 
    /**
     * @param window

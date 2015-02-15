@@ -132,14 +132,6 @@ public class PortalRequestContext {
 
     public synchronized void mergePortalURL(PortalURL portalURL, String windowId){
        requestedPortalURL = portalURL;
-//         if (requestedPortalURL == null)
-//         {
-//             requestedPortalURL = portalURL;
-//         }
-//         else
-//         {
-//             requestedPortalURL.merge(portalURL, windowId);
-//         }
     }
 
 	public ServletContext getServletContext() {

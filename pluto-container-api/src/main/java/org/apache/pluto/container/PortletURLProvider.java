@@ -86,11 +86,6 @@ public interface PortletURLProvider {
      * @return
      */
     boolean isPublicRenderParameter(String windowId, String name);
-   
-    /**
-     * Clears public render parameters except those that are marked for removal.
-     */
-    void clearPublicRenderParameters();
     
     /**
      * Retrieves the available private parameter names for the given window ID
