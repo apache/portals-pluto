@@ -174,7 +174,7 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
      */
     public void removePublicRenderParameter(String windowId, String name) {
        if (!isClosed()) {
-          portletURLProvider.removeParameter(windowId, name);
+          portletURLProvider.removePublicRenderParameter(windowId, name);
        }
     }
     
