@@ -825,9 +825,9 @@ var portlet = portlet || {};
       if (upids.length === 0) {
          busy = false;
       } else {
-      for (ii = 0; ii < upids.length; ii++) {
-         _updateStateForPortlet(upids[ii]);
-      }
+    	  for (ii = 0; ii < upids.length; ii++) {
+    		  _updateStateForPortlet(upids[ii]);
+    	  }
       }
 
    },
@@ -1082,8 +1082,8 @@ var portlet = portlet || {};
       // If an error occurred, post the error to the onError handler, if one is present.
 
       pi = _registeredPortlets[pid];
-      pi.executeAction(parms, element).then(function (upids) {
-         updatePageState(upids);
+      return pi.executeAction(parms, element).then(function (upids) {
+         return updatePageState(upids);
       }, function (err) {
          busy = false;
          if (oeListeners[pid]) {
@@ -1583,13 +1583,6 @@ var portlet = portlet || {};
              * submit the action to the server by executing a 'POST' with an action
              * URL containing any action parameters provided.
              * <p>
-             * A portlet action is a blocking operation.
-             * To allow for orderly state transitions, the portlet hub does not allow
-             * this function to be used while a blocking operation is in progress.
-             * A blocking operation is considered to be in progress
-             * from the initial call until the final onStateChange event for that
-             * operation has been fired. See {@link portlet} for further information.
-             * <p>
              * The parameters may be specified in either order, individually,
              * or not at all. Examples of valid calls:
              * <code>
@@ -1598,12 +1591,24 @@ var portlet = portlet || {};
              * <br>action(actParams);
              * <br>action(element);
              * </code>
+             * <p>
+             * A portlet action is a blocking operation.
+             * To allow for orderly state transitions, the portlet hub does not allow
+             * this function to be used while a blocking operation is in progress.
+             * A blocking operation is considered to be in progress
+             * from the initial call until the final onStateChange event for that
+             * operation has been fired. See {@link portlet} for further information.
+             * <p>
+             * 
              *
              * @param   {PortletParameters}  actParams   Action parameters to be
              *                                           added to the URL
              *                                           (optional)
              * @param   {HTMLFormElement}    element     DOM element of form to be submitted
              *                                           (optional)
+             *
+             * @returns {Promise}   A Promise object that is resolved with no argument
+             * 						when the action request has completed.
              *
              * @throws  {IllegalArgumentException}
              *                   Thrown if the input parameters are invalid
@@ -1643,13 +1648,15 @@ var portlet = portlet || {};
                         throwIllegalArgumentException("too many parameters arguments.");
                      }
                      parms = arg;
-                  } else {
+                  } else 
+                  if (arg !== undefined) { 
                      throwIllegalArgumentException("Invalid argument type. Argument " + (ii + 1)
                             + " is of type " + type);
                   }
                }
                
                // if we're dealing with a form, verify method and enctype
+               console.log("form element", el);
                
                if (el) {
                   meth = el.method ? el.method.toUpperCase() : undefined;
@@ -1680,7 +1687,7 @@ var portlet = portlet || {};
          
                // everything ok, so do the action
          
-               setupAction(portletId, parms, el);
+               return setupAction(portletId, parms, el);
             },
          
             /**

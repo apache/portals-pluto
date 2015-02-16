@@ -310,56 +310,42 @@ var portlet = portlet || {};
       return pageState.portlets[pid].state;
    },
    
-   /**
-    * Function to encode url tokens as Pluto likes it
-    */
-   plutoEncode = function (istr) {
-      var ENCODINGS = {
-            "_" :  "0x1",
-            "." :  "0x2",
-            "/" :  "0x3",
-            "\r" : "0x4",
-            "\n" : "0x5",
-            "<" :  "0x6",
-            ">" :  "0x7",
-            " " :  "0x8",
-            "#" :  "0x9",
-            "?" :  "0xa",
-            "\\" : "0xb",
-            "%" :  "0xc",
-            "|" :  "%7C"
-                      }, ii, ostr = "";
-      
-      for (ii=0; ii < istr.length; ii++) {
-         if (ENCODINGS[istr.charAt(ii)]) {
-            ostr += ENCODINGS[istr.charAt(ii)];
-         } else {
-            ostr += istr.charAt(ii);
-         }
-      }
-
-      return ostr;
-   },
-   
    
    // Constants used for URL Encoding/Decoding (copied from Pluto impl code)  ----------
-
+   
    PREFIX = "__",
-   DELIM = "_",
    PORTLET_ID = "pd",
-   ACTION = "ac",
-   RESOURCE = "rs",
    RESOURCE_ID = "ri",
    CACHE_LEVEL = "cl",
-   RENDER_PARAM = "rp",
-   PRIVATE_RENDER_PARAM = "pr",
-   PUBLIC_RENDER_PARAM = "sp",
    WINDOW_STATE = "ws",
    PORTLET_MODE = "pm",
-   VALUE_DELIM = "0x0",
+   
+   // The delimiter & special chars for the value encoding are chosen
+   // from the URL reserved delimiter characters that ARE ENCODED by the URLEncoder
+   // so that they will not appear encoded parameter names or values.
+   // See RFC 3986 & URLEncoder documentation.
+   VALUE_DELIM = ":",
+   VALUE_NULL = ",",
+   VALUE_ARRAY_EMPTY = "@",
+   DELIM = ";",
+   TOKEN_DELIM = "/",
 
-   AJAX_ACTION = "aa",              // new for portlet spec 3
-   PARTIAL_ACTION = "pa",           // new for portlet spec 3
+   ACTION = "ac",
+   RESOURCE = "rs",
+   AJAX_ACTION = "aa",       // new for portlet spec 3
+   PARTIAL_ACTION = "pa",    // new for portlet spec 3
+   RENDER = "re",            // new for portlet spec 3
+   
+   ACTION_PARAM = "av",      // new for portlet spec 3
+   RESOURCE_PARAM = "rv",    // new for portlet spec 3
+   RENDER_PARAM = "rp",
+   PUBLIC_RENDER_PARAM = "sp",
+   
+   
+   // constants for checking if portlet mode & window state have default values
+   VIEW = "VIEW",
+   NORMAL = "NORMAL",
+
    
    pidMap = {},
    
@@ -373,41 +359,61 @@ var portlet = portlet || {};
       for (ii = 0; ii < pids.length; ii++) {
          pid = pids[ii];
          pidMap[pid] = ii;
-         urlmap += "/" + PREFIX + PORTLET_ID;
-         urlmap += plutoEncode(pageState.portlets[pid].urlpid);
+         urlmap += TOKEN_DELIM + PREFIX + PORTLET_ID;
+         urlmap += encodeURIComponent(pageState.portlets[pid].urlpid);
          urlmap += DELIM + ii;
       }
       
       return urlmap;
    },
 
+   /**
+    * Helper for encoding a multivalued parameter
+    */
+   encodeParameter = function (name, vals) {
+	   var str = "", jj;
+	   if (vals) {
+		   str += encodeURIComponent(name);
+		   if (vals.length === 0) {
+			   str += VALUE_DELIM + VALUE_ARRAY_EMPTY;
+		   } else {
+			   for (jj=0; jj < vals.length; jj++) {
+				   if (vals[jj] === null) {
+					   str += VALUE_DELIM + VALUE_NULL;
+				   } else {
+					   str += VALUE_DELIM + encodeURIComponent(vals[jj]);
+				   }
+			   }
+		   }
+	   }
+	   return str;
+   },
    
    /**
     * Helper for generating parameter strings for the URL
     */
    genParmString = function (pid, name, type, group) {
-      var vals, jj, sep, str = "", wid = "", grpstr = "";
+      var vals, str = "", wid = "", grpstr = "";
       vals = pageState.portlets[pid].state.parameters[name];
       
-      // If encoding a render parameter, insert the pid in Pluto internal form 
-      // as opposed to namespace form -
-      
-      if (type === RENDER_PARAM || type === PUBLIC_RENDER_PARAM) {
-         wid = pidMap[pid];
-      }
-      
-      if (type === PUBLIC_RENDER_PARAM) {
-         grpstr = DELIM + plutoEncode(group);
-      }
-      
-      // If values are present, encode the multivalued parameter string
-      
-      if (vals) {
-         sep = VALUE_DELIM;
-         str += "/" + PREFIX + type + wid + grpstr + DELIM + encodeURIComponent(name);
-         for (jj=0; jj < vals.length; jj++) {
-            str += sep + encodeURIComponent(vals[jj]);
-         }
+      // if there are no values, return the empty string
+      if (vals !== undefined) {
+
+    	  // If encoding a render parameter, insert the pid in Pluto internal form 
+    	  // as opposed to namespace form -
+
+    	  if (type === RENDER_PARAM || type === PUBLIC_RENDER_PARAM
+    			  || type === ACTION_PARAM || type === RESOURCE_PARAM) {
+    		  wid = pidMap[pid];
+    	  }
+
+    	  if (type === PUBLIC_RENDER_PARAM) {
+    		  grpstr = DELIM + encodeURIComponent(group);
+    	  }
+
+    	  // If values are present, encode the multivalued parameter string
+
+    	  str += TOKEN_DELIM + PREFIX + type + wid + grpstr + DELIM + encodeParameter(name, vals);
       }
       return str;
    },
@@ -421,8 +427,13 @@ var portlet = portlet || {};
           ws = pageState.portlets[pid].state.windowState, 
           wid = pidMap[pid], str = "";
 
-      str += "/" + PREFIX + PORTLET_MODE + wid + DELIM + encodeURIComponent(pm);
-      str += "/" + PREFIX + WINDOW_STATE + wid + DELIM + encodeURIComponent(ws);
+      // Only add PM & WS if the values are not default
+      if (pm.toUpperCase() !== VIEW) {
+    	  str += TOKEN_DELIM + PREFIX + PORTLET_MODE + wid + DELIM + encodeURIComponent(pm);
+      }
+      if (ws.toUpperCase() !== NORMAL) {
+    	  str += TOKEN_DELIM + PREFIX + WINDOW_STATE + wid + DELIM + encodeURIComponent(ws);
+      }
 
       return str;
    },
@@ -442,7 +453,7 @@ var portlet = portlet || {};
    getUrl = function (type, pid, parms, cache) {
    
       var url = portlet.impl.getUrlBase(), ca = 'cacheLevelPage', parm, isAction = false,
-          sep = "", name, names, vals, ii, str, id, ids, tpid, prpstrings, group;
+          name, names, ii, str, id, ids, tpid, prpstrings, group, ptype;
           
       url += getPidMap();
        
@@ -456,19 +467,22 @@ var portlet = portlet || {};
       
       if (type === "RESOURCE") {
          // If generating resource URL, add resource window & cacheability
-         url += "/" + PREFIX + RESOURCE + pidMap[pid];
+         url += TOKEN_DELIM + PREFIX + RESOURCE + pidMap[pid];
          if (cache) {
             ca = cache;
          }
-         url += "/" + PREFIX + CACHE_LEVEL + plutoEncode(ca);
+         url += TOKEN_DELIM + PREFIX + CACHE_LEVEL + encodeURIComponent(ca);
+      } else if (type === "RENDER" && pid !== null) {
+         // Add Render window
+         url += TOKEN_DELIM + PREFIX + RENDER + pidMap[pid];
       } else if (type === "ACTION") {
-         // Add Ajax Action window
-         isAction = true;
-         url += "/" + PREFIX + AJAX_ACTION + pidMap[pid];
+          // Add Ajax Action window
+          isAction = true;
+          url += TOKEN_DELIM + PREFIX + AJAX_ACTION + pidMap[pid];
       } else if (type === "PARTIAL_ACTION") {
          // Add Partial Action window
          isAction = true;
-         url += "/" + PREFIX + PARTIAL_ACTION + pidMap[pid];
+         url += TOKEN_DELIM + PREFIX + PARTIAL_ACTION + pidMap[pid];
       }
       
       // Now add the state to the URL, taking into account cacheability if
@@ -500,7 +514,6 @@ var portlet = portlet || {};
          }
 
          // add the state for the target portlet for on-action urls.
-         // (Action URLs have only action parameters in the query string)
          // (for a render URL, pid can be null)
          if (!isAction && pid !== null) {
             url += genPMWSString(pid);  // portlet mode & window state
@@ -509,7 +522,7 @@ var portlet = portlet || {};
             for (name in names) {
                // Public render parameters are encoded separately
                if (names.hasOwnProperty(name) && !isPRP(pid, name)) {
-                  str += genParmString(pid, name, PRIVATE_RENDER_PARAM);
+                  str += genParmString(pid, name, RENDER_PARAM);
                }
             }
             url += str;
@@ -537,19 +550,17 @@ var portlet = portlet || {};
 
       }
 
-      // Encode resource or action parameters as query string
+      // Encode resource or action parameters
       if (parms) {
-         str = ""; sep = "?";
-         for (parm in parms) {
-            if (parms.hasOwnProperty(parm)) {
-               vals = parms[parm];
-               for (ii=0; ii < vals.length; ii++) {
-                  str += sep + encodeURIComponent(parm) + "=" + encodeURIComponent(vals[ii]);
-                  sep = "&";
-               }
-            }
-         }
-         url += str;
+    	  str = "";
+    	  ptype = isAction ? ACTION_PARAM : RESOURCE_PARAM;
+    	  for (parm in parms) {
+    		  if (parms.hasOwnProperty(parm)) {
+    	          str += TOKEN_DELIM + PREFIX + ptype + pidMap[pid] + DELIM;
+    			  str += encodeParameter(parm, parms[parm]);
+    		  }
+    	  }
+    	  url += str;
       }
 
       // Use Promise to allow for potential server communication - 

@@ -112,6 +112,27 @@
 
       <supported-public-render-parameter>color</supported-public-render-parameter>
    </portlet>
+
+   <portlet>
+      <portlet-name>ParamTestPortlet</portlet-name>
+      <display-name>PH Parameter Test Portlet</display-name>
+      
+      <portlet-class>basic.portlet.ParamTestPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>PH Parameter Test Portlet</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>imgName</supported-public-render-parameter>
+      <supported-public-render-parameter>color</supported-public-render-parameter>
+   </portlet>
    
    <event-definition>
       <qname>rp:Message</qname>

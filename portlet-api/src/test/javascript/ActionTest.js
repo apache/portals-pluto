@@ -187,13 +187,13 @@ describe('The portlet hub allows the portlet client to execute a portlet action'
          expect(testFunc).toThrowCustomException("IllegalArgumentException");
       });
 
-      it('throws an IllegalArgumentException if action parameters is undefined',function(){
-         var el = document.createElement("form");
-         var testFunc = function () {
-            hubA.action(undefined, el);
-         }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
-      });
+//       it('throws an IllegalArgumentException if action parameters is undefined',function(){
+//          var el = document.createElement("form");
+//          var testFunc = function () {
+//             hubA.action(undefined, el);
+//          }
+//          expect(testFunc).toThrowCustomException("IllegalArgumentException");
+//       });
 
       it('throws an IllegalArgumentException if action parameters is invalid',function(){
          var parms  = {rp1 : "resVal"};
