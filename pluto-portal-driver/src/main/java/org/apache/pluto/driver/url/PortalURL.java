@@ -81,12 +81,6 @@ public interface PortalURL extends Cloneable {
     * @param param
     */
    public void removeParameter(PortalURLParameter param);
-   
-   /**
-    * Removes the given public render parameter
-    * @param param
-    */
-   public void removePublicRenderParameter(PortalURLPublicParameter param);
 
    /**
     * Add the PRP mapper for the page being processed

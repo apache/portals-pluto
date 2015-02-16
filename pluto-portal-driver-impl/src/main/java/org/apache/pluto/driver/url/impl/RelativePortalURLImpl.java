@@ -505,7 +505,6 @@ public class RelativePortalURLImpl implements PortalURL {
     * .String)
     */
    public void clearResourceParameters(String window) {
-      handleServletRequestParams();
       HashSet<PortalURLParameter> rem = new HashSet<PortalURLParameter>();
       for (PortalURLParameter pup : parameters) {
          if (pup.getType().equals(PortalURLParameter.PARAM_TYPE_RESOURCE)
@@ -521,6 +520,7 @@ public class RelativePortalURLImpl implements PortalURL {
       parameters.removeAll(rem);
    }
 
+   // used by parser when parsing URL parameter strings
    protected void addParameter(PortalURLParameter param) {
       if (isDebug) {
          StringBuilder txt = new StringBuilder(
@@ -592,24 +592,5 @@ public class RelativePortalURLImpl implements PortalURL {
          LOG.debug(txt.toString());
       }
       parameters.remove(param);
-   }
-
-   public void removePublicRenderParameter(PortalURLPublicParameter param) {
-      handleServletRequestParams();
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder(
-               "Removing public render parameter: ");
-         txt.append(" window ID: " + param.getWindowId());
-         txt.append(", Name: " + param.getName());
-         txt.append(", QName: " + param.getQName());
-         txt.append(", Values: " + Arrays.toString(param.getValues()));
-         LOG.debug(txt.toString());
-      }
-      int index = prpMapper.getIndex(param);
-      if (index >= 0) {
-         prpMapper.setRemoved(index, true);
-      } else {
-         LOG.warn("Public parameter not found in PRP mapper.");
-      }
    }
 }

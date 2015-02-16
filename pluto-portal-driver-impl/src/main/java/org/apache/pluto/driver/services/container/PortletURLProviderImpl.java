@@ -68,7 +68,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
       this.url = url.clone();
       this.type = type;
       this.window = portletWindow.getId().getStringId();
-      this.paramFactory = url.getPortletParameterFactory();
+      this.paramFactory = this.url.getPortletParameterFactory();
 
       if (isDebug) {
          StringBuilder txt = new StringBuilder("Constructing PortalURLProviderImpl. ");
