@@ -37,72 +37,7 @@ package javax.portlet;
  * @see PortletState
  * @see PortletResponse
  */
-public interface StateAwareResponse extends PortletResponse {
-
-	/**
-     * Sets the window state of a portlet to the given window state.
-     * <p>
-     * Possible values are the standard window states and any custom window
-     * states supported by the portal and the portlet. Standard window states
-     * are:
-     * <ul>
-     * <li>MINIMIZED
-     * <li>NORMAL
-     * <li>MAXIMIZED
-     * </ul>
-     * 
-     * @param windowState
-     *            the new portlet window state
-     * 
-     * @exception WindowStateException
-     *                if the portlet cannot switch to the specified window
-     *                state. To avoid this exception the portlet can check the
-     *                allowed window states with
-     *                <code>Request.isWindowStateAllowed()</code>.
-     * @exception java.lang.IllegalStateException
-     *                if the method is invoked after <code>sendRedirect</code>
-     *                has been called.
-     * 
-     * @see WindowState
-     */
-
-	public void setWindowState(WindowState windowState)
-			throws WindowStateException;
-
-	/**
-     * Sets the portlet mode of a portlet to the given portlet mode.
-     * <p>
-     * Possible values are the standard portlet modes and any custom portlet
-     * modes supported by the portal and the portlet. Portlets must declare in
-     * the deployment descriptor the portlet modes they support for each markup
-     * type. Standard portlet modes are:
-     * <ul>
-     * <li>EDIT
-     * <li>HELP
-     * <li>VIEW
-     * </ul>
-     * <p>
-     * Note: The portlet may still be called in a different window state in the
-     * next render call, depending on the portlet container / portal.
-     * 
-     * @param portletMode
-     *            the new portlet mode
-     * 
-     * @exception PortletModeException
-     *                if the portlet cannot switch to this portlet mode, because
-     *                the portlet or portal does not support it for this markup,
-     *                or the current user is not allowed to switch to this
-     *                portlet mode. To avoid this exception the portlet can
-     *                check the allowed portlet modes with
-     *                <code>Request.isPortletModeAllowed()</code>.
-     * @exception java.lang.IllegalStateException
-     *                if the method is invoked after <code>sendRedirect</code>
-     *                has been called.
-     */
-
-	public void setPortletMode(PortletMode portletMode)
-			throws PortletModeException;
-
+public interface StateAwareResponse extends PortletResponse, MutablePortletState {
 
    /**
     * <span class="changed_modified_3_0">Sets</span> 
@@ -326,26 +261,6 @@ public interface StateAwareResponse extends PortletResponse {
 
    @Deprecated
 	public java.util.Map<String, String[]> getRenderParameterMap();
-
-	/**
-     * Returns the currently set portlet mode on this reponse.
-     * 
-     * @since 2.0
-     * 
-     * @return the portlet mode, or <code>null</code> if none is set
-     */
-
-	public PortletMode getPortletMode();
-
-	/**
-     * Returns the currently set window state on this response.
-     * 
-     * @since 2.0
-     * 
-     * @return the window state, or <code>null</code> if none is set
-     */
-
-	public WindowState getWindowState();
 
 
 	/**

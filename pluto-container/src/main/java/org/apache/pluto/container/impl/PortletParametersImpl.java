@@ -100,7 +100,7 @@ public abstract class PortletParametersImpl implements PortletParameters {
    public String getValue(String name) {
       checkNull("name", name);
       String[] vals = params.get(name);
-      String val = (vals == null) ? null : vals[0];
+      String val = (vals == null || vals.length == 0) ? null : vals[0];
       if (isTrace) {
          LOGGER.debug("Name: " + name + ", Value: " + val);
       }

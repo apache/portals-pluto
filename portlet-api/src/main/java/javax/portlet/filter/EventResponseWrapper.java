@@ -28,6 +28,8 @@ import java.util.Map;
 
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.MutablePortletParameters;
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.WindowState;
@@ -35,7 +37,8 @@ import javax.portlet.WindowStateException;
 import javax.xml.namespace.QName;
 
 /**
- * The <code>EventResponseWrapper</code> provides a convenient 
+ * <span class="changed_modified_3_0">The</span> 
+ * <code>EventResponseWrapper</code> provides a convenient 
  * implementation of the <code>EventResponse</code> interface 
  * that can be subclassed by developers wishing to adapt the response.
  * This class implements the Wrapper or Decorator pattern. 
@@ -82,6 +85,7 @@ public class EventResponseWrapper extends PortletResponseWrapper implements Even
       * The default behavior of this method is to call 
       * <code>setRenderParameter(key, value)</code> on the wrapped response object.
       */
+     @Deprecated
      public void setRenderParameter(String key, String value) {
          response.setRenderParameter(key, value);
      }
@@ -90,7 +94,9 @@ public class EventResponseWrapper extends PortletResponseWrapper implements Even
       * The default behavior of this method is to call 
       * <code>setRenderParameter(key, value)</code> on the wrapped response object.
       */
-     public void setRenderParameter(String key, String[] values) {
+     
+     @Deprecated
+     public void setRenderParameter(String key, String ... values) {
          response.setRenderParameter(key, values);
      }
 
@@ -98,6 +104,7 @@ public class EventResponseWrapper extends PortletResponseWrapper implements Even
       * The default behavior of this method is to call 
       * <code>setRenderParameters(parameters)</code> on the wrapped response object.
       */
+     @Deprecated
      public void setRenderParameters(Map<String, String[]> parameters) {
          response.setRenderParameters(parameters);
      }
@@ -145,6 +152,7 @@ public class EventResponseWrapper extends PortletResponseWrapper implements Even
       * The default behavior of this method is to call 
       * <code>getRenderParameterMap()</code> on the wrapped response object.
       */
+     @Deprecated
      public Map<String, String[]> getRenderParameterMap() {
          return response.getRenderParameterMap();
      }
@@ -161,6 +169,7 @@ public class EventResponseWrapper extends PortletResponseWrapper implements Even
       *  The default behavior of this method is to call 
       * <code>setRenderParameters()</code> on the wrapped response object.
       */
+     @Deprecated
      public void setRenderParameters(EventRequest request) {
          response.setRenderParameters(request);         
      }
@@ -177,8 +186,19 @@ public class EventResponseWrapper extends PortletResponseWrapper implements Even
      *  The default behavior of this method is to call 
      * <code>removePublicRenderParameter()</code> on the wrapped response object.
      */
+ 	@Deprecated
 	public void removePublicRenderParameter(String name) {
 		response.removePublicRenderParameter(name);		
 	}
+
+   /**
+    * <div class="changed_added_3_0">
+    *  The default behavior of this method is to call 
+    * <code>getRenderParameter()</code> on the wrapped response object.
+    * </div>
+    */
+   public MutableRenderParameters getRenderParameters() {
+      return response.getRenderParameters();
+   }
 
 }

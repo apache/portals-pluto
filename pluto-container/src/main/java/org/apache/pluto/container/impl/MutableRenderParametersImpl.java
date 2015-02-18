@@ -54,7 +54,7 @@ public class MutableRenderParametersImpl extends MutablePortletParametersImpl
     * @param type
     */
    public MutableRenderParametersImpl(PortletURLProvider urlProvider, String windowId) {
-      super(urlProvider, windowId, ParamType.ACTION);
+      super(urlProvider, windowId, ParamType.RENDER);
       prpNames = urlProvider.getPublicParameterNames(windowId);
    }
 
@@ -64,7 +64,7 @@ public class MutableRenderParametersImpl extends MutablePortletParametersImpl
     * @param type
     */
    public MutableRenderParametersImpl(Map<String, String[]> params, String windowId, Set<String> prpNames) {
-      super(params, windowId, ParamType.ACTION);
+      super(params, windowId, ParamType.RENDER);
       this.prpNames = new HashSet<String>(prpNames);
    }
 

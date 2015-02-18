@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.portlet.Event;
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
@@ -94,5 +95,12 @@ public interface PortletStateAwareResponseContext extends PortletResponseContext
      * @param name
      */
     void removeParameter(String windowId, String name);
+    
+    /**
+     * Returns a mutable render parameters object.
+     * 
+     * @return
+     */
+    MutableRenderParameters getRenderParameters(String windowId);
 
 }

@@ -36,7 +36,6 @@ limitations under the License.
 <p>Enter parameter name and value and click 'send'.
 To enter multiple values, separate values with a ',' character.
 Entering 'null' as a value will cause the corresponding value in the values array to be set to null.
-Entering 'null' by itself will cause the parameter to be set to null (removed).
 Entering 'empty' by itself will set the parameter to an empty array.
 Leaving the value field empty will set the parameter to an array containing a single empty string.
 <p/>
@@ -55,15 +54,11 @@ Leaving the value field empty will set the parameter to an array containing a si
           <%=(setType.equals(PARAM_SETTYPE_VARRAY) ? "checked" : "")%> >Value array
 
    </td></tr><tr><td>
-   To remove, use:
+   Remove:
    </td><td>
 
-   <input type='radio' name='<%=PARAM_REMTYPE%>' value='<%=PARAM_REMTYPE_REM%>'
-          <%=(remType.equals(PARAM_REMTYPE_REM) ? "checked" : "")%> >removePRP
-
-   </td><td>
-   <input type='radio' name='<%=PARAM_REMTYPE%>' value='<%=PARAM_REMTYPE_SET%>'
-          <%=(remType.equals(PARAM_REMTYPE_SET) ? "checked" : "")%> >setRenderParameter
+   <input type='checkbox' name='<%=PARAM_REMTYPE%>' value='<%=PARAM_REMTYPE_REM%>'
+          <%=(remType.equals(PARAM_REMTYPE_REM) ? "checked" : "")%> >remove parameter
 
    </td></tr><tr><td>
       Parameter Name:

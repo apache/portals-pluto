@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.portlet.Event;
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.StateAwareResponse;
@@ -182,5 +183,9 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl
       } else {
          responseContext.setParameter(windowId, key, values.clone());
       }
+   }
+
+   public MutableRenderParameters getRenderParameters() {
+      return responseContext.getRenderParameters(windowId);
    }
 }

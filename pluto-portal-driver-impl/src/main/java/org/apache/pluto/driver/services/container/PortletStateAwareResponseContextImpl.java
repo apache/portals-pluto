@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.portlet.Event;
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,7 @@ import org.apache.pluto.container.PortletStateAwareResponseContext;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.driver.PlutoServices;
+import org.apache.pluto.container.impl.MutableRenderParametersImpl;
 import org.apache.pluto.container.impl.PortletURLImpl;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
@@ -244,6 +246,13 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
        if (!isClosed()) {
           portletURLProvider.removeParameter(windowId, name);
        }
+    }
+
+    /**
+     * Gets the mutable render parameters. V3 method.
+     */
+    public MutableRenderParameters getRenderParameters(String windowId) {
+       return new MutableRenderParametersImpl(portletURLProvider, windowId);
     }
 
 }

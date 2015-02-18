@@ -83,6 +83,7 @@ public class MutablePortletParametersImpl extends
          StringBuilder txt = new StringBuilder();
          txt.append("Window ID: ").append(windowId)
             .append(", Name: ").append(name)
+            .append(", Type: ").append(type)
             .append(", Old Value: ").append(val)
             .append(", New Value: ").append(value);
          LOGGER.debug(txt.toString());
@@ -116,8 +117,9 @@ public class MutablePortletParametersImpl extends
          StringBuilder txt = new StringBuilder();
          txt.append("Window ID: ").append(windowId)
             .append(", Name: ").append(name)
-            .append(", Old Value: ").append(Arrays.toString(vals))
-            .append(", New Value: ").append(Arrays.toString(values));
+            .append(", Type: ").append(type)
+            .append(", Old Values: ").append(Arrays.toString(vals))
+            .append(", New Values: ").append(Arrays.toString(values));
          LOGGER.debug(txt.toString());
       }
       
@@ -147,6 +149,7 @@ public class MutablePortletParametersImpl extends
          StringBuilder txt = new StringBuilder();
          txt.append("Window ID: ").append(windowId)
             .append(", Name: ").append(name)
+            .append(", Type: ").append(type)
             .append(", Removed: ").append(isContains);
          LOGGER.debug(txt.toString());
       }

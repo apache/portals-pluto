@@ -33,6 +33,7 @@ import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderParameters;
@@ -80,6 +81,10 @@ public class ParamTestPortlet extends GenericPortlet {
          logger.fine(txt.toString());
       }
       
+      // don't display the control parameters
+      pnSet.remove(PARAM_SETTYPE);
+      pnSet.remove(PARAM_REMTYPE);
+      
       StringBuilder txt = new StringBuilder();
       txt.append("<h3>Currently set render parameters:</h3>\n");
       txt.append("<p>\n");
@@ -119,14 +124,12 @@ public class ParamTestPortlet extends GenericPortlet {
          throws PortletException, IOException {
    }
 
-   // nothing to do in processAction
-   @SuppressWarnings("deprecation")
    public void processAction(ActionRequest req, ActionResponse resp)
          throws PortletException, IOException {
       
       ActionParameters ap = req.getActionParameters();
-      RenderParameters rp = req.getRenderParameters();
-      Set<? extends String> rpNames = rp.getNames();
+      MutableRenderParameters mrp = resp.getRenderParameters();
+      Set<? extends String> rpNames = mrp.getNames();
 
       if (isDebug) {
          StringBuffer sb = new StringBuffer();
@@ -142,9 +145,11 @@ public class ParamTestPortlet extends GenericPortlet {
       
       String setType = ap.getValue(PARAM_SETTYPE);
       setType = (setType == null) ? PARAM_SETTYPE_VARRAY : setType;
+      mrp.setValue(PARAM_SETTYPE, setType);
       
       String remType = ap.getValue(PARAM_REMTYPE);
       remType = (remType == null) ? PARAM_REMTYPE_SET : remType;
+      mrp.setValue(PARAM_REMTYPE, remType);
       
       // Get the parameter name & values. Parse values string into individual values.
       // if string is 'null', change it into null.
@@ -178,39 +183,34 @@ public class ParamTestPortlet extends GenericPortlet {
             }
          }
          try {
-            if (parsedVals == null) {
-               if (remType.equals(PARAM_REMTYPE_SET)) {
-                  txt.append(". Remove using setRenderParameter");
-                  resp.setRenderParameter(pn, parsedVals);
-               } else {
-                  txt.append(". Remove using removePublicRenderParameter");
-                  resp.removePublicRenderParameter(pn);
-               }
-               
+            if (remType.equals(PARAM_REMTYPE_REM)) {
+               txt.append(". Removing parameter");
+               mrp.removeParameter(pn);
             } else {
                if (setType.equals(PARAM_SETTYPE_VARRAY)) {
                   txt.append(" using values array");
-                  resp.setRenderParameter(pn, parsedVals);
+                  mrp.setValues(pn, parsedVals);
                } else {
                   txt.append(" using first value in array");
-                  resp.setRenderParameter(pn, parsedVals[0]);
+                  String tval = (parsedVals == null) ? null : parsedVals[0];
+                  mrp.setValue(pn, tval);
                }
             }
          } catch(Exception e) {
             StringBuilder err = new StringBuilder("Exception setting parameter: ");
             err.append(e.toString());
-            resp.setRenderParameter("Error:", "<span style='color: red;'>" + err.toString() + "</span>");
+            mrp.setValue("Error:", "<span style='color: red;'>" + err.toString() + "</span>");
          }
       } else if (rpNames.isEmpty()) {
          txt.append("the error message");
-         resp.setRenderParameter("Error:", "<span style='color: red;'>No parameters available!</span>");
+         mrp.setValue("Error:", "<span style='color: red;'>No parameters available!</span>");
       }
       
       if (isDebug) {
          logger.fine(txt.toString());
          txt = new StringBuilder("Parsed Action Parameters: ");
          txt.append(", Name: ").append(pn);
-         txt.append(", Value string: >>").append(pv).append("<");
+         txt.append(", Value string: >>").append(pv).append("<<");
          txt.append(", Parsed Values: ").append(Arrays.toString(parsedVals));
          logger.fine(txt.toString());
       }
