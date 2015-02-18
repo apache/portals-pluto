@@ -25,7 +25,8 @@
 package javax.portlet;
 
 /**
- * The <CODE>MimeResponse</CODE> defines the base interface to assist a
+ * <span class="changed_modified_3_0">The</span>
+ * <CODE>MimeResponse</CODE> defines the base interface to assist a
  * portlet in returning MIME content. 
  *
  * @since 2.0
@@ -41,7 +42,7 @@ public interface MimeResponse extends PortletResponse {
      * portlet; if the value is set to <code>-1</code>, the cache does not expire.
      * <p>
      * A default can be defined in the portlet deployment descriptor
-     * with the <code>expiration-cache<code> tag, otherwise it is <code>0</code>.
+     * with the <code>expiration-cache</code> tag, otherwise it is <code>0</code>.
      * <p>
      * Non-integer values are treated as <code>0</code>.
      * <p>
@@ -51,6 +52,7 @@ public interface MimeResponse extends PortletResponse {
      */
     public static final String EXPIRATION_CACHE = "portlet.expiration-cache";
 
+    
     /**
      * Property to set the cache scope for this response using the
      * <code>setProperty</code> method intended to be used in 
@@ -59,7 +61,7 @@ public interface MimeResponse extends PortletResponse {
      * Predefined cache scopes are: <code>PUBLIC_SCOPE</code> and <code>PRIVATE_SCOPE</code>.
      * <p>
      * A default can be defined in the portlet deployment descriptor
-     * with the <code>cache-scope<code> tag, otherwise it is <code>PRIVATE_SCOPE</code>.
+     * with the <code>cache-scope</code> tag, otherwise it is <code>PRIVATE_SCOPE</code>.
      * <p>
      * Values that are not either <code>PUBLIC_SCOPE</code> or <code>PRIVATE_SCOPE</code>
      * are treated as <code>PRIVATE_SCOPE</code>.
@@ -172,11 +174,14 @@ public interface MimeResponse extends PortletResponse {
     public String getContentType();
 
     /**
-     * Sets the MIME type for the response. The portlet should set the
+     * <span class="changed_modified_3_0">Sets</span> 
+     * the MIME type for the response. The portlet should set the
      * content type before calling {@link #getWriter} or
-     * {@link #getPortletOutputStream}. If the content type is not 
-     * the {@link PortletRequest#getResponseContentType} value is
-     * set as response content type by the portlet container.
+     * {@link #getPortletOutputStream}. 
+     * <span class="changed_modified_3_0"> 
+     * If the content type is not set using this method, the preferred 
+     * content type as returned by {@link PortletRequest#getResponseContentType} is used.
+     * </span> 
      * <p>
      * Calling <code>setContentType</code> after <code>getWriter</code> or
      * <code>getOutputStream</code> does not change the content type.
@@ -184,6 +189,11 @@ public interface MimeResponse extends PortletResponse {
      * 
      * @param type
      *            the content MIME type
+     * 
+     * @exception java.lang.IllegalArgumentException 
+     * <span class="changed_added_3_0"> 
+     *             if the content type is invalid.
+     * </span>
      * 
      * @see PortletRequest#getResponseContentTypes
      * @see #getContentType
@@ -353,13 +363,20 @@ public interface MimeResponse extends PortletResponse {
             throws java.io.IOException;
 
 	/**
-     * Creates a portlet URL targeting the portlet. If no portlet mode, window
-     * state or security modifier is set in the PortletURL the current values
-     * are preserved. If a request is triggered by the PortletURL, it results in
+     * <div class="changed_modified_3_0">
+     * Creates a render URL targeting the portlet. 
+     * Render URLs cause idempotent requests that move the portlet to a 
+     * new view state, for example, to view a different page of data. 
+     * <p> 
+     * If a request is triggered by the URL, it results in
      * a render request.
+     * </div>
+     * <div class="changed_added_3_0">
      * <p>
-     * The returned URL can be further extended by adding portlet-specific
-     * parameters and portlet modes and window states.
+     * The returned render URL will not contain any private render parameters from the
+     * current request.  
+     * </div>
+     * <div class="changed_deleted_3_0">
      * <p>
      * The created URL will per default not contain any parameters of the
      * current render request.

@@ -38,6 +38,55 @@ public interface PortletURLProvider {
     enum TYPE { ACTION, RENDER, RESOURCE };
     
     TYPE getType();
+    
+    // For JSR 362 parameter handling
+    enum ParamType {
+       ACTION,
+       RENDER,
+       RESOURCE,
+    }
+
+    /**
+     * Returns a parameter map for the specified window and type.
+     * 
+     * V3.0 method.
+     * 
+     * @param windowId
+     * @param type
+     * @return
+     */
+    Map<String, String[]> getParameterMap(String windowId, ParamType type);
+
+    /**
+     * Sets a parameter of the given type for the window.
+     * 
+     * V3 method.
+     * 
+     * @param windowId
+     * @param name
+     * @param type
+     * @param strings
+     */
+    void setParameter(String windowId, String name, ParamType type, String[] strings);
+
+    /**
+     * Removes the given parameter
+     * 
+     * V3 method.
+     * 
+     * @param windowId
+     * @param name
+     * @param type
+     */
+    void removeParameter(String windowId, String name, ParamType type);
+
+    /**
+     * Gets the public render parameter names for this window.
+     * 
+     * @param windowId
+     * @return
+     */
+    Set<String> getPublicParameterNames(String windowId);
 
     /**
      * Sets the new portlet mode at the URL. If no mode is set at the URL the

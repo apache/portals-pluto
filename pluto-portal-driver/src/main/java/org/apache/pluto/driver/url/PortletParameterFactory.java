@@ -28,8 +28,10 @@ import java.util.Set;
 
 import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL.URLType;
+import static org.apache.pluto.driver.url.PortalURLParameter.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * @author Scott Nicklous
@@ -44,10 +46,6 @@ public class PortletParameterFactory {
    private final static boolean isDebug = LOGGER.isDebugEnabled();
    
    PortalURL url;
-   
-   HashMap<String, ArrayList<PortalURLParameter>> wid2Render;
-   HashMap<String, ArrayList<PortalURLParameter>> wid2Action;
-   HashMap<String, ArrayList<PortalURLParameter>> wid2Resource;
    
    static final HashSet<PortalURL.URLType> actionTypes = new HashSet<PortalURL.URLType>();
    static {
@@ -67,35 +65,6 @@ public class PortletParameterFactory {
    public PortletParameterFactory(PortalURL url) {
       this.url = url;
    }
-   
-   private void addParam(Map<String, ArrayList<PortalURLParameter>> map, PortalURLParameter parm) {
-      String wid = parm.getWindowId();
-      if (!map.keySet().contains(wid)) {
-         map.put(wid, new ArrayList<PortalURLParameter>());
-      }
-      map.get(wid).add(parm);
-   }
-   
-   /**
-    * process the URL parameters. Do this as late as possible so that 
-    * the servlet rquest parameters get handled properly.
-    */
-   private void processParams() {
-      wid2Render = new HashMap<String, ArrayList<PortalURLParameter>>();
-      wid2Action = new HashMap<String, ArrayList<PortalURLParameter>>();
-      wid2Resource = new HashMap<String, ArrayList<PortalURLParameter>>();
-      
-      for (PortalURLParameter parm : url.getParameters()) {
-         if (parm.getType().equals(PortalURLParameter.PARAM_TYPE_ACTION)) {
-            addParam(wid2Action, parm);
-         } else if (parm.getType().equals(PortalURLParameter.PARAM_TYPE_RESOURCE)) {
-            addParam(wid2Resource, parm);
-         } else {
-            addParam(wid2Render, parm);
-         }
-      }
-
-   }
 
    /**
     * This V2.0 method returns the private parameters for the given window ID.
@@ -112,34 +81,33 @@ public class PortletParameterFactory {
     */
    public Map<String, String[]> getPrivateParameterMap(String windowId) {
       HashMap<String, String[]> parameters = new HashMap<String, String[]>();
-      processParams();
       
       boolean isV3 = url.isVersion3(windowId);
 
       // get the action or resource parameters
       
-      if (wid2Action.containsKey(windowId)) {
-         for (PortalURLParameter parm : wid2Action.get(windowId)) {
-            parameters.put(parm.getName(), parm.getValues().clone());
-         }
-      } else if (wid2Resource.containsKey(windowId)) {
-         for (PortalURLParameter parm : wid2Resource.get(windowId)) {
-            parameters.put(parm.getName(), parm.getValues().clone());
+      for (PortalURLParameter pup : url.getParameters()) {
+         if (pup.getWindowId().equals(windowId)) { 
+            if (pup.getType().equals(PARAM_TYPE_ACTION) || pup.getType().equals(PARAM_TYPE_RESOURCE)) {
+               parameters.put(pup.getName(), pup.getValues().clone());
+            }
          }
       }
       
       // Now merge in the render parameters if we're not dealing with a V2 action
 
       if (isV3 || !actionTypes.contains(url.getType())) {
-         if (wid2Render.containsKey(windowId)) {
-            for (PortalURLParameter parm : wid2Render.get(windowId)) {
-               if (parameters.containsKey(parm.getName())) {
-                  ArrayList<String> vals = 
-                        new ArrayList<String>(Arrays.asList(parameters.get(parm.getName())));
-                  vals.addAll(Arrays.asList(parm.getValues()));
-                  parameters.put(parm.getName(), vals.toArray(new String[0]));
-               } else {
-                  parameters.put(parm.getName(), parm.getValues().clone());
+         for (PortalURLParameter pup : url.getParameters()) {
+            if (pup.getWindowId().equals(windowId)) {
+               if (pup.getType().equals(PARAM_TYPE_RENDER)) {
+                  if (parameters.containsKey(pup.getName())) {
+                     ArrayList<String> vals = 
+                           new ArrayList<String>(Arrays.asList(parameters.get(pup.getName())));
+                     vals.addAll(Arrays.asList(pup.getValues()));
+                     parameters.put(pup.getName(), vals.toArray(new String[0]));
+                  } else {
+                     parameters.put(pup.getName(), pup.getValues().clone());
+                  }
                }
             }
          }
@@ -196,11 +164,11 @@ public class PortletParameterFactory {
    public Map<String, String[]> getResourceRenderParameterMap(String windowId) {
       HashMap<String, String[]> parameters = new HashMap<String, String[]>();
 
-      processParams();
-      
-      if (wid2Render.containsKey(windowId)) {
-         for (PortalURLParameter parm : wid2Render.get(windowId)) {
-            parameters.put(parm.getName(), parm.getValues().clone());
+      for (PortalURLParameter pup : url.getParameters()) {
+         if (pup.getWindowId().equals(windowId)) {
+            if (pup.getType().equals(PARAM_TYPE_RENDER)) {
+               parameters.put(pup.getName(), pup.getValues().clone());
+            }
          }
       }
       
@@ -248,8 +216,7 @@ public class PortletParameterFactory {
    public boolean isPublicRenderParameter(String windowId, String name) {
       PublicRenderParameterMapper prpMapper = url.getPublicRenderParameterMapper();
       if (isDebug) {
-         StringBuilder txt = new StringBuilder(
-               "isPublicRenderParameter Window: ");
+         StringBuilder txt = new StringBuilder("Window: ");
          txt.append(windowId).append(", name: ").append(name);
          LOGGER.debug(txt.toString());
       }
@@ -366,5 +333,135 @@ public class PortletParameterFactory {
          PortalURLParameter pup = new PortalURLParameter(windowId, name, null, type);
          url.removeParameter(pup);
       }
+   }
+
+   /**
+    * Gets the parameter map for the window & type
+    * 
+    * @param windowId
+    * @param type
+    * @return
+    */
+   public Map<String, String[]> getParameterMap(String windowId, String type) {
+      HashMap<String, String[]> params = new HashMap<String, String[]>();
+      
+      for (PortalURLParameter pup : url.getParameters()) {
+         if (pup.getWindowId().equals(windowId)) {
+            if (pup.getType().equals(type)) {
+               params.put(pup.getName(), pup.getValues().clone());
+            }
+         }
+      }
+
+      if (type.equals(PARAM_TYPE_RENDER)) {
+         
+         PublicRenderParameterMapper mapper = url.getPublicRenderParameterMapper();
+
+         // Get onl the active (= set) PRPs for the window
+         for (PortalURLPublicParameter prp : mapper.getPRPsForWindow(windowId, true)) {
+            params.put(prp.getName(), prp.getValues().clone());
+         }
+      }
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder("Parameter map for ");
+         txt.append("window ID: ").append(windowId);
+         txt.append(", type: ").append(type);
+         for (String name : params.keySet()) {
+            txt.append("\nName: ").append(name);
+            txt.append(", Values: ").append(Arrays.toString(params.get(name)));
+         }
+         LOGGER.debug(txt.toString());
+      }
+
+      return params;
+   }
+
+   /**
+    * Sets a parameter of a given type for the window
+    * 
+    * @param windowId
+    * @param name
+    * @param type
+    * @param values
+    */
+   public void setParameter(String windowId, String name, String type, String[] values) {
+
+      PublicRenderParameterMapper mapper = url.getPublicRenderParameterMapper();
+      int index = mapper.getIndex(windowId, name);
+      
+      if (type.equals(PARAM_TYPE_RENDER) && (index >= 0)) {
+         mapper.setValues(index, values);
+      } else {
+         PortalURLParameter pup = new PortalURLParameter(windowId, name, values, type);
+         url.setParameter(pup);
+      }
+
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder("Set ");
+         txt.append("name: ").append(name);
+         txt.append(", type: ").append(type);
+         txt.append(", PRP index: ").append(index);
+         txt.append(", window ID: ").append(windowId);
+         txt.append(", Values: ").append(Arrays.toString(values));
+         LOGGER.debug(txt.toString());
+      }
+
+   }
+
+   /**
+    * Removes the parameter of the given type for the window
+    * 
+    * @param windowId
+    * @param name
+    * @param type
+    */
+   public void removeParameter(String windowId, String name, String type) {
+
+      PublicRenderParameterMapper mapper = url.getPublicRenderParameterMapper();
+      int index = mapper.getIndex(windowId, name);
+      
+      if (type.equals(PARAM_TYPE_RENDER) && (index >= 0)) {
+         mapper.setRemoved(index, true);
+      } else {
+         PortalURLParameter pup = new PortalURLParameter(windowId, name, null, type);
+         url.removeParameter(pup);
+      }
+
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder("Removed ");
+         txt.append("name: ").append(name);
+         txt.append(", type: ").append(type);
+         txt.append(", PRP index: ").append(index);
+         txt.append(", window ID: ").append(windowId);
+         LOGGER.debug(txt.toString());
+      }
+
+   }
+
+   /**
+    * Returns a Set containing the public render parameter names for the given
+    * window.
+    * 
+    * @param windowId
+    * @return
+    */
+   public Set<String> getPublicParameterNames(String windowId) {
+      HashSet<String> names = new HashSet<String>();
+
+      PublicRenderParameterMapper mapper = url.getPublicRenderParameterMapper();
+      
+      // get all of the PRP names
+      
+      List<PortalURLPublicParameter> prps = mapper.getPRPsForWindow(windowId, false);
+      for (PortalURLPublicParameter prp : prps) {
+         names.add(prp.getName());
+      }
+      
+      if (isDebug) {
+         LOGGER.debug("Public render parameter names: " + names.toString());
+      }
+
+      return names;
    }
 }

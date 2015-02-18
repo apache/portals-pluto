@@ -56,12 +56,21 @@ public class PortletURLProviderImpl implements PortletURLProvider {
    private final String                        window;
    private Map<String, List<String>>           properties;
 
-   // Hack: called to force class loading in Container thread
+   // called to force class loading in Container thread
    protected static final void load() {
       if (isDebug) {
          LOGGER.debug("Loaded.");
       }
    };
+   
+   private final static HashMap<PortletURLProvider.ParamType, String> paramTypeMap  = 
+         new HashMap<PortletURLProvider.ParamType, String>();
+   static {
+      paramTypeMap.put(ParamType.ACTION, PortalURLParameter.PARAM_TYPE_ACTION);
+      paramTypeMap.put(ParamType.RENDER, PortalURLParameter.PARAM_TYPE_RENDER);
+      paramTypeMap.put(ParamType.RESOURCE, PortalURLParameter.PARAM_TYPE_RESOURCE);
+   }
+
    
    public PortletURLProviderImpl(PortalURL url, TYPE type,
          PortletWindow portletWindow) {
@@ -276,6 +285,26 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     */
    public void removeParameter(String windowId, String name) {
       paramFactory.removeParameter(windowId, name);
+   }
+
+   // V3 method
+   public Map<String, String[]> getParameterMap(String windowId, ParamType type) {
+      return paramFactory.getParameterMap(windowId, paramTypeMap.get(type));
+   }
+
+   // V3 method
+   public void setParameter(String windowId, String name, ParamType type, String[] values) {
+      paramFactory.setParameter(windowId, name, paramTypeMap.get(type), values);
+   }
+
+   // V3Method
+   public void removeParameter(String windowId, String name, ParamType type) {
+      paramFactory.removeParameter(windowId, name, paramTypeMap.get(type));
+   }
+
+   // V3 method
+   public Set<String> getPublicParameterNames(String windowId) {
+      return paramFactory.getPublicParameterNames(windowId);
    }
 
 }
