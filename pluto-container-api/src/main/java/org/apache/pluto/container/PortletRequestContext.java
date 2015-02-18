@@ -20,7 +20,9 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.ActionParameters;
 import javax.portlet.PortletConfig;
+import javax.portlet.RenderParameters;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
@@ -62,4 +64,16 @@ public interface PortletRequestContext
     
     Map<String, String[]> getPrivateParameterMap();
     Map<String, String[]> getPublicParameterMap();
+    
+    /**
+     * Returns the render parameters for the portlet. V3 method.
+     * @return
+     */
+    RenderParameters getRenderParameters();
+
+    /**
+     * Returns the action parameters for the portlet. V3 method.
+     * @return
+     */
+    ActionParameters getActionParameters();
 }

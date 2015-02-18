@@ -18,6 +18,8 @@ package org.apache.pluto.container;
 
 import java.util.Map;
 
+import javax.portlet.ResourceParameters;
+
 /**
  * @version $Id$
  *
@@ -29,8 +31,14 @@ public interface PortletResourceRequestContext extends PortletRequestContext
     Map<String, String[]> getPrivateRenderParameterMap();
     
     /**
-     * get page state when handling a partial action request
+     * get page state when handling a partial action request. V3 method
      * @return
      */
     String getPageState();
+    
+    /**
+     * Returns the resource parameters for the request. V3 method.
+     * @return
+     */
+    ResourceParameters getResourceParameters();
 }

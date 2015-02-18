@@ -55,4 +55,17 @@ public class Constants {
    public final static String ATTRIB_PRPS = "prps";
    public final static String ATTRIB_PMS = "portletModes";
    public final static String ATTRIB_WS = "windowStates";
+
+   // For parameter test portlet
+
+   public final static String PARAM_NAME = "pName";
+   public final static String PARAM_VALUES = "pValues";
+   public final static String PARAM_REMTYPE = "remType";
+   public final static String PARAM_REMTYPE_REM = "remPRP";
+   public final static String PARAM_REMTYPE_SET = "setRP";
+   public final static String PARAM_SETTYPE = "setType";
+   public final static String PARAM_SETTYPE_VAL = "setVal";
+   public final static String PARAM_SETTYPE_VARRAY = "setVals";
+   public final static String ATTRIB_PARAMS = "params";
+
 }

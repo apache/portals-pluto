@@ -23,7 +23,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.ActionParameters;
 import javax.portlet.PortletConfig;
+import javax.portlet.RenderParameters;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
@@ -32,8 +34,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletRequestContext;
+import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.impl.ActionParametersImpl;
+import org.apache.pluto.container.impl.MutableActionParametersImpl;
+import org.apache.pluto.container.impl.MutableRenderParametersImpl;
+import org.apache.pluto.container.impl.MutableResourceParametersImpl;
 import org.apache.pluto.container.impl.PortletURLImpl;
+import org.apache.pluto.container.impl.RenderParametersImpl;
+import org.apache.pluto.container.impl.ResourceParametersImpl;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortletParameterFactory;
@@ -54,15 +63,23 @@ public class PortletRequestContextImpl implements PortletRequestContext {
    private ServletContext      servletContext;
    private Cookie              cookies[];
    
-   // Nasty trick to make sure the URL provider is loaded first by the container classloader
+   // make sure thethese classes are loaded first by the container classloader
    // so that the logs from these classes land in the Pluto log file.
    static {
       PortletURLProviderImpl.load();
       PortletURLImpl.load();
+      RenderParametersImpl.load();
+      ActionParametersImpl.load();
+      ResourceParametersImpl.load();
+      MutableRenderParametersImpl.load();
+      MutableActionParametersImpl.load();
+      MutableResourceParametersImpl.load();
    }
 
-   protected PortletWindow       window;
-   protected PortletParameterFactory paramFactory;
+   protected PortletWindow             window;
+   protected String                    windowId;
+   protected PortletURLProvider        urlProvider;
+   protected PortletParameterFactory   paramFactory;
 
    public PortletRequestContextImpl(PortletContainer container,
          HttpServletRequest containerRequest,
@@ -72,8 +89,9 @@ public class PortletRequestContextImpl implements PortletRequestContext {
       this.containerRequest = containerRequest;
       this.containerResponse = containerResponse;
       this.window = window;
-      this.url = PortalRequestContext.getContext(containerRequest)
-            .createPortalURL();
+      this.windowId = window.getId().getStringId();
+      this.url = PortalRequestContext.getContext(containerRequest).createPortalURL();
+      this.urlProvider = new PortletURLProviderImpl(url, window);
       this.paramFactory = url.getPortletParameterFactory();
    }
 
@@ -206,5 +224,13 @@ public class PortletRequestContextImpl implements PortletRequestContext {
 
    public HttpServletResponse getServletResponse() {
       return servletResponse;
+   }
+
+   public RenderParameters getRenderParameters() {
+      return new RenderParametersImpl(urlProvider, windowId);
+   }
+
+   public ActionParameters getActionParameters() {
+      return new ActionParametersImpl(urlProvider, windowId);
    }
 }

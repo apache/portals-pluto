@@ -44,7 +44,7 @@ import java.util.Locale;
  * @see RenderRequest
  * @see ResourceRequest
  */
-public interface PortletRequest
+public interface PortletRequest extends PortletState
 {
     
    
@@ -322,24 +322,6 @@ public interface PortletRequest
    */
 
   public boolean isPortletModeAllowed(PortletMode mode);
-
-
-  /**
-   * Returns the current portlet mode of the portlet.
-   *
-   * @return   the portlet mode
-   */
-
-  public PortletMode getPortletMode ();
-
-
-  /**
-   * Returns the current window state of the portlet.
-   *
-   * @return   the window state
-   */
-
-  public WindowState getWindowState ();
 
 
   /**

@@ -170,5 +170,5 @@ public interface PortalURL extends Cloneable {
    /**
     * @param window
     */
-   public void clearResourceParameters(String window);	
+   public void clearParameters(String window, String paramType);	
 }

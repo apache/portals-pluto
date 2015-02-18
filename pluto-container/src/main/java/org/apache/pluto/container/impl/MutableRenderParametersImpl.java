@@ -38,6 +38,13 @@ public class MutableRenderParametersImpl extends MutablePortletParametersImpl
       implements MutableRenderParameters {
    private static final Logger   LOGGER     = LoggerFactory.getLogger(MutableRenderParametersImpl.class);
    private static final boolean  isTrace    = LOGGER.isDebugEnabled();
+
+   // called to force class loading in Container thread
+   public static final void load() {
+      if (isTrace) {
+         LOGGER.debug("Loaded.");
+      }
+   };
    
    private final Set<String> prpNames;
 

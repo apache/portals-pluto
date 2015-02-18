@@ -70,8 +70,25 @@ public class PortletURLProviderImpl implements PortletURLProvider {
       paramTypeMap.put(ParamType.RENDER, PortalURLParameter.PARAM_TYPE_RENDER);
       paramTypeMap.put(ParamType.RESOURCE, PortalURLParameter.PARAM_TYPE_RESOURCE);
    }
-
    
+   private final static HashMap<URLType, TYPE> urlTypeMap = new HashMap<PortalURL.URLType, PortletURLProvider.TYPE>();
+   static {
+      urlTypeMap.put(URLType.Action, TYPE.ACTION);
+      urlTypeMap.put(URLType.PartialAction, TYPE.ACTION);
+      urlTypeMap.put(URLType.AjaxAction, TYPE.ACTION);
+      urlTypeMap.put(URLType.Portal, TYPE.RENDER);
+      urlTypeMap.put(URLType.Render, TYPE.RENDER);
+      urlTypeMap.put(URLType.Resource, TYPE.RESOURCE);
+   }
+
+   /**
+    * Constructs a URL provider that allows updates to the underlying URL. Used for
+    * creating portlet URLs and for the portlet responses.
+    * 
+    * @param url
+    * @param type
+    * @param portletWindow
+    */
    public PortletURLProviderImpl(PortalURL url, TYPE type,
          PortletWindow portletWindow) {
       this.url = url.clone();
@@ -117,12 +134,18 @@ public class PortletURLProviderImpl implements PortletURLProvider {
          break;
       case RESOURCE:
          this.url.setType(URLType.Resource);
-         this.url.clearResourceParameters(window);
+         this.url.clearParameters(window, PortalURLParameter.PARAM_TYPE_RESOURCE);
+         this.url.clearParameters(window, PortalURLParameter.PARAM_TYPE_ACTION);
          this.url.setCacheability(ResourceURL.PAGE);
          break;
       default:
          this.url.setType(URLType.Render);
-         this.url.clearParameters(window);
+         if (url.isVersion3(window)) {
+            this.url.clearParameters(window, PortalURLParameter.PARAM_TYPE_RESOURCE);
+            this.url.clearParameters(window, PortalURLParameter.PARAM_TYPE_ACTION);
+         } else {
+            this.url.clearParameters(window);
+         }
       }
 
       if (isTrace) {
@@ -131,6 +154,29 @@ public class PortletURLProviderImpl implements PortletURLProvider {
          LOGGER.debug(txt.toString());
       }
 
+   }
+
+   /**
+    * Creates a "read-only" URL provider that is used to provide portlet requests
+    * with info.
+    * 
+    * @param url
+    * @param windowId
+    */
+   public PortletURLProviderImpl(PortalURL url, PortletWindow portletWindow) {
+      this.url = url;
+      this.type = urlTypeMap.get(url.getType());
+      this.window = portletWindow.getId().getStringId();
+      this.paramFactory = this.url.getPortletParameterFactory();
+
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder("Created 'read-only' URL provider.");
+         txt.append(" type=").append(this.type);
+         txt.append(", URL type=").append(url.getType());
+         txt.append(", window=").append(window);
+         txt.append(", URL target=").append(url.getTargetWindow());
+         LOGGER.debug(txt.toString());
+      }
    }
 
    public PortalURL apply() {

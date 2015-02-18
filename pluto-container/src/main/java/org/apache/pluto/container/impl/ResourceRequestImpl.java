@@ -21,8 +21,8 @@ import java.util.Map;
 
 import javax.portlet.CacheControl;
 import javax.portlet.PortletRequest;
+import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletResourceResponseContext;
@@ -77,7 +77,6 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
         return getServletRequest().getHeader("accept");
     }
 
-    @SuppressWarnings("unchecked")
     public Enumeration<String> getResponseContentTypes()
     {
         return getServletRequest().getHeaders("accept");
@@ -115,5 +114,9 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
          LOG.debug(txt.toString());
       }
       return val;
+   }
+
+   public ResourceParameters getResourceParameters() {
+      return requestContext.getResourceParameters();
    }
 }

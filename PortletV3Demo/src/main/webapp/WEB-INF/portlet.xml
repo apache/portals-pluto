@@ -149,6 +149,27 @@
       <supported-public-render-parameter>color</supported-public-render-parameter>
    </portlet>
 
+   <portlet>
+      <portlet-name>ParamTestPortlet</portlet-name>
+      <display-name>V3 Parameter Test Portlet</display-name>
+      
+      <portlet-class>basic.portlet.ParamTestPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>V3 Parameter Test Portlet</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>Bild</supported-public-render-parameter>
+      <supported-public-render-parameter>Farbe</supported-public-render-parameter>
+   </portlet>
+
 	<custom-portlet-mode>
 		<description>Test mode #1</description>
 		<portlet-mode>MyMode_nonPortalManaged_1</portlet-mode>
@@ -189,5 +210,14 @@
    <public-render-parameter>
       <identifier>color</identifier>
       <qname>rp:alt-color</qname>
+   </public-render-parameter>
+   
+   <public-render-parameter>
+      <identifier>Bild</identifier>
+      <qname>rp:imgName</qname>
+   </public-render-parameter>
+   <public-render-parameter>
+      <identifier>Farbe</identifier>
+      <qname>rp:color</qname>
    </public-render-parameter>
  </portlet-app>

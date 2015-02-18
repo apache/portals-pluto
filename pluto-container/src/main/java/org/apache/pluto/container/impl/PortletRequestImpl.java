@@ -35,6 +35,7 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -77,10 +78,10 @@ public abstract class PortletRequestImpl implements PortletRequest
     // Private Member Variables ------------------------------------------------
 
     /** The PortalContext within which this request is occuring. */
-    private final PortalContext portalContext;
+    protected final PortalContext portalContext;
 
-    private final PortletRequestContext requestContext;
-    private final PortletResponseContext responseContext;
+    protected final PortletRequestContext requestContext;
+    protected final PortletResponseContext responseContext;
 
     /** The portlet session. */
     private PortletSession portletSession;
@@ -302,13 +303,12 @@ public abstract class PortletRequestImpl implements PortletRequest
         return requestContext.getPreferredLocale();
     }
 
-    @SuppressWarnings("unchecked")
     public Enumeration<Locale> getLocales()
     {
         Locale preferredLocale = getLocale();
         ArrayList<Locale> locales = new ArrayList<Locale>();
         locales.add(preferredLocale);
-        for (Enumeration e = getServletRequest().getLocales(); e.hasMoreElements(); )
+        for (Enumeration<Locale> e = getServletRequest().getLocales(); e.hasMoreElements(); )
         {
             Locale locale = (Locale)e.nextElement();
             if (!locale.equals(preferredLocale))
@@ -467,7 +467,6 @@ public abstract class PortletRequestImpl implements PortletRequest
         return cloneParameterMap(requestContext.getPrivateParameterMap());
     }
 
-    @SuppressWarnings("unchecked")
     public Enumeration<String> getProperties(String name)
     {
         ArgumentUtility.validateNotNull("propertyName", name);
@@ -477,7 +476,7 @@ public abstract class PortletRequestImpl implements PortletRequest
             Locale preferredLocale = getLocale();
             ArrayList<String> locales = new ArrayList<String>();
             locales.add(preferredLocale.toString());
-            for (Enumeration e = getServletRequest().getLocales(); e.hasMoreElements(); )
+            for (Enumeration<Locale> e = getServletRequest().getLocales(); e.hasMoreElements(); )
             {
                 Locale locale = (Locale)e.nextElement();
                 if (!locale.equals(preferredLocale))
@@ -706,5 +705,9 @@ public abstract class PortletRequestImpl implements PortletRequest
     {
         ArgumentUtility.validateNotEmpty("name", name);
         requestContext.setAttribute(name, null);
+    }
+
+    public RenderParameters getRenderParameters() {
+       return requestContext.getRenderParameters();
     }
 }

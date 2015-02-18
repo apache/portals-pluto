@@ -30,10 +30,13 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
+import javax.portlet.PortletParameters;
+import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 
 /**
- * The <code>ResourceRequestWrapper</code> provides a convenient 
+ * <span class="changed_modified_3_0">The</span>  
+ * <code>ResourceRequestWrapper</code> provides a convenient 
  * implementation of the <code>ResourceRequest</code> interface 
  * that can be subclassed by developers wishing to adapt the request.
  * This class implements the Wrapper or Decorator pattern. 
@@ -160,8 +163,9 @@ public class ResourceRequestWrapper extends PortletRequestWrapper implements Res
      * The default behavior of this method is to call 
      * <code>getPrivateRenderParameterMap()</code> on the wrapped request object.
      */
+   @Deprecated
 	public Map<String, String[]> getPrivateRenderParameterMap() {
-		return request.getPrivateParameterMap();
+		return request.getPrivateRenderParameterMap();
 	}
 
     /**
@@ -171,6 +175,16 @@ public class ResourceRequestWrapper extends PortletRequestWrapper implements Res
     public String getCacheability() {
         return request.getCacheability();
     }
+
+   /**
+    * <div class="changed_modified_3_0">  
+    *  The default behavior of this method is to call 
+    * <code>getResourceParameters()</code> on the wrapped response object.
+    * </div>
+    */
+   public ResourceParameters getResourceParameters() {
+      return request.getResourceParameters();
+   }
 
    /* (non-Javadoc)
     * @see javax.portlet.ResourceRequest#getPageState()

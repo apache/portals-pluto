@@ -31,14 +31,17 @@ import java.util.Map;
 
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
+import javax.portlet.PortletParameters;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
 import javax.servlet.http.Cookie;
 
 /**
- * The <code>PortletRequestWrapper</code> provides a convenient 
+ * <span class="changed_modified_3_0">The</span> 
+ * <code>PortletRequestWrapper</code> provides a convenient 
  * implementation of the <code>PortletRequest</code> interface 
  * and is extended by other request wrappers.
  * This class implements the Wrapper or Decorator pattern. 
@@ -53,9 +56,10 @@ public class PortletRequestWrapper implements PortletRequest {
     
     /** 
      * Require having a request for constructing
-     * the wrapper.
-     *
+    * the wrapper
      */
+   
+   @SuppressWarnings("unused")
     private PortletRequestWrapper() {
     }
     
@@ -123,9 +127,20 @@ public class PortletRequestWrapper implements PortletRequest {
     }
 
     /**
+    * <div class="changed_modified_3_0"> 
+    * The default behavior of this method is to call 
+    * <code>getRenderParameters()</code> on the wrapped request object.
+    * </div>
+    */
+   public RenderParameters getRenderParameters() {
+      return request.getRenderParameters();
+   }
+
+   /**
      * The default behavior of this method is to call 
      * <code>getParameter(String name)</code> on the wrapped request object.
      */
+   @Deprecated
     public String getParameter(String name) {
         return request.getParameter(name);
     }
@@ -134,6 +149,7 @@ public class PortletRequestWrapper implements PortletRequest {
      * The default behavior of this method is to call 
      * <code>getParameterMap()</code> on the wrapped request object.
      */
+   @Deprecated
     public Map<String, String[]> getParameterMap() {
         return request.getParameterMap();
     }
@@ -142,6 +158,7 @@ public class PortletRequestWrapper implements PortletRequest {
      * The default behavior of this method is to call 
      * <code>getParameterNames()</code> on the wrapped request object.
      */
+   @Deprecated
     public Enumeration<String> getParameterNames() {
         return request.getParameterNames();
     }
@@ -150,6 +167,7 @@ public class PortletRequestWrapper implements PortletRequest {
      * The default behavior of this method is to call 
      * <code>getParameterValues(name)</code> on the wrapped request object.
      */
+   @Deprecated
     public String[] getParameterValues(String name) {
         return request.getParameterValues(name);
     }
@@ -388,6 +406,7 @@ public class PortletRequestWrapper implements PortletRequest {
      *  The default behavior of this method is to call 
      * <code>getPrivateParameterMap()</code> on the wrapped request object.
      */
+   @Deprecated 
 	public Map<String, String[]> getPrivateParameterMap() {
 		return request.getPrivateParameterMap();
 	}
@@ -396,6 +415,7 @@ public class PortletRequestWrapper implements PortletRequest {
      *  The default behavior of this method is to call 
      * <code>getPublicParameterMap()</code> on the wrapped request object.
      */
+   @Deprecated
 	public Map<String, String[]> getPublicParameterMap() {
 		return request.getPublicParameterMap();
 	}

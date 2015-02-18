@@ -37,6 +37,13 @@ public class MutableActionParametersImpl extends MutablePortletParametersImpl
    private static final Logger   LOGGER     = LoggerFactory.getLogger(MutableActionParametersImpl.class);
    private static final boolean  isTrace    = LOGGER.isDebugEnabled();
 
+   // called to force class loading in Container thread
+   public static final void load() {
+      if (isTrace) {
+         LOGGER.debug("Loaded.");
+      }
+   };
+
    /**
     * @param urlProvider
     * @param windowId

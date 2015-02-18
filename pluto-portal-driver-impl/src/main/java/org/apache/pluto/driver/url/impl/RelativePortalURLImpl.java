@@ -504,10 +504,10 @@ public class RelativePortalURLImpl implements PortalURL {
     * org.apache.pluto.driver.url.PortalURL#clearResourceParameters(java.lang
     * .String)
     */
-   public void clearResourceParameters(String window) {
+   public void clearParameters(String window, String paramType) {
       HashSet<PortalURLParameter> rem = new HashSet<PortalURLParameter>();
       for (PortalURLParameter pup : parameters) {
-         if (pup.getType().equals(PortalURLParameter.PARAM_TYPE_RESOURCE)
+         if (pup.getType().equals(paramType)
                && pup.getWindowId().equals(window)) {
             rem.add(pup);
          }
@@ -515,6 +515,7 @@ public class RelativePortalURLImpl implements PortalURL {
       if (isTrace) {
          StringBuilder txt = new StringBuilder("Removing ");
          txt.append(rem.size()).append(" elements. Window ID: ").append(window);
+         txt.append(", Parameter type: ").append(paramType);
          LOG.debug(txt.toString());
       }
       parameters.removeAll(rem);

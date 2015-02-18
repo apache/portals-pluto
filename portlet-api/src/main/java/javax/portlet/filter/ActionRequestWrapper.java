@@ -29,10 +29,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
+import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletParameters;
 
 /**
- * The <code>ActionRequestWrapper</code> provides a convenient 
+ * <span class="changed_modified_3_0">The</span> 
+ * <code>ActionRequestWrapper</code> provides a convenient 
  * implementation of the <code>ActionRequest</code> interface 
  * that can be subclassed by developers wishing to adapt the request.
  * This class implements the Wrapper or Decorator pattern. 
@@ -138,5 +141,15 @@ public class ActionRequestWrapper extends PortletRequestWrapper implements Actio
     public String getMethod() {
         return request.getMethod();
     }
+
+    /**
+     * <div class="changed_added_3_0">
+     *  The default behavior of this method is to call 
+     * <code>getActionParameters()</code> on the wrapped request object.
+     * </div>
+     */
+   public ActionParameters getActionParameters() {
+      return request.getActionParameters();
+   }
 
 }

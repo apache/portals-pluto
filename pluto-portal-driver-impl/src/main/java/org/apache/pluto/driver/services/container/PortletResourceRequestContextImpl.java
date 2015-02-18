@@ -18,12 +18,14 @@ package org.apache.pluto.driver.services.container;
 
 import java.util.Map;
 
+import javax.portlet.ResourceParameters;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.impl.ResourceParametersImpl;
 
 /**
  * @version $Id$
@@ -65,5 +67,9 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
     */
    public String getPageState() {
       return pageState;
+   }
+
+   public ResourceParameters getResourceParameters() {
+      return new ResourceParametersImpl(urlProvider, windowId);
    }
 }
