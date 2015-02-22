@@ -143,8 +143,6 @@ public interface PortalURL extends Cloneable {
 
    void setWindowState(String windowId, WindowState windowState);
 
-   void clearParameters(String windowId);
-
    /**
     * 
     * @deprecated use toURL(boolean) instead
@@ -170,5 +168,13 @@ public interface PortalURL extends Cloneable {
    /**
     * @param window
     */
-   public void clearParameters(String window, String paramType);	
+   public void clearParameters(String window, String paramType);
+
+   public String getFragmentIdentifier();
+
+   public void setFragmentIdentifier(String fragment);
+
+   public boolean getAuthenticated();
+
+   public void setAuthenticated(boolean authenticated);	
 }

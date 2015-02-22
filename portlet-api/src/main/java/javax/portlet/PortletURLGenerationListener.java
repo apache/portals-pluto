@@ -25,7 +25,8 @@
 package javax.portlet;
 
 /**
- * Portlet applications can register portlet URL listeners in order to filter URLs 
+ * <span class="changed_modified_3_0">Portlet</span>
+ * applications can register portlet URL listeners in order to filter URLs 
  * before they get generated.
  * In order to receive a callback from the portlet container before a 
  * portlet URL is generated the portlet application needs to implement this 
@@ -43,7 +44,7 @@ public interface PortletURLGenerationListener {
 	 * 
 	 * @param actionURL  action URL to be generated
 	 */
-	public void filterActionURL(PortletURL actionURL);
+	public void filterActionURL(ActionURL actionURL);
 
 	/**
 	 * Callback being called by the portlet container
@@ -52,7 +53,7 @@ public interface PortletURLGenerationListener {
 	 * 
 	 * @param renderURL  render URL to be generated
 	 */
-	public void filterRenderURL(PortletURL renderURL);
+	public void filterRenderURL(RenderURL renderURL);
 	
 	/**
 	 * Callback being called by the portlet container

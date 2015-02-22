@@ -25,7 +25,8 @@
 package javax.portlet;
 
 /**
- * The <CODE>ResourceURL</CODE> defines a resource URL that when clicked will
+ * <span class="changed_modified_3_0">The</span> 
+ * <CODE>ResourceURL</CODE> defines a resource URL that when clicked will
  * result in a <code>serveResource</code> call of the
  * <code>ResourceServingPortlet</code> interface.
  * <p>
@@ -102,6 +103,33 @@ public interface ResourceURL extends BaseURL {
 
 	
 	/**
+    * <div class="changed_added_3_0">
+    * Gets the resource parameter values set for this URL.
+    * <p>
+    * Resource parameters are additional portlet parameters added to the 
+    * URL that extend the state information provided by 
+    * the render parameters.
+    * <p>
+    * Initially the returned object is empty. 
+    * <p>
+    * Modifying the parameter values encapsulated by the returned object directly
+    * modifies the resource parameters applied to the URL.
+    * <p>
+    * {@link PortletParameters} provides a description of the parameter concept.
+    * </div>
+    * 
+    * @return   a mutable <code>PortletParameters</code> object representing
+    *           the private and public render parameters
+    * @since    3.0
+    * @see      PortletParameters 
+    * @see      MutableResourceParameters 
+    * @see      ResourceRequest
+    */
+
+   public MutableResourceParameters getResourceParameters();
+
+
+   /**
      * Allows setting a resource ID that can be retrieved when serving the
      * resource through the {@link ResourceRequest#getResourceID} method.
      * 
@@ -111,6 +139,15 @@ public interface ResourceURL extends BaseURL {
 	public void setResourceID(String resourceID);
 
 	/**
+    * Returns the resource ID set on the ResourceURL or <code>null</code>
+    * if no resource ID was set on the URL.
+    * 
+    * @return  the resource ID set on the ResourceURL,or <code>null</code>
+    *          if no resource ID was set on the URL. 
+    */
+   public String getResourceID();
+
+   /**
 	 * Returns the cache level of this resource URL.
 	 * <p>
 	 * Possible return values are: <code>FULL, PORTLET</code> 

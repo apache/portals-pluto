@@ -27,7 +27,8 @@ package javax.portlet;
 
 
 /**
- * The <CODE>PortletURL</CODE> interface represents a URL
+ * <span class="changed_modified_3_0">The</span> 
+ * <CODE>PortletURL</CODE> interface represents a URL
  * that reference the portlet itself.
  * <p>
  * A PortletURL is created through the <CODE>RenderResponse</CODE>
@@ -48,79 +49,9 @@ package javax.portlet;
  * special tokens that will be converted to a valid URL, by the portal, 
  * before the content is returned to the client.
  */
-public interface PortletURL extends BaseURL
+public interface PortletURL extends BaseURL, MutablePortletState
 {
 
-
-
-  /**
-   * Indicates the window state the portlet should be in, if this 
-   * portlet URL triggers a request.
-   * <p>
-   * A URL can not have more than one window state attached to it.
-   * If more than one window state is set only the last one set
-   * is attached to the URL.
-   * 
-   * @param windowState
-   *               the portlet window state
-   *
-   * @exception WindowStateException
-   *                   if the portlet cannot switch to this state,
-   *                   because the portal does not support this state, the portlet has not 
-   *                   declared in its deployment descriptor that it supports this state, or the current
-   *                   user is not allowed to switch to this state.
-   *                   The <code>PortletRequest.isWindowStateAllowed()</code> method can be used
-   *                   to check if the portlet can set a given window state.
-   * @see PortletRequest#isWindowStateAllowed
-   */
-  public void setWindowState (WindowState windowState)
-    throws WindowStateException;
-
-
-  /**
-   * Indicates the portlet mode the portlet must be in, if this
-   * portlet URL triggers a request.
-   * <p>
-   * A URL can not have more than one portlet mode attached to it.
-   * If more than one portlet mode is set only the last one set
-   * is attached to the URL.
-   * 
-   * @param portletMode
-   *               the portlet mode
-   * 
-   * @exception PortletModeException
-   *                   if the portlet cannot switch to this mode,
-   *                   because the portal does not support this mode, the portlet has not
-   *                   declared in its deployment descriptor that it supports this mode for the current markup,
-   *                   or the current user is not allowed to switch to this mode.
-   *                   The <code>PortletRequest.isPortletModeAllowed()</code> method can be used
-   *                   to check if the portlet can set a given portlet mode.
-   * @see PortletRequest#isPortletModeAllowed
-   */
-  public void setPortletMode (PortletMode portletMode)
-    throws PortletModeException;
-
-
-  /**
-   * Returns the currently set portlet mode on this PortletURL.
-   *             
-   * @since 2.0
-   *
-   * @return   the portlet mode, or <code>null</code> if none is set
-   */
-
-  public PortletMode getPortletMode ();
-
-
-  /**
-   * Returns the currently set window state on this PortletURL.
-   *             
-   * @since 2.0
-   *
-   * @return   the window state, or <code>null</code> if none is set
-   */
-
-  public WindowState getWindowState ();
 
   /**
 	* Removes the specified public render parameter.
@@ -128,9 +59,6 @@ public interface PortletURL extends BaseURL
 	* in the portlet deployment descriptor under the
 	* <code>public-render-parameter</code> element with the
 	* <code>identifier</code> mapping to the parameter name.
-	* <p>
-	* Note that calling this method on a PortletURL of type
-	* Action URL does not have any effect.
 	* 
 	* @param name			a <code>String</code> specifying 
 	*					the name of the public render parameter to be removed
@@ -138,6 +66,10 @@ public interface PortletURL extends BaseURL
 	* @exception  java.lang.IllegalArgumentException 
 	*                            if name is <code>null</code>.
 	* @since 2.0
+    * 
+    * @deprecated As of version 3.0. Use {@link #getRenderParameters()} instead.
 	*/
+   
+   @Deprecated
   public void removePublicRenderParameter(String name); 
 }

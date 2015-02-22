@@ -79,12 +79,6 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
            super.close();
 
            if (isDebug) {
-              LOGGER.debug("Filtering the URL.");
-           }
-
-           new PortletURLImpl(this, portletURLProvider).filterURL();
-
-           if (isDebug) {
               LOGGER.debug("Applying the changes.");
            }
 

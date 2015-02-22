@@ -115,13 +115,47 @@ public interface ResourceResponse extends MimeResponse {
     
     
 	/**
+     * <div class="changed_added_3_0">
+     * Sets the HTTP status code for this request.
+     * <p>
+     * The status code should be a valid value as defined in 
+     * IETF <a href="http://tools.ietf.org/html/rfc2616">
+     * rfc2616 "Hypertext Transfer Protocol -- HTTP/1.1"
+     * </a>. The status code constants "SC_*" defined in 
+     * {@link javax.servlet.http.HttpServletResponse} may be used.
+     * <p>
+     * This method has no effect if it is called after 
+     * after the response has been committed.
+     * </div>
+     * 
+     * @see javax.servlet.http.HttpServletResponse
+     * @see javax.servlet.http.HttpServletResponse#setStatus
+     * 
+     * @since 3.0
+     * 
+     * @param sc an integer specifying the status code for this request
+     */
+    public void setStatus(int sc);
+    
+    
+	/**
      * @throws java.lang.IllegalStateException
      *             if the cacheability level of the resource URL
      *             triggering this <code>serveResource</code> call
      *             is not <code>PAGE</code> and thus does not allow
      *             for creating render URLs.
      */
-	public PortletURL createRenderURL();
+	public RenderURL createRenderURL();
+   
+   
+  /**
+     * @throws java.lang.IllegalStateException
+     *             if the cacheability level of the resource URL
+     *             triggering this <code>serveResource</code> call
+     *             is not <code>PAGE</code> and thus does not allow
+     *             for creating render URLs.
+     */
+  public RenderURL createRenderURL(ParameterCopyOption option);
 
 	/**
      * @throws java.lang.IllegalStateException
@@ -130,7 +164,16 @@ public interface ResourceResponse extends MimeResponse {
      *             is not <code>PAGE</code> and thus does not allow
      *             for creating action URLs.
      */
-	public PortletURL createActionURL();
+	public ActionURL createActionURL();
+
+	/**
+     * @throws java.lang.IllegalStateException
+     *             if the cacheability level of the resource URL
+     *             triggering this <code>serveResource</code> call
+     *             is not <code>PAGE</code> and thus does not allow
+     *             for creating action URLs.
+     */
+   public ActionURL createActionURL(ParameterCopyOption option);
 
 	/**
      * @throws java.lang.IllegalStateException

@@ -69,6 +69,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
       paramTypeMap.put(ParamType.ACTION, PortalURLParameter.PARAM_TYPE_ACTION);
       paramTypeMap.put(ParamType.RENDER, PortalURLParameter.PARAM_TYPE_RENDER);
       paramTypeMap.put(ParamType.RESOURCE, PortalURLParameter.PARAM_TYPE_RESOURCE);
+      paramTypeMap.put(ParamType.PUBLIC, PortalURLParameter.PARAM_TYPE_PUBLIC);
    }
    
    private final static HashMap<URLType, TYPE> urlTypeMap = new HashMap<PortalURL.URLType, PortletURLProvider.TYPE>();
@@ -128,23 +129,20 @@ public class PortletURLProviderImpl implements PortletURLProvider {
       }
 
       this.url.setTargetWindow(window);
+      this.url.clearParameters(window, PortalURLParameter.PARAM_TYPE_RESOURCE);
+      this.url.clearParameters(window, PortalURLParameter.PARAM_TYPE_ACTION);
       switch (type) {
       case ACTION:
          this.url.setType(URLType.Action);
          break;
       case RESOURCE:
          this.url.setType(URLType.Resource);
-         this.url.clearParameters(window, PortalURLParameter.PARAM_TYPE_RESOURCE);
-         this.url.clearParameters(window, PortalURLParameter.PARAM_TYPE_ACTION);
          this.url.setCacheability(ResourceURL.PAGE);
          break;
       default:
          this.url.setType(URLType.Render);
-         if (url.isVersion3(window)) {
-            this.url.clearParameters(window, PortalURLParameter.PARAM_TYPE_RESOURCE);
-            this.url.clearParameters(window, PortalURLParameter.PARAM_TYPE_ACTION);
-         } else {
-            this.url.clearParameters(window);
+         if (!url.isVersion3(window)) {
+            this.url.clearParameters(window, PortalURLParameter.PARAM_TYPE_RENDER);
          }
       }
 
@@ -277,6 +275,19 @@ public class PortletURLProviderImpl implements PortletURLProvider {
       out.write(result);
    }
 
+   public Appendable append(Appendable out, boolean escapeXML) throws IOException {
+      String result = apply().toURL(false);
+      if (escapeXML) {
+         result = result.replaceAll("&", "&amp;");
+         result = result.replaceAll("<", "&lt;");
+         result = result.replaceAll(">", "&gt;");
+         result = result.replaceAll("\'", "&#039;");
+         result = result.replaceAll("\"", "&#034;");
+      }
+      out.append(result);
+      return out;
+   }
+
    public Map<String, List<String>> getProperties() {
       if (properties == null) {
          properties = new HashMap<String, List<String>>();
@@ -351,6 +362,26 @@ public class PortletURLProviderImpl implements PortletURLProvider {
    // V3 method
    public Set<String> getPublicParameterNames(String windowId) {
       return paramFactory.getPublicParameterNames(windowId);
+   }
+
+   public void setAuthenticated(boolean authenticated) {
+      url.setAuthenticated(authenticated);
+   }
+
+   public boolean getAuthenticated() {
+      return url.getAuthenticated();
+   }
+
+   public void setFragmentIdentifier(String fragment) {
+      url.setFragmentIdentifier(fragment);
+   }
+
+   public String getFragmentIdentifier() {
+      return url.getFragmentIdentifier();
+   }
+
+   public void clearParameters(String windowId, ParamType type) {
+      url.clearParameters(windowId, paramTypeMap.get(type));
    }
 
 }

@@ -26,6 +26,8 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.WindowState;
 
+import org.apache.pluto.container.PortletURLProvider.ParamType;
+
 /**
  * Defines the interface used by the portlet container to create Portlet URLs.
  * This provider must be implemented by the Portal and provided via the
@@ -44,6 +46,7 @@ public interface PortletURLProvider {
        ACTION,
        RENDER,
        RESOURCE,
+       PUBLIC
     }
 
     /**
@@ -177,10 +180,44 @@ public interface PortletURLProvider {
     String toURL();
     
     void write(Writer out, boolean escapeXML) throws IOException;
-
+    
+    Appendable append(Appendable out, boolean escapeXML) throws IOException;
+    
     /**
      * Gets the mutable map of vendor-specific properties as set on the BaseURL
      * @return parameters a map containing the name and value(s) of the properties (may return null)
      */
     public Map<String, List<String>> getProperties();
+
+    /**
+     * Marks the URL for authenticated access
+     * 
+     * @param authenticated
+     */
+    void setAuthenticated(boolean authenticated);
+
+    /**
+     * Returns current authenticated setting
+     * 
+     * @return
+     */
+    boolean getAuthenticated();
+
+    /**
+     * Sets the fragment identifier on a render URL
+     * @param fragment
+     */
+    void setFragmentIdentifier(String fragment);
+
+    /**
+     * Gets the current fragment identifier for the render URL
+     * @return
+     */
+    String getFragmentIdentifier();
+
+    /**
+     * Cears parameters of specified type
+     * @param type
+     */
+    void clearParameters(String WindowId, ParamType paramType);
 }

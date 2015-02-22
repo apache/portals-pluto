@@ -82,6 +82,8 @@ public class PortalURLParserImpl implements PortalURLParser {
    private static final String PARTIAL_ACTION = "pa";    // new for portlet spec 3
    private static final String RENDER = "re";            // new for portlet spec 3
    
+   private static final String AUTHENTICATE = "au";      // new for portlet spec 3
+   
    private static final String ACTION_PARAM = "av";      // new for portlet spec 3
    private static final String RESOURCE_PARAM = "rv";    // new for portlet spec 3
 
@@ -255,6 +257,12 @@ public class PortalURLParserImpl implements PortalURLParser {
             // ResourceID definition: portalURL.setResourceID().
             if (type.equals(RESOURCE_ID)) {
                portalURL.setResourceID(urlDecode(vals[0]));
+               continue;
+            }
+
+            // Authenticate definition: portalURL.setAuthenticated().
+            if (type.equals(AUTHENTICATE)) {
+               portalURL.setAuthenticated(Boolean.valueOf(urlDecode(vals[0])));
                continue;
             }
 
@@ -490,6 +498,14 @@ public class PortalURLParserImpl implements PortalURLParser {
             buffer.append(PREFIX).append(ACTION).append(String.valueOf(index));
          }
       }
+      
+      // Add authenticate token if the URL requires authentication
+      
+      if (portalURL.getAuthenticated()) {
+         buffer.append(TOKEN_DELIM);
+         buffer.append(PREFIX).append(AUTHENTICATE)
+               .append(urlEncode(String.valueOf(portalURL.getAuthenticated())));
+      }
 
       String reswin = null;
       if (portalURL.getType() == URLType.Resource) {
@@ -620,6 +636,17 @@ public class PortalURLParserImpl implements PortalURLParser {
             }
          }
 
+      }
+      
+      // Add fragment identifier if present on render URL
+      if (portalURL.getType() == URLType.Render) {
+         String frag = portalURL.getFragmentIdentifier();
+         if (frag != null) {
+            if (isDebug) {
+               LOG.debug("Adding fragment identifier: " + frag);
+            }
+            buffer.append('#').append(frag);
+         }
       }
 
       // Construct the string representing the portal URL.

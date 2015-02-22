@@ -24,6 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletResourceResponseContext;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.impl.ResourceResponseImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @version $Id$
@@ -32,6 +35,8 @@ import org.apache.pluto.container.PortletWindow;
 public class PortletResourceResponseContextImpl extends PortletMimeResponseContextImpl implements
                 PortletResourceResponseContext
 {
+   private static final Logger    LOGGER  = LoggerFactory.getLogger(PortletResourceResponseContextImpl.class);
+   private static final boolean   isDebug = LOGGER.isDebugEnabled();
     
     public PortletResourceResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
                                               HttpServletResponse containerResponse, PortletWindow window)
@@ -41,6 +46,12 @@ public class PortletResourceResponseContextImpl extends PortletMimeResponseConte
 
     public void setCharacterEncoding(String charset)
     {
+        if (isDebug) {
+           StringBuilder txt = new StringBuilder("Setting character encoding.");
+           txt.append(" charset: ").append(charset);
+           txt.append(" isClosed: ").append(isClosed());
+           LOGGER.debug(txt.toString());
+        }
         if (!isClosed())
         {
             getServletResponse().setCharacterEncoding(charset);
@@ -62,4 +73,16 @@ public class PortletResourceResponseContextImpl extends PortletMimeResponseConte
             getServletResponse().setLocale(locale);
         }
     }
+
+   public void setStatus(int sc) {
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder("Setting character encoding.");
+         txt.append(" status code: ").append(sc);
+         txt.append(" isClosed: ").append(isClosed());
+         LOGGER.debug(txt.toString());
+      }
+      if (!isClosed()) {
+         getServletResponse().setStatus(sc);
+      }
+   }
 }

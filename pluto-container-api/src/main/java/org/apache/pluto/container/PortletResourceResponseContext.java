@@ -27,4 +27,5 @@ public interface PortletResourceResponseContext extends PortletMimeResponseConte
     void setLocale(Locale locale);
     void setCharacterEncoding(String charset);
     void setContentLength(int len);
+    void setStatus(int sc);
 }

@@ -38,6 +38,9 @@ import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLPublicParameter;
+
+import static org.apache.pluto.driver.url.PortalURLParameter.PARAM_TYPE_PUBLIC;
+
 import org.apache.pluto.driver.url.PortalURLParser;
 import org.apache.pluto.driver.url.PortletParameterFactory;
 
@@ -57,6 +60,9 @@ public class RelativePortalURLImpl implements PortalURL {
    private String                      renderPath;
    private String                      cacheLevel;
    private String                      resourceID;
+   private String                      fragmentId = null;
+   
+   private boolean                     isAuthenticated = false;
 
    private int                         cloneId        = 0;
    private static int                  cloneCtr       = 0;
@@ -138,6 +144,10 @@ public class RelativePortalURLImpl implements PortalURL {
       if (!reqParamsProcessed && servletRequest != null && targetWindow != null
             && type != URLType.Portal) {
          reqParamsProcessed = true;
+         
+         if (isDebug) {
+            LOG.debug("Processing servlet request parameters.");
+         }
 
          try {
             servletRequest.setCharacterEncoding("UTF-8"); // in case it hasn't
@@ -476,27 +486,6 @@ public class RelativePortalURLImpl implements PortalURL {
       return targetWindow;
    }
 
-   /**
-    * Clear parameters of the specified window.
-    * 
-    * @param windowId
-    *           the window ID.
-    */
-   public void clearParameters(String windowId) {
-      HashSet<PortalURLParameter> rem = new HashSet<PortalURLParameter>();
-      for (PortalURLParameter p : parameters) {
-         if (p.getWindowId().equals(windowId)) {
-            rem.add(p);
-         }
-      }
-      if (isTrace) {
-         StringBuilder txt = new StringBuilder("Removing ");
-         txt.append(rem.size()).append(" elements. Window ID: ").append(windowId);
-         LOG.debug(txt.toString());
-      }
-      parameters.removeAll(rem);
-   }
-
    /*
     * (non-Javadoc)
     * 
@@ -505,20 +494,29 @@ public class RelativePortalURLImpl implements PortalURL {
     * .String)
     */
    public void clearParameters(String window, String paramType) {
-      HashSet<PortalURLParameter> rem = new HashSet<PortalURLParameter>();
-      for (PortalURLParameter pup : parameters) {
-         if (pup.getType().equals(paramType)
-               && pup.getWindowId().equals(window)) {
-            rem.add(pup);
+      int removed = 0;
+      if (paramType.equals(PARAM_TYPE_PUBLIC)) {
+         for (PortalURLPublicParameter prp : prpMapper.getPRPsForWindow(window, true)) {
+            prpMapper.setRemoved(prpMapper.getIndex(prp), true);
+            removed++;
          }
+      } else  {
+         HashSet<PortalURLParameter> rem = new HashSet<PortalURLParameter>();
+         for (PortalURLParameter pup : parameters) {
+            if (pup.getType().equals(paramType)
+                  && pup.getWindowId().equals(window)) {
+               rem.add(pup);
+            }
+         }
+         removed = rem.size();
+         parameters.removeAll(rem);
       }
       if (isTrace) {
          StringBuilder txt = new StringBuilder("Removing ");
-         txt.append(rem.size()).append(" elements. Window ID: ").append(window);
+         txt.append(removed).append(" elements. Window ID: ").append(window);
          txt.append(", Parameter type: ").append(paramType);
          LOG.debug(txt.toString());
       }
-      parameters.removeAll(rem);
    }
 
    // used by parser when parsing URL parameter strings
@@ -593,5 +591,21 @@ public class RelativePortalURLImpl implements PortalURL {
          LOG.debug(txt.toString());
       }
       parameters.remove(param);
+   }
+
+   public String getFragmentIdentifier() {
+      return fragmentId;
+   }
+
+   public void setFragmentIdentifier(String fragment) {
+      this.fragmentId = fragment;
+   }
+
+   public boolean getAuthenticated() {
+      return isAuthenticated;
+   }
+
+   public void setAuthenticated(boolean authenticated) {
+      this.isAuthenticated = authenticated;
    }
 }

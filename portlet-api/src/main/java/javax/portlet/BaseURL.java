@@ -35,7 +35,7 @@ package javax.portlet;
  * @see   MutablePortletState
  * @since 2.0
  */
-public interface BaseURL {
+public interface BaseURL extends PortletState {
 
     /**
     * <span class="changed_modified_3_0">Sets</span> 
@@ -248,8 +248,45 @@ public interface BaseURL {
      * @throws PortletSecurityException  if the run-time environment does
      *                                   not support the indicated setting
      */
+   public void setSecure (boolean secure) throws PortletSecurityException;
 
-    public void setSecure (boolean secure) throws PortletSecurityException;
+
+   /**
+    * <div class="changed_added_3_0">
+    * Indicates whether authentication is required for this URL. 
+    * <p>
+    * When the parameter is set to <code>true</code>, user authentication will be 
+    * required when accessing the URL. 
+    * <p>
+    * If authentication is not set or if it is 
+    * set to false using this method, authentication will be allowed, but not
+    * required.
+    * </div>
+    *
+    * @param  authenticated  true, if the URL requires authentication.
+    *                        false, if the URL does not require authentication.
+    *
+    * @since 3.0
+    * @see #getAuthenticated()
+    * @see PortletRequest#getAuthType()
+    */
+   public void setAuthenticated (boolean authenticated);
+
+
+   /**
+    * <div class="changed_added_3_0">
+    * Returns the authentication setting for the URL.
+    * <p>
+    * </div>
+    * 
+    * @return     <code>true</code> if the URL requires authentication;
+    *             <code>false</code> if authentication is allowed but not required.
+    *
+    * @since 3.0
+    * @see #setAuthenticated(boolean)
+    */
+   public boolean getAuthenticated ();
+
 
     /**
      * Returns the portlet URL string representation to be embedded in the
@@ -266,8 +303,8 @@ public interface BaseURL {
      * 
      * @return   the encoded URL as a string
      */
+   public String toString ();
 
-    public String toString ();
     
     /** 
     * <span class="changed_modified_3_0">Returns</span> a
@@ -341,6 +378,55 @@ public interface BaseURL {
 
     
     /**
+    * <div class="changed_added_3_0">
+    * Appends the portlet URL to the appendable object.
+    * <p>
+    * Note that the appended URL may not be a valid URL, as it may
+    * be rewritten by the portal/portlet-container before returning the 
+    * markup to the client.
+    * <p>
+    * The appended URL is always XML escaped. For appending
+    * non-escaped URLs use {@link #append(java.lang.Appendable, boolean)}.
+    *  
+    * @param   out                 the object to receive the URL
+    * 
+    * @return  Appendable          the Appendable object containing the URL
+    * 
+    * @throws java.io.IOException  if an I/O error occurred while writing the URL
+    *
+    * @since 3.0
+    * </div>
+    */
+   public Appendable append(java.lang.Appendable out) throws java.io.IOException;
+
+
+   /**
+    * <div class="changed_added_3_0">
+    * Appends the portlet URL to the appendable object.
+    * <p>
+    * If the parameter escapeXML is set to true the URL will be escaped to be
+    * valid XML characters, i.e. &lt, &gt, &amp, &#039, &#034 will get converted
+    * into their corresponding character entity codes (&lt to &&lt, &gt to &&gt, 
+    * &amp to &&amp, &#039 to &&#039, &#034 to &&#034).
+    * If escapeXML is set to false no escaping will be done.
+    * <p>
+    * Note that the appended URL may not be a valid URL, as it may
+    * be rewritten by the portal/portlet-container before returning the 
+    * markup to the client.
+    *  
+    * @param   out                  the object to receive the URL
+    * 
+    * @return  Appendable          the Appendable object containing the URL
+    * 
+    * @throws java.io.IOException  if an I/O error occurred while writing the URL
+    *
+    * @since 3.0
+    * </div>
+    */
+   public Appendable append(java.lang.Appendable out, boolean escapeXML) throws java.io.IOException;
+
+
+   /**
      * Adds a String property to an existing key on the URL.
      * <p>
      * This method allows URL properties to have multiple values.
