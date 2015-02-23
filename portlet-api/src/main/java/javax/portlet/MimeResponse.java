@@ -449,7 +449,7 @@ public interface MimeResponse extends PortletResponse {
      *
      * @return a portlet render URL
      */
-    public RenderURL createRenderURL();
+    public <T extends PortletURL & RenderURL> T createRenderURL();
 	
 
     /**
@@ -513,7 +513,7 @@ public interface MimeResponse extends PortletResponse {
      * The returned URL can be further extended by adding portlet-specific action
      * parameters, portlet mode, and window state.
      * If no additional portlet mode, window
-     * state or security modifier is set on the URL, the values from the
+     * state or security modifier is set on the URL, the values from themi
      * current render or resource request are preserved.
      * <div class="changed_added_3_0">
      * <p>
@@ -533,7 +533,7 @@ public interface MimeResponse extends PortletResponse {
      * 
      * @return a portlet action URL
      */
-    public ActionURL createActionURL();
+    public <T extends PortletURL & ActionURL> T createActionURL();
 
 
     /**

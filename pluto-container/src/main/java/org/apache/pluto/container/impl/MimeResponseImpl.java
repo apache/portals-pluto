@@ -25,7 +25,9 @@ import java.util.Locale;
 
 import javax.portlet.CacheControl;
 import javax.portlet.MimeResponse;
+
 import static javax.portlet.MimeResponse.ParameterCopyOption.*;
+
 import javax.portlet.RenderURL;
 import javax.portlet.ActionURL;
 import javax.portlet.ResourceURL;
@@ -71,10 +73,12 @@ public class MimeResponseImpl extends PortletResponseImpl implements
       return responseContentTypes;
    }
 
+   @SuppressWarnings("unchecked")
    public ActionURL createActionURL() {
       return new ActionURLImpl(responseContext, COPY_PUBLIC_RENDER_PARAMETERS);
    }
 
+   @SuppressWarnings("unchecked")
    public RenderURL createRenderURL() {
       return new RenderURLImpl(responseContext, COPY_PUBLIC_RENDER_PARAMETERS);
    }
