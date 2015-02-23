@@ -508,6 +508,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       }
 
       String reswin = null;
+      boolean isCacheabilityFull = false;
       if (portalURL.getType() == URLType.Resource) {
          if (portalURL.getCacheability() != null) {
             buffer.append(TOKEN_DELIM);
@@ -520,12 +521,13 @@ public class PortalURLParserImpl implements PortalURLParser {
                   .append(urlEncode(portalURL.getResourceID()));
          }
          
-         // if cacheability = FULL, we're done. For PORTLET, set
+         // Set up cacheability processing. For PORTLET, set
          // the resource window so that the only the state for the
          // target portlet is set.
          
          if (portalURL.getCacheability().equals(ResourceURL.FULL)) {
-            return buffer.toString();
+            isCacheabilityFull = true;
+            reswin = portalURL.getTargetWindow();
          } else if (portalURL.getCacheability().equals(ResourceURL.PORTLET)) {
             reswin = portalURL.getTargetWindow();
          }
@@ -534,8 +536,8 @@ public class PortalURLParserImpl implements PortalURLParser {
       // Append portlet mode definitions.
       for (String pid : portalURL.getPortletModes().keySet()) {
          
-         // special handling for Cacheability = PORTLET
-         if (reswin != null && !reswin.equals(pid)) {
+         // special handling for Cacheability = PORTLET or FULL
+         if (isCacheabilityFull || (reswin != null && !reswin.equals(pid))) {
             continue;
          }
          
@@ -555,8 +557,8 @@ public class PortalURLParserImpl implements PortalURLParser {
       // Append window state definitions.
       for (String pid : portalURL.getWindowStates().keySet()) {
 
-         // special handling for Cacheability = PORTLET
-         if (reswin != null && !reswin.equals(pid)) {
+         // special handling for Cacheability = PORTLET or FULL
+         if (isCacheabilityFull || (reswin != null && !reswin.equals(pid))) {
             continue;
          }
          
@@ -576,7 +578,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       // Append action and render parameters.
       for (PortalURLParameter param : portalURL.getParameters()) {
 
-         // special handling for Cacheability = PORTLET
+         // special handling for Cacheability = PORTLET or FULL
          if (reswin != null && !reswin.equals(param.getWindowId())) {
             continue;
          }
@@ -596,46 +598,50 @@ public class PortalURLParserImpl implements PortalURLParser {
             } else if (param.getType().equals(PortalURLParameter.PARAM_TYPE_RESOURCE)) {
                ptype = RESOURCE_PARAM;
             }
-            buffer.append(TOKEN_DELIM).append(PREFIX).append(ptype)
-            .append(String.valueOf(index)).append(DELIM).append(urlEncode(param.getName()))
-            .append(VALUE_DELIM).append(valueString);
+            if (!isCacheabilityFull || ptype.equals(RESOURCE_PARAM)) {
+               buffer.append(TOKEN_DELIM).append(PREFIX).append(ptype)
+                     .append(String.valueOf(index))
+                     .append(DELIM).append(urlEncode(param.getName()))
+                     .append(VALUE_DELIM).append(valueString);
+            }
          }
       }
 
       // Add the public render parameters, retaining the grouping information and 
       // the parameter names for each portlet. 
-      PublicRenderParameterMapper mapper = portalURL.getPublicRenderParameterMapper();
-      List<Integer> activeIndexes = mapper.getActiveIndexes();
+      if (!isCacheabilityFull) {
+         PublicRenderParameterMapper mapper = portalURL.getPublicRenderParameterMapper();
+         List<Integer> activeIndexes = mapper.getActiveIndexes();
 
-      // special handling for Cacheability = PORTLET
-      if (reswin != null) {
-         List<PortalURLPublicParameter> pups = mapper.getPRPsForWindow(reswin, true);
-         activeIndexes = new ArrayList<Integer>();
-         for (PortalURLPublicParameter pup : pups) {
-            activeIndexes.add(mapper.getIndex(pup));
-         }
-      }
-      
-      for (int i : activeIndexes) {
-         String[] values = mapper.getValues(i);
-         String valstr = encodeMultiValues(values);
-         
-         // the values for the PRP group need only appear in the URL once
-         List<PortalURLPublicParameter> prplist = mapper.getPublicParameterGroup(i);
-         if (prplist.size() > 0) {
-            PortalURLPublicParameter prp = prplist.get(0);
-            int index = pids.indexOf(prp.getWindowId());
-            if (index >= 0) {
-               buffer.append(TOKEN_DELIM).append(PREFIX).append(PUBLIC_RENDER_PARAM)
-               .append(String.valueOf(index)).append(DELIM)
-               .append(String.valueOf(i)).append(DELIM)
-               .append(urlEncode(prp.getName())).append(VALUE_DELIM)
-               .append(valstr);
-            } else {
-               LOG.warn("window ID not on page for public render parameter: " + prp.toString());
+         // special handling for Cacheability = PORTLET
+         if (reswin != null) {
+            List<PortalURLPublicParameter> pups = mapper.getPRPsForWindow(reswin, true);
+            activeIndexes = new ArrayList<Integer>();
+            for (PortalURLPublicParameter pup : pups) {
+               activeIndexes.add(mapper.getIndex(pup));
             }
          }
 
+         for (int i : activeIndexes) {
+            String[] values = mapper.getValues(i);
+            String valstr = encodeMultiValues(values);
+
+            // the values for the PRP group need only appear in the URL once
+            List<PortalURLPublicParameter> prplist = mapper.getPublicParameterGroup(i);
+            if (prplist.size() > 0) {
+               PortalURLPublicParameter prp = prplist.get(0);
+               int index = pids.indexOf(prp.getWindowId());
+               if (index >= 0) {
+                  buffer.append(TOKEN_DELIM).append(PREFIX).append(PUBLIC_RENDER_PARAM)
+                  .append(String.valueOf(index)).append(DELIM)
+                  .append(String.valueOf(i)).append(DELIM)
+                  .append(urlEncode(prp.getName())).append(VALUE_DELIM)
+                  .append(valstr);
+               } else {
+                  LOG.warn("window ID not on page for public render parameter: " + prp.toString());
+               }
+            }
+         }
       }
       
       // Add fragment identifier if present on render URL

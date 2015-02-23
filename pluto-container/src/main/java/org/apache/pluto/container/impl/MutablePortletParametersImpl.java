@@ -19,6 +19,7 @@
 package org.apache.pluto.container.impl;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
 
 import javax.portlet.MutablePortletParameters;
@@ -170,7 +171,15 @@ public class MutablePortletParametersImpl extends
       int ctr = 0;
       
       // delete all parameters from this map not contained in input map
+      HashSet<String> remNames = new HashSet<String>(params.keySet());
       boolean removed = params.keySet().retainAll(inParams.getNames());
+      
+      if (removed && urlProvider != null) {
+         remNames.removeAll(inParams.getNames());
+         for(String name : remNames) {
+            urlProvider.removeParameter(windowId, name, type);
+         }
+      }
       
       for (String name : inParams.getNames()) {
          String[] vals = inParams.getValues(name).clone();

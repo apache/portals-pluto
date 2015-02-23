@@ -170,6 +170,69 @@
       <supported-public-render-parameter>Farbe</supported-public-render-parameter>
    </portlet>
 
+   <portlet>
+      <portlet-name>UrlTestPortlet</portlet-name>
+      <display-name>V3 URL Test Portlet</display-name>
+      
+      <portlet-class>basic.portlet.UrlTestPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>V3 Url Test Portlet</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>Bild</supported-public-render-parameter>
+      <supported-public-render-parameter>Farbe</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>UrlRPTestPortlet</portlet-name>
+      <display-name>V3 URL Render Parameter Test Portlet</display-name>
+      
+      <portlet-class>basic.portlet.UrlRPTestPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>V3 Url Render Parameter Test Portlet</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>Bild</supported-public-render-parameter>
+      <supported-public-render-parameter>Farbe</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>UrlAPTestPortlet</portlet-name>
+      <display-name>V3 Action URL Parameter Test Portlet</display-name>
+      
+      <portlet-class>basic.portlet.UrlAPTestPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>V3 Action Url Parameter Test Portlet</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>Bild</supported-public-render-parameter>
+      <supported-public-render-parameter>Farbe</supported-public-render-parameter>
+   </portlet>
+
 	<custom-portlet-mode>
 		<description>Test mode #1</description>
 		<portlet-mode>MyMode_nonPortalManaged_1</portlet-mode>

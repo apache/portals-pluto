@@ -66,6 +66,14 @@ public class Constants {
    public final static String PARAM_SETTYPE = "setType";
    public final static String PARAM_SETTYPE_VAL = "setVal";
    public final static String PARAM_SETTYPE_VARRAY = "setVals";
+   public final static String PARAM_AURLCOPY = "acopy";
+   public final static String PARAM_AURLCOPY_NONE = "acopy_none";
+   public final static String PARAM_AURLCOPY_PUBLIC = "acopy_public";
+   public final static String PARAM_AURLCOPY_ALL = "acopy_all";
    public final static String ATTRIB_PARAMS = "params";
+   public final static String ATTRIB_RENURLS = "renurls";
+   public final static String ATTRIB_RESURLS = "resurls";
+   public final static String ATTRIB_ACTURL = "aurl";
+   public final static String ATTRIB_ACTPARAMS = "actParams";
 
 }
