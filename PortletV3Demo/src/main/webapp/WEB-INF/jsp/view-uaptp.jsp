@@ -47,11 +47,11 @@ limitations under the License.
    ActionURL aurl = renderResponse.createActionURL(pco);
 %>
 
-<h3>Render URL Parameter clone & set Tester</h3>
-<p>V3 portlet to verify render parameter handling on render URLs through the set(), clone(), 
+<h3>Action URL Parameter clone & set Tester</h3>
+<p>V3 portlet to verify render & action parameter handling on action URLs through the set(), clone(), 
 clear(), and add() methods.</p>
 <p><hr/></p>
-<p>Render URLs:</p>
+<p>Action URLs, render parameters:</p>
    <table><tr>
    <%
       Map<String, String> rurls = (Map<String, String>)renderRequest.getAttribute(ATTRIB_RENURLS);
@@ -59,7 +59,25 @@ clear(), and add() methods.</p>
       for (String name : rurls.keySet()) {
          StringBuilder txt = new StringBuilder("<td align='left' style='padding: 0 5px 0 5px;'>");
          txt.append("<form  METHOD='POST' ACTION='").append(rurls.get(name)).append("'>")
-            .append("<button type='submit' name='action' value='doIt'>").append(name).append("</button>")
+            .append("<button type='submit'>").append(name).append("</button>")
+            .append("</form>")
+            .append("</td>");
+         out.println(txt.toString());
+         if ((++ctr)%3 == 0) {
+            out.println("</tr><tr>");
+         }
+      }        
+   %>
+   </tr></table>
+<p>Action URLs, action parameters:</p>
+   <table><tr>
+   <%
+      Map<String, String> aurls = (Map<String, String>)renderRequest.getAttribute(ATTRIB_ACTURLS);
+      ctr = 0;
+      for (String name : aurls.keySet()) {
+         StringBuilder txt = new StringBuilder("<td align='left' style='padding: 0 5px 0 5px;'>");
+         txt.append("<form  METHOD='POST' ACTION='").append(aurls.get(name)).append("'>")
+            .append("<button type='submit'>").append(name).append("</button>")
             .append("</form>")
             .append("</td>");
          out.println(txt.toString());

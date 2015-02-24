@@ -56,7 +56,7 @@ public class Constants {
    public final static String ATTRIB_PMS = "portletModes";
    public final static String ATTRIB_WS = "windowStates";
 
-   // For parameter test portlet
+   // For parameter & URL test portlets
 
    public final static String PARAM_NAME = "pName";
    public final static String PARAM_VALUES = "pValues";
@@ -73,7 +73,14 @@ public class Constants {
    public final static String ATTRIB_PARAMS = "params";
    public final static String ATTRIB_RENURLS = "renurls";
    public final static String ATTRIB_RESURLS = "resurls";
+   public final static String ATTRIB_ACTURLS = "acturls";
    public final static String ATTRIB_ACTURL = "aurl";
    public final static String ATTRIB_ACTPARAMS = "actParams";
+   
+   // For Fragment ID test portlet (LongPortlet)
+   
+   public final static String PARAM_FRAG = "frag";
+   public final static String PARAM_LINE = "line";
+   public final static String ATTRIB_LONGLINES = "longlines";
 
 }

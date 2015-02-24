@@ -21,7 +21,6 @@ package basic.portlet;
 import static basic.portlet.Constants.*;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -39,19 +38,15 @@ import javax.portlet.GenericPortlet;
 import static javax.portlet.MimeResponse.ParameterCopyOption.*;
 
 import javax.portlet.ActionURL;
+import javax.portlet.MutableActionParameters;
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderParameters;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.RenderURL;
-import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.portlet.ResourceURL;
-
-import static javax.portlet.ResourceURL.*;
 
 
 /**
@@ -147,8 +142,8 @@ public class UrlAPTestPortlet extends GenericPortlet {
       String name3 = "UParm" + (++ctr);
       String val3 = "" + ctr;
      
-      // Generate some render URLs with differing copy parameter and
-      // additional parameters. Use a TreeSet to have sorted output
+      // Generate some action URLs with differing render parameters.
+      // Use a TreeSet to have sorted output
       
       TreeMap<String, String> urls = new TreeMap<String, String>();
       MutableRenderParameters mrp = req.getRenderParameters().clone();
@@ -242,6 +237,58 @@ public class UrlAPTestPortlet extends GenericPortlet {
       }
       
       req.setAttribute(ATTRIB_RENURLS, urls);
+      
+      // Generate some action URLs with differing render parameters.
+      // Use a TreeSet to have sorted output
+      
+      urls = new TreeMap<String, String>();
+      mrp = req.getRenderParameters().clone();
+      
+      aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+      urls.put(" 1 No action parameters", aurl.toString());
+      
+      aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+      aurl.getActionParameters().setValue(name1, val1);
+      aurl.getActionParameters().setValues(name2, new String[]{val2});
+      aurl.getActionParameters().clear();
+      urls.put(" 2 set & clear action params", aurl.toString());
+      
+      aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+      MutableActionParameters map = aurl.getActionParameters().clone();
+      map.setValue(name3, val3);
+      map.setValues(name1, new String[]{val1, val2});
+      logger.fine("MAP from request # entries: " + map.getNames().size());
+      
+      {
+         aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+         MutableActionParameters map2 = map.clone();
+         map2.clear();
+         logger.fine("MAP2 afer clear # entries: " + map2.getNames().size());
+         aurl.getActionParameters().set(map2);
+         urls.put(" 3 AP Clear clone all", aurl.toString());
+      }
+      
+      {
+         aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+         MutableActionParameters map2 = map.clone();
+         logger.fine("MAP2 afer adding 2: # entries: " + map2.getNames().size());
+         aurl.getActionParameters().add(map2);
+         urls.put(" 4 AP Add thru clone 2", aurl.toString());
+      }
+      
+      {
+         aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+         MutableActionParameters map2 = map.clone();
+         map2.clear();
+         map2.setValue(name1, val1);
+         map2.setValue(name2, val2);
+         map2.setValue(name3, val3);
+         logger.fine("MAP2 after adding 3: # entries: " + map2.getNames().size());
+         aurl.getActionParameters().add(map2);
+         urls.put(" 5 AP Add thru clone 3", aurl.toString());
+      }
+      
+      req.setAttribute(ATTRIB_ACTURLS, urls);
 
       PortletRequestDispatcher rd = getPortletContext().getRequestDispatcher(
             "/WEB-INF/jsp/view-uaptp.jsp");
@@ -282,13 +329,42 @@ public class UrlAPTestPortlet extends GenericPortlet {
       
       txt.append("<h3>Render parameters for the last ActionRequest:</h3>\n");
       txt.append("<p>\n");
-      txt.append("   <table>");
-
-      // don't display the control parameters
-      for (String pn : mrp.getNames()) {
-         if (!pn.equals(PARAM_AURLCOPY) && !pn.equals(PARAM_REMTYPE) && !pn.equals(PARAM_SETTYPE)) {
-            String val = mrp.getValue(pn);
-            String[] vals = mrp.getValues(pn);
+      if (mrp.isEmpty()) {
+         txt.append("Render parameters is empty.");
+      } else {
+         txt.append("   <table>");
+         
+         // don't display the control parameters
+         for (String pn : mrp.getNames()) {
+            if (!pn.equals(PARAM_AURLCOPY) && !pn.equals(PARAM_REMTYPE) && !pn.equals(PARAM_SETTYPE)) {
+               String val = mrp.getValue(pn);
+               String[] vals = mrp.getValues(pn);
+               txt.append("      <tr><td " + style + ">Name: ")
+                  .append(pn)
+                  .append("</td><td " + style + ">Val: ")
+                  .append(val)
+                  .append("</td><td " + style + ">Len: ")
+                  .append(vals.length)
+                  .append("</td><td " + style + ">Values: ")
+                  .append(Arrays.toString(vals))
+                  .append("</td></tr>\n");
+            }
+         }
+         
+         txt.append("   </table>");
+      }
+      txt.append("</p>\n");
+      
+      txt.append("<h3>Action parameters for the last ActionRequest:</h3>\n");
+      txt.append("<p>\n");
+      if (ap.isEmpty()) {
+         txt.append("Action parameters is empty.");
+      } else {
+         txt.append("   <table>");
+         
+         for (String pn : ap.getNames()) {
+            String val = ap.getValue(pn);
+            String[] vals = ap.getValues(pn);
             txt.append("      <tr><td " + style + ">Name: ")
                .append(pn)
                .append("</td><td " + style + ">Val: ")
@@ -299,30 +375,9 @@ public class UrlAPTestPortlet extends GenericPortlet {
                .append(Arrays.toString(vals))
                .append("</td></tr>\n");
          }
+         
+         txt.append("   </table>");
       }
-      
-      txt.append("   </table>");
-      txt.append("</p>\n");
-      
-      txt.append("<h3>Action parameters for the last ActionRequest:</h3>\n");
-      txt.append("<p>\n");
-      txt.append("   <table>");
-
-      for (String pn : ap.getNames()) {
-         String val = ap.getValue(pn);
-         String[] vals = ap.getValues(pn);
-         txt.append("      <tr><td " + style + ">Name: ")
-            .append(pn)
-            .append("</td><td " + style + ">Val: ")
-            .append(val)
-            .append("</td><td " + style + ">Len: ")
-            .append(vals.length)
-            .append("</td><td " + style + ">Values: ")
-            .append(Arrays.toString(vals))
-            .append("</td></tr>\n");
-      }
-      
-      txt.append("   </table>");
       txt.append("</p>\n");
 
       req.getPortletSession().setAttribute(ATTRIB_ACTPARAMS, txt.toString());
@@ -392,8 +447,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
             mrp.setValue("Error:", "<span style='color: red;'>" + err.toString() + "</span>");
          }
       } else if (rpNames.isEmpty()) {
-         txt.append("the error message");
-         mrp.setValue("Error:", "<span style='color: red;'>No parameters available!</span>");
+         txt.append("nothing.");
       }
       
       if (isDebug) {

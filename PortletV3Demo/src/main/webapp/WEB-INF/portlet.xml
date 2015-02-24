@@ -233,6 +233,24 @@
       <supported-public-render-parameter>Farbe</supported-public-render-parameter>
    </portlet>
 
+   <portlet>
+      <portlet-name>LongPortlet</portlet-name>
+      <display-name>V3 Fragment Identifier Test Portlet</display-name>
+      
+      <portlet-class>basic.portlet.LongPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>V3 Fragment Identifier Test Portlet</title>
+      </portlet-info>
+   </portlet>
+
 	<custom-portlet-mode>
 		<description>Test mode #1</description>
 		<portlet-mode>MyMode_nonPortalManaged_1</portlet-mode>
