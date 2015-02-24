@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 public class ActionParametersImpl extends PortletParametersImpl implements
       ActionParameters {
    private static final Logger   LOGGER     = LoggerFactory.getLogger(ActionParametersImpl.class);
-   private static final boolean  isTrace    = LOGGER.isDebugEnabled();
+   private static final boolean  isTrace    = LOGGER.isTraceEnabled();
 
    // called to force class loading in Container thread
    public static final void load() {

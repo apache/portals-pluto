@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 public class MutableRenderParametersImpl extends MutablePortletParametersImpl
       implements MutableRenderParameters {
    private static final Logger   LOGGER     = LoggerFactory.getLogger(MutableRenderParametersImpl.class);
-   private static final boolean  isTrace    = LOGGER.isDebugEnabled();
+   private static final boolean  isTrace    = LOGGER.isTraceEnabled();
 
    // called to force class loading in Container thread
    public static final void load() {

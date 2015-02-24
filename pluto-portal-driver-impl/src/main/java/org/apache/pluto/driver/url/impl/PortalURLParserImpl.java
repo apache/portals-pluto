@@ -49,7 +49,8 @@ public class PortalURLParserImpl implements PortalURLParser {
 
    /** Logger. */
    private static final Logger LOG = LoggerFactory.getLogger(PortalURLParserImpl.class);
-   boolean isDebug = LOG.isDebugEnabled();
+   private static final boolean isDebug = LOG.isDebugEnabled();
+   private static final boolean isTrace = LOG.isTraceEnabled();
 
    /** The singleton parser instance. */
    private static final PortalURLParser PARSER = new PortalURLParserImpl();
@@ -149,7 +150,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       qi = (qi < 0) ? reqURI.length() : qi;
       pathInfo = reqURI.substring(prefix.length(), qi);
 
-      if (isDebug) {
+      if (isTrace) {
          LOG.debug("Parsing request pathInfo: " + pathInfo);
       }
 
@@ -171,7 +172,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       }
 
       portalURL.setRenderPath(renderPath.toString());
-      if (isDebug) {
+      if (isTrace) {
          LOG.debug("Parse: renderPath: " + renderPath.toString() + ",  pathInfo: " + pathInfo);
       }
 
@@ -316,7 +317,7 @@ public class PortalURLParserImpl implements PortalURLParser {
             // The remaining types deal with parameters, so extract the
             // parameter name and values.
             StringBuilder dbgstr = new StringBuilder();
-            if (isDebug) {
+            if (isTrace) {
                dbgstr.append("Decoding parameter: window ID=").append(pid)
                      .append(", name/value=").append(vals[1]);
             }
@@ -358,7 +359,7 @@ public class PortalURLParserImpl implements PortalURLParser {
                }
             }
             
-            if (isDebug) {
+            if (isTrace) {
                dbgstr.append(", paramName=").append(paramName);
                dbgstr.append(", Values length=").append(paramValues.length);
                dbgstr.append(", paramValues=").append(Arrays.toString(paramValues));
@@ -648,7 +649,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       if (portalURL.getType() == URLType.Render) {
          String frag = portalURL.getFragmentIdentifier();
          if (frag != null) {
-            if (isDebug) {
+            if (isTrace) {
                LOG.debug("Adding fragment identifier: " + frag);
             }
             buffer.append('#').append(frag);

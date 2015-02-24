@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 public class MutablePortletParametersImpl extends
       PortletParametersImpl implements MutablePortletParameters {
    private static final Logger   LOGGER     = LoggerFactory.getLogger(MutablePortletParametersImpl.class);
-   private static final boolean  isTrace    = LOGGER.isDebugEnabled();
+   private static final boolean  isTrace    = LOGGER.isTraceEnabled();
 
    /**
     * Constructor used by extending classes for instantiation

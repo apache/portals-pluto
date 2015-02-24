@@ -44,6 +44,7 @@ import org.slf4j.LoggerFactory;
 public class PortletParameterFactory {
    private static final Logger LOGGER = LoggerFactory.getLogger(PortletParameterFactory.class);
    private final static boolean isDebug = LOGGER.isDebugEnabled();
+   private final static boolean isTrace = LOGGER.isTraceEnabled();
    
    PortalURL url;
    
@@ -148,7 +149,7 @@ public class PortletParameterFactory {
          parameters.put(prp.getName(), prp.getValues().clone());
       }
       
-      if (isDebug) {
+      if (isTrace) {
          LOGGER.debug("getPublicParameterMap returning " + parameters.size() + " parameters.");
       }
       
@@ -177,7 +178,7 @@ public class PortletParameterFactory {
 
    public void addPublicRenderParameter(String windowId, String name, String[] values) {
       PublicRenderParameterMapper prpMapper = url.getPublicRenderParameterMapper();
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("Add PRP. Window: ");
          txt.append(windowId).append(", name: ").append(name)
                .append(", values = ").append(Arrays.toString(values));
@@ -197,7 +198,7 @@ public class PortletParameterFactory {
 
    public void removePublicRenderParameter(String windowId, String name) {
       PublicRenderParameterMapper prpMapper = url.getPublicRenderParameterMapper();
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("Remove PRP. Window: ");
          txt.append(windowId).append(", name: ").append(name);
          LOGGER.debug(txt.toString());
@@ -215,7 +216,7 @@ public class PortletParameterFactory {
 
    public boolean isPublicRenderParameter(String windowId, String name) {
       PublicRenderParameterMapper prpMapper = url.getPublicRenderParameterMapper();
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("Window: ");
          txt.append(windowId).append(", name: ").append(name);
          LOGGER.debug(txt.toString());
@@ -237,7 +238,7 @@ public class PortletParameterFactory {
          }
       }
 
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder();
          txt.append("Window ID: ").append(windowId);
          txt.append(", URL / Parameter type: ").append(type);
@@ -256,7 +257,7 @@ public class PortletParameterFactory {
       String type = urlTypeMap.get(url.getType());
       String[] vals = null;
       
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("Setting ");
          txt.append("name: ").append(name);
          txt.append(", URL / Parameter type: ").append(type);
@@ -291,7 +292,7 @@ public class PortletParameterFactory {
    public void setParameter(String windowId, String name, String[] values) {
       String type = urlTypeMap.get(url.getType());
       
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("Setting ");
          txt.append("name: ").append(name);
          txt.append(", values: ").append(Arrays.toString(values));
@@ -320,7 +321,7 @@ public class PortletParameterFactory {
     */
    public void removeParameter(String windowId, String name) {
       String type = urlTypeMap.get(url.getType());
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("Removing ");
          txt.append("name: ").append(name);
          txt.append(", type: ").append(type);
@@ -363,7 +364,7 @@ public class PortletParameterFactory {
          }
       }
       
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("Parameter map for ");
          txt.append("window ID: ").append(windowId);
          txt.append(", type: ").append(type);
@@ -397,7 +398,7 @@ public class PortletParameterFactory {
          url.setParameter(pup);
       }
 
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("Set ");
          txt.append("name: ").append(name);
          txt.append(", type: ").append(type);
@@ -428,7 +429,7 @@ public class PortletParameterFactory {
          url.removeParameter(pup);
       }
 
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("Removed ");
          txt.append("name: ").append(name);
          txt.append(", type: ").append(type);
@@ -458,7 +459,7 @@ public class PortletParameterFactory {
          names.add(prp.getName());
       }
       
-      if (isDebug) {
+      if (isTrace) {
          LOGGER.debug("Public render parameter names: " + names.toString());
       }
 

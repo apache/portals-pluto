@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public abstract class PortletParametersImpl implements PortletParameters {
    private static final Logger   LOGGER     = LoggerFactory.getLogger(PortletParametersImpl.class);
    private static final boolean  isDebug    = LOGGER.isDebugEnabled();
-   private static final boolean  isTrace    = LOGGER.isDebugEnabled();
+   private static final boolean  isTrace    = LOGGER.isTraceEnabled();
    
    protected final PortletURLProvider  urlProvider;
    protected final String              windowId;
@@ -59,7 +59,7 @@ public abstract class PortletParametersImpl implements PortletParameters {
       this.windowId = windowId;
       this.type = type;
       this.params = this.urlProvider.getParameterMap(windowId, type);
-      if (isDebug) {
+      if (isTrace) {
          LOGGER.debug("Created PortletParameters object for window: " + windowId + ", Type: " + type);
       }
    }

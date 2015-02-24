@@ -19,7 +19,9 @@ limitations under the License.
 <%@ page session="false" %>
 <%@ taglib uri="http://java.sun.com/portlet_2_0"  prefix="portlet" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.io.*,java.util.*,javax.portlet.*" %>
 <%@ page import="static basic.portlet.Constants.*" %>
+<%@ page import="static javax.portlet.MimeResponse.ParameterCopyOption.*" %>
 
 <portlet:defineObjects />
 
@@ -40,7 +42,10 @@ Entering 'empty' by itself will set the parameter to an empty array.
 Leaving the value field empty will set the parameter to an array containing a single empty string.
 <p/>
 <p><hr/></p>
-<FORM id='<portlet:namespace/>-setParams' METHOD='POST' ACTION='<portlet:actionURL/>' enctype='application/x-www-form-urlencoded' accept-charset='UTF-8'>
+<%
+   ActionURL aurl = renderResponse.createActionURL(COPY_RENDER_PARAMETERS);
+%>
+<FORM id='<portlet:namespace/>-setParams' METHOD='POST' ACTION='<%=aurl.toString() %>' enctype='application/x-www-form-urlencoded' accept-charset='UTF-8'>
    <table><tr><td align='left'>
 
    To set, use:

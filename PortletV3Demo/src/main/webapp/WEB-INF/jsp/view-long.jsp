@@ -47,16 +47,20 @@ limitations under the License.
    </td></tr></table>
 </FORM>
 <%
+   ArrayList<String> lines = (ArrayList<String>)renderRequest.getAttribute(ATTRIB_LONGLINES);
    String frag = renderRequest.getRenderParameters().getValue(PARAM_FRAG);
    String ln = renderRequest.getRenderParameters().getValue(PARAM_LINE);
    int lineNum = -1;
    if (frag != null && ln != null && frag.length() > 0 && ln.matches("\\d+")) {
       lineNum = Integer.parseInt(ln);
+      if (lineNum > lines.size()) {
+         lineNum = lines.size();
+      }
       RenderURL rurl = renderResponse.createRenderURL(COPY_RENDER_PARAMETERS);
       rurl.setFragmentIdentifier(frag);
       out.print("<p><a href='");
       out.print(rurl.toString());
-      out.println("'>Jump to line " + ln + "</a></p>");
+      out.println("'>Jump to line " + lineNum + "</a></p>");
    }
    String colStyle = "align='left' style='min-width: 25px; padding:0 10px 0 10px;'";
    String markStyle = "align='left' style='color:#00D; min-width: 25px; padding:0 10px 0 10px;'";
@@ -64,7 +68,6 @@ limitations under the License.
 <p><hr/></p>
 <table><tr>
 <%
-   ArrayList<String> lines = (ArrayList<String>)renderRequest.getAttribute(ATTRIB_LONGLINES);
    int i = 0;
    for (String line : lines) {
       String s1 = colStyle;

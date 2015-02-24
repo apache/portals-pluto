@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class ResourceParametersImpl extends PortletParametersImpl implements
       ResourceParameters {
    private static final Logger   LOGGER     = LoggerFactory.getLogger(ResourceParametersImpl.class);
-   private static final boolean  isTrace    = LOGGER.isDebugEnabled();
+   private static final boolean  isTrace    = LOGGER.isTraceEnabled();
 
    // called to force class loading in Container thread
    public static final void load() {

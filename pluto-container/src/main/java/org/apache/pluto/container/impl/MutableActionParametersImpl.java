@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public class MutableActionParametersImpl extends MutablePortletParametersImpl
       implements MutableActionParameters {
    private static final Logger   LOGGER     = LoggerFactory.getLogger(MutableActionParametersImpl.class);
-   private static final boolean  isTrace    = LOGGER.isDebugEnabled();
+   private static final boolean  isTrace    = LOGGER.isTraceEnabled();
 
    // called to force class loading in Container thread
    public static final void load() {

@@ -98,7 +98,7 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
    @Override
    public String getParameter(String name) {
       String val = super.getParameter(name);
-      if (LOG.isDebugEnabled()) {
+      if (LOG.isTraceEnabled()) {
          Map<String, String[]> pmap = super.getParameterMap();
          StringBuffer txt = new StringBuffer(1024);
          txt.append("Resource Request parameter map dump:");

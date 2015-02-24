@@ -181,7 +181,7 @@ public class RelativePortalURLImpl implements PortalURL {
                   int index = prpMapper.getIndex(targetWindow, parm);
                   if (index >= 0) {
                      prpMapper.setValues(index, parms.get(parm));
-                     if (isDebug) {
+                     if (isTrace) {
                         StringBuilder txt = new StringBuilder("Added public parameter: ");
                         txt.append(parm).append(", Values: ")
                            .append(Arrays.toString(parms.get(parm)));
@@ -200,7 +200,7 @@ public class RelativePortalURLImpl implements PortalURL {
                   parameters.remove(pup); // remove the old values
                }
                parameters.add(pup); // add the new values
-               if (isDebug) {
+               if (isTrace) {
                   StringBuilder txt = new StringBuilder("Added private parameter: ");
                   txt.append(parm).append(", Values: ").append(Arrays.toString(parms.get(parm)));
                   txt.append(", Type: ").append(ptype);
@@ -521,7 +521,7 @@ public class RelativePortalURLImpl implements PortalURL {
 
    // used by parser when parsing URL parameter strings
    protected void addParameter(PortalURLParameter param) {
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder(
                "Adding private parameter: ");
          txt.append(" window ID: " + param.getWindowId());
@@ -543,7 +543,7 @@ public class RelativePortalURLImpl implements PortalURL {
 
    public void setParameter(PortalURLParameter param) {
       handleServletRequestParams();
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder(
                "Setting private parameter: ");
          txt.append(" window ID: " + param.getWindowId());
@@ -579,7 +579,7 @@ public class RelativePortalURLImpl implements PortalURL {
 
    public void removeParameter(PortalURLParameter param) {
       handleServletRequestParams();
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder(
                "Removing private render parameter: ");
          txt.append(" window ID: " + param.getWindowId());

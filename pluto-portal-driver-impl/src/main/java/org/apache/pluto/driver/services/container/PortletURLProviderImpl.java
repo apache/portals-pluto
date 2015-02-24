@@ -106,7 +106,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
          LOGGER.debug(txt.toString());
       }
 
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("Before clearing parameters for window: ");
          txt.append(window);
          for (PortalURLParameter p : this.url.getParameters()) {
@@ -187,7 +187,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
          LOGGER.debug(txt.toString());
       }
       
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("URL Parameters for window: ");
          txt.append(window);
          for (PortalURLParameter p : url.getParameters()) {
