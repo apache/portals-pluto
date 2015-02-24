@@ -82,5 +82,9 @@ public class Constants {
    public final static String PARAM_FRAG = "frag";
    public final static String PARAM_LINE = "line";
    public final static String ATTRIB_LONGLINES = "longlines";
+   
+   // For Auth & Status Code portlet
+   
+   public final static String PARAM_STATUSCODE = "statusCode";
 
 }
