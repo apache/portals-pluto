@@ -93,7 +93,7 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
                 }
                 else if ("3.0".equals(version))
                 {
-                    adjustedNamespaceURI = "http://java.sun.com/xml/ns/portlet/portlet-app_3_0.xsd";
+                    adjustedNamespaceURI = "http://xmlns.jcp.org/xml/ns/portlet";
                 }
             }
             return eventCode;

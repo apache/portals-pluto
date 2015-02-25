@@ -117,7 +117,7 @@ public class PortletAppType implements PortletApplicationDefinition
     @XmlElement(name = "container-runtime-option")
     protected List<ContainerRuntimeOptionType> containerRuntimeOption;
     @XmlAttribute(required = true)
-    protected String version = JSR_362_VERSION;
+    protected String version;
     
     @XmlTransient
     protected String name;

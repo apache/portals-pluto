@@ -16,6 +16,6 @@
  * 
  * @version $Id$
  */
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_3_0.xsd", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://xmlns.jcp.org/xml/ns/portlet", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package org.apache.pluto.container.om.portlet30.impl;
 

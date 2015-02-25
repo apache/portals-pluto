@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:portlet="http://java.sun.com/xml/ns/portlet/portlet-app_3_0.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://java.sun.com/xml/ns/portlet/portlet-app_3_0.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0" xml:lang="en">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+        xmlns:portlet="http://xmlns.jcp.org/xml/ns/portlet" 
+        xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://xmlns.jcp.org/xml/ns/portlet" 
+        elementFormDefault="qualified" 
+        attributeFormDefault="unqualified" 
+        version="3.0" 
+        xml:lang="en">
 	<annotation>
 		<documentation>
 		This is the XML Schema for the Portlet 3.0 deployment descriptor.
@@ -27,7 +34,7 @@
 			The portlet-app element is the root of the deployment descriptor
 			for a portlet application. This element has a required attribute version
 			to specify to which version of the schema the deployment descriptor
-			conforms. In order to be a valid JSR 286 portlet application the version
+			conforms. In order to be a valid JSR 362 portlet application the version
 			must have the value "3.0".
 			</documentation>
 		</annotation>

@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --%>
 <%@ page session="false" %>
-<%@ taglib uri="http://java.sun.com/portlet_2_0"  prefix="portlet" %>
+<%@ taglib uri="http://xmlns.jcp.org/portlet_3_0"  prefix="portlet" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.io.*,java.util.*,javax.portlet.*" %>
 <%@ page import="static basic.portlet.Constants.*" %>

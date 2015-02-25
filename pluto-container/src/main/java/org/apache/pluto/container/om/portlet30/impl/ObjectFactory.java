@@ -33,7 +33,7 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory
 {
-    private final static QName _PortletApp_QNAME = new QName("http://java.sun.com/xml/ns/portlet/portlet-app_3_0.xsd",
+    private final static QName _PortletApp_QNAME = new QName("http://xmlns.jcp.org/xml/ns/portlet",
                                                              "portlet-app");
 
     public ObjectFactory()
@@ -45,7 +45,7 @@ public class ObjectFactory
         return new PortletAppType();
     }
 
-    @XmlElementDecl(namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_3_0.xsd", name = "portlet-app")
+    @XmlElementDecl(namespace = "http://xmlns.jcp.org/xml/ns/portlet", name = "portlet-app")
     public JAXBElement<PortletAppType> createPortletApp(PortletAppType value)
     {
         return new JAXBElement<PortletAppType>(_PortletApp_QNAME, PortletAppType.class, null, value);
