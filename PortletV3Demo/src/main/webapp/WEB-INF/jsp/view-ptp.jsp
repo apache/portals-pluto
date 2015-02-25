@@ -31,6 +31,14 @@ limitations under the License.
    
    String remType = renderRequest.getRenderParameters().getValue(PARAM_REMTYPE);
    remType = (remType == null) ? PARAM_REMTYPE_SET : remType;
+   
+   StringBuffer prpStr = new StringBuffer("Public render parameter names: ");
+   String sep = "";
+   for (String n : Collections.list(portletConfig.getPublicRenderParameterNames())) {
+      prpStr.append(sep).append(n);
+      sep = ", ";
+   }
+   
 %>
 
 <h3>V3 Parameter Tester</h3><hr/>
@@ -41,6 +49,7 @@ Entering 'null' as a value will cause the corresponding value in the values arra
 Entering 'empty' by itself will set the parameter to an empty array.
 Leaving the value field empty will set the parameter to an array containing a single empty string.
 <p/>
+<p><%=prpStr.toString() %></p>
 <p><hr/></p>
 <%
    ActionURL aurl = renderResponse.createActionURL(COPY_RENDER_PARAMETERS);

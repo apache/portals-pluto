@@ -45,6 +45,13 @@ limitations under the License.
       acText = "Copy public parameters";
    }
    ActionURL aurl = renderResponse.createActionURL(pco);
+   
+   StringBuffer prpStr = new StringBuffer("Public render parameter names: ");
+   String sep = "";
+   for (String n : Collections.list(portletConfig.getPublicRenderParameterNames())) {
+      prpStr.append(sep).append(n);
+      sep = ", ";
+   }
 %>
 
 <h3>Action URL Parameter clone & set Tester</h3>
@@ -95,6 +102,7 @@ Entering 'null' as a value will cause the corresponding value in the values arra
 Entering 'empty' by itself will set the parameter to an empty array.
 Leaving the value field empty will set the parameter to an array containing a single empty string.
 <p/>
+<p><%=prpStr.toString() %></p>
 <FORM id='<portlet:namespace/>-setParams' METHOD='POST' ACTION='<%=aurl.toString() %>' enctype='application/x-www-form-urlencoded' accept-charset='UTF-8'>
    <table><tr><td align='left'>
    
