@@ -33,7 +33,7 @@ limitations under the License.
    remType = (remType == null) ? PARAM_REMTYPE_SET : remType;
 %>
 
-<h3>Parameter Tester</h3><hr/>
+<h3>V3 Parameter Tester</h3><hr/>
 <p>This portlet uses V3 APIs but does not use the portlet hub.</p>
 <p>Enter parameter name and value and click 'send'.
 To enter multiple values, separate values with a ',' character.

@@ -174,13 +174,13 @@ public class UrlAPTestPortlet extends GenericPortlet {
       
       aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
       mrp = aurl.getRenderParameters().clone();
-      logger.fine("MRP from request # entries: " + mrp.getNames().size());
+      logger.fine("MRP from request # entries: " + mrp.size());
       
       {
          aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clearPrivate();
-         logger.fine("MRP2 afer clearPrivate # entries: " + mrp2.getNames().size());
+         logger.fine("MRP2 afer clearPrivate # entries: " + mrp2.size());
          aurl.getRenderParameters().set(mrp2);
          urls.put(" 7 Clear clone private", aurl.toString());
       }
@@ -189,7 +189,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
          aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clearPublic();
-         logger.fine("MRP2 afer clearPublic # entries: " + mrp2.getNames().size());
+         logger.fine("MRP2 afer clearPublic # entries: " + mrp2.size());
          aurl.getRenderParameters().set(mrp2);
          urls.put(" 8 Clear clone public", aurl.toString());
       }
@@ -198,7 +198,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
          aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clear();
-         logger.fine("MRP2 afer clear # entries: " + mrp2.getNames().size());
+         logger.fine("MRP2 afer clear # entries: " + mrp2.size());
          aurl.getRenderParameters().set(mrp2);
          urls.put(" 9 Clear clone all", aurl.toString());
       }
@@ -208,7 +208,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clear();
          mrp2.setValue(name1, val1);
-         logger.fine("MRP2 afer adding 1: # entries: " + mrp2.getNames().size());
+         logger.fine("MRP2 afer adding 1: # entries: " + mrp2.size());
          aurl.getRenderParameters().add(mrp2);
          urls.put(" A Add thru clone 1", aurl.toString());
       }
@@ -219,7 +219,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
          mrp2.clear();
          mrp2.setValue(name1, val1);
          mrp2.setValue(name2, val2);
-         logger.fine("MRP2 afer adding 2: # entries: " + mrp2.getNames().size());
+         logger.fine("MRP2 afer adding 2: # entries: " + mrp2.size());
          aurl.getRenderParameters().add(mrp2);
          urls.put(" B Add thru clone 2", aurl.toString());
       }
@@ -231,7 +231,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
          mrp2.setValue(name1, val1);
          mrp2.setValue(name2, val2);
          mrp2.setValue(name3, val3);
-         logger.fine("MRP2 afer adding 3: # entries: " + mrp2.getNames().size());
+         logger.fine("MRP2 afer adding 3: # entries: " + mrp2.size());
          aurl.getRenderParameters().add(mrp2);
          urls.put(" C Add thru clone 3", aurl.toString());
       }
@@ -257,13 +257,13 @@ public class UrlAPTestPortlet extends GenericPortlet {
       MutableActionParameters map = aurl.getActionParameters().clone();
       map.setValue(name3, val3);
       map.setValues(name1, new String[]{val1, val2});
-      logger.fine("MAP from request # entries: " + map.getNames().size());
+      logger.fine("MAP from request # entries: " + map.size());
       
       {
          aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
          MutableActionParameters map2 = map.clone();
          map2.clear();
-         logger.fine("MAP2 afer clear # entries: " + map2.getNames().size());
+         logger.fine("MAP2 afer clear # entries: " + map2.size());
          aurl.getActionParameters().set(map2);
          urls.put(" 3 AP Clear clone all", aurl.toString());
       }
@@ -271,7 +271,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
       {
          aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
          MutableActionParameters map2 = map.clone();
-         logger.fine("MAP2 afer adding 2: # entries: " + map2.getNames().size());
+         logger.fine("MAP2 afer adding 2: # entries: " + map2.size());
          aurl.getActionParameters().add(map2);
          urls.put(" 4 AP Add thru clone 2", aurl.toString());
       }
@@ -283,7 +283,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
          map2.setValue(name1, val1);
          map2.setValue(name2, val2);
          map2.setValue(name3, val3);
-         logger.fine("MAP2 after adding 3: # entries: " + map2.getNames().size());
+         logger.fine("MAP2 after adding 3: # entries: " + map2.size());
          aurl.getActionParameters().add(map2);
          urls.put(" 5 AP Add thru clone 3", aurl.toString());
       }

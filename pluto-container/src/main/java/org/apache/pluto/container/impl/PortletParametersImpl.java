@@ -145,6 +145,13 @@ public abstract class PortletParametersImpl implements PortletParameters {
    }
 
    /* (non-Javadoc)
+    * @see javax.portlet.PortletParameters#size()
+    */
+   public int size() {
+      return params.size();
+   }
+
+   /* (non-Javadoc)
     * @see javax.portlet.PortletParameters#mutableClone()
     */
    public MutablePortletParameters clone() {

@@ -217,6 +217,19 @@ public interface PortletParameters
   
   /**
    * <div class="changed_added_3_0">
+   * Returns the number of parameters in this object.
+   * </div> 
+   *
+   * @return  the number of parameters in this object
+   * 
+   * @since    3.0
+   */
+
+  public int size();
+
+  
+  /**
+   * <div class="changed_added_3_0">
    * Returns a <code>MutablePortletParameters</code> object encapsulating a copy of the same
    * parameters as the original object.
    * Changing a mutable copy will not influence the source object. 
