@@ -319,4 +319,10 @@
       <identifier>Farbe</identifier>
       <qname>rp:color</qname>
    </public-render-parameter>
+
+   <listener>
+      <description>Test Listener</description>
+      <listener-class>basic.portlet.URLFilter</listener-class>
+   </listener>
+
  </portlet-app>

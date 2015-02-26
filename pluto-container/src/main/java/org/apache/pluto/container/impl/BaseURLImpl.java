@@ -102,6 +102,7 @@ public abstract class BaseURLImpl implements BaseURL {
    /** 
     * implements the filter mechanism when the URLs are generated.
     */
+   @SuppressWarnings("unchecked")
    private void filterURL() {
       if (filtering) {
          throw new IllegalStateException(
@@ -113,7 +114,7 @@ public abstract class BaseURLImpl implements BaseURL {
                .getContainerServices().getPortletURLListenerService();
          PortletApplicationDefinition portletApp = responseContext
                .getPortletWindow().getPortletDefinition().getApplication();
-         for (PortletURLGenerationListener listener : service
+         for (PortletURLGenerationListener<RenderURL, ActionURL> listener : service
                .getPortletURLGenerationListeners(portletApp)) {
             if (this instanceof ActionURL) {
                listener.filterActionURL((ActionURL)this);

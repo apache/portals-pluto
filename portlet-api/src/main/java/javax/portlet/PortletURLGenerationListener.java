@@ -35,7 +35,8 @@ package javax.portlet;
  *
  * @since 2.0
  */
-public interface PortletURLGenerationListener {
+public interface PortletURLGenerationListener 
+      <T extends PortletURL & RenderURL, U extends PortletURL & ActionURL>{
 
 	/**
 	 * Callback being called by the portlet container
@@ -44,7 +45,7 @@ public interface PortletURLGenerationListener {
 	 * 
 	 * @param actionURL  action URL to be generated
 	 */
-	public void filterActionURL(ActionURL actionURL);
+	public void filterActionURL(U actionURL);
 
 	/**
 	 * Callback being called by the portlet container
@@ -53,7 +54,7 @@ public interface PortletURLGenerationListener {
 	 * 
 	 * @param renderURL  render URL to be generated
 	 */
-	public void filterRenderURL(RenderURL renderURL);
+	public void filterRenderURL(T renderURL);
 	
 	/**
 	 * Callback being called by the portlet container
