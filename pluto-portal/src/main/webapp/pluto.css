@@ -14,8 +14,13 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-body, th, td {
+body {
   background-color: #FFFFFF;
+  font-family: Arial, Helvetica, Sans-serif;
+  font-size: 95%;
+}
+
+th, td {
   font-family: Arial, Helvetica, Sans-serif;
   font-size: 95%;
 }
@@ -81,14 +86,16 @@ a.tooltip:hover span.tooltip {
 }
 
 #logout {
-  float:right;
+/*   float:right; */
   font-size:smaller;
 }
 
 /** 'content' block **/
 
 #content {
-  float: top;
+  float: right;
+  width: 83%;
+  font-size: 9pt;
 }
 
 /** 'portlet' block **/
@@ -98,6 +105,7 @@ a.tooltip:hover span.tooltip {
   padding: 0;
   width: 49%;
   float: left;
+  overflow:hidden;
 }
 
 #portlets-right-column {
@@ -108,7 +116,7 @@ a.tooltip:hover span.tooltip {
 }
 
 .portlet {
-  margin: 0px;
+  margin: 0px 0px 5px 0px;
   padding: 0px;
   border: 1px solid #2E6794;
 }
@@ -127,7 +135,7 @@ a.tooltip:hover span.tooltip {
   margin: 0px;
   padding: 0px;
   font-family: "Trebuchet MS", Trebuchet, Arial, Helvetica, Sans-serif;
-  font-size: 100%;
+  font-size: 10pt;
   float: none;
 }
 
@@ -135,6 +143,11 @@ a.tooltip:hover span.tooltip {
   width: 16px;
   height: 16px;
   float: right;
+}
+
+.portlet .header .title {
+   max-width: 85%;
+   overflow: hidden;
 }
 
 
@@ -219,6 +232,13 @@ input {
 
 /** navigation block **/
 
+#nav {
+   float: left;
+   font-size: 8pt;
+   width: 16%;
+   overflow: hidden;
+}
+
 #navigation .selected, #navigation .selected a {
   /** color: #6D97BF; **/
   color: #FFFFFF;
@@ -227,7 +247,7 @@ input {
 
 #navigation {
     position: relative;
-    float: top;
+/*     float: top; */
     width: 100%;
     padding: 0 0 1.75em 1em;
     margin: 0;
@@ -236,7 +256,7 @@ input {
 }
 
 #navigation LI {
-    float: left;
+/*     float: left; */
     margin: 0;
     padding: 0;
 }
