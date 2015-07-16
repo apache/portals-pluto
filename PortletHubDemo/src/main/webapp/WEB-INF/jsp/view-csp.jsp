@@ -107,7 +107,7 @@ limitations under the License.
       
           // use getValue with default value that is used if the parameter is not set
           newColor = state.p.getValue('<%=PARAM_COLOR%>', '#FFFFFF'),
-          subtype = state.p.getValue('<%=PARAM_SUBTYPE%>', '<%=PARAM_SUBTYPE_URL%>'),
+          subtype = state.p.getValue('<%=PARAM_SUBTYPE%>', '<%=PARAM_SUBTYPE_FORM%>'),
           msg = state.p.getValue('<%=PARAM_MSG_INPUT%>', ''),
           
           fgcolor = state.p.getValues('<%=PARAM_FG_COLOR%>'),

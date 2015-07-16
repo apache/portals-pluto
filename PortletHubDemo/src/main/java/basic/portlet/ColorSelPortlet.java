@@ -23,12 +23,15 @@ import static basic.portlet.Constants.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -73,6 +76,8 @@ public class ColorSelPortlet extends GenericPortlet {
    public void processAction(ActionRequest req, ActionResponse resp)
          throws PortletException, IOException {
             
+      dumpParameters(req);
+      
       String[] vals = req.getParameterValues(PARAM_FG_COLOR);
       String r = "0";
       String g = "0";
@@ -118,6 +123,19 @@ public class ColorSelPortlet extends GenericPortlet {
       sb.append(", Submission type: ").append(subType);
       sb.append(", Text: ").append(text);
       logger.fine(sb.toString());
+   }
+   
+   private void dumpParameters(PortletRequest req) {
+      if (logger.isLoggable(Level.FINEST)) {
+         StringBuilder sb = new StringBuilder();
+         sb.append("Portlet request parameters:");
+         Map<String, String[]> parms = req.getParameterMap();
+         for (String name : parms.keySet()) {
+            sb.append("\nName: ").append(name);
+            sb.append(", Values: ").append(Arrays.toString(parms.get(name)));
+         }
+         logger.finest(sb.toString());
+      }
    }
 
 }
