@@ -53,7 +53,7 @@
    </portlet>
    
    <public-render-parameter>
-      <identifier>publicRenderParameter</identifier>
+      <identifier>publicRenderParameter1</identifier>
       <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">x:publicRenderParameter1</qname>
    </public-render-parameter>
    
