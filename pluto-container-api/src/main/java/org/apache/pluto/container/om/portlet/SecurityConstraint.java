@@ -24,8 +24,8 @@ public interface SecurityConstraint {
     UserDataConstraint getUserDataConstraint();
 
     DisplayName getDisplayName(Locale locale);
-    List<? extends DisplayName> getDisplayNames();
-    DisplayName addDisplayName(String lang);
+    List<DisplayName> getDisplayNames();
+    void addDisplayName(DisplayName dispName);
 	
     List<String> getPortletNames();
     void addPortletName(String portletName);

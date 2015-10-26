@@ -21,12 +21,12 @@ import java.util.Locale;
 
 public interface InitParam {
 
-	String getParamName();
+   String getParamName();
 
-	String getParamValue();
-	void setParamValue(String paramValue);
+   String getParamValue();
+   void setParamValue(String paramValue);
 
-	Description getDescription(Locale locale);
-    List<? extends Description> getDescriptions();
-    Description addDescription(String lang);
+   Description getDescription(Locale locale);
+   List<Description> getDescriptions();
+   void addDescription(Description desc);
 }

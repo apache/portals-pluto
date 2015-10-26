@@ -20,9 +20,6 @@ import javax.xml.namespace.QName;
 
 public interface EventDefinitionReference {
 
-	QName getQName();
-
-	String getName();	
-	
-	QName getQualifiedName(String defaultNamespace);	
+   QName getQualifiedName();	
+	void setQualifiedName(QName qn);	
 }

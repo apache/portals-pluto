@@ -1,0 +1,30 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+   <servlet>
+      <servlet-name>Fred</servlet-name>
+      <servlet-class>high-class</servlet-class>
+   </servlet>
+
+   <locale-encoding-mapping-list>
+      <locale-encoding-mapping>
+         <locale>de_CH_CH</locale>
+         <encoding>UTF-8</encoding>
+      </locale-encoding-mapping>
+      <locale-encoding-mapping>
+         <locale>en_US</locale>
+         <encoding>UTF-8</encoding>
+      </locale-encoding-mapping>
+      <locale-encoding-mapping>
+         <locale>sl-rozaj-biske-1994</locale>
+         <encoding>UTF-8</encoding>
+      </locale-encoding-mapping>
+      <locale-encoding-mapping>
+         <locale>zh-Hans-CN</locale>
+         <encoding>Shift_JIS</encoding>
+      </locale-encoding-mapping>
+   </locale-encoding-mapping-list>
+</web-app>

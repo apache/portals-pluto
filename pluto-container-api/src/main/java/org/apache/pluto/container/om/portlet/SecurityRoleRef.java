@@ -21,12 +21,12 @@ import java.util.Locale;
 
 public interface SecurityRoleRef {
 
-	String getRoleName();
+   String getRoleName();
 
-	String getRoleLink();
-	void setRoleLink(String roleLink);
+   String getRoleLink();
+   void setRoleLink(String roleLink);
 
-	Description getDescription(Locale locale);
-    List<? extends Description> getDescriptions();
-    Description addDescription(String lang);
+   Description getDescription(Locale locale);
+   List<Description> getDescriptions();
+   void addDescription(Description desc);
 }

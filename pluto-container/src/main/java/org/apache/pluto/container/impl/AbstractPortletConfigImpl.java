@@ -135,7 +135,7 @@ public abstract class AbstractPortletConfigImpl implements PortletConfig
 	    ArrayList<QName> qnameList = new ArrayList<QName>();
         for (EventDefinitionReference ref : portlet.getSupportedProcessingEvents())
         {
-            QName name = ref.getQualifiedName(portlet.getApplication().getDefaultNamespace());
+            QName name = ref.getQualifiedName();
             if (name == null)
             {
                 continue;
@@ -149,7 +149,7 @@ public abstract class AbstractPortletConfigImpl implements PortletConfig
         ArrayList<QName> qnameList = new ArrayList<QName>();
         for (EventDefinitionReference ref : portlet.getSupportedPublishingEvents())
         {
-            QName name = ref.getQualifiedName(portlet.getApplication().getDefaultNamespace());
+            QName name = ref.getQualifiedName();
             if (name == null)
             {
                 continue;

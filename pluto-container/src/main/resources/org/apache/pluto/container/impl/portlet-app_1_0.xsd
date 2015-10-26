@@ -189,7 +189,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="mime-typeType">
@@ -202,7 +202,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="nameType">
@@ -213,7 +213,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="portletType">
@@ -232,13 +232,8 @@
 			<element name="expiration-cache" type="portlet:expiration-cacheType" minOccurs="0"/>
 			<element name="supports" type="portlet:supportsType" maxOccurs="unbounded"/>
 			<element name="supported-locale" type="portlet:supported-localeType" minOccurs="0" maxOccurs="unbounded"/>
-			<choice>
-				<sequence>
-					<element name="resource-bundle" type="portlet:resource-bundleType"/>
+			<element name="resource-bundle" type="portlet:resource-bundleType" minOccurs="0"/>
 					<element name="portlet-info" type="portlet:portlet-infoType" minOccurs="0"/>
-   			  	</sequence>
-   				<element name="portlet-info" type="portlet:portlet-infoType"/>
-			</choice>
 			<element name="portlet-preferences" type="portlet:portlet-preferencesType" minOccurs="0"/>
 			<element name="security-role-ref" type="portlet:security-role-refType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
@@ -286,7 +281,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="portlet-nameType">
@@ -299,7 +294,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="portlet-preferencesType">
@@ -368,7 +363,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="role-linkType">
@@ -381,7 +376,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="security-constraintType">
@@ -430,7 +425,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="supportsType">
@@ -456,7 +451,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="titleType">
@@ -467,7 +462,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<simpleType name="transport-guaranteeType">
@@ -536,7 +531,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="window-stateType">
@@ -547,7 +542,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<!--- everything below is copied from j2ee_1_4.xsd -->
@@ -569,7 +564,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string">
+			<extension base="portlet:string">
 				<attribute ref="xml:lang"/>
 			</extension>
 		</simpleContent>
@@ -625,7 +620,7 @@
 			type may be used.
 			</documentation>
 		</annotation>
-		<restriction base="string">
+		<restriction base="xs:token">
 			<whiteSpace value="collapse"/>
 		</restriction>
 	</simpleType>

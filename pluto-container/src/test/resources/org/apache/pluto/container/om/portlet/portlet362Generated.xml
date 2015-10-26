@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app id="id1" version="3.0"
+   xmlns="http://xmlns.jcp.org/xml/ns/portlet" 
+   xmlns:portlet="http://xmlns.jcp.org/xml/ns/portlet" 
+   xmlns:xml="http://www.w3.org/XML/1998/namespace"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/portlet portlet-app_3_0.xsd ">
+
+   <!-- generated test file -->
+
+   <portlet id="id2">
+      <description xml:lang="de">multi 
+      line 
+      description</description>
+      <portlet-name>portlet362</portlet-name>
+      <display-name xml:lang="de">display-name</display-name>
+      <portlet-class>org.apache.pluto.container.om.portlet.impl.fixtures.TestPortlet</portlet-class>
+      <init-param id="init1">
+         <description xml:lang="de">description</description>
+         <name>name</name>
+         <value>value</value>
+      </init-param>
+      <init-param id="init2">
+         <description xml:lang="de">description</description>
+         <name>nullValueParam</name>
+         <value></value>
+      </init-param>
+      <expiration-cache>50</expiration-cache>
+      <cache-scope>private</cache-scope>
+      <supports id="sup1">
+         <mime-type>mime-type</mime-type>
+         <portlet-mode>portlet-mode</portlet-mode>
+         <portlet:window-state>window-state</portlet:window-state>
+      </supports>
+      <supports id="sup2">
+         <mime-type>mime-type2</mime-type>
+         <portlet-mode>portlet-mode2</portlet-mode>
+         <portlet:window-state>window-state2</portlet:window-state>
+      </supports>
+      <supports id="sup3">
+         <mime-type>mime-type3</mime-type>
+         <portlet-mode>portlet-mode3</portlet-mode>
+         <portlet:window-state>window-state3</portlet:window-state>
+      </supports>
+      <supported-locale>supported-locale</supported-locale>
+      <resource-bundle>resource-bundle</resource-bundle>
+      <portlet-info id="info1">
+         <title>title</title>
+         <short-title>short-title</short-title>
+         <keywords>keywords</keywords>
+      </portlet-info>
+      <portlet-preferences id="prefs">
+         <preference id="pref1">
+            <name>name</name>
+            <value>value</value>
+            <read-only>true</read-only>
+         </preference>
+         <preferences-validator>
+            org.apache.pluto.container.om.portlet.impl.fixtures.TestPreferencesValidator
+         </preferences-validator>
+      </portlet-preferences>
+      <security-role-ref id="sec1">
+         <description xml:lang="de">description</description>
+         <role-name>NMTOKEN</role-name>
+         <role-link>role-link</role-link>
+      </security-role-ref>
+      <supported-processing-event>
+         <name>supported-processing-event</name>
+      </supported-processing-event>
+      <supported-publishing-event>
+         <qname xmlns:x="http://test.com">x:supported-publishing-event</qname>
+      </supported-publishing-event>
+      <supported-public-render-parameter>supported-public-render-parameter
+      </supported-public-render-parameter>
+      <container-runtime-option>
+         <name>Runtime-Option1</name>
+         <value>true</value>
+      </container-runtime-option>
+      <container-runtime-option>
+         <name>Runtime-Option2</name>
+         <value>value2</value>
+      </container-runtime-option>
+   </portlet>
+   <custom-portlet-mode id="mode1">
+      <description xml:lang="de">description</description>
+      <portlet-mode>portlet-mode</portlet-mode>
+      <portal-managed>false</portal-managed>
+   </custom-portlet-mode>
+   <custom-window-state id="state1">
+      <description xml:lang="de">description</description>
+      <window-state>window-state</window-state>
+   </custom-window-state>
+   <user-attribute id="att1">
+      <description xml:lang="de">description</description>
+      <name>name</name>
+   </user-attribute>
+   <security-constraint id="cons1">
+      <display-name xml:lang="de">display-name</display-name>
+      <portlet-collection>
+         <portlet-name>portlet362</portlet-name>
+      </portlet-collection>
+      <user-data-constraint id="data1">
+         <description xml:lang="de">description</description>
+         <transport-guarantee>NONE</transport-guarantee>
+      </user-data-constraint>
+   </security-constraint>
+   <resource-bundle>org.apache.portal.ResourceBundle</resource-bundle>
+   <filter>
+      <description xml:lang="de">description</description>
+      <display-name xml:lang="de">display-name</display-name>
+      <filter-name>filter-name</filter-name>
+      <filter-class>org.apache.pluto.container.om.portlet.impl.fixtures.TestFilter</filter-class>
+      <lifecycle>lifecycle</lifecycle>
+      <init-param id="init2">
+         <description xml:lang="de">description</description>
+         <name>name</name>
+         <value>value</value>
+      </init-param>
+   </filter>
+   <filter-mapping>
+      <filter-name>filter-name</filter-name>
+      <portlet-name>portlet362</portlet-name>
+   </filter-mapping>
+   <portlet:default-namespace>https://www.apache.org/</portlet:default-namespace>
+   <event-definition id="event1">
+      <description xml:lang="de">description</description>
+      <name>supported-processing-event</name>
+      <alias>QName</alias>
+      <value-type>org.apache.pluto.container.om.portlet.impl.fixtures.TestEventType</value-type>
+   </event-definition>
+   <event-definition id="event2">
+      <description xml:lang="de">description</description>
+      <qname xmlns:x="http://test.com">x:supported-publishing-event</qname>
+      <alias>QName</alias>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+   <public-render-parameter id="public1">
+      <description xml:lang="de">description</description>
+      <identifier>supported-public-render-parameter</identifier>
+      <qname>QName</qname>
+   </public-render-parameter>
+   <public-render-parameter id="public2">
+      <description xml:lang="de">description2</description>
+      <identifier>identifier2</identifier>
+      <name>Name</name>
+   </public-render-parameter>
+   <listener>
+      <description xml:lang="de">description</description>
+      <display-name xml:lang="de">display-name</display-name>
+      <listener-class>org.apache.pluto.container.om.portlet.impl.fixtures.TestListener</listener-class>
+   </listener>
+   <container-runtime-option>
+      <name>Runtime-Option-Portlet-App</name>
+      <value>false</value>
+   </container-runtime-option>
+</portlet-app>

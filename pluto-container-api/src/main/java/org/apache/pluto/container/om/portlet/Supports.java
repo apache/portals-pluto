@@ -20,11 +20,12 @@ import java.util.List;
 
 public interface Supports {
 
-	String getMimeType();
+   String getMimeType();
+   void setMimeType(String mt);
 
-	List<String> getPortletModes();
-	void addPortletMode(String portletMode);
+   List<String> getPortletModes();
+   void addPortletMode(String portletMode);
 
-	List<String> getWindowStates();
-    void addWindowState(String windowState);
+   List<String> getWindowStates();
+   void addWindowState(String windowState);
 }

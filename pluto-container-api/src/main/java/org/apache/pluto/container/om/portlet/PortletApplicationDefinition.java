@@ -24,68 +24,70 @@ import javax.xml.namespace.QName;
 
 public interface PortletApplicationDefinition {
 
-    String JSR_168_VERSION = "1.0";
-    String JSR_286_VERSION = "2.0";
-    String JSR_362_VERSION = "3.0";
+   String JSR_168_VERSION = "1.0";
+   String JSR_286_VERSION = "2.0";
+   String JSR_362_VERSION = "3.0";
 
-    String getName();
-    void setName(String name);
+   String getName();
+   void setName(String name);
+
+   String getId();
+   void setId(String id);
     
-    String getContextPath();
-    void setContextPath(String contextPath);
+   String getContextPath();
+   void setContextPath(String contextPath);
     
-    PortletDefinition getPortlet(String portletName);
-	List<? extends PortletDefinition> getPortlets();
-	PortletDefinition addPortlet(String name);
-	
-	List<? extends EventDefinition> getEventDefinitions();
-	EventDefinition addEventDefinition(String name);
-    EventDefinition addEventDefinition(QName qname);
+   PortletDefinition getPortlet(String portletName);
+   List<PortletDefinition> getPortlets();
+   void addPortlet(PortletDefinition pd);
+   
+   List<EventDefinition> getEventDefinitions();
+   EventDefinition getEventDefinition(QName qn);
+   void addEventDefinition(EventDefinition ed);
 
-	PublicRenderParameter getPublicRenderParameter(String identifier);
-	List<? extends PublicRenderParameter> getPublicRenderParameters();
-	PublicRenderParameter addPublicRenderParameter(String name, String identifier);
-    PublicRenderParameter addPublicRenderParameter(QName qname, String identifier);
+   PublicRenderParameter getPublicRenderParameter(String identifier);
+   List<PublicRenderParameter> getPublicRenderParameters();
+   void addPublicRenderParameter(PublicRenderParameter prp);
 
-	String getVersion();
-	void setVersion(String version);
+   String getVersion();
+   void setVersion(String version);
 
-	CustomPortletMode getCustomPortletMode(String name);
-	List<? extends CustomPortletMode> getCustomPortletModes();
-	CustomPortletMode addCustomPortletMode(String name);
+   CustomPortletMode getCustomPortletMode(String name);
+   List<CustomPortletMode> getCustomPortletModes();
+   void addCustomPortletMode(CustomPortletMode cpm);
 
-    CustomWindowState getCustomWindowState(String name);
-	List<? extends CustomWindowState> getCustomWindowStates();
-	CustomWindowState addCustomWindowState(String name);
+   CustomWindowState getCustomWindowState(String name);
+   List<CustomWindowState> getCustomWindowStates();
+   void addCustomWindowState(CustomWindowState cws);
 
-	UserAttribute getUserAttribute(String name);
-	List<? extends UserAttribute> getUserAttributes();
-	UserAttribute addUserAttribute(String name);
+   UserAttribute getUserAttribute(String name);
+   List<UserAttribute> getUserAttributes();
+   void addUserAttribute(UserAttribute ua);
 
-	List<? extends SecurityConstraint> getSecurityConstraints();
-	SecurityConstraint addSecurityConstraint(String transportGuarantee);
+   List<SecurityConstraint> getSecurityConstraints();
+   void addSecurityConstraint(SecurityConstraint sc);
 
-	String getResourceBundle();
-	void setResourceBundle(String resourceBundle);
+   String getResourceBundle();
+   void setResourceBundle(String resourceBundle);
 
-	Filter getFilter(String filterName);
-	List<? extends Filter> getFilters();
-	Filter addFilter(String filterName);
+   Filter getFilter(String filterName);
+   List<Filter> getFilters();
+   void addFilter(Filter filter);
 
-	FilterMapping getFilterMapping(String filterName);
-	List<? extends FilterMapping> getFilterMappings();
-	FilterMapping addFilterMapping(String filterName);
+   FilterMapping getFilterMapping(String filterName);
+   List<FilterMapping> getFilterMappings();
+   void addFilterMapping(FilterMapping fm);
 
-	List<? extends Listener> getListeners();
-	Listener addListener(String listenerClass);
+   List<Listener> getListeners();
+   void addListener(Listener listener);
 
-	String getDefaultNamespace();
-	void setDefaultNamespace(String defaultNamespace);
+   String getDefaultNamespace();
+   void setDefaultNamespace(String defaultNamespace);
 
-	ContainerRuntimeOption getContainerRuntimeOption(String name);
-	List<? extends ContainerRuntimeOption> getContainerRuntimeOptions();
-	ContainerRuntimeOption addContainerRuntimeOption(String name);
+   ContainerRuntimeOption getContainerRuntimeOption(String name);
+   List<ContainerRuntimeOption> getContainerRuntimeOptions();
+   void addContainerRuntimeOption(ContainerRuntimeOption cro);
 
-    Map<Locale, String> getLocaleEncodingMappings();
-    void addLocaleEncodingMapping(Locale locale, String encoding);
+   Map<Locale, String> getLocaleEncodingMappings();
+   void addLocaleEncodingMapping(Locale locale, String encoding);
 }

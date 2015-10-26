@@ -21,6 +21,7 @@ import java.util.Locale;
 public interface Description {
 
     String getLang();
+   void setLang(String lang);
     
 	String getDescription();
 	void setDescription(String description);

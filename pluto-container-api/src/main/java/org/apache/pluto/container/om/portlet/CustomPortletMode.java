@@ -27,6 +27,6 @@ public interface CustomPortletMode {
 	void setPortalManaged(boolean portalManaged);
 
 	Description getDescription(Locale locale);
-	List<? extends Description> getDescriptions();
-	Description addDescription(String lang);
+	List<Description> getDescriptions();
+	void addDescription(Description desc);
 }

@@ -24,19 +24,19 @@ public interface Filter {
     String getFilterName();
 
     Description getDescription(Locale locale);
-    List<? extends Description> getDescriptions();
-    Description addDescription(String lang);
+   List<Description> getDescriptions();
+   void addDescription(Description desc);
 
 	DisplayName getDisplayName(Locale locale);
-	List<? extends DisplayName> getDisplayNames();
-	DisplayName addDisplayName(String lang);
+   List<DisplayName> getDisplayNames();
+   void addDisplayName(DisplayName dn);
 
 	String getFilterClass();
 	void setFilterClass(String filterClass);
 
 	InitParam getInitParam(String paramName);
-	List<? extends InitParam> getInitParams();
-	InitParam addInitParam(String paramName);
+   List<InitParam> getInitParams();
+   void addInitParam(InitParam ip);
 
 	List<String> getLifecycles();
 	void addLifecycle(String lifecycle);

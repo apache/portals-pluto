@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet:portlet-app id="" version=""
+   xmlns:portlet="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+   xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd portlet-app_2_0.xsd "
+>
+
+   <!-- generated 2.0 deployment descriptor created by eclipse -->
+
+   <portlet:portlet id="">
+      <portlet:description xml:lang="">description</portlet:description>
+      <portlet:portlet-name>portlet-name</portlet:portlet-name>
+      <portlet:display-name xml:lang="">display-name</portlet:display-name>
+      <portlet:portlet-class>portlet-class</portlet:portlet-class>
+      <portlet:init-param id="">
+         <portlet:description xml:lang="">description</portlet:description>
+         <portlet:name>name</portlet:name>
+         <portlet:value>value</portlet:value>
+      </portlet:init-param>
+      <portlet:expiration-cache>0</portlet:expiration-cache>
+      <portlet:cache-scope>cache-scope</portlet:cache-scope>
+      <portlet:supports id="">
+         <portlet:mime-type>mime-type</portlet:mime-type>
+         <portlet:portlet-mode>portlet-mode</portlet:portlet-mode>
+         <portlet:window-state>window-state</portlet:window-state>
+      </portlet:supports>
+      <portlet:supported-locale>supported-locale</portlet:supported-locale>
+      <portlet:resource-bundle>resource-bundle</portlet:resource-bundle>
+      <portlet:portlet-info id="">
+         <portlet:title>title</portlet:title>
+         <portlet:short-title>short-title</portlet:short-title>
+         <portlet:keywords>keywords</portlet:keywords>
+      </portlet:portlet-info>
+      <portlet:portlet-preferences id="">
+         <portlet:preference id="">
+            <portlet:name>name</portlet:name>
+            <portlet:value>value</portlet:value>
+            <portlet:read-only>false</portlet:read-only>
+         </portlet:preference>
+         <portlet:preferences-validator>preferences-validator</portlet:preferences-validator>
+      </portlet:portlet-preferences>
+      <portlet:security-role-ref id="">
+         <portlet:description xml:lang="">description</portlet:description>
+         <portlet:role-name>NMTOKEN</portlet:role-name>
+         <portlet:role-link>role-link</portlet:role-link>
+      </portlet:security-role-ref>
+      <portlet:supported-processing-event id="">
+         <portlet:qname>QName</portlet:qname>
+      </portlet:supported-processing-event>
+      <portlet:supported-publishing-event id="">
+         <portlet:qname>QName</portlet:qname>
+      </portlet:supported-publishing-event>
+      <portlet:supported-public-render-parameter>supported-public-render-parameter</portlet:supported-public-render-parameter>
+      <portlet:container-runtime-option>
+         <portlet:name>name</portlet:name>
+         <portlet:value>value</portlet:value>
+      </portlet:container-runtime-option>
+   </portlet:portlet>
+   <portlet:custom-portlet-mode id="">
+      <portlet:description xml:lang="">description</portlet:description>
+      <portlet:portlet-mode>portlet-mode</portlet:portlet-mode>
+      <portlet:portal-managed>false</portlet:portal-managed>
+   </portlet:custom-portlet-mode>
+   <portlet:custom-window-state id="">
+      <portlet:description xml:lang="">description</portlet:description>
+      <portlet:window-state>window-state</portlet:window-state>
+   </portlet:custom-window-state>
+   <portlet:user-attribute id="">
+      <portlet:description xml:lang="">description</portlet:description>
+      <portlet:name>name</portlet:name>
+   </portlet:user-attribute>
+   <portlet:security-constraint id="">
+      <portlet:display-name xml:lang="">display-name</portlet:display-name>
+      <portlet:portlet-collection>
+         <portlet:portlet-name>portlet-name</portlet:portlet-name>
+      </portlet:portlet-collection>
+      <portlet:user-data-constraint id="">
+         <portlet:description xml:lang="">description</portlet:description>
+         <portlet:transport-guarantee>CONFIDENTIAL</portlet:transport-guarantee>
+      </portlet:user-data-constraint>
+   </portlet:security-constraint>
+   <portlet:resource-bundle>resource-bundle</portlet:resource-bundle>
+   <portlet:filter>
+      <portlet:description xml:lang="">description</portlet:description>
+      <portlet:display-name xml:lang="">display-name</portlet:display-name>
+      <portlet:filter-name>filter-name</portlet:filter-name>
+      <portlet:filter-class>filter-class</portlet:filter-class>
+      <portlet:lifecycle>lifecycle</portlet:lifecycle>
+      <portlet:init-param id="">
+         <portlet:description xml:lang="">description</portlet:description>
+         <portlet:name>name</portlet:name>
+         <portlet:value>value</portlet:value>
+      </portlet:init-param>
+   </portlet:filter>
+   <portlet:filter-mapping>
+      <portlet:filter-name>filter-name</portlet:filter-name>
+      <portlet:portlet-name>portlet-name</portlet:portlet-name>
+   </portlet:filter-mapping>
+   <portlet:default-namespace>http://tempuri.org</portlet:default-namespace>
+   <portlet:event-definition id="">
+      <portlet:description xml:lang="">description</portlet:description>
+      <portlet:qname>QName</portlet:qname>
+      <portlet:alias>QName</portlet:alias>
+      <portlet:value-type>value-type</portlet:value-type>
+   </portlet:event-definition>
+   <portlet:public-render-parameter id="">
+      <portlet:description xml:lang="">description</portlet:description>
+      <portlet:identifier>identifier</portlet:identifier>
+      <portlet:qname>QName</portlet:qname>
+      <portlet:alias>QName</portlet:alias>
+   </portlet:public-render-parameter>
+   <portlet:listener id="">
+      <portlet:description xml:lang="">description</portlet:description>
+      <portlet:display-name xml:lang="">display-name</portlet:display-name>
+      <portlet:listener-class>listener-class</portlet:listener-class>
+   </portlet:listener>
+   <portlet:container-runtime-option>
+      <portlet:name>name</portlet:name>
+      <portlet:value>value</portlet:value>
+   </portlet:container-runtime-option>
+</portlet:portlet-app>

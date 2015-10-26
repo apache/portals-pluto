@@ -23,14 +23,13 @@ import javax.xml.namespace.QName;
 
 public interface PublicRenderParameter {
 
-    QName getQName();
-    String getName();
-    String getIdentifier();
+   QName getQName();
+   String getIdentifier();
 
-    Description getDescription(Locale locale);
-    List<? extends Description> getDescriptions();
-    Description addDescription(String lang);
+   Description getDescription(Locale locale);
+   List<Description> getDescriptions();
+   void addDescription(Description desc);
 
-	List<QName> getAliases();
-	void addAlias(QName alias);
+   List<QName> getAliases();
+   void addAlias(QName alias);
 }

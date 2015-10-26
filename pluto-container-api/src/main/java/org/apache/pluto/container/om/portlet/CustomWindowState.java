@@ -24,6 +24,6 @@ public interface CustomWindowState {
     String getWindowState();
 
     Description getDescription(Locale locale);
-	List<? extends Description> getDescriptions();
-    Description addDescription(String lang);
+	 List<Description> getDescriptions();
+    void addDescription(Description desc);
 }
