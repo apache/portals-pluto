@@ -22,7 +22,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
     <portlet>
         <portlet-name>WarTestPortletName</portlet-name>
-        <portlet-class>WarTestPortletClass</portlet-class>
+        <portlet-class>org.apache.pluto.util.assemble.WarTestPortletClass</portlet-class>
         <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>

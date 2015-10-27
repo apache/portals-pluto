@@ -85,20 +85,7 @@ public class DriverPortletConfigImpl extends AbstractPortletConfigImpl implement
          PublicRenderParameter prp = prps.get(prpname);
          if (prp != null) {
             QName qn = prp.getQName();
-            if (qn == null) {
-               String name = prp.getName();
-               String ns = portlet.getApplication().getDefaultNamespace();
-               if (name != null && ns != null) {
-                  qn = new QName(ns, name);
-               } else {
-                  LOG.warn("Bad public render parameter name / namespace definition. name="
-                        + name + ", namespace=" + ns);
-               }
-            }
-            
-            if (qn != null) {
-               prpdefs.put(prpname, qn);
-            }
+            prpdefs.put(prpname, qn);
          } else {
             LOG.warn("Could not get public render parameter definition for identifier: " + prpname);
          }

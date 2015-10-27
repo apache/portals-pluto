@@ -123,11 +123,9 @@ public class EventProviderImpl implements EventProvider
         }
         if (events != null)
         {
-            String defaultNamespace = portletWindow.getPortletDefinition().getApplication()
-                                                   .getDefaultNamespace();
             for (EventDefinitionReference ref : events)
             {
-                QName name = ref.getQualifiedName(defaultNamespace);
+                QName name = ref.getQualifiedName();
                 if (name == null)
                 {
                     continue;
@@ -141,31 +139,17 @@ public class EventProviderImpl implements EventProvider
         return false;
     }
 
-    private boolean isValueInstanceOfDefinedClass(QName qname, Serializable value)
-    {
-        PortletApplicationDefinition app = portletWindow.getPortletDefinition().getApplication();
-        List<? extends EventDefinition> events = app.getEventDefinitions();
-        if (events != null)
-        {
-            for (EventDefinition def : events)
-            {
-                if (def.getQName() != null)
-                {
-                    if (def.getQName().equals(qname))
-                    {
-                        return value.getClass().getName().equals(def.getValueType());
-                    }
-                }
-                else
-                {
-                    QName tmp = new QName(app.getDefaultNamespace(), def.getName());
-                    if (tmp.equals(qname))
-                    {
-                        return value.getClass().getName().equals(def.getValueType());
-                    }
-                }
+   private boolean isValueInstanceOfDefinedClass(QName qname, Serializable value) {
+      PortletApplicationDefinition app = portletWindow.getPortletDefinition().getApplication();
+      
+      List<? extends EventDefinition> events = app.getEventDefinitions();
+      if (events != null) {
+         for (EventDefinition def : events) {
+            if (def.getQName().equals(qname)) {
+               return value.getClass().getName().equals(def.getValueType());
             }
-        }
+         }
+      }
         // event not declared
         return true;
     }

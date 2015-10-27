@@ -770,9 +770,9 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
          String warning;
          String pn = portlet.getPortletName().getValue();
          if (!isValidIdentifier(pn)) {
-            warning = "Bad portlet name: " + pn;
+            warning = "Portlet name not valid Java identifier: " + pn;
             LOG.warn(warning);
-            throw new IllegalArgumentException(warning);
+            // throw new IllegalArgumentException(warning);
          }
 
          String clsName = portlet.getPortletClass();

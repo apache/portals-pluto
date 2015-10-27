@@ -560,7 +560,7 @@ public class JSR286ConfigurationProcessor extends ConfigurationProcessor {
 
          // validate data
          if ((item.getName() == null) || (item.getName().getValue() == null)) {
-            String warning = "Bad portlet preference. Ppreference name was null.";
+            String warning = "Bad portlet preference. Preference name was null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
          }
@@ -572,7 +572,10 @@ public class JSR286ConfigurationProcessor extends ConfigurationProcessor {
          for (ValueType vt : vals) {
             lines.add(vt.getValue());
          }
-         boolean isRO = (item.getReadOnly().value().equalsIgnoreCase("true"));
+         boolean isRO = false;      // default if not specified
+         if (item.getReadOnly() != null && item.getReadOnly().value() != null) {
+            isRO = (item.getReadOnly().value().equalsIgnoreCase("true"));
+         }
 
          Preference pref = new PreferenceImpl(name, isRO, lines);
          list.add(pref);
@@ -770,9 +773,9 @@ public class JSR286ConfigurationProcessor extends ConfigurationProcessor {
          String warning;
          String pn = portlet.getPortletName().getValue();
          if (!isValidIdentifier(pn)) {
-            warning = "Bad portlet name: " + pn;
+            warning = "Portlet name not valid Java identifier: " + pn;
             LOG.warn(warning);
-            throw new IllegalArgumentException(warning);
+            //throw new IllegalArgumentException(warning);
          }
 
          String clsName = portlet.getPortletClass();

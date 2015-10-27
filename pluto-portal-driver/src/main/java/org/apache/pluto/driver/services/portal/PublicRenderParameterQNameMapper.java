@@ -90,7 +90,6 @@ public class PublicRenderParameterQNameMapper implements PublicRenderParameterMa
             Collection<String> prpIds = pd.getSupportedPublicRenderParameters();
             if (prpIds != null && prpIds.size() > 0) {
                Collection<? extends PublicRenderParameter> prpDefs = pad.getPublicRenderParameters();
-               String namespace = pad.getDefaultNamespace();
                for (String prpId : prpIds) {
                   Iterator<? extends PublicRenderParameter> i = prpDefs.iterator();
                   QName qn = null;
@@ -98,15 +97,6 @@ public class PublicRenderParameterQNameMapper implements PublicRenderParameterMa
                      PublicRenderParameter prpDef = i.next();
                      if (prpDef.getIdentifier().equals(prpId)) {
                         qn = prpDef.getQName();
-                        if (qn == null) {
-                           // If qname is null, build a qnamme from the name & namespace fields
-                           String name = prpDef.getName();
-                           if (name == null) {
-                              LOGGER.error("Problem with PRP definition: Both QName and Nqme are null.");
-                           } else {
-                              qn = new QName(namespace, name);
-                           }
-                        }
                      }
                   }
                   if (qn == null) {

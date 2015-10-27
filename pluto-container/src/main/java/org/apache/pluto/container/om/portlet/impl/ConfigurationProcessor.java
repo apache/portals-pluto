@@ -116,6 +116,10 @@ public abstract class ConfigurationProcessor {
             txt.append(assignable.getCanonicalName());
             throw new Exception();
          }
+      } catch (ClassNotFoundException e) {
+         LOG.warn(txt.toString() + e.getLocalizedMessage());
+         // can't throw exception if class not found, since the portlet
+         // application definition is used by the assembly mojo
       } catch (Exception e) {
          LOG.warn(txt.toString());
          throw new IllegalArgumentException(txt.toString(), e);
