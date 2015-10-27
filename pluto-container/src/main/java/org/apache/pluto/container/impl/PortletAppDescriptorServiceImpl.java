@@ -44,7 +44,10 @@ import javax.xml.xpath.XPathFactory;
 
 import org.apache.pluto.container.PortletAppDescriptorService;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -56,11 +59,12 @@ import org.xml.sax.SAXException;
  * Service that reads the portlet deployment descriptor.
  */
 
-public class PortletAppDescriptorServiceImpl implements
-      PortletAppDescriptorService {
-
-   private PortletApplicationDefinition pad        = null;
-   private ConfigurationHolder          confHolder = new ConfigurationHolder();
+public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorService {
+   
+   /** Logger. */
+   private static final Logger LOG = LoggerFactory.getLogger(PortletAppDescriptorServiceImpl.class);
+   private static final boolean isDebug = LOG.isDebugEnabled();
+   
 
    public PortletAppDescriptorServiceImpl() {
    }
@@ -76,6 +80,9 @@ public class PortletAppDescriptorServiceImpl implements
       if (in == null) {
          throw new IOException("Cannot read from a null InputStream");
       }
+
+      PortletApplicationDefinition pad        = null;
+      ConfigurationHolder          confHolder = new ConfigurationHolder();
 
       // read the deployment descriptor
       try {
@@ -93,11 +100,25 @@ public class PortletAppDescriptorServiceImpl implements
       return pad;
    }
 
-   public void mergeWebDescriptor(PortletApplicationDefinition pa,
+   public void mergeWebDescriptor(PortletApplicationDefinition pad,
          InputStream webDescriptor) throws Exception {
       
-      confHolder = new ConfigurationHolder(pa);
+      ConfigurationHolder confHolder = new ConfigurationHolder(pad);
       confHolder.processWebDD(webDescriptor);
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Processed web DD for Portlet app: ").append(pad.getName());
+         txt.append(", context path: ").append(pad.getContextPath());
+         txt.append(", # portlets: ").append(pad.getPortlets().size());
+         txt.append(", names: ");
+         String sep = "";
+         for (PortletDefinition pd : pad.getPortlets()) {
+            txt.append(sep).append(pd.getPortletName());
+            sep = ", ";
+         }
+         LOG.debug(txt.toString());
+      }
    }
 
    /**

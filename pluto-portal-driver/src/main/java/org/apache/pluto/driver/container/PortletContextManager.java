@@ -57,6 +57,8 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
      * Logger Instance
      */
     private static final Logger LOG = LoggerFactory.getLogger(PortletContextManager.class);
+    private static final boolean isDebug = LOG.isDebugEnabled();
+   
 
     /**
      * The PortletContext cache map: key is servlet context, and value is the
@@ -117,6 +119,20 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
         if (!portletContexts.containsKey(contextPath)) {
 
             PortletApplicationDefinition portletApp = portletRegistry.getPortletAppDD(servletContext, contextPath, contextPath);
+            
+            if (isDebug) {
+               StringBuilder txt = new StringBuilder(128);
+               txt.append("Parsed DD for Portlet app: ").append(portletApp.getName());
+               txt.append(", context path: ").append(portletApp.getContextPath());
+               txt.append(", # portlets: ").append(portletApp.getPortlets().size());
+               txt.append(", names: ");
+               String sep = "";
+               for (PortletDefinition pd : portletApp.getPortlets()) {
+                  txt.append(sep).append(pd.getPortletName());
+                  sep = ", ";
+               }
+               LOG.debug(txt.toString());
+            }
 
             DriverPortletContext portletContext = new DriverPortletContextImpl(servletContext, portletApp, rdService);
 

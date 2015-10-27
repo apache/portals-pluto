@@ -30,6 +30,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -201,6 +202,19 @@ public class ConfigurationHolder {
       }
 
       pad = jcp.process(jel);
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Parsed DD for Portlet app: ").append(pad.getName());
+         txt.append(", # portlets: ").append(pad.getPortlets().size());
+         txt.append(", names: ");
+         String sep = "";
+         for (PortletDefinition pd : pad.getPortlets()) {
+            txt.append(sep).append(pd.getPortletName());
+            sep = ", ";
+         }
+         LOG.debug(txt.toString());
+      }
 
    }
    
