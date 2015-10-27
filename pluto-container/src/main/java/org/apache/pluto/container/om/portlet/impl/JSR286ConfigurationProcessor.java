@@ -311,7 +311,7 @@ public class JSR286ConfigurationProcessor extends ConfigurationProcessor {
             if (pad.getPortlet(pname) == null) {
                String warning = "Bad FilterMapping definition. Portlet definition not found: " + pname;
                LOG.warn(warning);
-               throw new IllegalArgumentException(warning);
+//               throw new IllegalArgumentException(warning);
             }
             newitem.addPortletName(pname);
          }

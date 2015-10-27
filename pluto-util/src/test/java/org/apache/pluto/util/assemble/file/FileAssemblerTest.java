@@ -32,8 +32,11 @@ import org.custommonkey.xmlunit.XMLUnit;
 public class FileAssemblerTest extends XMLTestCase {
 
     private File webXmlFile;
+    private File web23XmlFile;
     private File portletXmlFile;
+    private File portlet23XmlFile;
     private File assembledWebXmlFile;
+    private File assembledWeb23XmlFile;
 
     protected void setUp() throws Exception {
         XMLUnit.setIgnoreWhitespace(true);
@@ -43,11 +46,20 @@ public class FileAssemblerTest extends XMLTestCase {
         final URL webXmlUrl = this.getClass().getResource("/org/apache/pluto/util/assemble/file/web.xml");
         this.webXmlFile = new File(webXmlUrl.getFile());
 
+        final URL web23XmlUrl = this.getClass().getResource("/org/apache/pluto/util/assemble/file/webServlet23.xml");
+        this.web23XmlFile = new File(web23XmlUrl.getFile());
+
         final URL portletXmlUrl = this.getClass().getResource("/org/apache/pluto/util/assemble/file/portlet.xml");
         this.portletXmlFile = new File(portletXmlUrl.getFile());
 
+        final URL portlet23XmlUrl = this.getClass().getResource("/org/apache/pluto/util/assemble/file/portletWebServlet23.xml");
+        this.portlet23XmlFile = new File(portlet23XmlUrl.getFile());
+
         final URL assembledWebXmlUrl = this.getClass().getResource("/org/apache/pluto/util/assemble/file/assembled.web.xml");
         this.assembledWebXmlFile = new File(assembledWebXmlUrl.getFile());
+
+        final URL assembledWeb23XmlUrl = this.getClass().getResource("/org/apache/pluto/util/assemble/file/assembled.webServlet23.xml");
+        this.assembledWeb23XmlFile = new File(assembledWeb23XmlUrl.getFile());
     }
 
     protected void tearDown() throws Exception {
@@ -69,6 +81,22 @@ public class FileAssemblerTest extends XMLTestCase {
         assembler.assemble(config);
 
         assertXMLEqual(new FileReader(this.assembledWebXmlFile), new FileReader(webXmlFileDest));
+    }
+
+    public void testAssembleWeb23ToNewDirectory() throws Exception {
+        AssemblerConfig config = new AssemblerConfig();
+
+        final File webXmlFileDest = File.createTempFile(this.web23XmlFile.getName() + ".", ".xml");
+        webXmlFileDest.deleteOnExit();
+
+        config.setWebappDescriptor(this.web23XmlFile);
+        config.setPortletDescriptor(this.portlet23XmlFile);
+        config.setDestination(webXmlFileDest);
+
+        FileAssembler assembler = new FileAssembler();
+        assembler.assemble(config);
+
+        assertXMLEqual(new FileReader(this.assembledWeb23XmlFile), new FileReader(webXmlFileDest));
     }
 
     public void testAssembleOverSelf() throws Exception {

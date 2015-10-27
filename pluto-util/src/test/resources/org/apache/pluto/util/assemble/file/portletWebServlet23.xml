@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at 
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<!-- FIXME: schema location points to temp location of portlet spec -->
+<portlet-app
+    xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+    version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd
+                        http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd">
+  
+  <!-- Test Portlet #1 ===================================================== -->
+  
+  <portlet>
+    
+    <description>TestSuiteDescription</description>
+    <portlet-name>TestPortlet1</portlet-name>
+    <display-name>Test Portlet #1</display-name>
+    <portlet-class>org.apache.pluto.testsuite.TestPortlet</portlet-class>
+    
+    <init-param>
+      <name>config</name>
+      <value>/WEB-INF/testsuite-config.xml</value>
+    </init-param>
+    <init-param>
+      <name>dummyName</name>
+      <value>dummyValue</value>
+    </init-param>
+    
+    <expiration-cache>-1</expiration-cache>
+    
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+      <portlet-mode>EDIT</portlet-mode>
+      <portlet-mode>HELP</portlet-mode>
+    </supports>
+    
+    <supported-locale>en</supported-locale>        
+    <supported-locale>de</supported-locale>
+    
+    <portlet-info>
+      <title>Test Portlet #1</title>
+      <short-title>Test #1</short-title>
+      <keywords>Test,Testing</keywords>
+    </portlet-info>
+    
+    <portlet-preferences>
+      <preference>
+        <name>dummyName</name>
+        <value>dummyValue</value>
+        <read-only>false</read-only>
+      </preference>
+      <preference>
+        <name>dummyName2</name>
+        <value>dummyValue2</value>
+      </preference>
+      <preference>
+        <name>readonly</name>
+        <value>readonly</value>
+        <read-only>true</read-only>
+      </preference>
+      <preference>
+        <name>nameWithNoValue</name>
+      </preference>
+      <preferences-validator>org.apache.pluto.testsuite.validator.PreferencesValidatorImpl</preferences-validator>
+    </portlet-preferences>
+    
+    <security-role-ref>
+      <role-name>plutoTestRole</role-name>
+      <role-link>tomcat</role-link>
+    </security-role-ref>
+  
+  </portlet>
+  
+  
+  
+  <!-- Test Portlet #2 ===================================================== -->
+  
+   <portlet>
+    
+    <description>TestSuiteDescription</description>
+    <portlet-name>TestPortlet2</portlet-name>
+    <display-name>Test Portlet #2</display-name>
+    <portlet-class>org.apache.pluto.testsuite.TestPortlet</portlet-class>
+    
+    <init-param>
+      <name>config</name>
+      <value>/WEB-INF/testsuite-2-config.xml</value>
+    </init-param>
+    <init-param>
+      <name>dummyName</name>
+      <value>dummyValue</value>
+    </init-param>
+    
+    <expiration-cache>-1</expiration-cache>
+    
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+      <portlet-mode>EDIT</portlet-mode>
+      <portlet-mode>HELP</portlet-mode>
+    </supports>
+    
+    <supported-locale>en</supported-locale>
+    <supported-locale>de</supported-locale>
+    <resource-bundle>TestPortlet</resource-bundle>
+    
+    <portlet-preferences >
+      <preference>
+        <name>dummyName</name>
+        <value>dummyValue</value>
+        <read-only>false</read-only>
+      </preference>
+      <preference>
+        <name>dummyName2</name>
+        <value>dummyValue2</value>
+      </preference>
+      <preference>
+        <name>readonly</name>
+        <value>readonly</value>
+        <read-only>true</read-only>
+      </preference>
+      <preference>
+        <name>nameWithNoValue</name>
+      </preference>
+      <preferences-validator>org.apache.pluto.testsuite.validator.PreferencesValidatorImpl2</preferences-validator>
+    </portlet-preferences>
+    
+    <security-role-ref>
+      <role-name>plutoTestRole</role-name>
+      <role-link>tomcat</role-link>
+    </security-role-ref>
+    
+  </portlet>
+
+  <!-- JSR 286 Compatibility Test Portlet -->
+  
+  <portlet>
+    
+    <description>JSR 286 Compatibility Tests</description>
+    <portlet-name>286TestPortlet</portlet-name>
+    <display-name>JSR 286 Test Portlet</display-name>
+    <portlet-class>org.apache.pluto.testsuite.TestPortlet</portlet-class>
+    
+    <init-param>
+      <name>config</name>
+      <value>/WEB-INF/testsuite-286-config.xml</value>
+    </init-param>
+    
+    <expiration-cache>-1</expiration-cache>
+    
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+      <portlet-mode>EDIT</portlet-mode>
+      <portlet-mode>HELP</portlet-mode>
+    </supports>
+        
+    <portlet-info>
+      <title>286 Test Portlet</title>
+      <short-title>286 Tests</short-title>
+      <keywords>JSR 286,Tests</keywords>
+    </portlet-info>
+    
+    <supported-processing-event>
+      <name>trigger-event-phase</name>
+    </supported-processing-event>
+
+    <supported-processing-event>
+      <name>event-with-complex-value</name>
+    </supported-processing-event>
+    
+    <supported-processing-event>
+      <name>event-with-simple-value</name>
+    </supported-processing-event>
+    
+    <supported-publishing-event>
+      <name>trigger-event-phase</name>
+    </supported-publishing-event>
+    
+    <supported-publishing-event>
+      <name>event-with-simple-value</name>
+    </supported-publishing-event>
+    
+    <supported-publishing-event>
+      <name>event-with-complex-value</name>
+    </supported-publishing-event>
+
+   <supported-publishing-event>
+      <qname xmlns:pluto="http://portals.apache.org/pluto/altns">event-with-qname</qname>
+   </supported-publishing-event>
+    
+    <supported-public-render-parameter>public-render-param1</supported-public-render-parameter>
+
+  </portlet>
+
+  <portlet>
+    
+    <description>JSR 286 Test Portlet Companion</description>
+    <portlet-name>286TestCompanionPortlet</portlet-name>
+    <portlet-class>
+        org.apache.pluto.testsuite.test.jsr286.TestCompanionPortlet
+    </portlet-class>
+    
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+    </supports>
+    
+    <portlet-info>
+      <title>286 Test Portlet Companion</title>
+      <short-title>286 Test Companion</short-title>
+      <keywords>JSR 286,Tests</keywords>
+    </portlet-info>
+    
+    <supported-processing-event>
+      <name>event-with-simple-value</name>
+    </supported-processing-event>
+    
+    <supported-processing-event>
+      <name>event-with-complex-value</name>
+    </supported-processing-event>
+
+   <supported-processing-event>
+      <qname xmlns:pluto="http://portals.apache.org/pluto/altns">event-with-qname</qname>
+   </supported-processing-event>
+    
+    <supported-public-render-parameter>public-render-param1</supported-public-render-parameter>
+
+  </portlet>
+
+  <filter>
+  
+    <description>
+        This filter should be applied both the JSR 286
+        test portlet as well as its helper portlet.
+    </description>
+    
+    <display-name>Wildcard Mapped Filter</display-name>
+      
+    <filter-name>WildcardMappedFilter</filter-name>
+    <filter-class>org.apache.pluto.testsuite.test.jsr286.filter.WildcardMappedFilter</filter-class>
+    
+    <lifecycle>ACTION_PHASE</lifecycle>
+    <lifecycle>RENDER_PHASE</lifecycle>
+    <lifecycle>EVENT_PHASE</lifecycle>
+    <lifecycle>RESOURCE_PHASE</lifecycle>
+  
+  </filter>
+
+  <filter>
+    
+    <description>
+        This filter implements portlet filter methods for all four
+        lifecycle phases and is used in the various portlet filter tests.
+    </description>
+    
+    <display-name>Test Portlet Filter</display-name>
+    
+    <filter-name>TestFilter</filter-name>
+    <filter-class>org.apache.pluto.testsuite.test.jsr286.filter.TestFilter</filter-class>
+  
+    <lifecycle>ACTION_PHASE</lifecycle>
+    <lifecycle>RENDER_PHASE</lifecycle>
+    <lifecycle>EVENT_PHASE</lifecycle>
+    <lifecycle>RESOURCE_PHASE</lifecycle>
+    
+  </filter>
+
+  <filter-mapping>
+    <filter-name>WildcardMappedFilter</filter-name>
+    <portlet-name>286*</portlet-name>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>TestFilter</filter-name>
+    <portlet-name>286TestPortlet</portlet-name>
+  </filter-mapping>
+
+  <!-- JSR 286 Portlet Coordination Definitions -->
+
+  <default-namespace>http://portals.apache.org/pluto/testsuite</default-namespace>
+  
+  <event-definition>
+   <name>trigger-event-phase</name>
+   <value-type>java.lang.String</value-type>
+  </event-definition>
+
+  <event-definition>
+    <name>event-with-simple-value</name>
+    <value-type>java.lang.String</value-type>
+  </event-definition>
+
+  <event-definition>
+    <name>event-with-complex-value</name>
+    <value-type>org.apache.pluto.testsuite.test.jsr286.event.ComposedObject</value-type>
+  </event-definition>
+  
+  <event-definition>
+   <qname xmlns:pluto="http://portals.apache.org/pluto/altns">event-with-qname</qname>
+   <value-type>java.lang.Integer</value-type>   
+  </event-definition>
+
+  <public-render-parameter>
+   <identifier>public-render-param1</identifier>
+   <qname xmlns:pluto="http://portals.apache.org/pluto/altns">public-render-param1</qname>
+  </public-render-parameter>
+
+</portlet-app>

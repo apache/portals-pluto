@@ -120,7 +120,37 @@ public class ConfigurationHolder {
    public void processPortletDD(InputStream stream)
          throws IOException, IllegalArgumentException, JAXBException, XMLStreamException {
 
-      JAXBContext cntxt = JAXBContext.newInstance(JAXB_CONTEXT);
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Info about classloaders:");
+         ClassLoader mycl = this.getClass().getClassLoader();
+         ClassLoader jaxbcl = JAXBContext.class.getClassLoader();
+         ClassLoader ofcl = org.apache.pluto.container.om.portlet20.impl.ObjectFactory.class.getClassLoader();
+         ClassLoader syscl = null;
+         try {syscl = ClassLoader.getSystemClassLoader();} catch(Exception e) {}
+         txt.append("\nmy classloader: ").append((mycl != null) ? mycl.toString() : "null");
+         txt.append("\njaxb classloader: ").append((jaxbcl != null) ? jaxbcl.toString() : "null");
+         txt.append("\nof classloader: ").append((ofcl != null) ? ofcl.toString() : "null");
+         txt.append("\nsys classloader: ").append((syscl != null) ? syscl.toString() : "null");
+         Class<?> myof = null;
+         Class<?> jaxbof = null;
+         Class<?> ofof = null;
+         Class<?> sysof = null;
+         String clsName = "org.apache.pluto.container.om.portlet20.impl.ObjectFactory";
+         try {myof = mycl.loadClass(clsName);} catch(Exception e) {}
+         try {jaxbof = jaxbcl.loadClass(clsName);} catch(Exception e) {}
+         try {ofof = ofcl.loadClass(clsName);} catch(Exception e) {}
+         try {sysof = syscl.loadClass(clsName);} catch(Exception e) {}
+         txt.append("\nNow attempting to load: ").append(clsName);
+         txt.append("\nMycl loaded: ").append(myof != null);
+         txt.append("\nJaxbofcl loaded: ").append(jaxbof != null);
+         txt.append("\nOfcl loaded: ").append(ofof != null);
+         txt.append("\nSyscl loaded: ").append(sysof != null);
+         LOG.debug(txt.toString());
+      }
+      
+      ClassLoader mycl = this.getClass().getClassLoader();
+      JAXBContext cntxt = JAXBContext.newInstance(JAXB_CONTEXT, mycl);
 
       Unmarshaller um = cntxt.createUnmarshaller();
       XMLInputFactory xif = XMLInputFactory.newFactory();
