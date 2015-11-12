@@ -81,7 +81,7 @@ public abstract class AbstractManagementMojo extends AbstractPlutoMojo {
     /**
      * @parameter expression="${project.remoteArtifactRepositories}"
      */
-    protected List remoteRepositories;
+    protected List<File> remoteRepositories;
 
     /**
      * @parameter expression="${ctx}" default-value="pluto"
@@ -94,28 +94,23 @@ public abstract class AbstractManagementMojo extends AbstractPlutoMojo {
      */
     protected String version;
 
-    /**
-     *  at parameter expression="${portletApps}"
-     */
-    protected Map portletApps = new HashMap();
-
     protected AbstractManagementMojo() {
     	// Do nothing.
     }
 
-    protected List getSharedDependencies() throws ArtifactNotFoundException, ArtifactResolutionException {
+    protected List<File> getSharedDependencies() throws ArtifactNotFoundException, ArtifactResolutionException {
        return getDependencies(InstallationDependency.getSharedDependencies());
     }
 
-    protected List getEndorsedDependencies() throws ArtifactNotFoundException, ArtifactResolutionException {
+    protected List<File> getEndorsedDependencies() throws ArtifactNotFoundException, ArtifactResolutionException {
        return getDependencies(InstallationDependency.getEndorsedDependencies());
     }
 
-    private List getDependencies(Collection artifacts) throws ArtifactNotFoundException, ArtifactResolutionException {
-        List list = new ArrayList();
-        Iterator it = artifacts.iterator();
+    private List<File> getDependencies(Collection<InstallationDependency> artifacts) throws ArtifactNotFoundException, ArtifactResolutionException {
+        List<File> list = new ArrayList<File>();
+        Iterator<InstallationDependency> it = artifacts.iterator();
         while(it.hasNext()) {
-            InstallationDependency dep = (InstallationDependency)it.next();
+            InstallationDependency dep = it.next();
             Artifact artifact = artifactFactory.createArtifactWithClassifier(
                     dep.getGroupId(), dep.getArtifactId(), dep.getVersion(), dep.getType(), null
             );
@@ -164,8 +159,8 @@ public abstract class AbstractManagementMojo extends AbstractPlutoMojo {
         return artifact.getFile();
     }
 
-    private Map getPortletApplications() throws ArtifactNotFoundException, ArtifactResolutionException {
-        Map files = new HashMap();
+    private Map<String, File> getPortletApplications() throws ArtifactNotFoundException, ArtifactResolutionException {
+        Map<String, File> files = new HashMap<String, File>();
         InstallationDependency dep = InstallationDependency.TESTSUITE;
         Artifact artifact = artifactFactory.createBuildArtifact(
                 dep.getGroupId(), dep.getArtifactId(), dep.getVersion(), dep.getType()

@@ -276,6 +276,7 @@ generate mailto links. -->
     <junit.version>4.12</junit.version>
     <jmock.version>1.2.0</jmock.version>
     <xmlunit.version>1.1</xmlunit.version>
+    <cdi.version>2.3.1.Final</cdi.version>
 
     <!-- The following properties are not directly used as maven
 dependencies, they're used by the maven pluto plugin for
@@ -351,6 +352,13 @@ TODO: Check if we need all of them. -->
           </exclusion>
         </exclusions>
       </dependency>
+      
+      <!-- CDI Library -->
+      <dependency>
+          <groupId>org.jboss.weld.servlet</groupId>
+          <artifactId>weld-servlet</artifactId>
+          <version>${}</version>
+      </dependency>      
 
       <!--  CCPP Libraries -->
       <dependency>

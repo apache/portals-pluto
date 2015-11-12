@@ -50,6 +50,18 @@ class InstallationDependency {
         new InstallationDependency("org.apache.portals.pluto", "portlet-api", 
                 VERSION_PROPERTIES.getProperty("portals.portlet-api.version"));
 
+    public static final InstallationDependency CDI_IMPL =
+        new InstallationDependency("org.jboss.weld.servlet", "weld-servlet", 
+                VERSION_PROPERTIES.getProperty("cdi.version"));
+
+    public static final InstallationDependency SLF4J_API =
+        new InstallationDependency("org.slf4j", "slf4j-api", 
+                VERSION_PROPERTIES.getProperty("slf4j.version"));
+
+    public static final InstallationDependency SLF4J_IMPL =
+        new InstallationDependency("org.slf4j", "slf4j-jdk14", 
+                VERSION_PROPERTIES.getProperty("slf4j.version"));
+
     public static final InstallationDependency CONTAINER_API =
         new InstallationDependency("org.apache.portals.pluto", "pluto-container-api", 
                 VERSION_PROPERTIES.getProperty("pluto.version"));
@@ -127,8 +139,8 @@ class InstallationDependency {
  
     
 
-    private static final List ENDORSED = new ArrayList();
-    private static final List SHARED = new ArrayList();
+    private static final List<InstallationDependency> ENDORSED = new ArrayList<InstallationDependency>();
+    private static final List<InstallationDependency> SHARED = new ArrayList<InstallationDependency>();
 
     static {
         SHARED.add(PORTLET_API);
@@ -136,14 +148,17 @@ class InstallationDependency {
         SHARED.add(CONTAINER_DRIVER_API);
         SHARED.add(TAGLIB);
         SHARED.add(CCPP_API);
+        SHARED.add(CDI_IMPL);
+        SHARED.add(SLF4J_API);
+        SHARED.add(SLF4J_IMPL);
     }
 
 
-    public static Collection getEndorsedDependencies() {
+    public static Collection<InstallationDependency> getEndorsedDependencies() {
         return Collections.unmodifiableCollection(ENDORSED);
     }
 
-    public static Collection getSharedDependencies() {
+    public static Collection<InstallationDependency> getSharedDependencies() {
         return Collections.unmodifiableCollection(SHARED);
     }
 
