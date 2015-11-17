@@ -144,6 +144,7 @@ class InstallationDependency {
 
     static {
         SHARED.add(PORTLET_API);
+        SHARED.add(CONTAINER);
         SHARED.add(CONTAINER_API);
         SHARED.add(CONTAINER_DRIVER_API);
         SHARED.add(TAGLIB);

@@ -35,6 +35,7 @@
       <groupId>org.apache.portals.pluto</groupId>
       <artifactId>pluto-container</artifactId>
       <version>${project.version}</version>
+      <scope>provided</scope>
       <exclusions>
         <exclusion>
           <groupId>org.apache.portals.pluto</groupId>

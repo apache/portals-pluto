@@ -43,6 +43,8 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class ConfigurationHolder {
+   
+   public static final String ATTRIB_NAME = "PortletAppConfig";
 
    private PortletApplicationDefinition   pad = null;
    private ConfigurationProcessor         jcp = null;

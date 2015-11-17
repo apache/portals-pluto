@@ -129,6 +129,14 @@
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
     </dependency>
+    
+    <!-- Other Support Libraries =========================================== -->
+    <dependency>
+       <groupId>org.slf4j</groupId>
+       <artifactId>slf4j-api</artifactId>
+       <scope>provided</scope>
+    </dependency>
+
 
     <!-- Testing Libraries ================================================= -->
     <dependency>

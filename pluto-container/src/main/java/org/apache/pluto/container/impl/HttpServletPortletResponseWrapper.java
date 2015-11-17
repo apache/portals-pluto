@@ -27,6 +27,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.ResourceResponse;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -250,6 +251,17 @@ public class HttpServletPortletResponseWrapper extends HttpServletResponseWrappe
 					{
 						outputStream.write(b);
 					}
+
+               @Override
+               public boolean isReady() {
+                  // Servlet 3.1 API. Not implemented.
+                  return true;
+               }
+
+               @Override
+               public void setWriteListener(WriteListener arg0) {
+                  // Servlet 3.1 API. Not implemented.
+               }
         		};
         	}
     	}

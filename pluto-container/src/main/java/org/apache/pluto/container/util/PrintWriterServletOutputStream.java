@@ -21,6 +21,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 
 /**
  * This is a specialized class implementing a ServletOutputStream that works in
@@ -130,4 +131,15 @@ public class PrintWriterServletOutputStream extends ServletOutputStream {
     public void println() throws IOException {
         mPrintWriter.println();
     }
+
+   @Override
+   public boolean isReady() {
+      // Servlet 3.1 API. not implemented; always ready. 
+      return true;
+   }
+
+   @Override
+   public void setWriteListener(WriteListener arg0) {
+      // Servlet 3.1 API. not implemented.
+   }
 }

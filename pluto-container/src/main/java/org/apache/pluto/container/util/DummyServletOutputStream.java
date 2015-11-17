@@ -19,6 +19,7 @@ package org.apache.pluto.container.util;
 import java.io.IOException;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 
 public final class DummyServletOutputStream extends ServletOutputStream{
 
@@ -112,6 +113,15 @@ public final class DummyServletOutputStream extends ServletOutputStream{
 	@Override
 	public void write(byte[] b) throws IOException {
 	}
+
+   @Override
+   public boolean isReady() {
+      return true;
+   }
+
+   @Override
+   public void setWriteListener(WriteListener arg0) {
+   }
 
 	
 }
