@@ -24,9 +24,12 @@
 
 package javax.portlet;
 
+import javax.portlet.MimeResponse.Copy;
+
 
 /**
- * The <CODE>ActionResponse</CODE> interface represents the portlet
+ * <span class="changed_modified_3_0">The</span> 
+ * <CODE>ActionResponse</CODE> interface represents the portlet
  * response to an action request.
  * It extends the <CODE>StateAwareResponse</CODE> interface to provide specific 
  * action response functionality to portlets.<br>
@@ -51,7 +54,7 @@ public interface ActionResponse extends StateAwareResponse
    * the portlet container may encode the given URL before the 
    * redirection is issued to the client.
    * <p>
-   * The sendRedirect method can not be invoked after any of the 
+    * The sendRedirect method cannot be invoked after any of the 
    * following methods of the ActionResponse interface has been called:
    * <ul>
    * <li>setPortletMode</li>
@@ -59,6 +62,7 @@ public interface ActionResponse extends StateAwareResponse
    * <li>setRenderParameter</li>
    * <li>setRenderParameters</li>
    * <li>removePublicRenderParamter</li>
+    * <li>getRenderParameters</li>
    * </ul>
    *
    * @param		location	the redirect location URL
@@ -98,6 +102,7 @@ public interface ActionResponse extends StateAwareResponse
    * <li>setWindowState
    * <li>setRenderParameter
    * <li>setRenderParameters
+    * <li>getRenderParameters</li>
    * </ul>
    * are only used for creating the render URL and not remembered after the redirect
    * is issued. 
@@ -116,6 +121,64 @@ public interface ActionResponse extends StateAwareResponse
 
   public void sendRedirect(String location, String renderUrlParamName)
     throws java.io.IOException; 
+  
+
+   /**
+    * <div class="changed_added_3_0">
+    * Returns a render URL containing render parameters according to the
+    * MimeResponse.Copy argument. The portlet may modify the returned render URL. The
+    * URL is intended to be used in the sendRedirect(String location) method to allow
+    * the portlet to force a redirect to the same page with modified portlet state.    * Creates a render URL targeting the current portlet. 
+    * <p>
+    * The getRedirectURL method cannot be invoked after any of the 
+    * following methods of the ActionResponse interface has been called:
+    * <ul>
+    * <li>setPortletMode</li>
+    * <li>setWindowState</li>
+    * <li>setRenderParameter</li>
+    * <li>setRenderParameters</li>
+    * <li>removePublicRenderParameter</li>
+    * <li>getRenderParameters</li>
+    * </ul>
+    * <p>
+    * 
+    * <p>
+    * The new render URL will contain render parameters from the
+    * current request as specified by the <code>option</code> parameter.
+    * <dl>
+    * <dt>NONE</dt>
+    * <dd>All public and private parameters are removed from the URL.</dd>
+    * <dt>ALL</dt>
+    * <dd>The public and private parameters governing the current 
+    * request are added to the URL.</dd>
+    * <dt>PUBLIC</dt>
+    * <dd>Only public parameters governing the current
+    * request are added to the URL.</dd>
+    * </dl>
+    * The URL can be further extended by adding render
+    * parameters, portlet mode, and window state.
+    * If no additional portlet mode, window
+    * state or security modifier is set on the URL, the values from the
+    * current render or resource request are preserved.
+    * <p>
+    * If a public render parameter value is set or removed on a render URL, then the public 
+    * render parameter will be set to the new value or removed when the URL is activated.
+    * </div>
+    * 
+    * @param option
+    *            Specifies how current parameters are to be copied to the URL
+    *
+    * @see Copy
+    * 
+    * @return a portlet render URL
+    *
+    * @exception java.lang.IllegalStateException
+    *                    if the method is invoked after any of above mentioned methods of 
+    *                    the ActionResponse interface has been called.
+    *     
+    * @since 3.0
+    */
+   public RenderURL getRedirectURL(Copy option)  throws IllegalStateException;
 }
 
 

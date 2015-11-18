@@ -26,7 +26,7 @@ import java.util.Locale;
 import javax.portlet.CacheControl;
 import javax.portlet.MimeResponse;
 
-import static javax.portlet.MimeResponse.ParameterCopyOption.*;
+import static javax.portlet.MimeResponse.Copy.*;
 
 import javax.portlet.RenderURL;
 import javax.portlet.ActionURL;
@@ -75,19 +75,19 @@ public class MimeResponseImpl extends PortletResponseImpl implements
 
    @SuppressWarnings("unchecked")
    public ActionURL createActionURL() {
-      return new ActionURLImpl(responseContext, COPY_PUBLIC_RENDER_PARAMETERS);
+      return new ActionURLImpl(responseContext, PUBLIC);
    }
 
    @SuppressWarnings("unchecked")
    public RenderURL createRenderURL() {
-      return new RenderURLImpl(responseContext, COPY_PUBLIC_RENDER_PARAMETERS);
+      return new RenderURLImpl(responseContext, PUBLIC);
    }
 
-   public ActionURL createActionURL(ParameterCopyOption option) {
+   public ActionURL createActionURL(Copy option) {
       return new ActionURLImpl(responseContext, option);
    }
 
-   public RenderURL createRenderURL(ParameterCopyOption option) {
+   public RenderURL createRenderURL(Copy option) {
       return new RenderURLImpl(responseContext, option);
    }
 

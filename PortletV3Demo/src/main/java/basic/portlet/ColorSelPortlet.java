@@ -63,6 +63,7 @@ public class ColorSelPortlet extends GenericPortlet {
          throws PortletException, IOException {
    }
 
+   @SuppressWarnings("deprecation")
    public void processAction(ActionRequest req, ActionResponse resp)
          throws PortletException, IOException {
             

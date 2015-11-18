@@ -18,10 +18,21 @@
 
 package basic.portlet;
 
-import static basic.portlet.Constants.*;
+import static basic.portlet.Constants.ATTRIB_PARAMS;
+import static basic.portlet.Constants.ATTRIB_RENURLS;
+import static basic.portlet.Constants.PARAM_AURLCOPY;
+import static basic.portlet.Constants.PARAM_AURLCOPY_ALL;
+import static basic.portlet.Constants.PARAM_NAME;
+import static basic.portlet.Constants.PARAM_REMTYPE;
+import static basic.portlet.Constants.PARAM_REMTYPE_REM;
+import static basic.portlet.Constants.PARAM_REMTYPE_SET;
+import static basic.portlet.Constants.PARAM_SETTYPE;
+import static basic.portlet.Constants.PARAM_SETTYPE_VARRAY;
+import static basic.portlet.Constants.PARAM_VALUES;
+import static javax.portlet.MimeResponse.Copy.ALL;
+import static javax.portlet.MimeResponse.Copy.NONE;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -35,9 +46,6 @@ import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
-
-import static javax.portlet.MimeResponse.ParameterCopyOption.*;
-
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
@@ -45,11 +53,8 @@ import javax.portlet.RenderParameters;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
-import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.portlet.ResourceURL;
-import static javax.portlet.ResourceURL.*;
 
 
 /**
@@ -151,36 +156,36 @@ public class UrlRPTestPortlet extends GenericPortlet {
       TreeMap<String, String> urls = new TreeMap<String, String>();
       MutableRenderParameters mrp = req.getRenderParameters().clone();
       
-      RenderURL rurl = resp.createRenderURL(COPY_NO_PARAMETERS);
+      RenderURL rurl = resp.createRenderURL(NONE);
       urls.put(" 1 No render parameters", rurl.toString());
 
-      rurl = resp.createRenderURL(COPY_NO_PARAMETERS);
+      rurl = resp.createRenderURL(NONE);
       rurl.getRenderParameters().set(mrp);
       urls.put(" 2 Copy with req clone", rurl.toString());
 
-      rurl = resp.createRenderURL(COPY_NO_PARAMETERS);
+      rurl = resp.createRenderURL(NONE);
       mrp.setValue(name1, val1);
       rurl.getRenderParameters().set(mrp);
       urls.put(" 3 Copy with req clone, 1 addl", rurl.toString());
       
-      rurl = resp.createRenderURL(COPY_RENDER_PARAMETERS);
+      rurl = resp.createRenderURL(ALL);
       rurl.getRenderParameters().clearPrivate();
       urls.put(" 4 Clear private", rurl.toString());
       
-      rurl = resp.createRenderURL(COPY_RENDER_PARAMETERS);
+      rurl = resp.createRenderURL(ALL);
       rurl.getRenderParameters().clearPublic();;
       urls.put(" 5 Clear public", rurl.toString());
       
-      rurl = resp.createRenderURL(COPY_RENDER_PARAMETERS);
+      rurl = resp.createRenderURL(ALL);
       rurl.getRenderParameters().clear();
       urls.put(" 6 Clear all", rurl.toString());
       
-      rurl = resp.createRenderURL(COPY_RENDER_PARAMETERS);
+      rurl = resp.createRenderURL(ALL);
       mrp = rurl.getRenderParameters().clone();
       logger.fine("MRP from request # entries: " + mrp.getNames().size());
       
       {
-         rurl = resp.createRenderURL(COPY_RENDER_PARAMETERS);
+         rurl = resp.createRenderURL(ALL);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clearPrivate();
          logger.fine("MRP2 afer clearPrivate # entries: " + mrp2.getNames().size());
@@ -189,7 +194,7 @@ public class UrlRPTestPortlet extends GenericPortlet {
       }
       
       {
-         rurl = resp.createRenderURL(COPY_RENDER_PARAMETERS);
+         rurl = resp.createRenderURL(ALL);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clearPublic();
          logger.fine("MRP2 afer clearPublic # entries: " + mrp2.getNames().size());
@@ -198,7 +203,7 @@ public class UrlRPTestPortlet extends GenericPortlet {
       }
       
       {
-         rurl = resp.createRenderURL(COPY_RENDER_PARAMETERS);
+         rurl = resp.createRenderURL(ALL);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clear();
          logger.fine("MRP2 afer clear # entries: " + mrp2.getNames().size());
@@ -207,7 +212,7 @@ public class UrlRPTestPortlet extends GenericPortlet {
       }
       
       {
-         rurl = resp.createRenderURL(COPY_RENDER_PARAMETERS);
+         rurl = resp.createRenderURL(ALL);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clear();
          mrp2.setValue(name1, val1);
@@ -217,7 +222,7 @@ public class UrlRPTestPortlet extends GenericPortlet {
       }
       
       {
-         rurl = resp.createRenderURL(COPY_RENDER_PARAMETERS);
+         rurl = resp.createRenderURL(ALL);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clear();
          mrp2.setValue(name1, val1);
@@ -228,7 +233,7 @@ public class UrlRPTestPortlet extends GenericPortlet {
       }
       
       {
-         rurl = resp.createRenderURL(COPY_RENDER_PARAMETERS);
+         rurl = resp.createRenderURL(ALL);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clear();
          mrp2.setValue(name1, val1);

@@ -24,17 +24,8 @@
 
 package javax.portlet.filter;
 
-import java.util.Map;
-
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
-import javax.portlet.MutablePortletParameters;
-import javax.portlet.MutableRenderParameters;
-import javax.portlet.PortletMode;
-import javax.portlet.PortletModeException;
-import javax.portlet.WindowState;
-import javax.portlet.WindowStateException;
-import javax.xml.namespace.QName;
 
 /**
  * <span class="changed_modified_3_0">The</span> 
@@ -48,157 +39,51 @@ import javax.xml.namespace.QName;
  * @see EventResponse
  */
 
-public class EventResponseWrapper extends PortletResponseWrapper implements EventResponse {
+public class EventResponseWrapper extends StateAwareResponseWrapper implements EventResponse {
 
-    EventResponse response;
-     
-     /**
-      * Creates an <code>EventResponse</code> adaptor 
-      * wrapping the given response object.
-      * 
-      * @param response  the event response to wrap
-      * @throws java.lang.IllegalArgumentException if the response is <code>null</code>
-      */
-     public EventResponseWrapper(EventResponse response) {
-    	 super(response);
-         this.response = response;
-     }
-
-     /**
-      * The default behavior of this method is to call 
-      * <code>setEvent(name, value)</code> on the wrapped response object.
-      */
-     public void setEvent(QName name, java.io.Serializable value) {
-         response.setEvent(name, value);
-     }
-
-     /**
-      * The default behavior of this method is to call 
-      * <code>setPortletMode(portletMode)</code> on the wrapped response object.
-      */
-     public void setPortletMode(PortletMode portletMode)
-             throws PortletModeException {
-         response.setPortletMode(portletMode);
-     }
-
-     /**
-      * The default behavior of this method is to call 
-      * <code>setRenderParameter(key, value)</code> on the wrapped response object.
-      */
-     @Deprecated
-     public void setRenderParameter(String key, String value) {
-         response.setRenderParameter(key, value);
-     }
-
-     /**
-      * The default behavior of this method is to call 
-      * <code>setRenderParameter(key, value)</code> on the wrapped response object.
-      */
-     
-     @Deprecated
-     public void setRenderParameter(String key, String ... values) {
-         response.setRenderParameter(key, values);
-     }
-
-     /**
-      * The default behavior of this method is to call 
-      * <code>setRenderParameters(parameters)</code> on the wrapped response object.
-      */
-     @Deprecated
-     public void setRenderParameters(Map<String, String[]> parameters) {
-         response.setRenderParameters(parameters);
-     }
-
-     /**
-      * The default behavior of this method is to call 
-      * <code>setWindowState(windowState)</code> on the wrapped response object.
-      */
-     public void setWindowState(WindowState windowState)
-             throws WindowStateException {
-         response.setWindowState(windowState);
-     }
-
-     /**
-      * Return the wrapped response object.
-      * 
-      * @return the wrapped response
-      */
-     public EventResponse getResponse() {
-         return response;
-     }
-
-     /**
-      * Sets the response object being wrapped.
-      * 
-      * @param response the response to set
-      * @throws java.lang.IllegalArgumentException   if the response is null.
-      */
-     public void setResponse(EventResponse response) {
-	    	if ( response == null)
-	    		throw new java.lang.IllegalArgumentException("Response is null");
-
-	    	this.response = response;
-     }
-
-     /**
-      * The default behavior of this method is to call 
-      * <code>getPortletMode()</code> on the wrapped response object.
-      */
-     public PortletMode getPortletMode() {
-         return response.getPortletMode();
-     }
-
-     /**
-      * The default behavior of this method is to call 
-      * <code>getRenderParameterMap()</code> on the wrapped response object.
-      */
-     @Deprecated
-     public Map<String, String[]> getRenderParameterMap() {
-         return response.getRenderParameterMap();
-     }
-
-     /**
-      * The default behavior of this method is to call 
-      * <code>getWindowState()</code> on the wrapped response object.
-      */
-     public WindowState getWindowState() {
-         return response.getWindowState();
-     }
-
-     /**
-      *  The default behavior of this method is to call 
-      * <code>setRenderParameters()</code> on the wrapped response object.
-      */
-     @Deprecated
-     public void setRenderParameters(EventRequest request) {
-         response.setRenderParameters(request);         
-     }
-
-     /**
-      *  The default behavior of this method is to call 
-      * <code>setEvent()</code> on the wrapped response object.
-      */
- 	public void setEvent(String name, java.io.Serializable value) {
- 		response.setEvent(name, value);
- 	}
- 	
-    /**
-     *  The default behavior of this method is to call 
-     * <code>removePublicRenderParameter()</code> on the wrapped response object.
-     */
- 	@Deprecated
-	public void removePublicRenderParameter(String name) {
-		response.removePublicRenderParameter(name);		
-	}
+   EventResponse response;
 
    /**
-    * <div class="changed_added_3_0">
-    *  The default behavior of this method is to call 
-    * <code>getRenderParameter()</code> on the wrapped response object.
-    * </div>
+    * Creates an <code>EventResponse</code> adaptor 
+    * wrapping the given response object.
+    * 
+    * @param response  the event response to wrap
+    * @throws java.lang.IllegalArgumentException if the response is <code>null</code>
     */
-   public MutableRenderParameters getRenderParameters() {
-      return response.getRenderParameters();
+   public EventResponseWrapper(EventResponse response) {
+      super(response);
+      this.response = response;
    }
 
+   /**
+    * Return the wrapped response object.
+    * 
+    * @return the wrapped response
+    */
+   public EventResponse getResponse() {
+      return response;
+   }
+
+   /**
+    * Sets the response object being wrapped.
+    * 
+    * @param response the response to set
+    * @throws java.lang.IllegalArgumentException   if the response is null.
+    */
+   public void setResponse(EventResponse response) {
+      if ( response == null) {
+         throw new java.lang.IllegalArgumentException("Response is null");
+      }
+      super.setResponse(response);
+      this.response = response;
+   }
+
+   /**
+    *  The default behavior of this method is to call 
+    * <code>setRenderParameters()</code> on the wrapped response object.
+    */
+   @Deprecated
+   public void setRenderParameters(EventRequest request) {
+      response.setRenderParameters(request);         
+   }
 }

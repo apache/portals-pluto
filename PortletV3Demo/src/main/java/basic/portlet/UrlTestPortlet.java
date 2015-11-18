@@ -36,7 +36,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
 
-import static javax.portlet.MimeResponse.ParameterCopyOption.*;
+import static javax.portlet.MimeResponse.Copy.*;
 
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletException;
@@ -144,26 +144,26 @@ public class UrlTestPortlet extends GenericPortlet {
       
       TreeMap<String, String> urls = new TreeMap<String, String>();
       
-      RenderURL rurl = resp.createRenderURL(COPY_NO_PARAMETERS);
+      RenderURL rurl = resp.createRenderURL(NONE);
       urls.put(" 1 Copy no params, 0 new", rurl.toString());
 
-      rurl = resp.createRenderURL(COPY_PUBLIC_RENDER_PARAMETERS);
+      rurl = resp.createRenderURL(PUBLIC);
       urls.put(" 2 Copy public params, 0 new", rurl.toString());
       
-      rurl = resp.createRenderURL(COPY_RENDER_PARAMETERS);
+      rurl = resp.createRenderURL(ALL);
       urls.put(" 3 Copy all params, 0 new", rurl.toString());
       
-      rurl = resp.createRenderURL(COPY_NO_PARAMETERS);
+      rurl = resp.createRenderURL(NONE);
       rurl.getRenderParameters().setValue(name1, val1);
       rurl.getRenderParameters().setValue(name2, val2);
       urls.put(" 4 Copy no params, 2 new", rurl.toString());
 
-      rurl = resp.createRenderURL(COPY_PUBLIC_RENDER_PARAMETERS);
+      rurl = resp.createRenderURL(PUBLIC);
       rurl.getRenderParameters().setValue(name1, val1);
       rurl.getRenderParameters().setValue(name2, val2);
       urls.put(" 5 Copy public params, 2 new", rurl.toString());
       
-      rurl = resp.createRenderURL(COPY_RENDER_PARAMETERS);
+      rurl = resp.createRenderURL(ALL);
       rurl.getRenderParameters().setValue(name1, val1);
       rurl.getRenderParameters().setValue(name2, val2);
       urls.put(" 6 Copy all params, 2 new", rurl.toString());

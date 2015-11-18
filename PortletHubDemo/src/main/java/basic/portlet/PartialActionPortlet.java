@@ -35,6 +35,9 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
+
+import static javax.portlet.ResourceRequest.*;
+
 import javax.portlet.ResourceResponse;
 
 /**
@@ -61,6 +64,7 @@ public class PartialActionPortlet extends GenericPortlet {
 
    }
 
+   @SuppressWarnings("deprecation")
    @Override
    public void processAction(ActionRequest req, ActionResponse resp)
          throws PortletException, IOException {
@@ -89,6 +93,7 @@ public class PartialActionPortlet extends GenericPortlet {
    /* (non-Javadoc)
     * @see javax.portlet.GenericPortlet#serveResource(javax.portlet.ResourceRequest, javax.portlet.ResourceResponse)
     */
+   @SuppressWarnings("deprecation")
    @Override
    public void serveResource(ResourceRequest req, ResourceResponse resp)
          throws PortletException, IOException {
@@ -99,7 +104,7 @@ public class PartialActionPortlet extends GenericPortlet {
       String num = req.getParameter(PARAM_NUM_ACTIONS);
       num = (num == null) ? "error" : num;
       
-      String pageState = req.getPageState();
+      String pageState = (String) req.getAttribute(PAGE_STATE);
       
       writer.write("<p>Partial Action has been executed " + num + " times.</p>\n");
       writer.write(";#delimiter#;");

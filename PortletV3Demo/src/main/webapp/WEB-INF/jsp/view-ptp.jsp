@@ -21,7 +21,7 @@ limitations under the License.
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.io.*,java.util.*,javax.portlet.*" %>
 <%@ page import="static basic.portlet.Constants.*" %>
-<%@ page import="static javax.portlet.MimeResponse.ParameterCopyOption.*" %>
+<%@ page import="static javax.portlet.MimeResponse.Copy.*" %>
 
 <portlet:defineObjects />
 
@@ -52,7 +52,7 @@ Leaving the value field empty will set the parameter to an array containing a si
 <p><%=prpStr.toString() %></p>
 <p><hr/></p>
 <%
-   ActionURL aurl = renderResponse.createActionURL(COPY_RENDER_PARAMETERS);
+   ActionURL aurl = renderResponse.createActionURL(ALL);
 %>
 <FORM id='<portlet:namespace/>-setParams' METHOD='POST' ACTION='<%=aurl.toString() %>' enctype='application/x-www-form-urlencoded' accept-charset='UTF-8'>
    <table><tr><td align='left'>

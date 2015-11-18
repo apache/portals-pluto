@@ -21,13 +21,14 @@ import java.util.Enumeration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.portlet.MimeResponse.ParameterCopyOption;
+import javax.portlet.MimeResponse.Copy;
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+import javax.portlet.annotations.PortletSerializable;
 
 import org.apache.pluto.container.PortletMimeResponseContext;
 import org.apache.pluto.container.PortletResponseContext;
@@ -36,6 +37,7 @@ import org.apache.pluto.container.om.portlet.CustomPortletMode;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.Supports;
 import org.apache.pluto.container.util.ArgumentUtility;
+
 
 /**
  * Refactoring to implement class hierarchy among various URL types
@@ -61,7 +63,7 @@ public abstract class PortletURLImpl extends BaseURLImpl implements PortletURL {
    }
 
    public PortletURLImpl(PortletMimeResponseContext responseContext,
-         PortletURLProvider portletURLProvider, ParameterCopyOption copy) {
+         PortletURLProvider portletURLProvider, Copy copy) {
       super(responseContext, portletURLProvider, copy);
    }
 
@@ -146,4 +148,32 @@ public abstract class PortletURLImpl extends BaseURLImpl implements PortletURL {
    public MutableRenderParameters getRenderParameters() {
       return new MutableRenderParametersImpl(urlProvider, windowId);
    }
+   
+   @SuppressWarnings("unused")
+   @Override
+   public void setBeanParameter(PortletSerializable bean) {
+      if (bean == null) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Required parameter is null.");
+         txt.append(", bean: ").append(bean);
+         LOGGER.info(txt.toString());
+         throw new IllegalArgumentException(txt.toString());
+      }
+      
+      // TODO: must be fixed when the bean implementation is integrated!!
+      String name = "Bob";
+      //String name = PortletStateScopedBeanHolder.getParameterName(bean.getClass());
+      
+      if (name == null) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Given bean is not @PortletStateScoped.");
+         txt.append(", bean: ").append(bean);
+         LOGGER.info(txt.toString());
+         throw new IllegalArgumentException(txt.toString());
+      }
+      
+      getRenderParameters().setValues(name, bean.serialize());
+      
+   }
+
 }

@@ -20,8 +20,8 @@ limitations under the License.
 <%@ taglib uri="http://xmlns.jcp.org/portlet_3_0"  prefix="portlet" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.io.*,java.util.*,javax.portlet.*" %>
-<%@ page import="javax.portlet.MimeResponse.ParameterCopyOption" %>
-<%@ page import="static javax.portlet.MimeResponse.ParameterCopyOption.*" %>
+<%@ page import="javax.portlet.MimeResponse.Copy" %>
+<%@ page import="static javax.portlet.MimeResponse.Copy.*" %>
 <%@ page import="static basic.portlet.Constants.*" %>
 
 <portlet:defineObjects />
@@ -35,13 +35,13 @@ limitations under the License.
 
    String aurlCopy = renderRequest.getRenderParameters().getValue(PARAM_AURLCOPY);
    aurlCopy = (aurlCopy == null) ? PARAM_AURLCOPY_ALL : aurlCopy;
-   ParameterCopyOption pco = COPY_NO_PARAMETERS;
+   Copy pco = NONE;
    String acText = "Copy no parameters";
    if (aurlCopy.equals(PARAM_AURLCOPY_ALL)) {
-      pco = COPY_RENDER_PARAMETERS;
+      pco = ALL;
       acText = "Copy render parameters";
    } else if (aurlCopy.equals(PARAM_AURLCOPY_PUBLIC)) {
-      pco = COPY_PUBLIC_RENDER_PARAMETERS;
+      pco = PUBLIC;
       acText = "Copy public parameters";
    }
    ActionURL aurl = renderResponse.createActionURL(pco);

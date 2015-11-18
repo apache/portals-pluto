@@ -47,6 +47,7 @@ public interface RenderResponse extends MimeResponse {
      * @param title
      *            portlet title as text String or resource URI
      */
+   @Deprecated
     public void setTitle(String title);
    
     

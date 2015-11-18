@@ -62,6 +62,7 @@ public class MessageBoxPortlet extends GenericPortlet {
 
    }
 
+   @SuppressWarnings("deprecation")
    @Override
    public void processAction(ActionRequest req, ActionResponse resp)
          throws PortletException, IOException {
@@ -83,7 +84,7 @@ public class MessageBoxPortlet extends GenericPortlet {
       req.getPortletSession().setAttribute(ATTRIB_MSGS, msgs);
    }
    
-   @SuppressWarnings("unchecked")
+   @SuppressWarnings({ "unchecked", "deprecation" })
    @Override
    public void processEvent(EventRequest req, EventResponse resp) 
          throws PortletException ,IOException {

@@ -18,16 +18,11 @@
 
 package basic.portlet;
 
-import static basic.portlet.Constants.*;
+import static basic.portlet.Constants.ATTRIB_LONGLINES;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,15 +30,9 @@ import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
-
-import static javax.portlet.MimeResponse.ParameterCopyOption.*;
-
-import javax.portlet.ActionURL;
-import javax.portlet.MutableActionParameters;
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.RenderParameters;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;

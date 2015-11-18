@@ -24,14 +24,8 @@
 
 package javax.portlet.filter;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-
 import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
-import javax.portlet.PortletParameters;
 
 /**
  * <span class="changed_modified_3_0">The</span> 
@@ -44,110 +38,51 @@ import javax.portlet.PortletParameters;
  * @since 2.0
  * @see ActionRequest
  */
-public class ActionRequestWrapper extends PortletRequestWrapper implements ActionRequest {
+public class ActionRequestWrapper extends ClientDataRequestWrapper implements ActionRequest {
 
-    ActionRequest request;
-    
-    /**
-     * Creates an <code>ActionRequest</code> adaptor 
-     * wrapping the given request object.
-     * 
-     * @param request  the action request to wrap
-     * @throws java.lang.IllegalArgumentException if the request is <code>null</code>
-     */
-    public ActionRequestWrapper(ActionRequest request) {
-        super(request);
-        this.request = request;
-    }
+   ActionRequest request;
 
-    /**
-     * The default behavior of this method is to call 
-     * <code>getCharacterEncoding()</code> on the wrapped request object.
-     */
-    public String getCharacterEncoding() {      
-        return request.getCharacterEncoding();
-    }
+   /**
+    * Creates an <code>ActionRequest</code> adaptor 
+    * wrapping the given request object.
+    * 
+    * @param request  the action request to wrap
+    * @throws java.lang.IllegalArgumentException if the request is <code>null</code>
+    */
+   public ActionRequestWrapper(ActionRequest request) {
+      super(request);
+      this.request = request;
+   }
 
-    /**
-     * The default behavior of this method is to call 
-     * <code>getContentLength()</code> on the wrapped request object.
-     */
-    public int getContentLength() {
-        return request.getContentLength();
-    }
+   /**
+    * Return the wrapped request object.
+    * 
+    * @return the wrapped request
+    */
+   public ActionRequest getRequest() {
+      return request;
+   }
 
-    /**
-     * The default behavior of this method is to call 
-     * <code>getContentType()</code> on the wrapped request object.
-     */
-    public String getContentType() {
-        return request.getContentType();
-    }
+   /**
+    * Sets the request object being wrapped.
+    * 
+    * @param request the request to set
+    * @throws java.lang.IllegalArgumentException   if the request is null.
+    */
+   public void setRequest(ActionRequest request) {
+      if ( request == null) {
+         throw new java.lang.IllegalArgumentException("Request is null");
+      }
+      super.setRequest(request);
+      this.request = request;
+   }
 
-    /**
-     * The default behavior of this method is to call 
-     * <code>getPortletInputStream()</code> on the wrapped request object.
-     */
-    public InputStream getPortletInputStream() throws IOException {
-        return request.getPortletInputStream();
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>getReader()</code> on the wrapped request object.
-     */
-    public BufferedReader getReader() throws UnsupportedEncodingException,
-            IOException {
-        return request.getReader();
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>setCharacterEncoding(String enc)</code> 
-     * on the wrapped request object.
-     */
-    public void setCharacterEncoding(String enc)
-            throws UnsupportedEncodingException {
-       request.setCharacterEncoding(enc);
-    }
-
-
-    /**
-     * Return the wrapped request object.
-     * 
-     * @return the wrapped request
-     */
-    public ActionRequest getRequest() {
-        return request;
-    }
-
-    /**
-     * Sets the request object being wrapped.
-     * 
-     * @param request the request to set
-     * @throws java.lang.IllegalArgumentException   if the request is null.
-     */
-    public void setRequest(ActionRequest request) {
-    	if ( request == null)
-    		throw new java.lang.IllegalArgumentException("Request is null");
-
-        this.request = request;
-    }
-
-    /**
-     *  The default behavior of this method is to call 
-     * <code>getMethod()</code> on the wrapped request object.
-     */
-    public String getMethod() {
-        return request.getMethod();
-    }
-
-    /**
-     * <div class="changed_added_3_0">
-     *  The default behavior of this method is to call 
-     * <code>getActionParameters()</code> on the wrapped request object.
-     * </div>
-     */
+   /**
+    * <div class="changed_added_3_0">
+    *  The default behavior of this method is to call 
+    * <code>getActionParameters()</code> on the wrapped request object.
+    * </div>
+    */
    public ActionParameters getActionParameters() {
       return request.getActionParameters();
    }

@@ -29,7 +29,7 @@ import java.util.Set;
 
 import javax.portlet.ActionURL;
 import javax.portlet.BaseURL;
-import javax.portlet.MimeResponse.ParameterCopyOption;
+import javax.portlet.MimeResponse.Copy;
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletSecurityException;
@@ -83,16 +83,16 @@ public abstract class BaseURLImpl implements BaseURL {
    }
 
    public BaseURLImpl(PortletMimeResponseContext responseContext,
-         PortletURLProvider portletURLProvider, ParameterCopyOption copy) {
+         PortletURLProvider portletURLProvider, Copy copy) {
       this(responseContext, portletURLProvider);
       
       switch (copy) {
-      case COPY_NO_PARAMETERS:
+      case NONE:
          urlProvider.clearParameters(windowId, PortletURLProvider.ParamType.PUBLIC);
-      case COPY_PUBLIC_RENDER_PARAMETERS:
+      case PUBLIC:
          urlProvider.clearParameters(windowId, PortletURLProvider.ParamType.RENDER);
          break;
-      case COPY_RENDER_PARAMETERS:
+      case ALL:
       }
    }
 

@@ -28,7 +28,8 @@ import javax.portlet.PortletResponse;
 import javax.servlet.http.Cookie;
 
 /**
- * The <code>PortletResponseWrapper</code> provides a convenient 
+ * <span class="changed_modified_3_0">The</span> 
+ * <code>PortletResponseWrapper</code> provides a convenient 
  * implementation of the <code>PortletResponse</code> interface 
  * and is extended by other response wrappers.
  * This class implements the Wrapper or Decorator pattern. 
@@ -40,14 +41,6 @@ import javax.servlet.http.Cookie;
 public class PortletResponseWrapper implements PortletResponse {
 
 		PortletResponse response;
-	    
-	    /** 
-	     * Require having a response for constructing
-	     * the wrapper.
-	     *
-	     */
-	    private PortletResponseWrapper() {
-	    }
 	    
 	    /**
 	     * Creates an <code>ActionResponse</code> adaptor 

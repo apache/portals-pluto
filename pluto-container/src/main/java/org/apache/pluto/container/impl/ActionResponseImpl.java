@@ -19,6 +19,8 @@ package org.apache.pluto.container.impl;
 import java.io.IOException;
 
 import javax.portlet.ActionResponse;
+import javax.portlet.MimeResponse.Copy;
+import javax.portlet.RenderURL;
 
 import org.apache.pluto.container.PortletActionResponseContext;
 import org.apache.pluto.container.ResourceURLProvider;
@@ -95,4 +97,11 @@ public class ActionResponseImpl extends StateAwareResponseImpl implements Action
         checkSetRedirected();
         ((PortletActionResponseContext)getResponseContext()).setRedirect(location, renderUrlParamName);
 	}
+
+   @Override
+   public RenderURL getRedirectURL(Copy option) throws IllegalStateException {
+      // TODO: implement
+      //return new RenderURLImpl(responseContext, option);
+      return null;
+   }
 }

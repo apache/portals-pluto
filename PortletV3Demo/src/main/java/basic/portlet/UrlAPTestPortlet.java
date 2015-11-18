@@ -35,7 +35,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
 
-import static javax.portlet.MimeResponse.ParameterCopyOption.*;
+import static javax.portlet.MimeResponse.Copy.*;
 
 import javax.portlet.ActionURL;
 import javax.portlet.MutableActionParameters;
@@ -148,36 +148,36 @@ public class UrlAPTestPortlet extends GenericPortlet {
       TreeMap<String, String> urls = new TreeMap<String, String>();
       MutableRenderParameters mrp = req.getRenderParameters().clone();
       
-      ActionURL aurl = resp.createActionURL(COPY_NO_PARAMETERS);
+      ActionURL aurl = resp.createActionURL(NONE);
       urls.put(" 1 No render parameters", aurl.toString());
 
-      aurl = resp.createActionURL(COPY_NO_PARAMETERS);
+      aurl = resp.createActionURL(NONE);
       aurl.getRenderParameters().set(mrp);
       urls.put(" 2 Copy with req clone", aurl.toString());
 
-      aurl = resp.createActionURL(COPY_NO_PARAMETERS);
+      aurl = resp.createActionURL(NONE);
       mrp.setValue(name1, val1);
       aurl.getRenderParameters().set(mrp);
       urls.put(" 3 Copy with req clone, 1 addl", aurl.toString());
       
-      aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+      aurl = resp.createActionURL(ALL);
       aurl.getRenderParameters().clearPrivate();
       urls.put(" 4 Clear private", aurl.toString());
       
-      aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+      aurl = resp.createActionURL(ALL);
       aurl.getRenderParameters().clearPublic();;
       urls.put(" 5 Clear public", aurl.toString());
       
-      aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+      aurl = resp.createActionURL(ALL);
       aurl.getRenderParameters().clear();
       urls.put(" 6 Clear all", aurl.toString());
       
-      aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+      aurl = resp.createActionURL(ALL);
       mrp = aurl.getRenderParameters().clone();
       logger.fine("MRP from request # entries: " + mrp.size());
       
       {
-         aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+         aurl = resp.createActionURL(ALL);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clearPrivate();
          logger.fine("MRP2 afer clearPrivate # entries: " + mrp2.size());
@@ -186,7 +186,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
       }
       
       {
-         aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+         aurl = resp.createActionURL(ALL);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clearPublic();
          logger.fine("MRP2 afer clearPublic # entries: " + mrp2.size());
@@ -195,7 +195,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
       }
       
       {
-         aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+         aurl = resp.createActionURL(ALL);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clear();
          logger.fine("MRP2 afer clear # entries: " + mrp2.size());
@@ -204,7 +204,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
       }
       
       {
-         aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+         aurl = resp.createActionURL(ALL);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clear();
          mrp2.setValue(name1, val1);
@@ -214,7 +214,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
       }
       
       {
-         aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+         aurl = resp.createActionURL(ALL);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clear();
          mrp2.setValue(name1, val1);
@@ -225,7 +225,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
       }
       
       {
-         aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+         aurl = resp.createActionURL(ALL);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clear();
          mrp2.setValue(name1, val1);
@@ -244,23 +244,23 @@ public class UrlAPTestPortlet extends GenericPortlet {
       urls = new TreeMap<String, String>();
       mrp = req.getRenderParameters().clone();
       
-      aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+      aurl = resp.createActionURL(ALL);
       urls.put(" 1 No action parameters", aurl.toString());
       
-      aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+      aurl = resp.createActionURL(ALL);
       aurl.getActionParameters().setValue(name1, val1);
       aurl.getActionParameters().setValues(name2, new String[]{val2});
       aurl.getActionParameters().clear();
       urls.put(" 2 set & clear action params", aurl.toString());
       
-      aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+      aurl = resp.createActionURL(ALL);
       MutableActionParameters map = aurl.getActionParameters().clone();
       map.setValue(name3, val3);
       map.setValues(name1, new String[]{val1, val2});
       logger.fine("MAP from request # entries: " + map.size());
       
       {
-         aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+         aurl = resp.createActionURL(ALL);
          MutableActionParameters map2 = map.clone();
          map2.clear();
          logger.fine("MAP2 afer clear # entries: " + map2.size());
@@ -269,7 +269,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
       }
       
       {
-         aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+         aurl = resp.createActionURL(ALL);
          MutableActionParameters map2 = map.clone();
          logger.fine("MAP2 afer adding 2: # entries: " + map2.size());
          aurl.getActionParameters().add(map2);
@@ -277,7 +277,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
       }
       
       {
-         aurl = resp.createActionURL(COPY_RENDER_PARAMETERS);
+         aurl = resp.createActionURL(ALL);
          MutableActionParameters map2 = map.clone();
          map2.clear();
          map2.setValue(name1, val1);

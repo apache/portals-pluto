@@ -24,6 +24,8 @@
 
 package javax.portlet;
 
+import javax.portlet.annotations.PortletSerializable;
+
 
 
 /**
@@ -72,4 +74,19 @@ public interface PortletURL extends BaseURL, MutablePortletState
    
    @Deprecated
   public void removePublicRenderParameter(String name); 
+   
+   /**
+    * Sets the value of a {@literal @}PortletStateScoped bean
+    * on an action or render URL. 
+    * Calling this method copies the bean state to the URL so that the values are
+    * available to the portlet when the URL is activated.
+    *  
+    * @param bean    The {@literal @}PortletStateScoped bean
+    * 
+    * @exception java.lang.IllegalArgumentException
+    *                if the bean is not an {@literal @}PortletStateScoped bean.
+    *                
+    * @see  javax.portlet.annotations.PortletStateScoped
+    */
+   public void setBeanParameter(PortletSerializable bean);
 }

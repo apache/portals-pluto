@@ -16,7 +16,7 @@
  */
 package org.apache.pluto.container.impl;
 
-import static javax.portlet.MimeResponse.ParameterCopyOption.COPY_PUBLIC_RENDER_PARAMETERS;
+import static javax.portlet.MimeResponse.Copy.PUBLIC;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,8 +28,6 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
 import org.apache.pluto.container.PortletResourceResponseContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ResourceResponseImpl extends MimeResponseImpl implements ResourceResponse
 {
@@ -49,7 +47,7 @@ public class ResourceResponseImpl extends MimeResponseImpl implements ResourceRe
     }
 	
     @Override
-    public ActionURL createActionURL(ParameterCopyOption option) {
+    public ActionURL createActionURL(Copy option) {
        if (ResourceURL.PAGE.equals(requestCacheLevel)) {
           return new ActionURLImpl(responseContext, option);
        } else {
@@ -58,7 +56,7 @@ public class ResourceResponseImpl extends MimeResponseImpl implements ResourceRe
     }
 
     @Override
-    public RenderURL createRenderURL(ParameterCopyOption option) {
+    public RenderURL createRenderURL(Copy option) {
        if (ResourceURL.PAGE.equals(requestCacheLevel)) {
           return new RenderURLImpl(responseContext, option);
        } else {
@@ -66,22 +64,24 @@ public class ResourceResponseImpl extends MimeResponseImpl implements ResourceRe
        }
     }
    
-    @Override
+    @SuppressWarnings("unchecked")
+   @Override
     public ActionURL createActionURL()
     {
         if (ResourceURL.PAGE.equals(requestCacheLevel))
         {
-            return new ActionURLImpl(responseContext, COPY_PUBLIC_RENDER_PARAMETERS);
+            return new ActionURLImpl(responseContext, PUBLIC);
         }
         throw new IllegalStateException("Not allowed to create an ActionURL with current request cacheability level "+requestCacheLevel);
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+   @Override
     public RenderURL createRenderURL()
     {
         if (ResourceURL.PAGE.equals(requestCacheLevel))
         {
-            return new RenderURLImpl(responseContext, COPY_PUBLIC_RENDER_PARAMETERS);
+            return new RenderURLImpl(responseContext, PUBLIC);
         }
         throw new IllegalStateException("Not allowed to create a RenderURL with current request cacheability level "+requestCacheLevel);
     }

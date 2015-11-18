@@ -1,7 +1,7 @@
 package org.apache.pluto.container.impl;
 
 import javax.portlet.ActionURL;
-import javax.portlet.MimeResponse.ParameterCopyOption;
+import javax.portlet.MimeResponse.Copy;
 import javax.portlet.MutableActionParameters;
 
 import org.apache.pluto.container.PortletMimeResponseContext;
@@ -35,7 +35,7 @@ public class ActionURLImpl extends PortletURLImpl implements ActionURL {
     * @param responseContext
     * @param urlProvider
     */
-   public ActionURLImpl(PortletMimeResponseContext responseContext, ParameterCopyOption copy) {
+   public ActionURLImpl(PortletMimeResponseContext responseContext, Copy copy) {
       super(responseContext, 
             responseContext.getPortletURLProvider(PortletURLProvider.TYPE.ACTION), copy);
    }

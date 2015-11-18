@@ -81,18 +81,6 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
     {
         return getServletRequest().getHeaders("accept");
     }
-
-   /* (non-Javadoc)
-    * @see javax.portlet.ResourceRequest#getPageState()
-    */
-   public String getPageState() {
-      // The page state is provided through the request context.
-      String ps = requestContext.getPageState();
-      if (LOG.isDebugEnabled()) {
-         LOG.debug("ResourceRequest#getPageState called.");
-      }
-      return ps;
-   }
    
    // Debug code - intercept getParameter call & dump all parameters to trace
    @Override

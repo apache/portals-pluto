@@ -70,6 +70,7 @@ public class ResourcePortlet extends GenericPortlet {
    /* (non-Javadoc)
     * @see javax.portlet.GenericPortlet#serveResource(javax.portlet.ResourceRequest, javax.portlet.ResourceResponse)
     */
+   @SuppressWarnings("deprecation")
    @Override
    public void serveResource(ResourceRequest req, ResourceResponse resp)
          throws PortletException, IOException {

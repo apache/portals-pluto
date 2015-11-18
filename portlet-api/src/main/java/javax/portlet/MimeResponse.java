@@ -39,12 +39,12 @@ public interface MimeResponse extends PortletResponse {
     * Specifies processing when a URL is created.
     * </div>
     * 
-    * @see #createActionURL(ParameterCopyOption)
-    * @see #createRenderURL(ParameterCopyOption)
+    * @see #createActionURL(Copy)
+    * @see #createRenderURL(Copy)
     * 
     * @since 3.0
     */
-   public enum ParameterCopyOption {
+   public enum Copy {
 
       /**
        * <div class="changed_added_3_0">
@@ -53,7 +53,7 @@ public interface MimeResponse extends PortletResponse {
        *  
        * @since 3.0
        */
-      COPY_NO_PARAMETERS,
+      NONE,
 
       /**
        * <div class="changed_added_3_0">
@@ -64,7 +64,7 @@ public interface MimeResponse extends PortletResponse {
        *  
        * @since 3.0
        */
-      COPY_RENDER_PARAMETERS,
+      ALL,
 
       /**
        * <div class="changed_added_3_0">
@@ -74,7 +74,7 @@ public interface MimeResponse extends PortletResponse {
        *  
        * @since 3.0
        */
-      COPY_PUBLIC_RENDER_PARAMETERS;
+      PUBLIC;
    }
    
    
@@ -443,8 +443,8 @@ public interface MimeResponse extends PortletResponse {
      * If a public render parameter value is set or removed on a render URL, then the public 
      * render parameter will be set to the new value or removed when the URL is activated.
      * <p>
-     * The effect of this method is the same as calling {@link #createRenderURL(ParameterCopyOption)}
-     * with the parameter set to COPY_PUBLIC_RENDER_PARAMETERS.
+     * The effect of this method is the same as calling {@link #createRenderURL(Copy)}
+     * with the parameter set to PUBLIC.
      * </div>
      *
      * @return a portlet render URL
@@ -464,12 +464,12 @@ public interface MimeResponse extends PortletResponse {
      * The new render URL will contain render parameters from the
      * current request as specified by the <code>option</code> parameter.
      * <dl>
-     * <dt>COPY_NO_PARAMETERS</dt>
+     * <dt>NONE</dt>
      * <dd>All public and private parameters are removed from the URL.</dd>
-     * <dt>COPY_RENDER_PARAMETERS</dt>
+     * <dt>ALL</dt>
      * <dd>The public and private parameters governing the current 
      * request are added to the URL.</dd>
-     * <dt>COPY_PUBLIC_PARAMETERS</dt>
+     * <dt>PUBLIC</dt>
      * <dd>Only public parameters governing the current
      * request are added to the URL.</dd>
      * </dl>
@@ -486,13 +486,13 @@ public interface MimeResponse extends PortletResponse {
      * @param option
      *            Specifies how current parameters are to be copied to the URL
      *
-     * @see ParameterCopyOption
+     * @see Copy
      * 
      * @return a portlet render URL
      *     
      * @since 3.0
      */
-    public RenderURL createRenderURL(ParameterCopyOption option);
+    public RenderURL createRenderURL(Copy option);
 
 
 	/**
@@ -527,8 +527,8 @@ public interface MimeResponse extends PortletResponse {
      * then the public render parameter will be set to the new value or 
      * removed when the URL is activated.
      * <p>
-     * The effect of this method is the same as calling {@link #createRenderURL(ParameterCopyOption)}
-     * with the parameter set to COPY_PUBLIC_RENDER_PARAMETERS.
+     * The effect of this method is the same as calling {@link #createRenderURL(Copy)}
+     * with the parameter set to PUBLIC.
      * </div>
      * 
      * @return a portlet action URL
@@ -548,12 +548,12 @@ public interface MimeResponse extends PortletResponse {
      * The new action URL will contain render parameters from the
      * current request as specified by the <code>option</code> parameter.
      * <dl>
-     * <dt>COPY_NO_PARAMETERS</dt>
+     * <dt>NONE</dt>
      * <dd>All public and private parameters are removed from the URL.</dd>
-     * <dt>COPY_RENDER_PARAMETERS</dt>
+     * <dt>ALL</dt>
      * <dd>The public and private parameters governing the current 
      * request are added to the URL.</dd>
-     * <dt>COPY_PUBLIC_PARAMETERS</dt>
+     * <dt>PUBLIC</dt>
      * <dd>Only public parameters governing the current
      * request are added to the URL.</dd>
      * </dl>
@@ -572,13 +572,13 @@ public interface MimeResponse extends PortletResponse {
      * @param option
      *            Specifies how current parameters are to be copied to the URL
      *
-     * @see ParameterCopyOption
+     * @see Copy
      * 
      * @return a portlet action URL
      *     
      * @since 3.0
      */
-    public ActionURL createActionURL(ParameterCopyOption option);
+    public ActionURL createActionURL(Copy option);
 
 
 	/**

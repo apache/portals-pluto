@@ -20,8 +20,8 @@ limitations under the License.
 <%@ taglib uri="http://xmlns.jcp.org/portlet_3_0"  prefix="portlet" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.io.*,java.util.*,javax.portlet.*" %>
-<%@ page import="javax.portlet.MimeResponse.ParameterCopyOption" %>
-<%@ page import="static javax.portlet.MimeResponse.ParameterCopyOption.*" %>
+<%@ page import="javax.portlet.MimeResponse.Copy" %>
+<%@ page import="static javax.portlet.MimeResponse.Copy.*" %>
 <%@ page import="static basic.portlet.Constants.*" %>
 
 <portlet:defineObjects />
@@ -56,7 +56,7 @@ limitations under the License.
       if (lineNum > lines.size()) {
          lineNum = lines.size();
       }
-      RenderURL rurl = renderResponse.createRenderURL(COPY_RENDER_PARAMETERS);
+      RenderURL rurl = renderResponse.createRenderURL(ALL);
       rurl.setFragmentIdentifier(frag);
       out.print("<p><a href='");
       out.print(rurl.toString());

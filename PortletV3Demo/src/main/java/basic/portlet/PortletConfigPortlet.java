@@ -18,10 +18,11 @@
 
 package basic.portlet;
 
-import static basic.portlet.Constants.*;
+import static basic.portlet.Constants.ATTRIB_PMS;
+import static basic.portlet.Constants.ATTRIB_PRPS;
+import static basic.portlet.Constants.ATTRIB_WS;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;

@@ -47,6 +47,7 @@ import org.apache.pluto.container.FilterManager;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
+import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
@@ -352,6 +353,15 @@ public class PortletServlet3 extends HttpServlet
             else if (methodId == PortletInvokerService.METHOD_RESOURCE)
             {
                 ResourceRequest resourceRequest = (ResourceRequest) portletRequest;
+
+                // if pageState != null, we're dealing with a Partial Action request, so
+                // store the page state string as a request attribute
+                PortletResourceRequestContext rc = (PortletResourceRequestContext) requestContext;
+                String ps = rc.getPageState();
+                if (ps != null) {
+                   resourceRequest.setAttribute(ResourceRequest.PAGE_STATE, ps);
+                }
+
                 ResourceResponse resourceResponse = (ResourceResponse) portletResponse;
                 filterManager.processFilter(resourceRequest, resourceResponse,
                         resourceServingPortlet, portletContext);

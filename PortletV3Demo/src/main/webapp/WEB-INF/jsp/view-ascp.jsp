@@ -20,8 +20,8 @@ limitations under the License.
 <%@ taglib uri="http://xmlns.jcp.org/portlet_3_0"  prefix="portlet" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.io.*,java.util.*,javax.portlet.*" %>
-<%@ page import="javax.portlet.MimeResponse.ParameterCopyOption" %>
-<%@ page import="static javax.portlet.MimeResponse.ParameterCopyOption.*" %>
+<%@ page import="javax.portlet.MimeResponse.Copy" %>
+<%@ page import="static javax.portlet.MimeResponse.Copy.*" %>
 <%@ page import="static basic.portlet.Constants.*" %>
 
 <portlet:defineObjects />
@@ -56,7 +56,7 @@ and other URLs that are marked as authenticated.</p>
       out.println("'>Resource URL, status code = " + sc + "</a></p>");
    }
    
-   RenderURL renurl = renderResponse.createRenderURL(COPY_RENDER_PARAMETERS);
+   RenderURL renurl = renderResponse.createRenderURL(ALL);
    renurl.setAuthenticated(true);
    out.print("<p><a href='");
    out.print(renurl.toString());
@@ -68,7 +68,7 @@ and other URLs that are marked as authenticated.</p>
    out.print(resurl.toString());
    out.println("'>Resource URL with setAuthenticated(true)</a></p>");
    
-   ActionURL acturl = renderResponse.createActionURL(COPY_RENDER_PARAMETERS);
+   ActionURL acturl = renderResponse.createActionURL(ALL);
    acturl.setAuthenticated(true);
    StringBuilder txt = new StringBuilder();
    txt.append("<form  METHOD='POST' ACTION='").append(acturl.toString()).append("'>")

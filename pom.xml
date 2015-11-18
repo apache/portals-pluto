@@ -356,9 +356,14 @@ TODO: Check if we need all of them. -->
       
       <!-- CDI Library -->
       <dependency>
+         <groupId>javax.enterprise</groupId>
+         <artifactId>cdi-api</artifactId>
+         <version>1.2</version>
+      </dependency>
+      <dependency>
           <groupId>org.jboss.weld.servlet</groupId>
           <artifactId>weld-servlet</artifactId>
-          <version>${}</version>
+          <version>${cdi.version}</version>
       </dependency>      
 
       <!--  CCPP Libraries -->
@@ -543,6 +548,7 @@ TODO: Check if we need all of them. -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.1</version>
           <configuration>
             <source>1.7</source>
             <target>1.7</target>
