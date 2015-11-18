@@ -42,7 +42,7 @@ import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.driver.PortletContextService;
-import org.apache.pluto.container.driver.PortletServlet;
+import org.apache.pluto.container.driver.PortletServlet3;
 import org.apache.pluto.container.util.StringManager;
 
 /**
@@ -65,11 +65,6 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
 
     // Private Member Variables ------------------------------------------------
 
-    /** URI prefix of the portlet invoker servlet.
-     *  TODO: this is Pluto Portal Driver specific!
-     * */
-    private static final String PREFIX = "/PlutoInvoker/";
-
     private PortletContextService portletContextService;
 
     // Constructor -------------------------------------------------------------
@@ -90,7 +85,7 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      * @param context request context used for the invocation
      * @param request  action request used for the invocation.
      * @param response action response used for the invocation.
-     * @see PortletServlet
+     * @see PortletServlet3
      * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest,javax.portlet.ActionResponse)
      */
     public void action(PortletRequestContext context, ActionRequest request, ActionResponse response, FilterManager filterManager)
@@ -106,7 +101,7 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      *
      * @param request  action request used for the invocation.
      * @param response action response used for the invocation.
-     * @see PortletServlet
+     * @see PortletServlet3
      * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
      */
     public void render(PortletRequestContext context, RenderRequest request, RenderResponse response, FilterManager filterManager)
@@ -122,7 +117,7 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      *
      * @param request  action request used for the invocation.
      * @param response action response used for the invocation.
-     * @see PortletServlet
+     * @see PortletServlet3
      * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
      */
     public void event(PortletRequestContext context, EventRequest request, EventResponse response, FilterManager filterManager)
@@ -138,7 +133,7 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      *
      * @param request  resource request used for the invocation.
      * @param response resource response used for the invocation.
-     * @see PortletServlet
+     * @see PortletServlet3
      * @see javax.portlet.Portlet#resource(javax.portlet.ResourceRequest,javax.portlet.ResourceResponse)
      */
     public void serveResource(PortletRequestContext context, ResourceRequest request, ResourceResponse response, FilterManager filterManager)
@@ -154,7 +149,7 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      *
      * @param request  action request used for the invocation.
      * @param response action response used for the invocation.
-     * @see PortletServlet
+     * @see PortletServlet3
      */
     public void load(PortletRequestContext context, PortletRequest request, PortletResponse response)
     throws IOException, PortletException, PortletContainerException {
@@ -205,7 +200,7 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
         String appName = portletWindow.getPortletDefinition().getApplication().getName();
         ServletContext servletContext = portletContextService.getPortletContext(appName).getServletContext();
 
-        String uri =  PREFIX + portletWindow.getPortletDefinition().getPortletName();
+        String uri =  PortletInvokerService.URIPREFIX + portletWindow.getPortletDefinition().getPortletName();
         if (LOG.isDebugEnabled()) {
             LOG.debug("Dispatching to portlet servlet at: " + uri);
         }

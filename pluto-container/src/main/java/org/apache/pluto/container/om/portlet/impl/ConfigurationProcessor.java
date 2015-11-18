@@ -98,7 +98,7 @@ public abstract class ConfigurationProcessor {
    protected void checkValidClass(String clsName, Class<?> assignable, String msg) {
    
       StringBuilder txt = new StringBuilder(128);
-      txt.append(msg);
+      txt.append(msg).append(", class name: ");
       txt.append(clsName);
       if (!isValidIdentifier(clsName)) {
          txt.append(". Invalid java identifier.");
@@ -109,7 +109,7 @@ public abstract class ConfigurationProcessor {
       // Make sure the class can be loaded
       Class<?> valClass = null;
       try {
-         ClassLoader cl = this.getClass().getClassLoader();
+         ClassLoader cl = Thread.currentThread().getContextClassLoader();
          valClass = cl.loadClass(clsName);
          if (assignable != null && !assignable.isAssignableFrom(valClass)) {
             txt.append(". Specified class is not a ");
@@ -117,7 +117,8 @@ public abstract class ConfigurationProcessor {
             throw new Exception();
          }
       } catch (ClassNotFoundException e) {
-         LOG.warn(txt.toString() + e.getLocalizedMessage());
+         txt.append(", Exception: ").append(e.toString());
+         LOG.warn(txt.toString());
          // can't throw exception if class not found, since the portlet
          // application definition is used by the assembly mojo
       } catch (Exception e) {

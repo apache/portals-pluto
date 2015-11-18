@@ -18,7 +18,7 @@ package org.apache.pluto.container.driver;
 
 /**
  * Defines the additional services needed for the Pluto Portal Driver to integrate with the Pluto Container
- * and accessed from the <code>org.apache.pluto.container.driver.PortletServlet</code>
+ * and accessed from the <code>org.apache.pluto.container.driver.PortletServlet3</code>
  * and the <code>org.apache.pluto.container.driver.impl.DefaultPortletInvokerService</code>.
  * These extra services are not required nor used by the container itself directly.
  *

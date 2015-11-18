@@ -36,6 +36,12 @@ import javax.portlet.ResourceResponse;
  */
 public interface PortletInvokerService {
 
+
+   /** 
+    * URI prefix of the portlet invoker servlet for generating the servlet mapping.
+    */
+   static final String URIPREFIX = "/PlutoInvoker3/";
+         
     /**
      * The key used to bind the <code>PortletRequest</code> to the underlying
      * <code>HttpServletRequest</code>.

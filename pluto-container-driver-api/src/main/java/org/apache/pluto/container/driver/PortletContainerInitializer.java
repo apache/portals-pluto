@@ -24,7 +24,10 @@ import java.util.Set;
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 
+import org.apache.pluto.container.PortletInvokerService;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,14 +96,40 @@ public class PortletContainerInitializer implements ServletContainerInitializer 
                holder.processWebDD(win);
             }
 
-            ctx.setAttribute(ConfigurationHolder.ATTRIB_NAME, holder);
-            
+            if (holder.getPad().getPortlets().size() > 0) {
+               
+               // dynamically deploy the portlet servlets
+               for (PortletDefinition pd : holder.getPad().getPortlets()) {
+                  String pn = pd.getPortletName();
+                  String mapping = PortletInvokerService.URIPREFIX + pn;
+
+                  if (isDebug) {
+                     StringBuilder txt = new StringBuilder();
+                     txt.append("Adding PortletServlet3, name: ");
+                     txt.append(pn);
+                     txt.append(", mapping: ").append(mapping);
+                     LOG.debug(txt.toString());
+                  }
+                  
+                  ServletRegistration.Dynamic sr = ctx.addServlet(pn + "_PS3", PortletServlet3.class);
+                  sr.addMapping(mapping);
+                  sr.setInitParameter(PortletServlet3.PORTLET_NAME, pn);
+                  sr.setLoadOnStartup(100);
+
+               }
+
+               ctx.setAttribute(ConfigurationHolder.ATTRIB_NAME, holder);
+               
+            } else {
+               LOG.error("Configuration problem - no portlet definitions");
+            }
+
          } catch (Exception e) {
             StringBuilder txt = new StringBuilder(128);
-            txt.append("Exception reading portlet application configuration");
+            txt.append("Exception processing portlet application configuration");
             txt.append(", Servlet ctx name: ").append(
                   ctx.getServletContextName());
-            txt.append(", Exception: ").append(e.getLocalizedMessage());
+            txt.append(", Exception: ").append(e.toString());
             LOG.error(txt.toString());
          }
       }

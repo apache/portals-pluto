@@ -16,7 +16,6 @@
  */
 package org.apache.pluto.driver.container;
 
-import java.io.InputStream;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -48,13 +47,6 @@ public class PortletDescriptorRegistry {
    private static final Logger LOG = LoggerFactory
          .getLogger(PortletDescriptorRegistry.class);
    private static final boolean isDebug = LOG.isDebugEnabled();
-   
-
-   /** Web deployment descriptor location. */
-   private static final String WEB_XML     = "/WEB-INF/web.xml";
-
-   /** Portlet deployment descriptor location. */
-   private static final String PORTLET_XML = "/WEB-INF/portlet.xml";
 
    /** Exception Messages. */
    private static final StringManager EXCEPTIONS  = StringManager.getManager(PortletDescriptorRegistry.class
@@ -64,6 +56,7 @@ public class PortletDescriptorRegistry {
    // Private Member Variables ------------------------------------------------
 
    /** The portlet application descriptor service. */
+   @SuppressWarnings("unused")
    private final PortletAppDescriptorService                       portletDDService;
 
    /**
@@ -107,7 +100,8 @@ public class PortletDescriptorRegistry {
    // Private Methods ---------------------------------------------------------
 
    /**
-    * Creates the portlet.xml deployment descriptor representation.
+    * Creates and retisters the portlet application configuration based on the
+    * config data read by the PortletContainerInitializer.
     * 
     * @param servletContext
     *           the servlet context for which the DD is requested.
@@ -133,30 +127,9 @@ public class PortletDescriptorRegistry {
          portletApp.setName(name);
          
       } else {
-         
-         if (isDebug) {
-            LOG.debug("Reading portlet config. ctx path: " + contextPath);
-         }
-
-         try {
-            InputStream paIn = servletContext.getResourceAsStream(PORTLET_XML);
-            InputStream webIn = servletContext.getResourceAsStream(WEB_XML);
-            if (paIn == null) {
-               throw new PortletContainerException("Cannot find '"
-                     + PORTLET_XML
-                     + "'. Are you sure it is in the deployed package?");
-            }
-            if (webIn == null) {
-               throw new PortletContainerException("Cannot find '" + WEB_XML
-                     + "'. Are you sure it is in the deployed package?");
-            }
-            portletApp = portletDDService.read(name, contextPath, paIn);
-            portletDDService.mergeWebDescriptor(portletApp, webIn);
-         } catch (Exception ex) {
             throw new PortletContainerException(EXCEPTIONS.getString(
                   "error.context.descriptor.load",
-                  new String[] { servletContext.getServletContextName() }), ex);
-         }
+                  new String[] { servletContext.getServletContextName(), "No config data stored in context." }));
       }
       return portletApp;
    }
