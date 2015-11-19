@@ -22,7 +22,7 @@ package org.apache.pluto.container.impl;
 import javax.portlet.MimeResponse.Copy;
 import javax.portlet.RenderURL;
 
-import org.apache.pluto.container.PortletMimeResponseContext;
+import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.util.ArgumentUtility;
 
@@ -37,7 +37,7 @@ public class RenderURLImpl extends PortletURLImpl implements RenderURL {
     * @param copy 
     * @param urlProvider
     */
-   public RenderURLImpl(PortletMimeResponseContext responseContext, Copy copy) {
+   public RenderURLImpl(PortletResponseContext responseContext, Copy copy) {
       super(responseContext,
             responseContext.getPortletURLProvider(PortletURLProvider.TYPE.RENDER), copy);
    }

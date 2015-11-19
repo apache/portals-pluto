@@ -27,9 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletMimeResponseContext;
-import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.PortletURLProvider.TYPE;
 import org.apache.pluto.container.util.PrintWriterServletOutputStream;
 
 /**
@@ -207,10 +205,5 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
         {
             getServletResponse().setContentType(contentType);
         }
-    }
-
-    public PortletURLProvider getPortletURLProvider(TYPE type)
-    {
-        return isClosed() ? null : new PortletURLProviderImpl(getPortalURL(), type, getPortletWindow());
     }
 }

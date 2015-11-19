@@ -18,9 +18,6 @@ package org.apache.pluto.container.impl;
 
 import java.util.Enumeration;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.portlet.MimeResponse.Copy;
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
@@ -30,13 +27,14 @@ import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 import javax.portlet.annotations.PortletSerializable;
 
-import org.apache.pluto.container.PortletMimeResponseContext;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.om.portlet.CustomPortletMode;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.Supports;
 import org.apache.pluto.container.util.ArgumentUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -62,7 +60,7 @@ public abstract class PortletURLImpl extends BaseURLImpl implements PortletURL {
       super(responseContext, urlProvider);
    }
 
-   public PortletURLImpl(PortletMimeResponseContext responseContext,
+   public PortletURLImpl(PortletResponseContext responseContext,
          PortletURLProvider portletURLProvider, Copy copy) {
       super(responseContext, portletURLProvider, copy);
    }

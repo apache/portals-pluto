@@ -20,6 +20,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.pluto.container.PortletURLProvider.TYPE;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 
@@ -38,6 +39,7 @@ public interface PortletResponseContext
     PortletWindow getPortletWindow();
     
     ResourceURLProvider getResourceURLProvider();
+    PortletURLProvider getPortletURLProvider(TYPE type);
     void addProperty(Cookie cookie);
     void addProperty(String key, Element element);
     void addProperty(String key, String value);

@@ -39,7 +39,6 @@ import javax.portlet.RenderURL;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 
-import org.apache.pluto.container.PortletMimeResponseContext;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletURLListenerService;
 import org.apache.pluto.container.PortletURLProvider;
@@ -82,7 +81,7 @@ public abstract class BaseURLImpl implements BaseURL {
       }
    }
 
-   public BaseURLImpl(PortletMimeResponseContext responseContext,
+   public BaseURLImpl(PortletResponseContext responseContext,
          PortletURLProvider portletURLProvider, Copy copy) {
       this(responseContext, portletURLProvider);
       

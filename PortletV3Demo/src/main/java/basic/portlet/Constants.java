@@ -40,6 +40,7 @@ public class Constants {
    public final static String PARAM_FG_GREEN = "green";
    public final static String PARAM_FG_BLUE = "blue";
    public final static String PARAM_MSG_INPUT = "imsg";
+   public final static String PARAM_URL_INPUT = "url";
    
    public final static String PARAM_NUM_ACTIONS = "numActions";
 

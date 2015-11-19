@@ -25,8 +25,10 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletResponseContext;
+import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.ResourceURLProvider;
+import org.apache.pluto.container.PortletURLProvider.TYPE;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
 import org.w3c.dom.DOMException;
@@ -168,5 +170,10 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
     public ResourceURLProvider getResourceURLProvider()
     {
         return isReleased() ? null : new ResourceURLProviderImpl(servletRequest,window);
+    }
+
+    public PortletURLProvider getPortletURLProvider(TYPE type)
+    {
+        return isClosed() ? null : new PortletURLProviderImpl(getPortalURL(), type, getPortletWindow());
     }
 }

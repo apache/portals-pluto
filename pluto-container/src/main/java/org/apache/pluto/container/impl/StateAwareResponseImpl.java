@@ -49,7 +49,7 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl
    @SuppressWarnings("unused")
    private final boolean isDebug = LOGGER.isDebugEnabled();
 
-   private PortletStateAwareResponseContext responseContext;
+   protected PortletStateAwareResponseContext responseContext;
    private final String                     windowId;
 
    public StateAwareResponseImpl(PortletStateAwareResponseContext responseContext) {
@@ -186,6 +186,7 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl
    }
 
    public MutableRenderParameters getRenderParameters() {
+      checkSetStateChanged();
       return responseContext.getRenderParameters(windowId);
    }
 }
