@@ -22,6 +22,8 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -97,10 +99,26 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
     }
 
     /**
+     * Invoke the portlet with a header request.
+     *
+     * @param request  header request used for the invocation.
+     * @param response header response used for the invocation.
+     * @see PortletServlet3
+     * @see javax.portlet.Portlet#header(javax.portlet.headerRequest,javax.portlet.headerResponse)
+     */
+    public void header(PortletRequestContext context, HeaderRequest request, HeaderResponse response, FilterManager filterManager)
+    throws IOException, PortletException, PortletContainerException {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Performing header Invocation");
+        }
+        invoke(context, request, response, filterManager, PortletInvokerService.METHOD_HEADER);
+    }
+
+    /**
      * Invoke the portlet with a render request.
      *
-     * @param request  action request used for the invocation.
-     * @param response action response used for the invocation.
+     * @param request  render request used for the invocation.
+     * @param response render response used for the invocation.
      * @see PortletServlet3
      * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
      */
@@ -115,8 +133,8 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
     /**
      * Invoke the portlet with a render request.
      *
-     * @param request  action request used for the invocation.
-     * @param response action response used for the invocation.
+     * @param request  event request used for the invocation.
+     * @param response event response used for the invocation.
      * @see PortletServlet3
      * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
      */

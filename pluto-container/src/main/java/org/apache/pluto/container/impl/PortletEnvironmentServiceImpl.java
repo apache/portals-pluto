@@ -21,6 +21,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
@@ -32,6 +34,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.pluto.container.PortletActionResponseContext;
 import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletEventResponseContext;
+import org.apache.pluto.container.PortletHeaderResponseContext;
 import org.apache.pluto.container.PortletRenderResponseContext;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletResourceRequestContext;
@@ -64,6 +67,16 @@ public class PortletEnvironmentServiceImpl implements PortletEnvironmentService
                                                HttpSession session)
     {
         return new PortletSessionImpl(portletContext, portletWindow, session);
+    }
+
+    public HeaderRequest createHeaderRequest(PortletRequestContext requestContext, PortletHeaderResponseContext responseContext)
+    {
+        return new HeaderRequestImpl(requestContext, responseContext);
+    }
+
+    public HeaderResponse createHeaderResponse(PortletHeaderResponseContext responseContext)
+    {
+        return new HeaderResponseImpl(responseContext);
     }
 
     public RenderRequest createRenderRequest(PortletRequestContext requestContext, PortletRenderResponseContext responseContext)

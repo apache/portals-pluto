@@ -27,18 +27,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
-import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURL.URLType;
 import org.apache.pluto.driver.util.PageState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The controller servlet used to drive the Portal Driver. All requests mapped
@@ -216,10 +215,19 @@ public class PortalDriverServlet extends HttpServlet {
          request.setAttribute(AttributeKeys.CURRENT_PAGE, pageConfig);
          String uri = (pageConfig.getUri() != null) ? pageConfig.getUri() : DEFAULT_PAGE_URI;
          
+         // Execute header request for each portlet on the page
+         
+         if (LOG.isDebugEnabled()) {
+            LOG.debug("Executing header requests for target portlets.");
+         }
+
+         doHeaders(request, response, portalURL);
+         
          if (LOG.isDebugEnabled()) {
             LOG.debug("Dispatching to: " + uri);
          }
          
+         // Dispatch to the JSP that aggregates the page.
          RequestDispatcher dispatcher = request.getRequestDispatcher(uri);
          dispatcher.forward(request, response);
          
@@ -245,5 +253,19 @@ public class PortalDriverServlet extends HttpServlet {
    public void doPost(HttpServletRequest request, HttpServletResponse response)
          throws ServletException, IOException {
       doGet(request, response);
+   }
+   
+   
+   private void doHeaders(HttpServletRequest req, HttpServletResponse resp, PortalURL purl) {
+      
+      for (String pid : purl.getPortletIds()) {
+         PortletWindowConfig wcfg = PortletWindowConfig.fromId(pid); 
+         PortletWindowImpl pwin = new PortletWindowImpl(container, wcfg, purl);
+         try {
+            container.doHeader(pwin, req, resp);
+         } catch (Exception e) {
+            
+         }
+      }
    }
 }

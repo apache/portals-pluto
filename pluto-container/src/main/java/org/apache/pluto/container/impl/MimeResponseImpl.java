@@ -46,7 +46,7 @@ public class MimeResponseImpl extends PortletResponseImpl implements
    private boolean                    committed;
    private String                     contentType;
 
-   private PortletMimeResponseContext responseContext;
+   protected PortletMimeResponseContext responseContext;
 
    public MimeResponseImpl(PortletMimeResponseContext responseContext) {
       super(responseContext);

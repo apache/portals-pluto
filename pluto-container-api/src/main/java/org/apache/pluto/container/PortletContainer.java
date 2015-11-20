@@ -63,6 +63,22 @@ public interface PortletContainer {
     void destroy() throws PortletContainerException;
 
     /**
+     * Calls the render headers method of the given portlet window.
+     * @param portletWindow the portlet Window
+     * @param request               the servlet request
+     * @param response              the servlet response
+     * @throws PortletException          if one portlet has trouble fulfilling
+     *                                   the request
+     * @throws IOException               if the streaming causes an I/O problem
+     * @throws PortletContainerException if the portlet container implementation
+     *                                   has trouble fulfilling the request
+     */
+    void doHeader(PortletWindow portletWindow,
+            HttpServletRequest request,
+            HttpServletResponse response)
+    throws PortletException, IOException, PortletContainerException;
+
+    /**
      * Calls the render method of the given portlet window.
      * @param portletWindow the portlet Window
      * @param request               the servlet request

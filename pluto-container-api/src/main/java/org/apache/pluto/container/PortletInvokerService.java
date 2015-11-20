@@ -22,6 +22,8 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -77,6 +79,14 @@ public interface PortletInvokerService {
     String METHOD_ID = "org.apache.pluto.core.method";
 
     /**
+     * The unique method identifier for header requests.  Header requests are
+     * requested through a call to the {@link PortletContainer#doHeader(org.apache.pluto.container.PortletWindow,
+     * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
+     * method.
+     */
+    Integer METHOD_HEADER = new Integer(101);
+
+    /**
      * The unique method identifier for render requests.  Render requests are
      * requested through a call to the {@link PortletContainer#doRender(org.apache.pluto.container.PortletWindow,
      * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
@@ -85,7 +95,7 @@ public interface PortletInvokerService {
     Integer METHOD_RENDER = new Integer(1);
 
     /**
-     * The unique method identifier for render requests.  Render requests are
+     * The unique method identifier for action requests.  Action requests are
      * requested through a call to the {@link PortletContainer#doAction(org.apache.pluto.container.PortletWindow,
      * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
      * method.
@@ -135,6 +145,9 @@ public interface PortletInvokerService {
     throws IOException, PortletException, PortletContainerException;
 
     void render(PortletRequestContext ctx, RenderRequest req, RenderResponse res, FilterManager filterManager)
+    throws IOException, PortletException, PortletContainerException;
+
+    void header(PortletRequestContext ctx, HeaderRequest req, HeaderResponse res, FilterManager filterManager)
     throws IOException, PortletException, PortletContainerException;
 
     void serveResource(PortletRequestContext ctx, ResourceRequest req, ResourceResponse res, FilterManager filterManager)

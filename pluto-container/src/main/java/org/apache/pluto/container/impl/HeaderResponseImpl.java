@@ -19,9 +19,11 @@ package org.apache.pluto.container.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.portlet.HeaderResponse;
 import javax.portlet.PortletMode;
 import javax.portlet.RenderResponse;
 
+import org.apache.pluto.container.PortletHeaderResponseContext;
 import org.apache.pluto.container.PortletRenderResponseContext;
 import org.apache.pluto.container.util.ArgumentUtility;
 
@@ -31,10 +33,10 @@ import org.apache.pluto.container.util.ArgumentUtility;
  * 
  */
 @SuppressWarnings("unchecked")
-public class RenderResponseImpl extends MimeResponseImpl implements RenderResponse
+public class HeaderResponseImpl extends MimeResponseImpl implements HeaderResponse
 {	
     
-    public RenderResponseImpl(PortletRenderResponseContext responseContext)
+    public HeaderResponseImpl(PortletHeaderResponseContext responseContext)
     {
         super(responseContext);
     }
@@ -115,11 +117,11 @@ public class RenderResponseImpl extends MimeResponseImpl implements RenderRespon
         {
             modes.add(getPortletWindow().getPortletMode());
         }
-        ((PortletRenderResponseContext) responseContext).setNextPossiblePortletModes(modes);
+        ((PortletHeaderResponseContext) responseContext).setNextPossiblePortletModes(modes);
     }
     
     public void setTitle(String title)
     {
-       ((PortletRenderResponseContext) responseContext).setTitle(title);
+       ((PortletHeaderResponseContext) responseContext).setTitle(title);
     }
 }

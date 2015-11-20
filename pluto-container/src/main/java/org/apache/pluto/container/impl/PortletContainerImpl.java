@@ -24,6 +24,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
@@ -40,6 +42,7 @@ import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletEventResponseContext;
+import org.apache.pluto.container.PortletHeaderResponseContext;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRenderResponseContext;
 import org.apache.pluto.container.PortletRequestContext;
@@ -120,6 +123,55 @@ public class PortletContainerImpl implements PortletContainer
 
 
     /**
+     * Performs Header request for the portlet associated with the specified portlet window.
+     * @param portletWindow  the portlet window.
+     * @param request  the servlet request.
+     * @param response  the servlet response.
+     * @throws IllegalStateException  if the container is not initialized.
+     * @throws PortletException
+     * @throws IOException
+     * @throws PortletContainerException
+     * 
+     * @see javax.portlet.Portlet#header(HeaderRequest, HeaderResponse)
+     */
+    @Override
+    public void doHeader(PortletWindow portletWindow,
+            HttpServletRequest request,
+            HttpServletResponse response)
+    throws PortletException, IOException, PortletContainerException
+    {
+        ensureInitialized();
+
+        debugWithName("Header request received for portlet: "
+                + portletWindow.getPortletDefinition().getPortletName());
+
+        PortletRequestContextService rcService = getContainerServices().getPortletRequestContextService();
+        PortletEnvironmentService envService = getContainerServices().getPortletEnvironmentService();
+        PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
+
+        PortletRequestContext requestContext = rcService.getPortletHeaderRequestContext(this, request, response, portletWindow);
+        PortletHeaderResponseContext responseContext = rcService.getPortletHeaderResponseContext(this, request, response, portletWindow);
+        HeaderRequest portletRequest = envService.createHeaderRequest(requestContext, responseContext);
+        HeaderResponse portletResponse = envService.createHeaderResponse(responseContext);
+
+        FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.HEADER_PHASE);
+
+        try
+        {
+            invoker.header(requestContext, portletRequest, portletResponse, filterManager);
+            // Mark portlet interaction is completed: backend implementation can flush response state now
+            responseContext.close();
+        }
+        finally
+        {
+            responseContext.release();
+        }
+
+        debugWithName("Portlet header done for: " + portletWindow.getPortletDefinition().getPortletName());
+    }
+
+
+    /**
      * Renders the portlet associated with the specified portlet window.
      * @param portletWindow  the portlet window.
      * @param request  the servlet request.
@@ -131,6 +183,7 @@ public class PortletContainerImpl implements PortletContainer
      * 
      * @see javax.portlet.Portlet#render(RenderRequest, RenderResponse)
      */
+    @Override
     public void doRender(PortletWindow portletWindow,
             HttpServletRequest request,
             HttpServletResponse response)

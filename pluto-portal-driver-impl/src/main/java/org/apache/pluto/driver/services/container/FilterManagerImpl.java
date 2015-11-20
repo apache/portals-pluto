@@ -24,6 +24,9 @@ import javax.portlet.ActionResponse;
 import javax.portlet.EventPortlet;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.HeaderPortlet;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
@@ -43,7 +46,7 @@ import org.apache.pluto.container.om.portlet.PortletDefinition;
 
 /**
  * Manage the initialization and doFilter {@link FilterChainImpl} for the filter which are
- * declareted in the deployment descriptor.
+ * declared in the deployment descriptor.
  * @since 05/29/2007
  * @version 2.0
  */
@@ -102,6 +105,13 @@ public class FilterManagerImpl implements FilterManager{
      * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.RenderRequest, javax.portlet.RenderResponse, javax.portlet.Portlet, javax.portlet.PortletContext)
      */
     public void processFilter(RenderRequest req, RenderResponse res, Portlet portlet,PortletContext portletContext) throws PortletException, IOException{
+        filterchain.processFilter(req, res, portlet, portletContext);
+    }
+
+    /**
+     * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.RenderRequest, javax.portlet.HeaderResponse, javax.portlet.HeaderPortlet, javax.portlet.PortletContext)
+     */
+    public void processFilter(HeaderRequest req, HeaderResponse res, HeaderPortlet portlet,PortletContext portletContext) throws PortletException, IOException{
         filterchain.processFilter(req, res, portlet, portletContext);
     }
 

@@ -206,6 +206,17 @@ public interface PortletRequest extends PortletState
   /**
    * String identifier for the portlet render lifecycle phase. In this
    * phase the portlet request and response are from type
+   * <code>HeaderRequest</code> and <code>HeaderResponse</code>.
+   * <p>
+   * The value of the constant is <code>HEADER_PHASE</code>.
+   * 
+   * @since 3.0
+   */
+  public static final String HEADER_PHASE = "HEADER_PHASE";
+  
+  /**
+   * String identifier for the portlet render lifecycle phase. In this
+   * phase the portlet request and response are from type
    * <code>RenderRequest</code> and <code>RenderResponse</code>.
    * <p>
    * The value of the constant is <code>RENDER_PHASE</code>.
