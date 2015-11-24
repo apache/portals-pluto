@@ -320,6 +320,10 @@ public class PortletServlet3 extends HttpServlet {
          // The requested method is RENDER: call Portlet.render(..)
          if (methodId == PortletInvokerService.METHOD_RENDER) {
             RenderRequest renderRequest = (RenderRequest) portletRequest;
+            String rh = requestContext.getRenderHeaders();
+            if (rh != null) {
+               renderRequest.setAttribute(PortletRequest.RENDER_PART, rh);
+            }
             RenderResponse renderResponse = (RenderResponse) portletResponse;
             filterManager.processFilter(renderRequest, renderResponse, portlet, portletContext);
          }

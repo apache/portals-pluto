@@ -62,6 +62,9 @@ group (the left column) displays portlets with odd IDs, while the second group
     <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js"></script>
     <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/portletHubImpl.js"></script>
     <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/portlet.js"></script>
+    
+    <!-- Now include the head section markup provided by the portlet header processing methods -->
+    ${headMarkup}
 </head>
 
 <body>

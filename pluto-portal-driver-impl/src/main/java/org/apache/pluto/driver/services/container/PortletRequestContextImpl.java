@@ -62,8 +62,9 @@ public class PortletRequestContextImpl implements PortletRequestContext {
    private PortletConfig       portletConfig;
    private ServletContext      servletContext;
    private Cookie              cookies[];
+   private String              renderHeaders = null;      
    
-   // make sure thethese classes are loaded first by the container classloader
+   // make sure these classes are loaded first by the container classloader
    // so that the logs from these classes land in the Pluto log file.
    static {
       PortletURLProviderImpl.load();
@@ -93,6 +94,16 @@ public class PortletRequestContextImpl implements PortletRequestContext {
       this.url = PortalRequestContext.getContext(containerRequest).createPortalURL();
       this.urlProvider = new PortletURLProviderImpl(url, window);
       this.paramFactory = url.getPortletParameterFactory();
+   }
+
+   @Override
+   public String getRenderHeaders() {
+      return renderHeaders;
+   }
+
+   @Override
+   public void setRenderHeaders(String renderHeaders) {
+      this.renderHeaders = renderHeaders;
    }
 
    protected boolean isReservedAttributeName(String name) {

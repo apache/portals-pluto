@@ -19,6 +19,7 @@ package org.apache.pluto.driver.services.container;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,6 +44,7 @@ public class PortletActionResponseContextImpl extends PortletStateAwareResponseC
                                             HttpServletResponse containerResponse, PortletWindow window)
     {
         super(container, containerRequest, containerResponse, window);
+        setLifecycle(PortletRequest.ACTION_PHASE);
     }
 
     public String getResponseURL()

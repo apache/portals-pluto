@@ -72,7 +72,7 @@ import javax.xml.namespace.QName;
  * or class variables and external objects such as files, database connections,
  * and network connections.
  */
-public abstract class GenericPortlet implements Portlet, PortletConfig, EventPortlet, ResourceServingPortlet {
+public abstract class GenericPortlet implements Portlet, PortletConfig, EventPortlet, ResourceServingPortlet, HeaderPortlet {
 
 	private transient PortletConfig config;
 
@@ -209,6 +209,18 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 		// if no action processing method was found throw exc
 		throw new PortletException("processAction method not implemented");
 	}
+
+	/**
+	 * V3 method implementing the headers stage within the render phase. The default
+	 * implementation does nothing.
+	 * <p>
+	 * Version 3 portlets should override this method to set HTTP headers, cookies, and
+	 * to provide markup for the overall document <code>HEAD</code> section.
+	 */
+	@Override
+   public void renderHeaders(HeaderRequest request, HeaderResponse response) throws PortletException, java.io.IOException {
+   }
+
 
 	/**
 	 * The default implementation of this method sets the headers using the

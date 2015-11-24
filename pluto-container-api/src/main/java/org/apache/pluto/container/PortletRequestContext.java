@@ -76,4 +76,8 @@ public interface PortletRequestContext
      * @return
      */
     ActionParameters getActionParameters();
+    
+    // for render headers support
+    void setRenderHeaders(String renderHeaders);
+    String getRenderHeaders();
 }

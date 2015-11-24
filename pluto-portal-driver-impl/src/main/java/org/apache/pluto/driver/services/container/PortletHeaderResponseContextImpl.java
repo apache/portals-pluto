@@ -19,6 +19,7 @@ package org.apache.pluto.driver.services.container;
 import java.util.Collection;
 
 import javax.portlet.PortletMode;
+import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -38,6 +39,7 @@ public class PortletHeaderResponseContextImpl extends PortletMimeResponseContext
                                             HttpServletResponse containerResponse, PortletWindow window)
     {
         super(container, containerRequest, containerResponse, window);
+        setLifecycle(PortletRequest.HEADER_PHASE);
     }
 
     public void setNextPossiblePortletModes(Collection<PortletMode> portletModes)

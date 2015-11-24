@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.FilterManager;
+import org.apache.pluto.container.HeaderData;
 import org.apache.pluto.container.PortletActionResponseContext;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
@@ -135,7 +136,7 @@ public class PortletContainerImpl implements PortletContainer
      * @see javax.portlet.Portlet#header(HeaderRequest, HeaderResponse)
      */
     @Override
-    public void doHeader(PortletWindow portletWindow,
+    public HeaderData doHeader(PortletWindow portletWindow,
             HttpServletRequest request,
             HttpServletResponse response)
     throws PortletException, IOException, PortletContainerException
@@ -151,15 +152,17 @@ public class PortletContainerImpl implements PortletContainer
 
         PortletRequestContext requestContext = rcService.getPortletHeaderRequestContext(this, request, response, portletWindow);
         PortletHeaderResponseContext responseContext = rcService.getPortletHeaderResponseContext(this, request, response, portletWindow);
+        responseContext.setPropsAllowed(true);
         HeaderRequest portletRequest = envService.createHeaderRequest(requestContext, responseContext);
         HeaderResponse portletResponse = envService.createHeaderResponse(responseContext);
+        HeaderData headerData = new HeaderData();
 
         FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.HEADER_PHASE);
 
         try
         {
             invoker.header(requestContext, portletRequest, portletResponse, filterManager);
-            // Mark portlet interaction is completed: backend implementation can flush response state now
+            headerData = responseContext.getHeaderData();
             responseContext.close();
         }
         finally
@@ -168,6 +171,7 @@ public class PortletContainerImpl implements PortletContainer
         }
 
         debugWithName("Portlet header done for: " + portletWindow.getPortletDefinition().getPortletName());
+        return headerData;
     }
 
 
@@ -184,9 +188,10 @@ public class PortletContainerImpl implements PortletContainer
      * @see javax.portlet.Portlet#render(RenderRequest, RenderResponse)
      */
     @Override
-    public void doRender(PortletWindow portletWindow,
+    public HeaderData doRender(PortletWindow portletWindow,
             HttpServletRequest request,
-            HttpServletResponse response)
+            HttpServletResponse response,
+            String renderHeaders)
     throws PortletException, IOException, PortletContainerException
     {
         ensureInitialized();
@@ -200,6 +205,15 @@ public class PortletContainerImpl implements PortletContainer
 
         PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
         PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
+
+        if (renderHeaders != null && renderHeaders.equals(PortletRequest.RENDER_HEADERS)) {
+           responseContext.setPropsAllowed(true);
+        } else {
+           responseContext.setPropsAllowed(false);
+        }
+        requestContext.setRenderHeaders(renderHeaders);
+        HeaderData headerData = new HeaderData();
+
         RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext);
         RenderResponse portletResponse = envService.createRenderResponse(responseContext);
 
@@ -208,7 +222,7 @@ public class PortletContainerImpl implements PortletContainer
         try
         {
             invoker.render(requestContext, portletRequest, portletResponse, filterManager);
-            // Mark portlet interaction is completed: backend implementation can flush response state now
+            headerData = responseContext.getHeaderData();
             responseContext.close();
         }
         finally
@@ -217,6 +231,7 @@ public class PortletContainerImpl implements PortletContainer
         }
 
         debugWithName("Portlet render done for: " + portletWindow.getPortletDefinition().getPortletName());
+        return headerData;
     }
 
     /**
@@ -247,6 +262,7 @@ public class PortletContainerImpl implements PortletContainer
 
         PortletResourceRequestContext requestContext = rcService.getPortletResourceRequestContext(this, request, response, portletWindow, pageState);
         PortletResourceResponseContext responseContext = rcService.getPortletResourceResponseContext(this, request, response, portletWindow);
+        responseContext.setPropsAllowed(true);
         ResourceRequest portletRequest = envService.createResourceRequest(requestContext, responseContext);
         ResourceResponse portletResponse = envService.createResourceResponse(responseContext, requestContext.getCacheability());
 
@@ -297,6 +313,7 @@ public class PortletContainerImpl implements PortletContainer
 
         PortletRequestContext requestContext = rcService.getPortletActionRequestContext(this, request, response, portletWindow);
         PortletActionResponseContext responseContext = rcService.getPortletActionResponseContext(this, request, response, portletWindow);
+        responseContext.setPropsAllowed(true);
         ActionRequest portletRequest = envService.createActionRequest(requestContext, responseContext);
         ActionResponse portletResponse = envService.createActionResponse(responseContext);
 

@@ -51,6 +51,12 @@ public class AttributeKeys {
     		"org.apache.pluto.driver.DynamicPortletTitle";
 
     public static final String PORTAL_URL_PARSER = "PORTAL_URL_PARSER";
+    
+    /**
+     * For passing the head section markup collected from the portlets 
+     * to the aggregation JSP.
+     */
+    public static final String HEAD_SECTION_MARKUP = "headMarkup";
 
     // Constructor -------------------------------------------------------------
 

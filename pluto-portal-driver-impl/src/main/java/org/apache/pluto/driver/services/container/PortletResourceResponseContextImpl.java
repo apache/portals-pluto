@@ -18,6 +18,7 @@ package org.apache.pluto.driver.services.container;
 
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,6 +43,7 @@ public class PortletResourceResponseContextImpl extends PortletMimeResponseConte
                                               HttpServletResponse containerResponse, PortletWindow window)
     {        
         super(container, containerRequest, containerResponse, window);
+        setLifecycle(PortletRequest.RESOURCE_PHASE);
     }
 
     public void setCharacterEncoding(String charset)

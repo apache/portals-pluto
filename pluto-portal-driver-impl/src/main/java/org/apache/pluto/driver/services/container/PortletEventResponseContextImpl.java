@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.driver.services.container;
 
+import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,5 +36,6 @@ public class PortletEventResponseContextImpl extends PortletStateAwareResponseCo
                                            HttpServletResponse containerResponse, PortletWindow window)
     {
         super(container, containerRequest, containerResponse, window);
+        setLifecycle(PortletRequest.EVENT_PHASE);
     }
 }

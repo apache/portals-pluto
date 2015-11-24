@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.PortletURLProvider.TYPE;
 import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
@@ -37,6 +38,13 @@ public interface PortletResponseContext
     HttpServletRequest getServletRequest();
     HttpServletResponse getServletResponse();
     PortletWindow getPortletWindow();
+    
+    // needed for header processing
+    void setLifecycle(String lifecycle);
+    String getLifecycle();
+    void setPropsAllowed(boolean isSetPropsAllowed);
+    boolean isSetPropsAllowed();
+    HeaderData getHeaderData();
     
     ResourceURLProvider getResourceURLProvider();
     PortletURLProvider getPortletURLProvider(TYPE type);

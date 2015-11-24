@@ -112,6 +112,24 @@
    </portlet>
 
    <portlet>
+      <portlet-name>V3HeaderPortlet</portlet-name>
+      <display-name>Header Phase Test Portlet</display-name>
+      
+      <portlet-class>basic.portlet.HeaderPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>Header Phase Test Portlet</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
       <portlet-name>PortletConfigPortlet1</portlet-name>
       <display-name>Portlet Config Portlet #1</display-name>
       
