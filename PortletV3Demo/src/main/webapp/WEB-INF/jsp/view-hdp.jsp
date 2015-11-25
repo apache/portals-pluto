@@ -27,6 +27,11 @@ limitations under the License.
 <h3>V3 Header Portlet</h3><hr/>
 <p>
 Portlet to demo the V3 header request functionality. The portlet uses a CSS class that sets a border and
-background color.
+background color. The corresponding style sheet is set through the PortletResponse#addProperty(String, Element)
+method. 
+</p>
+<p>
+Character encoding: <%=renderResponse.getCharacterEncoding() %>, 
+Content type: <%=renderResponse.getContentType() %>
 </p>
 </div>

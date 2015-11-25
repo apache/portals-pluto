@@ -32,178 +32,186 @@ import org.apache.pluto.container.util.PrintWriterServletOutputStream;
 
 /**
  * @version $Id$
- *
+ * 
  */
-public abstract class PortletMimeResponseContextImpl extends PortletResponseContextImpl implements PortletMimeResponseContext
-{
-    private static class CacheControlImpl implements CacheControl
-    {
-        private String eTag;
-        private int expirationTime;
-        private boolean publicScope;
-        private boolean cachedContent;
-        
-        public CacheControlImpl()
-        {
-        }
+public abstract class PortletMimeResponseContextImpl extends PortletResponseContextImpl implements
+      PortletMimeResponseContext {
+   private static class CacheControlImpl implements CacheControl {
+      private String  eTag;
+      private int     expirationTime;
+      private boolean publicScope;
+      private boolean cachedContent;
 
-        public boolean useCachedContent()
-        {
-            return cachedContent;
-        }
+      public CacheControlImpl() {
+      }
 
-        public String getETag()
-        {
-            return this.eTag;
-        }
+      public boolean useCachedContent() {
+         return cachedContent;
+      }
 
-        public int getExpirationTime()
-        {
-            return expirationTime;
-        }
+      public String getETag() {
+         return this.eTag;
+      }
 
-        public boolean isPublicScope()
-        {
-            return publicScope;
-        }
+      public int getExpirationTime() {
+         return expirationTime;
+      }
 
-        public void setETag(String eTag)
-        {
-            this.eTag = eTag;
-        }
+      public boolean isPublicScope() {
+         return publicScope;
+      }
 
-        public void setExpirationTime(int expirationTime)
-        {
-            this.expirationTime = expirationTime;
-        }
+      public void setETag(String eTag) {
+         this.eTag = eTag;
+      }
 
-        public void setPublicScope(boolean publicScope)
-        {
-            this.publicScope = publicScope;
-        }
+      public void setExpirationTime(int expirationTime) {
+         this.expirationTime = expirationTime;
+      }
 
-        public void setUseCachedContent(boolean cachedContent)
-        {
-            this.cachedContent = cachedContent;
-        }
-    }
-    
-    private CacheControl cacheControl;
-    private OutputStream outputStream;
-    
-    public PortletMimeResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
-                                          HttpServletResponse containerResponse, PortletWindow window)
-    {
-        super(container, containerRequest, containerResponse, window);
-    }
-    
-    public void close()
-    {
-        cacheControl = null;
-        outputStream = null;
-        super.close();
-    }
+      public void setPublicScope(boolean publicScope) {
+         this.publicScope = publicScope;
+      }
 
-    public void flushBuffer() throws IOException
-    {
-        if (!isClosed())
-        {
-            getServletResponse().flushBuffer();
-        }
-    }
+      public void setUseCachedContent(boolean cachedContent) {
+         this.cachedContent = cachedContent;
+      }
+   }
 
-    public int getBufferSize()
-    {
-        return getServletResponse().getBufferSize();
-    }
+   private CacheControl cacheControl;
+   private OutputStream outputStream;
 
-    public CacheControl getCacheControl()
-    {
-        if (isClosed())
-        {
-            return null;
-        }
-        if (cacheControl == null)
-        {
-            cacheControl = new CacheControlImpl();
-        }
-        return cacheControl;
-    }
+   public PortletMimeResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
+         HttpServletResponse containerResponse, PortletWindow window) {
+      super(container, containerRequest, containerResponse, window);
+   }
 
-    public String getCharacterEncoding()
-    {
-        return isClosed() ? null : getServletResponse().getCharacterEncoding();
-    }
+   public void close() {
+      cacheControl = null;
+      outputStream = null;
+      super.close();
+   }
 
-    public String getContentType()
-    {
-        return isClosed() ? null : getServletResponse().getContentType();
-    }
+   public void flushBuffer() throws IOException {
+      if (!isClosed() && !isSetPropsAllowed()) {
+         getServletResponse().flushBuffer();
+      }
+   }
 
-    public Locale getLocale()
-    {
-        return isClosed() ? null : getServletResponse().getLocale();
-    }
+   public int getBufferSize() {
+      if (isSetPropsAllowed()) {
+         // header request
+         return headerData.getBufferSize();
+      } else {
+         // render or resource request
+         return getServletResponse().getBufferSize();
+      }
+   }
 
-    public OutputStream getOutputStream() throws IOException, IllegalStateException
-    {
-        if (isClosed())
-        {
-            return null;
-        }
-        if (outputStream == null)
-        {
-            try
-            {
-                outputStream = getServletResponse().getOutputStream();
+   public CacheControl getCacheControl() {
+      if (isClosed()) {
+         return null;
+      }
+      if (cacheControl == null) {
+         cacheControl = new CacheControlImpl();
+      }
+      return cacheControl;
+   }
+
+   public String getCharacterEncoding() {
+      return isClosed() ? null : getServletResponse().getCharacterEncoding();
+   }
+
+   public String getContentType() {
+      return isClosed() ? null : getServletResponse().getContentType();
+   }
+
+   public Locale getLocale() {
+      return isClosed() ? null : getServletResponse().getLocale();
+   }
+
+   public OutputStream getOutputStream() throws IOException, IllegalStateException {
+      if (isClosed()) {
+         return null;
+      }
+      if (isSetPropsAllowed()) {
+         // header request
+         return headerData.getBaoStream();
+      } else {
+         // render or resource request
+         if (outputStream == null) {
+            try {
+               outputStream = getServletResponse().getOutputStream();
+            } catch (IllegalStateException e) {
+               // handle situation where underlying ServletResponse its getWriter()
+               // has been called already anyway: return a wrapped PrintWriter in that case
+               outputStream = new PrintWriterServletOutputStream(getServletResponse().getWriter(), getServletResponse()
+                     .getCharacterEncoding());
             }
-            catch (IllegalStateException e)
-            {
-                // handle situation where underlying ServletResponse its getWriter()
-                // has been called already anyway: return a wrapped PrintWriter in that case
-                outputStream = new PrintWriterServletOutputStream(getServletResponse().getWriter(),
-                                                                   getServletResponse().getCharacterEncoding());
-            }
-        }
-        return outputStream;
-    }
+         }
+         return outputStream;
+      }
+   }
 
-    public PrintWriter getWriter() throws IOException, IllegalStateException
-    {
-        return isClosed() ? null : getServletResponse().getWriter();
-    }
+   public PrintWriter getWriter() throws IOException, IllegalStateException {
+      if (isClosed()) {
+         return null;
+      }
+      if (isSetPropsAllowed()) {
+         // header request
+         return headerData.getWriter();
+      } else {
+         // render or resource request
+         return getServletResponse().getWriter();
+      }
+   }
 
-    public boolean isCommitted()
-    {
-        return getServletResponse().isCommitted();
-    }
+   public boolean isCommitted() {
+      if (isSetPropsAllowed()) {
+         // header request
+         return false;
+      } else {
+         return getServletResponse().isCommitted();
+      }
+   }
 
-    public void reset()
-    {
-        getServletResponse().reset();
-    }
+   public void reset() {
+      if (!isClosed()) {
+         if (isSetPropsAllowed()) {
+            // header request
+            headerData.reset();
+         } else {
+            getServletResponse().reset();
+         }
+      }
+   }
 
-    public void resetBuffer()
-    {
-        if (!isClosed())
-        {
+   public void resetBuffer() {
+      if (!isClosed()) {
+         if (isSetPropsAllowed()) {
+            // header request
+            headerData.resetBuffer();
+         } else {
             getServletResponse().resetBuffer();
-        }
-    }
+         }
+      }
+   }
 
-    public void setBufferSize(int size)
-    {
-        if (!isClosed())
-        {
+   public void setBufferSize(int size) {
+      if (!isClosed()) {
+         if (isSetPropsAllowed()) {
+            // header request
+            headerData.setBufferSize(size);
+         } else {
+            // render or resource request
             getServletResponse().setBufferSize(size);
-        }
-    }
+         }
+      }
+   }
 
-    public void setContentType(String contentType)
-    {
-        if (!isClosed())
-        {
-            getServletResponse().setContentType(contentType);
-        }
-    }
+   public void setContentType(String contentType) {
+      if (!isClosed()) {
+         getServletResponse().setContentType(contentType);
+      }
+   }
 }

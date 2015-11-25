@@ -41,6 +41,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.Cookie;
 
 import org.w3c.dom.Element;
 
@@ -58,7 +59,7 @@ public class HeaderPortlet extends GenericPortlet {
    @Override
    public void renderHeaders(HeaderRequest req, HeaderResponse resp) throws PortletException, IOException {
       
-      if (LOGGER.isLoggable(Level.FINE)) {
+      if (isDebug) {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Doing the headers. ");
          txt.append("portal ctx prop names: ");
@@ -77,13 +78,25 @@ public class HeaderPortlet extends GenericPortlet {
       String contextRoot = req.getContextPath();
       link.setAttribute("href", contextRoot + "/resources/css/styles.css");
       resp.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, link);
+      
+      // Add cookies
+      Cookie c = new Cookie(this.getPortletName(), "something special");
+      c.setMaxAge(60);
+      resp.addProperty(c);
+      c = new Cookie("Author", "Scott");
+      c.setComment("test cookie");
+      resp.addProperty(c);
+
+      // Set header
+      resp.setProperty("Portlet", this.getPortletName());
+      resp.setProperty("Portal", "Pluto");
 
    }
 
    @Override
    protected void doView(RenderRequest req, RenderResponse resp) throws PortletException, IOException {
       
-      if (LOGGER.isLoggable(Level.FINE)) {
+      if (isDebug) {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Rendering. ");
          txt.append("RENDER_PART: ");

@@ -217,7 +217,6 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 * Version 3 portlets should override this method to set HTTP headers, cookies, and
 	 * to provide markup for the overall document <code>HEAD</code> section.
 	 */
-	@Override
    public void renderHeaders(HeaderRequest request, HeaderResponse response) throws PortletException, java.io.IOException {
    }
 

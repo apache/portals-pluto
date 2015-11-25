@@ -20,12 +20,14 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -282,7 +284,23 @@ public class PortalDriverServlet extends HttpServlet {
             }
             
             if (hd != null) {
+               
+               // handle markup for document head section
                markup.append(hd.getHeadSectionMarkup()).append("\n");
+               
+               // add the cookies to the response
+               List<Cookie> cookies = hd.getCookies();
+               for (Cookie c : cookies) {
+                  resp.addCookie(c);
+               }
+               
+               // Add the HTTP headers to the response
+               Map<String, List<String>> headers = hd.getHttpHeaders();
+               for (String name : headers.keySet()) {
+                  for (String val : headers.get(name)) {
+                     resp.addHeader(name, val);
+                  }
+               }
             }
             
          } catch (PortletContainerException ex) {

@@ -18,12 +18,14 @@ package org.apache.pluto.container.impl;
 
 import java.util.Enumeration;
 
+import javax.portlet.MimeResponse;
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletWindow;
@@ -128,8 +130,9 @@ public abstract class PortletResponseImpl implements PortletResponse
 
     public void addProperty(String key, Element element)
     {
-        ArgumentUtility.validateNotEmpty("key", key);
-        responseContext.addProperty(key, element);
+       ArgumentUtility.validateNotEmpty("key", key);
+       ArgumentUtility.validateNotNull("element", element);
+       responseContext.addProperty(key, element);
     }
 
 
