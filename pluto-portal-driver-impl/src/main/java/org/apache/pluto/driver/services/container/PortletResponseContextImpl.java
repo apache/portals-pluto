@@ -18,6 +18,7 @@ package org.apache.pluto.driver.services.container;
 
 import static javax.portlet.PortletRequest.HEADER_PHASE;
 import static javax.portlet.PortletRequest.RENDER_PHASE;
+import static javax.portlet.PortletRequest.RESOURCE_PHASE;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -102,6 +103,17 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
    public void setPropsAllowed(boolean isSetPropsAllowed) {
       this.isSetPropsAllowed = isSetPropsAllowed;
    }
+   
+   /**
+    * Returns <code>true</code> if markup written to the portlet output stream should 
+    * land in the document head section.
+    *  
+    * @return  <code>true</code> if the header buffer is active
+    */
+   public boolean isHeaderBufferActive() {
+      return isSetPropsAllowed && !lifecycle.equals(RESOURCE_PHASE);
+   }
+
 
    /**
     * returns the header data provided by the portlet during header phase execution.

@@ -19,24 +19,39 @@ limitations under the License.
 <%@ page session="false" %>
 <%@ taglib uri="http://xmlns.jcp.org/portlet_3_0"  prefix="portlet" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="static basic.portlet.Constants.*" %>
 
 <portlet:defineObjects />
 
-<div class='headerPortlet'>
-<h3>V3 Header Portlet</h3><hr/>
-<p>
-Portlet to demo the V3 header request functionality. The portlet uses a CSS class that sets a border and
-background color. The corresponding style sheet is set through the PortletResponse#addProperty(String, Element)
-method. 
-</p>
-<p>
-Character encoding: <%=renderResponse.getCharacterEncoding() %>, 
-Content type: <%=renderResponse.getContentType() %>
-</p>
-<p>
-The following section shows cookie information inserted by JavaScript code that was added to the 
-output stream during the header phase processing.
-</p>
-<div  class='markupSection' id='<portlet:namespace/>cookieDiv'></div>
-</div>
+<!-- This jsp generates markup for the document head section -->
+   
+<meta name="description" content="Portlet Hub Demo Portlet">
+<style>
+<!--
+.markupSection {
+   padding: 5px;
+   background-color: #DDFFDD;
+   border: thin solid #22EE88;
+}
+-->
+</style>
+   
+<script type="text/javascript">
+(function () {
+   'use strict';
+   var cdiv = '<portlet:namespace/>cookieDiv',
+
+bootstrap = function () {
+   var cookies = document.cookie.split(';'), ii, markup;
+   markup = '<p>Current Cookies:</p>';
+   for (ii = 0; ii < cookies.length; ii++) {
+      markup += cookies[ii] + '<br/>';
+   }
+   document.getElementById(cdiv).innerHTML=markup;
+};
+   
+// execute when document has been loaded 
+window.addEventListener('load', bootstrap, false);
+}());
+</script>
+
+<p>Hi</p>

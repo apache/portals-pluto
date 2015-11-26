@@ -54,7 +54,13 @@ public class HttpServletPortletResponseWrapper extends HttpServletResponseWrappe
         super(response);
         this.portletResponse = portletResponse;
         this.lifecyclePhase = (String)portletRequest.getAttribute(PortletRequest.LIFECYCLE_PHASE);
-        this.mimeResponse = PortletRequest.RENDER_PHASE.equals(lifecyclePhase) || PortletRequest.RESOURCE_PHASE.equals(lifecyclePhase) ? (MimeResponse)portletResponse : null;
+        MimeResponse mr = null;
+        if (PortletRequest.RENDER_PHASE.equals(lifecyclePhase) || 
+            PortletRequest.RESOURCE_PHASE.equals(lifecyclePhase) ||
+            PortletRequest.HEADER_PHASE.equals(lifecyclePhase)) {
+           mr = (MimeResponse)portletResponse;
+        }
+        this.mimeResponse = mr;
         this.forwarded = !included;
         this.included = included;
     }

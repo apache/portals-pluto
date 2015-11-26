@@ -106,29 +106,7 @@
                  <artifactId>maven-war-plugin</artifactId>
                  <configuration>
                    <archiveClasses>false</archiveClasses>
-                   <webXml>${project.build.directory}/pluto-resources/web.xml</webXml>
                  </configuration>
-               </plugin>
-               <!-- bind 'pluto:assemble' goal to 'generate-resources' lifecycle -->
-               <plugin>
-                  <groupId>org.apache.portals.pluto</groupId>
-                  <artifactId>maven-pluto-plugin</artifactId>
-                  <dependencies>
-                     <dependency>
-                        <groupId>org.apache.portals.pluto</groupId>
-                        <artifactId>pluto-util</artifactId>
-                        <version>${project.version}</version>
-                        <scope>runtime</scope>
-                     </dependency>
-                  </dependencies>
-                  <executions>
-                     <execution>
-                        <phase>generate-resources</phase>
-                        <goals>
-                           <goal>assemble</goal>
-                        </goals>
-                     </execution>
-                  </executions>
                </plugin>
                <!-- workaround for war processing of m-r-r-plugin causing the generated NOTICE and LICENSE file to be put under WEB-INF/classes/META-INF -->
                <plugin>

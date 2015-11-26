@@ -93,13 +93,13 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
    }
 
    public void flushBuffer() throws IOException {
-      if (!isClosed() && !isSetPropsAllowed()) {
+      if (!isClosed() && !isHeaderBufferActive()) {
          getServletResponse().flushBuffer();
       }
    }
 
    public int getBufferSize() {
-      if (isSetPropsAllowed()) {
+      if (isHeaderBufferActive()) {
          // header request
          return headerData.getBufferSize();
       } else {
@@ -134,7 +134,7 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
       if (isClosed()) {
          return null;
       }
-      if (isSetPropsAllowed()) {
+      if (isHeaderBufferActive()) {
          // header request
          return headerData.getBaoStream();
       } else {
@@ -157,7 +157,7 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
       if (isClosed()) {
          return null;
       }
-      if (isSetPropsAllowed()) {
+      if (isHeaderBufferActive()) {
          // header request
          return headerData.getWriter();
       } else {
@@ -167,7 +167,7 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
    }
 
    public boolean isCommitted() {
-      if (isSetPropsAllowed()) {
+      if (isHeaderBufferActive()) {
          // header request
          return false;
       } else {
@@ -177,7 +177,7 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
 
    public void reset() {
       if (!isClosed()) {
-         if (isSetPropsAllowed()) {
+         if (isHeaderBufferActive()) {
             // header request
             headerData.reset();
          } else {
@@ -188,7 +188,7 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
 
    public void resetBuffer() {
       if (!isClosed()) {
-         if (isSetPropsAllowed()) {
+         if (isHeaderBufferActive()) {
             // header request
             headerData.resetBuffer();
          } else {
@@ -199,7 +199,7 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
 
    public void setBufferSize(int size) {
       if (!isClosed()) {
-         if (isSetPropsAllowed()) {
+         if (isHeaderBufferActive()) {
             // header request
             headerData.setBufferSize(size);
          } else {

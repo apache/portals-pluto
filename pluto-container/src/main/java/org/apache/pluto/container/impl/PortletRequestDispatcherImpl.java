@@ -50,6 +50,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
 {	
     /** Logger. */
     private static final Logger LOG = LoggerFactory.getLogger(PortletRequestDispatcherImpl.class);
+    private final static boolean isDebug = LOG.isDebugEnabled();
     
     // Private Member Variables ------------------------------------------------
     
@@ -214,16 +215,25 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
    
     public void forward(PortletRequest request, PortletResponse response) throws PortletException, IOException
     {
+       if (isDebug) {
+          LOG.debug("Doing request dispatcher forward for portlet request.");
+       }
         doDispatch(request, response, false);
     }
     
 	public void include(PortletRequest request, PortletResponse response) throws PortletException, IOException
 	{
+	   if (isDebug) {
+         LOG.debug("Doing request dispatcher include for portlet request.");
+      }
 	    doDispatch(request, response, true);
 	}
 	
 	public void include(RenderRequest request, RenderResponse response) throws PortletException, IOException
 	{
+      if (isDebug) {
+         LOG.debug("Doing request dispatcher include for render request.");
+      }
 	    doDispatch(request, response, true);
     }
 	

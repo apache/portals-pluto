@@ -19,14 +19,13 @@
 package basic.portlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.ActionURL;
 import javax.portlet.GenericPortlet;
 import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
@@ -35,18 +34,13 @@ import javax.portlet.PortalContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.RenderParameters;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.RenderURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.http.Cookie;
 
 import org.w3c.dom.Element;
-
-import static javax.portlet.MimeResponse.Copy.*;
-import static basic.portlet.Constants.*;
 
 /**
  * Portlet for testing the redirect funtionality, including the new getRedirectURL API.
@@ -90,6 +84,12 @@ public class HeaderPortlet extends GenericPortlet {
       // Set header
       resp.setProperty("Portlet", this.getPortletName());
       resp.setProperty("Portal", "Pluto");
+
+      PrintWriter writer = resp.getWriter();
+      writer.println("<!-- before JSP include -->");
+      PortletRequestDispatcher rd = getPortletContext().getRequestDispatcher("/WEB-INF/jsp/headSectionMarkup.jsp");
+      rd.include(req, resp);
+      writer.println("<!-- after JSP include -->");
 
    }
 

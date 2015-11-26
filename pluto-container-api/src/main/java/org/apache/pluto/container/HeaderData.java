@@ -29,6 +29,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.Cookie;
 import javax.xml.parsers.DocumentBuilder;
@@ -72,8 +74,8 @@ public class HeaderData {
    private static final String       ROOT_ELEMENT_END   = "</rootElement>";
    private static final String       ROOT_ELEMENT_REGEX = "(?:\\s*)</{0,1}" + ROOT_ELEMENT + ">(?:\\s*)";
 
-   private static final Set<String>  allowedTags        = new HashSet<String>(Arrays.asList(new String[] { "META",
-         "LINK", "STYLE", "SCRIPT", "NOSCRIPT"         }));
+   private static final Set<String>  allowedTags        = new HashSet<String>(Arrays.asList(new String[] { 
+         "META", "LINK", "STYLE", "SCRIPT", "NOSCRIPT"         }));
 
    private List<Cookie>              cookies            = new ArrayList<Cookie>();
    private Map<String, List<String>> httpHeaders        = new HashMap<String, List<String>>();
@@ -83,6 +85,9 @@ public class HeaderData {
    private PrintWriter               pWriter            = null;
 
    public void resetBuffer() {
+      if (isDebug) {
+         LOG.debug("Resetting buffer.");
+      }
       if (baoStream != null) {
          baoStream.reset();
       }
@@ -106,6 +111,9 @@ public class HeaderData {
          sWriter = new StringWriter(bufferSize);
          pWriter = new PrintWriter(sWriter);
       }
+      if (isDebug) {
+         LOG.debug("returning writer.");
+      }
       return pWriter;
    }
 
@@ -115,6 +123,9 @@ public class HeaderData {
       }
       if (baoStream == null) {
          baoStream = new ByteArrayOutputStream(bufferSize);
+      }
+      if (isDebug) {
+         LOG.debug("returning output stream.");
       }
       return baoStream;
    }
@@ -143,10 +154,31 @@ public class HeaderData {
       }
 
       if (src != null) {
-         StringBuilder sb = new StringBuilder(128);
+         StringBuffer sb = new StringBuffer(128);
          sb.append(ROOT_ELEMENT_START);
-         sb.append(src);
+         
+         // need to do some preprocessing on the input text to avoid placing a burden on the 
+         // portlet developer. Goals:
+         //    * allow meta and link tags with or without a closing slash
+         //    * allow use of unescaped angle brackets within script tag
+
+         // make the parser eat link & meta tags with or without closing slash.
+         src = src.replaceAll("(<(?:meta|link).*?[^/])>", "$1/>");
+         
+         // convert < brackets within script tags to corresponding entities
+         
+         Pattern pat = Pattern.compile("(?s)" +             // multiline mode 
+                                       "(?<=<script)" +     // 0-width lookbehind; script start tag
+                                       "(.*?)" +            // non-greedy content of tag
+                                       "(?=</script)");     // 0-width lookahead: script end tag
+         Matcher mat = pat.matcher(src);
+         while (mat.find()) {
+            mat.appendReplacement(sb, mat.group().replaceAll("<", "&lt;"));
+         }
+         mat.appendTail(sb);
+
          sb.append(ROOT_ELEMENT_END);
+         LOG.debug(sb.toString());
 
          StringReader sr = new StringReader(sb.toString());
          InputSource is = new InputSource(sr);
