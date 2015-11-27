@@ -27,7 +27,7 @@ limitations under the License.
 <meta name="description" content="Portlet Hub Demo Portlet">
 <style>
 <!--
-.markupSection {
+.markupSection {                 /* special chars & < */
    padding: 5px;
    background-color: #DDFFDD;
    border: thin solid #22EE88;
@@ -44,6 +44,7 @@ bootstrap = function () {
    var cookies = document.cookie.split(';'), ii, markup;
    markup = '<p>Current Cookies:</p>';
    for (ii = 0; ii < cookies.length; ii++) {
+      /* make sure parser eats & character */
       markup += cookies[ii] + '<br/>';
    }
    document.getElementById(cdiv).innerHTML=markup;

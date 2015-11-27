@@ -82,7 +82,7 @@ public class HeaderPortlet extends GenericPortlet {
       resp.addProperty(c);
 
       // Set header
-      resp.setProperty("Portlet", this.getPortletName());
+      resp.addProperty("Portlet", this.getPortletName());
       resp.setProperty("Portal", "Pluto");
 
       PrintWriter writer = resp.getWriter();

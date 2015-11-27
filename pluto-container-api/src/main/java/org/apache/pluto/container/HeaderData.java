@@ -167,24 +167,26 @@ public class HeaderData {
          
          // convert < brackets within script tags to corresponding entities
          
-         Pattern pat = Pattern.compile("(?s)" +             // multiline mode 
-                                       "(?<=<script)" +     // 0-width lookbehind; script start tag
-                                       "(.*?)" +            // non-greedy content of tag
-                                       "(?=</script)");     // 0-width lookahead: script end tag
+         Pattern pat = Pattern.compile("(?s)" +                      // multiline mode 
+                                       "(?<=<(script|style))" +      // 0-width lookbehind; start tag
+                                       "(.*?)" +                     // non-greedy content of tag
+                                       "(?=</(script|style))");      // 0-width lookahead; end tag
          Matcher mat = pat.matcher(src);
          while (mat.find()) {
-            mat.appendReplacement(sb, mat.group().replaceAll("<", "&lt;"));
+            mat.appendReplacement(sb, mat.group().replaceAll("&", "&amp;").replaceAll("<", "&lt;"));
          }
          mat.appendTail(sb);
 
          sb.append(ROOT_ELEMENT_END);
-         LOG.debug(sb.toString());
 
          StringReader sr = new StringReader(sb.toString());
          InputSource is = new InputSource(sr);
          Document adoc;
 
          try {
+            if (docBuilder == null) {
+               setupDoc();
+            }
             adoc = docBuilder.parse(is);
 
             // verify that all tags are allowed
@@ -292,15 +294,20 @@ public class HeaderData {
          LOG.warn(txt.toString());
       }
    }
+   
+   public void setupDoc() throws ParserConfigurationException {
+      DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
+      dbfac.setExpandEntityReferences(true);
+      docBuilder = dbfac.newDocumentBuilder();
+      doc = docBuilder.newDocument();
+      root = doc.createElement(ROOT_ELEMENT);
+      doc.appendChild(root);
+   }
 
    public Element createElement(String tagName) {
       try {
          if (doc == null) {
-            DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
-            docBuilder = dbfac.newDocumentBuilder();
-            doc = docBuilder.newDocument();
-            root = doc.createElement(ROOT_ELEMENT);
-            doc.appendChild(root);
+            setupDoc();
          }
          return doc.createElement(tagName);
       } catch (ParserConfigurationException e) {
