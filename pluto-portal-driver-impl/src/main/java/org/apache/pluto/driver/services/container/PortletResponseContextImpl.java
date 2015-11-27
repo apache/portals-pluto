@@ -175,8 +175,9 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
          txt.append(", value: ").append(value);
         LOG.warn(txt.toString());
       } else {
-         // header names are case insensitive
-         if (disallowedHeaders.contains(key.toUpperCase())) {
+         // header names are case insensitive. allow setting all headers 
+         // during the resource phase.
+         if (!lifecycle.matches(RESOURCE_PHASE) && disallowedHeaders.contains(key.toUpperCase())) {
             StringBuilder txt = new StringBuilder(128);
             txt.append("Ignoring disallowed HTTP header: ").append(key);
             txt.append(" with value: ").append(value);
@@ -241,8 +242,9 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
          txt.append(", value: ").append(value);
          LOG.warn(txt.toString());
       } else {
-         // header names are case insensitive
-         if (disallowedHeaders.contains(key.toUpperCase())) {
+         // header names are case insensitive. allow setting all headers 
+         // during the resource phase.
+         if (!lifecycle.matches(RESOURCE_PHASE) && disallowedHeaders.contains(key.toUpperCase())) {
             StringBuilder txt = new StringBuilder(128);
             txt.append("Ignoring disallowed HTTP header: ").append(key);
             txt.append(" with value: ").append(value);
