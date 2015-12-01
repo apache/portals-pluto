@@ -203,5 +203,14 @@ public class ConfigurationHolder {
       }
       jcp.processWebDD(in, pad);
    }
+   
+   /**
+    * validates the configuration. To be called after the configuration has been completely read.
+    */
+   public void validate() {
+      if (jcp != null) {
+         jcp.validate();
+      }
+   }
 
 }

@@ -78,7 +78,6 @@ public class JSR168ConfigurationProcessor extends ConfigurationProcessor {
    // private static final boolean         isDebug = LOG.isDebugEnabled();
    private static final boolean         isTrace = LOG.isTraceEnabled();
 
-   private PortletApplicationDefinition pad;
 
    /* (non-Javadoc)
     * @see org.apache.pluto.container.om.portlet.impl.jsr168.ConfigurationProcessor#process(javax.xml.bind.JAXBElement)
@@ -559,6 +558,10 @@ public class JSR168ConfigurationProcessor extends ConfigurationProcessor {
          pad.addPortlet(pd);
 
       }
+   }
+   @Override
+   public void validate() throws IllegalArgumentException {
+      // For version 1.0, do nothing.
    }
 
 }

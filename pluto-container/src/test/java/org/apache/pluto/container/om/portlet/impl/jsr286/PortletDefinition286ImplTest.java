@@ -294,7 +294,7 @@ public class PortletDefinition286ImplTest {
    @Test
    public void testGetResourceBundle() {
       assertNotNull(cut.getResourceBundle());
-      assertEquals("resource-bundle", cut.getResourceBundle());
+      assertEquals("org.apache.pluto.container.om.portlet.GoodBundle", cut.getResourceBundle());
    }
 
    @Test

@@ -43,7 +43,7 @@
          <portlet:window-state>window-state3</portlet:window-state>
       </supports>
       <supported-locale>supported-locale</supported-locale>
-      <resource-bundle>resource-bundle</resource-bundle>
+      <resource-bundle>org.apache.pluto.container.om.portlet.GoodBundle</resource-bundle>
       <portlet-info id="info1">
          <title>title</title>
          <short-title>short-title</short-title>
@@ -104,7 +104,7 @@
          <transport-guarantee>NONE</transport-guarantee>
       </user-data-constraint>
    </security-constraint>
-   <resource-bundle>org.apache.portal.ResourceBundle</resource-bundle>
+   <resource-bundle>org.apache.pluto.container.om.portlet.GoodBundle</resource-bundle>
    <filter>
       <description xml:lang="de">description</description>
       <display-name xml:lang="de">display-name</display-name>

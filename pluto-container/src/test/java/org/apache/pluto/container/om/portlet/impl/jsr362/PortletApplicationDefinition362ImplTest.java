@@ -111,11 +111,11 @@ public class PortletApplicationDefinition362ImplTest {
     */
    @Test
    public void testGetSetId() {
-      String val = pad.getId();
+      String val = cut.getId();
       assertNotNull(val);
       assertEquals("id1", val);
-      pad.setId("42");
-      val = pad.getId();
+      cut.setId("42");
+      val = cut.getId();
       assertNotNull(val);
       assertEquals("42", val);
    }
@@ -125,8 +125,8 @@ public class PortletApplicationDefinition362ImplTest {
     */
    @Test
    public void testGetSetName() {
-      pad.setName("Bob");
-      String val = pad.getName();
+      cut.setName("Bob");
+      String val = cut.getName();
       assertNotNull(val);
       assertEquals("Bob", val);
    }
@@ -136,8 +136,8 @@ public class PortletApplicationDefinition362ImplTest {
     */
    @Test
    public void testSetGetContextPath() {
-      pad.setContextPath("Bob");
-      String val = pad.getContextPath();
+      cut.setContextPath("Bob");
+      String val = cut.getContextPath();
       assertNotNull(val);
       assertEquals("Bob", val);
    }
@@ -147,11 +147,11 @@ public class PortletApplicationDefinition362ImplTest {
     */
    @Test
    public void testGetSetVersion() {
-      String val = pad.getVersion();
+      String val = cut.getVersion();
       assertNotNull(val);
       assertEquals("3.0", val);
-      pad.setVersion("42");
-      val = pad.getVersion();
+      cut.setVersion("42");
+      val = cut.getVersion();
       assertNotNull(val);
       assertEquals("42", val);
    }
@@ -161,12 +161,12 @@ public class PortletApplicationDefinition362ImplTest {
     */
    @Test
    public void testGetSetResourceBundle() {
-      String val = pad.getResourceBundle();
+      String val = cut.getResourceBundle();
       String txt = "com.ibm.portal.ResourceBundle";
       assertNotNull(val);
-      assertEquals("org.apache.portal.ResourceBundle", val);
-      pad.setResourceBundle(txt);
-      val = pad.getResourceBundle();
+      assertEquals("org.apache.pluto.container.om.portlet.GoodBundle", val);
+      cut.setResourceBundle(txt);
+      val = cut.getResourceBundle();
       assertNotNull(val);
       assertEquals(txt, val);
    }
@@ -176,12 +176,12 @@ public class PortletApplicationDefinition362ImplTest {
     */
    @Test
    public void testGetSetDefaultNamespace() {
-      String val = pad.getDefaultNamespace();
+      String val = cut.getDefaultNamespace();
       String txt = "https://www.ibm.com/";
       assertNotNull(val);
       assertEquals("https://www.apache.org/", val);
-      pad.setDefaultNamespace(txt);
-      val = pad.getDefaultNamespace();
+      cut.setDefaultNamespace(txt);
+      val = cut.getDefaultNamespace();
       assertNotNull(val);
       assertEquals(txt, val);
    }
@@ -191,7 +191,7 @@ public class PortletApplicationDefinition362ImplTest {
     */
    @Test
    public void testGetPortlet() {
-      PortletDefinition pd = pad.getPortlet("portlet362");
+      PortletDefinition pd = cut.getPortlet("portlet362");
       assertNotNull(pd);
    }
 
@@ -647,6 +647,14 @@ public class PortletApplicationDefinition362ImplTest {
          int ind = testlocs.indexOf(loc);
          assertEquals(testencs[ind], localemap.get(loc));
       }
+   }
+   
+   /**
+    * Make sure validate() throws no exceptions
+    */
+   @Test
+   public void testValidate() {
+         cfp.validate();
    }
 
 }

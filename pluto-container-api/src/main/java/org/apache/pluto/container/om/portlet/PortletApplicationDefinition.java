@@ -39,6 +39,13 @@ public interface PortletApplicationDefinition {
     
    PortletDefinition getPortlet(String portletName);
    List<PortletDefinition> getPortlets();
+   /**
+    * The portlet name can end with the wildcard character '*'. The wildcard 
+    * matches any suffix. For filter mapping.
+    * 
+    * @return     The list of matching portlets
+    */
+   public List<PortletDefinition> getMatchingPortlets(String portletName);
    void addPortlet(PortletDefinition pd);
    
    List<EventDefinition> getEventDefinitions();

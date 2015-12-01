@@ -3,6 +3,7 @@ package org.apache.pluto.container.om.portlet.impl;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.parsers.DocumentBuilder;
@@ -28,6 +29,13 @@ public abstract class ConfigurationProcessor {
          .getLogger(ConfigurationProcessor.class);
    
 
+   protected PortletApplicationDefinition pad;
+   
+
+   public PortletApplicationDefinition getPad() {
+      return pad;
+   }
+
    /**
     * Traverses the portlet deployment descriptor tree and returns the data in
     * the form of a portlet application definition.
@@ -40,6 +48,23 @@ public abstract class ConfigurationProcessor {
     */
    public abstract PortletApplicationDefinition process(
          JAXBElement<?> rootElement) throws IllegalArgumentException;
+
+   /**
+    * Validates the given portlet application definition. This method should only be called after 
+    * the complete configuration has been read.
+    * <p>
+    * The validation method is designed to be called within the portlet application servlet context.
+    * It throws exceptions when specified classes cannot be loaded or other severe configuration
+    * problem is discovered. It logs warnings for less severe configuration problems.
+    * <p>
+    * The validation code is separate from the 
+    * configuration reading code so that the config reading code won't cause exceptions when it 
+    * is used by the maven-portlet-plugin packaging code. 
+    * 
+    * @throws IllegalArgumentException
+    *             If there is a validation error.
+    */
+   public abstract void validate() throws IllegalArgumentException;
 
    /**
     * Handle the locale the old-fashioned way (v1 & v2)
@@ -110,17 +135,50 @@ public abstract class ConfigurationProcessor {
       Class<?> valClass = null;
       try {
          ClassLoader cl = Thread.currentThread().getContextClassLoader();
+         if (cl == null) {
+            cl = this.getClass().getClassLoader();
+         }
          valClass = cl.loadClass(clsName);
          if (assignable != null && !assignable.isAssignableFrom(valClass)) {
             txt.append(". Specified class is not a ");
             txt.append(assignable.getCanonicalName());
             throw new Exception();
          }
-      } catch (ClassNotFoundException e) {
-         txt.append(", Exception: ").append(e.toString());
+//       } catch (ClassNotFoundException e) {
+//          txt.append(", Exception: ").append(e.toString());
+//          LOG.warn(txt.toString());
+//          // can't throw exception if class not found, since the portlet
+//          // application definition is used by the assembly mojo
+      } catch (Exception e) {
          LOG.warn(txt.toString());
-         // can't throw exception if class not found, since the portlet
-         // application definition is used by the assembly mojo
+         throw new IllegalArgumentException(txt.toString(), e);
+      }
+   }
+
+   /**
+    * checks if resource bundle name is valid by trying to load it. 
+    * 
+    * @param bundleName
+    *           Class name string from configuration
+    */
+   protected void checkValidBundle(String bundleName) {
+   
+      StringBuilder txt = new StringBuilder(128);
+      txt.append("Bad resource bundle: ");
+      txt.append(bundleName);
+      if (!isValidIdentifier(bundleName)) {
+         txt.append(". Invalid java identifier.");
+         LOG.warn(txt.toString());
+         throw new IllegalArgumentException(txt.toString());
+      }
+   
+      try {
+         ClassLoader cl = Thread.currentThread().getContextClassLoader();
+         if (cl == null) {
+            cl = this.getClass().getClassLoader();
+         }
+         @SuppressWarnings("unused")
+         ResourceBundle rb = ResourceBundle.getBundle(bundleName, Locale.getDefault(), cl); 
       } catch (Exception e) {
          LOG.warn(txt.toString());
          throw new IllegalArgumentException(txt.toString(), e);

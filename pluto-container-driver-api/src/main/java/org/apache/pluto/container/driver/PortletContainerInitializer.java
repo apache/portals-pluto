@@ -95,6 +95,8 @@ public class PortletContainerInitializer implements ServletContainerInitializer 
                // parse the web app deployment descriptor
                holder.processWebDD(win);
             }
+            
+            holder.validate();
 
             if (holder.getPad().getPortlets().size() > 0) {
                

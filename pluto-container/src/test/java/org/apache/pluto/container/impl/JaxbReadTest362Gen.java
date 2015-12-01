@@ -104,7 +104,7 @@ public class JaxbReadTest362Gen {
       assertEquals("org.apache.pluto.container.om.portlet.impl.fixtures.TestEventType", portletApp.getEventDefinition().get(0).getValueType());
       assertEquals("lifecycle", portletApp.getFilter().get(0).getLifecycle().get(0));
       assertEquals("portlet362", portletApp.getFilterMapping().get(0).getPortletName().get(0).getValue());
-      assertEquals("org.apache.portal.ResourceBundle", portletApp.getResourceBundle().getValue());
+      assertEquals("org.apache.pluto.container.om.portlet.GoodBundle", portletApp.getResourceBundle().getValue());
       assertEquals("3.0", portletApp.getVersion());
       
       // test container runtime options

@@ -23,9 +23,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.Portlet;
-import javax.portlet.PortletURLGenerationListener;
 import javax.portlet.PreferencesValidator;
-import javax.portlet.filter.PortletFilter;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
@@ -89,7 +87,7 @@ import org.slf4j.LoggerFactory;
  * @author Scott Nicklous
  * 
  */
-public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
+public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
 
    /** Logger. */
    private static final Logger          LOG     = LoggerFactory
@@ -97,13 +95,11 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
    // private static final boolean isDebug = LOG.isDebugEnabled();
    private static final boolean         isTrace = LOG.isTraceEnabled();
 
-   private PortletApplicationDefinition pad;
-
    /*
     * (non-Javadoc)
     * 
     * @see
-    * org.apache.pluto.container.om.portlet.impl.jsr168.ConfigurationProcessor
+    * org.apache.pluto.container.om.portlet.impl.jsr362.ConfigurationProcessor
     * #process(javax.xml.bind.JAXBElement)
     */
    @Override
@@ -251,16 +247,11 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
       for (FilterType item : args) {
 
          // validate data
-         if ((item.getFilterName() == null)
-               || (item.getFilterClass() == null)) {
+         if ((item.getFilterName() == null) || (item.getFilterName().length() == 0)
+               || (item.getFilterClass() == null) || (item.getFilterClass().length() == 0)) {
             String warning = "Bad Filter definition. name or class was null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
-         }
-         String clsName = item.getFilterClass();
-         if (clsName != null && !clsName.equals("")) {
-            checkValidClass(clsName, PortletFilter.class,
-                  "Bad filter definition. Filter class is invalid: ");
          }
 
          // set up the custom portlet mode
@@ -298,22 +289,11 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
          }
-         if (pad.getFilter(fname) == null) {
-            String warning = "Bad FilterMapping definition. Filter definition not found: " + fname;
-            LOG.warn(warning);
-            throw new IllegalArgumentException(warning);
-         }
          
          // set up the filter mapping
          FilterMapping newitem = new FilterMappingImpl(fname);
          for (PortletNameType pnt : item.getPortletName()) {
-            String pname = pnt.getValue();
-            if (pad.getPortlet(pname) == null) {
-               String warning = "Bad FilterMapping definition. Portlet definition not found: " + pname;
-               LOG.warn(warning);
-               throw new IllegalArgumentException(warning);
-            }
-            newitem.addPortletName(pname);
+            newitem.addPortletName(pnt.getValue());
          }
 
          // add it to the model
@@ -329,18 +309,13 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
       for (ListenerType item : args) {
 
          // validate data
-         if (item.getListenerClass() == null) {
+         if (item.getListenerClass() == null || item.getListenerClass().length() == 0) {
             String warning = "Bad Listener definition. Class was null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
          }
-         String clsName = item.getListenerClass();
-         if (clsName != null && !clsName.equals("")) {
-            checkValidClass(clsName, PortletURLGenerationListener.class,
-                  "Bad listener definition. Listener class is invalid: ");
-         }
 
-         // set up the custom portlet mode
+         // set up the listener
          Listener newitem = new ListenerImpl(item.getListenerClass());
          for (Description desc : handleDescriptions(item.getDescription())) {
             newitem.addDescription(desc);
@@ -364,14 +339,14 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
          // validate data
          if ((cpm.getPortletMode() == null)
                || (cpm.getPortletMode().getValue() == null)) {
-            String warning = "Bad custom portlet mode. Mode was null.";
+            String warning = "Custom portlet mode cannot be null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
          } else {
             String val = cpm.getPortletMode().getValue();
             if (val.equalsIgnoreCase("view") || val.equalsIgnoreCase("edit")
                   || val.equalsIgnoreCase("help")) {
-               String warning = "Bad custom portlet mode. Mode was: " + val;
+               String warning = "Bad custom portlet mode: " + val;
                LOG.warn(warning);
                throw new IllegalArgumentException(warning);
             }
@@ -406,14 +381,14 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
          // validate data
          if ((cws.getWindowState() == null)
                || (cws.getWindowState().getValue() == null)) {
-            String warning = "Bad custom portlet mode. Mode was null.";
+            String warning = "Custom window state cannot be null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
          } else {
             String val = cws.getWindowState().getValue();
-            if (val.equalsIgnoreCase("view") || val.equalsIgnoreCase("edit")
-                  || val.equalsIgnoreCase("help")) {
-               String warning = "Bad custom portlet mode. Mode was: " + val;
+            if (val.equalsIgnoreCase("normal") || val.equalsIgnoreCase("maximized")
+                  || val.equalsIgnoreCase("minimized")) {
+               String warning = "Bad custom window state: " + val;
                LOG.warn(warning);
                throw new IllegalArgumentException(warning);
             }
@@ -448,8 +423,8 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
             throw new IllegalArgumentException(warning);
          } else {
             for (PortletNameType pnt : pct.getPortletName()) {
-               if (!isValidIdentifier(pnt.getValue())) {
-                  String warning = "Bad portlet name: " + pnt.getValue();
+               if (pnt.getValue().length() == 0) {
+                  String warning = "Portlet name may not be null.";
                   LOG.warn(warning);
                   throw new IllegalArgumentException(warning);
                }
@@ -532,7 +507,8 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
       for (InitParamType parm : parms) {
 
          // validate data
-         if ((parm.getName() == null) || (parm.getName().getValue() == null)) {
+         if ((parm.getName() == null) || (parm.getName().getValue() == null) ||
+               (parm.getName().getValue().length() == 0)) {
             String warning = "Bad init parameter. Parameter name was null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
@@ -559,8 +535,9 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
       for (PreferenceType item : args) {
 
          // validate data
-         if ((item.getName() == null) || (item.getName().getValue() == null)) {
-            String warning = "Bad portlet preference. Ppreference name was null.";
+         if ((item.getName() == null) || (item.getName().getValue() == null) ||
+               (item.getName().getValue().length() == 0)) {
+            String warning = "Bad portlet preference. Preference name was null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
          }
@@ -572,7 +549,10 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
          for (ValueType vt : vals) {
             lines.add(vt.getValue());
          }
-         boolean isRO = (item.getReadOnly().value().equalsIgnoreCase("true"));
+         boolean isRO = false;      // default if not specified
+         if (item.getReadOnly() != null && item.getReadOnly().value() != null) {
+            isRO = (item.getReadOnly().value().equalsIgnoreCase("true"));
+         }
 
          Preference pref = new PreferenceImpl(name, isRO, lines);
          list.add(pref);
@@ -617,8 +597,9 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
       for (SecurityRoleRefType item : args) {
 
          // validate data
-         if ((item.getRoleName() == null) || (item.getRoleLink() == null)
-               || (item.getRoleLink().getValue() == null)) {
+         if ((item.getRoleName() == null) || (item.getRoleName().length() == 0) || 
+               (item.getRoleLink() == null) || (item.getRoleLink().getValue() == null) ||
+               (item.getRoleLink().getValue().length() == 0)) {
             String warning = "Bad security role reference. Name or link was null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
@@ -661,13 +642,6 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
             qname = new QName(pad.getDefaultNamespace(), name);
          }
 
-         if (pad.getEventDefinition(qname) == null) {
-            String warning = "Bad Event definition reference. No event definition found for qname: "
-                  + qname;
-            LOG.warn(warning);
-            throw new IllegalArgumentException(warning);
-         }
-
          // set up the event def ref
          EventDefinitionReference newedr = new EventDefinitionReferenceImpl(
                qname);
@@ -690,11 +664,6 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
          }
-         String clsName = item.getValueType();
-         if (clsName != null && !clsName.equals("")) {
-            checkValidClass(clsName, null,
-                  "Bad Event definition. Payload type is invalid: ");
-         }
 
          // prepare the qname
          String name = item.getName();
@@ -705,6 +674,7 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
 
          // set up the event definition
          EventDefinition newed = new EventDefinitionImpl(qname);
+         String clsName = item.getValueType();
          if (clsName != null && clsName.length() > 0) {
             newed.setValueType(clsName);
          }
@@ -768,15 +738,20 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
 
          // validate portlet name & class
          String warning;
-         String pn = portlet.getPortletName().getValue();
-         if (!isValidIdentifier(pn)) {
-            warning = "Portlet name not valid Java identifier: " + pn;
+         if (portlet.getPortletName() == null || portlet.getPortletName().getValue() == null ||
+               portlet.getPortletName().getValue().length() == 0) {
+            warning = "Portlet name may not be null";
             LOG.warn(warning);
-            // throw new IllegalArgumentException(warning);
+            throw new IllegalArgumentException(warning);
          }
+         String pn = portlet.getPortletName().getValue();
 
          String clsName = portlet.getPortletClass();
-         checkValidClass(clsName, Portlet.class, "Bad portlet class: ");
+         if (clsName == null || clsName.length() == 0) {
+            warning = "Portlet class may not be null";
+            LOG.warn(warning);
+            throw new IllegalArgumentException(warning);
+         }
 
          // set up portlet definition
 
@@ -810,12 +785,10 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
 
          PortletInfoType pit = portlet.getPortletInfo();
          if (pit != null) {
-            if (pit.getTitle().getValue() == null) {
-               warning = "Portlet info section does not contain title. Ingoring ...";
-               LOG.warn(warning);
-            } else {
-               String title, st = null, kw = null;
+               String title = null, st = null, kw = null;
+            if (pit.getTitle() != null) {
                title = pit.getTitle().getValue();
+            }
                if (pit.getShortTitle() != null) {
                   st = pit.getShortTitle().getValue();
                }
@@ -825,7 +798,6 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
                PortletInfo info = new PortletInfoImpl(title, kw, st);
                pd.setPortletInfo(info);
             }
-         }
 
          for (SupportedLocaleType slt : portlet.getSupportedLocale()) {
             pd.addSupportedLocale(slt.getValue());
@@ -840,8 +812,6 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
             Preferences newprefs = new PreferencesImpl();
 
             clsName = prefs.getPreferencesValidator();
-            checkValidClass(clsName, PreferencesValidator.class,
-                  "Bad portlet preferences validator class: ");
 
             newprefs.setPreferencesValidator(clsName);
             for (Preference p : handlePreferences(prefs.getPreference())) {
@@ -861,14 +831,8 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
          }
 
          for (String prp : portlet.getSupportedPublicRenderParameter()) {
-            boolean ok = false;
-            for (PublicRenderParameter prpdef : pad.getPublicRenderParameters()) {
-               if (prpdef.getIdentifier().equals(prp)) {
-                  ok = true;
-               }
-            }
-            if (!ok) {
-               warning = "Public render parameter definition not found for: " + prp;
+            if ((prp == null) || (prp.length() == 0)) {
+               warning = "Supported public render parameter definition may not be null.";
                LOG.warn(warning);
                throw new IllegalArgumentException(warning);
             }
@@ -890,6 +854,13 @@ public class JSR362ConfigurationProcessor extends ConfigurationProcessor {
          pad.addPortlet(pd);
 
       }
+   }
+   
+   /**
+    * validate the v3.0 configuration
+    */
+   public void validate () {
+      super.validate();             // reuse the 2.0 validation code
    }
 
 }

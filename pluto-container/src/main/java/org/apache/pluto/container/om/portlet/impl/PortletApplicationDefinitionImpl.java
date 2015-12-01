@@ -239,6 +239,24 @@ public class PortletApplicationDefinitionImpl implements
       return ret;
    }
 
+   /**
+    * The portlet name can end with the wildcard character '*'. The wildcard 
+    * matches any suffix. For filter mapping.
+    * 
+    * @return     The list of matching portlets
+    */
+   @Override
+   public List<PortletDefinition> getMatchingPortlets(String portletName) {
+      ArrayList<PortletDefinition> ret = new ArrayList<PortletDefinition>();
+      String match = portletName.replaceAll("^(.*)\\*$",  "$1");
+      for (PortletDefinition pd : portlets) {
+         if (pd.getPortletName().startsWith(match)) {
+            ret.add(new PortletDefinitionImpl(pd));
+         }
+      }
+      return ret;
+   }
+
    @Override
    public void addPortlet(PortletDefinition pd) {
       portlets.add( pd);
