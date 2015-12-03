@@ -55,4 +55,13 @@ public @interface InitParameter {
     * @return     The parameter value
     */
    String   value();
+   
+   /**
+    * <div class='container-change'>
+    * Provides locale-specific text describing the initialization parameter for use by the portal application or by tools.
+    * </div>
+    * 
+    * @return  The event description
+    */
+   LocaleString[]      description() default {};
 }

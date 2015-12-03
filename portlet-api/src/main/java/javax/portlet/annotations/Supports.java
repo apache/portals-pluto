@@ -34,7 +34,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 /**
  * <div class='changed_added_3_0'>
  * This annotation is used within composite portlet configuration annotations to
- * specify the supported portlet modes and window states for a given locale.
+ * specify the supported portlet modes and window states for a given content type.
  * It cannot be used as a stand-alone portlet annotation.
  * </div>
  */
@@ -50,25 +50,37 @@ public @interface Supports {
     * for example <code>"text{@literal /}*"</code> or <code>"*{@literal /}*"</code>.
     * </div>
     * 
-    * @return  The mime type
+    * @return     The MIME type
     */
    String   mimeType() default "text/html";
    
    /**
     * <div class='container-change'>
-    * The names of the supported portlet modes.
+    * Defines the portlet modes supported by this portlet.
+    * <p>
+    * The following names represent the standard portlet modes: 
+    * "edit", "help", "view".
+    * Custom portlet modes may also be defined.
+    * <p>
+    * Portlet mode names are not case sensitive.
     * </div>
     * 
     * @return  The supported portlet modes
     */
-   String[]      portletModes() default "";
+   String[] portletModes() default {"view"};
    
    /**
     * <div class='container-change'>
-    * The names of the supported window states.
+    * Defines the window states supported by this portlet.
+    * <p>
+    * The following names represent the standard window states: 
+    * "normal", "minimized", "maximized".
+    * Custom window states may also be defined.
+    * <p>
+    * Window state names are not case sensitive.
     * </div>
     * 
     * @return  The supported window states
     */
-   String[]      windowStates() default "";
+   String[] windowStates() default {"normal", "minimized", "maximized"};
 }

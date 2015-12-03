@@ -35,7 +35,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 /**
  * <div class='changed_added_3_0'>
  * This annotation is used within composite portlet configuration annotations to
- * represent portlet container runtime option name-value pairs.
+ * represent portlet container runtime option name-value pairs.  
  * It cannot be used as a stand-alone portlet annotation.
  * </div>
  */
@@ -50,9 +50,9 @@ public @interface RuntimeOption {
    String   name();
    
    /**
-    * The container runtime options value
+    * The container runtime options values.
     * 
-    * @return     The parameter value
+    * @return     The parameter values
     */
-   String   value();
+   String[]   values();
 }

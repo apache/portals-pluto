@@ -58,4 +58,14 @@ public @interface SecurityRoleRef {
     * @return  The role link
     */
    String      roleLink() default "";
+   
+   /**
+    * <div class='container-change'>
+    * The security role ref description.
+    * It provides locale-specific text describing the security role ref for use by the portal application or by tools.
+    * </div>
+    * 
+    * @return  The portlet description
+    */
+   LocaleString[]   description() default {};
 }

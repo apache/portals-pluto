@@ -69,6 +69,19 @@ import static java.lang.annotation.RetentionPolicy.*;
 public @interface PortletRequestFilter {
    
    /**
+    * The filter name. 
+    * <p>
+    * The filter name is not required. If a filter name is provided, the filter configuration
+    * may be addressed through the filter name in the portlet deployment descriptor to modify 
+    * the filter or filter mapping.
+    * <p>
+    *  
+    * 
+    * @return  The filter name
+    */
+   String   filterName() default "";
+   
+   /**
     * <div class='not-supported'>
     * The portlet names for which the request filter applies.
     * <p>

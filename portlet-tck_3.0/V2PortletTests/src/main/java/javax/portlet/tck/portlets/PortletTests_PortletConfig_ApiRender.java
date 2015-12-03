@@ -105,9 +105,15 @@ public class PortletTests_PortletConfig_ApiRender implements Portlet, ResourceSe
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getPortletName      */
       /* Details: "Method getPortletName(): Returns a String containing the   */
       /* portlet name"                                                        */
-      TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPORTLETNAME);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      TestResult tr0 = tcd.getTestResultSucceeded(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPORTLETNAME);
+      String portletName = portletConfig.getPortletName();
+      if (!portletName.equals(this.getClass().getSimpleName())) {
+         tr0.setTcSuccess(false);
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Portlet name did not match class name. Portlet name: ").append(portletName);
+         txt.append(", Class name: ").append(this.getClass().getSimpleName());
+         tr0.appendTcDetail(txt.toString());
+      }
       tr0.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getPortletContext   */
