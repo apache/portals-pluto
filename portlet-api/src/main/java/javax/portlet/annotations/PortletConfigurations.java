@@ -47,5 +47,5 @@ public @interface PortletConfigurations {
     * 
     * @return     An array of portlet configurations
     */
-   PortletConfiguration[] configurations();
+   PortletConfiguration[] value();
 }
