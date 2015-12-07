@@ -91,7 +91,7 @@ public class PortletApplicationDefinition362ImplTest {
       InputStream in = PortletApplicationDefinition362ImplTest.class
             .getClassLoader().getResourceAsStream(XML_FILE);
       
-      cfp = new ConfigurationHolder(pad);
+      cfp = new ConfigurationHolder();
       try {
          cfp.processPortletDD(in);
          pad = cfp.getPad();
@@ -228,6 +228,27 @@ public class PortletApplicationDefinition362ImplTest {
   }
 
    /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addPortlet(org.apache.pluto.container.om.portlet.PortletDefinition)}.
+    */
+   @Test
+   public void testAddDupPortlet() {
+      String newPN = "portlet362";
+      PortletDefinition pd = new PortletDefinitionImpl(newPN, cut);
+      cut.addPortlet(pd);
+      
+      List<PortletDefinition> list = cut.getPortlets();
+      assertNotNull(list);
+      assertEquals(1, list.size());
+      boolean ok = false;
+      for (PortletDefinition item : list) {
+         if (item.getPortletName().equals(newPN)) {
+            ok = true;
+         }
+      }
+      assertTrue(ok);
+  }
+
+   /**
     * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#getEventDefinitions()}.
     */
    @Test
@@ -277,6 +298,27 @@ public class PortletApplicationDefinition362ImplTest {
    }
 
    /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addEventDefinition(org.apache.pluto.container.om.portlet.EventDefinition)}.
+    */
+   @Test
+   public void testAddDupEventDefinition() {
+      QName qn = new QName("https://www.apache.org/", "supported-processing-event");
+      EventDefinition ed = new EventDefinitionImpl(qn);
+      cut.addEventDefinition(ed);
+
+      List<EventDefinition> list = cut.getEventDefinitions();
+      assertNotNull(list);
+      assertEquals(2, list.size());
+      boolean ok = false;
+      for (EventDefinition item : list) {
+         if (item.getQName().equals(qn)) {
+            ok = true;
+         }
+      }
+      assertTrue(ok);
+   }
+
+   /**
     * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#getPublicRenderParameter(java.lang.String)}.
     */
    @Test
@@ -312,6 +354,22 @@ public class PortletApplicationDefinition362ImplTest {
       assertNotNull(prps);
       assertEquals(3, prps.size());
       assertEquals(prpid, prps.get(2).getIdentifier());
+   }
+
+   /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addPublicRenderParameter(org.apache.pluto.container.om.portlet.PublicRenderParameter)}.
+    */
+   @Test
+   public void testAddDupPublicRenderParameter() {
+      String prpid = "supported-public-render-parameter";
+      QName qn = new QName("https://www.apache.org/", "QName");
+      PublicRenderParameter prp = new PublicRenderParameterImpl(qn, prpid);
+      cut.addPublicRenderParameter(prp);
+      
+      List<PublicRenderParameter> prps = cut.getPublicRenderParameters();
+      assertNotNull(prps);
+      assertEquals(2, prps.size());
+      assertEquals(prpid, prps.get(1).getIdentifier());
    }
 
    /**
@@ -352,6 +410,21 @@ public class PortletApplicationDefinition362ImplTest {
    }
 
    /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addCustomPortletMode(org.apache.pluto.container.om.portlet.CustomPortletMode)}.
+    */
+   @Test
+   public void testAddDuplicateCustomPortletMode() {
+      String newItem = "portlet-mode";
+      CustomPortletMode prp = new CustomPortletModeImpl(newItem);
+      cut.addCustomPortletMode(prp);
+      
+      List<CustomPortletMode> list = cut.getCustomPortletModes();
+      assertNotNull(list);
+      assertEquals(1, list.size());
+      assertEquals(newItem, list.get(0).getPortletMode());
+   }
+
+   /**
     * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#getCustomWindowState(java.lang.String)}.
     */
    @Test
@@ -378,7 +451,7 @@ public class PortletApplicationDefinition362ImplTest {
     */
    @Test
    public void testAddCustomWindowState() {
-      String newItem = "newMode";
+      String newItem = "newState";
       CustomWindowState prp = new CustomWindowStateImpl(newItem);
       cut.addCustomWindowState(prp);
       
@@ -386,6 +459,21 @@ public class PortletApplicationDefinition362ImplTest {
       assertNotNull(list);
       assertEquals(2, list.size());
       assertEquals(newItem, list.get(1).getWindowState());
+   }
+
+   /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addCustomWindowState(org.apache.pluto.container.om.portlet.CustomWindowState)}.
+    */
+   @Test
+   public void testAddDupCustomWindowState() {
+      String newItem = "window-state";
+      CustomWindowState prp = new CustomWindowStateImpl(newItem);
+      cut.addCustomWindowState(prp);
+      
+      List<CustomWindowState> list = cut.getCustomWindowStates();
+      assertNotNull(list);
+      assertEquals(1, list.size());
+      assertEquals(newItem, list.get(0).getWindowState());
    }
 
    /**
@@ -426,18 +514,34 @@ public class PortletApplicationDefinition362ImplTest {
    }
 
    /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addUserAttribute(org.apache.pluto.container.om.portlet.UserAttribute)}.
+    */
+   @Test
+   public void testAddDupUserAttribute() {
+      String newItem = "name";
+      UserAttribute prp = new UserAttributeImpl(newItem);
+      cut.addUserAttribute(prp);
+      
+      List<UserAttribute> list = cut.getUserAttributes();
+      assertNotNull(list);
+      assertEquals(1, list.size());
+      assertEquals(newItem, list.get(0).getName());
+   }
+
+   /**
     * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#getFilter(java.lang.String)}.
     */
    @Test
    public void testGetFilter() {
       String newItem = "filter-name";
+      String filterClass = "org.apache.pluto.container.om.portlet.impl.fixtures.TestFilter";
       Filter item = cut.getFilter(newItem);
       assertNotNull(item);
       Filter filter = cut.getFilters().get(0);
-      assertEquals("org.apache.pluto.container.om.portlet.impl.fixtures.TestFilter", 
+      assertEquals(filterClass, 
             filter.getFilterClass());
-      assertEquals("description", filter.getDescription(new Locale("de")).getDescription());
-      assertEquals("display-name", filter.getDisplayName(new Locale("de")).getDisplayName());
+      assertEquals("description", filter.getDescription(new Locale("de")).getText());
+      assertEquals("display-name", filter.getDisplayName(new Locale("de")).getText());
       assertEquals("lifecycle", filter.getLifecycles().get(0));
       assertEquals("value", filter.getInitParam("name").getParamValue());
    }
@@ -460,13 +564,49 @@ public class PortletApplicationDefinition362ImplTest {
    @Test
    public void testAddFilter() {
       String newItem = "newFilter";
-      Filter prp = new FilterImpl(newItem);
-      cut.addFilter(prp);
+      String filterClass = "org.apache.pluto.container.om.portlet.impl.fixtures.TestFilter";
+      Filter fil = new FilterImpl(newItem);
+      fil.setFilterClass(filterClass);
+      cut.addFilter(fil);
       
       List<Filter> list = cut.getFilters();
       assertNotNull(list);
       assertEquals(2, list.size());
       assertEquals(newItem, list.get(1).getFilterName());
+   }
+
+   /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addFilter(org.apache.pluto.container.om.portlet.Filter)}.
+    */
+   @Test
+   public void testRemoveFilter() {
+      // existing filter def is removed if filter class is null (= not set)
+      String newItem = "filter-name";
+      Filter fil = new FilterImpl(newItem);
+      assertNotNull(cut.getFilter(newItem));
+      cut.addFilter(fil);
+      
+      List<Filter> list = cut.getFilters();
+      assertNotNull(list);
+      assertEquals(0, list.size());
+      assertEquals(null, cut.getFilter(newItem));
+   }
+
+   /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addFilter(org.apache.pluto.container.om.portlet.Filter)}.
+    */
+   @Test
+   public void testAddDupFilter() {
+      String newItem = "filter-name";
+      String filterClass = "org.apache.pluto.container.om.portlet.impl.fixtures.TestFilter";
+      Filter fil = new FilterImpl(newItem);
+      fil.setFilterClass(filterClass);
+      cut.addFilter(fil);
+      
+      List<Filter> list = cut.getFilters();
+      assertNotNull(list);
+      assertEquals(1, list.size());
+      assertEquals(newItem, list.get(0).getFilterName());
    }
 
    /**
@@ -499,13 +639,48 @@ public class PortletApplicationDefinition362ImplTest {
    @Test
    public void testAddFilterMapping() {
       String newItem = "newFilter";
-      FilterMapping prp = new FilterMappingImpl(newItem);
-      cut.addFilterMapping(prp);
+      String portletName = "portlet362";
+      FilterMapping fm = new FilterMappingImpl(newItem);
+      fm.addPortletName(portletName);
+      cut.addFilterMapping(fm);
       
       List<FilterMapping> list = cut.getFilterMappings();
       assertNotNull(list);
       assertEquals(2, list.size());
       assertEquals(newItem, list.get(1).getFilterName());
+   }
+
+   /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addFilterMapping(org.apache.pluto.container.om.portlet.FilterMapping)}.
+    */
+   @Test
+   public void testRemoveFilterMapping() {
+      String newItem = "filter-name";
+      FilterMapping fm = new FilterMappingImpl(newItem);
+      assertNotNull(cut.getFilterMapping(newItem));
+      cut.addFilterMapping(fm);
+      
+      List<FilterMapping> list = cut.getFilterMappings();
+      assertNotNull(list);
+      assertEquals(0, list.size());
+      assertEquals(null, cut.getFilterMapping(newItem));
+   }
+
+   /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addFilterMapping(org.apache.pluto.container.om.portlet.FilterMapping)}.
+    */
+   @Test
+   public void testAddDupFilterMapping() {
+      String newItem = "filter-name";
+      String portletName = "portlet362";
+      FilterMapping fm = new FilterMappingImpl(newItem);
+      fm.addPortletName(portletName);
+      cut.addFilterMapping(fm);
+      
+      List<FilterMapping> list = cut.getFilterMappings();
+      assertNotNull(list);
+      assertEquals(1, list.size());
+      assertEquals(newItem, list.get(0).getFilterName());
    }
 
    /**
@@ -548,6 +723,23 @@ public class PortletApplicationDefinition362ImplTest {
    }
 
    /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addContainerRuntimeOption(org.apache.pluto.container.om.portlet.ContainerRuntimeOption)}.
+    */
+   @Test
+   public void testAddDupContainerRuntimeOption() {
+      String newItem = "Runtime-Option-Portlet-App";
+      String[] newvals = {"v1", "v2"}; 
+      ContainerRuntimeOption item = new ContainerRuntimeOptionImpl(newItem, Arrays.asList(newvals));
+      cut.addContainerRuntimeOption(item);
+      
+      List<ContainerRuntimeOption> list = cut.getContainerRuntimeOptions();
+      assertNotNull(list);
+      assertEquals(1, list.size());
+      assertEquals(newItem, list.get(0).getName());
+      assertArrayEquals(newvals, list.get(0).getValues().toArray());
+   }
+
+   /**
     * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#getListeners()}.
     */
    @Test
@@ -556,6 +748,7 @@ public class PortletApplicationDefinition362ImplTest {
       assertNotNull(list);
       assertEquals(1, list.size());
       assertEquals("org.apache.pluto.container.om.portlet.impl.fixtures.TestListener", list.get(0).getListenerClass());
+      assertEquals("test listener", list.get(0).getListenerName());
    }
 
    /**
@@ -564,24 +757,36 @@ public class PortletApplicationDefinition362ImplTest {
    @Test
    public void testAddListener() {
       String clsName = "org.apache.pluto.container.om.portlet.impl.fixtures.DifferentListener";
+      String lisName = "Different Listener";
       Listener newitem = new ListenerImpl(clsName);
+      newitem.setListenerName(lisName);
+      
       cut.addListener(newitem);
       
       List<Listener> list = cut.getListeners();
       assertNotNull(list);
       assertEquals(2, list.size());
       assertEquals(clsName, list.get(1).getListenerClass());
+      assertEquals(lisName, list.get(1).getListenerName());
    }
 
    /**
-    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#getSecurityConstraints()}.
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addListener(org.apache.pluto.container.om.portlet.Listener)}.
     */
    @Test
-   public void testGetSecurityConstraints() {
-      List<SecurityConstraint> list = cut.getSecurityConstraints();
+   public void testAddDupListener() {
+      String clsName = "org.apache.pluto.container.om.portlet.impl.fixtures.TestListener";
+      String lisName = "test listener";
+      Listener newitem = new ListenerImpl(clsName);
+      newitem.setListenerName(lisName);
+      
+      cut.addListener(newitem);
+      
+      List<Listener> list = cut.getListeners();
       assertNotNull(list);
       assertEquals(1, list.size());
-      assertEquals("NONE", list.get(0).getUserDataConstraint().getTransportGuarantee());
+      assertEquals(clsName, list.get(0).getListenerClass());
+      assertEquals(lisName, list.get(0).getListenerName());
    }
 
    /**
@@ -594,8 +799,22 @@ public class PortletApplicationDefinition362ImplTest {
       
       List<SecurityConstraint> list = cut.getSecurityConstraints();
       assertNotNull(list);
-      assertEquals(2, list.size());
-      assertEquals("CONFIDENTIAL", list.get(1).getUserDataConstraint().getTransportGuarantee());
+      assertEquals(1, list.size());
+      assertEquals("CONFIDENTIAL", list.get(0).getUserDataConstraint().getTransportGuarantee());
+   }
+
+   /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addSecurityConstraint(org.apache.pluto.container.om.portlet.SecurityConstraint)}.
+    */
+   @Test
+   public void testAddDupSecurityConstraint() {
+      SecurityConstraint seco = new SecurityConstraintImpl(new UserDataConstraintImpl("NONE"));
+      cut.addSecurityConstraint(seco);
+      
+      List<SecurityConstraint> list = cut.getSecurityConstraints();
+      assertNotNull(list);
+      assertEquals(1, list.size());
+      assertEquals("NONE", list.get(0).getUserDataConstraint().getTransportGuarantee());
    }
 
    /**

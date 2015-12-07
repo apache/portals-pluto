@@ -91,7 +91,7 @@ public class PortletApplicationDefinition286ImplTest {
       InputStream in = PortletApplicationDefinition286ImplTest.class
             .getClassLoader().getResourceAsStream(XML_FILE);
       
-      cfp = new ConfigurationHolder(pad);
+      cfp = new ConfigurationHolder();
       try {
          cfp.processPortletDD(in);
          pad = cfp.getPad();
@@ -436,8 +436,8 @@ public class PortletApplicationDefinition286ImplTest {
       Filter filter = cut.getFilters().get(0);
       assertEquals("org.apache.pluto.container.om.portlet.impl.fixtures.TestFilter", 
             filter.getFilterClass());
-      assertEquals("description", filter.getDescription(new Locale("de")).getDescription());
-      assertEquals("display-name", filter.getDisplayName(new Locale("de")).getDisplayName());
+      assertEquals("description", filter.getDescription(new Locale("de")).getText());
+      assertEquals("display-name", filter.getDisplayName(new Locale("de")).getText());
       assertEquals("lifecycle", filter.getLifecycles().get(0));
       assertEquals("value", filter.getInitParam("name").getParamValue());
    }
@@ -460,8 +460,10 @@ public class PortletApplicationDefinition286ImplTest {
    @Test
    public void testAddFilter() {
       String newItem = "newFilter";
-      Filter prp = new FilterImpl(newItem);
-      cut.addFilter(prp);
+      String filCls = "org.apache.pluto.container.om.portlet.impl.fixtures.TestFilter";
+      Filter fil = new FilterImpl(newItem);
+      fil.setFilterClass(filCls);
+      cut.addFilter(fil);
       
       List<Filter> list = cut.getFilters();
       assertNotNull(list);
@@ -499,8 +501,9 @@ public class PortletApplicationDefinition286ImplTest {
    @Test
    public void testAddFilterMapping() {
       String newItem = "newFilter";
-      FilterMapping prp = new FilterMappingImpl(newItem);
-      cut.addFilterMapping(prp);
+      FilterMapping fm = new FilterMappingImpl(newItem);
+      fm.addPortletName("portlet286");
+      cut.addFilterMapping(fm);
       
       List<FilterMapping> list = cut.getFilterMappings();
       assertNotNull(list);

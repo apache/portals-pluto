@@ -30,7 +30,6 @@ import org.apache.pluto.container.om.portlet10.impl.PortletAppType;
 import org.apache.pluto.container.om.portlet10.impl.PortletType;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Low-level test to read a deployment descriptor

@@ -67,4 +67,40 @@ public class EventDefinitionReferenceImpl implements EventDefinitionReference {
       this.qname = qn;
    }
 
+   /* (non-Javadoc)
+    * @see java.lang.Object#hashCode()
+    */
+   @Override
+   public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((qname == null) ? 0 : qname.hashCode());
+      return result;
+   }
+
+   /* (non-Javadoc)
+    * @see java.lang.Object#equals(java.lang.Object)
+    */
+   @Override
+   public boolean equals(Object obj) {
+      if (this == obj) {
+         return true;
+      }
+      if (obj == null) {
+         return false;
+      }
+      if (getClass() != obj.getClass()) {
+         return false;
+      }
+      EventDefinitionReferenceImpl other = (EventDefinitionReferenceImpl) obj;
+      if (qname == null) {
+         if (other.qname != null) {
+            return false;
+         }
+      } else if (!qname.equals(other.qname)) {
+         return false;
+      }
+      return true;
+   }
+
 }

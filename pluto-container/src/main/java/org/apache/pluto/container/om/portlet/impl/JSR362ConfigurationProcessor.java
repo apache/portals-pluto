@@ -19,11 +19,26 @@
 package org.apache.pluto.container.om.portlet.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.portlet.Portlet;
-import javax.portlet.PreferencesValidator;
+import javax.portlet.PortletRequest;
+import javax.portlet.annotations.InitParameter;
+import javax.portlet.annotations.LocaleString;
+import javax.portlet.annotations.PortletApplication;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.PortletRequestFilter;
+import javax.portlet.annotations.PublicRenderParameterDefinition;
+import javax.portlet.annotations.RuntimeOption;
+import javax.portlet.annotations.UserAttribute;
+import javax.portlet.filter.ActionFilter;
+import javax.portlet.filter.EventFilter;
+import javax.portlet.filter.HeaderFilter;
+import javax.portlet.filter.RenderFilter;
+import javax.portlet.filter.ResourceFilter;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
@@ -33,6 +48,7 @@ import org.apache.pluto.container.om.portlet.CustomPortletMode;
 import org.apache.pluto.container.om.portlet.CustomWindowState;
 import org.apache.pluto.container.om.portlet.Description;
 import org.apache.pluto.container.om.portlet.DisplayName;
+import org.apache.pluto.container.om.portlet.Dependency;
 import org.apache.pluto.container.om.portlet.EventDefinition;
 import org.apache.pluto.container.om.portlet.EventDefinitionReference;
 import org.apache.pluto.container.om.portlet.Filter;
@@ -45,13 +61,12 @@ import org.apache.pluto.container.om.portlet.PortletInfo;
 import org.apache.pluto.container.om.portlet.Preference;
 import org.apache.pluto.container.om.portlet.Preferences;
 import org.apache.pluto.container.om.portlet.PublicRenderParameter;
-import org.apache.pluto.container.om.portlet.SecurityConstraint;
 import org.apache.pluto.container.om.portlet.SecurityRoleRef;
 import org.apache.pluto.container.om.portlet.Supports;
-import org.apache.pluto.container.om.portlet.UserDataConstraint;
 import org.apache.pluto.container.om.portlet30.impl.ContainerRuntimeOptionType;
 import org.apache.pluto.container.om.portlet30.impl.CustomPortletModeType;
 import org.apache.pluto.container.om.portlet30.impl.CustomWindowStateType;
+import org.apache.pluto.container.om.portlet30.impl.DependencyType;
 import org.apache.pluto.container.om.portlet30.impl.DescriptionType;
 import org.apache.pluto.container.om.portlet30.impl.DisplayNameType;
 import org.apache.pluto.container.om.portlet30.impl.EventDefinitionReferenceType;
@@ -59,10 +74,10 @@ import org.apache.pluto.container.om.portlet30.impl.EventDefinitionType;
 import org.apache.pluto.container.om.portlet30.impl.FilterMappingType;
 import org.apache.pluto.container.om.portlet30.impl.FilterType;
 import org.apache.pluto.container.om.portlet30.impl.InitParamType;
+import org.apache.pluto.container.om.portlet30.impl.KeywordsType;
 import org.apache.pluto.container.om.portlet30.impl.ListenerType;
 import org.apache.pluto.container.om.portlet30.impl.MimeTypeType;
 import org.apache.pluto.container.om.portlet30.impl.PortletAppType;
-import org.apache.pluto.container.om.portlet30.impl.PortletCollectionType;
 import org.apache.pluto.container.om.portlet30.impl.PortletInfoType;
 import org.apache.pluto.container.om.portlet30.impl.PortletModeType;
 import org.apache.pluto.container.om.portlet30.impl.PortletNameType;
@@ -70,12 +85,12 @@ import org.apache.pluto.container.om.portlet30.impl.PortletPreferencesType;
 import org.apache.pluto.container.om.portlet30.impl.PortletType;
 import org.apache.pluto.container.om.portlet30.impl.PreferenceType;
 import org.apache.pluto.container.om.portlet30.impl.PublicRenderParameterType;
-import org.apache.pluto.container.om.portlet30.impl.SecurityConstraintType;
 import org.apache.pluto.container.om.portlet30.impl.SecurityRoleRefType;
+import org.apache.pluto.container.om.portlet30.impl.ShortTitleType;
 import org.apache.pluto.container.om.portlet30.impl.SupportedLocaleType;
 import org.apache.pluto.container.om.portlet30.impl.SupportsType;
+import org.apache.pluto.container.om.portlet30.impl.TitleType;
 import org.apache.pluto.container.om.portlet30.impl.UserAttributeType;
-import org.apache.pluto.container.om.portlet30.impl.UserDataConstraintType;
 import org.apache.pluto.container.om.portlet30.impl.ValueType;
 import org.apache.pluto.container.om.portlet30.impl.WindowStateType;
 import org.slf4j.Logger;
@@ -90,22 +105,21 @@ import org.slf4j.LoggerFactory;
 public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
 
    /** Logger. */
-   private static final Logger          LOG     = LoggerFactory
-                                                      .getLogger(JSR362ConfigurationProcessor.class);
+   private static final Logger  LOG     = LoggerFactory.getLogger(JSR362ConfigurationProcessor.class);
    // private static final boolean isDebug = LOG.isDebugEnabled();
-   private static final boolean         isTrace = LOG.isTraceEnabled();
+   private static final boolean isTrace = LOG.isTraceEnabled();
+
+   public JSR362ConfigurationProcessor(PortletApplicationDefinition pad) {
+      super(pad);
+   }
 
    /*
     * (non-Javadoc)
     * 
-    * @see
-    * org.apache.pluto.container.om.portlet.impl.jsr362.ConfigurationProcessor
-    * #process(javax.xml.bind.JAXBElement)
+    * @see org.apache.pluto.container.om.portlet.impl.jsr362.ConfigurationProcessor #process(javax.xml.bind.JAXBElement)
     */
    @Override
-   public PortletApplicationDefinition process(JAXBElement<?> rootElement)
-         throws IllegalArgumentException {
-      pad = new PortletApplicationDefinitionImpl();
+   public void process(JAXBElement<?> rootElement) throws IllegalArgumentException {
 
       // make sure we were called properly
       assert (rootElement != null);
@@ -134,15 +148,13 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          LOG.trace(txt.toString());
       }
 
-      if (app.getDefaultNamespace() != null
-            && !app.getDefaultNamespace().equals("")) {
+      if (app.getDefaultNamespace() != null && !app.getDefaultNamespace().equals("")) {
          pad.setDefaultNamespace(app.getDefaultNamespace());
       } else {
          pad.setDefaultNamespace(XMLConstants.NULL_NS_URI);
       }
 
-      if (app.getResourceBundle() != null
-            && app.getResourceBundle().getValue() != null
+      if (app.getResourceBundle() != null && app.getResourceBundle().getValue() != null
             && !app.getResourceBundle().getValue().equals("")) {
          pad.setResourceBundle(app.getResourceBundle().getValue());
       }
@@ -151,25 +163,22 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          pad.addEventDefinition(ed);
       }
 
-      for (PublicRenderParameter prp : handlePRPs(app
-            .getPublicRenderParameter())) {
+      for (PublicRenderParameter prp : handlePRPs(app.getPublicRenderParameter())) {
          pad.addPublicRenderParameter(prp);
       }
-      
+
       for (ContainerRuntimeOption cro : handleRTOptions(app.getContainerRuntimeOption())) {
          pad.addContainerRuntimeOption(cro);
       }
 
       handleCPM(app.getCustomPortletMode());
       handleCWS(app.getCustomWindowState());
-      handleSC(app.getSecurityConstraint());
       handleUA(app.getUserAttribute());
       handleListeners(app.getListener());
       handleFilters(app.getFilter());
       handlePortlets(app.getPortlet());
       handleFilterMappings(app.getFilterMapping());
 
-      return pad;
    }
 
    /**
@@ -228,8 +237,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          }
 
          // set up the user attribute
-         UserAttributeImpl attr = new UserAttributeImpl(uat.getName()
-               .getValue());
+         UserAttributeImpl attr = new UserAttributeImpl(uat.getName().getValue());
          for (Description desc : handleDescriptions(uat.getDescription())) {
             attr.addDescription(desc);
          }
@@ -247,8 +255,8 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
       for (FilterType item : args) {
 
          // validate data
-         if ((item.getFilterName() == null) || (item.getFilterName().length() == 0)
-               || (item.getFilterClass() == null) || (item.getFilterClass().length() == 0)) {
+         if ((item.getFilterName() == null) || (item.getFilterName().length() == 0) || (item.getFilterClass() == null)
+               || (item.getFilterClass().length() == 0)) {
             String warning = "Bad Filter definition. name or class was null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
@@ -289,7 +297,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
          }
-         
+
          // set up the filter mapping
          FilterMapping newitem = new FilterMappingImpl(fname);
          for (PortletNameType pnt : item.getPortletName()) {
@@ -314,16 +322,20 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
          }
+         
 
          // set up the listener
          Listener newitem = new ListenerImpl(item.getListenerClass());
+         if (item.getListenerName() != null) {
+            newitem.setListenerName(item.getListenerName());
+         }
          for (Description desc : handleDescriptions(item.getDescription())) {
             newitem.addDescription(desc);
          }
          for (DisplayName dispName : handleDisplayNames(item.getDisplayName())) {
             newitem.addDisplayName(dispName);
          }
-         
+
          // add it to the model
          pad.addListener(newitem);
 
@@ -337,15 +349,13 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
       for (CustomPortletModeType cpm : cpms) {
 
          // validate data
-         if ((cpm.getPortletMode() == null)
-               || (cpm.getPortletMode().getValue() == null)) {
+         if ((cpm.getPortletMode() == null) || (cpm.getPortletMode().getValue() == null)) {
             String warning = "Custom portlet mode cannot be null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
          } else {
             String val = cpm.getPortletMode().getValue();
-            if (val.equalsIgnoreCase("view") || val.equalsIgnoreCase("edit")
-                  || val.equalsIgnoreCase("help")) {
+            if (val.equalsIgnoreCase("view") || val.equalsIgnoreCase("edit") || val.equalsIgnoreCase("help")) {
                String warning = "Bad custom portlet mode: " + val;
                LOG.warn(warning);
                throw new IllegalArgumentException(warning);
@@ -353,16 +363,13 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          }
 
          // set up the custom portlet mode
-         CustomPortletMode pm = new CustomPortletModeImpl(cpm.getPortletMode()
-               .getValue());
+         CustomPortletMode pm = new CustomPortletModeImpl(cpm.getPortletMode().getValue());
          for (Description desc : handleDescriptions(cpm.getDescription())) {
             pm.addDescription(desc);
          }
          boolean isPortalManaged = true; // default is true
-         if (cpm.getPortalManaged() != null
-               && cpm.getPortalManaged().value() != null) {
-            isPortalManaged = cpm.getPortalManaged().value()
-                  .equalsIgnoreCase("true");
+         if (cpm.getPortalManaged() != null && cpm.getPortalManaged().value() != null) {
+            isPortalManaged = cpm.getPortalManaged().value().equalsIgnoreCase("true");
          }
          pm.setPortalManaged(isPortalManaged);
 
@@ -379,8 +386,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
       for (CustomWindowStateType cws : cwss) {
 
          // validate data
-         if ((cws.getWindowState() == null)
-               || (cws.getWindowState().getValue() == null)) {
+         if ((cws.getWindowState() == null) || (cws.getWindowState().getValue() == null)) {
             String warning = "Custom window state cannot be null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
@@ -395,8 +401,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          }
 
          // set up the custom portlet mode
-         CustomWindowState ws = new CustomWindowStateImpl(cws.getWindowState()
-               .getValue());
+         CustomWindowState ws = new CustomWindowStateImpl(cws.getWindowState().getValue());
          for (Description desc : handleDescriptions(cws.getDescription())) {
             ws.addDescription(desc);
          }
@@ -406,59 +411,6 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
 
       }
 
-   }
-
-   /**
-    * Security constraints
-    */
-   private void handleSC(List<SecurityConstraintType> scs) {
-      for (SecurityConstraintType sc : scs) {
-
-         // validate data
-         PortletCollectionType pct = sc.getPortletCollection();
-         if ((pct == null) || (pct.getPortletName() == null)
-               || (pct.getPortletName().size() == 0)) {
-            String warning = "Portlet collection is empty.";
-            LOG.warn(warning);
-            throw new IllegalArgumentException(warning);
-         } else {
-            for (PortletNameType pnt : pct.getPortletName()) {
-               if (pnt.getValue().length() == 0) {
-                  String warning = "Portlet name may not be null.";
-                  LOG.warn(warning);
-                  throw new IllegalArgumentException(warning);
-               }
-            }
-         }
-
-         UserDataConstraintType udc = sc.getUserDataConstraint();
-         if ((udc == null) || (udc.getTransportGuarantee() == null)
-               || (udc.getTransportGuarantee().value() == null)) {
-            String warning = "User data constraint contains null value.";
-            LOG.warn(warning);
-            throw new IllegalArgumentException(warning);
-         }
-
-         // set up the user data constraint
-         UserDataConstraint newudc = new UserDataConstraintImpl(udc
-               .getTransportGuarantee().value());
-         for (Description desc : handleDescriptions(udc.getDescription())) {
-            newudc.addDescription(desc);
-         }
-
-         // set up the security constraint
-         SecurityConstraint newsc = new SecurityConstraintImpl(newudc);
-         for (DisplayName dispName : handleDisplayNames(sc.getDisplayName())) {
-            newsc.addDisplayName(dispName);
-         }
-         for (PortletNameType portletName : pct.getPortletName()) {
-            newsc.addPortletName(portletName.getValue());
-         }
-
-         // add it to the model
-         pad.addSecurityConstraint(newsc);
-
-      }
    }
 
    private List<Supports> handleSupports(List<SupportsType> sts) {
@@ -507,8 +459,8 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
       for (InitParamType parm : parms) {
 
          // validate data
-         if ((parm.getName() == null) || (parm.getName().getValue() == null) ||
-               (parm.getName().getValue().length() == 0)) {
+         if ((parm.getName() == null) || (parm.getName().getValue() == null)
+               || (parm.getName().getValue().length() == 0)) {
             String warning = "Bad init parameter. Parameter name was null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
@@ -535,8 +487,8 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
       for (PreferenceType item : args) {
 
          // validate data
-         if ((item.getName() == null) || (item.getName().getValue() == null) ||
-               (item.getName().getValue().length() == 0)) {
+         if ((item.getName() == null) || (item.getName().getValue() == null)
+               || (item.getName().getValue().length() == 0)) {
             String warning = "Bad portlet preference. Preference name was null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
@@ -549,7 +501,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          for (ValueType vt : vals) {
             lines.add(vt.getValue());
          }
-         boolean isRO = false;      // default if not specified
+         boolean isRO = false; // default if not specified
          if (item.getReadOnly() != null && item.getReadOnly().value() != null) {
             isRO = (item.getReadOnly().value().equalsIgnoreCase("true"));
          }
@@ -560,14 +512,12 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
       return list;
    }
 
-   private List<ContainerRuntimeOption> handleRTOptions(
-         List<ContainerRuntimeOptionType> args) {
+   private List<ContainerRuntimeOption> handleRTOptions(List<ContainerRuntimeOptionType> args) {
       ArrayList<ContainerRuntimeOption> list = new ArrayList<ContainerRuntimeOption>();
       for (ContainerRuntimeOptionType arg : args) {
 
          // validate data
-         if ((arg.getName() == null) || (arg.getName().getValue() == null)
-               || arg.getName().getValue().equals("")) {
+         if ((arg.getName() == null) || (arg.getName().getValue() == null) || arg.getName().getValue().equals("")) {
             String warning = "Bad container runtime option. Name was null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
@@ -581,8 +531,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             lines.add(vt.getValue());
          }
 
-         ContainerRuntimeOption item = new ContainerRuntimeOptionImpl(name,
-               lines);
+         ContainerRuntimeOption item = new ContainerRuntimeOptionImpl(name, lines);
          list.add(item);
 
       }
@@ -597,9 +546,8 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
       for (SecurityRoleRefType item : args) {
 
          // validate data
-         if ((item.getRoleName() == null) || (item.getRoleName().length() == 0) || 
-               (item.getRoleLink() == null) || (item.getRoleLink().getValue() == null) ||
-               (item.getRoleLink().getValue().length() == 0)) {
+         if ((item.getRoleName() == null) || (item.getRoleName().length() == 0) || (item.getRoleLink() == null)
+               || (item.getRoleLink().getValue() == null) || (item.getRoleLink().getValue().length() == 0)) {
             String warning = "Bad security role reference. Name or link was null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
@@ -607,7 +555,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
 
          // set up the role ref
          String name = item.getRoleName();
-         String link = item.getRoleLink().getValue();
+         String link = (item.getRoleLink() != null) ? item.getRoleLink().getValue() : null;
          SecurityRoleRef srr = new SecurityRoleRefImpl(name);
          srr.setRoleLink(link);
          for (Description desc : handleDescriptions(item.getDescription())) {
@@ -620,11 +568,9 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
    }
 
    /**
-    * Event definition references - supported publishing events & supported
-    * processing events
+    * Event definition references - supported publishing events & supported processing events
     */
-   private List<EventDefinitionReference> handleEventDefRefs(
-         List<EventDefinitionReferenceType> args) {
+   private List<EventDefinitionReference> handleEventDefRefs(List<EventDefinitionReferenceType> args) {
       ArrayList<EventDefinitionReference> list = new ArrayList<EventDefinitionReference>();
       for (EventDefinitionReferenceType item : args) {
 
@@ -643,8 +589,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          }
 
          // set up the event def ref
-         EventDefinitionReference newedr = new EventDefinitionReferenceImpl(
-               qname);
+         EventDefinitionReference newedr = new EventDefinitionReferenceImpl(qname);
 
          list.add(newedr);
       }
@@ -690,8 +635,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
       return list;
    }
 
-   private List<PublicRenderParameter> handlePRPs(
-         List<PublicRenderParameterType> args) {
+   private List<PublicRenderParameter> handlePRPs(List<PublicRenderParameterType> args) {
       ArrayList<PublicRenderParameter> list = new ArrayList<PublicRenderParameter>();
       for (PublicRenderParameterType item : args) {
 
@@ -720,9 +664,6 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          for (Description desc : handleDescriptions(item.getDescription())) {
             newprp.addDescription(desc);
          }
-         for (QName qn : item.getAlias()) {
-            newprp.addAlias(qn);
-         }
 
          list.add(newprp);
       }
@@ -738,24 +679,28 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
 
          // validate portlet name & class
          String warning;
-         if (portlet.getPortletName() == null || portlet.getPortletName().getValue() == null ||
-               portlet.getPortletName().getValue().length() == 0) {
+         if (portlet.getPortletName() == null || portlet.getPortletName().getValue() == null
+               || portlet.getPortletName().getValue().length() == 0) {
             warning = "Portlet name may not be null";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
          }
+         
          String pn = portlet.getPortletName().getValue();
-
          String clsName = portlet.getPortletClass();
-         if (clsName == null || clsName.length() == 0) {
-            warning = "Portlet class may not be null";
-            LOG.warn(warning);
-            throw new IllegalArgumentException(warning);
-         }
 
          // set up portlet definition
 
-         PortletDefinition pd = new PortletDefinitionImpl(pn, pad);
+         PortletDefinition pd = pad.getPortlet(pn);
+         if (pd == null) {
+            // If no annotated definition, the class name must be present
+            if (clsName == null || clsName.length() == 0) {
+               warning = "Portlet class may not be null";
+               LOG.warn(warning);
+               throw new IllegalArgumentException(warning);
+            }
+            pd = new PortletDefinitionImpl(pn, pad);
+         }
          pd.setPortletClass(portlet.getPortletClass());
 
          if (portlet.getResourceBundle() != null) {
@@ -770,8 +715,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             pd.setCacheScope(portlet.getCacheScope().getValue());
          }
 
-         for (DisplayName dispName : handleDisplayNames(portlet
-               .getDisplayName())) {
+         for (DisplayName dispName : handleDisplayNames(portlet.getDisplayName())) {
             pd.addDisplayName(dispName);
          }
 
@@ -783,21 +727,33 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             pd.addSupports(s);
          }
 
+         // handle portlet info
+
          PortletInfoType pit = portlet.getPortletInfo();
          if (pit != null) {
-               String title = null, st = null, kw = null;
-            if (pit.getTitle() != null) {
-               title = pit.getTitle().getValue();
+
+            PortletInfo info = pd.getPortletInfo();
+            if (info == null) {
+               info = new PortletInfoImpl();
             }
-               if (pit.getShortTitle() != null) {
-                  st = pit.getShortTitle().getValue();
-               }
-               if (pit.getKeywords() != null) {
-                  kw = pit.getKeywords().getValue();
-               }
-               PortletInfo info = new PortletInfoImpl(title, kw, st);
-               pd.setPortletInfo(info);
+
+            for (TitleType item : pit.getTitle()) {
+               Locale loc = (item.getLang() == null) ? Locale.ENGLISH : Locale.forLanguageTag(item.getLang());
+               info.addTitle(new LocaleTextImpl(loc, item.getValue()));
             }
+
+            for (ShortTitleType item : pit.getShortTitle()) {
+               Locale loc = (item.getLang() == null) ? Locale.ENGLISH : Locale.forLanguageTag(item.getLang());
+               info.addShortTitle(new LocaleTextImpl(loc, item.getValue()));
+            }
+
+            for (KeywordsType item : pit.getKeywords()) {
+               Locale loc = (item.getLang() == null) ? Locale.ENGLISH : Locale.forLanguageTag(item.getLang());
+               info.addKeywords(new LocaleTextImpl(loc, item.getValue()));
+            }
+
+            pd.setPortletInfo(info);
+         }
 
          for (SupportedLocaleType slt : portlet.getSupportedLocale()) {
             pd.addSupportedLocale(slt.getValue());
@@ -809,7 +765,12 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
 
          PortletPreferencesType prefs = portlet.getPortletPreferences();
          if (prefs != null) {
-            Preferences newprefs = new PreferencesImpl();
+
+            // merge the new prefs with the old
+            Preferences newprefs = pd.getPortletPreferences();
+            if (newprefs == null) {
+               newprefs = new PreferencesImpl();
+            }
 
             clsName = prefs.getPreferencesValidator();
 
@@ -820,13 +781,11 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             pd.setPortletPreferences(newprefs);
          }
 
-         for (SecurityRoleRef srr : handleSecRoleRef(portlet
-               .getSecurityRoleRef())) {
+         for (SecurityRoleRef srr : handleSecRoleRef(portlet.getSecurityRoleRef())) {
             pd.addSecurityRoleRef(srr);
          }
 
-         for (ContainerRuntimeOption cro : handleRTOptions(portlet
-               .getContainerRuntimeOption())) {
+         for (ContainerRuntimeOption cro : handleRTOptions(portlet.getContainerRuntimeOption())) {
             pd.addContainerRuntimeOption(cro);
          }
 
@@ -840,27 +799,391 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          }
 
          // Supported processing events
-         for (EventDefinitionReference edr : handleEventDefRefs(portlet
-               .getSupportedProcessingEvent())) {
+         for (EventDefinitionReference edr : handleEventDefRefs(portlet.getSupportedProcessingEvent())) {
             pd.addSupportedProcessingEvent(edr);
          }
 
          // Supported publishing events
-         for (EventDefinitionReference edr : handleEventDefRefs(portlet
-               .getSupportedPublishingEvent())) {
+         for (EventDefinitionReference edr : handleEventDefRefs(portlet.getSupportedPublishingEvent())) {
             pd.addSupportedPublishingEvent(edr);
+         }
+         
+         // dependencies
+         for (DependencyType dt : portlet.getDependency()) {
+            if (dt.getName() == null || dt.getName().getValue() == null || dt.getName().getValue().length() == 0) {
+               String warn = "Dependency name is empty, ignoring Dependency block.";
+               LOG.warn(warn);
+               continue;
+            }
+            if (dt.getMinVersion() == null || dt.getMinVersion().getValue() == null || dt.getMinVersion().getValue().length() == 0) {
+               String warn = "Dependency minimum version is empty, ignoring Dependency block.";
+               LOG.warn(warn);
+               continue;
+            }
+            Dependency dep = new DependencyImpl(dt.getName().getValue(), dt.getMinVersion().getValue());
+            pd.addDependency(dep);
          }
 
          pad.addPortlet(pd);
 
       }
    }
-   
+
    /**
     * validate the v3.0 configuration
     */
-   public void validate () {
-      super.validate();             // reuse the 2.0 validation code
+   public void validate() {
+      super.validate(); // reuse the 2.0 validation code
+   }
+
+   /**
+    * Extracts the data from the portlet application annotation and adds it to the portlet application definition
+    * structure.
+    * <p>
+    * This method is designed to be called before the portlet deployment descriptor is read so that data from the
+    * portlet DD can override that provided through annotations.
+    * 
+    * @param app
+    *           The portlet application annotation
+    */
+   @Override
+   public void processPortletAppAnnotation(PortletApplication app) {
+
+      // version
+      if (!app.version().equals("3.0")) {
+         String warning = "Bad version in annotation. Expected 3.0, was: " + app.version();
+         LOG.warn(warning);
+         throw new IllegalArgumentException(warning);
+      }
+      pad.setVersion(app.version());
+
+      // default namespace & resource bundle
+      pad.setDefaultNamespace(app.defaultNamespaceURI());
+      pad.setResourceBundle(app.resourceBundle());
+
+      // runtime options
+      for (RuntimeOption ro : app.runtimeOptions()) {
+         ContainerRuntimeOption cro = new ContainerRuntimeOptionImpl(ro.name(), Arrays.asList(ro.values()));
+         pad.addContainerRuntimeOption(cro);
+      }
+
+      // User Attributes
+      for (UserAttribute ua : app.userAttributes()) {
+         org.apache.pluto.container.om.portlet.UserAttribute attrib = new UserAttributeImpl(ua.name());
+         for (LocaleString ls : ua.description()) {
+            Description d = new DescriptionImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+            attrib.addDescription(d);
+         }
+         pad.addUserAttribute(attrib);
+      }
+
+      // Public render parameter defs
+      for (PublicRenderParameterDefinition prpd : app.publicParams()) {
+         QName qn = new QName(prpd.qname().namespaceURI(), prpd.qname().localPart());
+         PublicRenderParameter prp = new PublicRenderParameterImpl(qn, prpd.identifier());
+         for (LocaleString ls : prpd.description()) {
+            Description d = new DescriptionImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+            prp.addDescription(d);
+         }
+         for (LocaleString ls : prpd.displayName()) {
+            DisplayName d = new DisplayNameImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+            prp.addDisplayName(d);
+         }
+         pad.addPublicRenderParameter(prp);
+      }
+
+      // Event defs
+      for (javax.portlet.annotations.EventDefinition ed : app.events()) {
+         QName qn = new QName(ed.qname().namespaceURI(), ed.qname().localPart());
+         EventDefinition evt = new EventDefinitionImpl(qn);
+         for (LocaleString ls : ed.description()) {
+            Description d = new DescriptionImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+            evt.addDescription(d);
+         }
+         for (LocaleString ls : ed.displayName()) {
+            DisplayName d = new DisplayNameImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+            evt.addDisplayName(d);
+         }
+         pad.addEventDefinition(evt);
+      }
+
+      // Custom portlet mode
+      for (javax.portlet.annotations.CustomPortletMode cpm : app.customPortletModes()) {
+         org.apache.pluto.container.om.portlet.CustomPortletMode mode = new CustomPortletModeImpl(cpm.name());
+         for (LocaleString ls : cpm.description()) {
+            Description d = new DescriptionImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+            mode.addDescription(d);
+         }
+         mode.setPortalManaged(cpm.portalManaged());
+         pad.addCustomPortletMode(mode);
+      }
+
+      // Custom window state
+      for (javax.portlet.annotations.CustomWindowState cpm : app.customWindowStates()) {
+         org.apache.pluto.container.om.portlet.CustomWindowState ws = new CustomWindowStateImpl(cpm.name());
+         for (LocaleString ls : cpm.description()) {
+            Description d = new DescriptionImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+            ws.addDescription(d);
+         }
+         pad.addCustomWindowState(ws);
+      }
+
+   }
+
+   /**
+    * Extracts the data from the portlet annotation and adds it to a portlet filter definition structure. The portlet
+    * filter definition will be created if it does not already exist.
+    * <p>
+    * This method is designed to be called before the portlet deployment descriptor is read so that data from the
+    * portlet DD can override that provided through annotations.
+    * 
+    * @param cls
+    *           The annotated class.
+    */
+   @Override
+   public void processPortletFilterAnnotation(Class<?> cls) {
+
+      PortletRequestFilter prf = cls.getAnnotation(PortletRequestFilter.class);
+      if (prf != null) {
+
+         // determine the lifecycles based on the implemented filter interfaces
+         List<String> lc = new ArrayList<String>();
+         if (ActionFilter.class.isAssignableFrom(cls)) {
+            lc.add(PortletRequest.ACTION_PHASE);
+         }
+         if (RenderFilter.class.isAssignableFrom(cls)) {
+            lc.add(PortletRequest.RENDER_PHASE);
+         }
+         if (ResourceFilter.class.isAssignableFrom(cls)) {
+            lc.add(PortletRequest.RESOURCE_PHASE);
+         }
+         if (EventFilter.class.isAssignableFrom(cls)) {
+            lc.add(PortletRequest.EVENT_PHASE);
+         }
+         if (HeaderFilter.class.isAssignableFrom(cls)) {
+            lc.add(PortletRequest.HEADER_PHASE);
+         }
+
+         if (lc.size() == 0) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("@PortletRequestFilter annotated class must implement ActionFilter, RenderFilter, EventFilter, ResourceFilter, or HeaderFilter. ");
+            txt.append(", class: ").append(cls.getCanonicalName());
+            LOG.warn(txt.toString());
+            throw new IllegalArgumentException(txt.toString());
+         }
+
+         // prepare the filter definition
+         String clsName = cls.getCanonicalName();
+         String fn = prf.filterName();
+         if (fn.length() == 0) {
+            // create random name
+            final String chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZüÜäÄöÖß";
+            StringBuilder txt = new StringBuilder(128);
+            Random rand = new Random();
+            for (int ii = 0; ii < 32; ii++) {
+               txt.append(chars.charAt(rand.nextInt(chars.length())));
+            }
+            fn = "Generated " + txt.toString();
+         }
+         if (isTrace) {
+            LOG.trace("Adding filter named: " + fn);
+         }
+
+         if (pad.getFilter(fn) != null) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("Duplicate filter annotation. FilterName: ").append(fn);
+            txt.append(", class: ").append(cls.getCanonicalName());
+            LOG.warn(txt.toString());
+            throw new IllegalArgumentException(txt.toString());
+         }
+
+         Filter filter = new FilterImpl(fn);
+         filter.setFilterClass(clsName);
+         for (String l : lc) {
+            filter.addLifecycle(l);
+         }
+         filter.setOrdinal(prf.ordinal());
+
+         for (LocaleString ls : prf.description()) {
+            Description d = new DescriptionImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+            filter.addDescription(d);
+         }
+         for (LocaleString ls : prf.displayName()) {
+            DisplayName d = new DisplayNameImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+            filter.addDisplayName(d);
+         }
+
+         for (InitParameter ip : prf.initParams()) {
+            InitParam plutoInitParam = new InitParamImpl(ip.name(), ip.value());
+            for (LocaleString ls : ip.description()) {
+               Description d = new DescriptionImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+               plutoInitParam.addDescription(d);
+            }
+            filter.addInitParam(plutoInitParam);
+         }
+
+         pad.addFilter(filter);
+
+         // now prepare and store the filter mapping
+
+         FilterMapping mapping = new FilterMappingImpl(fn);
+         for (String portletName : prf.portletNames()) {
+            mapping.addPortletName(portletName);
+         }
+         pad.addFilterMapping(mapping);
+
+      }
+   }
+
+   /**
+    * Extracts the data from the portlet annotation and adds it to a portlet definition structure. The portlet
+    * definition will be created if it does not already exist.
+    * <p>
+    * This method is designed to be called before the portlet deployment descriptor is read so that data from the
+    * portlet DD can override that provided through annotations.
+    * 
+    * @param pc   The portlet configuration annotation
+    * @param cls  The annotated class
+    */
+   @Override
+   public void processPortletConfigAnnotation(PortletConfiguration pc, Class<?> cls) {
+
+      if (pc != null) {
+
+         // Each portlet config annotation must have a unique portlet name
+         String portletName = pc.portletName();
+         if (pad.getPortlet(portletName) != null) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("Duplicate portlet configuration annotation. Portlet name: ").append(portletName);
+            txt.append(", class: ").append(cls.getCanonicalName());
+            LOG.warn(txt.toString());
+            throw new IllegalArgumentException(txt.toString());
+         }
+
+         PortletDefinition pd = new PortletDefinitionImpl(portletName, pad);
+
+         // If the portlet config annotation is applied to a class that implements the
+         // Portlet interface, add the portlet class, otherwise, don't.
+         if (Portlet.class.isAssignableFrom(cls)) {
+            pd.setPortletClass(cls.getCanonicalName());
+         }
+
+         // handle descriptions, display names, and init params
+
+         for (LocaleString ls : pc.description()) {
+            Description d = new DescriptionImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+            pd.addDescription(d);
+         }
+
+         for (LocaleString ls : pc.displayName()) {
+            DisplayName d = new DisplayNameImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+            pd.addDisplayName(d);
+         }
+
+         for (InitParameter ip : pc.initParams()) {
+            InitParam plutoInitParam = new InitParamImpl(ip.name(), ip.value());
+            for (LocaleString ls : ip.description()) {
+               Description d = new DescriptionImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+               plutoInitParam.addDescription(d);
+            }
+            pd.addInitParam(plutoInitParam);
+         }
+
+         // cache scope, expiration time, resource bundle
+
+         pd.setCacheScope(pc.cacheScopePublic() ? "public" : "private");
+         pd.setExpirationCache(pc.cacheExpirationTime());
+         pd.setResourceBundle(pc.resourceBundle());
+
+         // handle portlet info - title, short title, keywords
+
+         PortletInfo info = new PortletInfoImpl();
+         boolean infoAdded = false;
+
+         for (LocaleString item : pc.title()) {
+            Locale loc = (item.locale().length() == 0) ? Locale.ENGLISH : Locale.forLanguageTag(item.locale());
+            info.addTitle(new LocaleTextImpl(loc, item.value()));
+            infoAdded = true;
+         }
+
+         for (LocaleString item : pc.shortTitle()) {
+            Locale loc = (item.locale().length() == 0) ? Locale.ENGLISH : Locale.forLanguageTag(item.locale());
+            info.addShortTitle(new LocaleTextImpl(loc, item.value()));
+            infoAdded = true;
+         }
+
+         for (LocaleString item : pc.keywords()) {
+            Locale loc = (item.locale().length() == 0) ? Locale.ENGLISH : Locale.forLanguageTag(item.locale());
+            info.addKeywords(new LocaleTextImpl(loc, item.value()));
+            infoAdded = true;
+         }
+
+         if (infoAdded) {
+            pd.setPortletInfo(info);
+         }
+         
+         // public parameters, supported locales
+         
+         for (String prp : pc.publicParams()) {
+            pd.addSupportedPublicRenderParameter(prp);
+         }
+         
+         for (String loc : pc.supportedLocales()) {
+            pd.addSupportedLocale(loc);
+         }
+         
+         // Container runtime options
+         
+         for (RuntimeOption ro : pc.runtimeOptions()) {
+            ContainerRuntimeOption cro = new ContainerRuntimeOptionImpl(ro.name(), Arrays.asList(ro.values()));
+            pd.addContainerRuntimeOption(cro);
+         }
+         
+         // Portlet preferences
+         
+         Preferences prefs = new PreferencesImpl();
+         for (javax.portlet.annotations.Preference pa : pc.prefs()) {
+            Preference pref = new PreferenceImpl(pa.name(), pa.isReadOnly(), Arrays.asList(pa.values()));
+            prefs.addPreference(pref);
+         }
+         if (prefs.getPortletPreferences().size() > 0) {
+            pd.setPortletPreferences(prefs);
+         }
+         
+         // Supports
+         
+         for (javax.portlet.annotations.Supports sa : pc.supports()) {
+            Supports supps = new SupportsImpl(sa.mimeType());
+            for (String pm : sa.portletModes()) {
+               supps.addPortletMode(pm);
+            }
+            for (String ws : sa.windowStates()) {
+               supps.addWindowState(ws);
+            }
+            pd.addSupports(supps);
+         }
+         
+         // Security role refs
+         
+         for (javax.portlet.annotations.SecurityRoleRef srra : pc.roleRefs()) {
+            SecurityRoleRef ref = new SecurityRoleRefImpl(srra.roleName());
+            ref.setRoleLink(srra.roleLink());
+            for (LocaleString ls : srra.description()) {
+               Description d = new DescriptionImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+               ref.addDescription(d);
+            }
+            pd.addSecurityRoleRef(ref);
+         }
+         
+         // dependencies
+
+         for (javax.portlet.annotations.Dependency da : pc.dependencies()) {
+            Dependency dep = new DependencyImpl(da.name(), da.minVersion());
+            pd.addDependency(dep);
+         }
+
+         pad.addPortlet(pd);
+      }
    }
 
 }

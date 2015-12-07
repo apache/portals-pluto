@@ -37,6 +37,7 @@ public class ListenerImpl implements Listener {
    private final List<Description> descs = new ArrayList<Description>();
    private final List<DisplayName> dispNames = new ArrayList<DisplayName>();
    private String listenerClass = "";
+   private String listenerName = "";
 
    
    /**
@@ -52,6 +53,7 @@ public class ListenerImpl implements Listener {
          dispNames.add(new DisplayNameImpl(disp));
       }
       listenerClass = lis.getListenerClass();
+      listenerName = lis.getListenerName();
    }
    
    /**
@@ -136,6 +138,58 @@ public class ListenerImpl implements Listener {
    @Override
    public void setListenerClass(String filterClass) {
       listenerClass = filterClass;
+   }
+
+   /**
+    * @return the listenerName
+    */
+   @Override
+   public String getListenerName() {
+      return listenerName;
+   }
+
+   /**
+    * @param listenerName the listenerName to set
+    */
+   @Override
+   public void setListenerName(String listenerName) {
+      this.listenerName = listenerName;
+   }
+
+   /* (non-Javadoc)
+    * @see java.lang.Object#hashCode()
+    */
+   @Override
+   public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((listenerClass == null) ? 0 : listenerClass.hashCode());
+      return result;
+   }
+
+   /* (non-Javadoc)
+    * @see java.lang.Object#equals(java.lang.Object)
+    */
+   @Override
+   public boolean equals(Object obj) {
+      if (this == obj) {
+         return true;
+      }
+      if (obj == null) {
+         return false;
+      }
+      if (getClass() != obj.getClass()) {
+         return false;
+      }
+      ListenerImpl other = (ListenerImpl) obj;
+      if (listenerClass == null) {
+         if (other.listenerClass != null) {
+            return false;
+         }
+      } else if (!listenerClass.equals(other.listenerClass)) {
+         return false;
+      }
+      return true;
    }
 
 }

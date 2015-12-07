@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.Portlet;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURLGenerationListener;
 import javax.portlet.PreferencesValidator;
 import javax.portlet.filter.PortletFilter;
@@ -98,6 +97,10 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
    // private static final boolean isDebug = LOG.isDebugEnabled();
    private static final boolean         isTrace = LOG.isTraceEnabled();
 
+   public JSR286ConfigurationProcessor(PortletApplicationDefinition pad) {
+      super(pad);
+   }
+
    /*
     * (non-Javadoc)
     * 
@@ -106,9 +109,7 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
     * #process(javax.xml.bind.JAXBElement)
     */
    @Override
-   public PortletApplicationDefinition process(JAXBElement<?> rootElement)
-         throws IllegalArgumentException {
-      pad = new PortletApplicationDefinitionImpl();
+   public void process(JAXBElement<?> rootElement) throws IllegalArgumentException {
 
       // make sure we were called properly
       assert (rootElement != null);
@@ -172,7 +173,6 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
       handlePortlets(app.getPortlet());
       handleFilterMappings(app.getFilterMapping());
 
-      return pad;
    }
 
    /**
@@ -792,15 +792,15 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
             if (pit.getTitle() != null) {
                title = pit.getTitle().getValue();
             }
-               if (pit.getShortTitle() != null) {
-                  st = pit.getShortTitle().getValue();
-               }
-               if (pit.getKeywords() != null) {
-                  kw = pit.getKeywords().getValue();
-               }
-               PortletInfo info = new PortletInfoImpl(title, kw, st);
-               pd.setPortletInfo(info);
+            if (pit.getShortTitle() != null) {
+               st = pit.getShortTitle().getValue();
             }
+            if (pit.getKeywords() != null) {
+               kw = pit.getKeywords().getValue();
+            }
+            PortletInfo info = new PortletInfoImpl(title, kw, st);
+            pd.setPortletInfo(info);
+         }
 
          for (SupportedLocaleType slt : portlet.getSupportedLocale()) {
             pd.addSupportedLocale(slt.getValue());

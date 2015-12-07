@@ -43,6 +43,8 @@ public class FilterImpl implements Filter {
    private final List<DisplayName> dispNames = new ArrayList<DisplayName>();
    private final Map<String, InitParam> initParams = new HashMap<String, InitParam>();
    private String fclass = "";
+   private int ordinal;
+   private boolean ordinalSet = false;
    
    
    /**
@@ -65,6 +67,8 @@ public class FilterImpl implements Filter {
       for (InitParam ip : fi.getInitParams()) {
          this.initParams.put(ip.getParamName(), new InitParamImpl(ip));
       }
+      this.ordinal = fi.getOrdinal();
+      this.ordinalSet = fi.isOrdinalSet();
 
    }
 
@@ -189,6 +193,67 @@ public class FilterImpl implements Filter {
    @Override
    public void addInitParam(InitParam ip) {
       initParams.put(ip.getParamName(),  ip);
+   }
+
+   /**
+    * @return the ordinal
+    */
+   @Override
+   public int getOrdinal() {
+      return ordinal;
+   }
+
+   /**
+    * @param ordinal the ordinal to set
+    */
+   @Override
+   public void setOrdinal(int ordinal) {
+      this.ordinal = ordinal;
+      this.ordinalSet = true;
+   }
+
+   /**
+    * @return the ordinalSet
+    */
+   @Override
+   public boolean isOrdinalSet() {
+      return ordinalSet;
+   }
+
+   /* (non-Javadoc)
+    * @see java.lang.Object#hashCode()
+    */
+   @Override
+   public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((filterName == null) ? 0 : filterName.hashCode());
+      return result;
+   }
+
+   /* (non-Javadoc)
+    * @see java.lang.Object#equals(java.lang.Object)
+    */
+   @Override
+   public boolean equals(Object obj) {
+      if (this == obj) {
+         return true;
+      }
+      if (obj == null) {
+         return false;
+      }
+      if (getClass() != obj.getClass()) {
+         return false;
+      }
+      FilterImpl other = (FilterImpl) obj;
+      if (filterName == null) {
+         if (other.filterName != null) {
+            return false;
+         }
+      } else if (!filterName.equals(other.filterName)) {
+         return false;
+      }
+      return true;
    }
 
 }

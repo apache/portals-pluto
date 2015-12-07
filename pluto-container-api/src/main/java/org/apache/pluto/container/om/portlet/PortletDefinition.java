@@ -78,4 +78,8 @@ public interface PortletDefinition {
    ContainerRuntimeOption getContainerRuntimeOption(String name);
    List<ContainerRuntimeOption> getContainerRuntimeOptions();
    void addContainerRuntimeOption(ContainerRuntimeOption cro);
+
+   void addDependency(Dependency dep);
+   List<Dependency> getDependencies();
+   Dependency getDependency(String name);
 }

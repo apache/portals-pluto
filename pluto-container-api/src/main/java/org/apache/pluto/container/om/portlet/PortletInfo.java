@@ -16,14 +16,29 @@
  */
 package org.apache.pluto.container.om.portlet;
 
+import java.util.List;
+import java.util.Locale;
+
 public interface PortletInfo {
 
 	String getTitle();
 	void setTitle(String title);
 
+   LocaleText getTitle(Locale locale);
+   List<LocaleText> getTitles();
+   void addTitle(LocaleText title);
+
 	String getKeywords();
 	void setKeywords(String keywords);
 
+   LocaleText getKeywords(Locale locale);
+   List<LocaleText> getKeywordsList();
+   void addKeywords(LocaleText kw);
+
 	String getShortTitle();
 	void setShortTitle(String shortTitle);
+
+   LocaleText getShortTitle(Locale locale);
+   List<LocaleText> getShortTitles();
+   void addShortTitle(LocaleText st);
 }

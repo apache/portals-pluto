@@ -1,3 +1,22 @@
+/*  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+
+
 package org.apache.pluto.container.om.portlet.impl.jsr362;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -13,10 +32,12 @@ import java.util.Locale;
 import javax.xml.namespace.QName;
 
 import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
+import org.apache.pluto.container.om.portlet.Dependency;
 import org.apache.pluto.container.om.portlet.Description;
 import org.apache.pluto.container.om.portlet.DisplayName;
 import org.apache.pluto.container.om.portlet.EventDefinitionReference;
 import org.apache.pluto.container.om.portlet.InitParam;
+import org.apache.pluto.container.om.portlet.LocaleText;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.PortletInfo;
@@ -26,10 +47,12 @@ import org.apache.pluto.container.om.portlet.SecurityRoleRef;
 import org.apache.pluto.container.om.portlet.Supports;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
 import org.apache.pluto.container.om.portlet.impl.ContainerRuntimeOptionImpl;
+import org.apache.pluto.container.om.portlet.impl.DependencyImpl;
 import org.apache.pluto.container.om.portlet.impl.DescriptionImpl;
 import org.apache.pluto.container.om.portlet.impl.DisplayNameImpl;
 import org.apache.pluto.container.om.portlet.impl.EventDefinitionReferenceImpl;
 import org.apache.pluto.container.om.portlet.impl.InitParamImpl;
+import org.apache.pluto.container.om.portlet.impl.LocaleTextImpl;
 import org.apache.pluto.container.om.portlet.impl.PortletDefinitionImpl;
 import org.apache.pluto.container.om.portlet.impl.PortletInfoImpl;
 import org.apache.pluto.container.om.portlet.impl.PreferenceImpl;
@@ -42,6 +65,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+
+/**
+ * Test class for reading the portlet deployment descriptor.
+ * 
+ * @author Scott Nicklous
+ */
 public class PortletDefinition362ImplTest {
 
    private static final String XML_FILE = 
@@ -58,7 +87,7 @@ public class PortletDefinition362ImplTest {
       InputStream in = PortletDefinition362ImplTest.class
             .getClassLoader().getResourceAsStream(XML_FILE);
       
-      ConfigurationHolder cfp = new ConfigurationHolder(pad);
+      ConfigurationHolder cfp = new ConfigurationHolder();
       try {
          cfp.processPortletDD(in);
          pad = cfp.getPad();
@@ -96,7 +125,7 @@ public class PortletDefinition362ImplTest {
       Locale loc = new Locale("de");
       Description d = ip.getDescription(loc);
       assertNotNull(d);
-      assertEquals("description", d.getDescription());
+      assertEquals("description", d.getText());
    }
 
    @Test
@@ -135,6 +164,20 @@ public class PortletDefinition362ImplTest {
    }
 
    @Test
+   public void testAddDupInitParam() {
+      String name = "name", value = "value";
+      InitParam newip = new InitParamImpl(name, value);
+      cut.addInitParam(newip);
+      
+      List<InitParam> ips = cut.getInitParams();
+      assertEquals(2, ips.size());
+      InitParam ip = cut.getInitParam(name);
+      assertNotNull(ip);
+      assertEquals(name, ip.getParamName());
+      assertEquals(value, ip.getParamValue());
+   }
+
+   @Test
    public void testGetPortletClass() {
       assertNotNull(cut.getPortletClass());
       assertEquals(TestPortlet.class.getCanonicalName(), cut.getPortletClass());
@@ -148,7 +191,7 @@ public class PortletDefinition362ImplTest {
    }
 
    @Test
-   public void testGetPortletInfo() {
+   public void testGetPortletInfoJSR286Compat() {
       PortletInfo info = cut.getPortletInfo();
       assertNotNull(info);
       assertEquals("title", info.getTitle());
@@ -167,6 +210,116 @@ public class PortletDefinition362ImplTest {
       assertEquals(ti, info.getTitle());
       assertEquals(st, info.getShortTitle());
       assertEquals(kw, info.getKeywords());
+   }
+
+   @Test
+   public void testGetTitle() {
+      PortletInfo info = cut.getPortletInfo();
+      assertNotNull(info);
+      List<LocaleText> list = info.getTitles();
+      assertEquals(2, list.size());
+      assertEquals("title", info.getTitle(Locale.ENGLISH).getText());
+      assertEquals("Titel", info.getTitle(Locale.GERMAN).getText());
+   }
+   
+   @Test
+   public void testAddTitle() {
+      PortletInfo info = cut.getPortletInfo();
+      assertNotNull(info);
+      LocaleText lt = new LocaleTextImpl(Locale.FRENCH, "intitulé");
+      info.addTitle(lt);
+      List<LocaleText> list = info.getTitles();
+      assertEquals(3, list.size());
+      assertEquals("title", info.getTitle(Locale.ENGLISH).getText());
+      assertEquals("intitulé", info.getTitle(Locale.FRENCH).getText());
+      assertEquals("Titel", info.getTitle(Locale.GERMAN).getText());
+   }
+   
+   @Test
+   public void testAddDupTitle() {
+      PortletInfo info = cut.getPortletInfo();
+      assertNotNull(info);
+      String text = "Different Title";
+      LocaleText lt = new LocaleTextImpl(Locale.ENGLISH, text);
+      info.addTitle(lt);
+      List<LocaleText> list = info.getTitles();
+      assertEquals(2, list.size());
+      assertEquals(text, info.getTitle(Locale.ENGLISH).getText());
+      assertEquals("Titel", info.getTitle(Locale.GERMAN).getText());
+   }
+
+   @Test
+   public void testGetShortTitle() {
+      PortletInfo info = cut.getPortletInfo();
+      assertNotNull(info);
+      List<LocaleText> list = info.getShortTitles();
+      assertEquals(2, list.size());
+      assertEquals("short-title", info.getShortTitle(Locale.ENGLISH).getText());
+      assertEquals("Kurztitel", info.getShortTitle(Locale.GERMAN).getText());
+   }
+   
+   @Test
+   public void testAddShortTitle() {
+      PortletInfo info = cut.getPortletInfo();
+      assertNotNull(info);
+      String text = "intitulé en bref";
+      LocaleText lt = new LocaleTextImpl(Locale.FRENCH, text);
+      info.addShortTitle(lt);
+      List<LocaleText> list = info.getShortTitles();
+      assertEquals(3, list.size());
+      assertEquals("short-title", info.getShortTitle(Locale.ENGLISH).getText());
+      assertEquals(text, info.getShortTitle(Locale.FRENCH).getText());
+      assertEquals("Kurztitel", info.getShortTitle(Locale.GERMAN).getText());
+   }
+   
+   @Test
+   public void testAddDupShortTitle() {
+      PortletInfo info = cut.getPortletInfo();
+      assertNotNull(info);
+      String text = "Different Short Title";
+      LocaleText lt = new LocaleTextImpl(Locale.ENGLISH, text);
+      info.addShortTitle(lt);
+      List<LocaleText> list = info.getTitles();
+      assertEquals(2, list.size());
+      assertEquals(text, info.getShortTitle(Locale.ENGLISH).getText());
+      assertEquals("Kurztitel", info.getShortTitle(Locale.GERMAN).getText());
+   }
+
+   @Test
+   public void testGetKeywords() {
+      PortletInfo info = cut.getPortletInfo();
+      assertNotNull(info);
+      List<LocaleText> list = info.getKeywordsList();
+      assertEquals(2, list.size());
+      assertEquals("keywords", info.getKeywords(Locale.ENGLISH).getText());
+      assertEquals("Schlagwörter", info.getKeywords(Locale.GERMAN).getText());
+   }
+   
+   @Test
+   public void testAddKeywords() {
+      PortletInfo info = cut.getPortletInfo();
+      assertNotNull(info);
+      String text = "mot-clés";
+      LocaleText lt = new LocaleTextImpl(Locale.FRENCH, text);
+      info.addKeywords(lt);
+      List<LocaleText> list = info.getKeywordsList();
+      assertEquals(3, list.size());
+      assertEquals(text, info.getKeywords(Locale.FRENCH).getText());
+      assertEquals("keywords", info.getKeywords(Locale.ENGLISH).getText());
+      assertEquals("Schlagwörter", info.getKeywords(Locale.GERMAN).getText());
+   }
+   
+   @Test
+   public void testAddDupKeywords() {
+      PortletInfo info = cut.getPortletInfo();
+      assertNotNull(info);
+      String text = "andre Schlagwörter";
+      LocaleText lt = new LocaleTextImpl(Locale.GERMAN, text);
+      info.addKeywords(lt);
+      List<LocaleText> list = info.getKeywordsList();
+      assertEquals(2, list.size());
+      assertEquals(text, info.getKeywords(Locale.GERMAN).getText());
+      assertEquals("keywords", info.getKeywords(Locale.ENGLISH).getText());
    }
 
    @Test
@@ -239,6 +392,24 @@ public class PortletDefinition362ImplTest {
    }
 
    @Test  // JSR 286
+   public void testAddDupSupportedProcessingEvent() {
+      QName qn = new QName("https://www.apache.org/", "supported-processing-event");
+      EventDefinitionReference edr = new EventDefinitionReferenceImpl(qn);
+      cut.addSupportedProcessingEvent(edr);
+      
+      List<EventDefinitionReference> list = cut.getSupportedProcessingEvents();
+      assertNotNull(list);
+      assertEquals(1, list.size());
+      boolean ok = false;
+      for (EventDefinitionReference item : list) {
+         if (item.getQualifiedName().equals(qn)) {
+            ok = true;
+         }
+      }
+      assertTrue(ok);
+   }
+
+   @Test  // JSR 286
    public void testGetSupportedPublishingEvents() {
       List<EventDefinitionReference> list = cut.getSupportedPublishingEvents();
       assertNotNull(list);
@@ -273,6 +444,24 @@ public class PortletDefinition362ImplTest {
    }
 
    @Test  // JSR 286
+   public void testAddDupSupportedPublishingEvent() {
+      QName qn = new QName("http://test.com", "supported-publishing-event");
+      EventDefinitionReference edr = new EventDefinitionReferenceImpl(qn);
+      cut.addSupportedPublishingEvent(edr);
+      
+      List<EventDefinitionReference> list = cut.getSupportedPublishingEvents();
+      assertNotNull(list);
+      assertEquals(1, list.size());
+      boolean ok = false;
+      for (EventDefinitionReference item : list) {
+         if (item.getQualifiedName().equals(qn)) {
+            ok = true;
+         }
+      }
+      assertTrue(ok);
+   }
+
+   @Test  // JSR 286
    public void testGetSupportedPublicRenderParameters() {
       List<String> list = cut.getSupportedPublicRenderParameters();
       String prp = "supported-public-render-parameter";
@@ -288,6 +477,16 @@ public class PortletDefinition362ImplTest {
       List<String> list = cut.getSupportedPublicRenderParameters();
       assertNotNull(list);
       assertEquals(2, list.size());
+      assertTrue(list.contains(newprp));
+   }
+
+   @Test  // JSR 286
+   public void testAddDupSupportedPublicRenderParameter() {
+      String newprp = "supported-public-render-parameter";
+      cut.addSupportedPublicRenderParameter(newprp);
+      List<String> list = cut.getSupportedPublicRenderParameters();
+      assertNotNull(list);
+      assertEquals(1, list.size());
       assertTrue(list.contains(newprp));
    }
 
@@ -323,7 +522,7 @@ public class PortletDefinition362ImplTest {
       assertEquals("role-link", srr.getRoleLink());
       Description d = srr.getDescription(new Locale("de"));
       assertNotNull(d);
-      assertEquals("description", d.getDescription());
+      assertEquals("description", d.getText());
       
    }
 
@@ -337,6 +536,22 @@ public class PortletDefinition362ImplTest {
 
       List<SecurityRoleRef> list = cut.getSecurityRoleRefs();
       assertEquals(2, list.size());
+      srr = cut.getSecurityRoleRef(name);
+      assertNotNull(srr);
+      assertEquals(name, srr.getRoleName());
+      assertEquals(link, srr.getRoleLink());
+   }
+
+   @Test
+   public void testAddDupSecurityRoleRef() {
+      String name = "NMTOKEN";
+      String link = "role-link";
+      SecurityRoleRef srr = new SecurityRoleRefImpl(name);
+      srr.setRoleLink(link);
+      cut.addSecurityRoleRef(srr);
+
+      List<SecurityRoleRef> list = cut.getSecurityRoleRefs();
+      assertEquals(1, list.size());
       srr = cut.getSecurityRoleRef(name);
       assertNotNull(srr);
       assertEquals(name, srr.getRoleName());
@@ -387,11 +602,27 @@ public class PortletDefinition362ImplTest {
    }
 
    @Test
+   public void testAddDupSupports() {
+      Supports s = new SupportsImpl("mime-type2");
+      cut.addSupports(s);
+      List<Supports> list = cut.getSupports();
+      assertEquals(3, list.size());
+      boolean ok = false;
+      for (Supports item : list) {
+         if (item.getMimeType().equals("mime-type2")) {
+            ok = true;
+            break;
+         }
+      }
+      assertTrue(ok);
+   }
+
+   @Test
    public void testGetDescription() {
       Locale loc = new Locale("DE");
       Description desc = cut.getDescription(loc);
       assertNotNull(desc);
-      assertEquals("multi line description", desc.getDescription());
+      assertEquals("multi line description", desc.getText());
    }
 
    @Test
@@ -399,7 +630,7 @@ public class PortletDefinition362ImplTest {
       List<Description> list = cut.getDescriptions();
       assertNotNull(list);
       assertEquals(1, list.size());
-      assertEquals("multi line description", list.get(0).getDescription());
+      assertEquals("multi line description", list.get(0).getText());
    }
 
    @Test
@@ -414,11 +645,26 @@ public class PortletDefinition362ImplTest {
       assertEquals(2, list.size());
       for (Description desc : list) {
          if (desc.getLocale().equals(loc)) {
-            assertEquals(text, desc.getDescription());
+            assertEquals(text, desc.getText());
          } else {
-            assertEquals("multi line description", desc.getDescription());
+            assertEquals("multi line description", desc.getText());
          }
       }
+   }
+
+   @Test
+   public void testAddDupDescription() {
+      Locale loc = Locale.GERMAN;
+      String text = "multi line description";
+      Description d = new DescriptionImpl(loc, text);
+      cut.addDescription(d);
+
+      List<Description> list = cut.getDescriptions();
+      assertNotNull(list);
+      assertEquals(1, list.size());
+      Description desc = list.get(0);
+      assertEquals(text, desc.getText());
+      assertEquals("multi line description", desc.getText());
    }
 
    @Test
@@ -426,7 +672,7 @@ public class PortletDefinition362ImplTest {
       Locale loc = new Locale("DE");
       DisplayName name = cut.getDisplayName(loc);
       assertNotNull(name);
-      assertEquals("display-name", name.getDisplayName());
+      assertEquals("display-name", name.getText());
    }
 
    @Test
@@ -434,7 +680,7 @@ public class PortletDefinition362ImplTest {
       List<DisplayName> list = cut.getDisplayNames();
       assertNotNull(list);
       assertEquals(1, list.size());
-      assertEquals("display-name", list.get(0).getDisplayName());
+      assertEquals("display-name", list.get(0).getText());
    }
 
    @Test
@@ -449,11 +695,26 @@ public class PortletDefinition362ImplTest {
       assertEquals(2, list.size());
       for (DisplayName desc : list) {
          if (desc.getLocale().equals(loc)) {
-            assertEquals(text, desc.getDisplayName());
+            assertEquals(text, desc.getText());
          } else {
-            assertEquals("display-name", desc.getDisplayName());
+            assertEquals("display-name", desc.getText());
          }
       }
+   }
+
+   @Test
+   public void testAddDupDisplayName() {
+      Locale loc = Locale.GERMAN;
+      String text = "display-name";
+      DisplayName d = new DisplayNameImpl(loc, text);
+      cut.addDisplayName(d);
+
+      List<DisplayName> list = cut.getDisplayNames();
+      assertNotNull(list);
+
+      assertEquals(1, list.size());
+      DisplayName dn = list.get(0);
+      assertEquals(text, dn.getText());
    }
 
    @Test
@@ -470,6 +731,16 @@ public class PortletDefinition362ImplTest {
       
       List<String> list = cut.getSupportedLocales();
       assertEquals(2, list.size());
+      assertTrue(list.contains(locname));
+   }
+
+   @Test
+   public void testAddDupSupportedLocale() {
+      String locname = "supported-locale";
+      cut.addSupportedLocale(locname);
+      
+      List<String> list = cut.getSupportedLocales();
+      assertEquals(1, list.size());
       assertTrue(list.contains(locname));
    }
 
@@ -533,6 +804,75 @@ public class PortletDefinition362ImplTest {
       ContainerRuntimeOption newcro = cut.getContainerRuntimeOption(name);
       assertNotNull(newcro);
       assertArrayEquals(vals, newcro.getValues().toArray());
+   }
+
+   @Test  // JSR 286
+   public void testAddDupContainerRuntimeOption() {
+      String name = "Runtime-Option1";
+      String[] vals = {"true"};
+      ContainerRuntimeOption cro = new ContainerRuntimeOptionImpl(name, Arrays.asList(vals));
+      cut.addContainerRuntimeOption(cro);
+      
+      ContainerRuntimeOption newcro = cut.getContainerRuntimeOption(name);
+      assertNotNull(newcro);
+      assertArrayEquals(vals, newcro.getValues().toArray());
+   }
+   
+   @Test
+   public void testGetDependency() {
+      String depName = "JQuery";
+      String depVers = "2.1.4";
+      Dependency dep = cut.getDependency(depName);
+      assertNotNull(dep);
+      assertEquals(depName, dep.getName());
+      assertEquals(depVers, dep.getVersion());
+   }
+   
+   @Test
+   public void testGetDependency2() {
+      String depName = "AngularJS";
+      String depVers = "1.4.8";
+      Dependency dep = cut.getDependency(depName);
+      assertNotNull(dep);
+      assertEquals(depName, dep.getName());
+      assertEquals(depVers, dep.getVersion());
+   }
+   
+   @Test
+   public void testGetDependencies() {
+      String depName = "JQuery";
+      String depVers = "2.1.4";
+      List<Dependency> deps = cut.getDependencies();
+      assertNotNull(deps);
+      assertEquals(2, deps.size());
+      Dependency dep = new DependencyImpl(depName, depVers);
+      assertTrue(deps.contains(dep));
+   }
+   
+   @Test
+   public void testAddDependency() {
+      String depName = "Bozo";
+      String depVers = "1.4";
+      Dependency dep = new DependencyImpl(depName, depVers);
+      cut.addDependency(dep);
+      
+      List<Dependency> deps = cut.getDependencies();
+      assertNotNull(deps);
+      assertEquals(3, deps.size());
+      assertTrue(deps.contains(dep));
+   }
+   
+   @Test
+   public void testAddDupDependency() {
+      String depName = "JQuery";
+      String depVers = "2.2.2";
+      Dependency dep = new DependencyImpl(depName, depVers);
+      cut.addDependency(dep);
+      
+      List<Dependency> deps = cut.getDependencies();
+      assertNotNull(deps);
+      assertEquals(2, deps.size());
+      assertTrue(deps.contains(dep));
    }
 
 }

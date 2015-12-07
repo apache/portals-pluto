@@ -176,4 +176,40 @@ public class EventDefinitionImpl implements EventDefinition {
       valType = valueType;
    }
 
+   /* (non-Javadoc)
+    * @see java.lang.Object#hashCode()
+    */
+   @Override
+   public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((qn == null) ? 0 : qn.hashCode());
+      return result;
+   }
+
+   /* (non-Javadoc)
+    * @see java.lang.Object#equals(java.lang.Object)
+    */
+   @Override
+   public boolean equals(Object obj) {
+      if (this == obj) {
+         return true;
+      }
+      if (obj == null) {
+         return false;
+      }
+      if (getClass() != obj.getClass()) {
+         return false;
+      }
+      EventDefinitionImpl other = (EventDefinitionImpl) obj;
+      if (qn == null) {
+         if (other.qn != null) {
+            return false;
+         }
+      } else if (!qn.equals(other.qn)) {
+         return false;
+      }
+      return true;
+   }
+
 }

@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.portlet.annotations.PortletApplication;
+import javax.portlet.annotations.PortletConfiguration;
 import javax.xml.bind.JAXBElement;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -27,10 +29,13 @@ public abstract class ConfigurationProcessor {
    /** Logger. */
    private static final Logger LOG = LoggerFactory
          .getLogger(ConfigurationProcessor.class);
-   
+
 
    protected PortletApplicationDefinition pad;
    
+   public ConfigurationProcessor(PortletApplicationDefinition pad) {
+      this.pad = pad;
+   }
 
    public PortletApplicationDefinition getPad() {
       return pad;
@@ -46,8 +51,7 @@ public abstract class ConfigurationProcessor {
     * @throws IllegalArgumentException
     *            If there is a data validation error
     */
-   public abstract PortletApplicationDefinition process(
-         JAXBElement<?> rootElement) throws IllegalArgumentException;
+   public abstract void process(JAXBElement<?> rootElement) throws IllegalArgumentException;
 
    /**
     * Validates the given portlet application definition. This method should only be called after 
@@ -144,11 +148,6 @@ public abstract class ConfigurationProcessor {
             txt.append(assignable.getCanonicalName());
             throw new Exception();
          }
-//       } catch (ClassNotFoundException e) {
-//          txt.append(", Exception: ").append(e.toString());
-//          LOG.warn(txt.toString());
-//          // can't throw exception if class not found, since the portlet
-//          // application definition is used by the assembly mojo
       } catch (Exception e) {
          LOG.warn(txt.toString());
          throw new IllegalArgumentException(txt.toString(), e);
@@ -189,10 +188,9 @@ public abstract class ConfigurationProcessor {
     * Reads web app deployment descriptor to extract the locale - encoding mappings 
     * 
     * @param in            Input stream for DD
-    * @param pad           Portlet application definition to be updated
     * @throws Exception    If there is a parsing problem
     */
-   public void processWebDD(InputStream in, PortletApplicationDefinition pad) throws Exception {
+   public void processWebDD(InputStream in) throws Exception {
 
       // set up document
       DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
@@ -219,6 +217,58 @@ public abstract class ConfigurationProcessor {
          Locale locale = deriveLocale(locstr);
          pad.addLocaleEncodingMapping(locale, encstr);
       }
+   }
+   
+   /**
+    * Extracts the data from the portlet application annotation and adds it to the 
+    * portlet application definition structure.
+    * <p>
+    * The default method implementation does nothing. The V3 implementation will
+    * override this method to provide function.  
+    * <p>
+    * This method is designed to be called before the portlet deployment descriptor
+    * is read so that data from the portlet DD can override that provided through annotations.
+    * 
+    * @param pa      The portlet application annotation
+    */
+   public void processPortletAppAnnotation(PortletApplication pa) {
+      // default impl = do nothing
+   }
+   
+   /**
+    * Extracts the data from the portlet annotation and adds it to a 
+    * portlet definition structure. The portlet definition will be created if it does not
+    * already exist.
+    * <p>
+    * The default method implementation does nothing. The V3 implementation will
+    * override this method to provide function.  
+    * <p>
+    * This method is designed to be called before the portlet deployment descriptor
+    * is read so that data from the portlet DD can override that provided through annotations.
+    * 
+    * @param pc   The portlet configuration annotation
+    * @param cls  The annotated class
+    */
+   public void processPortletConfigAnnotation(PortletConfiguration pc, Class<?> cls) {
+      // default impl = do nothing
+   }
+
+   
+   /**
+    * Extracts the data from the portlet annotation and adds it to a 
+    * portlet filter definition structure. The portlet filter definition will be created if it does not
+    * already exist.
+    * <p>
+    * The default method implementation does nothing. The V3 implementation will
+    * override this method to provide function.  
+    * <p>
+    * This method is designed to be called before the portlet deployment descriptor
+    * is read so that data from the portlet DD can override that provided through annotations.
+    * 
+    * @param cls     The annotated class. 
+    */
+   public void processPortletFilterAnnotation(Class<?> cls) {
+      // default impl = do nothing
    }
 
 }

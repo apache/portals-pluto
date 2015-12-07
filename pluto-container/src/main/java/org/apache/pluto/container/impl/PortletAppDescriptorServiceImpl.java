@@ -103,22 +103,22 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
    public void mergeWebDescriptor(PortletApplicationDefinition pad,
          InputStream webDescriptor) throws Exception {
       
-      ConfigurationHolder confHolder = new ConfigurationHolder(pad);
-      confHolder.processWebDD(webDescriptor);
-      
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder(128);
-         txt.append("Processed web DD for Portlet app: ").append(pad.getName());
-         txt.append(", context path: ").append(pad.getContextPath());
-         txt.append(", # portlets: ").append(pad.getPortlets().size());
-         txt.append(", names: ");
-         String sep = "";
-         for (PortletDefinition pd : pad.getPortlets()) {
-            txt.append(sep).append(pd.getPortletName());
-            sep = ", ";
-         }
-         LOG.debug(txt.toString());
-      }
+//       ConfigurationHolder confHolder = new ConfigurationHolder(pad);
+//       confHolder.processWebDD(webDescriptor);
+//       
+//       if (isDebug) {
+//          StringBuilder txt = new StringBuilder(128);
+//          txt.append("Processed web DD for Portlet app: ").append(pad.getName());
+//          txt.append(", context path: ").append(pad.getContextPath());
+//          txt.append(", # portlets: ").append(pad.getPortlets().size());
+//          txt.append(", names: ");
+//          String sep = "";
+//          for (PortletDefinition pd : pad.getPortlets()) {
+//             txt.append(sep).append(pd.getPortletName());
+//             sep = ", ";
+//          }
+//          LOG.debug(txt.toString());
+//       }
    }
 
    /**

@@ -30,7 +30,6 @@ import org.apache.pluto.container.om.portlet30.impl.PortletAppType;
 import org.apache.pluto.container.om.portlet30.impl.PortletType;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Low-level test to read a deployment descriptor
@@ -93,12 +92,10 @@ public class JaxbReadTest362Gen {
       assertEquals("portlet-mode", portletApp.getCustomPortletMode().get(0).getPortletMode().getValue());
       assertEquals("window-state", portletApp.getCustomWindowState().get(0).getWindowState().getValue());
       assertEquals("name", portletApp.getUserAttribute().get(0).getName().getValue());
-      assertEquals("portlet362", portletApp.getSecurityConstraint().get(0)
-            .getPortletCollection().getPortletName().get(0).getValue());
       
       // Some additional stuff from old test suite
       assertTrue(portlet.getPortletClass().equals("org.apache.pluto.container.om.portlet.impl.fixtures.TestPortlet"));
-      assertTrue(portlet.getPortletInfo().getTitle().getValue().equals("title"));
+      assertTrue(portlet.getPortletInfo().getTitle().get(0).getValue().equals("title"));
       assertEquals( "supports size should be 3", 3, portlet.getSupports().size());
       
       assertEquals("org.apache.pluto.container.om.portlet.impl.fixtures.TestEventType", portletApp.getEventDefinition().get(0).getValueType());

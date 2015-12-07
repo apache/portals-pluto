@@ -52,7 +52,7 @@ public class PortletDefinition168ImplTest {
       InputStream in = PortletApplicationDefinition168ImplTest.class
             .getClassLoader().getResourceAsStream(XML_FILE);
       
-      ConfigurationHolder cfp = new ConfigurationHolder(pad);
+      ConfigurationHolder cfp = new ConfigurationHolder();
       try {
          cfp.processPortletDD(in);
          pad = cfp.getPad();
@@ -90,7 +90,7 @@ public class PortletDefinition168ImplTest {
       Locale loc = new Locale("de");
       Description d = ip.getDescription(loc);
       assertNotNull(d);
-      assertEquals("description", d.getDescription());
+      assertEquals("description", d.getText());
    }
 
    @Test
@@ -250,7 +250,7 @@ public class PortletDefinition168ImplTest {
       assertEquals("role-link", srr.getRoleLink());
       Description d = srr.getDescription(new Locale("de"));
       assertNotNull(d);
-      assertEquals("description", d.getDescription());
+      assertEquals("description", d.getText());
       
    }
 
@@ -303,7 +303,7 @@ public class PortletDefinition168ImplTest {
       Locale loc = new Locale("DE");
       Description desc = cut.getDescription(loc);
       assertNotNull(desc);
-      assertEquals("multi line description", desc.getDescription());
+      assertEquals("multi line description", desc.getText());
    }
 
    @Test
@@ -311,7 +311,7 @@ public class PortletDefinition168ImplTest {
       List<Description> list = cut.getDescriptions();
       assertNotNull(list);
       assertEquals(1, list.size());
-      assertEquals("multi line description", list.get(0).getDescription());
+      assertEquals("multi line description", list.get(0).getText());
    }
 
    @Test
@@ -326,9 +326,9 @@ public class PortletDefinition168ImplTest {
       assertEquals(2, list.size());
       for (Description desc : list) {
          if (desc.getLocale().equals(loc)) {
-            assertEquals(text, desc.getDescription());
+            assertEquals(text, desc.getText());
          } else {
-            assertEquals("multi line description", desc.getDescription());
+            assertEquals("multi line description", desc.getText());
          }
       }
    }
@@ -338,7 +338,7 @@ public class PortletDefinition168ImplTest {
       Locale loc = new Locale("DE");
       DisplayName name = cut.getDisplayName(loc);
       assertNotNull(name);
-      assertEquals("display-name", name.getDisplayName());
+      assertEquals("display-name", name.getText());
    }
 
    @Test
@@ -346,7 +346,7 @@ public class PortletDefinition168ImplTest {
       List<DisplayName> list = cut.getDisplayNames();
       assertNotNull(list);
       assertEquals(1, list.size());
-      assertEquals("display-name", list.get(0).getDisplayName());
+      assertEquals("display-name", list.get(0).getText());
    }
 
    @Test
@@ -361,9 +361,9 @@ public class PortletDefinition168ImplTest {
       assertEquals(2, list.size());
       for (DisplayName desc : list) {
          if (desc.getLocale().equals(loc)) {
-            assertEquals(text, desc.getDisplayName());
+            assertEquals(text, desc.getText());
          } else {
-            assertEquals("display-name", desc.getDisplayName());
+            assertEquals("display-name", desc.getText());
          }
       }
    }
