@@ -21,10 +21,15 @@ package org.apache.pluto.container.driver;
 import java.io.InputStream;
 import java.util.Set;
 
+import javax.portlet.annotations.PortletApplication;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.PortletConfigurations;
+import javax.portlet.filter.PortletFilter;
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+import javax.servlet.annotation.HandlesTypes;
 
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
@@ -39,7 +44,8 @@ import org.slf4j.LoggerFactory;
  * @author Scott Nicklous
  * 
  */
-// @HandlesTypes({PortletApplication.class, PortletConfiguration.class})
+@HandlesTypes({PortletApplication.class, PortletConfiguration.class,
+               PortletFilter.class, PortletConfigurations.class})
 public class PortletContainerInitializer implements ServletContainerInitializer {
 
    private static final String WEB_XML     = "/WEB-INF/web.xml";
