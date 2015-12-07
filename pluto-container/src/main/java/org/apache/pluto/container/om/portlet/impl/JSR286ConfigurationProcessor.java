@@ -478,12 +478,12 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
          List<PortletModeType> pmlist = st.getPortletMode();
          if (pmlist.size() == 0) {
             String info = "No portlet modes found in Supports block.";
-            LOG.info(info);
+            LOG.debug(info);
          }
          List<WindowStateType> wslist = st.getWindowState();
          if (wslist.size() == 0) {
             String info = "No window states found in Supports block.";
-            LOG.info(info);
+            LOG.debug(info);
          }
 
          // set up Supports
@@ -865,30 +865,49 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
    public void validate () {
       super.validate();
       
+      StringBuilder txt = new StringBuilder(128);
+      
       // validate the resource bundle
       if (pad.getResourceBundle() != null) {
-         checkValidBundle(pad.getResourceBundle());
+         try {
+            checkValidBundle(pad.getResourceBundle());
+         } catch (Exception e) {
+            pad.setResourceBundle("");
+         }
       }
       
       // validate event definitions by making sure the payload classes, if provided, can be loaded.
       for (EventDefinition ed : pad.getEventDefinitions()) {
          String clsName = ed.getValueType();
          if (clsName != null && !clsName.equals("")) {
-            checkValidClass(clsName, null,
-                  "Bad Event definition. Payload type is invalid: ");
+            try {
+               checkValidClass(clsName, null, "Bad Event definition. Payload type is invalid: ");
+            } catch (Exception e) {
+               pad.removeEventDefinition(ed);
+            }
          }
       }
       
       // validate provided listener classes
       for (Listener l : pad.getListeners()) {
-         checkValidClass(l.getListenerClass(), PortletURLGenerationListener.class,
-               "Bad listener definition. Listener class is invalid: ");
+         try {
+            checkValidClass(l.getListenerClass(), PortletURLGenerationListener.class,
+                  "Bad listener definition. Listener class is invalid: ");
+         } catch(Exception e) {
+            pad.removeListener(l);
+         }
       }
       
       // Validate the filter classes
       for (Filter f : pad.getFilters()) {
-         checkValidClass(f.getFilterClass(), PortletFilter.class,
-               "Bad filter definition. Filter class is invalid: ");
+         try {
+            txt.setLength(0);
+            txt.append("Bad filter definition. Filter name: ").append(f.getFilterName());
+            txt.append(". Filter class is invalid: ");
+            checkValidClass(f.getFilterClass(), PortletFilter.class, txt.toString());
+         } catch(Exception e) {
+            pad.removeFilter(f);
+         }
       }
       
       // validate the filter mappings by making sure that the specified filters and 
@@ -896,15 +915,21 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
       for (FilterMapping fm : pad.getFilterMappings()) {
          String fname = fm.getFilterName();
          if (pad.getFilter(fname) == null) {
-            String warning = "Bad FilterMapping definition. Filter definition not found: " + fname;
-            LOG.warn(warning);
-            throw new IllegalArgumentException(warning);
+            txt.setLength(0);
+            txt.append("Bad filter mapping definition. Filter name: ").append(fm.getFilterName());
+            txt.append(", Portlet names: ").append(fm.getPortletNames().toString());
+            txt.append(", Filter definition not found: ").append(fname);
+            LOG.warn(txt.toString());
+            pad.removeFilterMapping(fm);
          }
          for (String pn : fm.getPortletNames()) {
             if (pad.getMatchingPortlets(pn).isEmpty()) {
-               String warning = "Bad FilterMapping definition. Portlet definition not found: " + pn;
-               LOG.warn(warning);
-               throw new IllegalArgumentException(warning);
+               txt.setLength(0);
+               txt.append("Bad filter mapping definition. Filter name: ").append(fm.getFilterName());
+               txt.append(", Portlet names: ").append(fm.getPortletNames().toString());
+               txt.append(", Portlet definition not found: ").append(pn);
+               LOG.warn(txt.toString());
+               pad.removeFilterMapping(fm);
             }
          }
       }
@@ -914,34 +939,52 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
          
          // check the portlet class
          if (pad.getVersion().equals("2.0") || pad.getVersion().equals("1.0")) {
-            checkValidClass(portlet.getPortletClass(), Portlet.class, "Bad portlet class: ");
+            try {
+               checkValidClass(portlet.getPortletClass(), Portlet.class, "Bad portlet class: ");
+            } catch (Exception e) {
+               pad.removePortlet(portlet);
+               continue;
+            }
          }
          
          // check the resource bundle
          if (portlet.getResourceBundle() != null) {
-            checkValidBundle(portlet.getResourceBundle());
+            try {
+               checkValidBundle(portlet.getResourceBundle());
+            } catch (Exception e) {
+               pad.setResourceBundle("");
+            }
          }
          
          // check the portlet preferences validator class
          Preferences prefs = portlet.getPortletPreferences();
          if (prefs != null && prefs.getPreferencesValidator() != null) {
             String clsName = prefs.getPreferencesValidator();
+            try {
             checkValidClass(clsName, PreferencesValidator.class,
                   "Bad portlet preferences validator class: ");
+            } catch (Exception e) {
+               portlet.setPortletPreferences(null);
+            }
          }
          
          // Check the supported public render parameters
          for (String prp : portlet.getSupportedPublicRenderParameters()) {
             boolean ok = false;
+            txt.setLength(0);
+            txt.append("Valid PRP identifiers: ");
+            String sep = "";
             for (PublicRenderParameter prpdef : pad.getPublicRenderParameters()) {
+               txt.append(sep).append(prpdef.getIdentifier());
+               sep = ", ";
                if (prpdef.getIdentifier().equals(prp)) {
                   ok = true;
                }
             }
             if (!ok) {
-               String warning = "Public render parameter definition not found for: " + prp;
-               LOG.warn(warning);
-               throw new IllegalArgumentException(warning);
+               txt.append(". Public render parameter definition not found for: ").append(prp);
+               LOG.warn(txt.toString());
+               portlet.removeSupportedPublicRenderParameter(prp);
             }
          }
          
@@ -949,10 +992,17 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
          for (EventDefinitionReference edr : portlet.getSupportedPublishingEvents()) {
             QName qname = edr.getQualifiedName();
             if (pad.getEventDefinition(qname) == null) {
-               String warning = "Bad publishing event definition reference. No event definition found for qname: "
-                     + qname;
-               LOG.warn(warning);
-               throw new IllegalArgumentException(warning);
+               txt.setLength(0);
+               txt.append("Bad publishing event definition reference. No event definition found for qname: ");
+               txt.append(qname);
+               txt.append(". Valid QNames: ");
+               String sep = "";
+               for (EventDefinition def : pad.getEventDefinitions()) {
+                  txt.append(sep).append(def.getQName());
+                  sep = ", ";
+               }
+               LOG.warn(txt.toString());
+               portlet.removeSupportedPublishingEvent(edr);
             }
          }
          
@@ -960,10 +1010,17 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
          for (EventDefinitionReference edr : portlet.getSupportedProcessingEvents()) {
             QName qname = edr.getQualifiedName();
             if (pad.getEventDefinition(qname) == null) {
-               String warning = "Bad processing event definition reference. No event definition found for qname: "
-                     + qname;
-               LOG.warn(warning);
-               throw new IllegalArgumentException(warning);
+               txt.setLength(0);
+               txt.append("Bad publishing event definition reference. No event definition found for qname: ");
+               txt.append(qname);
+               txt.append(". Valid QNames: ");
+               String sep = "";
+               for (EventDefinition def : pad.getEventDefinitions()) {
+                  txt.append(sep).append(def.getQName());
+                  sep = ", ";
+               }
+               LOG.warn(txt.toString());
+               portlet.removeSupportedProcessingEvent(edr);
             }
          }
          

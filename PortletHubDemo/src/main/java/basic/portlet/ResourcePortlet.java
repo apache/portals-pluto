@@ -39,11 +39,44 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.annotations.EventDefinition;
+import javax.portlet.annotations.LocaleString;
+import javax.portlet.annotations.PortletApplication;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.PortletQName;
+import javax.portlet.annotations.PublicRenderParameterDefinition;
+import javax.portlet.annotations.Supports;
 
 
 /**
- * A management portlet that displays the current deep link configuraion
+ * A demo portlet that displays images
  */
+@PortletApplication(
+      events = {
+            @EventDefinition(
+                  qname = @PortletQName(
+                        namespaceURI = "http://www.apache.org/portals/pluto/ResourcePortlet", 
+                        localPart = "Message"),
+                  payloadType = String.class)},
+      publicParams = {
+            @PublicRenderParameterDefinition(
+                  qname = @PortletQName(
+                        namespaceURI = "http://www.apache.org/portals/pluto/ResourcePortlet", 
+                        localPart = "imgName"),
+                  identifier = "imgName"
+                  ),
+            @PublicRenderParameterDefinition(
+                  qname = @PortletQName(
+                        namespaceURI = "http://www.apache.org/portals/pluto/ResourcePortlet", 
+                        localPart = "color"),
+                  identifier = "color") }
+      )
+@PortletConfiguration(portletName = "PH-ResourcePortlet-PRP",
+      title={@LocaleString("PH Resource Portlet")},
+      supportedLocales = {"en"},
+      supports = @Supports(mimeType = "text/html", portletModes = "VIEW"),
+      publicParams = {"color", "imgName"}
+      )
 public class ResourcePortlet extends GenericPortlet {
 
    // Set up logging

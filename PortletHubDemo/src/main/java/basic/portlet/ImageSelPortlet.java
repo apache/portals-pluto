@@ -38,11 +38,15 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.annotations.LocaleString;
+import javax.portlet.annotations.PortletConfiguration;
 
 
 /**
- * A management portlet that displays the current deep link configuraion
+ * A demo portlet for selecting images
  */
+@PortletConfiguration(portletName = "ImageSelPortlet", publicParams = "imgName", 
+                      title = @LocaleString("PH Image Selection Portlet"))
 public class ImageSelPortlet extends GenericPortlet {
 
    // Set up logging

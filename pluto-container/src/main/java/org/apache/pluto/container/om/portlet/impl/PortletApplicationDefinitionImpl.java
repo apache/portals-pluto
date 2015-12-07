@@ -269,6 +269,11 @@ public class PortletApplicationDefinitionImpl implements
       }
       portlets.add( pd);
    }
+   
+   @Override
+   public boolean removePortlet(PortletDefinition pd) {
+      return portlets.remove(pd);
+   }
 
    @Override
    public List<EventDefinition> getEventDefinitions() {
@@ -296,6 +301,11 @@ public class PortletApplicationDefinitionImpl implements
          LOG.debug("Removed duplicate event definition: " + ed.getQName());
       }
       events.add(ed);
+   }
+   
+   @Override
+   public boolean removeEventDefinition(EventDefinition ed) {
+      return events.remove(ed);
    }
 
    @Override
@@ -334,6 +344,11 @@ public class PortletApplicationDefinitionImpl implements
       }
       prps.add(prp);
    }
+   
+   @Override
+   public boolean removePublicRenderParameter(PublicRenderParameter prp) {
+      return prps.remove(prp);
+   }
 
    @Override
    public CustomPortletMode getCustomPortletMode(String arg) {
@@ -361,6 +376,11 @@ public class PortletApplicationDefinitionImpl implements
          LOG.debug("Removed duplicate custom portlet mode: " + cpm.getPortletMode());
       }
       cpms.add(cpm);
+   }
+   
+   @Override
+   public boolean removeCustomPortletMode(CustomPortletMode pm) {
+      return cpms.remove(pm);
    }
 
    @Override
@@ -390,6 +410,11 @@ public class PortletApplicationDefinitionImpl implements
       }
       cwss.add(cws);
    }
+   
+   @Override
+   public boolean removeCustomWindowState(CustomWindowState ws) {
+      return cwss.remove(ws);
+   }
 
    @Override
    public UserAttribute getUserAttribute(String arg) {
@@ -417,6 +442,11 @@ public class PortletApplicationDefinitionImpl implements
          LOG.debug("Removed duplicate user attribute: " + ua.getName());
       }
       uattrs.add(ua);
+   }
+   
+   @Override
+   public boolean removeUserAttribute(UserAttribute ua) {
+      return uattrs.remove(ua);
    }
 
    @Override
@@ -451,6 +481,11 @@ public class PortletApplicationDefinitionImpl implements
          LOG.debug("No filter class for filter: " + filter.getFilterName());
       }
    }
+   
+   @Override
+   public boolean removeFilter(Filter filter) {
+      return filters.remove(filter);
+   }
 
    @Override
    public FilterMapping getFilterMapping(String arg) {
@@ -484,6 +519,11 @@ public class PortletApplicationDefinitionImpl implements
          LOG.debug("No portlet names for filter mapping. Filter name: " + fm.getFilterName());
       }
    }
+   
+   @Override
+   public boolean removeFilterMapping(FilterMapping fm) {
+      return fmaps.remove(fm);
+   }
 
    @Override
    public ContainerRuntimeOption getContainerRuntimeOption(String arg) {
@@ -512,6 +552,11 @@ public class PortletApplicationDefinitionImpl implements
       }
       cros.add(cro);
    }
+   
+   @Override
+   public boolean removeRuntimeOption(ContainerRuntimeOption cro) {
+      return cros.remove(cro);
+   }
 
    @Override
    public List<Listener> getListeners() {
@@ -528,6 +573,11 @@ public class PortletApplicationDefinitionImpl implements
          LOG.debug("Removed duplicate listener: " + listener.getListenerClass());
       }
       listeners.add(listener);
+   }
+   
+   @Override
+   public boolean removeListener(Listener listener) {
+      return listeners.remove(listener);
    }
 
    @Override
@@ -548,6 +598,11 @@ public class PortletApplicationDefinitionImpl implements
    }
 
    @Override
+   public boolean removeSecurityCOnstraint(SecurityConstraint sc) {
+      return constraints.remove(sc);
+   }
+
+   @Override
    public Map<Locale, String> getLocaleEncodingMappings() {
       Map<Locale, String> lem = new HashMap<Locale, String>();
       for (Locale l : localemap.keySet()) {
@@ -559,6 +614,11 @@ public class PortletApplicationDefinitionImpl implements
    @Override
    public void addLocaleEncodingMapping(Locale locale, String encoding) {
       localemap.put(locale, encoding);
+   }
+   
+   @Override
+   public String removeLocaleEncodingMapping(Locale locale) {
+      return localemap.remove(locale);
    }
 
 }

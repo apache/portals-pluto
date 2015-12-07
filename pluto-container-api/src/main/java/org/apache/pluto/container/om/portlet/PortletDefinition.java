@@ -40,12 +40,15 @@ public interface PortletDefinition {
 
    List<EventDefinitionReference> getSupportedProcessingEvents();
    void addSupportedProcessingEvent(EventDefinitionReference edr);
+   boolean removeSupportedProcessingEvent(EventDefinitionReference edr);
     
    List<EventDefinitionReference> getSupportedPublishingEvents();
    void addSupportedPublishingEvent(EventDefinitionReference edr);
+   boolean removeSupportedPublishingEvent(EventDefinitionReference edr);
 
    List<String> getSupportedPublicRenderParameters();
    void addSupportedPublicRenderParameter(String identifier);
+   boolean removeSupportedPublicRenderParameter(String identifier);
 
    String getResourceBundle();
    void setResourceBundle(String resourceBundle);
@@ -82,4 +85,5 @@ public interface PortletDefinition {
    void addDependency(Dependency dep);
    List<Dependency> getDependencies();
    Dependency getDependency(String name);
+
 }

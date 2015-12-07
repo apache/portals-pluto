@@ -24,6 +24,7 @@ import java.util.Set;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletConfigurations;
+import javax.portlet.annotations.PortletRequestFilter;
 import javax.portlet.filter.PortletFilter;
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
@@ -45,7 +46,7 @@ import org.slf4j.LoggerFactory;
  * 
  */
 @HandlesTypes({PortletApplication.class, PortletConfiguration.class,
-               PortletFilter.class, PortletConfigurations.class})
+               PortletRequestFilter.class, PortletConfigurations.class})
 public class PortletContainerInitializer implements ServletContainerInitializer {
 
    private static final String WEB_XML     = "/WEB-INF/web.xml";
@@ -89,7 +90,7 @@ public class PortletContainerInitializer implements ServletContainerInitializer 
             ConfigurationHolder holder = new ConfigurationHolder();
 
             if (classes != null) {
-               // digest any & all configuration annotations
+               holder.processConfigAnnotations(classes);
             }
 
             if (pin != null) {
@@ -129,7 +130,7 @@ public class PortletContainerInitializer implements ServletContainerInitializer 
                ctx.setAttribute(ConfigurationHolder.ATTRIB_NAME, holder);
                
             } else {
-               LOG.error("Configuration problem - no portlet definitions");
+               LOG.debug("No portlet definitions for context: " + ctx.getServletContextName());
             }
 
          } catch (Exception e) {
@@ -138,7 +139,7 @@ public class PortletContainerInitializer implements ServletContainerInitializer 
             txt.append(", Servlet ctx name: ").append(
                   ctx.getServletContextName());
             txt.append(", Exception: ").append(e.toString());
-            LOG.error(txt.toString());
+            LOG.info(txt.toString());
          }
       }
 

@@ -259,6 +259,11 @@ public class PortletDefinitionImpl implements PortletDefinition {
       }
       proEvtRefs.add(edr);
    }
+   
+   @Override
+   public boolean removeSupportedProcessingEvent(EventDefinitionReference edr) {
+      return proEvtRefs.remove(edr);
+   }
 
    /* (non-Javadoc)
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getSupportedPublishingEvents()
@@ -278,6 +283,11 @@ public class PortletDefinitionImpl implements PortletDefinition {
       }
       pubEvtRefs.add(edr);
    }
+   
+   @Override
+   public boolean removeSupportedPublishingEvent(EventDefinitionReference edr) {
+      return pubEvtRefs.remove(edr);
+   }
 
    /* (non-Javadoc)
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getSupportedPublicRenderParameters()
@@ -296,6 +306,11 @@ public class PortletDefinitionImpl implements PortletDefinition {
          LOG.debug("Removed duplicate supported render param: " + identifier);
       }
       pubParms.add(identifier);
+   }
+   
+   @Override
+   public boolean removeSupportedPublicRenderParameter(String identifier) {
+      return pubParms.remove(identifier);
    }
 
    /* (non-Javadoc)
