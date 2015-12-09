@@ -65,7 +65,7 @@ public @interface SecurityRoleRef {
     * It provides locale-specific text describing the security role ref for use by the portal application or by tools.
     * </div>
     * 
-    * @return  The portlet description
+    * @return  The security role reference description
     */
    LocaleString[]   description() default {};
 }

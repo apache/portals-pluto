@@ -33,25 +33,20 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * <div class='changed_added_3_0'>
- * Designates a preferences validator method.
+ * Designates a preferences validator class.
  * The PreferencesValidator allows validation of the set of portlet preferences 
  * before they are stored in the persistent store.
  * The validator method is invoked during execution of the 
  * store method of the PortletPreferences. 
  * <p>
- * The annotated method must have the following signature:
- * <p>
- *    <code>public void &lt;methodName&gt;(PortletPreferences preferences) throws ValidatorException</code>
- * <p>   
- * where the method name can be freely selected.
- * <p>
+ * The annotated class must implement the <code>PreferencesValidator</code> interface.
  * </div>
  *    
- * @see javax.portlet.PreferencesValidator#validate(javax.portlet.PortletPreferences) PreferencesValidator#validate
+ * @see javax.portlet.PreferencesValidator
  *
  */
 
-@Retention(RUNTIME) @Target({METHOD})
+@Retention(RUNTIME) @Target({TYPE})
 public @interface PreferencesValidator {
    
    /**
@@ -67,17 +62,5 @@ public @interface PreferencesValidator {
     * 
     * @return     The portlet names
     */
-   String[]   portletNames();
-   
-   /**
-    * The ordinal number for this annotated method.
-    * <p>
-    * The ordinal number determines the order of execution if multiple methods
-    * are annotated.
-    * Annotated methods with a lower ordinal number are executed before methods with
-    * a higher ordinal number.
-    * 
-    * @return     The ordinal number
-    */
-   int        ordinal() default 0;
+   String[]   portletNames() default "*";
 }

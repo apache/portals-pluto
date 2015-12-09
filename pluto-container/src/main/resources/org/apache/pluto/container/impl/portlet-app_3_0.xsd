@@ -372,15 +372,22 @@
 				A filter can be restricted to one or more lifecycle phases
 				of the portlet. Valid entries for lifecycle are:
 				ACTION_PHASE, EVENT_PHASE, RENDER_PHASE,
-				RESOURCE_PHASE
+				RESOURCE_PHASE.
+            The filter-name element allows an annotated filter to be addressed
+            and replaced through a corresponding portlet deployment descriptor 
+            filter and / or filter mapping configuration.
+            If the filter class is null, the annotated filter with matching filter name will
+            be removed from the configuration. The ordinal element determines the order of execution
+            should there be multiple filters configured. The default ordinal number is 0.
 				Used in: portlet-app
 				</documentation>
 		</annotation>
 		<sequence>
 			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="display-name" type="portlet:display-nameType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="filter-name" type="portlet:filter-nameType"/>
+			<element name="filter-name" type="portlet:filter-nameType" minOccurs="0" maxOccurs="1"/>
 			<element name="filter-class" type="portlet:fully-qualified-classType"/>
+         <element name="ordinal" type="xs:int" minOccurs="0" maxOccurs="1"/>
 			<element name="lifecycle" type="portlet:string" maxOccurs="unbounded"/>
 			<element name="init-param" type="portlet:init-paramType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
@@ -439,14 +446,20 @@
 		<annotation>
 			<documentation>
 			The listenerType is used to declare listeners for this portlet application.
+         The optional listener-name element allows an annotated listener to be addressed
+         and replaced through a corresponding portlet deployment descriptor configuration.
+         If a listener name is provided and the listener class is null, the annotated listener will
+         be removed from the configuration. The ordinal element determines the order of execution
+         should there be multiple listeners configured. The default ordinal number is 0.
 			Used in: portlet-app
 			</documentation>
 		</annotation>
 		<sequence>
          <element name="listener-name" type="portlet:string" minOccurs="0" maxOccurs="1"/>
+         <element name="ordinal" type="xs:int" minOccurs="0" maxOccurs="1"/>
 			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="display-name" type="portlet:display-nameType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="listener-class" type="portlet:fully-qualified-classType"/>
+			<element name="listener-class" type="portlet:fully-qualified-classType" minOccurs="0" maxOccurs="1"/>
 		</sequence>
 		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>

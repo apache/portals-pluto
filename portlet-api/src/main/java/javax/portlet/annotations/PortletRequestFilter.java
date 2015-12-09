@@ -96,7 +96,7 @@ public @interface PortletRequestFilter {
     * 
     * @return     The portlet names
     */
-   String[]   portletNames();
+   String[]   portletNames() default "*";
    
    /**
     * <div class='not-supported'>

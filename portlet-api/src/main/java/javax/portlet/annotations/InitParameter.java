@@ -61,7 +61,7 @@ public @interface InitParameter {
     * Provides locale-specific text describing the initialization parameter for use by the portal application or by tools.
     * </div>
     * 
-    * @return  The event description
+    * @return  The parameter description
     */
    LocaleString[]      description() default {};
 }

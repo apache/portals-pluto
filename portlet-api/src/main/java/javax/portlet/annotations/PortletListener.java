@@ -33,54 +33,32 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * <div class='changed_added_3_0'>
- * Designates a portlet URL generation listener method.
+ * Designates a portlet URL generation listener class.
  * The listener method will be invoked before a URL of the corresponding type is
  * generated.
  * <p>
- * The annotated method must have one of the following signatures:
- * <p>
- *    <code>public void &lt;methodName&gt;(ActionURL actionURL)</code>
- * <p>   
- * <p>
- *    <code>public void &lt;methodName&gt;(RenderURL renderURL)</code>
- * <p>   
- * <p>
- *    <code>public void &lt;methodName&gt;(ResourceURL resourceURL)</code>
- * <p>   
- * where the method name can be freely selected.
+ * The annotated method must implement the <code>PortletListener</code> interface.
  * </div>
  *    
  * @see javax.portlet.PortletURLGenerationListener
  *
  */
 
-@Retention(RUNTIME) @Target({METHOD})
-public @interface PortletURLGenerationListener {
+@Retention(RUNTIME) @Target({TYPE})
+public @interface PortletListener {
    
    /**
-    * <div class='changed_added_3_0'>
-    * Needed for V2.0 portlets to discern between a Render URL and an Action URL
-    * since both are represented by the interface PortletURL.
-    * 
-    * Not needed for v3.0 portlets.
-    * </div>
-    */
-   public enum URLType {RENDER, ACTION, RESOURCE}
-   
-   /**
-    * The portlet names for which the listener applies.
+    * The listener name. 
     * <p>
-    * The annotated listener method can apply to multiple portlets within the portlet
-    * application. The names of the portlets to which the listener applies must be 
-    * specified in this field.
+    * The listener name is not required. If a listener name is provided, the listener configuration
+    * may be addressed through the listener name in the portlet deployment descriptor to modify 
+    * or remove the listener.
     * <p>
-    * A wildcard character '*' can be specified in the first portletName array element 
-    * to indicate that the listener is to apply to all portlets in the portlet application.
-    * If specified, the wildcard character must appear alone in the first array element.
+    *  
     * 
-    * @return     The portlet names
+    * @return  The listener name
     */
-   String[]    portletNames();
+   String   listenerName() default "";
    
    /**
     * The ordinal number for this annotated method.
@@ -105,25 +83,11 @@ public @interface PortletURLGenerationListener {
    
    /**
     * <div class='not-supported'>
-    * The portlet filter description
-    * providing locale-specific text describing the portlet filter for use by the portal application or by tools.
+    * The portlet listener description
+    * providing locale-specific text describing the portlet listener for use by the portal application or by tools.
     * </div>
     * 
     * @return  The portlet description
     */
    LocaleString[]   description() default {};
-   
-   /**
-    * The URL Type. 
-    * This field is needed for v2.0 portlets to discern between render URLs and 
-    * action URLs, since both are represented by the interface PortletURL.
-    * 
-    * Needs not be specified for ResourceURLs, as they are identified by the
-    * ResourceURL interface.
-    * 
-    * Not needed for v3.0 portlets
-    * 
-    * @return  The URL type
-    */
-   URLType     type() default URLType.RENDER;
 }

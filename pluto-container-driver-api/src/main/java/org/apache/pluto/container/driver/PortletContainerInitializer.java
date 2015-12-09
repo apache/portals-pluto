@@ -25,7 +25,6 @@ import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletConfigurations;
 import javax.portlet.annotations.PortletRequestFilter;
-import javax.portlet.filter.PortletFilter;
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
