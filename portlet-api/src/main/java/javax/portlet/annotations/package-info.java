@@ -81,7 +81,7 @@
  * Please see the following annotation descriptions:
  * {@link javax.portlet.annotations.PortletRequestFilter},
  * {@link javax.portlet.annotations.PortletListener}, and
- * {@link javax.portlet.annotations.PreferencesValidator}.
+ * {@link javax.portlet.annotations.PortletPreferencesValidator}.
  * </ul>
  * <h4>Injectable Portlet Artifacts</h4>
  * <p>

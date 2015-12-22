@@ -34,12 +34,12 @@ import static java.lang.annotation.RetentionPolicy.*;
 /**
  * <div class='changed_added_3_0'>
  * Designates a preferences validator class.
- * The PreferencesValidator allows validation of the set of portlet preferences 
+ * The PortletPreferencesValidator allows validation of the set of portlet preferences 
  * before they are stored in the persistent store.
  * The validator method is invoked during execution of the 
  * store method of the PortletPreferences. 
  * <p>
- * The annotated class must implement the <code>PreferencesValidator</code> interface.
+ * The annotated class must implement the <code>PortletPreferencesValidator</code> interface.
  * </div>
  *    
  * @see javax.portlet.PreferencesValidator
@@ -47,7 +47,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  */
 
 @Retention(RUNTIME) @Target({TYPE})
-public @interface PreferencesValidator {
+public @interface PortletPreferencesValidator {
    
    /**
     * The portlet names for which the validator applies.
