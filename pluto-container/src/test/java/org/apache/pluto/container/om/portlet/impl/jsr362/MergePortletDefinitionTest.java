@@ -56,14 +56,12 @@ import org.apache.pluto.container.om.portlet.impl.EventDefinitionReferenceImpl;
 import org.apache.pluto.container.om.portlet.impl.InitParamImpl;
 import org.apache.pluto.container.om.portlet.impl.LocaleTextImpl;
 import org.apache.pluto.container.om.portlet.impl.PortletDefinitionImpl;
-import org.apache.pluto.container.om.portlet.impl.PortletInfoImpl;
 import org.apache.pluto.container.om.portlet.impl.PreferenceImpl;
 import org.apache.pluto.container.om.portlet.impl.PreferencesImpl;
 import org.apache.pluto.container.om.portlet.impl.SecurityRoleRefImpl;
 import org.apache.pluto.container.om.portlet.impl.SupportsImpl;
 import org.apache.pluto.container.om.portlet.impl.fixtures.TestAnnotatedPortlet;
 import org.apache.pluto.container.om.portlet.impl.fixtures.TestPortlet;
-import org.apache.pluto.container.om.portlet.impl.fixtures.TestPortletAppAnnotatedClass;
 import org.apache.pluto.container.om.portlet.impl.fixtures.TestPreferencesValidator;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -210,9 +208,6 @@ public class MergePortletDefinitionTest {
       PortletInfo info = cut.getPortletInfo();
       assertNotNull(info);
       List<LocaleText> list = info.getTitles();
-      for (LocaleText lt : list) {
-         System.out.println("title: " + lt.getText());
-      }
       assertEquals(2, list.size());
       assertEquals("Annotated Portlet", info.getTitle(Locale.ENGLISH).getText());
       assertEquals("Titel", info.getTitle(Locale.GERMAN).getText());

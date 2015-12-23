@@ -74,6 +74,11 @@ public class FilterMappingImpl implements FilterMapping {
    public void addPortletName(String portletName) {
       portletNames.add(portletName);
    }
+   
+   @Override
+   public boolean removePortletName(String pn) {
+      return portletNames.remove(pn);
+   }
 
    /* (non-Javadoc)
     * @see java.lang.Object#hashCode()

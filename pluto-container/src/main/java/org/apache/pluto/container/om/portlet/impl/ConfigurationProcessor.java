@@ -3,6 +3,7 @@ package org.apache.pluto.container.om.portlet.impl;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import javax.portlet.annotations.PortletApplication;
@@ -185,6 +186,28 @@ public abstract class ConfigurationProcessor {
    }
    
    /**
+    * Generates a unique name for use in cases where the item is ordered by name, but the name 
+    * is optional to from the point of view of the portlet developer. For example, the filter name
+    * need not be specified in the filter annotation, but if it is, the filter config can be
+    * modified through a corresponding specification in the portlet deployment descriptor.
+    * 
+    * @return
+    */
+   protected String genUniqueName() {
+     
+      // create random name
+      final String chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZüÜäÄöÖß";
+      StringBuilder txt = new StringBuilder(128);
+      txt.append("Generated:");
+      Random rand = new Random();
+      for (int ii = 0; ii < 32; ii++) {
+         txt.append(chars.charAt(rand.nextInt(chars.length())));
+      }
+      return txt.toString();
+
+   }
+   
+   /**
     * Reads web app deployment descriptor to extract the locale - encoding mappings 
     * 
     * @param in            Input stream for DD
@@ -269,6 +292,30 @@ public abstract class ConfigurationProcessor {
     */
    public void processPortletFilterAnnotation(Class<?> cls) {
       // default impl = do nothing
+   }
+
+   /**
+    * Extracts the data from the portlet annotation and adds it to a 
+    * portlet listener definition structure. The portlet listener definition will be created if it does not
+    * already exist.
+    * <p>
+    * The default method implementation does nothing. The V3 implementation will
+    * override this method to provide function.  
+    * <p>
+    * This method is designed to be called before the portlet deployment descriptor
+    * is read so that data from the portlet DD can override that provided through annotations.
+    * 
+    * @param cls
+    */
+   public void processListenerAnnotation(Class<?> cls) {
+   }
+
+   /**
+    * Processes PortletPreferencesValidator annotated classes.
+    * 
+    * @param cls
+    */
+   public void processValidatorAnnotation(Class<?> cls) {
    }
 
 }

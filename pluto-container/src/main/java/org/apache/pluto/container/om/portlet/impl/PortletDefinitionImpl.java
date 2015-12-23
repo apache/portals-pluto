@@ -57,7 +57,7 @@ public class PortletDefinitionImpl implements PortletDefinition {
    private int expirationCache;
    
    private PortletInfo info;
-   private Preferences prefs;
+   private Preferences prefs = new PreferencesImpl();
    
    private final List<String> supportedLocales = new ArrayList<String>();
    private final List<String> pubParms = new ArrayList<String>();
@@ -233,7 +233,7 @@ public class PortletDefinitionImpl implements PortletDefinition {
     */
    @Override
    public Preferences getPortletPreferences() {
-      return (prefs != null) ? new PreferencesImpl(prefs) : null;
+      return new PreferencesImpl(prefs);
    }
 
    @Override

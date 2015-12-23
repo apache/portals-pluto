@@ -34,4 +34,7 @@ public interface Listener {
    
    String getListenerName();
    void setListenerName(String listenerName);
+   
+   int getOrdinal();
+   void setOrdinal(int ordinal);
 }

@@ -25,6 +25,8 @@ import java.util.Set;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletConfigurations;
+import javax.portlet.annotations.PortletListener;
+import javax.portlet.annotations.PortletPreferencesValidator;
 import javax.portlet.annotations.PortletRequestFilter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -136,7 +138,8 @@ public class ConfigurationHolder {
 
       } else if (jel.getValue() instanceof org.apache.pluto.container.om.portlet30.impl.PortletAppType) {
 
-         jcp = new JSR362ConfigurationProcessor(pad);
+         // if config processor already present, there were annotations. don't overwrite
+         jcp = (jcp == null) ? new JSR362ConfigurationProcessor(pad) : jcp;
 
       } else {
          String warning = "Unknown application type: " + jel.getValue().getClass().getCanonicalName();
@@ -212,9 +215,16 @@ public class ConfigurationHolder {
                }
             }
             
-            PortletRequestFilter prf = cls.getAnnotation(PortletRequestFilter.class);
-            if (prf != null) {
+            if (cls.getAnnotation(PortletRequestFilter.class) != null) {
                jcp.processPortletFilterAnnotation(cls);
+            }
+            
+            if (cls.getAnnotation(PortletListener.class) != null) {
+               jcp.processListenerAnnotation(cls);
+            }
+            
+            if (cls.getAnnotation(PortletPreferencesValidator.class) != null) {
+               jcp.processValidatorAnnotation(cls);
             }
             
          }

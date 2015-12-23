@@ -94,6 +94,7 @@ public interface PortletApplicationDefinition {
    void addFilterMapping(FilterMapping fm);
    boolean removeFilterMapping(FilterMapping fm);
 
+   Listener getListener(String name);
    List<Listener> getListeners();
    void addListener(Listener listener);
    boolean removeListener(Listener listener);

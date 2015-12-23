@@ -24,4 +24,5 @@ public interface FilterMapping {
 
 	List<String> getPortletNames();
 	void addPortletName(String portletName);
+   boolean removePortletName(String pn);
 }

@@ -105,28 +105,30 @@ public class PortletContainerInitializer implements ServletContainerInitializer 
             holder.validate();
 
             if (holder.getPad().getPortlets().size() > 0) {
+
+               ctx.setAttribute(ConfigurationHolder.ATTRIB_NAME, holder);
                
                // dynamically deploy the portlet servlets
                for (PortletDefinition pd : holder.getPad().getPortlets()) {
                   String pn = pd.getPortletName();
                   String mapping = PortletInvokerService.URIPREFIX + pn;
+                  String servletName = pn + "_PS3";
 
                   if (isDebug) {
                      StringBuilder txt = new StringBuilder();
-                     txt.append("Adding PortletServlet3, name: ");
+                     txt.append("Adding PortletServlet3. Portlet name: ");
                      txt.append(pn);
+                     txt.append(", servlet name: ").append(servletName);
                      txt.append(", mapping: ").append(mapping);
                      LOG.debug(txt.toString());
                   }
                   
-                  ServletRegistration.Dynamic sr = ctx.addServlet(pn + "_PS3", PortletServlet3.class);
+                  ServletRegistration.Dynamic sr = ctx.addServlet(servletName, PortletServlet3.class);
                   sr.addMapping(mapping);
                   sr.setInitParameter(PortletServlet3.PORTLET_NAME, pn);
                   sr.setLoadOnStartup(100);
 
                }
-
-               ctx.setAttribute(ConfigurationHolder.ATTRIB_NAME, holder);
                
             } else {
                LOG.debug("No portlet definitions for context: " + ctx.getServletContextName());

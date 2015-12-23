@@ -61,13 +61,4 @@ public @interface Preference {
     * @return  The read-only flag
     */
    boolean     isReadOnly() default false;
-   
-   /**
-    * <div class='container-change'>
-    * Provides locale-specific text describing the portlet preference for use by the portal application or by tools.
-    * </div>
-    * 
-    * @return  The portlet preference description
-    */
-   LocaleString[]      description() default {};
 }

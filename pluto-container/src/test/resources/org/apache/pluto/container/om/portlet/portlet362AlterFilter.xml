@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app id="id1" version="3.0"
+   xmlns="http://xmlns.jcp.org/xml/ns/portlet" 
+   xmlns:portlet="http://xmlns.jcp.org/xml/ns/portlet" 
+   xmlns:xml="http://www.w3.org/XML/1998/namespace"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/portlet portlet-app_3_0.xsd ">
+
+   <!-- JSR 362 portlet DD test file -->
+
+   <portlet id="id2">
+      <portlet-name>portlet1</portlet-name>
+      <display-name xml:lang="de">display-name</display-name>
+   </portlet>
+   <filter>
+      <!-- delete bFilter from configuration (no filter class) -->
+      <filter-name>bFilter</filter-name>
+   </filter>
+   <filter>
+      <!-- change aFilter to use different class -->
+      <filter-name>aFilter</filter-name>
+      <filter-class>org.apache.pluto.container.om.portlet.impl.fixtures.TestFilter</filter-class>
+      <ordinal>-40</ordinal>
+   </filter>
+</portlet-app>

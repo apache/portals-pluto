@@ -749,6 +749,7 @@ public class PortletApplicationDefinition362ImplTest {
       assertEquals(1, list.size());
       assertEquals("org.apache.pluto.container.om.portlet.impl.fixtures.TestListener", list.get(0).getListenerClass());
       assertEquals("test listener", list.get(0).getListenerName());
+      assertEquals(100, list.get(0).getOrdinal());
    }
 
    /**
@@ -758,16 +759,20 @@ public class PortletApplicationDefinition362ImplTest {
    public void testAddListener() {
       String clsName = "org.apache.pluto.container.om.portlet.impl.fixtures.DifferentListener";
       String lisName = "Different Listener";
+      int ord = 200;
       Listener newitem = new ListenerImpl(clsName);
       newitem.setListenerName(lisName);
+      newitem.setOrdinal(ord);
       
       cut.addListener(newitem);
       
       List<Listener> list = cut.getListeners();
       assertNotNull(list);
       assertEquals(2, list.size());
-      assertEquals(clsName, list.get(1).getListenerClass());
-      assertEquals(lisName, list.get(1).getListenerName());
+      Listener testItem = list.get(1);
+      assertEquals(clsName, testItem.getListenerClass());
+      assertEquals(lisName, testItem.getListenerName());
+      assertEquals(ord, testItem.getOrdinal());
    }
 
    /**
@@ -777,6 +782,30 @@ public class PortletApplicationDefinition362ImplTest {
    public void testAddDupListener() {
       String clsName = "org.apache.pluto.container.om.portlet.impl.fixtures.TestListener";
       String lisName = "test listener";
+      int ord = 100;
+      Listener newitem = new ListenerImpl(clsName);
+      newitem.setListenerName(lisName);
+      newitem.setOrdinal(ord);
+      
+      cut.addListener(newitem);
+      
+      List<Listener> list = cut.getListeners();
+      assertNotNull(list);
+      assertEquals(1, list.size());
+      Listener testItem = list.get(0);
+
+      assertEquals(clsName, testItem.getListenerClass());
+      assertEquals(lisName, testItem.getListenerName());
+      assertEquals(ord, testItem.getOrdinal());
+   }
+
+   /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addListener(org.apache.pluto.container.om.portlet.Listener)}.
+    */
+   @Test
+   public void testReplaceListenerClass() {
+      String clsName = "org.apache.pluto.container.om.portlet.impl.fixtures.DifferentListener";
+      String lisName = "test listener";
       Listener newitem = new ListenerImpl(clsName);
       newitem.setListenerName(lisName);
       
@@ -785,8 +814,11 @@ public class PortletApplicationDefinition362ImplTest {
       List<Listener> list = cut.getListeners();
       assertNotNull(list);
       assertEquals(1, list.size());
-      assertEquals(clsName, list.get(0).getListenerClass());
-      assertEquals(lisName, list.get(0).getListenerName());
+      Listener testItem = list.get(0);
+
+      assertEquals(clsName, testItem.getListenerClass());
+      assertEquals(lisName, testItem.getListenerName());
+      assertEquals(0, testItem.getOrdinal());
    }
 
    /**

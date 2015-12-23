@@ -20,6 +20,7 @@
 package org.apache.pluto.container.om.portlet.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -56,7 +57,7 @@ public class PortletApplicationDefinitionImpl implements
    private String id;
    private String name;
    private String contextPath;
-   private String version;
+   private String version = "3.0";
    private String resourceBundle;
    private String defaultNamespace;
    
@@ -73,8 +74,8 @@ public class PortletApplicationDefinitionImpl implements
    // for the locale - encoding mappings from the web.xml
    private final Map<Locale, String> localemap = new HashMap<Locale, String>();
    
-   private final ArrayList<Listener> listeners = new ArrayList<Listener>();
-   private final ArrayList<SecurityConstraint> constraints = new ArrayList<SecurityConstraint>();
+   private final List<Listener> listeners = new ArrayList<Listener>();
+   private final List<SecurityConstraint> constraints = new ArrayList<SecurityConstraint>();
 
    /**
     * Default constructor
@@ -472,13 +473,22 @@ public class PortletApplicationDefinitionImpl implements
    @Override
    public void addFilter(Filter filter) {
       // If the filter class is null, remove the filter definition, otherwise replace it
-      if (filters.remove(filter)) {
+      boolean removed = filters.remove(filter);
+      
+      if (removed) {
          LOG.debug("Removed duplicate filter definition: " + filter.getFilterName());
       } 
+      
+      // If a filter class is present, add the new one. Otherwise, if the filter was
+      // removed, get rid of the filter mapping as well.
       if (filter.getFilterClass() != null && filter.getFilterClass().length() > 0) {
          filters.add(filter);
+         // sort by ordinal. for JSR286 portlets, the ordinal will always be 0, so
+         // the list will remain in the original order.
+         Collections.sort(filters, new FilterComparator());
       } else {
-         LOG.debug("No filter class for filter: " + filter.getFilterName());
+         LOG.debug("No filter class for filter. Deleting filter mapping. filter name: " + filter.getFilterName());
+         removeFilterMapping(getFilterMapping(filter.getFilterName()));
       }
    }
    
@@ -559,6 +569,16 @@ public class PortletApplicationDefinitionImpl implements
    }
 
    @Override
+   public Listener getListener(String name) {
+      for (Listener l : listeners) {
+         if (l.getListenerName().equals(name)) {
+            return new ListenerImpl(l);
+         }
+      }
+      return null;
+   }
+
+   @Override
    public List<Listener> getListeners() {
       ArrayList<Listener> list = new ArrayList<Listener>();
       for (Listener l : listeners) {
@@ -569,10 +589,34 @@ public class PortletApplicationDefinitionImpl implements
 
    @Override
    public void addListener(Listener listener) {
+      
+      // Remove the listener if already present. This is based on the listener class
+      // for JSR 286 portlets and on the listener name for JSR 362 portlets
+
+      if (version.equals("3.0")) {
+         for (int ii = 0; ii < listeners.size(); ii++) {
+            if (listeners.get(ii).getListenerName().equals(listener.getListenerName())) {
+               listeners.remove(ii);
+               LOG.debug("Removed duplicate listener with name: " + listener.getListenerName());
+               break;
+            }
+         }
+      } else {
+
+         // If the listener class is null, remove the listener definition, otherwise replace it
       if (listeners.remove(listener)) {
-         LOG.debug("Removed duplicate listener: " + listener.getListenerClass());
+            LOG.debug("Removed duplicate listener for class: " + listener.getListenerClass());
       }
+      } 
+      
+      if (listener.getListenerClass() != null && listener.getListenerClass().length() > 0) {
       listeners.add(listener);
+         // sort by ordinal. for JSR286 portlets, the ordinal will always be 0, so
+         // the list will remain in the original order.
+         Collections.sort(listeners, new ListenerComparator());
+      } else {
+         LOG.debug("No listener class for listener: " + listener.getListenerName());
+      }
    }
    
    @Override

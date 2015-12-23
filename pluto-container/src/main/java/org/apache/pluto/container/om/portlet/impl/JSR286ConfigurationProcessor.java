@@ -958,13 +958,14 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
          
          // check the portlet preferences validator class
          Preferences prefs = portlet.getPortletPreferences();
-         if (prefs != null && prefs.getPreferencesValidator() != null) {
             String clsName = prefs.getPreferencesValidator();
+         if (prefs != null && clsName != null) {
             try {
             checkValidClass(clsName, PreferencesValidator.class,
                   "Bad portlet preferences validator class: ");
             } catch (Exception e) {
-               portlet.setPortletPreferences(null);
+               prefs.setPreferencesValidator(null);
+               portlet.setPortletPreferences(prefs);
             }
          }
          

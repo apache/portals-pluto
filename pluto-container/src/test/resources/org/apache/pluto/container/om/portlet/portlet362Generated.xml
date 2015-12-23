@@ -157,6 +157,7 @@
    </public-render-parameter>
    <listener>
       <listener-name>test listener</listener-name>
+      <ordinal>100</ordinal>
       <description xml:lang="de">description</description>
       <display-name xml:lang="de">display-name</display-name>
       <listener-class>org.apache.pluto.container.om.portlet.impl.fixtures.TestListener</listener-class>

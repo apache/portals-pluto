@@ -38,6 +38,7 @@ public class ListenerImpl implements Listener {
    private final List<DisplayName> dispNames = new ArrayList<DisplayName>();
    private String listenerClass = "";
    private String listenerName = "";
+   private int ordinal = 0;
 
    
    /**
@@ -54,6 +55,7 @@ public class ListenerImpl implements Listener {
       }
       listenerClass = lis.getListenerClass();
       listenerName = lis.getListenerName();
+      ordinal = lis.getOrdinal();
    }
    
    /**
@@ -154,6 +156,22 @@ public class ListenerImpl implements Listener {
    @Override
    public void setListenerName(String listenerName) {
       this.listenerName = listenerName;
+   }
+
+   /**
+    * @return the ordinal
+    */
+   @Override
+   public int getOrdinal() {
+      return ordinal;
+   }
+
+   /**
+    * @param ordinal the ordinal to set
+    */
+   @Override
+   public void setOrdinal(int ordinal) {
+      this.ordinal = ordinal;
    }
 
    /* (non-Javadoc)

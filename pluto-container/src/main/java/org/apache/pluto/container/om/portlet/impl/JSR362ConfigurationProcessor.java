@@ -20,16 +20,21 @@ package org.apache.pluto.container.om.portlet.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
+import java.util.Map;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletURLGenerationListener;
+import javax.portlet.PreferencesValidator;
 import javax.portlet.annotations.InitParameter;
 import javax.portlet.annotations.LocaleString;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.PortletListener;
+import javax.portlet.annotations.PortletPreferencesValidator;
 import javax.portlet.annotations.PortletRequestFilter;
 import javax.portlet.annotations.PublicRenderParameterDefinition;
 import javax.portlet.annotations.RuntimeOption;
@@ -46,9 +51,9 @@ import javax.xml.namespace.QName;
 import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
 import org.apache.pluto.container.om.portlet.CustomPortletMode;
 import org.apache.pluto.container.om.portlet.CustomWindowState;
+import org.apache.pluto.container.om.portlet.Dependency;
 import org.apache.pluto.container.om.portlet.Description;
 import org.apache.pluto.container.om.portlet.DisplayName;
-import org.apache.pluto.container.om.portlet.Dependency;
 import org.apache.pluto.container.om.portlet.EventDefinition;
 import org.apache.pluto.container.om.portlet.EventDefinitionReference;
 import org.apache.pluto.container.om.portlet.Filter;
@@ -108,6 +113,11 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
    private static final Logger  LOG     = LoggerFactory.getLogger(JSR362ConfigurationProcessor.class);
    // private static final boolean isDebug = LOG.isDebugEnabled();
    private static final boolean isTrace = LOG.isTraceEnabled();
+
+   // For holding the preference validators while the portlet configuration
+   // annotations are being processed.
+   private Map<PortletPreferencesValidator, String> prefValidators =
+         new HashMap<PortletPreferencesValidator, String>();
 
    public JSR362ConfigurationProcessor(PortletApplicationDefinition pad) {
       super(pad);
@@ -254,15 +264,32 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
    private void handleFilters(List<FilterType> args) {
       for (FilterType item : args) {
 
-         // validate data
-         if ((item.getFilterName() == null) || (item.getFilterName().length() == 0) || (item.getFilterClass() == null)
-               || (item.getFilterClass().length() == 0)) {
-            String warning = "Bad Filter definition. name or class was null.";
-            LOG.warn(warning);
-            throw new IllegalArgumentException(warning);
+         // Filter name may not be empty
+         String fn = item.getFilterName();
+         if (fn == null || fn.length() == 0) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("Bad Filter definition.");
+            txt.append(" Filter name is empty. ");
+            txt.append(", Filter class: ").append(item.getFilterClass());
+            LOG.warn(txt.toString());
+            throw new IllegalArgumentException(txt.toString());
+         }
+         
+         // Filter class may only be empty if an annotated filter of that name
+         // is already present
+         String fc = item.getFilterClass();
+         if (pad.getFilter(fn) == null) {
+            if ((fc == null) || (fc.length() == 0)) {
+               StringBuilder txt = new StringBuilder(128);
+               txt.append("Bad Filter definition.");
+               txt.append(" Filter name: ").append(item.getFilterName());
+               txt.append(", Filter class is empty.");
+               LOG.warn(txt.toString());
+               throw new IllegalArgumentException(txt.toString());
+            }
          }
 
-         // set up the custom portlet mode
+         // set up the filter config
          Filter newitem = new FilterImpl(item.getFilterName());
          newitem.setFilterClass(item.getFilterClass());
          for (InitParam ip : handleInitParam(item.getInitParam())) {
@@ -277,6 +304,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          for (DisplayName dispName : handleDisplayNames(item.getDisplayName())) {
             newitem.addDisplayName(dispName);
          }
+         newitem.setOrdinal((item.getOrdinal() == null) ? 0 : item.getOrdinal());
 
          // add it to the model
          pad.addFilter(newitem);
@@ -316,25 +344,34 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
    private void handleListeners(List<ListenerType> args) {
       for (ListenerType item : args) {
 
-         // validate data
+         String name = item.getListenerName();
+
+         // validate data. Empty class allowed if annotated config present
+         if ((name == null) || (name.length() == 0) || (pad.getListener(name) == null)) {
          if (item.getListenerClass() == null || item.getListenerClass().length() == 0) {
             String warning = "Bad Listener definition. Class was null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
          }
+         }
          
+         if (name == null || name.length() == 0) {
+            name = genUniqueName();
+         }
 
          // set up the listener
          Listener newitem = new ListenerImpl(item.getListenerClass());
-         if (item.getListenerName() != null) {
-            newitem.setListenerName(item.getListenerName());
-         }
+         
          for (Description desc : handleDescriptions(item.getDescription())) {
             newitem.addDescription(desc);
          }
          for (DisplayName dispName : handleDisplayNames(item.getDisplayName())) {
             newitem.addDisplayName(dispName);
          }
+
+         newitem.setOrdinal((item.getOrdinal() == null) ? 0 : item.getOrdinal());
+
+         newitem.setListenerName(name);
 
          // add it to the model
          pad.addListener(newitem);
@@ -695,7 +732,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          if (pd == null) {
             // If no annotated definition, the class name must be present
             if (clsName == null || clsName.length() == 0) {
-               warning = "Portlet class may not be null";
+               warning = "Portlet class may not be null. Portlet name: " + pn;
                LOG.warn(warning);
                throw new IllegalArgumentException(warning);
             }
@@ -768,16 +805,22 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
 
             // merge the new prefs with the old
             Preferences newprefs = pd.getPortletPreferences();
-            if (newprefs == null) {
-               newprefs = new PreferencesImpl();
-            }
 
             clsName = prefs.getPreferencesValidator();
+            if (clsName != null && clsName.length() > 0) {
+               if (clsName.equals("null")) {
+                  // marks that an annotated preferences validator should not be 
+                  // applied to this portlet
+                  newprefs.setNullValidator(true);
+               } else {
+                  newprefs.setPreferencesValidator(clsName);
+               }
+            }
 
-            newprefs.setPreferencesValidator(clsName);
             for (Preference p : handlePreferences(prefs.getPreference())) {
                newprefs.addPreference(p);
             }
+            
             pd.setPortletPreferences(newprefs);
          }
 
@@ -833,6 +876,81 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
     * validate the v3.0 configuration
     */
    public void validate() {
+      
+      // If the filter mapping portlet names element contains a single '*', expand
+      // the portlet names into a list of all portlet names in the application.
+      for (FilterMapping fm : pad.getFilterMappings()) {
+         if (fm.getPortletNames().size() == 1) {
+            if (fm.getPortletNames().get(0).equals("*")) {
+               fm.removePortletName("*");
+               for (PortletDefinition pd : pad.getPortlets()) {
+                  fm.addPortletName(pd.getPortletName());
+               }
+               pad.addFilterMapping(fm);
+            }
+         }
+      }
+      
+      // Apply the stored annotated preference validators to the
+      // portlet definitions
+      
+      for (PortletPreferencesValidator vali : prefValidators.keySet()) {
+         String[] pns = vali.portletNames();
+         String clsName = prefValidators.get(vali);
+
+         if ((pns.length > 0) && pns[0].equals("*")) {
+            
+            for (PortletDefinition pd : pad.getPortlets()) {
+               
+               // If a preferences validator is already configured, it had to have
+               // come from the portlet DD, so don't overwrite.
+               
+               Preferences prefs = pd.getPortletPreferences();
+               String oldVali = prefs.getPreferencesValidator();
+               if (oldVali == null || oldVali.length() == 0) {
+                  // If the validator was explicitly set to null in the
+                  // deployment descriptor, don't apply annotated validator
+                  if (!prefs.isNullValidator()) {
+                     prefs.setPreferencesValidator(clsName);
+                     pd.setPortletPreferences(prefs);
+                     pad.addPortlet(pd);
+                  }
+               }
+               
+            }
+            
+         } else {
+            for (String pn : pns) {
+               PortletDefinition pd = pad.getPortlet(pn);
+               
+               if (pd == null) {
+                  StringBuilder txt = new StringBuilder(128);
+                  txt.append("Portlet name defined in preferences validator annotation could not be found in configuration.");
+                  txt.append(" Portlet name: ").append(pn);
+                  txt.append(" Preferences validator class: ").append(clsName);
+                  LOG.warn(txt.toString());
+                  continue;
+               }
+               
+               // If a preferences validator is already configured, it had to have
+               // come from the portlet DD, so don't overwrite.
+               
+               Preferences prefs = pd.getPortletPreferences();
+               String oldVali = prefs.getPreferencesValidator();
+               if (oldVali == null || oldVali.length() == 0) {
+                  // If the validator was explicitly set to null in the
+                  // deployment descriptor, don't apply annotated validator
+                  if (!prefs.isNullValidator()) {
+                     prefs.setPreferencesValidator(clsName);
+                     pd.setPortletPreferences(prefs);
+                     pad.addPortlet(pd);
+                  }
+               }
+               
+            }
+         }
+      }
+      
       super.validate(); // reuse the 2.0 validation code
    }
 
@@ -977,14 +1095,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          String clsName = cls.getCanonicalName();
          String fn = prf.filterName();
          if (fn.length() == 0) {
-            // create random name
-            final String chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZüÜäÄöÖß";
-            StringBuilder txt = new StringBuilder(128);
-            Random rand = new Random();
-            for (int ii = 0; ii < 32; ii++) {
-               txt.append(chars.charAt(rand.nextInt(chars.length())));
-            }
-            fn = "Generated " + txt.toString();
+            fn = genUniqueName();
          }
          if (isTrace) {
             LOG.trace("Adding filter named: " + fn);
@@ -993,7 +1104,8 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          if (pad.getFilter(fn) != null) {
             StringBuilder txt = new StringBuilder(128);
             txt.append("Duplicate filter annotation. FilterName: ").append(fn);
-            txt.append(", class: ").append(cls.getCanonicalName());
+            txt.append(", class 1: ").append(cls.getCanonicalName());
+            txt.append(", class 2: ").append(pad.getFilter(fn).getFilterClass());
             LOG.warn(txt.toString());
             throw new IllegalArgumentException(txt.toString());
          }
@@ -1033,6 +1145,79 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          }
          pad.addFilterMapping(mapping);
 
+      }
+   }
+   
+   @Override
+   public void processListenerAnnotation(Class<?> cls) {
+      
+      PortletListener listener = cls.getAnnotation(PortletListener.class);
+      if (listener != null) {
+
+         if (!PortletURLGenerationListener.class.isAssignableFrom(cls)) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("@PortletListener annotated class must implement PortletURLGenerationListener interface. ");
+            txt.append(", class: ").append(cls.getCanonicalName());
+            LOG.warn(txt.toString());
+            throw new IllegalArgumentException(txt.toString());
+         }
+ 
+         String clsName = cls.getCanonicalName();
+         String name = listener.listenerName();
+         if (name.length() == 0) {
+            name = genUniqueName();
+         }
+
+         if (pad.getListener(name) != null) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("Duplicate listener annotation. Listener name: ").append(name);
+            txt.append(", class 1: ").append(clsName);
+            txt.append(", class 2: ").append(pad.getListener(name).getListenerClass());
+            LOG.warn(txt.toString());
+            throw new IllegalArgumentException(txt.toString());
+         }
+         
+         Listener newItem = new ListenerImpl(clsName);
+         newItem.setListenerName(name);
+         newItem.setOrdinal(listener.ordinal());
+
+         for (LocaleString ls : listener.description()) {
+            Description d = new DescriptionImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+            newItem.addDescription(d);
+         }
+         for (LocaleString ls : listener.displayName()) {
+            DisplayName d = new DisplayNameImpl(Locale.forLanguageTag(ls.locale()), ls.value());
+            newItem.addDisplayName(d);
+         }
+         
+         pad.addListener(newItem);
+
+      }
+   }
+   
+   /**
+    * Processes PortletPreferencesValidator annotated classes. The preferences 
+    * validators are temorarily stored while the portlet configuration annotations
+    * are being processed. 
+    * 
+    * @param cls  The annotated class
+    */
+   @Override 
+   public void processValidatorAnnotation(Class<?> cls) {
+      
+      PortletPreferencesValidator vali = cls.getAnnotation(PortletPreferencesValidator.class);
+      if (vali != null) {
+
+         if (!PreferencesValidator.class.isAssignableFrom(cls)) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("@PortletPreferencesValidator annotated class must implement PreferencesValidator interface. ");
+            txt.append(", class: ").append(cls.getCanonicalName());
+            LOG.warn(txt.toString());
+            throw new IllegalArgumentException(txt.toString());
+         }
+ 
+         String clsName = cls.getCanonicalName();
+         prefValidators.put(vali, clsName);
       }
    }
 

@@ -146,12 +146,83 @@ public class JSR362PortletFilterAnnotationTest {
       String newItem = "newFilter";
       Filter fil = new FilterImpl(newItem);
       fil.setFilterClass("SomeClass");
+      fil.setOrdinal(100);
       cut.addFilter(fil);
       
       List<Filter> list = cut.getFilters();
       assertNotNull(list);
       assertEquals(2, list.size());
       assertEquals(newItem, list.get(1).getFilterName());
+   }
+
+   /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addFilter(org.apache.pluto.container.om.portlet.Filter)}.
+    */
+   @Test
+   public void checkFilterOrder1() {
+      String newItem = "newFilter";
+      String oldItem = "aFilter";
+      Filter fil = new FilterImpl(newItem);
+      fil.setFilterClass("SomeClass");
+      fil.setOrdinal(10);
+      cut.addFilter(fil);
+      
+      List<Filter> list = cut.getFilters();
+      assertNotNull(list);
+      assertEquals(2, list.size());
+      assertEquals(newItem, list.get(0).getFilterName());
+      assertEquals(oldItem, list.get(1).getFilterName());
+   }
+
+   /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addFilter(org.apache.pluto.container.om.portlet.Filter)}.
+    */
+   @Test
+   public void checkFilterOrder2() {
+      String newItem = "newFilter";
+      String oldItem = "aFilter";
+      Filter fil = new FilterImpl(newItem);
+      fil.setFilterClass("SomeClass");
+      fil.setOrdinal(1000);
+      cut.addFilter(fil);
+      
+      List<Filter> list = cut.getFilters();
+      assertNotNull(list);
+      assertEquals(2, list.size());
+      assertEquals(newItem, list.get(1).getFilterName());
+      assertEquals(oldItem, list.get(0).getFilterName());
+   }
+
+   /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addFilter(org.apache.pluto.container.om.portlet.Filter)}.
+    */
+   @Test
+   public void deleteFilter1() {
+      String oldItem = "aFilter";
+      Filter fil = new FilterImpl(oldItem);
+      fil.setFilterClass(null);
+      fil.setOrdinal(1000);
+      cut.addFilter(fil);
+      
+      List<Filter> list = cut.getFilters();
+      assertNotNull(list);
+      assertEquals(0, list.size());
+   }
+
+   /**
+    * Test method for {@link org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl#addFilter(org.apache.pluto.container.om.portlet.Filter)}.
+    */
+   @Test
+   public void deleteFilter2() {
+      String oldItem = "aFilter";
+      Filter fil = new FilterImpl(oldItem);
+      fil.setFilterClass("");
+      fil.setOrdinal(1000);
+      cut.addFilter(fil);
+      
+      List<Filter> list = cut.getFilters();
+      assertNotNull(list);
+      assertEquals(0, list.size());
    }
 
    /**
