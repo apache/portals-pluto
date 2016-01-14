@@ -32,6 +32,8 @@ import javax.servlet.ServletRegistration;
 import javax.servlet.annotation.HandlesTypes;
 
 import org.apache.pluto.container.PortletInvokerService;
+import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
+import org.apache.pluto.container.bean.processor.PortletCDIExtension;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
 import org.slf4j.Logger;
@@ -66,82 +68,107 @@ public class PortletContainerInitializer implements ServletContainerInitializer 
    public void onStartup(Set<Class<?>> classes, ServletContext ctx)
          throws ServletException {
 
-      InputStream win = ctx.getResourceAsStream(WEB_XML);
-      InputStream pin = ctx.getResourceAsStream(PORTLET_XML);
+      try {
 
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder(128);
-         txt.append("§§§ ServletContainerInitializer. ctx path: ").append(
-               ctx.getContextPath());
-         txt.append(", servlet ctx name: ").append(ctx.getServletContextName());
-         txt.append(", # portlet annotations: ").append(
-               (classes != null) ? classes.size() : "null");
-         txt.append(", found web.xml: ").append(win != null);
-         txt.append(", found portlet.xml: ").append(pin != null);
-         LOG.debug(txt.toString());
-      }
+         // Get the bean configuration from the CDI extension
 
-      // If portlet configuration is available, parse it and launch the portlet
-      // servlets
-      if ((classes != null && classes.size() > 0) || pin != null) {
-
-         try {
-            ConfigurationHolder holder = new ConfigurationHolder();
-
-            if (classes != null) {
-               holder.processConfigAnnotations(classes);
-            }
-
-            if (pin != null) {
-               // parse the portlet deployment descriptor
-               holder.processPortletDD(pin);
-            }
-
-            if (win != null) {
-               // parse the web app deployment descriptor
-               holder.processWebDD(win);
-            }
-            
-            holder.validate();
-
-            if (holder.getPad().getPortlets().size() > 0) {
-
-               ctx.setAttribute(ConfigurationHolder.ATTRIB_NAME, holder);
-               
-               // dynamically deploy the portlet servlets
-               for (PortletDefinition pd : holder.getPad().getPortlets()) {
-                  String pn = pd.getPortletName();
-                  String mapping = PortletInvokerService.URIPREFIX + pn;
-                  String servletName = pn + "_PS3";
-
-                  if (isDebug) {
-                     StringBuilder txt = new StringBuilder();
-                     txt.append("Adding PortletServlet3. Portlet name: ");
-                     txt.append(pn);
-                     txt.append(", servlet name: ").append(servletName);
-                     txt.append(", mapping: ").append(mapping);
-                     LOG.debug(txt.toString());
-                  }
-                  
-                  ServletRegistration.Dynamic sr = ctx.addServlet(servletName, PortletServlet3.class);
-                  sr.addMapping(mapping);
-                  sr.setInitParameter(PortletServlet3.PORTLET_NAME, pn);
-                  sr.setLoadOnStartup(100);
-
-               }
-               
-            } else {
-               LOG.debug("No portlet definitions for context: " + ctx.getServletContextName());
-            }
-
-         } catch (Exception e) {
-            StringBuilder txt = new StringBuilder(128);
-            txt.append("Exception processing portlet application configuration");
-            txt.append(", Servlet ctx name: ").append(
-                  ctx.getServletContextName());
-            txt.append(", Exception: ").append(e.toString());
-            LOG.info(txt.toString());
+         AnnotatedConfigBean acb = PortletCDIExtension.getConfig();
+         if (acb == null) {
+            StringBuilder txt = new StringBuilder();
+            txt.append("The managed bean configuration could not be obtained. \n\nMake sure Tomcat is configured correctly.");
+            txt.append("\nVerify that the CDI implementation is available and configured to run before the Pluto portlet container initializer.");
+            txt.append("\nVerify that the file 'weld-servlet-2.3.1.Final.jar' is in the ${catalina.base}/lib directory.");
+            txt.append("\nVerify that the catalina.properties file contains a line similar to:.");
+            txt.append("\n   common.loader=\"${catalina.home}/lib/weld-servlet-2.3.1.Final.jar\",\"${catalina.base}/lib\",\"${catalina.base}/lib/*.jar\",\"${catalina.home}/lib\",\"${catalina.home}/lib/*.jar\"");
+            txt.append("\n");
+            LOG.warn(txt.toString());
          }
+
+         // Read the annotated configuration
+
+         ConfigurationHolder holder = new ConfigurationHolder();
+
+         if (classes != null) {
+            holder.processConfigAnnotations(classes);
+         }
+
+         // set up for reading the XML files
+
+         InputStream win = ctx.getResourceAsStream(WEB_XML);
+         InputStream pin = ctx.getResourceAsStream(PORTLET_XML);
+
+         if (isDebug) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("§§§ ServletContainerInitializer. ctx path: ").append(
+                  ctx.getContextPath());
+            txt.append(", servlet ctx name: ").append(ctx.getServletContextName());
+            txt.append(", # portlet annotations: ").append(
+                  (classes != null) ? classes.size() : "null");
+            txt.append(", found web.xml: ").append(win != null);
+            txt.append(", found portlet.xml: ").append(pin != null);
+            LOG.debug(txt.toString());
+         }
+
+         // Now read the XML configuration and validate the resulting explicit config
+
+         if (pin != null) {
+            // parse the portlet deployment descriptor
+            holder.processPortletDD(pin);
+         }
+
+         if (win != null) {
+            // parse the web app deployment descriptor
+            holder.processWebDD(win);
+         }
+
+         holder.validate();
+         
+         // If we were able to obtain a bean config, reconcile the bean config with the
+         // explicitly declared portlet configuration.
+         
+         if (acb != null) {
+            holder.reconcileBeanConfig(acb.getMethodStore());
+         }
+         
+         // If portlets have been found in this servlet context, launch the portlet servlets
+
+         if (holder.getPad().getPortlets().size() > 0) {
+
+            ctx.setAttribute(ConfigurationHolder.ATTRIB_NAME, holder);
+
+            // dynamically deploy the portlet servlets
+            for (PortletDefinition pd : holder.getPad().getPortlets()) {
+               String pn = pd.getPortletName();
+               String mapping = PortletInvokerService.URIPREFIX + pn;
+               String servletName = pn + "_PS3";
+
+               if (isDebug) {
+                  StringBuilder txt = new StringBuilder();
+                  txt.append("Adding PortletServlet3. Portlet name: ");
+                  txt.append(pn);
+                  txt.append(", servlet name: ").append(servletName);
+                  txt.append(", mapping: ").append(mapping);
+                  LOG.debug(txt.toString());
+               }
+
+               ServletRegistration.Dynamic sr = ctx.addServlet(servletName, PortletServlet3.class);
+               sr.addMapping(mapping);
+               sr.setInitParameter(PortletServlet3.PORTLET_NAME, pn);
+               sr.setLoadOnStartup(100);
+
+            }
+
+         } else {
+            LOG.debug("No portlet definitions for context: " + ctx.getServletContextName());
+         }
+
+      } catch (Exception e) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Exception processing portlet application configuration");
+         txt.append(", Servlet ctx name: ").append(
+               ctx.getServletContextName());
+         txt.append(", Exception: ").append(e.toString());
+         LOG.info(txt.toString());
       }
 
    }

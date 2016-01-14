@@ -95,9 +95,6 @@ public abstract class AnnotationRecognizer {
    public void checkAnnotatedType(ProcessAnnotatedType pat) throws InvalidAnnotationException {
       AnnotatedType<?> aType = pat.getAnnotatedType();
       String typeName = aType.getJavaClass().getCanonicalName();
-      if (isDebug) {
-         LOG.debug("Checking for annotations on: " + typeName);
-      }
       try {
          
          // Process the class annotations

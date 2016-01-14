@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 public class PortletSessionScopedConfig  implements Serializable {
    private static final long serialVersionUID = -5333145344722804837L;
    private final Logger LOG = LoggerFactory.getLogger(PortletSessionScopedConfig.class);
-   private final boolean isDebug = LOG.isDebugEnabled();
+   private final boolean isTrace = LOG.isTraceEnabled();
    
    
    // Maps the bean contextual to the annotation. The bean contextual is obtained
@@ -94,10 +94,10 @@ public class PortletSessionScopedConfig  implements Serializable {
       
       // dump configuration data to trace
       
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder(128);
-         txt.append("PortletSessionScopedBeanHolder configuration: \n");
-         txt.append("\nAnnotatedBeans: ");
+         txt.append("PortletSessionScopedBeanHolder configuration. ");
+         txt.append(" AnnotatedBeans: ");
          txt.append(getConfigAsString());
          LOG.debug(txt.toString());
       }

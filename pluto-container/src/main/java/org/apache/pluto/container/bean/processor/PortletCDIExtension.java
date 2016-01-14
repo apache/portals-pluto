@@ -100,16 +100,16 @@ public class PortletCDIExtension implements Extension {
       // Done processing the annotations, so put the resulting configuration in an
       // application scoped bean to pass it to the servlet
       
-      LOG.debug("Now attempting to get the AnnotatedConfigBean ...");
+      LOG.trace("Now attempting to get the AnnotatedConfigBean ...");
       Set<Bean<?>> beans = bm.getBeans(AnnotatedConfigBean.class);
       @SuppressWarnings("unchecked")
       Bean<AnnotatedConfigBean> bean = (Bean<AnnotatedConfigBean>) bm.resolve(beans);
       if (bean != null) {
-         LOG.debug("Got AnnotatedConfigBean bean: " + bean.getBeanClass().getCanonicalName());
+         LOG.trace("Got AnnotatedConfigBean bean: " + bean.getBeanClass().getCanonicalName());
          try {
             CreationalContext<AnnotatedConfigBean> cc = bm.createCreationalContext(bean);
             acb = (AnnotatedConfigBean) bm.getReference(bean, AnnotatedConfigBean.class, cc);
-            LOG.debug("Got AnnotatedConfigBean instance.");
+            LOG.trace("Got AnnotatedConfigBean instance.");
             acb.setMethodStore(ams);
             acb.setSummary(summary);
             acb.setStateScopedConfig(par.getStateScopedConfig());

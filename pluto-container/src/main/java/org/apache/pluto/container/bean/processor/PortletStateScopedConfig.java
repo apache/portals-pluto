@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
 public class PortletStateScopedConfig  implements Serializable {
    private static final long serialVersionUID = -5333145344722804837L;
    private final Logger LOG = LoggerFactory.getLogger(PortletStateScopedConfig.class);
-   private final boolean isDebug = LOG.isDebugEnabled();
+   private final boolean isTrace = LOG.isTraceEnabled();
    
    
    // Contains a sorted list of PortletStateScoped annotated class names. The sorted list
@@ -131,10 +131,10 @@ public class PortletStateScopedConfig  implements Serializable {
       
       // dump configuration data to trace
       
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder(128);
-         txt.append("PortletStateScopedBeanHolder configuration: \n");
-         txt.append("\nAnnotatedBeans: ");
+         txt.append("PortletStateScopedBeanHolder configuration.");
+         txt.append(" Annotated Beans: ");
          txt.append(getConfigAsString());
          LOG.debug(txt.toString());
       }
