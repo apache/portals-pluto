@@ -104,7 +104,13 @@ public class AddlPortletTests_SPEC2_9_WindowStates implements Portlet, ResourceS
       /* Details: "Support for the NORMAL window state does not need to be    */
       /* declared in the deployment descriptor"                               */
       TestResult tr0 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_9_WINDOWSTATES_DECLARINGWINDOWSTATES1);
-      /* TODO: implement test */
+      try {
+          
+          tr0.setTcSuccess(portletReq.isWindowStateAllowed(WindowState.NORMAL));
+       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
+       tr0.writeTo(writer);
+      
+      
       tr0.appendTcDetail("Not implemented.");
       tr0.writeTo(writer);
 
@@ -113,6 +119,13 @@ public class AddlPortletTests_SPEC2_9_WindowStates implements Portlet, ResourceS
       /* be declared in the deployment descriptor"                            */
       TestResult tr1 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_9_WINDOWSTATES_DECLARINGWINDOWSTATES2);
       /* TODO: implement test */
+      try {
+        //  tr1.setTcSuccess(hasField("MINIMIZED", WindowState.MINIMIZED));
+       } catch(Exception e) {tr1.appendTcDetail(e.toString());}
+       tr1.writeTo(writer);
+      
+      
+      
       tr1.appendTcDetail("Not implemented.");
       tr1.writeTo(writer);
 

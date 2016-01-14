@@ -82,9 +82,13 @@ public class PortletTests_Portlet_ApiAction implements Portlet, ResourceServingP
       /* Details: "Method processAction(ActionRequest, ActionResponse): is    */
       /* called when an action URL for the portlet is triggered"              */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLET_APIACTION_PROCESSACTION);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
+      try {
+          String name = "processAction";
+          Class<?> retType = void.class;
+          Class<?>[] parms = {ActionRequest.class, ActionResponse.class};
+          tr0.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
+       tr0.writeTo(writer);
 
       portletReq.getPortletSession().setAttribute(
                    Constants.RESULT_ATTR_PREFIX + "PortletTests_Portlet_ApiAction",

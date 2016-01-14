@@ -48,6 +48,7 @@ import static javax.portlet.ResourceURL.*;
 public class PortletTests_PortletConfig_ApiRender implements Portlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
          PortletTests_PortletConfig_ApiRender.class.getName();
+private static final Locale Locale = null;
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
@@ -60,6 +61,7 @@ public class PortletTests_PortletConfig_ApiRender implements Portlet, ResourceSe
    @Override
    public void destroy() {
    }
+   
 
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
@@ -105,34 +107,57 @@ public class PortletTests_PortletConfig_ApiRender implements Portlet, ResourceSe
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getPortletName      */
       /* Details: "Method getPortletName(): Returns a String containing the   */
       /* portlet name"                                                        */
-      TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPORTLETNAME);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      TestResult tr0 = tcd.getTestResultSucceeded(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPORTLETNAME);
+      String portletName=portletConfig.getPortletName();
+      if (!portletName.equals(this.getClass().getSimpleName())) {
+    	  tr0.setTcSuccess(false);
+    	  StringBuilder txt=new StringBuilder(128);
+    	  txt.append("Portlet Name did not match Class name. Portlet name:").append(portletName);
+    	  txt.append(", Class name:").append(this.getClass().getSimpleName());
+          tr0.appendTcDetail(txt.toString());
+       }
       tr0.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getPortletContext   */
       /* Details: "Method getPortletContext(): Returns the PortletContext     */
       /* object associated with the portlet"                                  */
-      TestResult tr1 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPORTLETCONTEXT);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      TestResult tr1 = tcd.getTestResultSucceeded(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPORTLETCONTEXT);
+      PortletContext pc=portletConfig.getPortletContext();
+      if (pc==null) {
+    	 tr1.setTcSuccess(false);
+    	 StringBuilder txt=new StringBuilder(128);
+         txt.append("The Portlet Context is null");
+         tr1.appendTcDetail(txt.toString());
+    	  
+      }
+      
       tr1.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getResourceBundle   */
       /* Details: "Method getResourceBundle(Locale): Returns the              */
       /* ResourceBundle for the specified locale"                             */
-      TestResult tr2 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETRESOURCEBUNDLE);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      TestResult tr2 = tcd.getTestResultSucceeded(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETRESOURCEBUNDLE);
+      Locale loc=new Locale("en_US");
+      ResourceBundle rb=portletConfig.getResourceBundle(loc);
+      StringBuilder txt2=new StringBuilder(128);
+      txt2.append("value is").append(rb);
+      tr2.appendTcDetail(txt2.toString());
       tr2.writeTo(writer);
 
+      
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getInitParameter1   */
       /* Details: "Method getInitParameter(String): Returns a String          */
       /* containing the initialization parameter value for the given name"    */
-      TestResult tr3 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETINITPARAMETER1);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      TestResult tr3 = tcd.getTestResultSucceeded(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETINITPARAMETERNAMES1);
+      String val = portletConfig.getInitParameter("param1");
+      if ((val == null) || !val.equals("value1")) {
+         tr3.setTcSuccess(false);
+         StringBuilder txt3 = new StringBuilder(128);
+         txt3.append("Value for param1 was not 'value1' but ").append(val);
+         tr3.appendTcDetail(txt3.toString());
+      }
       tr3.writeTo(writer);
+      
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getInitParameter3   */
       /* Details: "Method getInitParameter(String): Throws                    */
@@ -140,7 +165,7 @@ public class PortletTests_PortletConfig_ApiRender implements Portlet, ResourceSe
       TestResult tr4 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETINITPARAMETER3);
       try {
          try {
-            String val = portletConfig.getInitParameter(null);
+            String val1 = portletConfig.getInitParameter(null);
             tr4.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
             tr4.setTcSuccess(true);
@@ -155,8 +180,17 @@ public class PortletTests_PortletConfig_ApiRender implements Portlet, ResourceSe
       /* java.util.Enumeration&lt;java.lang.String&gt; containing the names   */
       /* of the initialization parameters"                                    */
       TestResult tr5 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETINITPARAMETERNAMES1);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      Enumeration<String> parms = portletConfig.getInitParameterNames();
+      List<String> list = Collections.list(parms);
+      if (list.size() == 3 ) {
+         if (list.contains("param1") && list.contains("param2") && list.contains("param3")) {
+            tr5.setTcSuccess(true);
+         } else {
+            tr5.appendTcDetail("Parameter names don't match: " + list.toString());
+         }
+      } else {
+         tr5.appendTcDetail("Parameter name enumeration had invalid length: " + list.size());
+      }
       tr5.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getPublicRenderParameterNames1 */
@@ -164,45 +198,87 @@ public class PortletTests_PortletConfig_ApiRender implements Portlet, ResourceSe
       /* java.util.Enumeration&lt;java.lang.String&gt; containing the names   */
       /* of the public render parameters"                                     */
       TestResult tr6 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPUBLICRENDERPARAMETERNAMES1);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
+      Enumeration<String> Renderparms = portletConfig.getPublicRenderParameterNames();
+      List<String> list1 = Collections.list(Renderparms);
+      if (list1.size() == 1 ) {
+           if (list1.contains("tckPRP1")) {
+    	       tr6.setTcSuccess(true);
+           } else {
+    	        tr6.appendTcDetail("Public render Parameter did not match  :" +list1.toString());
+             }
+      } else {
+    	  tr6.appendTcDetail("Parameter name had invalid length" +list1.size());
+      }
       tr6.writeTo(writer);
-
+      
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getDefaultNamespace1 */
       /* Details: "Method getDefaultNamespace(): Returns a String             */
       /* containing the default namespace for events and public render        */
       /* parameters as defined in the deployment descriptor"                  */
       TestResult tr7 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETDEFAULTNAMESPACE1);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      String str =portletConfig.getDefaultNamespace();
+      StringBuilder txt7=new StringBuilder(128);
+      if(str.equals("https://www.apache.org")) {
+    	  tr7.setTcSuccess(true);
+      } else { 
+          txt7.append("The default namespace is :").append(str);
+          tr7.appendTcDetail(txt7.toString());
+         }   
       tr7.writeTo(writer);
-
+      
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getPublishingEventQNames1 */
       /* Details: "Method getPublishingEventQNames(): Returns an              */
       /* java.util.Enumeration&lt;java.lang.String&gt; containing the         */
       /* publishing event qnames as defined in the deployment descriptor"     */
-      TestResult tr8 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPUBLISHINGEVENTQNAMES1);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
+      TestResult tr8 = tcd.getTestResultSucceeded(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPUBLISHINGEVENTQNAMES1);
+      Enumeration<QName> eventqname=portletConfig.getPublishingEventQNames();
+      List<QName> list8=Collections.list(eventqname);
+      StringBuilder txt8=new StringBuilder(128);
+      txt8.append("Number of entries: ").append(list8.size()).append(", Values: ");
+      String sep = "";
+      for (QName qn : list8) {
+    	  txt8.append(sep).append(qn.toString());
+    	  sep = ", ";
+      }
+      tr8.appendTcDetail(txt8.toString());
       tr8.writeTo(writer);
-
+      
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getProcessingEventQNames1 */
       /* Details: "Method getProcessingEventQNames(): Returns an              */
       /* java.util.Enumeration&lt;java.lang.String&gt; containing the         */
       /* processing event qnames as defined in the deployment descriptor"     */
       TestResult tr9 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPROCESSINGEVENTQNAMES1);
-      /* TODO: implement test */
-      tr9.appendTcDetail("Not implemented.");
-      tr9.writeTo(writer);
+      Enumeration<QName> nm1=portletConfig.getProcessingEventQNames();
+      QName qname1=new QName("http://www.apache.org/portals/pluto/portlet-tck_3.0", "PortletTests_Event_ApiEvent");
+      if (nm1 == null) {
+          tr9.appendTcDetail("PublishEventQName is null.");
+       } else if (!nm1.equals(qname1)) {
+          StringBuilder txt9 = new StringBuilder(128);
+          txt9.append("PublishEventQName is not expected value.");
+          txt9.append(" Expected: ").append(qname1);
+          txt9.append(" Actual: ").append(nm1);
+          tr9.appendTcDetail(txt9.toString());
+         }
+        tr9.writeTo(writer);
+
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getSupportedLocales1 */
       /* Details: "Method getSupportedLocales(): Returns an                   */
       /* java.util.Enumeration&lt;java.lang.String&gt; containing the names   */
       /* of the supported locales as defined in the deployment descriptor"    */
       TestResult tr10 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETSUPPORTEDLOCALES1);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
-      tr10.writeTo(writer);
+      Enumeration<java.util.Locale> locale=portletConfig.getSupportedLocales();
+      List<Locale> list10 = Collections.list(locale);
+      if (list10.size() == 1 ) {
+          if (list10.contains(Locale.forLanguageTag("en_us"))) {
+   	       tr10.setTcSuccess(true);
+          } else {
+   	        tr10.appendTcDetail("Locales did not match  :" +list10.toString());
+            }
+     } else {
+   	  tr10.appendTcDetail("Locales had invalid length" +list10.size());
+     }
+     tr10.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getContainerRuntimeOptions1 */
       /* Details: "Method getContainerRuntimeOptions(): Returns an            */
@@ -210,9 +286,12 @@ public class PortletTests_PortletConfig_ApiRender implements Portlet, ResourceSe
       /* containing the container runtime options as defined in the           */
       /* deployment descriptor"                                               */
       TestResult tr11 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS1);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
-      tr11.writeTo(writer);
+      Map<String,String[]> runoption=portletConfig.getContainerRuntimeOptions();
+      String[] val2 = runoption.get("somename");
+      Set<String> keys = runoption.keySet();
+    		  
+    
+      
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getContainerRuntimeOptions2 */
       /* Details: "Method getContainerRuntimeOptions(): If the same option    */
@@ -236,9 +315,6 @@ public class PortletTests_PortletConfig_ApiRender implements Portlet, ResourceSe
       /* Details: "Method getContainerRuntimeOptions(): Returns an empty      */
       /* map if no container runtime options have been defined "              */
       TestResult tr14 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS4);
-      /* TODO: implement test */
-      tr14.appendTcDetail("Not implemented.");
-      tr14.writeTo(writer);
 
    }
 

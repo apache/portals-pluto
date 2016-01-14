@@ -45,21 +45,18 @@ import static javax.portlet.ResourceURL.*;
  * portlet PortletTests_GenericPortlet_ApiRender_event
  *
  */
-public class PortletTests_GenericPortlet_ApiRender implements Portlet, ResourceServingPortlet {
+public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
    private static final String LOG_CLASS = 
          PortletTests_GenericPortlet_ApiRender.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
-   private PortletConfig portletConfig = null;
-
+   private boolean initCalled = false;
+   
    @Override
-   public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
+   public void init() {
+	   initCalled = true;
    }
-
-   @Override
-   public void destroy() {
-   }
+   
 
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
@@ -102,28 +99,53 @@ public class PortletTests_GenericPortlet_ApiRender implements Portlet, ResourceS
 
       ClassChecker cc = new ClassChecker(GenericPortlet.class);
 
+      
+      
+      /* TestCase: V2PortletTests_GenericPortlet_ApiRender_getPortletConfig   */
+      /* Details: "Method getPortletConfig(): Returns the PortletConfig       */
+      /* object for the portlet"                                              */
+      TestResult tr31 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_GETPORTLETCONFIG);
+      PortletConfig pc = getPortletConfig();
+      
+      StringBuilder txt=new StringBuilder(128);
+      txt.append("The value is:").append(pc);
+      tr31.appendTcDetail(txt.toString());
+      tr31.writeTo(writer);
+      
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_initA              */
       /* Details: "Method init(): Called when the portlet is initialized"     */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_INITA);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
+      try {
+          String name = "init";
+          Class<?> retType = void.class;
+          Class<?>[] parms = null;
+          tr0.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
+       tr0.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_initB              */
       /* Details: "Method init(PortletConfig): Called when the portlet is     */
       /* initialized"                                                         */
       TestResult tr1 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_INITB);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
-      tr1.writeTo(writer);
+      try {
+          String name = "init";
+          Class<?> retType = void.class;
+          Class<?>[] parms = {PortletConfig.class};
+          tr1.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr1.appendTcDetail(e.toString());}
+       tr1.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_processAction1     */
       /* Details: "Method processAction(ActionRequest, ActionResponse): If    */
       /* overridden, the Portlet.processAction tests execute correctly"       */
       TestResult tr2 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_PROCESSACTION1);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
-      tr2.writeTo(writer);
+      try {
+          String name = "processAction";
+          Class<?> retType = void.class;
+          Class<?>[] parms = {ActionRequest.class, ActionResponse.class};
+          tr2.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr2.appendTcDetail(e.toString());}
+       tr2.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_processAction2     */
       /* Details: "Method processAction(ActionRequest, ActionResponse):       */
@@ -139,17 +161,25 @@ public class PortletTests_GenericPortlet_ApiRender implements Portlet, ResourceS
       /* Throws PortletException if no matching @ProcessAction annotated      */
       /* method found"                                                        */
       TestResult tr4 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_PROCESSACTION3);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
-      tr4.writeTo(writer);
+      try {
+          String name = "processAction";
+          Class<?>[] exceptions = {PortletException.class, java.io.IOException.class};
+          Class<?>[] parms = {ActionRequest.class, ActionResponse.class};
+          tr4.setTcSuccess(cc.hasMethod(name, parms, exceptions));
+       } catch(Exception e) {tr4.appendTcDetail(e.toString());}
+       tr4.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_render1            */
       /* Details: "Method render(RenderRequest, RenderResponse): If           */
       /* overridden, Portlet.render tests execute correctly"                  */
       TestResult tr5 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_RENDER1);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
-      tr5.writeTo(writer);
+      try {
+          String name = "render";
+          Class<?> retType = void.class;
+          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
+          tr5.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr5.appendTcDetail(e.toString());}
+       tr5.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_render2            */
       /* Details: "Method render(RenderRequest, RenderResponse): If           */
@@ -227,42 +257,61 @@ public class PortletTests_GenericPortlet_ApiRender implements Portlet, ResourceS
       /* Details: "Method render(RenderRequest, RenderResponse): If           */
       /* RENDER_PART=&lt;any other value&gt;, throws PortletException "       */
       TestResult tr14 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_RENDER10);
-      /* TODO: implement test */
-      tr14.appendTcDetail("Not implemented.");
-      tr14.writeTo(writer);
-
+      try {
+          String name = "render";
+          Class<?>[] exceptions = {PortletException.class, java.io.IOException.class};
+          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
+          tr14.setTcSuccess(cc.hasMethod(name, parms, exceptions));
+       } catch(Exception e) {tr14.appendTcDetail(e.toString());}
+       tr14.writeTo(writer);
+       
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_getTitle1          */
       /* Details: "Method getTitle(): If overridden, the String returned by   */
       /* this method is used as the portlet title"                            */
       TestResult tr15 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_GETTITLE1);
-      /* TODO: implement test */
-      tr15.appendTcDetail("Not implemented.");
-      tr15.writeTo(writer);
+      try {
+          String name = "getTitle";
+          Class<?>[] exceptions = null;
+          Class<?>[] parms = {RenderRequest.class};
+          tr15.setTcSuccess(cc.hasMethod(name, parms, exceptions));
+       } catch(Exception e) {tr15.appendTcDetail(e.toString());}
+       tr15.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_getTitle2          */
       /* Details: "Method getTitle(): Returns a String containing the title   */
       /* from the portlet resource bundle under the key                       */
       /* \"javax.portlet.title\""                                             */
       TestResult tr16 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_GETTITLE2);
-      /* TODO: implement test */
-      tr16.appendTcDetail("Not implemented.");
-      tr16.writeTo(writer);
+      try {
+          String name = "getTitle";
+          Class<?> retType = String.class;
+          Class<?>[] parms = {RenderRequest.class};
+          tr16.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr16.appendTcDetail(e.toString());}
+       tr16.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_getTitle3          */
       /* Details: "Method getTitle(): Returns null if no title is available   */
       /* from the portlet resource bundle"                                    */
       TestResult tr17 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_GETTITLE3);
-      /* TODO: implement test */
-      tr17.appendTcDetail("Not implemented.");
-      tr17.writeTo(writer);
-
+      try {
+          String name = "getTitle";
+          Class<?> retType = null;
+          Class<?>[] parms = {RenderRequest.class};
+          tr17.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr17.appendTcDetail(e.toString());}
+       tr17.writeTo(writer);
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_doDispatch1        */
       /* Details: "Method doDispatch(RenderRequest, RenderResponse): If       */
       /* overridden, is called when markup is to be generated"                */
       TestResult tr18 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_DODISPATCH1);
-      /* TODO: implement test */
-      tr18.appendTcDetail("Not implemented.");
-      tr18.writeTo(writer);
+      try {
+          String name = "doDispatch";
+          Class<?> retType = void.class;
+          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
+          tr18.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr18.appendTcDetail(e.toString());}
+       tr18.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_doDispatch2        */
       /* Details: "Method doDispatch(RenderRequest, RenderResponse): If not   */
@@ -318,82 +367,112 @@ public class PortletTests_GenericPortlet_ApiRender implements Portlet, ResourceS
       /* mode is not \"view\", \"edit\", or \"help\", throws a                */
       /* PortletException"                                                    */
       TestResult tr24 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_DODISPATCH7);
-      /* TODO: implement test */
-      tr24.appendTcDetail("Not implemented.");
-      tr24.writeTo(writer);
+      try {
+          String name = "doDispatch";
+          Class<?>[] exceptions = {PortletException.class, java.io.IOException.class};
+          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
+          tr24.setTcSuccess(cc.hasMethod(name, parms, exceptions));
+       } catch(Exception e) {tr24.appendTcDetail(e.toString());}
+       tr24.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_doView1            */
       /* Details: "Method doView(RenderRequest, RenderResponse): If           */
       /* overridden, is called when a render request in view mode occurs"     */
       TestResult tr25 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_DOVIEW1);
-      /* TODO: implement test */
-      tr25.appendTcDetail("Not implemented.");
-      tr25.writeTo(writer);
+      try {
+          String name = "doView";
+          Class<?> retType = void.class;
+          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
+          tr25.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr25.appendTcDetail(e.toString());}
+       tr25.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_doView2            */
       /* Details: "Method doView(RenderRequest, RenderResponse): If not       */
       /* overridden, throws a PortletException"                               */
       TestResult tr26 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_DOVIEW2);
-      /* TODO: implement test */
-      tr26.appendTcDetail("Not implemented.");
-      tr26.writeTo(writer);
+      try {
+          String name = "doView";
+          Class<?>[] exceptions = {PortletException.class, java.io.IOException.class};
+          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
+          tr26.setTcSuccess(cc.hasMethod(name, parms, exceptions));
+       } catch(Exception e) {tr26.appendTcDetail(e.toString());}
+       tr26.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_doEdit1            */
       /* Details: "Method doEdit(RenderRequest, RenderResponse): If           */
       /* overridden, is called when a render request in edit mode occurs"     */
       TestResult tr27 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_DOEDIT1);
-      /* TODO: implement test */
-      tr27.appendTcDetail("Not implemented.");
-      tr27.writeTo(writer);
+      try {
+          String name = "doEdit";
+          Class<?> retType = void.class;
+          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
+          tr27.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr27.appendTcDetail(e.toString());}
+       tr27.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_doEdit2            */
       /* Details: "Method doEdit(RenderRequest, RenderResponse): If not       */
       /* overridden, throws a PortletException"                               */
       TestResult tr28 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_DOEDIT2);
-      /* TODO: implement test */
-      tr28.appendTcDetail("Not implemented.");
-      tr28.writeTo(writer);
+      try {
+          String name = "doEdit";
+          Class<?>[] exceptions = {PortletException.class, java.io.IOException.class};
+          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
+          tr28.setTcSuccess(cc.hasMethod(name, parms, exceptions));
+       } catch(Exception e) {tr28.appendTcDetail(e.toString());}
+       tr28.writeTo(writer);
+
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_doHelp1            */
       /* Details: "Method doHelp(RenderRequest, RenderResponse): If           */
       /* overridden, is called when a render request in help mode occurs"     */
       TestResult tr29 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_DOHELP1);
-      /* TODO: implement test */
-      tr29.appendTcDetail("Not implemented.");
-      tr29.writeTo(writer);
+      try {
+          String name = "doHelp";
+          Class<?> retType = void.class;
+          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
+          tr29.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr29.appendTcDetail(e.toString());}
+       tr29.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_doHelp2            */
       /* Details: "Method doHelp(RenderRequest, RenderResponse): If not       */
       /* overridden, throws a PortletException"                               */
       TestResult tr30 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_DOHELP2);
-      /* TODO: implement test */
-      tr30.appendTcDetail("Not implemented.");
-      tr30.writeTo(writer);
+      try {
+          String name = "doHelp";
+          Class<?>[] exceptions = {PortletException.class, java.io.IOException.class};
+          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
+          tr30.setTcSuccess(cc.hasMethod(name, parms, exceptions));
+       } catch(Exception e) {tr30.appendTcDetail(e.toString());}
+       tr30.writeTo(writer);
 
-      /* TestCase: V2PortletTests_GenericPortlet_ApiRender_getPortletConfig   */
-      /* Details: "Method getPortletConfig(): Returns the PortletConfig       */
-      /* object for the portlet"                                              */
-      TestResult tr31 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_GETPORTLETCONFIG);
-      /* TODO: implement test */
-      tr31.appendTcDetail("Not implemented.");
-      tr31.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_destroy            */
       /* Details: "Method destroy(): Called by the portlet container to       */
       /* indicate to a portlet that the portlet is being taken out of         */
       /* service. "                                                           */
       TestResult tr32 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_DESTROY);
-      /* TODO: implement test */
-      tr32.appendTcDetail("Not implemented.");
-      tr32.writeTo(writer);
+      try {
+          String name = "destroy";
+          Class<?> retType = void.class;
+          Class<?>[] parms = null;
+          tr32.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr32.appendTcDetail(e.toString());}
+       tr32.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_serveResource1     */
       /* Details: "Method serveResource(ResourceRequest, ResourceResponse):   */
       /* Is called when a ResourceURL targeting the portlet is triggered"     */
       TestResult tr33 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_SERVERESOURCE1);
-      /* TODO: implement test */
-      tr33.appendTcDetail("Not implemented.");
-      tr33.writeTo(writer);
+      try {
+          String name = "serveResource";
+          Class<?> retType = void.class;
+          Class<?>[] parms = {ResourceRequest.class, ResourceResponse.class};
+          tr33.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr33.appendTcDetail(e.toString());}
+       tr33.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_serveResource2     */
       /* Details: "Method serveResource(ResourceRequest, ResourceResponse):   */
@@ -417,9 +496,13 @@ public class PortletTests_GenericPortlet_ApiRender implements Portlet, ResourceS
       /* Details: "Method processEvent(EventRequest, EventResponse): Is       */
       /* called when an Event targeting the portlet occurs"                   */
       TestResult tr36 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_PROCESSEVENT1);
-      /* TODO: implement test */
-      tr36.appendTcDetail("Not implemented.");
-      tr36.writeTo(writer);
+      try {
+          String name = "processEvent";
+          Class<?> retType = void.class;
+          Class<?>[] parms = {EventRequest.class, EventResponse.class};
+          tr36.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr36.appendTcDetail(e.toString());}
+       tr36.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_processEvent2      */
       /* Details: "Method processEvent(EventRequest, EventResponse): The      */
@@ -443,34 +526,49 @@ public class PortletTests_GenericPortlet_ApiRender implements Portlet, ResourceS
       /* Details: "Method doHeaders(RenderRequest, RenderResponse): Is        */
       /* called during generic portlet render request processing  "           */
       TestResult tr39 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_DOHEADERS1);
-      /* TODO: implement test */
-      tr39.appendTcDetail("Not implemented.");
-      tr39.writeTo(writer);
+      try {
+          String name = "doHeaders";
+          Class<?>[] exceptions = null;
+          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
+          tr39.setTcSuccess(cc.hasMethod(name, parms, exceptions));
+       } catch(Exception e) {tr39.appendTcDetail(e.toString());}
+       tr39.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_doHeaders2         */
       /* Details: "Method doHeaders(RenderRequest, RenderResponse): The       */
       /* default implementation does nothing"                                 */
       TestResult tr40 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_DOHEADERS2);
-      /* TODO: implement test */
-      tr40.appendTcDetail("Not implemented.");
-      tr40.writeTo(writer);
+      try {
+          String name = "doHeaders";
+          Class<?> retType = void.class;
+          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
+          tr40.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr40.appendTcDetail(e.toString());}
+       tr40.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_getNextPossiblePortletModes1 */
       /* Details: "Method getNextPossiblePortletModes(): Is called during     */
       /* generic portlet render request processing"                           */
       TestResult tr41 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_GETNEXTPOSSIBLEPORTLETMODES1);
-      /* TODO: implement test */
-      tr41.appendTcDetail("Not implemented.");
-      tr41.writeTo(writer);
+      try {
+          String name = "getNextPossiblePortletModes";
+          Class<?> retType = java.util.Collection.class;
+          Class<?>[] parms = {RenderRequest.class};
+          tr41.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr41.appendTcDetail(e.toString());}
+       tr41.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_getNextPossiblePortletModes2 */
       /* Details: "Method getNextPossiblePortletModes(): The default          */
       /* implementation returns null"                                         */
       TestResult tr42 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_GETNEXTPOSSIBLEPORTLETMODES2);
-      /* TODO: implement test */
-      tr42.appendTcDetail("Not implemented.");
-      tr42.writeTo(writer);
-
+      try {
+          String name = "getNextPossiblePortletModes";
+          Class<?>[] exceptions = null;
+          Class<?>[] parms = {RenderRequest.class};
+          tr42.setTcSuccess(cc.hasMethod(name, parms, exceptions));
+       } catch(Exception e) {tr42.appendTcDetail(e.toString());}
+       tr42.writeTo(writer);
    }
 
 }

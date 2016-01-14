@@ -23,6 +23,7 @@ import java.util.*;
 import java.util.logging.*;
 import static java.util.logging.Logger.*;
 import javax.xml.namespace.QName;
+import javax.xml.xpath.XPathConstants;
 import javax.portlet.*;
 import javax.portlet.filter.*;
 import javax.servlet.*;
@@ -48,6 +49,7 @@ import static javax.portlet.ResourceURL.*;
 public class PortletTests_PortletConfig_ApiRender2 implements Portlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
          PortletTests_PortletConfig_ApiRender2.class.getName();
+private static final String XMLConstants = null;
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
@@ -106,24 +108,39 @@ public class PortletTests_PortletConfig_ApiRender2 implements Portlet, ResourceS
       /* Details: "Method getInitParameter(String): Returns null if the       */
       /* specified initialization parameter does not exist"                   */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETINITPARAMETER2);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      String val = portletConfig.getInitParameter("param1");
+      if (val == null) {
+         tr0.setTcSuccess(true);
+      } else {
+         tr0.appendTcDetail(" The value for the parameter is : " +val);
+    
+      }
       tr0.writeTo(writer);
-
+      
       /* TestCase: V2PortletTests_PortletConfig_ApiRender2_getInitParameterNames2 */
       /* Details: "Method getInitParameterNames(): Returns an empty           */
       /* Enumeration if there are no initialization parameters available "    */
       TestResult tr1 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETINITPARAMETERNAMES2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
-      tr1.writeTo(writer);
-
+      Enumeration<String> parms = portletConfig.getInitParameterNames();
+      List<String> list1 = Collections.list(parms);
+      if (list1.size() == 0 ) {
+            tr1.setTcSuccess(true);
+      } else {
+            tr1.appendTcDetail("The Init Parameter names are : " +list1.toString());
+           }
+      tr1.writeTo(writer);   
+      
       /* TestCase: V2PortletTests_PortletConfig_ApiRender2_getPublicRenderParameterNames2 */
       /* Details: "Method getPublicRenderParameterNames(): Returns an empty   */
       /* Enumeration if there are no public render parameters are defined "   */
       TestResult tr2 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPUBLICRENDERPARAMETERNAMES2);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      Enumeration<String> Renderparms = portletConfig.getPublicRenderParameterNames();
+      List<String> list2 = Collections.list(Renderparms);
+      if (list2.size() == 0 ) {
+    	       tr2.setTcSuccess(true);
+           } else {
+    	        tr2.appendTcDetail("Public render Parameters are  :" +list2.toString());
+             }
       tr2.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender2_getDefaultNamespace2 */
@@ -131,33 +148,42 @@ public class PortletTests_PortletConfig_ApiRender2 implements Portlet, ResourceS
       /* XMLConstants.NULL_NS_URI if no default namespace is defined in the   */
       /* deployment descriptor "                                              */
       TestResult tr3 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETDEFAULTNAMESPACE2);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
-      tr3.writeTo(writer);
+      String str =portletConfig.getDefaultNamespace();
+      if(str==null || str.equals("https://www.apache.org")) {
+    	  tr3.setTcSuccess(true);
+      } else {
+    	  tr3.appendTcDetail("The default Namespace is :" +str);
+      }
+       tr3.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender2_getPublishingEventQNames2 */
       /* Details: "Method getPublishingEventQNames(): Returns an empty        */
       /* Enumeration if there are no processing events are defined"           */
       TestResult tr4 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPUBLISHINGEVENTQNAMES2);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
-      tr4.writeTo(writer);
+      
+       tr4.writeTo(writer);
+
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender2_getProcessingEventQNames2 */
       /* Details: "Method getProcessingEventQNames(): Returns an empty        */
       /* Enumeration if there are no processing events are defined"           */
       TestResult tr5 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPROCESSINGEVENTQNAMES2);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      
       tr5.writeTo(writer);
+
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender2_getSupportedLocales2 */
       /* Details: "Method getSupportedLocales(): Returns an empty             */
       /* Enumeration if there are no supported locales are defined"           */
       TestResult tr6 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETSUPPORTEDLOCALES2);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
-      tr6.writeTo(writer);
+      Enumeration<java.util.Locale> locale=portletConfig.getSupportedLocales();
+      List<Locale> list10 = Collections.list(locale);
+      if (list10.size() == 0 ) {
+   	       tr6.setTcSuccess(true);
+          } else {
+   	        tr6.appendTcDetail("The supported Locales are :" +list10.toString());
+          }
+       tr6.writeTo(writer);
 
    }
 

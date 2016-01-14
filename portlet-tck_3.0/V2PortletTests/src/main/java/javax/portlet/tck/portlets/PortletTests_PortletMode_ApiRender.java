@@ -106,9 +106,11 @@ public class PortletTests_PortletMode_ApiRender implements Portlet, ResourceServ
       /* Details: "The constructor PortletMode(java.lang.String): allows a    */
       /* PortletMode object of the specified name to be constructed"          */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_CONSTRUCTOR1);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
+      try {
+          Class<?>[] parms = {String.class};
+          tr0.setTcSuccess(cc.hasConstructor(parms));
+       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
+       tr0.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletMode_ApiRender_constructor2          */
       /* Details: "The constructor PortletMode(java.lang.String): converts    */
@@ -149,26 +151,37 @@ public class PortletTests_PortletMode_ApiRender implements Portlet, ResourceServ
       /* Details: "Method toString(): Returns a String representation of      */
       /* the portlet mode"                                                    */
       TestResult tr5 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_TOSTRING);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
-      tr5.writeTo(writer);
+      try {
+          String name = "toString";
+          Class<?> retType = String.class;
+          Class<?>[] parms = null;
+          tr5.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr5.appendTcDetail(e.toString());}
+       tr5.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletMode_ApiRender_hashCode              */
       /* Details: "Method hashCode(): Returns an int containing the has       */
       /* code for the portlet mode"                                           */
       TestResult tr6 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_HASHCODE);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
-      tr6.writeTo(writer);
+      try {
+          String name = "hashCode";
+          Class<?> retType = int.class;
+          Class<?>[] parms = null;
+          tr6.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr6.appendTcDetail(e.toString());}
+       tr6.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletMode_ApiRender_equals                */
       /* Details: "Method equals(): Returns true if the PortletMode equals    */
       /* the specified PortletMode"                                           */
       TestResult tr7 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_EQUALS);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
-      tr7.writeTo(writer);
-
+      try {
+          String name = "equals";
+          Class<?> retType = boolean.class;
+          Class<?>[] parms = {Object.class};
+          tr7.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr7.appendTcDetail(e.toString());}
+       tr7.writeTo(writer);
    }
 
 }

@@ -106,34 +106,48 @@ public class PortletTests_Portlet_ApiRender implements Portlet, ResourceServingP
       /* Details: "Method init(PortletConfig): is called for the portlet      */
       /* defined in the deployment descriptor"                                */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLET_APIRENDER_INIT1);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
-
+      try {
+          String name = "init";
+          Class<?> retType = void.class;
+          Class<?>[] parms = {PortletConfig.class};
+          tr0.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
+       tr0.writeTo(writer);
       /* TestCase: V2PortletTests_Portlet_ApiRender_init2                     */
       /* Details: "Method init(PortletConfig): If the init method throws a    */
       /* PortletException, the portlet will not be placed in service"         */
       TestResult tr1 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLET_APIRENDER_INIT2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
-      tr1.writeTo(writer);
+      try {
+          String name = "init";
+          Class<?>[] exceptions = {PortletException.class};
+          Class<?>[] parms = {PortletConfig.class};
+          tr1.setTcSuccess(cc.hasMethod(name, parms, exceptions));
+       } catch(Exception e) {tr1.appendTcDetail(e.toString());}
+       tr1.writeTo(writer);
 
       /* TestCase: V2PortletTests_Portlet_ApiRender_render1                   */
       /* Details: "Method render(RenderRequest, RenderResponse): is called    */
       /* when the portlet is to be rendered"                                  */
       TestResult tr2 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLET_APIRENDER_RENDER1);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
-      tr2.writeTo(writer);
+      try {
+          String name = "render";
+          Class<?> retType = void.class;
+          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
+          tr2.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
+       } catch(Exception e) {tr2.appendTcDetail(e.toString());}
+       tr2.writeTo(writer);
 
       /* TestCase: V2PortletTests_Portlet_ApiRender_render2                   */
       /* Details: "Method render(RenderRequest, RenderResponse): is called    */
       /* when a Render URL for the portlet is triggered"                      */
       TestResult tr3 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLET_APIRENDER_RENDER2);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
-      tr3.writeTo(writer);
-
+      try {
+          String name = "render";
+          Class<?>[] exceptions = {PortletException.class, java.io.IOException.class};
+          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
+          tr3.setTcSuccess(cc.hasMethod(name, parms, exceptions));
+       } catch(Exception e) {tr3.appendTcDetail(e.toString());}
+       tr3.writeTo(writer);
    }
 
 }
