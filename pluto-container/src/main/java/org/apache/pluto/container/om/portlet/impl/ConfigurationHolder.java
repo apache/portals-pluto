@@ -36,6 +36,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.slf4j.Logger;
@@ -67,6 +68,14 @@ public class ConfigurationHolder {
     */
    public ConfigurationHolder() {
       this.pad = new PortletApplicationDefinitionImpl();
+   }
+
+   /**
+    * Constructor taking existing portlet app definition - for testing purposes
+    * @param pad
+    */
+   public ConfigurationHolder(PortletApplicationDefinition pad) {
+      this.pad = pad;
    }
 
    /**
@@ -235,9 +244,20 @@ public class ConfigurationHolder {
     * validates the configuration. To be called after the configuration has been completely read.
     */
    public void validate() {
-      if (jcp != null) {
-         jcp.validate();
+      if (jcp == null) {
+         jcp = new JSR362ConfigurationProcessor(pad);
       }
+      jcp.validate();
+   }
+
+   /**
+    * Reconciles the bean configuration with the config from annotations & portlet DD.
+    */
+   public void reconcileBeanConfig(AnnotatedMethodStore ams) {
+      if (jcp == null) {
+         jcp = new JSR362ConfigurationProcessor(pad);
+      }
+      jcp.reconcileBeanConfig(ams);
    }
 
 }

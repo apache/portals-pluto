@@ -182,7 +182,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
         }
     }
 
-    public void setValues(String key, String[] values) throws ReadOnlyException {
+    public void setValues(String key, String... values) throws ReadOnlyException {
         if (isReadOnly(key)) {
             throw new ReadOnlyException(EXCEPTIONS.getString(
                     "error.preference.readonly", key));

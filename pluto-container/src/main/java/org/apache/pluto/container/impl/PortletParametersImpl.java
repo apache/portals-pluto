@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class PortletParametersImpl implements PortletParameters {
    private static final Logger   LOGGER     = LoggerFactory.getLogger(PortletParametersImpl.class);
-   private static final boolean  isDebug    = LOGGER.isDebugEnabled();
+   //private static final boolean  isDebug    = LOGGER.isDebugEnabled();
    private static final boolean  isTrace    = LOGGER.isTraceEnabled();
    
    protected final PortletURLProvider  urlProvider;

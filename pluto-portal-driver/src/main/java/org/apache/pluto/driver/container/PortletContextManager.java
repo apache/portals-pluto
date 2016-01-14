@@ -360,16 +360,15 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
     }
 
 
-    @SuppressWarnings("unchecked")
     protected static String computeContextPath(ServletContext context) {
         if (APP_ID_RESOLVERS.size() < 1) {
-            List<Class> classes = null;
+            List<Class<?>> classes = null;
             try {
                 classes = ClasspathScanner.findConfiguredImplementations(ApplicationIdResolver.class);
             } catch (IOException e) {
                 throw new RuntimeException("Unable to find any ApplicationIdResolvers");
             }
-            for (Class c : classes) {
+            for (Class<?> c : classes) {
                 try {
                     APP_ID_RESOLVERS.add((ApplicationIdResolver)c.newInstance());
                 } catch (Exception e) {

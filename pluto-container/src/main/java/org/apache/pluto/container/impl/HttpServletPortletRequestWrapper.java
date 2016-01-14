@@ -346,7 +346,6 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     	}
     }
     
-    @SuppressWarnings("unchecked")
     public HttpServletPortletRequestWrapper(HttpServletRequest request, ServletContext servletContext, HttpSession session, PortletRequest portletRequest, boolean included, boolean namedDispatch)
     {
         super(request);
@@ -876,7 +875,6 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
      * </ul>
      * </p>
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Map<String, String[]> getParameterMap()
     {
@@ -1150,7 +1148,6 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Enumeration<String> getAttributeNames()
     {

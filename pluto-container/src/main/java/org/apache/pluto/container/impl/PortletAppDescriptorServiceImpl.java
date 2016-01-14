@@ -19,41 +19,15 @@ package org.apache.pluto.container.impl;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.regex.Pattern;
 
-import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.helpers.DefaultValidationEventHandler;
-import javax.xml.namespace.NamespaceContext;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.events.XMLEvent;
-import javax.xml.stream.util.StreamReaderDelegate;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathFactory;
 
 import org.apache.pluto.container.PortletAppDescriptorService;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.EntityResolver;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 /**
  * Service that reads the portlet deployment descriptor.
@@ -63,6 +37,7 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
    
    /** Logger. */
    private static final Logger LOG = LoggerFactory.getLogger(PortletAppDescriptorServiceImpl.class);
+   @SuppressWarnings("unused")
    private static final boolean isDebug = LOG.isDebugEnabled();
    
 

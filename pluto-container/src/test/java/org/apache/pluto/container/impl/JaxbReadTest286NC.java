@@ -52,8 +52,6 @@ public class JaxbReadTest286NC {
          Unmarshaller um = cntxt.createUnmarshaller();
          JAXBElement<?> jel = (JAXBElement<?>) um.unmarshal(in);
          assertNotNull(jel.getValue());
-         System.out.println("===> Object type: "
-               + jel.getValue().getClass().getCanonicalName());
          assertTrue(jel.getValue() instanceof PortletAppType);
          portletApp = (PortletAppType) jel.getValue();
       } catch (Exception e) {

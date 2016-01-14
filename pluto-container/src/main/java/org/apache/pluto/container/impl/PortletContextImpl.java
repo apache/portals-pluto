@@ -107,7 +107,6 @@ public class PortletContextImpl implements PortletContext
         return servletContext.getRealPath(path);
     }
 
-    @SuppressWarnings("unchecked")
     public Set<String> getResourcePaths(String path) {
         return servletContext.getResourcePaths(path);
     }
@@ -128,7 +127,6 @@ public class PortletContextImpl implements PortletContext
         return servletContext.getAttribute(name);
     }
 
-    @SuppressWarnings("unchecked")
     public Enumeration<String> getAttributeNames() {
         return servletContext.getAttributeNames();
     }
@@ -141,7 +139,6 @@ public class PortletContextImpl implements PortletContext
         return servletContext.getInitParameter(name);
     }
 
-    @SuppressWarnings("unchecked")
     public Enumeration<String> getInitParameterNames() {
         return servletContext.getInitParameterNames();
     }

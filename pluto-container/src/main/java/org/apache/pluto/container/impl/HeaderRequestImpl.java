@@ -23,7 +23,6 @@ import javax.portlet.HeaderRequest;
 import javax.portlet.PortletRequest;
 
 import org.apache.pluto.container.PortletHeaderResponseContext;
-import org.apache.pluto.container.PortletRenderResponseContext;
 import org.apache.pluto.container.PortletRequestContext;
 
 /**

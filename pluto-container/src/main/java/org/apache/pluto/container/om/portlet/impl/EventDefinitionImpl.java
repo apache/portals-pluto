@@ -40,7 +40,7 @@ public class EventDefinitionImpl implements EventDefinition {
    private final ArrayList<QName> aliases = new ArrayList<QName>();
    private final List<Description> descs = new ArrayList<Description>();
    private final List<DisplayName> dispNames = new ArrayList<DisplayName>();
-   private String valType = "";
+   private String valType;
 
    /**
     * Copy constructor

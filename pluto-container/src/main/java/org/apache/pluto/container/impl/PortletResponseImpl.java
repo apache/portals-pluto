@@ -18,7 +18,6 @@ package org.apache.pluto.container.impl;
 
 import java.util.Enumeration;
 
-import javax.portlet.MimeResponse;
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletResponse;

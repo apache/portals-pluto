@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 
 import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
@@ -214,7 +215,7 @@ public class PortletApplicationDefinitionImpl implements
     */
    @Override
    public String getDefaultNamespace() {
-      return defaultNamespace;
+      return (defaultNamespace == null) ? XMLConstants.NULL_NS_URI : defaultNamespace;
    }
 
    /* (non-Javadoc)
@@ -270,7 +271,7 @@ public class PortletApplicationDefinitionImpl implements
       }
       portlets.add( pd);
    }
-   
+
    @Override
    public boolean removePortlet(PortletDefinition pd) {
       return portlets.remove(pd);
@@ -303,7 +304,7 @@ public class PortletApplicationDefinitionImpl implements
       }
       events.add(ed);
    }
-   
+
    @Override
    public boolean removeEventDefinition(EventDefinition ed) {
       return events.remove(ed);
@@ -345,7 +346,7 @@ public class PortletApplicationDefinitionImpl implements
       }
       prps.add(prp);
    }
-   
+
    @Override
    public boolean removePublicRenderParameter(PublicRenderParameter prp) {
       return prps.remove(prp);
@@ -378,7 +379,7 @@ public class PortletApplicationDefinitionImpl implements
       }
       cpms.add(cpm);
    }
-   
+
    @Override
    public boolean removeCustomPortletMode(CustomPortletMode pm) {
       return cpms.remove(pm);
@@ -411,7 +412,7 @@ public class PortletApplicationDefinitionImpl implements
       }
       cwss.add(cws);
    }
-   
+
    @Override
    public boolean removeCustomWindowState(CustomWindowState ws) {
       return cwss.remove(ws);
@@ -444,7 +445,7 @@ public class PortletApplicationDefinitionImpl implements
       }
       uattrs.add(ua);
    }
-   
+
    @Override
    public boolean removeUserAttribute(UserAttribute ua) {
       return uattrs.remove(ua);
@@ -491,7 +492,7 @@ public class PortletApplicationDefinitionImpl implements
          removeFilterMapping(getFilterMapping(filter.getFilterName()));
       }
    }
-   
+
    @Override
    public boolean removeFilter(Filter filter) {
       return filters.remove(filter);
@@ -529,7 +530,7 @@ public class PortletApplicationDefinitionImpl implements
          LOG.debug("No portlet names for filter mapping. Filter name: " + fm.getFilterName());
       }
    }
-   
+
    @Override
    public boolean removeFilterMapping(FilterMapping fm) {
       return fmaps.remove(fm);
@@ -562,12 +563,12 @@ public class PortletApplicationDefinitionImpl implements
       }
       cros.add(cro);
    }
-   
+
    @Override
    public boolean removeRuntimeOption(ContainerRuntimeOption cro) {
       return cros.remove(cro);
    }
-
+   
    @Override
    public Listener getListener(String name) {
       for (Listener l : listeners) {
@@ -604,13 +605,13 @@ public class PortletApplicationDefinitionImpl implements
       } else {
 
          // If the listener class is null, remove the listener definition, otherwise replace it
-      if (listeners.remove(listener)) {
+         if (listeners.remove(listener)) {
             LOG.debug("Removed duplicate listener for class: " + listener.getListenerClass());
-      }
+         } 
       } 
       
       if (listener.getListenerClass() != null && listener.getListenerClass().length() > 0) {
-      listeners.add(listener);
+         listeners.add(listener);
          // sort by ordinal. for JSR286 portlets, the ordinal will always be 0, so
          // the list will remain in the original order.
          Collections.sort(listeners, new ListenerComparator());
@@ -618,7 +619,7 @@ public class PortletApplicationDefinitionImpl implements
          LOG.debug("No listener class for listener: " + listener.getListenerName());
       }
    }
-   
+
    @Override
    public boolean removeListener(Listener listener) {
       return listeners.remove(listener);

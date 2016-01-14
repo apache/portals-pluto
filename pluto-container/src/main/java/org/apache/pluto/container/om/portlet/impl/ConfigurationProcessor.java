@@ -16,6 +16,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
+import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +71,24 @@ public abstract class ConfigurationProcessor {
     *             If there is a validation error.
     */
    public abstract void validate() throws IllegalArgumentException;
+   
+   /**
+    * reconciles the given annotated method store containing the bean configuration
+    * with the configuration as read from the portlet deployment descriptor and 
+    * the corresponding type annotations.
+    * <p>
+    * Portlets that are defined in the bean config are added to the portlet application
+    * definition if not already present. Event reference information from the 
+    * annotations is verified and added to the corresponding portlet definition.
+    * <p>
+    * Methods from portlet classes definied in the portlet definitions are
+    * added to the annotated method store.
+    * 
+    * @param ams
+    */
+   public void reconcileBeanConfig(AnnotatedMethodStore ams) {
+      // do nothing for JSR 168 & JSR 286 portlets
+   }
 
    /**
     * Handle the locale the old-fashioned way (v1 & v2)
@@ -101,6 +120,9 @@ public abstract class ConfigurationProcessor {
     * @return
     */
    protected boolean isValidIdentifier(String id) {
+      if (id == null || id.length() == 0) {
+         return false;
+      }
       char[] chars = id.toCharArray();
       if (!Character.isJavaIdentifierStart(chars[0])) {
          return false;
