@@ -508,7 +508,7 @@ public abstract class ConfigurationProcessor {
             // publishing event references. Such annotated methods must use the same bean
             // instance, so fix up the method store.
             
-            ams.setPortletClassInstance(cls, instance);
+            ams.setPortletClassInstance(pd.getPortletName(), cls, instance);
 
             // extract the methods from the portlet class and add them to the method store
             // as long there is no corresponding annotated method already present.

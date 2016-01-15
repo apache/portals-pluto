@@ -538,14 +538,17 @@ public class AnnotatedMethodStore {
    }
    
    /**
-    * Sets the bean instance for all annotated methods that are members of a configured portlet
-    * class to ensure that all annotated methods of the portlet class use the same bean instance.
+    * Sets the bean instance for all annotated methods for a given portlet that are members of 
+    * a configured portlet class to ensure that all annotated methods of the portlet class use 
+    * the same bean instance.
     * 
-    * @param cls
-    * @param beanInstance
+    * @param portletName      The portlet name
+    * @param cls              The class
+    * @param beanInstance     The instance to use
     */
-   public void setPortletClassInstance(Class<?> cls, Object beanInstance) {
-      for (List<AnnotatedMethod> list : methods.values()) {
+   public void setPortletClassInstance(String portletName, Class<?> cls, Object beanInstance) {
+      for (MethodIdentifier mi : getMethodIDsForPortlet(portletName)) {
+         List<AnnotatedMethod> list =  methods.get(mi);
          for (AnnotatedMethod am : list) {
             if (am.getJavaMethod().getDeclaringClass().equals(cls)) {
                am.setPortletClassInstance(beanInstance);
