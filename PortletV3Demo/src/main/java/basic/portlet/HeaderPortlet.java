@@ -38,6 +38,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.LocaleString;
 import javax.servlet.http.Cookie;
 
 import org.w3c.dom.Element;
@@ -45,6 +47,8 @@ import org.w3c.dom.Element;
 /**
  * Portlet for testing the redirect funtionality, including the new getRedirectURL API.
  */
+@PortletConfiguration(portletName="V3HeaderPortlet", 
+                      title=@LocaleString("Header Phase Test Portlet"))
 public class HeaderPortlet extends GenericPortlet {
 
    private static final Logger  LOGGER  = Logger.getLogger(HeaderPortlet.class.getName());

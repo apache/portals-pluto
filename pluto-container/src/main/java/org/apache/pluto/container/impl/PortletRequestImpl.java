@@ -374,7 +374,7 @@ public abstract class PortletRequestImpl implements PortletRequest
     {
         if (LOG.isDebugEnabled())
         {
-            LOG.debug("Retreiving portlet session (create=" + create + ")");
+            LOG.debug("Retrieving portlet session (create=" + create + ")");
         }
         //
         // It is critical that we don't retrieve the portlet session until the

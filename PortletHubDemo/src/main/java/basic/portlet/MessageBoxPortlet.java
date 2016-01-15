@@ -18,7 +18,10 @@
 
 package basic.portlet;
 
-import static basic.portlet.Constants.*;
+import static basic.portlet.Constants.ATTRIB_MSGS;
+import static basic.portlet.Constants.DELIM;
+import static basic.portlet.Constants.PARAM_COLOR;
+import static basic.portlet.Constants.PARAM_NUM_MSGS;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,10 +40,16 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.annotations.EventMethod;
+import javax.portlet.annotations.LocaleString;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.PortletQName;
 
 /**
  * A demo portlet that displays messages sent via event
  */
+@PortletConfiguration(portletName = "MessageBoxPortlet", publicParams = "color", 
+                      title = @LocaleString("PH Message Box Portlet"))
 public class MessageBoxPortlet extends GenericPortlet {
 
    // Set up logging
@@ -68,7 +77,7 @@ public class MessageBoxPortlet extends GenericPortlet {
 
       // the only action for this portlet is to reset the stored messages
       
-      String actionName = req.getParameter("action");
+      String actionName = req.getActionParameters().getValue(ActionRequest.ACTION_NAME);
       logger.fine("MBP: Resetting messages. numMsgs = 0,  actionName = " + actionName);
 
       ArrayList<String> msgs = new ArrayList<String>();
@@ -79,15 +88,18 @@ public class MessageBoxPortlet extends GenericPortlet {
       sb.append("</p>");
       msgs.add(sb.toString());
 
-      resp.setRenderParameter(PARAM_NUM_MSGS, "0");
+      resp.getRenderParameters().setValue(PARAM_NUM_MSGS, "0");
       req.getPortletSession().setAttribute(ATTRIB_MSGS, msgs);
    }
    
-   @SuppressWarnings("unchecked")
+   @EventMethod(portletName="MessageBoxPortlet", processingEvents= {
+         @PortletQName(namespaceURI="http://www.apache.org/portals/pluto/ResourcePortlet", localPart="Message")
+   })
    @Override
    public void processEvent(EventRequest req, EventResponse resp) 
          throws PortletException ,IOException {
       
+      @SuppressWarnings("unchecked")
       ArrayList<String> msgs = (ArrayList<String>) req.getPortletSession().getAttribute(ATTRIB_MSGS);
       if (msgs == null) {
          msgs = new ArrayList<String>();
@@ -96,7 +108,7 @@ public class MessageBoxPortlet extends GenericPortlet {
       String[] msg;
       int numMsgs = 0;
       try {
-         numMsgs = Integer.parseInt(req.getParameter(PARAM_NUM_MSGS));
+         numMsgs = Integer.parseInt(req.getRenderParameters().getValue(PARAM_NUM_MSGS));
       } catch (Exception e) {}
       
       if (numMsgs == 0) {
@@ -117,7 +129,7 @@ public class MessageBoxPortlet extends GenericPortlet {
          msg[1] = "#D00";
       }
       
-      String clr = req.getParameter(PARAM_COLOR);
+      String clr = req.getRenderParameters().getValue(PARAM_COLOR);
       clr = (clr == null) ? "#FFFFFF" : clr;
       
       StringBuffer sb = new StringBuffer();
@@ -130,7 +142,7 @@ public class MessageBoxPortlet extends GenericPortlet {
       
       logger.fine("Adding message: " + sb.toString());
 
-      resp.setRenderParameter(PARAM_NUM_MSGS, Integer.toString(msgs.size()));
+      resp.getRenderParameters().setValue(PARAM_NUM_MSGS, Integer.toString(msgs.size()));
       req.getPortletSession().setAttribute(ATTRIB_MSGS, msgs);
    };
    

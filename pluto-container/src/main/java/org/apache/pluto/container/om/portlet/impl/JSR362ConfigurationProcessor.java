@@ -733,8 +733,13 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
                throw new IllegalArgumentException(warning);
             }
             pd = new PortletDefinitionImpl(pn, pad);
+            pd.setPortletClass(portlet.getPortletClass());
+         } else {
+            if ((clsName != null) && (clsName.length() > 0)) {
+               // The portlet class set in the portlet DD overrides the annotated class.
+               pd.setPortletClass(portlet.getPortletClass());
+            }
          }
-         pd.setPortletClass(portlet.getPortletClass());
 
          if (portlet.getResourceBundle() != null) {
             pd.setResourceBundle(portlet.getResourceBundle().getValue());

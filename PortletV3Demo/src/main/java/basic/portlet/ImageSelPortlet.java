@@ -41,7 +41,7 @@ import javax.portlet.ResourceResponse;
 
 
 /**
- * A management portlet that displays the current deep link configuraion
+ * A demo portlet for image selection.
  */
 public class ImageSelPortlet extends GenericPortlet {
 

@@ -80,9 +80,9 @@ public class ImageSelPortlet extends GenericPortlet {
 
 	      String pid = resp.getNamespace();
 	      Set<String> names = imgMap.keySet();
-	      String selType = req.getParameter(PARAM_SELTYPE);
+	      String selType = req.getRenderParameters().getValue(PARAM_SELTYPE);
 	      selType = (selType == null) ? PARAM_SELTYPE_RADIO : selType;
-	      String imgName = req.getParameter(PARAM_IMGNAME);
+	      String imgName = req.getRenderParameters().getValue(PARAM_IMGNAME);
 	      imgName = (imgName == null) ? "default" : imgName;
 
 	      if (selType.equals(PARAM_SELTYPE_RADIO)) {

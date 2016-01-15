@@ -18,12 +18,17 @@
 
 package basic.portlet;
 
-import static basic.portlet.Constants.*;
+import static basic.portlet.Constants.DELIM;
+import static basic.portlet.Constants.PARAM_FG_BLUE;
+import static basic.portlet.Constants.PARAM_FG_COLOR;
+import static basic.portlet.Constants.PARAM_FG_GREEN;
+import static basic.portlet.Constants.PARAM_FG_RED;
+import static basic.portlet.Constants.PARAM_MSG_INPUT;
+import static basic.portlet.Constants.PARAM_SUBTYPE;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,18 +36,24 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
+import javax.portlet.PortletParameters;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.annotations.ActionMethod;
+import javax.portlet.annotations.LocaleString;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.PortletQName;
 import javax.xml.namespace.QName;
 
 
 /**
- * A management portlet that displays the current deep link configuration
+ * An example color selection portlet that uses the portlet hub.
  */
+@PortletConfiguration(portletName = "ColorSelPortlet", publicParams = "color", 
+                      title = @LocaleString("PH Color Selection Portlet"))
 public class ColorSelPortlet extends GenericPortlet {
 
    // Set up logging
@@ -73,12 +84,16 @@ public class ColorSelPortlet extends GenericPortlet {
          throws PortletException, IOException {
    }
 
+   @ActionMethod(portletName="ColorSelPortlet", publishingEvents= {
+         @PortletQName(namespaceURI="http://www.apache.org/portals/pluto/ResourcePortlet", localPart="Message")
+   })
    public void processAction(ActionRequest req, ActionResponse resp)
          throws PortletException, IOException {
             
-      dumpParameters(req);
+      dumpParameters("Action", req.getActionParameters());
+      dumpParameters("Render", req.getRenderParameters());
       
-      String[] vals = req.getParameterValues(PARAM_FG_COLOR);
+      String[] vals = req.getActionParameters().getValues(PARAM_FG_COLOR);
       String r = "0";
       String g = "0";
       String b = "0";
@@ -94,17 +109,17 @@ public class ColorSelPortlet extends GenericPortlet {
       // make sure the private parameter are all on the URL for 
       // potential back button support
       if (vals != null) {
-         resp.setRenderParameter(PARAM_FG_COLOR, vals);
+         resp.getRenderParameters().setValues(PARAM_FG_COLOR, vals);
       }
       
-      String subType = req.getParameter(PARAM_SUBTYPE);
+      String subType = req.getActionParameters().getValue(PARAM_SUBTYPE);
       if (subType != null) {
-         resp.setRenderParameter(PARAM_SUBTYPE, subType);
+         resp.getRenderParameters().setValue(PARAM_SUBTYPE, subType);
       }
       
-      String text = req.getParameter(PARAM_MSG_INPUT);
+      String text = req.getActionParameters().getValue(PARAM_MSG_INPUT);
       if (text != null) {
-         resp.setRenderParameter(PARAM_MSG_INPUT, text);
+         resp.getRenderParameters().setValue(PARAM_MSG_INPUT, text);
       }
       
       String msg = text + DELIM + clr;
@@ -116,7 +131,7 @@ public class ColorSelPortlet extends GenericPortlet {
          resp.setEvent(qn, msg);
          logger.fine("Firing event with QName: " + qn.toString());
       } else {
-         logger.warning("No publishing event QName available. Check portlet deployment descriptor.");
+         logger.warning("No publishing event QName available. Check portlet configuration.");
       }
       
       StringBuilder sb = new StringBuilder("Color: ").append(Arrays.toString(vals));
@@ -125,14 +140,13 @@ public class ColorSelPortlet extends GenericPortlet {
       logger.fine(sb.toString());
    }
    
-   private void dumpParameters(PortletRequest req) {
+   private void dumpParameters(String type, PortletParameters parms) {
       if (logger.isLoggable(Level.FINEST)) {
          StringBuilder sb = new StringBuilder();
-         sb.append("Portlet request parameters:");
-         Map<String, String[]> parms = req.getParameterMap();
-         for (String name : parms.keySet()) {
+         sb.append("Portlet ").append(type).append(" parameters:");
+         for (String name : parms.getNames()) {
             sb.append("\nName: ").append(name);
-            sb.append(", Values: ").append(Arrays.toString(parms.get(name)));
+            sb.append(", Values: ").append(Arrays.toString(parms.getValues(name)));
          }
          logger.finest(sb.toString());
       }

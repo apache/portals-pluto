@@ -45,7 +45,7 @@ import javax.portlet.WindowState;
 import javax.xml.namespace.QName;
 
 /**
- * A management portlet that displays the current deep link configuraion
+ * A portlet for displaying config data
  */
 public class PortletConfigPortlet extends GenericPortlet {
 

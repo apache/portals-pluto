@@ -95,37 +95,8 @@
 
    <portlet>
       <portlet-name>V3RedirectPortlet</portlet-name>
-      <display-name>Redirect Test Portlet</display-name>
-      
-      <portlet-class>basic.portlet.RedirectPortlet</portlet-class>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-         <portlet-mode>VIEW</portlet-mode>
-      </supports>
-
-      <supported-locale>en</supported-locale>        
-
       <portlet-info>
          <title>Redirect Test Portlet</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V3HeaderPortlet</portlet-name>
-      <display-name>Header Phase Test Portlet</display-name>
-      
-      <portlet-class>basic.portlet.HeaderPortlet</portlet-class>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-         <portlet-mode>VIEW</portlet-mode>
-      </supports>
-
-      <supported-locale>en</supported-locale>        
-
-      <portlet-info>
-         <title>Header Phase Test Portlet</title>
       </portlet-info>
    </portlet>
 

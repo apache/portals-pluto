@@ -42,7 +42,7 @@ import javax.portlet.ResourceResponse;
 
 
 /**
- * A management portlet that displays the current deep link configuraion
+ * A portlet for displaying an image and text using a resource URL.
  */
 public class ResourcePortlet extends GenericPortlet {
 

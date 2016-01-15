@@ -8,7 +8,9 @@ import static org.apache.pluto.container.bean.processor.MethodDescription.METH_I
 import static org.apache.pluto.container.bean.processor.MethodDescription.METH_REN;
 import static org.apache.pluto.container.bean.processor.MethodDescription.METH_RES;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +49,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 public abstract class ConfigurationProcessor {
    
@@ -245,7 +250,15 @@ public abstract class ConfigurationProcessor {
 
       // set up document
       DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
+      fact.setValidating(false);
+      
       final DocumentBuilder builder = fact.newDocumentBuilder();
+      builder.setEntityResolver(new EntityResolver() {
+         public InputSource resolveEntity(String arg0, String arg1) throws SAXException, IOException {
+            return new InputSource(new StringReader(""));
+         }
+      });
+
       final Document document = builder.parse(in);
       final Element root = document.getDocumentElement();
 
@@ -261,13 +274,16 @@ public abstract class ConfigurationProcessor {
       NodeList nodes = (NodeList) GET_LIST.evaluate(root,
             XPathConstants.NODESET);
 
+      int mappings = 0;
       for (int jj = 0; jj < nodes.getLength(); jj++) {
          Node node = nodes.item(jj);
          String locstr = (String) GET_LOC.evaluate(node, XPathConstants.STRING);
          String encstr = (String) GET_ENC.evaluate(node, XPathConstants.STRING);
          Locale locale = deriveLocale(locstr);
          pad.addLocaleEncodingMapping(locale, encstr);
+         mappings++;
       }
+      LOG.debug("done parsing web DD, # mappings: " + mappings);
    }
    
    /**

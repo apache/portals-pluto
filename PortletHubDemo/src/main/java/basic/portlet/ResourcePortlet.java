@@ -107,13 +107,13 @@ public class ResourcePortlet extends GenericPortlet {
    public void serveResource(ResourceRequest req, ResourceResponse resp)
          throws PortletException, IOException {
 
-      String key = req.getParameter(PARAM_IMGNAME);
+      String key = req.getRenderParameters().getValue(PARAM_IMGNAME);
       String imgDir = DEFAULT_IMAGE;
       if ((key != null) && imgMap.containsKey(key)) {
          imgDir = imgMap.get(key);
       }
       
-      String bc = req.getParameter(PARAM_BORDER_COLOR);
+      String bc = req.getResourceParameters().getValue(PARAM_BORDER_COLOR);
       String imgStyle = "";
       if (bc != null) {
          imgStyle = " style='border:1px solid " + bc + ";' ";
@@ -125,7 +125,7 @@ public class ResourcePortlet extends GenericPortlet {
       resp.setContentType("text/html");
       PrintWriter writer = resp.getWriter();
       
-      String clr = req.getParameter(PARAM_COLOR);
+      String clr = req.getRenderParameters().getValue(PARAM_COLOR);
       clr = (clr == null) ? "#FFFFFF" : clr;
       
       // add action button if cacheability allows -

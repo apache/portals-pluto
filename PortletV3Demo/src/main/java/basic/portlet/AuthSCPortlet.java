@@ -40,7 +40,7 @@ import javax.portlet.ResourceResponse;
 
 
 /**
- * A portlet that allows render parameter names & values to be entered and set.
+ * A portlet that causes the resource request status code to be set.
  * 
  * @author Scott Nicklous
  */
