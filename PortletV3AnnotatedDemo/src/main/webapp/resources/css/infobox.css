@@ -1,0 +1,19 @@
+.infobox {
+   border-style:solid; 
+   border-width:2px; 
+   padding:4px; 
+   margin-bottom:10px;
+   overflow:auto;
+   border-color:#000088; 
+   background:#E0E0FF;
+}
+
+.parmbox {
+   border-style:solid; 
+   border-width:2px; 
+   padding:4px; 
+   margin:3px;
+   overflow:auto;
+   border-color:#008800; 
+   background:#E0FFE0;
+}

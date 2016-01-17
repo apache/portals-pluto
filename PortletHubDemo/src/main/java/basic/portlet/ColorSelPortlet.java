@@ -52,7 +52,7 @@ import javax.xml.namespace.QName;
 /**
  * An example color selection portlet that uses the portlet hub.
  */
-@PortletConfiguration(portletName = "ColorSelPortlet", publicParams = "color", 
+@PortletConfiguration(portletName = "PH-ColorSelPortlet", publicParams = "color", 
                       title = @LocaleString("PH Color Selection Portlet"))
 public class ColorSelPortlet extends GenericPortlet {
 
@@ -84,7 +84,7 @@ public class ColorSelPortlet extends GenericPortlet {
          throws PortletException, IOException {
    }
 
-   @ActionMethod(portletName="ColorSelPortlet", publishingEvents= {
+   @ActionMethod(portletName="PH-ColorSelPortlet", publishingEvents= {
          @PortletQName(namespaceURI="http://www.apache.org/portals/pluto/ResourcePortlet", localPart="Message")
    })
    public void processAction(ActionRequest req, ActionResponse resp)

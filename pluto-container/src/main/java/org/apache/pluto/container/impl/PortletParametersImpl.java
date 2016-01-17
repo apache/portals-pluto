@@ -126,7 +126,7 @@ public abstract class PortletParametersImpl implements PortletParameters {
     */
    public String[] getValues(String name) {
       checkNull("name", name);
-      String[] vals = params.get(name).clone();
+      String[] vals = (params.get(name) == null) ? null : params.get(name).clone();
       if (isTrace) {
          LOGGER.debug("Name: " + name + ", Values: " + Arrays.toString(vals));
       }

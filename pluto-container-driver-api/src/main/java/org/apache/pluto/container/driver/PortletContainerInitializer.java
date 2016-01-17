@@ -19,12 +19,15 @@
 package org.apache.pluto.container.driver;
 
 import java.io.InputStream;
+import java.util.EnumSet;
 import java.util.Set;
 
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletConfigurations;
 import javax.portlet.annotations.PortletRequestFilter;
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -157,6 +160,19 @@ public class PortletContainerInitializer implements ServletContainerInitializer 
                sr.setLoadOnStartup(100);
 
             }
+            
+            // Add the cross-context filter & terminal listener
+            
+            FilterRegistration.Dynamic fr = ctx.addFilter("WeldCrossContextFilter", "org.jboss.weld.servlet.WeldCrossContextFilter");
+            EnumSet<DispatcherType> dt = EnumSet.noneOf(DispatcherType.class);
+            dt.add(DispatcherType.FORWARD);
+            dt.add(DispatcherType.INCLUDE);
+            dt.add(DispatcherType.ERROR);
+            fr.addMappingForUrlPatterns(dt, false, "/*");
+            
+            ctx.addListener("org.jboss.weld.servlet.WeldTerminalListener");
+
+            LOG.debug("Completed deployment of servlets & filters for context: " + ctx.getContextPath());
 
          } else {
             LOG.debug("No portlet definitions for context: " + ctx.getServletContextName());

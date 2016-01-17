@@ -378,15 +378,18 @@ public abstract class ConfigurationProcessor {
     */
    public void reconcileBeanConfig(AnnotatedMethodStore ams) {
       
+      Set<String> portletNames = ams.getPortletNames();
+      // the wildcard is only in the store for display / debug purposes. don't reconcile.
+      portletNames.remove("*");     
       if (isDebug) {
          StringBuilder txt = new StringBuilder();
-         txt.append("Beginning reconciliation. Annotated portlets: ").append(ams.getPortletNames().toString());
+         txt.append("Beginning reconciliation. Annotated portlets: ").append(portletNames.toString());
          LOG.debug(txt.toString());
       }
 
       ams.setDefaultNamespace(pad.getDefaultNamespace());
       
-      for (String pn : ams.getPortletNames()) {
+      for (String pn : portletNames) {
          
          PortletDefinition pd = pad.getPortlet(pn);
          if (pd == null) {
@@ -478,19 +481,19 @@ public abstract class ConfigurationProcessor {
             StringBuilder txt = new StringBuilder(128);
             BeanManager bm = ams.getBeanMgr();
             if (bm == null) {
-               txt.append("Could not instantiate portlet class. Bean manager is null.");
+               txt.append("Could not get portlet bean. Bean manager is null.");
             } else {
                Set<Bean<?>> beans = bm.getBeans(cls);
                if (beans == null || beans.size() == 0) {
-                  txt.append("Could not instantiate portlet class. No beans found.");
+                  txt.append("Could not get portlet bean. No beans found.");
                } else {
                   Bean<?> bean = bm.resolve(beans);
                   if (bean == null) {
-                     txt.append("Could not instantiate portlet class. Could not resolve bean.");
+                     txt.append("Could not get portlet bean. Could not resolve bean.");
                   } else {
                      instance = bm.getReference(bean, bean.getBeanClass(), bm.createCreationalContext(bean));
                      if (instance == null) {
-                        txt.append("Could not instantiate portlet class. Could not get bean instance.");
+                        txt.append("Could not get portlet bean. Could not get bean instance.");
                      }
                   }
                }
@@ -620,7 +623,9 @@ public abstract class ConfigurationProcessor {
       if (isDebug) {
          StringBuilder txt = new StringBuilder();
          txt.append("Finished reconciling bean config. ");
-         txt.append("Resulting portlet list: ").append(ams.getPortletNames().toString());
+         Set<String> finalNames = ams.getPortletNames();
+         finalNames.remove("*");    // don't display wildcard
+         txt.append("Resulting portlet list: ").append(finalNames.toString());
          LOG.debug(txt.toString());
       }
       
