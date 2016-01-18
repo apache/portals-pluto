@@ -114,6 +114,9 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
    private void beforeInvoke(PortletRequest req, PortletResponse resp) {
 
       // Set the portlet session bean holder for the thread & session
+      PortletRequestScopedBeanHolder.setBeanHolder();
+
+      // Set the portlet session bean holder for the thread & session
       PortletSessionBeanHolder.setBeanHolder(req.getPortletSession());
 
       // Set the portlet state scoped bean holder
@@ -128,6 +131,9 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
     * exception occurs.
     */
    private void afterInvoke(PortletResponse resp) {
+
+      // Remove the portlet session bean holder for the thread
+      PortletRequestScopedBeanHolder.removeBeanHolder();
 
       // Remove the portlet session bean holder for the thread
       PortletSessionBeanHolder.removeBeanHolder();

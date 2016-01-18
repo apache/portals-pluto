@@ -76,12 +76,15 @@ public class PortletCDIExtension implements Extension {
     * 
     * @param abd
     */
-   void addPortletSessionScopeContext(@Observes AfterBeanDiscovery abd) {
+   void addPortletCustomScopeContexts(@Observes AfterBeanDiscovery abd) {
       PortletSessionScopedContext pssc = new PortletSessionScopedContext();
       abd.addContext(pssc);
       
       PortletStateScopedContext pstsc = new PortletStateScopedContext();
       abd.addContext(pstsc);
+      
+      PortletRequestScopedContext prsc = new PortletRequestScopedContext();
+      abd.addContext(prsc);
    }
 
    /**
