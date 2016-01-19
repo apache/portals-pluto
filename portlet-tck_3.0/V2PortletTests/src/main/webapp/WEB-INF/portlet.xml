@@ -44,7 +44,9 @@
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
-      <resource-bundle>Test1</resource-bundle>
+      
+     <resource-bundle>org.apache.pluto.container.om.portlet.TestBundle</resource-bundle>
+     
       <portlet-info>
          <title>PortletTests_PortletConfig_ApiRender</title>
       </portlet-info>

@@ -137,10 +137,10 @@ private static final Locale Locale = null;
       /* Details: "Method getResourceBundle(Locale): Returns the              */
       /* ResourceBundle for the specified locale"                             */
       TestResult tr2 = tcd.getTestResultSucceeded(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETRESOURCEBUNDLE);
-      Locale loc=new Locale("en_US");
+      Locale loc=java.util.Locale.getDefault();
       ResourceBundle rb=portletConfig.getResourceBundle(loc);
       StringBuilder txt2=new StringBuilder(128);
-      txt2.append("value is").append(rb);
+      txt2.append("The value is").append(rb);
       tr2.appendTcDetail(txt2.toString());
       tr2.writeTo(writer);
 

@@ -146,6 +146,9 @@ public class PortletTests_Event_ApiEvent_event implements Portlet, EventPortlet,
       try
       {
       Object val=evt.getValue();
+      if(val==null) {
+    	  tr4.appendTcDetail("EventPayload is null");
+      } 
       if ((val instanceof String)) {
     	  String txt = (String) val;
     	  if (txt.equals("Hi!")) {
