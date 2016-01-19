@@ -509,8 +509,9 @@ public class RequestTests_PortletRequest_ApiRender implements Portlet, ResourceS
       /* Details: "Method getAuthType(): Returns null if the request was      */
       /* not authenticated"                                                   */
       TestResult tr38 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETAUTHTYPE2);
-      /* TODO: implement test */
-      tr38.appendTcDetail("Not implemented.");
+      String getauth=portletReq.getAuthType();
+      
+      tr38.appendTcDetail("Not implemented."+getauth);
       tr38.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_getContextPath1    */
