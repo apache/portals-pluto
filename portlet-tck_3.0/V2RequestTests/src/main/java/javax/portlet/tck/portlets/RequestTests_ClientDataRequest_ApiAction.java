@@ -82,8 +82,10 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       /* Details: "Method getPortletInputStream(): Returns an InputStream     */
       /* object"                                                              */
       TestResult tr0 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM1);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      InputStream is=((ClientDataRequest) portletConfig).getPortletInputStream();
+      StringBuilder txt=new StringBuilder(128);
+      txt.append("The value is :").append(is);
+      tr0.appendTcDetail(txt.toString());
       tr0.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getPortletInputStream2 */

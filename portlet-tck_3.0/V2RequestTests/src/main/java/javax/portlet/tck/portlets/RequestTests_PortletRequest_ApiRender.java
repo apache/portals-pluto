@@ -48,9 +48,11 @@ import static javax.portlet.ResourceURL.*;
 public class RequestTests_PortletRequest_ApiRender implements Portlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
          RequestTests_PortletRequest_ApiRender.class.getName();
+
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
+
 
    @Override
    public void init(PortletConfig config) throws PortletException {
@@ -238,62 +240,97 @@ public class RequestTests_PortletRequest_ApiRender implements Portlet, ResourceS
       /* Details: "Method isWindowStateAllowed(WindowState): Returns true     */
       /* if the specified WindowState is allowed"                             */
       TestResult tr15 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_ISWINDOWSTATEALLOWED1);
-      /* TODO: implement test */
-      tr15.appendTcDetail("Not implemented.");
+      boolean bswt=portletReq.isWindowStateAllowed(WindowState.NORMAL);
+      if (bswt==true) {
+    	  tr15.setTcSuccess(true);
+      }  else {
+    	  tr15.appendTcDetail("The window State is not allowed");
+          }
       tr15.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_isWindowStateAllowed2 */
       /* Details: "Method isWindowStateAllowed(WindowState): Returns false    */
       /* if the specified WindowState is not allowed"                         */
       TestResult tr16 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_ISWINDOWSTATEALLOWED2);
-      /* TODO: implement test */
-      tr16.appendTcDetail("Not implemented.");
+      boolean bswf=portletReq.isWindowStateAllowed(new WindowState("popup"));
+      if (bswf==false) {
+    	  tr16.setTcSuccess(true);
+      }  else {
+    	  tr16.appendTcDetail("The Supported Window state is" +portletReq.getWindowState());
+          }
       tr16.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_isPortletModeAllowed1 */
       /* Details: "Method isPortletModeAllowed(PortletMode): Returns true     */
       /* if the specified PortletMode is allowed"                             */
       TestResult tr17 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_ISPORTLETMODEALLOWED1);
-      /* TODO: implement test */
-      tr17.appendTcDetail("Not implemented.");
+      boolean bspt=portletReq.isPortletModeAllowed(PortletMode.VIEW);
+      if (bspt==true) {
+    	  tr17.setTcSuccess(true);
+      }  else {
+    	  tr17.appendTcDetail("The PortletMode  is not allowed");
+          }
       tr17.writeTo(writer);
+ 
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_isPortletModeAllowed2 */
       /* Details: "Method isPortletModeAllowed(PortletMode): Returns false    */
       /* if the specified PortletMode is not allowed"                         */
       TestResult tr18 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_ISPORTLETMODEALLOWED2);
-      /* TODO: implement test */
-      tr18.appendTcDetail("Not implemented.");
+      boolean bspf=portletReq.isPortletModeAllowed(new PortletMode("Test"));
+      if (bspf==false) {
+    	  tr18.setTcSuccess(true);
+      }  else {
+    	  tr18.appendTcDetail("The Supported Portlet Mode is" +portletReq.getPortletMode());
+          }
       tr18.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_getPortletMode     */
       /* Details: "Method getPortletMode(): Returns current PortletMode "     */
       TestResult tr19 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPORTLETMODE);
-      /* TODO: implement test */
-      tr19.appendTcDetail("Not implemented.");
+      PortletMode pm=portletReq.getPortletMode();
+      StringBuilder txt19=new StringBuilder(128);
+      if( pm.equals(portletReq.getPortletMode()) ) {
+      tr19.setTcSuccess(true);
+      } else {  
+      txt19.append("The current Portlet Mode is :").append(pm);
+      tr19.appendTcDetail(txt19.toString());
+      }
       tr19.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_getWindowState     */
       /* Details: "Method getWindowState(): Returns current WindowState"      */
       TestResult tr20 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETWINDOWSTATE);
-      /* TODO: implement test */
-      tr20.appendTcDetail("Not implemented.");
-      tr20.writeTo(writer);
+      WindowState ws=portletReq.getWindowState();
+      StringBuilder txt20=new StringBuilder(128);
+      if( ws.equals(portletReq.getWindowState()) ) {
+      tr20.setTcSuccess(true);
+      } else {  
+      txt20.append("The current Window State is :").append(pm);
+      tr20.appendTcDetail(txt20.toString());
+      }
+      tr20.writeTo(writer);	  
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_getPreferences     */
       /* Details: "Method getPreferences(): Returns the PortletPreferences    */
       /* object associated with the portlet"                                  */
       TestResult tr21 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPREFERENCES);
-      /* TODO: implement test */
-      tr21.appendTcDetail("Not implemented.");
-      tr21.writeTo(writer);
+      PortletPreferences pp=portletReq.getPreferences();
+      StringBuilder txt21=new StringBuilder(128);
+      if( pp.equals(portletReq.getPreferences()) ) {
+      tr21.setTcSuccess(true);
+      } else {  
+      txt21.append("The Preference associated with Portlet is :").append(pm);
+      tr21.appendTcDetail(txt21.toString());
+      }
+      tr21.writeTo(writer);	
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_getPortletSessionA1 */
       /* Details: "Method getPortletSession(): Returns current                */
       /* PortletSession if one already exists"                                */
       TestResult tr22 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPORTLETSESSIONA1);
-      /* TODO: implement test */
-      tr22.appendTcDetail("Not implemented.");
+      PortletSession ps=portletReq.getPortletSession();
+      
       tr22.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_getPortletSessionA2 */
@@ -340,16 +377,24 @@ public class RequestTests_PortletRequest_ApiRender implements Portlet, ResourceS
       /* Details: "Method getProperty(String): If specified request           */
       /* property exists, returns its value "                                 */
       TestResult tr28 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPROPERTY1);
-      /* TODO: implement test */
-      tr28.appendTcDetail("Not implemented.");
+      String getprop=portletReq.getProperty("referer");
+      if(getprop.equals("http://localhost:8080/pluto/portal")) {
+    	  tr28.setTcSuccess(true);
+      } else {
+    	  tr28.appendTcDetail("The Specified Property value is null");
+      }
       tr28.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_getProperty2       */
       /* Details: "Method getProperty(String): If specified request           */
       /* property does not exist, returns null"                               */
       TestResult tr29 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPROPERTY2);
-      /* TODO: implement test */
-      tr29.appendTcDetail("Not implemented.");
+      String getpropn=portletReq.getProperty("user");
+      if(getpropn==null) {
+    	  tr29.setTcSuccess(true);
+      } else {
+    	  tr29.appendTcDetail("The Specified Property name doesnot exist");
+      }
       tr29.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_getProperty3       */
@@ -358,7 +403,7 @@ public class RequestTests_PortletRequest_ApiRender implements Portlet, ResourceS
       TestResult tr30 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPROPERTY3);
       try {
          try {
-            String val = portletReq.getProperty(null);
+           String val = portletReq.getProperty(null);
             tr30.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
             tr30.setTcSuccess(true);
@@ -372,16 +417,30 @@ public class RequestTests_PortletRequest_ApiRender implements Portlet, ResourceS
       /* Details: "Method getProperties(String): If specified request         */
       /* property exists, returns its values as an Enumeration "              */
       TestResult tr31 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPROPERTIES1);
-      /* TODO: implement test */
-      tr31.appendTcDetail("Not implemented.");
+      Enumeration<String> getprops=portletReq.getProperties("accept-language");
+      List<String> list31=Collections.list(getprops);
+      if(list31.size()==2) {
+    	  if(list31.contains("en_US") && list31.contains("en")) {
+    		  tr31.setTcSuccess(true);
+    	  } else {
+    		  tr31.appendTcDetail("The Specified Property has invalid values but actual are" +list31.toString());
+    	  }
+      } else {
+    	  tr31.appendTcDetail("The Property Values had invalid length"+list31.size());
+      }
       tr31.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_getProperties2     */
       /* Details: "Method getProperties(String): If specified request         */
       /* property does not exist, returns an empty Enumeration"               */
       TestResult tr32 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPROPERTIES2);
-      /* TODO: implement test */
-      tr32.appendTcDetail("Not implemented.");
+      Enumeration<String> getpropsn=portletReq.getProperties("language");
+      List<String> list32=Collections.list(getpropsn);
+      if(list32.isEmpty()) {
+    	  tr32.setTcSuccess(true);
+      } else {
+    	  tr32.appendTcDetail("The Specified Property values are" +list32.toString());
+      }
       tr32.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_getProperties3     */
@@ -404,8 +463,18 @@ public class RequestTests_PortletRequest_ApiRender implements Portlet, ResourceS
       /* Details: "Method getPropertyNames(): Returns an Enumeration of all   */
       /* request property names"                                              */
       TestResult tr34 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPROPERTYNAMES1);
-      /* TODO: implement test */
-      tr34.appendTcDetail("Not implemented.");
+      Enumeration<String> prnames=portletReq.getPropertyNames();
+      List<String> list34=Collections.list(prnames);
+      if(list34.size()==9) {
+    	  if(list34.contains("referer") && list34.contains("accept-language") && list34.contains("cookie") && list34.contains("host") && list34.contains("connection") && list34.contains("cache-control") && list34.contains("accept-encoding") && list34.contains("user-agent") && list34.contains("accept")) {
+        	  tr34.setTcSuccess(true);
+    	  } else {
+    		  tr34.setTcDetail("The Property Names are not Valid but actual are" +list34.toString());
+    	  }
+      } else {
+    	  
+    	  tr34.setTcDetail("The Property names had invalid length"+list34.size());
+      }
       tr34.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_getPropertyNames2  */
@@ -420,8 +489,12 @@ public class RequestTests_PortletRequest_ApiRender implements Portlet, ResourceS
       /* Details: "Method getPortalContext(): Returns the context of the      */
       /* portal"                                                              */
       TestResult tr36 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPORTALCONTEXT);
-      /* TODO: implement test */
-      tr36.appendTcDetail("Not implemented.");
+      String gpc=portletReq.getPortalContext().getPortalInfo();
+      if(gpc.equals("pluto-portal-driver/2.1.0-SNAPSHOT")) {
+    	  tr36.setTcSuccess(true);
+      } else {
+    	  tr36.setTcDetail("The PortalContext for the portal is invalid");
+      }
       tr36.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_getAuthType1       */
