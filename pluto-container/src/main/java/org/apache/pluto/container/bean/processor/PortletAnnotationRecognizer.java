@@ -37,6 +37,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.portlet.PortletException;
@@ -69,9 +71,11 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
    static {
       classAnnotations.add(PortletStateScoped.class);
       classAnnotations.add(PortletSessionScoped.class);
+      classAnnotations.add(SessionScoped.class);
+      classAnnotations.add(RequestScoped.class);
    }
    
-   // Maps the annotation class to a list of method descriptions. A given annnotation
+   // Maps the annotation class to a list of method descriptions. A given annotation
    // may support multiple method signatures, each of which has its own method description.
    private final static Map<Class<? extends Annotation>, List<MethodDescription>> descriptions = 
          new HashMap<Class<? extends Annotation>, List<MethodDescription>>();
@@ -237,14 +241,28 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
             LOG.debug(txt.toString());
             summary.addSessionBeanErrorString(theClass, txt.toString());
          } else {
-            if (pss.value() == PortletSession.APPLICATION_SCOPE) {
-               PortletSessionScopedAnnotatedType at = new PortletSessionScopedAnnotatedType((AnnotatedType<PortletSessionScoped>)aType);
-               summary.addAppScopedType(at);
-               return at;
-            } else {
-               sessionScopedConfig.addAnnotation(theClass, pss);
-            }
+            sessionScopedConfig.addAnnotation(theClass, pss);
          }
+
+      }  else if (anno instanceof RequestScoped) {
+
+         // Wrap the request scoped bean to make it a portlet request scoped bean, add it to 
+         // the summary, and return it so it gets processed by CDI
+
+         PortletRequestScopedAnnotatedType at = new PortletRequestScopedAnnotatedType((AnnotatedType<RequestScoped>)aType);
+         summary.addReqScopedType(at);
+         return at;
+         
+      }  else if (anno instanceof SessionScoped) {
+
+         // Wrap the session scoped bean to make it a portlet session scoped bean with application
+         // scope, add it to the summary, and return it so it gets processed by CDI
+
+         PortletSessionScopedAnnotatedType at = new PortletSessionScopedAnnotatedType((AnnotatedType<SessionScoped>)aType);
+         PortletSessionScoped pss = at.getAnnotation(PortletSessionScoped.class);
+         sessionScopedConfig.addAnnotation(theClass, pss);
+         summary.addAppScopedType(at);
+         return at;
 
       }  else {
          

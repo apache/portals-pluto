@@ -156,7 +156,7 @@ public class PortletSessionScopedConfig  implements Serializable {
     * @param bean    The bean
     * @return        <code>true</code> if the bean is portlet scoped
     */
-   public Boolean isPortletScoped(Bean<?> bean) {
+   public Boolean isPortletScoped(Contextual<?> bean) {
       PortletSessionScoped anno = context2Anno.get(bean);
       assert anno != null;
       return (anno.value() == PortletSession.PORTLET_SCOPE);

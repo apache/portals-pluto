@@ -37,6 +37,8 @@ import org.apache.pluto.container.bean.processor.PortletCDIExtension;
 import org.apache.pluto.container.bean.processor.PortletSessionScopedConfig;
 import org.apache.pluto.container.bean.processor.PortletStateScopedConfig;
 import org.apache.pluto.container.bean.processor.fixtures.PortletStateScopedClass;
+import org.apache.pluto.container.bean.processor.fixtures.SessionScopedApp1;
+import org.apache.pluto.container.bean.processor.fixtures.SessionScopedApp2;
 import org.apache.pluto.container.bean.processor.fixtures.SessionScopedPortlet1;
 import org.apache.pluto.container.bean.processor.fixtures.SessionScopedPortlet2;
 import org.apache.pluto.container.bean.processor.fixtures.SessionScopedPortletBad1;
@@ -89,7 +91,7 @@ public class PortletSessionScopedTest {
    public void annotatedClassPresent1() {
       Set<Class<?>> classes = sessConfig.getBeanClasses();
       assertNotNull(classes);
-      assertEquals(2, classes.size());
+      assertEquals(4, classes.size());
    }
 
    @Test
@@ -104,6 +106,20 @@ public class PortletSessionScopedTest {
       Set<Class<?>> classes = sessConfig.getBeanClasses();
       assertNotNull(classes);
       assertTrue(classes.contains(SessionScopedPortlet2.class));
+   }
+
+   @Test
+   public void annotatedClassPresent4() {
+      Set<Class<?>> classes = sessConfig.getBeanClasses();
+      assertNotNull(classes);
+      assertTrue(classes.contains(SessionScopedApp1.class));
+   }
+
+   @Test
+   public void annotatedClassPresent5() {
+      Set<Class<?>> classes = sessConfig.getBeanClasses();
+      assertNotNull(classes);
+      assertTrue(classes.contains(SessionScopedApp2.class));
    }
 
    @Test

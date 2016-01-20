@@ -43,7 +43,7 @@ import org.apache.pluto.container.bean.processor.PortletSessionScopedAnnotatedTy
 import org.apache.pluto.container.bean.processor.PortletSessionScopedConfig;
 import org.apache.pluto.container.bean.processor.PortletStateScopedConfig;
 import org.apache.pluto.container.bean.processor.fixtures.PortletStateScopedClass;
-import org.apache.pluto.container.bean.processor.fixtures.SessionScopedApp1;
+import org.apache.pluto.container.bean.processor.fixtures.SessionScopedApp2;
 import org.jglue.cdiunit.AdditionalClasses;
 import org.jglue.cdiunit.AdditionalPackages;
 import org.jglue.cdiunit.CdiRunner;
@@ -104,12 +104,12 @@ public class PortletSessionAppScopeTest {
    }
    
    @Test
-   public void checkNoPortletSessionScoped() throws Exception {
+   public void checkNoSessionScoped() throws Exception {
       Set<Annotation> annos = appScoped.getAnnotations();
       assertNotEquals(0, annos.size());
       boolean ok = true;
       for (Annotation a : annos) {
-         if (a.annotationType().equals(PortletSessionScoped.class)) {
+         if (a.annotationType().equals(SessionScoped.class)) {
             ok = false;
             break;
          }
@@ -118,12 +118,12 @@ public class PortletSessionAppScopeTest {
    }
    
    @Test
-   public void checkSessionScoped() throws Exception {
+   public void checkPortletSessionScoped() throws Exception {
       Set<Annotation> annos = appScoped.getAnnotations();
       assertEquals(1, annos.size());
       boolean ok = false;
       for (Annotation a : annos) {
-         if (a.annotationType().equals(SessionScoped.class)) {
+         if (a.annotationType().equals(PortletSessionScoped.class)) {
             ok = true;
             break;
          }
@@ -132,35 +132,35 @@ public class PortletSessionAppScopeTest {
    }
    
    @Test
-   public void doesNotContainPortletSessionScoped() throws Exception {
-      assertFalse(appScoped.isAnnotationPresent(PortletSessionScoped.class));
+   public void doesNotContainSessionScoped() throws Exception {
+      assertFalse(appScoped.isAnnotationPresent(SessionScoped.class));
    }
    
    @Test
    public void containsPortletSessionScoped() throws Exception {
-      assertTrue(appScoped.isAnnotationPresent(SessionScoped.class));
+      assertTrue(appScoped.isAnnotationPresent(PortletSessionScoped.class));
    }
    
    @Test
    public void getAnnotation() throws Exception {
-      assertNotNull(appScoped.getAnnotation(SessionScoped.class));
+      assertNotNull(appScoped.getAnnotation(PortletSessionScoped.class));
    }
    
    @Test
    public void getAnnotationBad() throws Exception {
-      assertNull(appScoped.getAnnotation(PortletSessionScoped.class));
+      assertNull(appScoped.getAnnotation(SessionScoped.class));
    }
    
    @Test
    public void checkJavaClass() throws Exception {
       Class<?> cls = appScoped.getJavaClass();
-      assertEquals(SessionScopedApp1.class, cls);
+      assertEquals(SessionScopedApp2.class, cls);
    }
    
    @Test
    public void checkBaseType() throws Exception {
       Type type = appScoped.getBaseType();
-      assertEquals(SessionScopedApp1.class, type);
+      assertEquals(SessionScopedApp2.class, type);
    }
    
 //    @Test

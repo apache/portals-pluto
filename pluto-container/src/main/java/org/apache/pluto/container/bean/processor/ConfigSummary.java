@@ -36,6 +36,9 @@ public class ConfigSummary {
    
    // List of PortletSessionScoped beans with APPLICATION_SCOPE
    List<PortletSessionScopedAnnotatedType> appScopedTypes = new ArrayList<PortletSessionScopedAnnotatedType>();
+   
+   // List of RequestScoped beans
+   List<PortletRequestScopedAnnotatedType> reqScopedTypes = new ArrayList<PortletRequestScopedAnnotatedType>();
 
    // Per-class error messages for portlet session scoped bean deployment problems
    private final Map<Class<?>, String> badSessionBeans = new HashMap<Class<?>, String>();
@@ -43,7 +46,7 @@ public class ConfigSummary {
    // Per-class error messages for portlet state scoped bean deployment problems
    private final Map<Class<?>, String> badStateBeans = new HashMap<Class<?>, String>();
    
-   // Per-portlet error messages for deployment problems
+   // Per-portlet error messages for deployment problems. Key is the portlet name.
    private final Map<String, List<String>> errors = new TreeMap<String, List<String>>();
    
    /**
@@ -161,6 +164,22 @@ public class ConfigSummary {
     */
    public List<PortletSessionScopedAnnotatedType> getAppScopedTypes() {
       return appScopedTypes;
+   }
+
+   /**
+    * Returns list of all request scoped beans
+    * @return the reqScopedTypes
+    */
+   public List<PortletRequestScopedAnnotatedType> getReqScopedTypes() {
+      return reqScopedTypes;
+   }
+
+   /**
+    * Adds a request scoped bean to the summary list
+    * @param reqScopedTypes the reqScopedTypes to set
+    */
+   public void addReqScopedType(PortletRequestScopedAnnotatedType type) {
+      reqScopedTypes.add(type);
    }
 
 }

@@ -32,6 +32,18 @@ public class HelloWorldRender {
    // entered through the form.
    @Inject
    private NameBean nameBean;
+   
+   @Inject
+   private RequestRandomNumberBean reqrn;
+   
+   @Inject
+   private PortletSessionRandomNumberBean pltsessrn;
+   
+   @Inject
+   private AppSessionRandomNumberBean appsessrn;
+   
+   @Inject
+   private ApplicationRandomNumberBean apprn;
 
    /**
     * Bean portlet render method for "BeanHelloWorld" portlet.
@@ -44,15 +56,24 @@ public class HelloWorldRender {
       
       StringBuilder txt = new StringBuilder(128);
       
-      txt.append("<h3>Hello ");
-      
+      txt.append("<h3>Hello \n");
       // Get the name from the bean. If it hasn't been set, just greet the world.
       if (nameBean.getName() != null) {
          txt.append(nameBean.getName());
       } else {
-         txt.append("World");
+         txt.append("World\n");
       }
-      txt.append("!!</h3>");
+      txt.append("!!</h3>\n");
+      
+      txt.append("<table><tr><td align='left'>\n");
+      txt.append("Application Scoped number:</td><td>").append(apprn.getRandomNumber());
+      txt.append("</td></tr><tr><td>\n");
+      txt.append("Portlet session scoped (Application) number:</td><td>").append(appsessrn.getRandomNumber());
+      txt.append("</td></tr><tr><td>\n");
+      txt.append("Portlet session scoped (Portlet) number:</td><td>").append(pltsessrn.getRandomNumber());
+      txt.append("</td></tr><tr><td>\n");
+      txt.append("Request number:</td><td>").append(reqrn.getRandomNumber());
+      txt.append("</td></tr></table>\n");
       
       return txt.toString();
    }

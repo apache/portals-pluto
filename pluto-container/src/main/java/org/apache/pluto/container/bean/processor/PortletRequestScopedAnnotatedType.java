@@ -24,33 +24,31 @@ import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.spi.AnnotatedConstructor;
 import javax.enterprise.inject.spi.AnnotatedField;
 import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.AnnotatedType;
-import javax.portlet.PortletSession;
-import javax.portlet.annotations.PortletSessionScoped;
+import javax.portlet.annotations.PortletRequestScoped;
 
 /**
- * A wrapper for a PortletSessionScoped annotated type with APPLICATION_SCOPE
- * that replaces the <code>{@literal @}PortletSessionScoped</code> annotation with
- * <code>{@literal @}SessionScoped</code> in order to allow the bean to be used
- * within servlets in the same session outside of a portlet request, and also 
- * obtain the application scope semantics.
+ * A wrapper for a RequestScoped annotated type 
+ * that replaces the <code>{@literal @}RequestScoped</code> annotation with
+ * <code>{@literal @}PortletRequestScoped</code> in order to assure that the bean
+ * is scoped to the portlet request rather than to the underlying servlet request.
  * 
  * @author Scott
  *
  */
-public class PortletSessionScopedAnnotatedType implements AnnotatedType<SessionScoped> {
+public class PortletRequestScopedAnnotatedType implements AnnotatedType<RequestScoped> {
 
    // to obtain annotation instances
-   @SessionScoped
-   @PortletSessionScoped(PortletSession.APPLICATION_SCOPE)
+   @RequestScoped
+   @PortletRequestScoped
    private class Dummy {}  
    
    // the wrapped type.
-   private final AnnotatedType<SessionScoped> aType;
+   private final AnnotatedType<RequestScoped> aType;
    
    // The set of annotations
    private final Set<Annotation> annos = new HashSet<Annotation>();
@@ -58,11 +56,11 @@ public class PortletSessionScopedAnnotatedType implements AnnotatedType<SessionS
    /**
     * Construct the wrapper. 
     */
-   public PortletSessionScopedAnnotatedType(AnnotatedType<SessionScoped> type) {
+   public PortletRequestScopedAnnotatedType(AnnotatedType<RequestScoped> type) {
       aType = type;
       annos.addAll(type.getAnnotations());
-      annos.remove(Dummy.class.getAnnotation(SessionScoped.class));
-      annos.add(Dummy.class.getAnnotation(PortletSessionScoped.class));
+      annos.remove(Dummy.class.getAnnotation(RequestScoped.class));
+      annos.add(Dummy.class.getAnnotation(PortletRequestScoped.class));
    }
 
    /* (non-Javadoc)
@@ -120,7 +118,7 @@ public class PortletSessionScopedAnnotatedType implements AnnotatedType<SessionS
     * @see javax.enterprise.inject.spi.AnnotatedType#getConstructors()
     */
    @Override
-   public Set<AnnotatedConstructor<SessionScoped>> getConstructors() {
+   public Set<AnnotatedConstructor<RequestScoped>> getConstructors() {
       return aType.getConstructors();
    }
 
@@ -128,7 +126,7 @@ public class PortletSessionScopedAnnotatedType implements AnnotatedType<SessionS
     * @see javax.enterprise.inject.spi.AnnotatedType#getFields()
     */
    @Override
-   public Set<AnnotatedField<? super SessionScoped>> getFields() {
+   public Set<AnnotatedField<? super RequestScoped>> getFields() {
       return aType.getFields();
    }
 
@@ -136,7 +134,7 @@ public class PortletSessionScopedAnnotatedType implements AnnotatedType<SessionS
     * @see javax.enterprise.inject.spi.AnnotatedType#getJavaClass()
     */
    @Override
-   public Class<SessionScoped> getJavaClass() {
+   public Class<RequestScoped> getJavaClass() {
       return aType.getJavaClass();
    }
 
@@ -144,7 +142,7 @@ public class PortletSessionScopedAnnotatedType implements AnnotatedType<SessionS
     * @see javax.enterprise.inject.spi.AnnotatedType#getMethods()
     */
    @Override
-   public Set<AnnotatedMethod<? super SessionScoped>> getMethods() {
+   public Set<AnnotatedMethod<? super RequestScoped>> getMethods() {
       return aType.getMethods();
    }
 

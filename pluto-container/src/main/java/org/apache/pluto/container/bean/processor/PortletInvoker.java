@@ -117,7 +117,7 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
       PortletRequestScopedBeanHolder.setBeanHolder();
 
       // Set the portlet session bean holder for the thread & session
-      PortletSessionBeanHolder.setBeanHolder(req.getPortletSession());
+      PortletSessionBeanHolder.setBeanHolder(req, acb.getSessionScopedConfig());
 
       // Set the portlet state scoped bean holder
       PortletStateScopedBeanHolder.setBeanHolder(req, acb.getStateScopedConfig());
