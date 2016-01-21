@@ -47,6 +47,7 @@ public class PortletSessionScopedBeanMap implements HttpSessionBindingListener, 
    
    private static final Logger LOG = LoggerFactory.getLogger(PortletSessionScopedBeanMap.class);
    private static final boolean isDebug = LOG.isDebugEnabled();
+   private static final boolean isTrace = LOG.isTraceEnabled();
    
    // Used in the bean map to designate application scoped beans.
    private static final String WINDOW_ID_APPLICATION = "application";
@@ -82,12 +83,13 @@ public class PortletSessionScopedBeanMap implements HttpSessionBindingListener, 
          id = WINDOW_ID_APPLICATION;
       }
 
+      boolean addedMap = false;
       synchronized (beans) {
          Map<Contextual<?>, BeanInstance<?>> beanMap = beans.get(id);
          if (beanMap == null) {
             beanMap = new HashMap<Contextual<?>, BeanInstance<?>>();
             beans.put(id, beanMap);
-            LOG.debug("Added new bean map.");
+            addedMap = true;
          }
          beanMap.put(bean, bi);
       }
@@ -98,8 +100,11 @@ public class PortletSessionScopedBeanMap implements HttpSessionBindingListener, 
          if (bean instanceof Bean<?>) {
             Bean<?> b = (Bean<?>) bean;
             txt.append(b.getBeanClass().getSimpleName());
+         } else {
+            txt.append("Contextual");
          }
          txt.append(", window ID: ").append(id);
+         txt.append(", added new map: ").append(addedMap);
          LOG.debug(txt.toString());
       }
    }
@@ -112,13 +117,26 @@ public class PortletSessionScopedBeanMap implements HttpSessionBindingListener, 
          id = WINDOW_ID_APPLICATION;
       }
 
+      boolean gotMap = false;
       synchronized(beans) {
          Map<Contextual<?>, BeanInstance<?>> beanMap = beans.get(id);
          if (beanMap != null) {
-            instance = (T) beanMap.get(bean).instance;
+            gotMap = true;
+            BeanInstance<?> bi = beanMap.get(bean);
+            if (bi != null) {
+               instance = (T) bi.instance;
+            }
          }
       }
-      LOG.debug("Window ID: " + id + ", instance: " + instance);
+      
+      if (isTrace) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Window ID: ").append(id);
+         txt.append(", retrieved map: ").append(gotMap);
+         txt.append(", instance null: ").append(instance == null);
+         LOG.debug(txt.toString());
+      }
+      
       return instance;
    }
    

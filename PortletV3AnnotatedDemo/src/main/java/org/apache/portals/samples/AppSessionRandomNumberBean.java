@@ -36,7 +36,7 @@ public class AppSessionRandomNumberBean implements Serializable {
    private int randomNumber;
    
    public AppSessionRandomNumberBean() {
-      randomNumber = ((int)(Math.random() * 1000)) - 500;
+      randomNumber = ((int)(Math.random() * 1000));
    }
 
    /**

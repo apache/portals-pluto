@@ -32,7 +32,7 @@ public class RequestRandomNumberBean {
    private int randomNumber;
    
    public RequestRandomNumberBean() {
-      randomNumber = ((int)(Math.random() * 1000)) - 500;
+      randomNumber = ((int)(Math.random() * 1000));
    }
 
    /**

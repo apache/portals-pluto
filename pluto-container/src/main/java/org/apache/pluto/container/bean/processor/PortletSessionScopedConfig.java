@@ -34,11 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Configuration for PortletStateScoped CDI beans with PORTLET_SCOPE.
- * <p>
- * ===================================
- * === Only used for test purposes ===
- * ===================================
+ * Configuration for PortletStateScoped CDI beans.
  * 
  * @author Scott Nicklous
  *
@@ -159,7 +155,22 @@ public class PortletSessionScopedConfig  implements Serializable {
    public Boolean isPortletScoped(Contextual<?> bean) {
       PortletSessionScoped anno = context2Anno.get(bean);
       assert anno != null;
-      return (anno.value() == PortletSession.PORTLET_SCOPE);
+      boolean isPS = (anno.value() == PortletSession.PORTLET_SCOPE);
+      
+      if (isTrace) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Bean: ");
+         if (bean instanceof Bean<?>) {
+            Bean<?> b = (Bean<?>) bean;
+            txt.append(b.getBeanClass().getSimpleName());
+         } else {
+            txt.append("Contextual");
+         }
+         txt.append(", isPortletScoped: ").append(isPS);
+         LOG.debug(txt.toString());
+      }
+      
+      return isPS;
    }
 
 }

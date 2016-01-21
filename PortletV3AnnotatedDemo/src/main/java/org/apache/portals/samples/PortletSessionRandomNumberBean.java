@@ -35,7 +35,7 @@ public class PortletSessionRandomNumberBean implements Serializable{
    private int randomNumber;
    
    public PortletSessionRandomNumberBean() {
-      randomNumber = ((int)(Math.random() * 1000)) - 500;
+      randomNumber = ((int)(Math.random() * 1000));
    }
 
    /**

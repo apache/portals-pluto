@@ -37,10 +37,16 @@ public class HelloWorldRender {
    private RequestRandomNumberBean reqrn;
    
    @Inject
+   private PortletRequestRandomNumberBean pltreqrn;
+   
+   @Inject
    private PortletSessionRandomNumberBean pltsessrn;
    
    @Inject
    private AppSessionRandomNumberBean appsessrn;
+   
+   @Inject
+   private SessionRandomNumberBean sessrn;
    
    @Inject
    private ApplicationRandomNumberBean apprn;
@@ -65,15 +71,19 @@ public class HelloWorldRender {
       }
       txt.append("!!</h3>\n");
       
-      txt.append("<table><tr><td align='left'>\n");
+      txt.append("<p><table cellspacing='2' cellpadding='0'><tr><td align='left'>\n");
       txt.append("Application Scoped number:</td><td>").append(apprn.getRandomNumber());
+      txt.append("</td></tr><tr><td>\n");
+      txt.append("Session scoped number:</td><td>").append(sessrn.getRandomNumber());
       txt.append("</td></tr><tr><td>\n");
       txt.append("Portlet session scoped (Application) number:</td><td>").append(appsessrn.getRandomNumber());
       txt.append("</td></tr><tr><td>\n");
       txt.append("Portlet session scoped (Portlet) number:</td><td>").append(pltsessrn.getRandomNumber());
       txt.append("</td></tr><tr><td>\n");
+      txt.append("Portlet Request number:</td><td>").append(pltreqrn.getRandomNumber());
+      txt.append("</td></tr><tr><td>\n");
       txt.append("Request number:</td><td>").append(reqrn.getRandomNumber());
-      txt.append("</td></tr></table>\n");
+      txt.append("</td></tr></table></p>\n");
       
       return txt.toString();
    }

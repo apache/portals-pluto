@@ -74,30 +74,28 @@ public class PortletSessionBeanHolder implements Serializable {
       PortletSession ps = req.getPortletSession();
       String windowId = req.getWindowID();
 
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder(80);
-         txt.append("Setting portlet session bean holder.");
-         txt.append(" ThreadId: ").append(Thread.currentThread().getId());
-         txt.append(", PortletSession: ").append(ps.getId());
-         txt.append(", WindowId: ").append(windowId);
-         LOG.debug(txt.toString());
-      }
-
       PortletSessionScopedBeanMap map = (PortletSessionScopedBeanMap) ps.getAttribute(ATTRIBNAME,
             PortletSession.APPLICATION_SCOPE);
+      
+      boolean createdMap = false;
       if (map == null) {
          map = new PortletSessionScopedBeanMap();
          ps.setAttribute(ATTRIBNAME, map, PortletSession.APPLICATION_SCOPE);
-
-         if (isDebug) {
-            StringBuilder txt = new StringBuilder(80);
-            txt.append("Created new portlet session bean map.");
-            LOG.debug(txt.toString());
-         }
+         createdMap = true;
       }
 
       PortletSessionBeanHolder holder = new PortletSessionBeanHolder(map, windowId, config);
       holders.set(holder);
+
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder(80);
+         txt.append("Set portlet session bean holder.");
+         txt.append(" ThreadId: ").append(Thread.currentThread().getId());
+         txt.append(", PortletSession: ").append(ps.getId());
+         txt.append(", WindowId: ").append(windowId);
+         txt.append(", Added new BeanMap to session: ").append(createdMap);
+         LOG.debug(txt.toString());
+      }
    }
 
    /**

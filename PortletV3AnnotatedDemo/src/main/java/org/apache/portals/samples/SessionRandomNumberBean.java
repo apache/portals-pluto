@@ -19,19 +19,22 @@
 
 package org.apache.portals.samples;
 
-import javax.enterprise.context.ApplicationScoped;
+import java.io.Serializable;
+
+import javax.enterprise.context.SessionScoped;
 
 /**
  * Provides a random number generated once per request.
  * @author Scott Nicklous
  *
  */
-@ApplicationScoped
-public class ApplicationRandomNumberBean {
-   
+@SessionScoped
+public class SessionRandomNumberBean implements Serializable {
+   private static final long serialVersionUID = -5412855426733207637L;
+
    private int randomNumber;
    
-   public ApplicationRandomNumberBean() {
+   public SessionRandomNumberBean() {
       randomNumber = ((int)(Math.random() * 1000));
    }
 

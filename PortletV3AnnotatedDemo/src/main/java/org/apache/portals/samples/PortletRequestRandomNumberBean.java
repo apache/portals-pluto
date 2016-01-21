@@ -19,19 +19,19 @@
 
 package org.apache.portals.samples;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.portlet.annotations.PortletRequestScoped;
 
 /**
  * Provides a random number generated once per request.
  * @author Scott Nicklous
  *
  */
-@ApplicationScoped
-public class ApplicationRandomNumberBean {
+@PortletRequestScoped
+public class PortletRequestRandomNumberBean {
    
    private int randomNumber;
    
-   public ApplicationRandomNumberBean() {
+   public PortletRequestRandomNumberBean() {
       randomNumber = ((int)(Math.random() * 1000));
    }
 
