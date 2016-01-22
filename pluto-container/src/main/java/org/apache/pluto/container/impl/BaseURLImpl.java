@@ -304,18 +304,4 @@ public abstract class BaseURLImpl implements BaseURL {
       urlProvider.setSecure(secure);
    }
 
-   /* (non-Javadoc)
-    * @see javax.portlet.BaseURL#setAuthenticated(boolean)
-    */
-   public void setAuthenticated(boolean authenticated) {
-      urlProvider.setAuthenticated(authenticated);
-   }
-
-   /* (non-Javadoc)
-    * @see javax.portlet.BaseURL#getAuthenticated()
-    */
-   public boolean getAuthenticated() {
-      return urlProvider.getAuthenticated();
-   }
-
 }

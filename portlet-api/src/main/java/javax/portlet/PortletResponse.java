@@ -25,7 +25,8 @@
 package javax.portlet;
 
 /**
- * The <CODE>PortletResponse</CODE> defines the base interface to assist a
+ * <div class="changed_modified_3_0">The</div>
+ * <CODE>PortletResponse</CODE> defines the base interface to assist a
  * portlet in creating and sending a response to the client. The portlet
  * container uses specialized versions of this interface when invoking a
  * portlet.
@@ -54,7 +55,10 @@ public interface PortletResponse {
      * @param key
      *            the key of the property to be returned to the portal
      * @param value
-     *            the value of the property to be returned to the portal
+     *            the value of the property to be returned to the portal. 
+     *            <span class="changed_modified_3_0">
+     *            The value should be encoded according to RFC 2047 (http://www.ietf.org/rfc/rfc2047.txt).
+     *            </span> 
      * 
      * @exception java.lang.IllegalArgumentException
      *                if key is <code>null</code>.
@@ -75,7 +79,10 @@ public interface PortletResponse {
      * @param key
      *            the key of the property to be returned to the portal
      * @param value
-     *            the value of the property to be returned to the portal
+     *            the value of the property to be returned to the portal.
+     *            <span class="changed_modified_3_0">
+     *            The value should be encoded according to RFC 2047 (http://www.ietf.org/rfc/rfc2047.txt).
+     *            </span> 
      * 
      * @exception java.lang.IllegalArgumentException
      *                if key is <code>null</code>.
