@@ -40,8 +40,6 @@ import javax.portlet.ActionRequest;
  */
 public class ActionRequestWrapper extends ClientDataRequestWrapper implements ActionRequest {
 
-   ActionRequest request;
-
    /**
     * Creates an <code>ActionRequest</code> adaptor 
     * wrapping the given request object.
@@ -51,7 +49,6 @@ public class ActionRequestWrapper extends ClientDataRequestWrapper implements Ac
     */
    public ActionRequestWrapper(ActionRequest request) {
       super(request);
-      this.request = request;
    }
 
    /**
@@ -60,7 +57,7 @@ public class ActionRequestWrapper extends ClientDataRequestWrapper implements Ac
     * @return the wrapped request
     */
    public ActionRequest getRequest() {
-      return request;
+      return (ActionRequest) super.getRequest();
    }
 
    /**
@@ -70,11 +67,7 @@ public class ActionRequestWrapper extends ClientDataRequestWrapper implements Ac
     * @throws java.lang.IllegalArgumentException   if the request is null.
     */
    public void setRequest(ActionRequest request) {
-      if ( request == null) {
-         throw new java.lang.IllegalArgumentException("Request is null");
-      }
       super.setRequest(request);
-      this.request = request;
    }
 
    /**
@@ -84,7 +77,7 @@ public class ActionRequestWrapper extends ClientDataRequestWrapper implements Ac
     * </div>
     */
    public ActionParameters getActionParameters() {
-      return request.getActionParameters();
+      return ((ActionRequest)wrapped).getActionParameters();
    }
 
 }

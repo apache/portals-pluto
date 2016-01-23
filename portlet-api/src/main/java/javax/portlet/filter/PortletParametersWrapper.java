@@ -19,33 +19,32 @@
 
 package javax.portlet.filter;
 
-import java.io.IOException;
+import java.util.Set;
 
-import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletResponse;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.MutablePortletParameters;
+import javax.portlet.PortletParameters;
 
 /**
  * <div class="changed_added_3_0">
- * The <code>PortletRequestDispatcherWrapper</code> provides a convenient 
- * implementation of the <code>PortletRequestDispatcher</code> interface 
+ * The <code>PortletParametersWrapper</code> provides a convenient 
+ * implementation of the <code>PortletParameters</code> interface 
  * that can be subclassed by developers wishing to adapt the request.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  * </div>
  * 
  * @author Scott Nicklous
+ *
  */
-public class PortletRequestDispatcherWrapper implements PortletRequestDispatcher {
+public class PortletParametersWrapper implements PortletParameters {
    
-   protected PortletRequestDispatcher wrapped;
+   protected PortletParameters wrapped;
    
    /**
+    * @param the wrapped object to set.
+    * @throws java.lang.IllegalArgumentException   if the PortletParameters is null.
     */
-   public PortletRequestDispatcherWrapper(PortletRequestDispatcher wrapped) {
+   public PortletParametersWrapper(PortletParameters wrapped) {
       if (wrapped == null) {
          throw new java.lang.IllegalArgumentException("Object to wrap is null");
       }
@@ -58,7 +57,7 @@ public class PortletRequestDispatcherWrapper implements PortletRequestDispatcher
     * 
     * @return the wrapped object.
     */
-   public PortletRequestDispatcher getWrapped() {
+   public PortletParameters getWrapped() {
       return wrapped;
    }
 
@@ -67,9 +66,9 @@ public class PortletRequestDispatcherWrapper implements PortletRequestDispatcher
     * Sets the wrapped object.
     * 
     * @param the wrapped object to set.
-    * @throws java.lang.IllegalArgumentException   if the request is null.
+    * @throws java.lang.IllegalArgumentException   if the PortletParameters is null.
     */
-   public void setWrapped(PortletRequestDispatcher wrapped) {
+   public void setWrapped(PortletParameters wrapped) {
       if (wrapped == null) {
          throw new java.lang.IllegalArgumentException("Object to wrap is null");
       }
@@ -77,27 +76,51 @@ public class PortletRequestDispatcherWrapper implements PortletRequestDispatcher
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletRequestDispatcher#include(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
+    * @see javax.portlet.PortletParameters#getValue(java.lang.String)
     */
    @Override
-   public void include(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-      wrapped.include(request, response);
+   public String getValue(String name) {
+      return wrapped.getValue(name);
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletRequestDispatcher#include(javax.portlet.PortletRequest, javax.portlet.PortletResponse)
+    * @see javax.portlet.PortletParameters#getNames()
     */
    @Override
-   public void include(PortletRequest request, PortletResponse response) throws PortletException, IOException {
-      wrapped.include(request, response);
+   public Set<? extends String> getNames() {
+      return wrapped.getNames();
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletRequestDispatcher#forward(javax.portlet.PortletRequest, javax.portlet.PortletResponse)
+    * @see javax.portlet.PortletParameters#getValues(java.lang.String)
     */
    @Override
-   public void forward(PortletRequest request, PortletResponse response) throws PortletException, IOException {
-      wrapped.forward(request, response);
+   public String[] getValues(String name) {
+      return wrapped.getValues(name);
+   }
+
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletParameters#isEmpty()
+    */
+   @Override
+   public boolean isEmpty() {
+      return wrapped.isEmpty();
+   }
+
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletParameters#size()
+    */
+   @Override
+   public int size() {
+      return wrapped.size();
+   }
+
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletParameters#clone()
+    */
+   @Override
+   public MutablePortletParameters clone() {
+      return wrapped.clone();
    }
 
 }

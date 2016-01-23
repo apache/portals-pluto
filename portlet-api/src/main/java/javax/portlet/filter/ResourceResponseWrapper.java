@@ -32,7 +32,7 @@ import javax.portlet.ResourceResponse;
  * <span class="changed_modified_3_0">The</span>  
  * <code>ResourceResponseWrapper</code> provides a convenient 
  * implementation of the <code>ResourceResponse</code> interface 
- * that can be subclassed by developers wishing to adapt the response.
+ * that can be subclassed by developers wishing to adapt the ((ResourceResponse)response).
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped response object.
  *
@@ -41,8 +41,6 @@ import javax.portlet.ResourceResponse;
  */
 
 public class ResourceResponseWrapper extends MimeResponseWrapper implements ResourceResponse {
-
-   ResourceResponse response;
 
    /**
     * Creates an <code>ResourceResponse</code> adaptor 
@@ -53,7 +51,6 @@ public class ResourceResponseWrapper extends MimeResponseWrapper implements Reso
     */
    public ResourceResponseWrapper(ResourceResponse response) {
       super(response);
-      this.response = response;
    }
 
    /**
@@ -62,7 +59,7 @@ public class ResourceResponseWrapper extends MimeResponseWrapper implements Reso
     * @return the wrapped response
     */
    public ResourceResponse getResponse() {
-      return response;
+      return (ResourceResponse) response;
    }
 
    /**
@@ -72,11 +69,7 @@ public class ResourceResponseWrapper extends MimeResponseWrapper implements Reso
     * @throws java.lang.IllegalArgumentException   if the response is null.
     */
    public void setResponse(ResourceResponse response) {
-      if ( response == null) {
-         throw new java.lang.IllegalArgumentException("Response is null");
-      }
       super.setResponse(response);
-      this.response = response;
    }
 
 
@@ -85,8 +78,7 @@ public class ResourceResponseWrapper extends MimeResponseWrapper implements Reso
     * <code>setCharacterEncoding(String charset)</code> on the wrapped response object.
     */
    public void setCharacterEncoding(String charset) {
-      response.setCharacterEncoding(charset);
-      return;
+      ((ResourceResponse)response).setCharacterEncoding(charset);
    }
 
    /**
@@ -94,8 +86,7 @@ public class ResourceResponseWrapper extends MimeResponseWrapper implements Reso
     * <code>setLocale(Locale loc)</code> on the wrapped response object.
     */
    public void setLocale(Locale loc) {
-      response.setLocale(loc);
-      return;
+      ((ResourceResponse)response).setLocale(loc);
    }
 
    /**
@@ -103,7 +94,7 @@ public class ResourceResponseWrapper extends MimeResponseWrapper implements Reso
     * <code>setContentLength()</code> on the wrapped response object.
     */
    public void setContentLength(int len) {
-      response.setContentLength(len);
+      ((ResourceResponse)response).setContentLength(len);
    }
 
    /**
@@ -113,7 +104,7 @@ public class ResourceResponseWrapper extends MimeResponseWrapper implements Reso
     * </div>
     */
    public void setStatus(int sc) {
-      response.setStatus(sc);
+      ((ResourceResponse)response).setStatus(sc);
    }
 
 

@@ -40,8 +40,6 @@ import javax.portlet.EventRequest;
  */
 public class EventRequestWrapper extends PortletRequestWrapper implements EventRequest {
 
-   EventRequest request;
-
 
    /**
     * Creates an <code>EventRequest</code> adaptor 
@@ -52,7 +50,6 @@ public class EventRequestWrapper extends PortletRequestWrapper implements EventR
     */
    public EventRequestWrapper(EventRequest request) {
       super(request);
-      this.request = request;
    }
 
    /**
@@ -61,7 +58,7 @@ public class EventRequestWrapper extends PortletRequestWrapper implements EventR
     * @return the wrapped request
     */
    public EventRequest getRequest() {
-      return request;
+      return (EventRequest) super.getRequest();
    }
 
    /**
@@ -71,11 +68,7 @@ public class EventRequestWrapper extends PortletRequestWrapper implements EventR
     * @throws java.lang.IllegalArgumentException   if the request is null.
     */
    public void setRequest(EventRequest request) {
-      if ( request == null) {
-         throw new java.lang.IllegalArgumentException("Request is null");
-      }
       super.setRequest(request);
-      this.request = request;
    }
 
    /**
@@ -83,7 +76,7 @@ public class EventRequestWrapper extends PortletRequestWrapper implements EventR
     * <code>getEvent()</code> on the wrapped request object.
     */
    public Event getEvent() {
-      return request.getEvent();
+      return ((EventRequest)wrapped).getEvent();
    }
 
    /**
@@ -91,7 +84,7 @@ public class EventRequestWrapper extends PortletRequestWrapper implements EventR
     * <code>getMethod()</code> on the wrapped request object.
     */
    public String getMethod() {
-      return request.getMethod();
+      return ((EventRequest)wrapped).getMethod();
    }
 
 

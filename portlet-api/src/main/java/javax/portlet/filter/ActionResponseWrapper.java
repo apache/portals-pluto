@@ -34,7 +34,7 @@ import javax.portlet.RenderURL;
  * <span class="changed_modified_3_0">The</span> 
  * <code>ActionResponseWrapper</code> provides a convenient 
  * implementation of the <code>ActionResponse</code> interface 
- * that can be subclassed by developers wishing to adapt the response.
+ * that can be subclassed by developers wishing to adapt the ((ActionResponse)response).
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped response object.
  *
@@ -42,8 +42,6 @@ import javax.portlet.RenderURL;
  * @see ActionResponse
  */
 public class ActionResponseWrapper extends StateAwareResponseWrapper implements ActionResponse {
-
-   ActionResponse response;
 
    /**
     * Creates an <code>ActionResponse</code> adaptor 
@@ -54,7 +52,6 @@ public class ActionResponseWrapper extends StateAwareResponseWrapper implements 
     */
    public ActionResponseWrapper(ActionResponse response) {
       super(response);
-      this.response = response;
    }
 
    /**
@@ -63,7 +60,7 @@ public class ActionResponseWrapper extends StateAwareResponseWrapper implements 
     * @return the wrapped response
     */
    public ActionResponse getResponse() {
-      return response;
+      return (ActionResponse) response;
    }
 
    /**
@@ -73,11 +70,7 @@ public class ActionResponseWrapper extends StateAwareResponseWrapper implements 
     * @throws java.lang.IllegalArgumentException   if the response is null.
     */
    public void setResponse(ActionResponse response) {
-      if ( response == null) {
-         throw new java.lang.IllegalArgumentException("Response is null");
-      }
       super.setResponse(response);
-      this.response = response;
    }
 
    /**
@@ -85,7 +78,7 @@ public class ActionResponseWrapper extends StateAwareResponseWrapper implements 
     * <code>sendRedirect(location)</code> on the wrapped response object.
     */
    public void sendRedirect(String location) throws IOException {
-      response.sendRedirect(location);
+      ((ActionResponse)response).sendRedirect(location);
    }
 
    /**
@@ -93,14 +86,14 @@ public class ActionResponseWrapper extends StateAwareResponseWrapper implements 
     * <code>sendRedirect(location, renderUrlParamName)</code> on the wrapped response object.
     */
    public void sendRedirect(String location, String renderUrlParamName) throws IOException {
-      response.sendRedirect(location, renderUrlParamName);
+      ((ActionResponse)response).sendRedirect(location, renderUrlParamName);
    }
 
    /**
     * call wrapped object.
     */
    public RenderURL getRedirectURL(Copy option) throws IllegalStateException {
-      return response.getRedirectURL(option);
+      return ((ActionResponse)response).getRedirectURL(option);
    }
 
 }

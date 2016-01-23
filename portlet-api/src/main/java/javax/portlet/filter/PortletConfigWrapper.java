@@ -31,6 +31,13 @@ import javax.portlet.WindowState;
 import javax.xml.namespace.QName;
 
 /**
+ * <div class="changed_added_3_0">
+ * The <code>PortletConfigWrapper</code> provides a convenient 
+ * implementation of the <code>PortletConfig</code> interface 
+ * that can be subclassed by developers wishing to adapt the request.
+ * This class implements the Wrapper or Decorator pattern. 
+ * Methods default to calling through to the wrapped request object.
+ * </div>
  * 
  * @author Scott Nicklous
  *
@@ -40,18 +47,10 @@ public class PortletConfigWrapper implements PortletConfig {
    protected PortletConfig wrapped;
    
    /**
-    * <div class="changed_added_3_0">
-    * The <code>PortletConfigWrapper</code> provides a convenient 
-    * implementation of the <code>PortletConfig</code> interface 
-    * that can be subclassed by developers wishing to adapt the request.
-    * This class implements the Wrapper or Decorator pattern. 
-    * Methods default to calling through to the wrapped request object.
-    * </div>
-    * Construct with appropriate object.
     */
    public PortletConfigWrapper(PortletConfig wrapped) {
       if (wrapped == null) {
-         throw new java.lang.IllegalArgumentException("Wrapped object is null");
+         throw new java.lang.IllegalArgumentException("Object to wrap is null");
       }
       this.wrapped = wrapped;
    }
@@ -62,7 +61,7 @@ public class PortletConfigWrapper implements PortletConfig {
     * 
     * @return the wrapped object.
     */
-   public PortletConfig getPortletConfig() {
+   public PortletConfig getWrapped() {
       return wrapped;
    }
 
@@ -73,7 +72,7 @@ public class PortletConfigWrapper implements PortletConfig {
     * @param the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the request is null.
     */
-   public void setPortletConfig(PortletConfig wrapped) {
+   public void setWrapped(PortletConfig wrapped) {
       if (wrapped == null) {
          throw new java.lang.IllegalArgumentException("Object to wrap is null");
       }

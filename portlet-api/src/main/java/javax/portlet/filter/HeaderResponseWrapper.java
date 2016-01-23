@@ -16,31 +16,24 @@
  *  under the License.
  */
 
-
 package javax.portlet.filter;
 
 import javax.portlet.HeaderResponse;
 
 /**
- * <div class="changed_added_3_0">
- * The <code>HeaderResponseWrapper</code> provides a convenient 
- * implementation of the <code>HeaderResponse</code> interface 
- * that can be subclassed by developers wishing to adapt the Response.
- * This class implements the Wrapper or Decorator pattern. 
- * Methods default to calling through to the wrapped Response object.
- * </div>
+ * <div class="changed_added_3_0"> The <code>HeaderResponseWrapper</code>
+ * provides a convenient implementation of the <code>HeaderResponse</code>
+ * interface that can be subclassed by developers wishing to adapt the Response.
+ * This class implements the Wrapper or Decorator pattern. Methods default to
+ * calling through to the wrapped Response object. </div>
  */
-public class HeaderResponseWrapper extends MimeResponseWrapper implements
-HeaderResponse {
-
-   HeaderResponse response;
+public class HeaderResponseWrapper extends MimeResponseWrapper implements HeaderResponse {
 
    /**
     * @param response
     */
    public HeaderResponseWrapper(HeaderResponse response) {
       super(response);
-      this.response = response;
    }
 
    /**
@@ -49,28 +42,28 @@ HeaderResponse {
     * @return the wrapped response
     */
    public HeaderResponse getResponse() {
-      return response;
+      return (HeaderResponse) response;
    }
 
    /**
     * Sets the response object being wrapped.
     * 
-    * @param response the response to set
-    * @throws java.lang.IllegalArgumentException   if the response is null.
+    * @param response
+    *           the response to set
+    * @throws java.lang.IllegalArgumentException
+    *            if the response is null.
     */
    public void setResponse(HeaderResponse response) {
-      if ( response == null) {
-         throw new java.lang.IllegalArgumentException("Response is null");
-      }
       super.setResponse(response);
-      this.response = response;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see javax.portlet.HeaderResponse#setTitle(java.lang.String)
     */
    public void setTitle(String title) {
-      response.setTitle(title);
+      ((HeaderResponse)response).setTitle(title);
    }
 
 }

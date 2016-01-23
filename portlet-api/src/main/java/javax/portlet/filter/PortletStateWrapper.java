@@ -19,33 +19,32 @@
 
 package javax.portlet.filter;
 
-import java.io.IOException;
-
-import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletResponse;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletState;
+import javax.portlet.RenderParameters;
+import javax.portlet.WindowState;
 
 /**
  * <div class="changed_added_3_0">
- * The <code>PortletRequestDispatcherWrapper</code> provides a convenient 
- * implementation of the <code>PortletRequestDispatcher</code> interface 
+ * The <code>PortletStateWrapper</code> provides a convenient 
+ * implementation of the <code>PortletState</code> interface 
  * that can be subclassed by developers wishing to adapt the request.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  * </div>
  * 
  * @author Scott Nicklous
+ *
  */
-public class PortletRequestDispatcherWrapper implements PortletRequestDispatcher {
+public class PortletStateWrapper implements PortletState {
    
-   protected PortletRequestDispatcher wrapped;
+   protected PortletState wrapped;
    
    /**
+    * @param the wrapped object to set.
+    * @throws java.lang.IllegalArgumentException   if the PortletState is null.
     */
-   public PortletRequestDispatcherWrapper(PortletRequestDispatcher wrapped) {
+   public PortletStateWrapper(PortletState wrapped) {
       if (wrapped == null) {
          throw new java.lang.IllegalArgumentException("Object to wrap is null");
       }
@@ -58,7 +57,7 @@ public class PortletRequestDispatcherWrapper implements PortletRequestDispatcher
     * 
     * @return the wrapped object.
     */
-   public PortletRequestDispatcher getWrapped() {
+   public PortletState getWrapped() {
       return wrapped;
    }
 
@@ -67,9 +66,9 @@ public class PortletRequestDispatcherWrapper implements PortletRequestDispatcher
     * Sets the wrapped object.
     * 
     * @param the wrapped object to set.
-    * @throws java.lang.IllegalArgumentException   if the request is null.
+    * @throws java.lang.IllegalArgumentException   if the PortletState is null.
     */
-   public void setWrapped(PortletRequestDispatcher wrapped) {
+   public void setWrapped(PortletState wrapped) {
       if (wrapped == null) {
          throw new java.lang.IllegalArgumentException("Object to wrap is null");
       }
@@ -77,27 +76,27 @@ public class PortletRequestDispatcherWrapper implements PortletRequestDispatcher
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletRequestDispatcher#include(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
+    * @see javax.portlet.PortletState#getRenderParameters()
     */
    @Override
-   public void include(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-      wrapped.include(request, response);
+   public RenderParameters getRenderParameters() {
+      return wrapped.getRenderParameters();
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletRequestDispatcher#include(javax.portlet.PortletRequest, javax.portlet.PortletResponse)
+    * @see javax.portlet.PortletState#getPortletMode()
     */
    @Override
-   public void include(PortletRequest request, PortletResponse response) throws PortletException, IOException {
-      wrapped.include(request, response);
+   public PortletMode getPortletMode() {
+      return wrapped.getPortletMode();
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletRequestDispatcher#forward(javax.portlet.PortletRequest, javax.portlet.PortletResponse)
+    * @see javax.portlet.PortletState#getWindowState()
     */
    @Override
-   public void forward(PortletRequest request, PortletResponse response) throws PortletException, IOException {
-      wrapped.forward(request, response);
+   public WindowState getWindowState() {
+      return wrapped.getWindowState();
    }
 
 }

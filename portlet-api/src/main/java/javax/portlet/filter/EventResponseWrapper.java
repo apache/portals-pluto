@@ -31,7 +31,7 @@ import javax.portlet.EventResponse;
  * <span class="changed_modified_3_0">The</span> 
  * <code>EventResponseWrapper</code> provides a convenient 
  * implementation of the <code>EventResponse</code> interface 
- * that can be subclassed by developers wishing to adapt the response.
+ * that can be subclassed by developers wishing to adapt the ((EventResponse)response).
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped response object.
  *
@@ -40,8 +40,6 @@ import javax.portlet.EventResponse;
  */
 
 public class EventResponseWrapper extends StateAwareResponseWrapper implements EventResponse {
-
-   EventResponse response;
 
    /**
     * Creates an <code>EventResponse</code> adaptor 
@@ -52,7 +50,6 @@ public class EventResponseWrapper extends StateAwareResponseWrapper implements E
     */
    public EventResponseWrapper(EventResponse response) {
       super(response);
-      this.response = response;
    }
 
    /**
@@ -61,7 +58,7 @@ public class EventResponseWrapper extends StateAwareResponseWrapper implements E
     * @return the wrapped response
     */
    public EventResponse getResponse() {
-      return response;
+      return (EventResponse) response;
    }
 
    /**
@@ -71,11 +68,7 @@ public class EventResponseWrapper extends StateAwareResponseWrapper implements E
     * @throws java.lang.IllegalArgumentException   if the response is null.
     */
    public void setResponse(EventResponse response) {
-      if ( response == null) {
-         throw new java.lang.IllegalArgumentException("Response is null");
-      }
       super.setResponse(response);
-      this.response = response;
    }
 
    /**
@@ -84,6 +77,6 @@ public class EventResponseWrapper extends StateAwareResponseWrapper implements E
     */
    @Deprecated
    public void setRenderParameters(EventRequest request) {
-      response.setRenderParameters(request);         
+      ((EventResponse)response).setRenderParameters(request);         
    }
 }
