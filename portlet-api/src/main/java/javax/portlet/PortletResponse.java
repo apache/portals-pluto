@@ -25,7 +25,7 @@
 package javax.portlet;
 
 /**
- * <div class="changed_modified_3_0">The</div>
+ * <span class="changed_modified_3_0">The</span>
  * <CODE>PortletResponse</CODE> defines the base interface to assist a
  * portlet in creating and sending a response to the client. The portlet
  * container uses specialized versions of this interface when invoking a

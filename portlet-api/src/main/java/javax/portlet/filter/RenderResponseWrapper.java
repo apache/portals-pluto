@@ -32,7 +32,7 @@ import javax.portlet.RenderResponse;
 /**
  * <span class="changed_modified_3_0">The</span> <code>RenderResponseWrapper</code> provides a convenient 
  * implementation of the <code>RenderResponse</code> interface 
- * that can be subclassed by developers wishing to adapt the ((RenderResponse)response).
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped response object.
  *

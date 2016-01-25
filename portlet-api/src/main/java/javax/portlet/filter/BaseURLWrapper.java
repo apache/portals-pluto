@@ -30,7 +30,7 @@ import javax.portlet.PortletSecurityException;
  * <div class="changed_added_3_0">
  * The <code>BaseURLWrapper</code> provides a convenient 
  * implementation of the <code>BaseURL</code> interface 
- * that can be subclassed by developers wishing to adapt the request.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  * </div>
@@ -41,7 +41,7 @@ import javax.portlet.PortletSecurityException;
 public class BaseURLWrapper extends PortletStateWrapper implements BaseURL {
    
    /**
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the BaseURL is null.
     */
    public BaseURLWrapper(BaseURL wrapped) {
@@ -63,7 +63,7 @@ public class BaseURLWrapper extends PortletStateWrapper implements BaseURL {
    /**
     * Sets the wrapped object.
     * 
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the BaseURL is null.
     */
    public void setWrapped(BaseURL wrapped) {

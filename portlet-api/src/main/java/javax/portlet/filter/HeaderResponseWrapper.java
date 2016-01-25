@@ -23,7 +23,7 @@ import javax.portlet.HeaderResponse;
 /**
  * <div class="changed_added_3_0"> The <code>HeaderResponseWrapper</code>
  * provides a convenient implementation of the <code>HeaderResponse</code>
- * interface that can be subclassed by developers wishing to adapt the Response.
+ * interface that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. Methods default to
  * calling through to the wrapped Response object. </div>
  */

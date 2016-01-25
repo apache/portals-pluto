@@ -34,7 +34,7 @@ import javax.portlet.RenderURL;
  * <span class="changed_modified_3_0">The</span> 
  * <code>ActionResponseWrapper</code> provides a convenient 
  * implementation of the <code>ActionResponse</code> interface 
- * that can be subclassed by developers wishing to adapt the ((ActionResponse)response).
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped response object.
  *

@@ -26,7 +26,7 @@ import javax.portlet.ResourceURL;
  * <div class="changed_added_3_0">
  * The <code>ResourceURLWrapper</code> provides a convenient 
  * implementation of the <code>ResourceURL</code> interface 
- * that can be subclassed by developers wishing to adapt the request.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  * </div>
@@ -37,7 +37,7 @@ import javax.portlet.ResourceURL;
 public class ResourceURLWrapper extends BaseURLWrapper implements ResourceURL {
    
    /**
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the ResourceURL is null.
     */
    public ResourceURLWrapper(ResourceURL wrapped) {
@@ -58,7 +58,7 @@ public class ResourceURLWrapper extends BaseURLWrapper implements ResourceURL {
    /**
     * Sets the wrapped object.
     * 
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the ResourceURL is null.
     */
    public void setWrapped(ResourceURL wrapped) {

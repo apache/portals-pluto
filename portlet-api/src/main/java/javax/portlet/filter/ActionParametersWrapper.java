@@ -26,7 +26,7 @@ import javax.portlet.MutableActionParameters;
  * <div class="changed_added_3_0">
  * The <code>ActionParametersWrapper</code> provides a convenient 
  * implementation of the <code>ActionParameters</code> interface 
- * that can be subclassed by developers wishing to adapt the request.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  * </div>
@@ -37,7 +37,7 @@ import javax.portlet.MutableActionParameters;
 public class ActionParametersWrapper extends PortletParametersWrapper implements ActionParameters {
    
    /**
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the ActionParameters is null.
     */
    public ActionParametersWrapper(ActionParameters wrapped) {
@@ -58,7 +58,7 @@ public class ActionParametersWrapper extends PortletParametersWrapper implements
    /**
     * Sets the wrapped object.
     * 
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the ActionParameters is null.
     */
    public void setWrapped(ActionParameters wrapped) {

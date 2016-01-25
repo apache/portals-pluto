@@ -28,7 +28,7 @@ import javax.portlet.ClientDataRequest;
 /**
  * <div class="changed_added_3_0"> The <code>ClientDataRequestWrapper</code>
  * provides a convenient implementation of the <code>ClientDataRequest</code>
- * interface that can be subclassed by developers wishing to adapt the request.
+ * interface that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. Methods default to
  * calling through to the wrapped request object. </div>
  */

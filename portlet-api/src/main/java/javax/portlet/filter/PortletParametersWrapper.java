@@ -28,7 +28,7 @@ import javax.portlet.PortletParameters;
  * <div class="changed_added_3_0">
  * The <code>PortletParametersWrapper</code> provides a convenient 
  * implementation of the <code>PortletParameters</code> interface 
- * that can be subclassed by developers wishing to adapt the request.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  * </div>
@@ -41,7 +41,7 @@ public class PortletParametersWrapper implements PortletParameters {
    protected PortletParameters wrapped;
    
    /**
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the PortletParameters is null.
     */
    public PortletParametersWrapper(PortletParameters wrapped) {
@@ -65,7 +65,7 @@ public class PortletParametersWrapper implements PortletParameters {
    /**
     * Sets the wrapped object.
     * 
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the PortletParameters is null.
     */
    public void setWrapped(PortletParameters wrapped) {

@@ -32,7 +32,7 @@ import javax.portlet.PortletRequestDispatcher;
  * <div class="changed_added_3_0">
  * The <code>PortletContextWrapper</code> provides a convenient 
  * implementation of the <code>PortletContext</code> interface 
- * that can be subclassed by developers wishing to adapt the request.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  * </div>
@@ -67,7 +67,7 @@ public class PortletContextWrapper implements PortletContext {
    /**
     * Sets the wrapped object.
     * 
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the PortletContext is null.
     */
    public void setPortletContext(PortletContext wrapped) {

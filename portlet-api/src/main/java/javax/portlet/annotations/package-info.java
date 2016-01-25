@@ -48,7 +48,6 @@
  * {@link javax.portlet.annotations.HeaderMethod}, 
  * {@link javax.portlet.annotations.RenderMethod}, 
  * {@link javax.portlet.annotations.ServeResourceMethod}, or 
- * {@link javax.portlet.annotations.PortletResources}.
  * <p>
  * Bean portlet methods can be contained in any valid bean class. 
  * The class needs not implement any portlet-specific interface or extend a portlet class. 

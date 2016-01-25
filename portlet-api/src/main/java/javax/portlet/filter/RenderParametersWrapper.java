@@ -26,7 +26,7 @@ import javax.portlet.RenderParameters;
  * <div class="changed_added_3_0">
  * The <code>RenderParametersWrapper</code> provides a convenient 
  * implementation of the <code>RenderParameters</code> interface 
- * that can be subclassed by developers wishing to adapt the request.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  * </div>
@@ -37,7 +37,7 @@ import javax.portlet.RenderParameters;
 public class RenderParametersWrapper extends PortletParametersWrapper implements RenderParameters {
    
    /**
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the RenderParameters is null.
     */
    public RenderParametersWrapper(RenderParameters wrapped) {
@@ -58,7 +58,7 @@ public class RenderParametersWrapper extends PortletParametersWrapper implements
    /**
     * Sets the wrapped object.
     * 
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the RenderParameters is null.
     */
    public void setWrapped(RenderParameters wrapped) {

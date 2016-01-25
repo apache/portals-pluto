@@ -34,7 +34,7 @@ import javax.xml.namespace.QName;
  * <div class="changed_added_3_0">
  * The <code>StateAwareResponseWrapper</code> provides a convenient 
  * implementation of the <code>StateAwareResponse</code> interface 
- * that can be subclassed by developers wishing to adapt the Response.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped Response object.
  * </div>

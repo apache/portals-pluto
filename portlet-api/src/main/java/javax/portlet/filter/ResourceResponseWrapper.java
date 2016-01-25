@@ -32,7 +32,7 @@ import javax.portlet.ResourceResponse;
  * <span class="changed_modified_3_0">The</span>  
  * <code>ResourceResponseWrapper</code> provides a convenient 
  * implementation of the <code>ResourceResponse</code> interface 
- * that can be subclassed by developers wishing to adapt the ((ResourceResponse)response).
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped response object.
  *

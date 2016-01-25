@@ -26,7 +26,7 @@ import javax.portlet.ResourceParameters;
  * <div class="changed_added_3_0">
  * The <code>ResourceParametersWrapper</code> provides a convenient 
  * implementation of the <code>ResourceParameters</code> interface 
- * that can be subclassed by developers wishing to adapt the request.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  * </div>
@@ -37,7 +37,7 @@ import javax.portlet.ResourceParameters;
 public class ResourceParametersWrapper extends PortletParametersWrapper implements ResourceParameters {
    
    /**
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the ResourceParameters is null.
     */
    public ResourceParametersWrapper(ResourceParameters wrapped) {
@@ -58,7 +58,7 @@ public class ResourceParametersWrapper extends PortletParametersWrapper implemen
    /**
     * Sets the wrapped object.
     * 
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the ResourceParameters is null.
     */
    public void setWrapped(ResourceParameters wrapped) {

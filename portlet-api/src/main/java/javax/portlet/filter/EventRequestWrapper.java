@@ -31,7 +31,7 @@ import javax.portlet.EventRequest;
  * <span class="changed_modified_3_0">The</span> 
  * <code>EventRequestWrapper</code> provides a convenient 
  * implementation of the <code>EventRequest</code> interface 
- * that can be subclassed by developers wishing to adapt the request.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  *

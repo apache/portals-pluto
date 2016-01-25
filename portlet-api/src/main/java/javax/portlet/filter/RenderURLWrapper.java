@@ -25,7 +25,7 @@ import javax.portlet.RenderURL;
  * <div class="changed_added_3_0">
  * The <code>RenderURLWrapper</code> provides a convenient 
  * implementation of the <code>RenderURL</code> interface 
- * that can be subclassed by developers wishing to adapt the request.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  * </div>
@@ -36,7 +36,7 @@ import javax.portlet.RenderURL;
 public class RenderURLWrapper extends PortletURLWrapper implements RenderURL {
    
    /**
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the RenderURL is null.
     */
    public RenderURLWrapper(RenderURL wrapped) {
@@ -57,7 +57,7 @@ public class RenderURLWrapper extends PortletURLWrapper implements RenderURL {
    /**
     * Sets the wrapped object.
     * 
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the RenderURL is null.
     */
    public void setWrapped(RenderURL wrapped) {

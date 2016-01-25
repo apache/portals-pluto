@@ -25,7 +25,7 @@ import javax.portlet.MutableRenderParameters;
  * <div class="changed_added_3_0">
  * The <code>MutableRenderParametersWrapper</code> provides a convenient 
  * implementation of the <code>MutableRenderParameters</code> interface 
- * that can be subclassed by developers wishing to adapt the request.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  * </div>
@@ -36,7 +36,7 @@ import javax.portlet.MutableRenderParameters;
 public class MutableRenderParametersWrapper extends MutablePortletParametersWrapper implements MutableRenderParameters {
    
    /**
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the MutableRenderParameters is null.
     */
    public MutableRenderParametersWrapper(MutableRenderParameters wrapped) {
@@ -57,7 +57,7 @@ public class MutableRenderParametersWrapper extends MutablePortletParametersWrap
    /**
     * Sets the wrapped object.
     * 
-    * @param the wrapped object to set.
+    * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the MutableRenderParameters is null.
     */
    public void setWrapped(MutableRenderParameters wrapped) {
