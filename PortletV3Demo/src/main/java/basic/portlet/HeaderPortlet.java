@@ -18,9 +18,14 @@
 
 package basic.portlet;
 
+import static basic.portlet.Constants.ATTRIB_PROPS;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -88,6 +93,20 @@ public class HeaderPortlet extends GenericPortlet {
       // Set header
       resp.addProperty("Portlet", this.getPortletName());
       resp.setProperty("Portal", "Pluto");
+      resp.addProperty("Portal", "Apache");
+      
+      // get header info
+      
+      Collection<String> names = resp.getPropertyNames();
+      List<String> hdrInfo = new ArrayList<String>();
+      for (String name: names) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Property name: ").append(name);
+         txt.append(", value: ").append(resp.getProperty(name));
+         txt.append(", values: ").append(resp.getPropertyValues(name));
+         hdrInfo.add(txt.toString());
+      }
+      req.getPortletSession().setAttribute(ATTRIB_PROPS, hdrInfo);
 
       PrintWriter writer = resp.getWriter();
       writer.println("<!-- before JSP include -->");

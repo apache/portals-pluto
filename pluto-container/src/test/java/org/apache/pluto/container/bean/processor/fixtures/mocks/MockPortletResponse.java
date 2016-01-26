@@ -19,6 +19,8 @@
 
 package org.apache.pluto.container.bean.processor.fixtures.mocks;
 
+import java.util.Collection;
+
 import javax.portlet.PortletResponse;
 import javax.servlet.http.Cookie;
 
@@ -81,6 +83,21 @@ public class MockPortletResponse implements PortletResponse {
     */
    @Override
    public void setProperty(String arg0, String arg1) {
+   }
+
+   @Override
+   public String getProperty(String key) {
+      return null;
+   }
+
+   @Override
+   public Collection<String> getPropertyValues(String name) {
+      return null;
+   }
+
+   @Override
+   public Collection<String> getPropertyNames() {
+      return null;
    }
 
 }

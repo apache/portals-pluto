@@ -57,4 +57,13 @@ public class MockResourceResponse extends MockMimeResponse implements ResourceRe
    public void setStatus(int arg0) {
    }
 
+   @Override
+   public int getStatus() {
+      return 0;
+   }
+
+   @Override
+   public void setContentLengthLong(long len) {
+   }
+
 }

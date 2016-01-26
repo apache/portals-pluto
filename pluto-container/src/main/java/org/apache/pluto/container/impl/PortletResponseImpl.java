@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.container.impl;
 
+import java.util.Collection;
 import java.util.Enumeration;
 
 import javax.portlet.PortalContext;
@@ -190,5 +191,20 @@ public abstract class PortletResponseImpl implements PortletResponse
     {
         ArgumentUtility.validateNotEmpty("key", key);
         responseContext.setProperty(key, value);
+    }
+
+    @Override
+    public String getProperty(String key) {
+       return responseContext.getProperty(key);
+    }
+
+    @Override
+    public Collection<String> getPropertyValues(String name) {
+       return responseContext.getPropertyValues(name);
+    }
+
+    @Override
+    public Collection<String> getPropertyNames() {
+       return responseContext.getPropertyNames();
     }
 }

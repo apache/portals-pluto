@@ -107,5 +107,15 @@ public class ResourceResponseWrapper extends MimeResponseWrapper implements Reso
       ((ResourceResponse)response).setStatus(sc);
    }
 
+   @Override
+   public int getStatus() {
+      return ((ResourceResponse)response).getStatus();
+   }
+
+   @Override
+   public void setContentLengthLong(long len) {
+      ((ResourceResponse)response).setContentLengthLong(len);
+   }
+
 
 }

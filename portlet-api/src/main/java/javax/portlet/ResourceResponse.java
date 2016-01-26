@@ -109,7 +109,7 @@ public interface ResourceResponse extends MimeResponse {
      * after the response has been committed.
      * </span>
      * 
-     * @param len an integer specifying the length of the content being returned
+     * @param len an integer specifying the length of the content being returned; sets the Content-Length header
      */
     public void setContentLength(int len);
     
@@ -136,6 +136,39 @@ public interface ResourceResponse extends MimeResponse {
      * @param sc an integer specifying the status code for this request
      */
     public void setStatus(int sc);
+    
+    
+   /**
+     * <div class="changed_added_3_0">
+     * Gets the current HTTP status code for the response.
+     * </div>
+     * 
+     * @return    The HTTP status code
+     * 
+     * @see javax.servlet.http.HttpServletResponse
+     * @see javax.servlet.http.HttpServletResponse#getStatus
+     * 
+     * @since 3.0
+     */
+    public int getStatus();
+    
+    
+    /**
+     * <div class="changed_added_3_0">
+     * Sets the length of the content body in the response.
+     * <p>
+     * This method has no effect if it is called after 
+     * after the response has been committed.
+     * </div>
+     * 
+     * @param len a <code>long</code> specifying the length of the content being returned; sets the Content-Length header
+     * 
+     * @see javax.servlet.http.HttpServletResponse
+     * @see javax.servlet.http.HttpServletResponse#setContentLengthLong
+     * 
+     * @since 3.0
+     */
+    public void setContentLengthLong(long len);
     
     
 	/**

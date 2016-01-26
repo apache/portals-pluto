@@ -88,9 +88,15 @@ public class AuthSCPortlet extends GenericPortlet {
          resp.setStatus(sc);
       }
       
-      txt.append("<p>serveResource</p>")
-         .append("<p>Status code: ").append(scText).append("</p>");
+      txt.append("<p>serveResource</p>");
+      txt.append("<p>Status code: ").append(scText);
+      txt.append("<br>Status code from getStatus(): ").append(resp.getStatus());
+      txt.append("<br>Content length: ");
+      int len = txt.length() + "</p>".length() + 3;
+      txt.append(String.format("%3d", len));
+      txt.append("</p>");
       
+      resp.setContentLengthLong(txt.length());
       writer.write(txt.toString());
    }
 

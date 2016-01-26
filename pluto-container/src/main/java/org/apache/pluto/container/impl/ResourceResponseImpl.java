@@ -169,7 +169,18 @@ public class ResourceResponseImpl extends MimeResponseImpl implements ResourceRe
 	    }
 	}
 
+	@Override
    public void setStatus(int sc) {
       responseContext.setStatus(sc);
    }
+	
+	@Override
+	public int getStatus() {
+	   return responseContext.getStatus();
+	}
+	
+	@Override
+	public void setContentLengthLong(long len) {
+      responseContext.setContentLengthLong(len);
+	}
 }

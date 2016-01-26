@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletResourceResponseContext;
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.impl.ResourceResponseImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,6 +67,15 @@ public class PortletResourceResponseContextImpl extends PortletMimeResponseConte
         }
     }
 
+    @Override
+    public void setContentLengthLong(long len)
+    {
+        if (!isClosed())
+        {
+            getServletResponse().setContentLengthLong(len);
+        }
+    }
+
     public void setLocale(Locale locale)
     {
         if (!isClosed())
@@ -86,5 +94,10 @@ public class PortletResourceResponseContextImpl extends PortletMimeResponseConte
       if (!isClosed()) {
          getServletResponse().setStatus(sc);
       }
+   }
+
+   @Override
+   public int getStatus() {
+      return getServletResponse().getStatus();
    }
 }
