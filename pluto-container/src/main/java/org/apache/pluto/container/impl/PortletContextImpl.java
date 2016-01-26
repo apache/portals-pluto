@@ -19,6 +19,7 @@ package org.apache.pluto.container.impl;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
@@ -31,6 +32,8 @@ import javax.servlet.ServletContext;
 import org.apache.pluto.container.ContainerInfo;
 import org.apache.pluto.container.RequestDispatcherService;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Default Portlet Context Implementation.
@@ -39,6 +42,11 @@ import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
  */
 public class PortletContextImpl implements PortletContext
 {
+   
+   /** Logger. */
+   private static final Logger LOG = LoggerFactory.getLogger(PortletContextImpl.class);
+   private static final boolean isDebug = LOG.isDebugEnabled();
+   
     // Private Member Variables ------------------------------------------------
     
     protected ServletContext servletContext;
@@ -183,5 +191,49 @@ public class PortletContextImpl implements PortletContext
 	public Enumeration<String> getContainerRuntimeOptions() {
 	    return Collections.enumeration(supportedContainerRuntimeOptions);
 	}
+	
+	private int[] getVersion() {
+	   int[] vers = {0, 0};
+      String[] toks = portletApp.getVersion().split("\\.");
+	   try {
+	      if (toks.length != 2) {
+	         if (isDebug) {
+               StringBuilder txt = new StringBuilder();
+               txt.append("Problem parsing version. Version string: ").append(portletApp.getVersion());
+               txt.append(", tokens: ").append(Arrays.toString(toks));
+               LOG.debug(txt.toString());
+            }
+	      } else {
+	         vers[0] = Integer.parseInt(toks[0]);
+	         vers[1] = Integer.parseInt(toks[1]);
+	      }
+	   } catch (Exception e) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Problem parsing version. Version string: ").append(portletApp.getVersion());
+         txt.append(", tokens: ").append(Arrays.toString(toks));
+         LOG.debug(txt.toString());
+	   }
+	   return vers;
+	}
+
+   @Override
+   public int getEffectiveMajorVersion() {
+      return getVersion()[0];
+   }
+
+   @Override
+   public int getEffectiveMinorVersion() {
+      return getVersion()[1];
+   }
+
+   @Override
+   public String getContextPath() {
+      return portletApp.getContextPath();
+   }
+
+   @Override
+   public ClassLoader getClassLoader() {
+      return servletContext.getClassLoader();
+   }
 }
 

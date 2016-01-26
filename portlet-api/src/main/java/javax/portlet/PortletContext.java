@@ -30,7 +30,8 @@ import java.net.MalformedURLException;
 
 
 /**
- * The <CODE>PortletContext</CODE> interface defines a portlet view
+ * <span class="changed_modified_3_0">The</span>
+ * <CODE>PortletContext</CODE> interface defines a portlet view
  * of the portlet container.
  * The <CODE>PortletContext</CODE> also makes resources available
  * to the portlet. Using the context, a portlet can access
@@ -466,4 +467,61 @@ public interface PortletContext
    *          container as String values.
    */
   public java.util.Enumeration<String> getContainerRuntimeOptions();
+
+
+  /**
+   * <div class="changed_added_3_0"> 
+   * Returns the major version of the 
+   * Portlet API used by the portlet application running in this PortletContext.
+   * </div>
+   *  
+   * @since 3.0
+   *
+   * @return   the major version
+   *
+   * @see   #getEffectiveMinorVersion()
+   */
+  public int getEffectiveMajorVersion();
+
+
+  /**
+   * <div class="changed_added_3_0"> 
+   * Returns the minor version of the 
+   * Portlet API used by the portlet application running in this PortletContext.
+   * </div>
+   * 
+   * @since 3.0
+   *
+   * @return   the minor version
+   *
+   * @see   #getEffectiveMajorVersion()
+   */
+  public int getEffectiveMinorVersion();
+
+
+  /**
+   * <div class="changed_added_3_0"> 
+   * Returns the context path for this portlet application.
+   * </div>
+   * 
+   * @since 3.0
+   *
+   * @return   the context path for this portlet application.
+   */
+  public String getContextPath();
+
+
+  /**
+   * <div class="changed_added_3_0"> 
+   * Returns the class loader for this portlet context.
+   * </div>
+   * 
+   * @since 3.0
+   *
+   * @return   the class loader for this portlet application.
+   * 
+   * @throws
+   * SecurityException - if a security manager denies access to the requested class loader
+   */
+  public ClassLoader getClassLoader();
 }
