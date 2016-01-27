@@ -117,6 +117,7 @@
    </properties>
 
    <modules>
+      <module>basicPortlet</module>
       <module>common</module>
       <module>TestModule1</module>
       <module>TestModule2</module>

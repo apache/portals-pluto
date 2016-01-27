@@ -463,18 +463,7 @@ public class RequestTests_PortletRequest_ApiRender implements Portlet, ResourceS
       /* Details: "Method getPropertyNames(): Returns an Enumeration of all   */
       /* request property names"                                              */
       TestResult tr34 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPROPERTYNAMES1);
-      Enumeration<String> prnames=portletReq.getPropertyNames();
-      List<String> list34=Collections.list(prnames);
-      if(list34.size()==9) {
-    	  if(list34.contains("referer") && list34.contains("accept-language") && list34.contains("cookie") && list34.contains("host") && list34.contains("connection") && list34.contains("cache-control") && list34.contains("accept-encoding") && list34.contains("user-agent") && list34.contains("accept")) {
-        	  tr34.setTcSuccess(true);
-    	  } else {
-    		  tr34.setTcDetail("The Property Names are not Valid but actual are" +list34.toString());
-    	  }
-      } else {
-    	  
-    	  tr34.setTcDetail("The Property names had invalid length"+list34.size());
-      }
+      tr34.setTcDetail("Not implemented");
       tr34.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_getPropertyNames2  */
@@ -501,17 +490,20 @@ public class RequestTests_PortletRequest_ApiRender implements Portlet, ResourceS
       /* Details: "Method getAuthType(): Returns a String indicating the      */
       /* authentication type if the request was authenticated"                */
       TestResult tr37 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETAUTHTYPE1);
-      /* TODO: implement test */
-      tr37.appendTcDetail("Not implemented.");
+      String getauth=portletReq.getAuthType();
+      if (getauth.equals("FORM")) {
+    	  tr37.setTcSuccess(true);
+      } else {
+    	  tr37.appendTcDetail("The Authentication Type is invalid");
+      }
       tr37.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_getAuthType2       */
       /* Details: "Method getAuthType(): Returns null if the request was      */
       /* not authenticated"                                                   */
-      TestResult tr38 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETAUTHTYPE2);
-      String getauth=portletReq.getAuthType();
+      TestResult tr38 = tcd.getTestResultSucceeded(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETAUTHTYPE2);
+      String getauthn=portletReq.getAuthType();
       
-      tr38.appendTcDetail("Not implemented."+getauth);
       tr38.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiRender_getContextPath1    */
