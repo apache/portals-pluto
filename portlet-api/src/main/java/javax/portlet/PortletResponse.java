@@ -214,7 +214,7 @@ public interface PortletResponse {
     * <code>addProperty(java.lang.String, java.lang.String)</code>.
     * </div>
     * 
-    * @param     name   the name of the response property whose value is to be returned
+    * @param     key   the name of the response property whose value is to be returned
     * @return           the value of the response property with the given name, or null if 
     *            no property with the given name has been set on this response
     * 
@@ -235,13 +235,13 @@ public interface PortletResponse {
     * response.
     * </div>
     * 
-    * @param     name   the name of the response property whose values are to be returned
+    * @param     key   the name of the response property whose values are to be returned
     * @return           the values of the response property with the given name, or an empty collection if 
     *            no property with the given name has been set on this response
     * 
     * @since 3.0
     */
-   Collection<String> getPropertyValues(String name);
+   Collection<String> getPropertyValues(String key);
 
    
    /**

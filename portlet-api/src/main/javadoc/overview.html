@@ -21,6 +21,32 @@
     <div class="indexContainer-not">
     <ul>
     <li>
+    20160128:
+    Added a new PortalContext wrapper class according to 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-62">PORTLETSPEC3-62</a>:
+    {@link javax.portlet.filter.PortalContextWrapper PortalContextWrapper}.
+    Removed the annotation ConditionalDispatchMethod along with the associated interfaces
+    MethodToken and ConditionalDispatcher, as they will not be included in the V3 specification.
+    </li>
+    <li>
+    20160126:
+    Added new PortletContext methods according to 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-53">PORTLETSPEC3-53</a>:
+    {@link javax.portlet.PortletContext#getClassLoader() getClassLoader},
+    {@link javax.portlet.PortletContext#getContextPath() getContextPath},
+    {@link javax.portlet.PortletContext#getEffectiveMajorVersion() getEffectiveMajorVersion}, and
+    {@link javax.portlet.PortletContext#getEffectiveMinorVersion() getEffectiveMinorVersion}.
+    Added new PortletResponse methods according to 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-60">PORTLETSPEC3-60</a>:
+    {@link javax.portlet.PortletResponse#getProperty(String) getProperty},
+    {@link javax.portlet.PortletResponse#getPropertyNames() getPropertyNames}, and
+    {@link javax.portlet.PortletResponse#getPropertyValues(String) getPropertyValues}.
+    Added new ResourceResponse methods according to 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-60">PORTLETSPEC3-60</a>:
+    {@link javax.portlet.ResourceResponse#setContentLengthLong(long) setContentLengthLong} and
+    {@link javax.portlet.ResourceResponse#getStatus() getStatus}.
+    </li>
+    <li>
     20160125:
     Added clarification to 
     {@link javax.portlet.PortletResponse PortletResponse} addProperty and setProperty 
@@ -51,10 +77,7 @@
     <li>
     20151005: 
     Added annotations and interfaces for conditional dispatching: 
-    {@link javax.portlet.ConditionalDispatcher ConditionalDispatcher},
-    {@link javax.portlet.MethodToken MethodToken},
-    and 
-    {@link javax.portlet.annotations.ConditionalDispatchMethod ConditionalDispatchMethod}.
+    ConditionalDispatcher, MethodToken, and ConditionalDispatchMethod.
     Updated 
     {@link javax.portlet.annotations.HeaderMethod HeaderMethod}, 
     {@link javax.portlet.annotations.RenderMethod RenderMethod}, and 
@@ -97,9 +120,7 @@
     20150922: 
     Added interfaces and annotations for conditional dispatching.
     Added classes:
-    {@link javax.portlet.MethodToken},
-    {@link javax.portlet.ConditionalDispatcher}, and
-    {@link javax.portlet.annotations.ConditionalDispatchMethod}.
+    MethodToken, ConditionalDispatcher, and ConditionalDispatchMethod.
     </li>
     <li>
     20150921: Modified annotation classes to conform to latest spec draft.

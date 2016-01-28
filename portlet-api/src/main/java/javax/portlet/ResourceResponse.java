@@ -163,9 +163,6 @@ public interface ResourceResponse extends MimeResponse {
      * 
      * @param len a <code>long</code> specifying the length of the content being returned; sets the Content-Length header
      * 
-     * @see javax.servlet.http.HttpServletResponse
-     * @see javax.servlet.http.HttpServletResponse#setContentLengthLong
-     * 
      * @since 3.0
      */
     public void setContentLengthLong(long len);

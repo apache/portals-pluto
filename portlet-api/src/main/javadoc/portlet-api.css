@@ -511,6 +511,7 @@ h1.hidden {
 
 .indexContainer a[href*="BaseURL.html"],
 .indexContainer a[href*="PortletConfig.html"],
+.indexContainer a[href*="PortletContext.html"],
 .indexContainer a[href*="PortletPreferences.html"],
 .indexContainer a[href*="GenericPortlet.html"],
 .indexContainer a[href*="ActionRequest.html"],
@@ -616,6 +617,7 @@ h1.hidden {
 .indexContainer a[href*="MutableRenderParametersWrapper.html"],
 .indexContainer a[href*="MutableResourceParametersWrapper.html"],
 .indexContainer a[href*="PortletConfigWrapper.html"],
+.indexContainer a[href*="PortalContextWrapper.html"],
 .indexContainer a[href*="PortletContextWrapper.html"],
 .indexContainer a[href*="PortletParametersWrapper.html"],
 .indexContainer a[href*="PortletRequestDispatcherWrapper.html"],
