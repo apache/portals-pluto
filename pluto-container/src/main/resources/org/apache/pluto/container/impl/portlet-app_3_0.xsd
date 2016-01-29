@@ -142,8 +142,7 @@
 			<element name="default-namespace" type="xs:anyURI" minOccurs="0"/>
 			<element name="event-definition" type="portlet:event-definitionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="public-render-parameter" type="portlet:public-render-parameterType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="listener" type="portlet:listenerType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="conditional-dispatcher" type="portlet:conditionalDispatcherType" minOccurs="0" maxOccurs="1"/>
+			<element name="listener" type="portlet:listenerType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="container-runtime-option" type="portlet:container-runtime-optionType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
 		<attribute name="version" type="portlet:string" use="required"/>
@@ -306,8 +305,7 @@
 			<element name="supported-publishing-event" type="portlet:event-definition-referenceType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="supported-public-render-parameter" type="portlet:string" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="container-runtime-option" type="portlet:container-runtime-optionType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="dependency" type="portlet:dependencyType" minOccurs="0" maxOccurs="unbounded"/>
-         <element name="conditional-dispatcher" type="portlet:conditionalDispatcherType" minOccurs="0" maxOccurs="1"/>
+			<element name="dependency" type="portlet:dependencyType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
 		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
@@ -427,21 +425,7 @@
 			<element name="name" type="xs:NCName"/>
 		</choice>
 		<attribute name="id" type="portlet:string" use="optional"/>
-	</complexType>
-   <complexType name="conditionalDispatcherType">
-      <annotation>
-         <documentation>
-         The conditionalDispatcherType is used to declare conditional dispatchers for this portlet or portlet application.
-         Used in: portlet, portlet-app
-         </documentation>
-      </annotation>
-      <sequence>
-         <element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
-         <element name="display-name" type="portlet:display-nameType" minOccurs="0" maxOccurs="unbounded"/>
-         <element name="dispatcher-class" type="portlet:fully-qualified-classType"/>
-      </sequence>
-      <attribute name="id" type="portlet:string" use="optional"/>
-   </complexType>
+	</complexType>
 	<complexType name="listenerType">
 		<annotation>
 			<documentation>
