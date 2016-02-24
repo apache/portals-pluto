@@ -30,7 +30,7 @@ import javax.portlet.HeaderRequest;
  * <div class="changed_added_3_0">
  * The <code>HeaderRequestWrapper</code> provides a convenient 
  * implementation of the <code>HeaderRequest</code> interface 
- * that can be subclassed by developers wishing to adapt the request.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  * </div>
@@ -39,8 +39,6 @@ import javax.portlet.HeaderRequest;
  * @see HeaderRequest
  */
 public class HeaderRequestWrapper extends RenderRequestWrapper implements HeaderRequest {
-
-    HeaderRequest request;
     
     /**
      * Creates an <code>HeaderRequest</code> adaptor 
@@ -51,7 +49,6 @@ public class HeaderRequestWrapper extends RenderRequestWrapper implements Header
      */
     public HeaderRequestWrapper(HeaderRequest request) {
     	super(request);
-    	this.request = request;
     }
 
     /**
@@ -59,8 +56,9 @@ public class HeaderRequestWrapper extends RenderRequestWrapper implements Header
      * 
      * @return the wrapped request
      */
+    @Override
     public HeaderRequest getRequest() {
-       return request;
+       return (HeaderRequest) wrapped;
     }
 
     /**
@@ -70,11 +68,7 @@ public class HeaderRequestWrapper extends RenderRequestWrapper implements Header
      * @throws java.lang.IllegalArgumentException   if the request is null.
      */
     public void setRequest(HeaderRequest request) {
-       if ( request == null) {
-          throw new java.lang.IllegalArgumentException("Request is null");
-       }
        super.setRequest(request);
-       this.request = request;
     }
 
 }

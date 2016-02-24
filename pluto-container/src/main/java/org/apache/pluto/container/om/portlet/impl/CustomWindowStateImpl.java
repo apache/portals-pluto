@@ -101,4 +101,40 @@ public class CustomWindowStateImpl implements CustomWindowState {
       descs.add(desc);
    }
 
+   /* (non-Javadoc)
+    * @see java.lang.Object#hashCode()
+    */
+   @Override
+   public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((ws == null) ? 0 : ws.hashCode());
+      return result;
+   }
+
+   /* (non-Javadoc)
+    * @see java.lang.Object#equals(java.lang.Object)
+    */
+   @Override
+   public boolean equals(Object obj) {
+      if (this == obj) {
+         return true;
+      }
+      if (obj == null) {
+         return false;
+      }
+      if (getClass() != obj.getClass()) {
+         return false;
+      }
+      CustomWindowStateImpl other = (CustomWindowStateImpl) obj;
+      if (ws == null) {
+         if (other.ws != null) {
+            return false;
+         }
+      } else if (!ws.equals(other.ws)) {
+         return false;
+      }
+      return true;
+   }
+
 }

@@ -70,5 +70,5 @@ public @interface InitMethod {
     * 
     * @return  The portlet name
     */
-   String   portletName();
+   String   value();
 }

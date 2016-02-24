@@ -63,39 +63,10 @@ public @interface EventMethod {
    String   portletName();
    
    /**
-    * If set to <code>true</code>, render parameters will be automatically copied
-    * from the <code>EventRequest</code> to the <code>EventResponse</code>.
-    * <p>
-    * The copy will take place before the code body of the annotated method
-    * is executed.
-    * 
-    * @return     <code>true</code> if parameters are to be copied.
-    */
-   boolean  copyParameters() default true; 
-   
-   /**
-    * The event name.
-    * <p>
-    * TODO: rework / remove this.
-    * <p>
-    * If an event name is specified, the bean enabler will dispatch portlet events with 
-    * matching event names to this method. 
-    * <p>
-    * An EventMethod with an empty event 
-    * name will receive all event requests not dispatched to other named EventMethods.
-    * 
-    * 
-    * @return  The event name
-    */
-   String   eventName() default "";
-   
-   /**
     * <div class='container-change'>
     * The processing event QName definitions supported by this method.
     * <p>
     * At least one processing event QName must be specified.
-    * <p>
-    * TODO: remove the default clause after rework above.
     * </div>
     * 
     * @see     EventDefinition
@@ -103,7 +74,7 @@ public @interface EventMethod {
     * 
     * @return  The processing event QNames
     */
-   PortletQName[]   processingEvents() default {};
+   PortletQName[]   processingEvents();
    
    /**
     * <div class='container-change'>

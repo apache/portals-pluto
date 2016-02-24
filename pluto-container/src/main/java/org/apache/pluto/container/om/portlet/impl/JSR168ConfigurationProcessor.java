@@ -77,16 +77,17 @@ public class JSR168ConfigurationProcessor extends ConfigurationProcessor {
                                                       .getLogger(JSR168ConfigurationProcessor.class);
    // private static final boolean         isDebug = LOG.isDebugEnabled();
    private static final boolean         isTrace = LOG.isTraceEnabled();
-
-   private PortletApplicationDefinition pad;
+   
+   public JSR168ConfigurationProcessor(PortletApplicationDefinition pad) {
+      super(pad);
+   }
 
    /* (non-Javadoc)
     * @see org.apache.pluto.container.om.portlet.impl.jsr168.ConfigurationProcessor#process(javax.xml.bind.JAXBElement)
     */
    @Override
-   public PortletApplicationDefinition process(JAXBElement<?> rootElement)
+   public void process(JAXBElement<?> rootElement)
          throws IllegalArgumentException {
-      pad = new PortletApplicationDefinitionImpl();
 
       // make sure we were called properly
       assert (rootElement != null);
@@ -121,7 +122,6 @@ public class JSR168ConfigurationProcessor extends ConfigurationProcessor {
       handleUA(app.getUserAttribute());
       handlePortlets(app.getPortlet());
 
-      return pad;
    }
 
    /**
@@ -559,6 +559,11 @@ public class JSR168ConfigurationProcessor extends ConfigurationProcessor {
          pad.addPortlet(pd);
 
       }
+   }
+
+   @Override
+   public void validate() throws IllegalArgumentException {
+      // For version 1.0, do nothing.
    }
 
 }

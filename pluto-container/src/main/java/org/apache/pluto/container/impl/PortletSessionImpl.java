@@ -107,7 +107,6 @@ public class PortletSessionImpl implements PortletSession {
         return getAttributeNames(DEFAULT_SCOPE);
     }
     
-    @SuppressWarnings("unchecked")
     public Enumeration<String> getAttributeNames(int scope) {
     	// Return all attribute names in the nested HttpSession object.
         if (scope == PortletSession.APPLICATION_SCOPE) {

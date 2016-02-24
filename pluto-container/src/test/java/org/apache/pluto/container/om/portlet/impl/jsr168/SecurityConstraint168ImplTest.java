@@ -36,7 +36,7 @@ public class SecurityConstraint168ImplTest {
       InputStream in = PortletApplicationDefinition168ImplTest.class
             .getClassLoader().getResourceAsStream(XML_FILE);
       
-      ConfigurationHolder cfp = new ConfigurationHolder(pad);
+      ConfigurationHolder cfp = new ConfigurationHolder();
       try {
          cfp.processPortletDD(in);
          pad = cfp.getPad();
@@ -70,7 +70,7 @@ public class SecurityConstraint168ImplTest {
       Locale loc = new Locale("DE");
       DisplayName name = constraint.getDisplayName(loc);
       assertNotNull(name);
-      assertEquals("display-name", name.getDisplayName());
+      assertEquals("display-name", name.getText());
    }
 
    @Test
@@ -78,7 +78,7 @@ public class SecurityConstraint168ImplTest {
       List<DisplayName> list = constraint.getDisplayNames();
       assertNotNull(list);
       assertEquals(1, list.size());
-      assertEquals("display-name", list.get(0).getDisplayName());
+      assertEquals("display-name", list.get(0).getText());
    }
 
    @Test
@@ -93,9 +93,9 @@ public class SecurityConstraint168ImplTest {
       assertEquals(2, list.size());
       for (DisplayName desc : list) {
          if (desc.getLocale().equals(loc)) {
-            assertEquals(text, desc.getDisplayName());
+            assertEquals(text, desc.getText());
          } else {
-            assertEquals("display-name", desc.getDisplayName());
+            assertEquals("display-name", desc.getText());
          }
       }
    }

@@ -20,16 +20,13 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.inject.Inject;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.EventPortlet;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
-import javax.portlet.HeaderPortlet;
 import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
-import javax.portlet.Portlet;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -37,7 +34,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.portlet.ResourceServingPortlet;
 import javax.portlet.UnavailableException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -53,12 +49,13 @@ import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
+import org.apache.pluto.container.bean.processor.PortletInvoker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Portlet Invocation Servlet. This servlet recieves cross context requests from the the container and services the
+ * Portlet Invocation Servlet. This servlet receives cross context requests from the the container and services the
  * portlet request for the specified method.
  * 
  * @version 1.1
@@ -69,42 +66,16 @@ public class PortletServlet3 extends HttpServlet {
    
    /** Logger. */
    private static final Logger LOG = LoggerFactory.getLogger(PortletServlet3.class);
-   private static final boolean isDebug = LOG.isDebugEnabled();
-   
 
    /**
     * Portlet name constant, needed by portlet container initializer
     */
    public static final String PORTLET_NAME     = "portlet-name";
 
-   private class NullPortlet implements EventPortlet, ResourceServingPortlet, Portlet, HeaderPortlet {
-      public void processEvent(EventRequest arg0, EventResponse arg1) throws PortletException, IOException {
-      }
-
-      public void serveResource(ResourceRequest arg0, ResourceResponse arg1) throws PortletException, IOException {
-      }
-
-      public void destroy() {
-      }
-
-      public void init(PortletConfig arg0) throws PortletException {
-      }
-
-      public void processAction(ActionRequest arg0, ActionResponse arg1) throws PortletException, IOException {
-      }
-
-      public void render(RenderRequest arg0, RenderResponse arg1) throws PortletException, IOException {
-      }
-
-      @Override
-      public void renderHeaders(HeaderRequest request, HeaderResponse response) throws PortletException, IOException {
-         if (isDebug) {
-            LOG.debug("NullPortlet renderHeaders! Portlet name: " + portletName);
-         }
-      }
-   }
-
    // Private Member Variables ------------------------------------------------
+   
+   @Inject
+   private AnnotatedConfigBean acb;
 
    /**
     * The portlet name as defined in the portlet app descriptor.
@@ -114,7 +85,7 @@ public class PortletServlet3 extends HttpServlet {
    /**
     * The portlet instance wrapped by this servlet.
     */
-   private Portlet                portlet;
+   private PortletInvoker invoker = null;
 
    /**
     * The internal portlet context instance.
@@ -125,19 +96,6 @@ public class PortletServlet3 extends HttpServlet {
     * The internal portlet config instance.
     */
    private DriverPortletConfig    portletConfig;
-
-   /**
-    * The Event Portlet instance (the same object as portlet) wrapped by this servlet.
-    */
-   private EventPortlet           eventPortlet;
-   
-   /**
-    * Header portlet instance
-    */
-   private HeaderPortlet          headerPortlet;
-
-   /** The resource serving portlet instance wrapped by this servlet. */
-   private ResourceServingPortlet resourceServingPortlet;
 
    private PortletContextService  contextService;
 
@@ -163,6 +121,20 @@ public class PortletServlet3 extends HttpServlet {
 
       // Retrieve portlet name as defined as an initialization parameter.
       portletName = getInitParameter(PORTLET_NAME);
+      
+      // Get the config bean and create the invoker
+      try {
+         if (acb == null || acb.getMethodStore() == null) {
+            LOG.error("Could not obtain configuration bean for portlet " + portletName + ". Exiting.");
+            return;
+         } else {
+            invoker = new PortletInvoker(acb, portletName);
+            LOG.debug("Created the portlet invoker for portlet: " + portletName);
+         }
+      } catch(Exception e) {
+         LOG.error("Exception obtaining configuration bean for portlet " + portletName + ". Exiting. Exception: " + e.toString());
+         return;
+      }
 
       started = false;
 
@@ -204,21 +176,14 @@ public class PortletServlet3 extends HttpServlet {
             return true;
          }
 
-         PortletDefinition portletDD = portletConfig.getPortletDefinition();
-
-         // Create and initialize the portlet wrapped in the servlet.
+         // initialize the portlet wrapped in the servlet.
          try {
-            Class<?> clazz = paClassLoader.loadClass((portletDD.getPortletClass()));
-            portlet = (Portlet) clazz.newInstance();
-            portlet.init(portletConfig);
-            initializeEventPortlet();
-            initializeResourceServingPortlet();
-            initializeHeaderPortlet();
+            invoker.init(portletConfig);
             return true;
          } catch (Exception ex) {
             context.log(ex.getMessage(), ex);
             // take out of service
-            portlet = null;
+            invoker = null;
             portletConfig = null;
             return true;
          }
@@ -234,13 +199,13 @@ public class PortletServlet3 extends HttpServlet {
          } else if (started && portletContext != null) {
             started = false;
             contextService.unregister(portletContext);
-            if (portlet != null) {
+            if (invoker != null) {
                try {
-                  portlet.destroy();
+                  invoker.destroy();
                } catch (Exception e) {
                   // ignore
                }
-               portlet = null;
+               invoker = null;
             }
          }
          super.destroy();
@@ -278,7 +243,7 @@ public class PortletServlet3 extends HttpServlet {
     * @throws IOException
     */
    private void dispatch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      if (portlet == null) {
+      if (invoker == null) {
          throw new javax.servlet.UnavailableException("Portlet " + portletName + " unavailable");
       }
 
@@ -325,7 +290,7 @@ public class PortletServlet3 extends HttpServlet {
                renderRequest.setAttribute(PortletRequest.RENDER_PART, rh);
             }
             RenderResponse renderResponse = (RenderResponse) portletResponse;
-            filterManager.processFilter(renderRequest, renderResponse, portlet, portletContext);
+            filterManager.processFilter(renderRequest, renderResponse, invoker, portletContext);
          }
 
          // The requested method is HEADER: call
@@ -333,7 +298,7 @@ public class PortletServlet3 extends HttpServlet {
          else if (methodId == PortletInvokerService.METHOD_HEADER) {
             HeaderRequest headerRequest = (HeaderRequest) portletRequest;
             HeaderResponse headerResponse = (HeaderResponse) portletResponse;
-            filterManager.processFilter(headerRequest, headerResponse, headerPortlet, portletContext);
+            filterManager.processFilter(headerRequest, headerResponse, invoker, portletContext);
          }
 
          // The requested method is RESOURCE: call
@@ -350,21 +315,21 @@ public class PortletServlet3 extends HttpServlet {
             }
 
             ResourceResponse resourceResponse = (ResourceResponse) portletResponse;
-            filterManager.processFilter(resourceRequest, resourceResponse, resourceServingPortlet, portletContext);
+            filterManager.processFilter(resourceRequest, resourceResponse, invoker, portletContext);
          }
 
          // The requested method is ACTION: call Portlet.processAction(..)
          else if (methodId == PortletInvokerService.METHOD_ACTION) {
             ActionRequest actionRequest = (ActionRequest) portletRequest;
             ActionResponse actionResponse = (ActionResponse) portletResponse;
-            filterManager.processFilter(actionRequest, actionResponse, portlet, portletContext);
+            filterManager.processFilter(actionRequest, actionResponse, invoker, portletContext);
          }
 
          // The request methode is Event: call Portlet.processEvent(..)
          else if (methodId == PortletInvokerService.METHOD_EVENT) {
             EventRequest eventRequest = (EventRequest) portletRequest;
             EventResponse eventResponse = (EventResponse) portletResponse;
-            filterManager.processFilter(eventRequest, eventResponse, eventPortlet, portletContext);
+            filterManager.processFilter(eventRequest, eventResponse, invoker, portletContext);
          }
          // The requested method is ADMIN: call handlers.
          else if (methodId == PortletInvokerService.METHOD_ADMIN) {
@@ -392,15 +357,14 @@ public class PortletServlet3 extends HttpServlet {
 
          // Portlet.destroy() isn't called by Tomcat, so we have to fix it.
          try {
-            portlet.destroy();
+            invoker.destroy();
          } catch (Throwable th) {
             // Don't care for Exception
             this.getServletContext().log("Error during portlet destroy.", th);
          }
          // take portlet out of service
-         portlet = null;
+         invoker = null;
 
-         // TODO: Handle everything as permanently for now.
          throw new javax.servlet.UnavailableException(ex.getMessage());
 
       } catch (PortletException ex) {
@@ -421,30 +385,6 @@ public class PortletServlet3 extends HttpServlet {
          } else {
             listener.onError(event, e);
          }
-      }
-   }
-
-   private void initializeEventPortlet() {
-      if (portlet instanceof EventPortlet) {
-         eventPortlet = (EventPortlet) portlet;
-      } else {
-         eventPortlet = new NullPortlet();
-      }
-   }
-
-   private void initializeResourceServingPortlet() {
-      if (portlet instanceof ResourceServingPortlet) {
-         resourceServingPortlet = (ResourceServingPortlet) portlet;
-      } else {
-         resourceServingPortlet = new NullPortlet();
-      }
-   }
-
-   private void initializeHeaderPortlet() {
-      if (portlet instanceof HeaderPortlet) {
-         headerPortlet = (HeaderPortlet) portlet;
-      } else {
-         headerPortlet = new NullPortlet();
       }
    }
 }

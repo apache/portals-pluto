@@ -29,17 +29,13 @@ import org.apache.pluto.container.om.portlet.Description;
  * @author Scott Nicklous
  *
  */
-public class DescriptionImpl implements Description {
-   
-   private Locale locale;
-   private String desc;
+public class DescriptionImpl extends LocaleTextImpl implements Description {
    
    /**
     * default: lang = english
     */
    public DescriptionImpl() {
-      locale = Locale.ENGLISH;
-      desc = "";
+      super();
    }
    
    /**
@@ -48,53 +44,14 @@ public class DescriptionImpl implements Description {
     * @param disp       description string
     */
    public DescriptionImpl(Locale locale, String desc) {
-      this.locale = locale;
-      this.desc = desc;
+      super(locale, desc);
    }
    
    /**
     * Copy constructor
     */
    public DescriptionImpl(Description di) {
-      this.locale = (Locale) di.getLocale().clone();
-      this.desc = di.getDescription();
-   }
-
-   /* (non-Javadoc)
-    * @see org.apache.pluto.container.om.portlet.Description#getLang()
-    */
-   @Override
-   public String getLang() {
-      return locale.toLanguageTag();
-   }
-   
-   @Override
-   public void setLang(String lang) {
-      this.locale = Locale.forLanguageTag(lang);
-   }
-
-   /* (non-Javadoc)
-    * @see org.apache.pluto.container.om.portlet.Description#getDescription()
-    */
-   @Override
-   public String getDescription() {
-      return desc;
-   }
-
-   /* (non-Javadoc)
-    * @see org.apache.pluto.container.om.portlet.Description#setDescription(java.lang.String)
-    */
-   @Override
-   public void setDescription(String description) {
-      desc = description;
-   }
-
-   /* (non-Javadoc)
-    * @see org.apache.pluto.container.om.portlet.Description#getLocale()
-    */
-   @Override
-   public Locale getLocale() {
-      return Locale.forLanguageTag(locale.toLanguageTag());
+      super(di);
    }
 
 }

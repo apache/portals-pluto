@@ -251,43 +251,6 @@ public interface BaseURL extends PortletState {
    public void setSecure (boolean secure) throws PortletSecurityException;
 
 
-   /**
-    * <div class="changed_added_3_0">
-    * Indicates whether authentication is required for this URL. 
-    * <p>
-    * When the parameter is set to <code>true</code>, user authentication will be 
-    * required when accessing the URL. 
-    * <p>
-    * If authentication is not set or if it is 
-    * set to false using this method, authentication will be allowed, but not
-    * required.
-    * </div>
-    *
-    * @param  authenticated  true, if the URL requires authentication.
-    *                        false, if the URL does not require authentication.
-    *
-    * @since 3.0
-    * @see #getAuthenticated()
-    * @see PortletRequest#getAuthType()
-    */
-   public void setAuthenticated (boolean authenticated);
-
-
-   /**
-    * <div class="changed_added_3_0">
-    * Returns the authentication setting for the URL.
-    * <p>
-    * </div>
-    * 
-    * @return     <code>true</code> if the URL requires authentication;
-    *             <code>false</code> if authentication is allowed but not required.
-    *
-    * @since 3.0
-    * @see #setAuthenticated(boolean)
-    */
-   public boolean getAuthenticated ();
-
-
     /**
      * Returns the portlet URL string representation to be embedded in the
      * markup.<br>

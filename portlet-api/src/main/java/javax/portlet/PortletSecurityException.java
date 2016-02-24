@@ -35,10 +35,6 @@ public class PortletSecurityException extends PortletException
 
   private static final long serialVersionUID = 1L;
 
-  private PortletSecurityException ()
-  {
-  }
-
   /**
    * Constructs a new security exception with the given text. The
    * portlet container may use the text write it to a log.

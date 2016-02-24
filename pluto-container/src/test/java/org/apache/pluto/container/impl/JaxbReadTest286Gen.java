@@ -34,7 +34,6 @@ import org.apache.pluto.container.om.portlet20.impl.PortletAppType;
 import org.apache.pluto.container.om.portlet20.impl.PortletType;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Low-level test to read a deployment descriptor
@@ -57,8 +56,6 @@ public class JaxbReadTest286Gen {
          Unmarshaller um = cntxt.createUnmarshaller();
          JAXBElement<?> jel = (JAXBElement<?>) um.unmarshal(in);
          assertNotNull(jel.getValue());
-         System.out.println("===> Object type: "
-               + jel.getValue().getClass().getCanonicalName());
          assertTrue(jel.getValue() instanceof PortletAppType);
          portletApp = (PortletAppType) jel.getValue();
       } catch (Exception e) {
@@ -115,7 +112,7 @@ public class JaxbReadTest286Gen {
       assertEquals("org.apache.pluto.container.om.portlet.impl.fixtures.TestEventType", portletApp.getEventDefinition().get(0).getValueType());
       assertEquals("lifecycle", portletApp.getFilter().get(0).getLifecycle().get(0));
       assertEquals("portlet286", portletApp.getFilterMapping().get(0).getPortletName().get(0).getValue());
-      assertEquals("org.apache.portal.ResourceBundle", portletApp.getResourceBundle().getValue());
+      assertEquals("org.apache.pluto.container.om.portlet.GoodBundle", portletApp.getResourceBundle().getValue());
       assertEquals("2.0", portletApp.getVersion());
       
       // test container runtime options

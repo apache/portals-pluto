@@ -16,7 +16,6 @@
  *  under the License.
  */
 
-
 package javax.portlet.filter;
 
 import java.io.BufferedReader;
@@ -27,25 +26,19 @@ import java.io.UnsupportedEncodingException;
 import javax.portlet.ClientDataRequest;
 
 /**
- * <div class="changed_added_3_0">
- * The <code>ClientDataRequestWrapper</code> provides a convenient 
- * implementation of the <code>ClientDataRequest</code> interface 
- * that can be subclassed by developers wishing to adapt the request.
- * This class implements the Wrapper or Decorator pattern. 
- * Methods default to calling through to the wrapped request object.
- * </div>
+ * <div class="changed_added_3_0"> The <code>ClientDataRequestWrapper</code>
+ * provides a convenient implementation of the <code>ClientDataRequest</code>
+ * interface that can be subclassed by developers.
+ * This class implements the Wrapper or Decorator pattern. Methods default to
+ * calling through to the wrapped request object. </div>
  */
-public class ClientDataRequestWrapper extends PortletRequestWrapper implements
-ClientDataRequest {
-
-   ClientDataRequest request;
+public class ClientDataRequestWrapper extends PortletRequestWrapper implements ClientDataRequest {
 
    /**
     * @param request
     */
    public ClientDataRequestWrapper(ClientDataRequest request) {
       super(request);
-      this.request = request;
    }
 
    /**
@@ -54,72 +47,83 @@ ClientDataRequest {
     * @return the wrapped request
     */
    public ClientDataRequest getRequest() {
-      return request;
+      return (ClientDataRequest) super.getRequest();
    }
 
    /**
     * Sets the request object being wrapped.
     * 
-    * @param request the request to set
-    * @throws java.lang.IllegalArgumentException   if the request is null.
+    * @param request
+    *           the request to set
+    * @throws java.lang.IllegalArgumentException
+    *            if the request is null.
     */
    public void setRequest(ClientDataRequest request) {
-      if ( request == null) {
-         throw new java.lang.IllegalArgumentException("Request is null");
-      }
       super.setRequest(request);
-      this.request = request;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see javax.portlet.ClientDataRequest#getPortletInputStream()
     */
    public InputStream getPortletInputStream() throws IOException {
-      return request.getPortletInputStream();
+      return ((ClientDataRequest)wrapped).getPortletInputStream();
    }
 
-   /* (non-Javadoc)
-    * @see javax.portlet.ClientDataRequest#setCharacterEncoding(java.lang.String)
+   /*
+    * (non-Javadoc)
+    * 
+    * @see
+    * javax.portlet.ClientDataRequest#setCharacterEncoding(java.lang.String)
     */
-   public void setCharacterEncoding(String enc)
-         throws UnsupportedEncodingException {
-      request.setCharacterEncoding(enc);
+   public void setCharacterEncoding(String enc) throws UnsupportedEncodingException {
+      ((ClientDataRequest)wrapped).setCharacterEncoding(enc);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see javax.portlet.ClientDataRequest#getReader()
     */
-   public BufferedReader getReader() throws UnsupportedEncodingException,
-   IOException {
-      return request.getReader();
+   public BufferedReader getReader() throws UnsupportedEncodingException, IOException {
+      return ((ClientDataRequest)wrapped).getReader();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see javax.portlet.ClientDataRequest#getCharacterEncoding()
     */
    public String getCharacterEncoding() {
-      return request.getCharacterEncoding();
+      return ((ClientDataRequest)wrapped).getCharacterEncoding();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see javax.portlet.ClientDataRequest#getContentType()
     */
    public String getContentType() {
-      return request.getContentType();
+      return ((ClientDataRequest)wrapped).getContentType();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see javax.portlet.ClientDataRequest#getContentLength()
     */
    public int getContentLength() {
-      return request.getContentLength();
+      return ((ClientDataRequest)wrapped).getContentLength();
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see javax.portlet.ClientDataRequest#getMethod()
     */
    public String getMethod() {
-      return request.getMethod();
+      return ((ClientDataRequest)wrapped).getMethod();
    }
 
 }

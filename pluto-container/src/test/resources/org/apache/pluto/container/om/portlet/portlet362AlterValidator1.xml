@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<portlet-app id="id1" version="3.0"
+   xmlns="http://xmlns.jcp.org/xml/ns/portlet" 
+   xmlns:portlet="http://xmlns.jcp.org/xml/ns/portlet" 
+   xmlns:xml="http://www.w3.org/XML/1998/namespace"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/portlet portlet-app_3_0.xsd ">
+
+   <!-- JSR 362 portlet DD test file -->
+
+   <portlet>
+      <portlet-name>portlet1</portlet-name>
+      <display-name xml:lang="de">display-name</display-name>
+      <portlet-preferences>
+         <preference>
+            <name>aPref</name>
+            <value>aValue</value>
+            <read-only>true</read-only>
+         </preference>
+         <preference>
+            <name>bPref</name>
+            <value>dValue</value>
+            <value>eValue</value>
+            <value>fValue</value>
+            <read-only>true</read-only>
+         </preference>
+      </portlet-preferences>
+   </portlet>
+   <portlet>
+      <portlet-name>portlet2</portlet-name>
+      <display-name xml:lang="de">display-name</display-name>
+      <portlet-preferences>
+         <preferences-validator>null</preferences-validator>
+      </portlet-preferences>
+   </portlet>
+   <portlet>
+      <portlet-name>portlet3</portlet-name>
+      <display-name xml:lang="de">display-name</display-name>
+      <portlet-preferences>
+         <preference>
+            <name>cPref</name>
+            <value>cValue</value>
+            <read-only>false</read-only>
+         </preference>
+         <preferences-validator>null</preferences-validator>
+      </portlet-preferences>
+   </portlet>
+   <portlet>
+      <portlet-name>portlet4</portlet-name>
+      <display-name xml:lang="de">display-name</display-name>
+      <portlet-class>org.apache.pluto.container.om.portlet.impl.fixtures.TestPortlet</portlet-class>
+      <portlet-preferences>
+         <preference>
+            <name>dPref</name>
+            <value>dValue</value>
+            <read-only>true</read-only>
+         </preference>
+      </portlet-preferences>
+   </portlet>
+</portlet-app>

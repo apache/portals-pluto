@@ -24,114 +24,126 @@
 
 package javax.portlet.filter;
 
+import java.util.Collection;
+
 import javax.portlet.PortletResponse;
 import javax.servlet.http.Cookie;
 
 /**
- * <span class="changed_modified_3_0">The</span> 
- * <code>PortletResponseWrapper</code> provides a convenient 
- * implementation of the <code>PortletResponse</code> interface 
- * and is extended by other response wrappers.
- * This class implements the Wrapper or Decorator pattern. 
- * Methods default to calling through to the wrapped response object.
- *
+ * <span class="changed_modified_3_0">The</span> <code>PortletResponseWrapper</code> provides a convenient
+ * implementation of the <code>PortletResponse</code> interface and is extended by other response wrappers. This class
+ * implements the Wrapper or Decorator pattern. Methods default to calling through to the wrapped response object.
+ * 
  * @since 2.0
  * @see PortletResponse
  */
 public class PortletResponseWrapper implements PortletResponse {
 
-		PortletResponse response;
-	    
-	    /**
-	     * Creates an <code>ActionResponse</code> adaptor 
-	     * wrapping the given response object.
-	     * 
-	     * @param response  the action response to wrap
-	     * @throws java.lang.IllegalArgumentException if the response is <code>null</code>
-	     */
-	    public PortletResponseWrapper(PortletResponse response) {
-	    	if ( response == null)
-	    		throw new java.lang.IllegalArgumentException("Response is null");
+   PortletResponse response;
 
-	        this.response = response;
-	    }
+   /**
+    * Creates an <code>ActionResponse</code> adaptor wrapping the given response object.
+    * 
+    * @param response
+    *           the action response to wrap
+    * @throws java.lang.IllegalArgumentException
+    *            if the response is <code>null</code>
+    */
+   public PortletResponseWrapper(PortletResponse response) {
+      if (response == null)
+         throw new java.lang.IllegalArgumentException("Response is null");
 
-	    /**
-	     * The default behavior of this method is to call 
-	     * <code>addProperty(key, value)</code> on the wrapped response object.
-	     */
-	    public void addProperty(String key, String value) {
-	        response.addProperty(key, value);
-	    }
+      this.response = response;
+   }
 
-	    /**
-	     * The default behavior of this method is to call 
-	     * <code>encodeURL(path)</code> on the wrapped response object.
-	     */
-	    public String encodeURL(String path) {
-	        return response.encodeURL(path);
-	    }
+   /**
+    * The default behavior of this method is to call <code>addProperty(key, value)</code> on the wrapped response
+    * object.
+    */
+   public void addProperty(String key, String value) {
+      response.addProperty(key, value);
+   }
 
-	    /**
-	     * The default behavior of this method is to call 
-	     * <code>getNamespace()</code> on the wrapped response object.
-	     */
-	    public String getNamespace() {
-	        return response.getNamespace();
-	    }
+   /**
+    * The default behavior of this method is to call <code>encodeURL(path)</code> on the wrapped response object.
+    */
+   public String encodeURL(String path) {
+      return response.encodeURL(path);
+   }
 
-	    /**
-	     * The default behavior of this method is to call 
-	     * <code>setProperty(key, value)</code> on the wrapped response object.
-	     */
-	    public void setProperty(String key, String value) {
-	        response.setProperty(key, value);
-	    }
+   /**
+    * The default behavior of this method is to call <code>getNamespace()</code> on the wrapped response object.
+    */
+   public String getNamespace() {
+      return response.getNamespace();
+   }
 
-	    /**
-	     * Return the wrapped response object.
-	     * 
-	     * @return the wrapped response
-	     */
-	    public PortletResponse getResponse() {
-	        return response;
-	    }
+   /**
+    * The default behavior of this method is to call <code>setProperty(key, value)</code> on the wrapped response
+    * object.
+    */
+   public void setProperty(String key, String value) {
+      response.setProperty(key, value);
+   }
 
-	    /**
-	     * Sets the response object being wrapped.
-	     * 
-	     * @param response the response to set
-	     * @throws java.lang.IllegalArgumentException   if the response is null.
-	     */
-	    public void setResponse(PortletResponse response) {
-	    	if ( response == null)
-	    		throw new java.lang.IllegalArgumentException("Response is null");
+   /**
+    * Return the wrapped response object.
+    * 
+    * @return the wrapped response
+    */
+   public PortletResponse getResponse() {
+      return response;
+   }
 
-	        this.response = response;
-	    }
+   /**
+    * Sets the response object being wrapped.
+    * 
+    * @param response
+    *           the response to set
+    * @throws java.lang.IllegalArgumentException
+    *            if the response is null.
+    */
+   public void setResponse(PortletResponse response) {
+      if (response == null)
+         throw new java.lang.IllegalArgumentException("Response is null");
 
-	    /**
-	     *  The default behavior of this method is to call 
-	     * <code>addProperty()</code> on the wrapped response object.
-	     */
-	    public void addProperty(String key, org.w3c.dom.Element element) {
-	        response.addProperty(key, element);
-	    }
+      this.response = response;
+   }
 
-	    /**
-	     *  The default behavior of this method is to call 
-	     * <code>createElement()</code> on the wrapped response object.
-	     */
-	    public org.w3c.dom.Element createElement(String tagName) {
-	        return response.createElement(tagName);
-	    }
+   /**
+    * The default behavior of this method is to call <code>addProperty()</code> on the wrapped response object.
+    */
+   public void addProperty(String key, org.w3c.dom.Element element) {
+      response.addProperty(key, element);
+   }
 
-	    /**
-	     *  The default behavior of this method is to call 
-	     * <code>addProperty()</code> on the wrapped response object.
-	     */
-	    public void addProperty(Cookie cookie) {
-	        response.addProperty(cookie);
-	    }
+   /**
+    * The default behavior of this method is to call <code>createElement()</code> on the wrapped response object.
+    */
+   public org.w3c.dom.Element createElement(String tagName) {
+      return response.createElement(tagName);
+   }
+
+   /**
+    * The default behavior of this method is to call <code>addProperty()</code> on the wrapped response object.
+    */
+   public void addProperty(Cookie cookie) {
+      response.addProperty(cookie);
+   }
+
+   @Override
+   public String getProperty(String key) {
+      return response.getProperty(key);
+   }
+
+   @Override
+   public Collection<String> getPropertyValues(String name) {
+      return response.getPropertyValues(name);
+   }
+
+   @Override
+   public Collection<String> getPropertyNames() {
+      return response.getPropertyNames();
+   }
 
 }

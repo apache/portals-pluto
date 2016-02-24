@@ -24,8 +24,11 @@
 
 package javax.portlet;
 
+import java.util.Collection;
+
 /**
- * The <CODE>PortletResponse</CODE> defines the base interface to assist a
+ * <span class="changed_modified_3_0">The</span>
+ * <CODE>PortletResponse</CODE> defines the base interface to assist a
  * portlet in creating and sending a response to the client. The portlet
  * container uses specialized versions of this interface when invoking a
  * portlet.
@@ -54,7 +57,10 @@ public interface PortletResponse {
      * @param key
      *            the key of the property to be returned to the portal
      * @param value
-     *            the value of the property to be returned to the portal
+     *            the value of the property to be returned to the portal. 
+     *            <span class="changed_modified_3_0">
+     *            The value should be encoded according to RFC 2047 (http://www.ietf.org/rfc/rfc2047.txt).
+     *            </span> 
      * 
      * @exception java.lang.IllegalArgumentException
      *                if key is <code>null</code>.
@@ -75,7 +81,10 @@ public interface PortletResponse {
      * @param key
      *            the key of the property to be returned to the portal
      * @param value
-     *            the value of the property to be returned to the portal
+     *            the value of the property to be returned to the portal.
+     *            <span class="changed_modified_3_0">
+     *            The value should be encoded according to RFC 2047 (http://www.ietf.org/rfc/rfc2047.txt).
+     *            </span> 
      * 
      * @exception java.lang.IllegalArgumentException
      *                if key is <code>null</code>.
@@ -192,5 +201,66 @@ public interface PortletResponse {
     */
    org.w3c.dom.Element createElement(String tagName) throws org.w3c.dom.DOMException;
 
+   
+   /**
+    * <div class="changed_added_3_0">
+    * Gets the value of the response property with the given name.
+    * <p>
+    * If a response property with the given name exists and contains multiple
+    * values, the value that was added first will be returned.
+    * <p>
+    * This method considers only response properties set or added via
+    * <code>setProperty(java.lang.String, java.lang.String)</code> or
+    * <code>addProperty(java.lang.String, java.lang.String)</code>.
+    * </div>
+    * 
+    * @param     key   the name of the response property whose value is to be returned
+    * @return           the value of the response property with the given name, or null if 
+    *            no property with the given name has been set on this response
+    * 
+    * @since 3.0
+    */
+   String getProperty(String key);
+
+   
+   /**
+    * <div class="changed_added_3_0">
+    * Gets the values of the response property with the given name.
+    * <p>
+    * This method considers only response properties set or added via
+    * <code>setProperty(java.lang.String, java.lang.String)</code> or
+    * <code>addProperty(java.lang.String, java.lang.String)</code>.
+    * <p>
+    * Altering the returned collection will not affect the properties set on the
+    * response.
+    * </div>
+    * 
+    * @param     key   the name of the response property whose values are to be returned
+    * @return           the values of the response property with the given name, or an empty collection if 
+    *            no property with the given name has been set on this response
+    * 
+    * @since 3.0
+    */
+   Collection<String> getPropertyValues(String key);
+
+   
+   /**
+    * <div class="changed_added_3_0">
+    * Gets the names of all response properties set on the response.
+    * <p>
+    * This method considers only response properties set or added via
+    * <code>setProperty(java.lang.String, java.lang.String)</code> or
+    * <code>addProperty(java.lang.String, java.lang.String)</code>.
+    * <p>
+    * Altering the returned collection will not affect the properties set on the
+    * response.
+    * </div>
+    * 
+    * @return    the names of the response properties with the given name, 
+    *            or an empty collection if no properties have been set on this response
+    * 
+    * @since 3.0
+    */
+   Collection<String> getPropertyNames();
 
 }

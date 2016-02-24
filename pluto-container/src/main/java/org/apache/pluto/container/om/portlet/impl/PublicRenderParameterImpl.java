@@ -26,6 +26,7 @@ import java.util.Locale;
 import javax.xml.namespace.QName;
 
 import org.apache.pluto.container.om.portlet.Description;
+import org.apache.pluto.container.om.portlet.DisplayName;
 import org.apache.pluto.container.om.portlet.PublicRenderParameter;
 
 /**
@@ -40,6 +41,7 @@ public class PublicRenderParameterImpl implements PublicRenderParameter {
    private String id;
    private final List<QName> aliases = new ArrayList<QName>();
    private final List<Description> descs = new ArrayList<Description>();
+   private final List<DisplayName> dispNames = new ArrayList<DisplayName>();
 
    /**
     * Copy constructor
@@ -54,6 +56,9 @@ public class PublicRenderParameterImpl implements PublicRenderParameter {
       }
       for (Description desc : pri.getDescriptions()) {
          descs.add(new DescriptionImpl(desc));
+      }
+      for (DisplayName dn : pri.getDisplayNames()) {
+         dispNames.add(new DisplayNameImpl(dn));
       }
    }
    
@@ -112,6 +117,36 @@ public class PublicRenderParameterImpl implements PublicRenderParameter {
    }
 
    /* (non-Javadoc)
+    * @see org.apache.pluto.container.om.portlet.PublicRenderParameter#getDisplayName(java.util.Locale)
+    */
+   @Override
+   public DisplayName getDisplayName(Locale locale) {
+      DisplayName ret = null;
+      for (DisplayName dn : dispNames) {
+         if (dn.getLocale().equals(locale)) {
+            ret = dn;
+         }
+      }
+      return ret;
+   }
+
+   /* (non-Javadoc)
+    * @see org.apache.pluto.container.om.portlet.PublicRenderParameter#getDisplayNames()
+    */
+   @Override
+   public List<DisplayName> getDisplayNames() {
+      return new ArrayList<DisplayName>(dispNames);
+   }
+
+   /* (non-Javadoc)
+    * @see org.apache.pluto.container.om.portlet.PublicRenderParameter#addDisplayName(org.apache.pluto.container.om.portlet.DisplayName)
+    */
+   @Override
+   public void addDisplayName(DisplayName dn) {
+      dispNames.add(dn);
+   }
+
+   /* (non-Javadoc)
     * @see org.apache.pluto.container.om.portlet.PublicRenderParameter#getAliases()
     */
    @Override
@@ -125,6 +160,42 @@ public class PublicRenderParameterImpl implements PublicRenderParameter {
    @Override
    public void addAlias(QName qName) {
       aliases.add(qName);
+   }
+
+   /* (non-Javadoc)
+    * @see java.lang.Object#hashCode()
+    */
+   @Override
+   public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((id == null) ? 0 : id.hashCode());
+      return result;
+   }
+
+   /* (non-Javadoc)
+    * @see java.lang.Object#equals(java.lang.Object)
+    */
+   @Override
+   public boolean equals(Object obj) {
+      if (this == obj) {
+         return true;
+      }
+      if (obj == null) {
+         return false;
+      }
+      if (getClass() != obj.getClass()) {
+         return false;
+      }
+      PublicRenderParameterImpl other = (PublicRenderParameterImpl) obj;
+      if (id == null) {
+         if (other.id != null) {
+            return false;
+         }
+      } else if (!id.equals(other.id)) {
+         return false;
+      }
+      return true;
    }
 
 }

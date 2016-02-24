@@ -41,10 +41,6 @@ public class ValidatorException extends PortletException
   private transient ArrayList<String> failedKeyVector = new ArrayList<String>();
   private static final long serialVersionUID = 1L;
 
-  private ValidatorException ()
-  {
-  }
-
   /**
    * Constructs a new validator exception with the given text. The
    * portlet container may use the text write it to a log.

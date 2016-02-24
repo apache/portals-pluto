@@ -21,10 +21,12 @@ package basic.portlet;
 import static basic.portlet.Constants.ATTRIB_PMS;
 import static basic.portlet.Constants.ATTRIB_PRPS;
 import static basic.portlet.Constants.ATTRIB_WS;
+import static basic.portlet.Constants.ATTRIB_CTX;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +36,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.GenericPortlet;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequestDispatcher;
@@ -45,7 +48,7 @@ import javax.portlet.WindowState;
 import javax.xml.namespace.QName;
 
 /**
- * A management portlet that displays the current deep link configuraion
+ * A portlet for displaying config data
  */
 public class PortletConfigPortlet extends GenericPortlet {
 
@@ -109,9 +112,25 @@ public class PortletConfigPortlet extends GenericPortlet {
          sb.append(", PortletMode: ").append(pm.toString());
          pms.add(sb.toString());
       }
-      
+
       req.setAttribute(ATTRIB_WS, wss);
       req.setAttribute(ATTRIB_PMS, pms);
+      
+      // get the info from the new PortletContext APIs
+      
+      PortletContext ctx = getPortletContext();
+      List<String> ctxinfo = new ArrayList<String>();
+      String vers = "" + ctx.getEffectiveMajorVersion() + "." + ctx.getEffectiveMinorVersion();
+      ctxinfo.add("Portlet application version: " + vers);
+      ClassLoader cl = ctx.getClassLoader();
+      String cltxt = null;
+      if (cl != null) {
+         cltxt = cl.toString().replaceAll("(\\n|\\r|\\t)", " ");
+      }
+      ctxinfo.add("ClassLoader: " + cltxt);
+      ctxinfo.add("Portlet context path: " + ctx.getContextPath());
+      
+      req.setAttribute(ATTRIB_CTX, ctxinfo);
 
       PortletRequestDispatcher rd = getPortletContext().getRequestDispatcher(
             "/WEB-INF/jsp/view-pcp.jsp");

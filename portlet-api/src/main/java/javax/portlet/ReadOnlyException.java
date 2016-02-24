@@ -33,10 +33,6 @@ public class ReadOnlyException extends PortletException
 {
 	  private static final long serialVersionUID = 1L;
 
-  private ReadOnlyException ()
-  {
-  }
-
   /**
    * Constructs a new read-only exception with the given text. The
    * portlet container may use the text write it to a log.

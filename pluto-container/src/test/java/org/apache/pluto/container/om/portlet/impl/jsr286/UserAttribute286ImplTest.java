@@ -58,7 +58,7 @@ public class UserAttribute286ImplTest {
       InputStream in = UserAttribute286ImplTest.class
             .getClassLoader().getResourceAsStream(XML_FILE);
       
-      ConfigurationHolder cfp = new ConfigurationHolder(pad);
+      ConfigurationHolder cfp = new ConfigurationHolder();
       try {
          cfp.processPortletDD(in);
          pad = cfp.getPad();
@@ -94,7 +94,7 @@ public class UserAttribute286ImplTest {
       Locale loc = new Locale("DE");
       Description desc = ua.getDescription(loc);
       assertNotNull(desc);
-      assertEquals("description", desc.getDescription());
+      assertEquals("description", desc.getText());
    }
 
    /**
@@ -105,7 +105,7 @@ public class UserAttribute286ImplTest {
       List<Description> list = ua.getDescriptions();
       assertNotNull(list);
       assertEquals(1, list.size());
-      assertEquals("description", list.get(0).getDescription());
+      assertEquals("description", list.get(0).getText());
    }
 
    /**
@@ -123,9 +123,9 @@ public class UserAttribute286ImplTest {
       assertEquals(2, list.size());
       for (Description desc : list) {
          if (desc.getLocale().equals(loc)) {
-            assertEquals(text, desc.getDescription());
+            assertEquals(text, desc.getText());
          } else {
-            assertEquals("description", desc.getDescription());
+            assertEquals("description", desc.getText());
          }
       }
    }

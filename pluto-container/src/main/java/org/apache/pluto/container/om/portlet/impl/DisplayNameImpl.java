@@ -29,17 +29,13 @@ import org.apache.pluto.container.om.portlet.DisplayName;
  * @author Scott Nicklous
  *
  */
-public class DisplayNameImpl implements DisplayName {
-   
-   private Locale locale;
-   private String disp;
+public class DisplayNameImpl extends LocaleTextImpl implements DisplayName {
    
    /**
     * default: lang = english
     */
    public DisplayNameImpl() {
-      locale = Locale.ENGLISH;
-      disp = "";
+      super();
    }
    
    /**
@@ -48,48 +44,14 @@ public class DisplayNameImpl implements DisplayName {
     * @param disp       description string
     */
    public DisplayNameImpl(Locale locale, String desc) {
-      this.locale = locale;
-      this.disp = desc;
+      super(locale, desc);
    }
    
    /**
     * Copy constructor
     */
    public DisplayNameImpl(DisplayName di) {
-      this.locale = (Locale) di.getLocale().clone();
-      this.disp = di.getDisplayName();
-   }
-
-   /* (non-Javadoc)
-    * @see org.apache.pluto.container.om.portlet.DisplayName#getLang()
-    */
-   @Override
-   public String getLang() {
-      return locale.toLanguageTag();
-   }
-
-   /* (non-Javadoc)
-    * @see org.apache.pluto.container.om.portlet.DisplayName#getDisplayName()
-    */
-   @Override
-   public String getDisplayName() {
-      return disp;
-   }
-
-   /* (non-Javadoc)
-    * @see org.apache.pluto.container.om.portlet.DisplayName#setDisplayName(java.lang.String)
-    */
-   @Override
-   public void setDisplayName(String description) {
-      disp = description;
-   }
-
-   /* (non-Javadoc)
-    * @see org.apache.pluto.container.om.portlet.DisplayName#getLocale()
-    */
-   @Override
-   public Locale getLocale() {
-      return (Locale) locale.clone();
+      super(di);
    }
 
 }

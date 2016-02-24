@@ -509,10 +509,14 @@ h1.hidden {
 /* the href with the caret makes the links in the overview document work. */
 /* the href with exact file specifier makes the links in the package lists work. */
 
+.indexContainer a[href*="BaseURL.html"],
 .indexContainer a[href*="PortletConfig.html"],
+.indexContainer a[href*="PortletContext.html"],
 .indexContainer a[href*="PortletPreferences.html"],
 .indexContainer a[href*="GenericPortlet.html"],
 .indexContainer a[href*="ActionRequest.html"],
+.indexContainer a[href*="ActionResponse.html"],
+.indexContainer a[href*="PortletResponse.html"],
 .indexContainer a[href*="PortletRequest.html"],
 .indexContainer a[href*="PortletURL.html"],
 .indexContainer a[href*="PortletMode.html"],
@@ -521,7 +525,6 @@ h1.hidden {
 .indexContainer a[href*="RenderResponse.html"],
 .indexContainer a[href*="ResourceRequest.html"],
 .indexContainer a[href*="PortletSession.html"],
-.indexContainer a[href*="BaseURL.html"],
 .indexContainer a[href*="StateAwareResponse.html"],
 .indexContainer a[href*="EventResponse.html"],
 .indexContainer a[href*="MimeResponse.html"],
@@ -529,10 +532,15 @@ h1.hidden {
 .indexContainer a[href*="ResourceResponse.html"],
 .indexContainer a[href*="ActionRequestWrapper.html"],
 .indexContainer a[href*="ActionResponseWrapper.html"],
+.indexContainer a[href*="EventRequestWrapper.html"],
 .indexContainer a[href*="EventResponseWrapper.html"],
 .indexContainer a[href*="PortletRequestWrapper.html"],
+.indexContainer a[href*="PortletResponseWrapper.html"],
+.indexContainer a[href*="RenderRequestWrapper.html"],
+.indexContainer a[href*="RenderResponseWrapper.html"],
 .indexContainer a[href*="ResourceRequestWrapper.html"],
 .indexContainer a[href*="ResourceResponseWrapper.html"],
+.indexContainer a[href*="RenderRequestWrapper.html"]
 .indexContainer a[href*="RenderResponseWrapper.html"]
 { 
    cursor: url(resources/changed_modified_3_0_cursor.png), auto;
@@ -544,9 +552,86 @@ h1.hidden {
 
 /* List of added files */
 
+.indexContainer a[href*="ActionMethod.html"],
+.indexContainer a[href*="ActionParam.html"],
+.indexContainer a[href*="BeanPortlet.html"],
+.indexContainer a[href*="ClientDataRequestWrapper.html"],
+.indexContainer a[href*="ConditionalDispatcher.html"],
+.indexContainer a[href*="ConditionalDispatchMethod.html"],
+.indexContainer a[href*="ContentTypeSupport.html"],
+.indexContainer a[href*="ContextPath.html"],
+.indexContainer a[href*="Dependency.html"],
+.indexContainer a[href*="DestroyMethod.html"],
+.indexContainer a[href*="EventMethod.html"],
+.indexContainer a[href*="HeaderFilter.html"],
+.indexContainer a[href*="HeaderFilterChain.html"],
+.indexContainer a[href*="HeaderRequest.html"],
+.indexContainer a[href*="HeaderRequestWrapper.html"],
+.indexContainer a[href*="HeaderResponse.html"],
+.indexContainer a[href*="HeaderResponseWrapper.html"],
+.indexContainer a[href*="HeaderPortlet.html"],
+.indexContainer a[href*="HeaderMethod.html"],
+.indexContainer a[href*="InitMethod.html"],
+.indexContainer a[href*="InitParameter.html"],
+.indexContainer a[href*="RuntimeOption.html"],
+.indexContainer a[href*="LocaleString.html"],
+.indexContainer a[href*="package-info.html"],
+.indexContainer a[href*="MethodToken.html"],
+.indexContainer a[href*="MimeResponseWrapper.html"],
+.indexContainer a[href*="Namespace.html"],
+.indexContainer a[href*="PortletApplication.html"],
+.indexContainer a[href*="PortletConfiguration.html"],
+.indexContainer a[href*="PortletConfigurations.html"],
+.indexContainer a[href*="EventDefinition.html"],
+.indexContainer a[href*="PortletQName.html"],
+.indexContainer a[href*="PortletRequestFilter.html"],
+.indexContainer a[href*="PortletRequestScoped.html"],
+.indexContainer a[href*="PortletResources.html"],
+.indexContainer a[href*="PortletSerializable.html"],
+.indexContainer a[href*="PortletSessionScoped.html"],
+.indexContainer a[href*="PortletStateScoped.html"],
+.indexContainer a[href*="PortletListener.html"],
+.indexContainer a[href*="PortletListener.URLType.html"],
+.indexContainer a[href*="Preference.html"],
+.indexContainer a[href*="PreferencesValidator.html"],
+.indexContainer a[href*="PublicRenderParameterDefinition.html"],
+.indexContainer a[href*="RenderMethod.html"],
+.indexContainer a[href*="RenderParam.html"],
+.indexContainer a[href*="ResourceParam.html"],
+.indexContainer a[href*="ServeResourceMethod.html"],
+.indexContainer a[href*="SecurityRoleRef.html"],
+.indexContainer a[href*="StateAwareResponseWrapper.html"],
+.indexContainer a[href*="URLFactory.html"],
+.indexContainer a[href*="UserAttribute.html"],
+.indexContainer a[href*="WindowId.html"],
+.indexContainer a[href*="CustomPortletMode.html"],
+.indexContainer a[href*="CustomWindowState.html"],
+.indexContainer a[href*="Supports.html"],
+
+.indexContainer a[href*="ActionParametersWrapper.html"],
+.indexContainer a[href*="ActionURLWrapper.html"],
+.indexContainer a[href*="BaseURLWrapper.html"],
+.indexContainer a[href*="MutableActionParametersWrapper.html"],
+.indexContainer a[href*="MutablePortletParametersWrapper.html"],
+.indexContainer a[href*="MutablePortletStateWrapper.html"],
+.indexContainer a[href*="MutableRenderParametersWrapper.html"],
+.indexContainer a[href*="MutableResourceParametersWrapper.html"],
+.indexContainer a[href*="PortletConfigWrapper.html"],
+.indexContainer a[href*="PortalContextWrapper.html"],
+.indexContainer a[href*="PortletContextWrapper.html"],
+.indexContainer a[href*="PortletParametersWrapper.html"],
+.indexContainer a[href*="PortletRequestDispatcherWrapper.html"],
+.indexContainer a[href*="PortletSessionWrapper.html"],
+.indexContainer a[href*="PortletStateWrapper.html"],
+.indexContainer a[href*="PortletURLWrapper.html"],
+.indexContainer a[href*="RenderParametersWrapper.html"],
+.indexContainer a[href*="RenderURLWrapper.html"],
+.indexContainer a[href*="ResourceParametersWrapper.html"],
+.indexContainer a[href*="ResourceURLWrapper.html"],
+
 .indexContainer a[href*="ActionURL.html"],
 .indexContainer a[href*="RenderURL.html"],
-.indexContainer a[href*="MimeResponse.ParameterCopyOption.html"],
+.indexContainer a[href*="MimeResponse.Copy.html"],
 .indexContainer a[href*="Mutable.html"],
 .indexContainer a[href*="MutablePortletParameters.html"],
 .indexContainer a[href*="PortletParameters.html"],
@@ -564,4 +649,28 @@ h1.hidden {
    padding-left:0.2em; border-left:solid;
    border-left-width:thin; border-right:none;
    border-top:none; border-bottom:none; border-color:green 
+}
+
+
+.codebox {
+   font-family: 'Courier New', Courier, monospace; 
+   margin: 0px 4px 8px 4px; 
+   padding: 3px; 
+   border:thin solid blue; 
+   min-height: 10px; 
+   background-color: #CFF;
+   display: inline-block;
+}
+
+table.ovtable {
+    border-collapse: collapse;
+}
+
+table.ovtable th, td {
+    border: 1px solid black;
+    padding: 2px 3px 2px 3px;
+}
+
+ul.nospace {
+   margin: 5px 0px;
 }

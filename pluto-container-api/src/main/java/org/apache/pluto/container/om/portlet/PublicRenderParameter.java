@@ -30,6 +30,10 @@ public interface PublicRenderParameter {
    List<Description> getDescriptions();
    void addDescription(Description desc);
 
+   DisplayName getDisplayName(Locale locale);
+   List<DisplayName> getDisplayNames();
+   void addDisplayName(DisplayName desc);
+
    List<QName> getAliases();
    void addAlias(QName alias);
 }

@@ -6,7 +6,7 @@
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/portlet portlet-app_3_0.xsd ">
 
-   <!-- generated test file -->
+   <!-- JSR 362 portlet DD test file -->
 
    <portlet id="id2">
       <description xml:lang="de">multi 
@@ -30,24 +30,27 @@
       <supports id="sup1">
          <mime-type>mime-type</mime-type>
          <portlet-mode>portlet-mode</portlet-mode>
-         <portlet:window-state>window-state</portlet:window-state>
+         <window-state>window-state</window-state>
       </supports>
       <supports id="sup2">
          <mime-type>mime-type2</mime-type>
          <portlet-mode>portlet-mode2</portlet-mode>
-         <portlet:window-state>window-state2</portlet:window-state>
+         <window-state>window-state2</window-state>
       </supports>
       <supports id="sup3">
          <mime-type>mime-type3</mime-type>
          <portlet-mode>portlet-mode3</portlet-mode>
-         <portlet:window-state>window-state3</portlet:window-state>
+         <window-state>window-state3</window-state>
       </supports>
       <supported-locale>supported-locale</supported-locale>
-      <resource-bundle>resource-bundle</resource-bundle>
+      <resource-bundle>org.apache.pluto.container.om.portlet.GoodBundle</resource-bundle>
       <portlet-info id="info1">
          <title>title</title>
+         <title xml:lang="de">Titel</title>
          <short-title>short-title</short-title>
+         <short-title xml:lang="de">Kurztitel</short-title>
          <keywords>keywords</keywords>
+         <keywords xml:lang="de">Schlagwörter</keywords>
       </portlet-info>
       <portlet-preferences id="prefs">
          <preference id="pref1">
@@ -80,6 +83,14 @@
          <name>Runtime-Option2</name>
          <value>value2</value>
       </container-runtime-option>
+      <dependency>
+         <name>JQuery</name>
+         <min-version>2.1.4</min-version>
+      </dependency>
+      <dependency>
+         <name>AngularJS</name>
+         <min-version>1.4.8</min-version>
+      </dependency>
    </portlet>
    <custom-portlet-mode id="mode1">
       <description xml:lang="de">description</description>
@@ -104,7 +115,7 @@
          <transport-guarantee>NONE</transport-guarantee>
       </user-data-constraint>
    </security-constraint>
-   <resource-bundle>org.apache.portal.ResourceBundle</resource-bundle>
+   <resource-bundle>org.apache.pluto.container.om.portlet.GoodBundle</resource-bundle>
    <filter>
       <description xml:lang="de">description</description>
       <display-name xml:lang="de">display-name</display-name>
@@ -145,6 +156,8 @@
       <name>Name</name>
    </public-render-parameter>
    <listener>
+      <listener-name>test listener</listener-name>
+      <ordinal>100</ordinal>
       <description xml:lang="de">description</description>
       <display-name xml:lang="de">display-name</display-name>
       <listener-class>org.apache.pluto.container.om.portlet.impl.fixtures.TestListener</listener-class>

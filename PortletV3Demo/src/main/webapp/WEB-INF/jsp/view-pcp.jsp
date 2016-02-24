@@ -53,3 +53,9 @@ getPortletModes(String), getWindowStates(String), and getPublicRenderParameterDe
    <li><c:out value="${prp}"></c:out></li>
 </c:forEach>
 </ul>
+<h5>Portlet Context Info:</h5>
+<ul>
+<c:forEach items="<%=renderRequest.getAttribute(ATTRIB_CTX) %>" var="ctx">
+   <li><c:out value="${ctx}"></c:out></li>
+</c:forEach>
+</ul>

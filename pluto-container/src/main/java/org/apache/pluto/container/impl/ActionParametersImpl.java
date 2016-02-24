@@ -23,7 +23,6 @@ import java.util.Map;
 
 import javax.portlet.ActionParameters;
 import javax.portlet.MutableActionParameters;
-import javax.portlet.MutablePortletParameters;
 
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletURLProvider.ParamType;

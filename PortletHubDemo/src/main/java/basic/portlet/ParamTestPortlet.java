@@ -38,6 +38,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.annotations.LocaleString;
+import javax.portlet.annotations.PortletConfiguration;
 
 
 /**
@@ -45,6 +47,8 @@ import javax.portlet.ResourceResponse;
  * 
  * @author Scott Nicklous
  */
+@PortletConfiguration(portletName = "ParamTestPortlet", publicParams = {"color", "imgName"},
+                        title = @LocaleString("PH Parameter Test Portlet"))
 public class ParamTestPortlet extends GenericPortlet {
 
    // Set up logging

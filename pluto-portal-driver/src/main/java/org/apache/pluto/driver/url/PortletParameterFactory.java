@@ -43,7 +43,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PortletParameterFactory {
    private static final Logger LOGGER = LoggerFactory.getLogger(PortletParameterFactory.class);
-   private final static boolean isDebug = LOGGER.isDebugEnabled();
    private final static boolean isTrace = LOGGER.isTraceEnabled();
    
    PortalURL url;
@@ -114,7 +113,7 @@ public class PortletParameterFactory {
          }
       }
 
-      if (isDebug) {
+      if (isTrace) {
          StringBuffer sb = new StringBuffer();
          sb.append("Dump private Parameter Map:");
          for (String k : parameters.keySet()) {
@@ -125,7 +124,7 @@ public class PortletParameterFactory {
                sep = ", ";
             }
          }
-         LOGGER.debug(sb.toString());
+         LOGGER.trace(sb.toString());
       }
       return parameters;
    }

@@ -38,11 +38,15 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.annotations.LocaleString;
+import javax.portlet.annotations.PortletConfiguration;
 
 
 /**
- * A management portlet that displays the current deep link configuraion
+ * A demo portlet for selecting images
  */
+@PortletConfiguration(portletName = "ImageSelPortlet", publicParams = "imgName", 
+                      title = @LocaleString("PH Image Selection Portlet"))
 public class ImageSelPortlet extends GenericPortlet {
 
    // Set up logging
@@ -76,9 +80,9 @@ public class ImageSelPortlet extends GenericPortlet {
 
 	      String pid = resp.getNamespace();
 	      Set<String> names = imgMap.keySet();
-	      String selType = req.getParameter(PARAM_SELTYPE);
+	      String selType = req.getRenderParameters().getValue(PARAM_SELTYPE);
 	      selType = (selType == null) ? PARAM_SELTYPE_RADIO : selType;
-	      String imgName = req.getParameter(PARAM_IMGNAME);
+	      String imgName = req.getRenderParameters().getValue(PARAM_IMGNAME);
 	      imgName = (imgName == null) ? "default" : imgName;
 
 	      if (selType.equals(PARAM_SELTYPE_RADIO)) {

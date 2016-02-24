@@ -52,10 +52,14 @@ public class Constants {
    
    public final static String DELIM = ";%;";
    
+   // For header portlet
+   public final static String ATTRIB_PROPS = "properties";
+
    // For PortletConfig portlet
    public final static String ATTRIB_PRPS = "prps";
    public final static String ATTRIB_PMS = "portletModes";
    public final static String ATTRIB_WS = "windowStates";
+   public final static String ATTRIB_CTX = "portletContext";
 
    // For parameter & URL test portlets
 

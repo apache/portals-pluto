@@ -56,7 +56,6 @@ public class ServletPortletSessionProxy implements InvocationHandler
         {
             try
             {
-                @SuppressWarnings("unchecked")
                 Class<? extends Object>[] currentInterfaces = current.getInterfaces();
                 for (int i = 0; i < currentInterfaces.length; i++)
                 {
@@ -88,7 +87,6 @@ public class ServletPortletSessionProxy implements InvocationHandler
      * @see java.lang.reflect.InvocationHandler#invoke(java.lang.Object,
      *      java.lang.reflect.Method, java.lang.Object[])
      */
-    @SuppressWarnings("unchecked")
     public Object invoke(Object proxy, Method m, Object[] args) throws Throwable
     {
         Object retval = null;

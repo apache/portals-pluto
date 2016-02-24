@@ -35,7 +35,7 @@ import javax.xml.namespace.QName;
 
 
 /**
- * A management portlet that displays the current deep link configuration
+ * A demo portlet for color selection.
  */
 public class ColorSelPortlet extends GenericPortlet {
 
@@ -63,11 +63,10 @@ public class ColorSelPortlet extends GenericPortlet {
          throws PortletException, IOException {
    }
 
-   @SuppressWarnings("deprecation")
    public void processAction(ActionRequest req, ActionResponse resp)
          throws PortletException, IOException {
             
-      String[] vals = req.getParameterValues(PARAM_FG_COLOR);
+      String[] vals = req.getActionParameters().getValues(PARAM_FG_COLOR);
       String r = "0";
       String g = "0";
       String b = "0";
@@ -83,17 +82,17 @@ public class ColorSelPortlet extends GenericPortlet {
       // make sure the private parameter are all on the URL for 
       // potential back button support
       if (vals != null) {
-         resp.setRenderParameter(PARAM_FG_COLOR, vals);
+         resp.getRenderParameters().setValues(PARAM_FG_COLOR, vals);
       }
       
-      String val = req.getParameter(PARAM_SUBTYPE);
+      String val = req.getActionParameters().getValue(PARAM_SUBTYPE);
       if (val != null) {
-         resp.setRenderParameter(PARAM_SUBTYPE, val);
+         resp.getRenderParameters().setValue(PARAM_SUBTYPE, val);
       }
       
-      val = req.getParameter(PARAM_MSG_INPUT);
+      val = req.getActionParameters().getValue(PARAM_MSG_INPUT);
       if (val != null) {
-         resp.setRenderParameter(PARAM_MSG_INPUT, val);
+         resp.getRenderParameters().setValue(PARAM_MSG_INPUT, val);
       }
       
       String msg = val + DELIM + clr;

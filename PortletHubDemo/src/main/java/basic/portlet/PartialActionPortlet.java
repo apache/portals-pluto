@@ -39,10 +39,14 @@ import javax.portlet.ResourceRequest;
 import static javax.portlet.ResourceRequest.*;
 
 import javax.portlet.ResourceResponse;
+import javax.portlet.annotations.LocaleString;
+import javax.portlet.annotations.PortletConfiguration;
 
 /**
- * A management portlet that displays the current deep link configuraion
+ * A demo portlet exercising the partial action processing sequence
  */
+@PortletConfiguration(portletName = "PartialActionPortlet", publicParams = "color",
+                        title = @LocaleString("PH Partial Action Portlet"))
 public class PartialActionPortlet extends GenericPortlet {
 
    // Set up logging

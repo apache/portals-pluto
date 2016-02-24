@@ -48,7 +48,6 @@
  * {@link javax.portlet.annotations.HeaderMethod}, 
  * {@link javax.portlet.annotations.RenderMethod}, 
  * {@link javax.portlet.annotations.ServeResourceMethod}, or 
- * {@link javax.portlet.annotations.PortletResources}.
  * <p>
  * Bean portlet methods can be contained in any valid bean class. 
  * The class needs not implement any portlet-specific interface or extend a portlet class. 
@@ -80,8 +79,8 @@
  * <p>
  * Please see the following annotation descriptions:
  * {@link javax.portlet.annotations.PortletRequestFilter},
- * {@link javax.portlet.annotations.PortletURLGenerationListener}, and
- * {@link javax.portlet.annotations.PreferencesValidator}.
+ * {@link javax.portlet.annotations.PortletListener}, and
+ * {@link javax.portlet.annotations.PortletPreferencesValidator}.
  * </ul>
  * <h4>Injectable Portlet Artifacts</h4>
  * <p>

@@ -39,7 +39,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 /**
- * A management portlet that displays the current deep link configuraion
+ * A portlet that recieves messages and displays them.
  */
 public class MessageBoxPortlet extends GenericPortlet {
 

@@ -53,7 +53,7 @@ import static javax.portlet.ResourceURL.*;
 
 
 /**
- * A purtlet hub portlet that allows parameter names & values to be entered and set.
+ * A portlet that creates various types of URL.
  * 
  * @author Scott Nicklous
  */

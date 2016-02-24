@@ -64,6 +64,7 @@ public class HeaderData {
    /** Logger. */
    private static final Logger       LOG                = LoggerFactory.getLogger(HeaderData.class);
    private static final boolean      isDebug            = LOG.isDebugEnabled();
+   private static final boolean      isTrace            = LOG.isTraceEnabled();
 
    // for document processing
    private DocumentBuilder           docBuilder         = null;
@@ -345,11 +346,11 @@ public class HeaderData {
          }
       }
 
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder sb = new StringBuilder();
          sb.append("returning tags: ");
          sb.append((tags.length() > 0) ? "\n" + tags : "");
-         LOG.debug(sb.toString());
+         LOG.trace(sb.toString());
       }
 
       return tags;

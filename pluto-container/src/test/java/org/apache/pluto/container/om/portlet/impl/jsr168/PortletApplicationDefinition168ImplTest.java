@@ -50,7 +50,7 @@ public class PortletApplicationDefinition168ImplTest {
       InputStream in = PortletApplicationDefinition168ImplTest.class
             .getClassLoader().getResourceAsStream(XML_FILE);
       
-      ConfigurationHolder cfp = new ConfigurationHolder(pad);
+      ConfigurationHolder cfp = new ConfigurationHolder();
       try {
          cfp.processPortletDD(in);
          pad = cfp.getPad();

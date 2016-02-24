@@ -28,4 +28,6 @@ public interface PortletResourceResponseContext extends PortletMimeResponseConte
     void setCharacterEncoding(String charset);
     void setContentLength(int len);
     void setStatus(int sc);
+    int getStatus();
+    void setContentLengthLong(long len);
 }

@@ -34,21 +34,18 @@ import javax.xml.namespace.QName;
  * <div class="changed_added_3_0">
  * The <code>StateAwareResponseWrapper</code> provides a convenient 
  * implementation of the <code>StateAwareResponse</code> interface 
- * that can be subclassed by developers wishing to adapt the Response.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped Response object.
  * </div>
  */
 public class StateAwareResponseWrapper extends PortletResponseWrapper implements StateAwareResponse {
 
-   StateAwareResponse response;
-
    /**
     * @param response
     */
    public StateAwareResponseWrapper(StateAwareResponse response) {
       super(response);
-      this.response = response;
    }
 
    /**
@@ -57,7 +54,7 @@ public class StateAwareResponseWrapper extends PortletResponseWrapper implements
     * @return the wrapped response
     */
    public StateAwareResponse getResponse() {
-      return response;
+      return (StateAwareResponse) response;
    }
 
    /**
@@ -67,18 +64,14 @@ public class StateAwareResponseWrapper extends PortletResponseWrapper implements
     * @throws java.lang.IllegalArgumentException   if the response is null.
     */
    public void setResponse(StateAwareResponse response) {
-      if ( response == null) {
-         throw new java.lang.IllegalArgumentException("Response is null");
-      }
       super.setResponse(response);
-      this.response = response;
    }
 
    /* (non-Javadoc)
     * @see javax.portlet.MutablePortletState#getRenderParameters()
     */
    public MutableRenderParameters getRenderParameters() {
-      return response.getRenderParameters();
+      return ((StateAwareResponse)response).getRenderParameters();
    }
 
    /* (non-Javadoc)
@@ -86,7 +79,7 @@ public class StateAwareResponseWrapper extends PortletResponseWrapper implements
     */
    public void setWindowState(WindowState windowState)
          throws WindowStateException {
-      response.setWindowState(windowState);
+      ((StateAwareResponse)response).setWindowState(windowState);
    }
 
    /* (non-Javadoc)
@@ -94,21 +87,21 @@ public class StateAwareResponseWrapper extends PortletResponseWrapper implements
     */
    public void setPortletMode(PortletMode portletMode)
          throws PortletModeException {
-      response.setPortletMode(portletMode);
+      ((StateAwareResponse)response).setPortletMode(portletMode);
    }
 
    /* (non-Javadoc)
     * @see javax.portlet.PortletState#getPortletMode()
     */
    public PortletMode getPortletMode() {
-      return response.getPortletMode();
+      return ((StateAwareResponse)response).getPortletMode();
    }
 
    /* (non-Javadoc)
     * @see javax.portlet.PortletState#getWindowState()
     */
    public WindowState getWindowState() {
-      return response.getWindowState();
+      return ((StateAwareResponse)response).getWindowState();
    }
 
    /* (non-Javadoc)
@@ -116,7 +109,7 @@ public class StateAwareResponseWrapper extends PortletResponseWrapper implements
     */
    @Deprecated
    public void setRenderParameters(Map<String, String[]> parameters) {
-      response.setRenderParameters(parameters);
+      ((StateAwareResponse)response).setRenderParameters(parameters);
    }
 
    /* (non-Javadoc)
@@ -124,7 +117,7 @@ public class StateAwareResponseWrapper extends PortletResponseWrapper implements
     */
    @Deprecated
    public void setRenderParameter(String key, String value) {
-      response.setRenderParameter(key, value);
+      ((StateAwareResponse)response).setRenderParameter(key, value);
    }
 
    /* (non-Javadoc)
@@ -132,21 +125,21 @@ public class StateAwareResponseWrapper extends PortletResponseWrapper implements
     */
    @Deprecated
    public void setRenderParameter(String key, String... values) {
-      response.setRenderParameter(key, values);
+      ((StateAwareResponse)response).setRenderParameter(key, values);
    }
 
    /* (non-Javadoc)
     * @see javax.portlet.StateAwareResponse#setEvent(javax.xml.namespace.QName, java.io.Serializable)
     */
    public void setEvent(QName name, Serializable value) {
-      response.setEvent(name, value);
+      ((StateAwareResponse)response).setEvent(name, value);
    }
 
    /* (non-Javadoc)
     * @see javax.portlet.StateAwareResponse#setEvent(java.lang.String, java.io.Serializable)
     */
    public void setEvent(String name, Serializable value) {
-      response.setEvent(name, value);
+      ((StateAwareResponse)response).setEvent(name, value);
    }
 
    /* (non-Javadoc)
@@ -154,7 +147,7 @@ public class StateAwareResponseWrapper extends PortletResponseWrapper implements
     */
    @Deprecated
    public Map<String, String[]> getRenderParameterMap() {
-      return response.getRenderParameterMap();
+      return ((StateAwareResponse)response).getRenderParameterMap();
    }
 
    /* (non-Javadoc)
@@ -162,7 +155,7 @@ public class StateAwareResponseWrapper extends PortletResponseWrapper implements
     */
    @Deprecated
    public void removePublicRenderParameter(String name) {
-      response.removePublicRenderParameter(name);
+      ((StateAwareResponse)response).removePublicRenderParameter(name);
    }
 
 }

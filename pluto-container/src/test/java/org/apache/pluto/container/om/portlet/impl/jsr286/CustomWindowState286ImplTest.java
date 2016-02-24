@@ -53,7 +53,7 @@ public class CustomWindowState286ImplTest {
       InputStream in = CustomWindowState286ImplTest.class
             .getClassLoader().getResourceAsStream(XML_FILE);
       
-      ConfigurationHolder cfp = new ConfigurationHolder(pad);
+      ConfigurationHolder cfp = new ConfigurationHolder();
       try {
          cfp.processPortletDD(in);
          pad = cfp.getPad();
@@ -85,7 +85,7 @@ public class CustomWindowState286ImplTest {
       Locale loc = new Locale("de");
       Description d = cws.getDescription(loc);
       assertNotNull(d);
-      assertEquals("description", d.getDescription());
+      assertEquals("description", d.getText());
    }
 
    /**
@@ -117,9 +117,9 @@ public class CustomWindowState286ImplTest {
       assertEquals(2, list.size());
       for (Description desc : list) {
          if (desc.getLocale().equals(loc)) {
-            assertEquals(text, desc.getDescription());
+            assertEquals(text, desc.getText());
          } else {
-            assertEquals("description", desc.getDescription());
+            assertEquals("description", desc.getText());
          }
       }
 

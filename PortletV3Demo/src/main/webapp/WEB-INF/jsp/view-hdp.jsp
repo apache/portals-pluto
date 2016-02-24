@@ -39,4 +39,10 @@ The following section shows cookie information inserted by JavaScript code that 
 output stream during the header phase processing.
 </p>
 <div  class='markupSection' id='<portlet:namespace/>cookieDiv'></div>
+<h5>Portlet Response Properties (read from HeaderResponse):</h5>
+<ul>
+<c:forEach items="<%=portletSession.getAttribute(ATTRIB_PROPS) %>" var="prop">
+   <li><c:out value="${prop}"></c:out></li>
+</c:forEach>
+</ul>
 </div>

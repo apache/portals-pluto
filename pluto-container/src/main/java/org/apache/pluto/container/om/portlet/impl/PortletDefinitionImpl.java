@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
+import org.apache.pluto.container.om.portlet.Dependency;
 import org.apache.pluto.container.om.portlet.Description;
 import org.apache.pluto.container.om.portlet.DisplayName;
 import org.apache.pluto.container.om.portlet.EventDefinitionReference;
@@ -34,12 +35,17 @@ import org.apache.pluto.container.om.portlet.PortletInfo;
 import org.apache.pluto.container.om.portlet.Preferences;
 import org.apache.pluto.container.om.portlet.SecurityRoleRef;
 import org.apache.pluto.container.om.portlet.Supports;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Scott Nicklous
  *
  */
 public class PortletDefinitionImpl implements PortletDefinition {
+   
+   /** Logger. */
+   private static final Logger LOG = LoggerFactory.getLogger(PortletDefinitionImpl.class);
    
    private PortletApplicationDefinition pad;
    
@@ -51,7 +57,7 @@ public class PortletDefinitionImpl implements PortletDefinition {
    private int expirationCache;
    
    private PortletInfo info;
-   private Preferences prefs;
+   private Preferences prefs = new PreferencesImpl();
    
    private final List<String> supportedLocales = new ArrayList<String>();
    private final List<String> pubParms = new ArrayList<String>();
@@ -66,7 +72,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
    
    private final List<InitParam> iparms = new ArrayList<InitParam>(); 
    private final List<SecurityRoleRef> secRefs = new ArrayList<SecurityRoleRef>(); 
-   private final List<Supports> supps = new ArrayList<Supports>(); 
+   private final List<Supports> supps = new ArrayList<Supports>();
+   
+   private final List<Dependency> dependencies = new ArrayList<Dependency>(); 
 
    /**
     * Copy constructor
@@ -114,6 +122,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       }
       for (Supports s : pd.getSupports()) {
          this.supps.add(new SupportsImpl(s));
+      }
+      for (Dependency dep : pd.getDependencies()) {
+         this.dependencies.add(dep);
       }
    }
    
@@ -174,6 +185,17 @@ public class PortletDefinitionImpl implements PortletDefinition {
     */
    @Override
    public void addInitParam(InitParam ip) {
+      int ii = iparms.indexOf(ip);
+      if (ii >= 0) {
+         
+         InitParam x = iparms.get(ii);
+         iparms.remove(ii);
+         
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Removed duplicate init parameter. name: ").append(x.getParamName());
+         txt.append(", value: ").append(x.getParamValue());
+         LOG.debug(txt.toString());
+      }
       iparms.add(ip);
    }
 
@@ -211,7 +233,7 @@ public class PortletDefinitionImpl implements PortletDefinition {
     */
    @Override
    public Preferences getPortletPreferences() {
-      return (prefs != null) ? new PreferencesImpl(prefs) : null;
+      return new PreferencesImpl(prefs);
    }
 
    @Override
@@ -232,7 +254,15 @@ public class PortletDefinitionImpl implements PortletDefinition {
     */
    @Override
    public void addSupportedProcessingEvent(EventDefinitionReference edr) {
+      if (proEvtRefs.remove(edr)) {
+         LOG.debug("Removed duplicate supported processing event ref: " + edr.getQualifiedName());
+      }
       proEvtRefs.add(edr);
+   }
+   
+   @Override
+   public boolean removeSupportedProcessingEvent(EventDefinitionReference edr) {
+      return proEvtRefs.remove(edr);
    }
 
    /* (non-Javadoc)
@@ -248,7 +278,15 @@ public class PortletDefinitionImpl implements PortletDefinition {
     */
    @Override
    public void addSupportedPublishingEvent(EventDefinitionReference edr) {
+      if (pubEvtRefs.remove(edr)) {
+         LOG.debug("Removed duplicate supported publishing event ref: " + edr.getQualifiedName());
+      }
       pubEvtRefs.add(edr);
+   }
+   
+   @Override
+   public boolean removeSupportedPublishingEvent(EventDefinitionReference edr) {
+      return pubEvtRefs.remove(edr);
    }
 
    /* (non-Javadoc)
@@ -264,7 +302,15 @@ public class PortletDefinitionImpl implements PortletDefinition {
     */
    @Override
    public void addSupportedPublicRenderParameter(String identifier) {
+      if (pubParms.remove(identifier)) {
+         LOG.debug("Removed duplicate supported render param: " + identifier);
+      }
       pubParms.add(identifier);
+   }
+   
+   @Override
+   public boolean removeSupportedPublicRenderParameter(String identifier) {
+      return pubParms.remove(identifier);
    }
 
    /* (non-Javadoc)
@@ -310,6 +356,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
     */
    @Override
    public void addSecurityRoleRef(SecurityRoleRef srr) {
+      if (secRefs.remove(srr)) {
+         LOG.debug("Removed duplicate security role ref: " + srr.getRoleName());
+      }
       secRefs.add(srr);
    }
 
@@ -340,7 +389,43 @@ public class PortletDefinitionImpl implements PortletDefinition {
     */
    @Override
    public void addSupports(Supports supp) {
-      supps.add(supp);
+      if (supps.remove(supp)) {
+         LOG.debug("Removed duplicate supports block for: " + supp.getMimeType());
+      }
+     supps.add(supp);
+   }
+
+   /* (non-Javadoc)
+    * @see org.apache.pluto.container.om.portlet.PortletDefinition#getDependency(java.lang.String)
+    */
+   @Override
+   public Dependency getDependency(String name) {
+      Dependency ret = null;
+      for (Dependency item : dependencies) {
+         if (item.getName().equals(name)) {
+            ret = new DependencyImpl(item);
+         }
+      }
+      return ret;
+   }
+
+   /* (non-Javadoc)
+    * @see org.apache.pluto.container.om.portlet.PortletDefinition#getDependency()
+    */
+   @Override
+   public List<Dependency> getDependencies() {
+      return new ArrayList<Dependency>(dependencies);
+   }
+
+   /* (non-Javadoc)
+    * @see org.apache.pluto.container.om.portlet.PortletDefinition#addDependency(java.lang.String)
+    */
+   @Override
+   public void addDependency(Dependency dep) {
+      if (dependencies.remove(dep)) {
+         LOG.debug("Removed duplicate dependencies block for: " + dep.getName());
+      }
+     dependencies.add(dep);
    }
 
    /* (non-Javadoc)
@@ -370,6 +455,12 @@ public class PortletDefinitionImpl implements PortletDefinition {
     */
    @Override
    public void addDescription(Description desc) {
+      if (descs.remove(desc)) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Removed duplicate description for locale: ").append(desc.getLocale().toString());
+         txt.append(", description: ").append(desc.getText());
+         LOG.debug(txt.toString());
+      }
       descs.add(desc);
    }
 
@@ -399,8 +490,14 @@ public class PortletDefinitionImpl implements PortletDefinition {
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#addDisplayName(org.apache.pluto.container.om.portlet.DisplayName)
     */
    @Override
-   public void addDisplayName(DisplayName desc) {
-      dispNames.add(desc);
+   public void addDisplayName(DisplayName dispName) {
+      if (dispNames.remove(dispName)) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Removed duplicate description for locale: ").append(dispName.getLocale().toString());
+         txt.append(", description: ").append(dispName.getText());
+         LOG.debug(txt.toString());
+      }
+      dispNames.add(dispName);
    }
 
    /* (non-Javadoc)
@@ -416,6 +513,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
     */
    @Override
    public void addSupportedLocale(String lang) {
+      if (supportedLocales.remove(lang)) {
+         LOG.debug("Removed duplicate supported locale: " + lang);
+      }
       supportedLocales.add(lang);
    }
 
@@ -482,7 +582,54 @@ public class PortletDefinitionImpl implements PortletDefinition {
     */
    @Override
    public void addContainerRuntimeOption(ContainerRuntimeOption cro) {
+      int ii = crtOptions.indexOf(cro);
+      if (ii >= 0) {
+         
+         ContainerRuntimeOption x = crtOptions.get(ii);
+         crtOptions.remove(ii);
+         
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Removed duplicate portlet container runtime option: ").append(x.getName());
+         txt.append(", vals: ").append(x.getValues().toString());
+         LOG.debug(txt.toString());
+      }
       crtOptions.add(new ContainerRuntimeOptionImpl(cro));
+   }
+
+   /* (non-Javadoc)
+    * @see java.lang.Object#hashCode()
+    */
+   @Override
+   public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((portletName == null) ? 0 : portletName.hashCode());
+      return result;
+   }
+
+   /* (non-Javadoc)
+    * @see java.lang.Object#equals(java.lang.Object)
+    */
+   @Override
+   public boolean equals(Object obj) {
+      if (this == obj) {
+         return true;
+      }
+      if (obj == null) {
+         return false;
+      }
+      if (getClass() != obj.getClass()) {
+         return false;
+      }
+      PortletDefinitionImpl other = (PortletDefinitionImpl) obj;
+      if (portletName == null) {
+         if (other.portletName != null) {
+            return false;
+         }
+      } else if (!portletName.equals(other.portletName)) {
+         return false;
+      }
+      return true;
    }
 
 }

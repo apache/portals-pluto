@@ -20,7 +20,14 @@ package org.apache.pluto.container.om.portlet.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Set;
 
+import javax.portlet.annotations.PortletApplication;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.PortletConfigurations;
+import javax.portlet.annotations.PortletListener;
+import javax.portlet.annotations.PortletPreferencesValidator;
+import javax.portlet.annotations.PortletRequestFilter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -29,46 +36,42 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class processes the web app deployment descriptor and the portlet
- * deployment descriptor files.
+ * This class processes the web app deployment descriptor and the portlet deployment descriptor files.
  * 
  * 
  * @author Scott Nicklous
  * 
  */
 public class ConfigurationHolder {
-   
-   public static final String ATTRIB_NAME = "PortletAppConfig";
 
-   private PortletApplicationDefinition   pad = null;
-   private ConfigurationProcessor         jcp = null;
-
+   public static final String           ATTRIB_NAME  = "PortletAppConfig";
+   private PortletApplicationDefinition pad          = null;
+   private ConfigurationProcessor       jcp          = null;
 
    /** Logger. */
-   private static final Logger          LOG          = LoggerFactory
-                                                           .getLogger(ConfigurationHolder.class);
+   private static final Logger          LOG          = LoggerFactory.getLogger(ConfigurationHolder.class);
    private static final boolean         isDebug      = LOG.isDebugEnabled();
 
    private static final String          JAXB_CONTEXT = "org.apache.pluto.container.om.portlet10.impl:"
                                                            + "org.apache.pluto.container.om.portlet20.impl:"
                                                            + "org.apache.pluto.container.om.portlet30.impl";
 
-   
    /**
     * Default constructor
     */
    public ConfigurationHolder() {
       this.pad = new PortletApplicationDefinitionImpl();
    }
+
    /**
-    * Constructor
-    * 
+    * Constructor taking existing portlet app definition - for testing purposes
     * @param pad
     */
    public ConfigurationHolder(PortletApplicationDefinition pad) {
@@ -78,37 +81,23 @@ public class ConfigurationHolder {
    /**
     * returns the finished portlet application definition
     * 
-    * @return  the portlet application definition
+    * @return the portlet application definition
     */
    public PortletApplicationDefinition getPad() {
       return pad;
    }
 
    /**
-    * Sets the portlet application definition to be processed
-    * 
-    * @param pad
-    */
-   public void setPad(PortletApplicationDefinition pad) {
-      this.pad = pad;
-   }
-
-   /**
-    * Processes the portlet deployment descriptor represented by the given input
-    * stream.
+    * Processes the portlet deployment descriptor represented by the given input stream.
     * <p>
-    * The data is merged into an existing configuration data structure if one is
-    * provided. This capability is used by version 3 portlets for merging config
-    * data from the files into config data that has been read from annotations.
+    * The data is merged into an existing configuration data structure if one is provided. This capability is used by
+    * version 3 portlets for merging config data from the files into config data that has been read from annotations.
     * <p>
-    * If no existing configuration data is provides, or if a version 1.0 or
-    * version 2.0 deployment descriptor is being processed, a new configuration
-    * data structure is created.
+    * If no existing configuration data is provides, or if a version 1.0 or version 2.0 deployment descriptor is being
+    * processed, a new configuration data structure is created.
     * <p>
-    * The class also performs validity checking and throws exceptions for
-    * invalid data. To maintain compatibility with the earlier Pluto
-    * implementation, an <code>IllegalArgumentException</code> is thrown in such
-    * cases.
+    * The class also performs validity checking and throws exceptions for invalid data. To maintain compatibility with
+    * the earlier Pluto implementation, an <code>IllegalArgumentException</code> is thrown in such cases.
     * 
     * 
     * @param stream
@@ -118,11 +107,11 @@ public class ConfigurationHolder {
     *            If an I/O error occurs
     * @throws IllegalArgumentException
     *            If data validation fails
-    * @throws XMLStreamException 
+    * @throws XMLStreamException
     */
-   public void processPortletDD(InputStream stream)
-         throws IOException, IllegalArgumentException, JAXBException, XMLStreamException {
-      
+   public void processPortletDD(InputStream stream) throws IOException, IllegalArgumentException, JAXBException,
+         XMLStreamException {
+
       ClassLoader mycl = this.getClass().getClassLoader();
       JAXBContext cntxt = JAXBContext.newInstance(JAXB_CONTEXT, mycl);
 
@@ -143,39 +132,32 @@ public class ConfigurationHolder {
          txt.append(jel.getValue().getClass().getCanonicalName());
          LOG.debug(txt.toString());
       }
-      
-      if (jel.getValue() instanceof 
-            org.apache.pluto.container.om.portlet10.impl.PortletAppType) {
 
-         // Ignore existing config data for 1.0 portlets 
+      if (jel.getValue() instanceof org.apache.pluto.container.om.portlet10.impl.PortletAppType) {
+
+         // Ignore existing config data for 1.0 portlets
          pad = new PortletApplicationDefinitionImpl();
-         jcp = new JSR168ConfigurationProcessor();
-         
-      } else if (jel.getValue() instanceof 
-            org.apache.pluto.container.om.portlet20.impl.PortletAppType) {
-         
+         jcp = new JSR168ConfigurationProcessor(pad);
+
+      } else if (jel.getValue() instanceof org.apache.pluto.container.om.portlet20.impl.PortletAppType) {
+
          // Ignore existing config data for 2.0 portlets
          pad = new PortletApplicationDefinitionImpl();
-         jcp = new JSR286ConfigurationProcessor();
-         
-      } else if (jel.getValue() instanceof 
-            org.apache.pluto.container.om.portlet30.impl.PortletAppType) {
+         jcp = new JSR286ConfigurationProcessor(pad);
 
-         // for v3, let config data from DD overwrite existing data from annotations
-         if (pad == null) {
-            pad = new PortletApplicationDefinitionImpl();
-         }
-         jcp = new JSR362ConfigurationProcessor();
-         
+      } else if (jel.getValue() instanceof org.apache.pluto.container.om.portlet30.impl.PortletAppType) {
+
+         // if config processor already present, there were annotations. don't overwrite
+         jcp = (jcp == null) ? new JSR362ConfigurationProcessor(pad) : jcp;
+
       } else {
-         String warning = "Unknown application type: " + 
-               jel.getValue().getClass().getCanonicalName();
+         String warning = "Unknown application type: " + jel.getValue().getClass().getCanonicalName();
          LOG.warn(warning);
          throw new IOException(warning);
       }
 
-      pad = jcp.process(jel);
-      
+      jcp.process(jel);
+
       if (isDebug) {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Parsed DD for Portlet app: ").append(pad.getName());
@@ -190,18 +172,92 @@ public class ConfigurationHolder {
       }
 
    }
-   
+
    /**
     * extracts the locale-encoding mapping from the web deployment descriptor
     * 
-    * @param in   Input stream for the web DD
-    * @throws Exception 
+    * @param in
+    *           Input stream for the web DD
+    * @throws Exception
     */
    public void processWebDD(InputStream in) throws Exception {
       if (jcp == null) {
-         jcp = new JSR286ConfigurationProcessor();
+         jcp = new JSR286ConfigurationProcessor(pad);
       }
-      jcp.processWebDD(in, pad);
+      jcp.processWebDD(in);
+   }
+
+   /**
+    * Accepts a list of classes that are annotated with portlet configuration and portlet application configuration
+    * annotations. Extracts the config data from the annotations to create a corresponding portlet application
+    * definition structure.
+    * <p>
+    * This method must be called before processing the portlet xml so that the data from the portlet DD may properly
+    * override the annotation configuration data.
+    * <p>
+    * This method is designed to be used within a ServletContainerInitializer onStartup() method. The SCI should be
+    * annotated as follows: <code>@HandlesTypes({PortletApplication.class, PortletConfiguration.class, #
+    * PortletConfigurations.class, PortletRequestFilter.class})</code>
+    * 
+    * @param classes
+    *           List of classes annotated with portlet config annotations
+    */
+   public void processConfigAnnotations(Set<Class<?>> classes) {
+      if (classes != null) {
+         jcp = new JSR362ConfigurationProcessor(pad);
+         for (Class<?> cls : classes) {
+            
+            PortletApplication pa = cls.getAnnotation(PortletApplication.class);
+            if (pa != null) {
+               jcp.processPortletAppAnnotation(pa);
+            }
+            
+            PortletConfiguration pc = cls.getAnnotation(PortletConfiguration.class);
+            if (pc != null) {
+               jcp.processPortletConfigAnnotation(pc, cls);
+            }
+            
+            PortletConfigurations pcs = cls.getAnnotation(PortletConfigurations.class);
+            if (pcs != null) {
+               for (PortletConfiguration config : pcs.value()) {
+                  jcp.processPortletConfigAnnotation(config, cls);
+               }
+            }
+            
+            if (cls.getAnnotation(PortletRequestFilter.class) != null) {
+               jcp.processPortletFilterAnnotation(cls);
+            }
+            
+            if (cls.getAnnotation(PortletListener.class) != null) {
+               jcp.processListenerAnnotation(cls);
+            }
+            
+            if (cls.getAnnotation(PortletPreferencesValidator.class) != null) {
+               jcp.processValidatorAnnotation(cls);
+            }
+            
+         }
+      }
+   }
+
+   /**
+    * validates the configuration. To be called after the configuration has been completely read.
+    */
+   public void validate() {
+      if (jcp == null) {
+         jcp = new JSR362ConfigurationProcessor(pad);
+      }
+      jcp.validate();
+   }
+
+   /**
+    * Reconciles the bean configuration with the config from annotations & portlet DD.
+    */
+   public void reconcileBeanConfig(AnnotatedMethodStore ams) {
+      if (jcp == null) {
+         jcp = new JSR362ConfigurationProcessor(pad);
+      }
+      jcp.reconcileBeanConfig(ams);
    }
 
 }

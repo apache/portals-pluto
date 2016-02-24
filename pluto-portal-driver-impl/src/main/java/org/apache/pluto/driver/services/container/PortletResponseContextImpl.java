@@ -20,8 +20,11 @@ import static javax.portlet.PortletRequest.HEADER_PHASE;
 import static javax.portlet.PortletRequest.RENDER_PHASE;
 import static javax.portlet.PortletRequest.RESOURCE_PHASE;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.portlet.MimeResponse;
@@ -192,6 +195,36 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
 
    public Element createElement(String tagName) throws DOMException {
       return headerData.createElement(tagName);
+   }
+
+   @Override
+   public String getProperty(String key) {
+      String val = null;
+      if (!isClosed() && isSetPropsAllowed) {
+         List<String> vals = headerData.getHttpHeaders().get(key);
+         if (!vals.isEmpty()) {
+            val = vals.get(0);
+         }
+      }
+      return val;
+   }
+
+   @Override
+   public Collection<String> getPropertyValues(String key) {
+      List<String> vals = new ArrayList<String>();
+      if (!isClosed() && isSetPropsAllowed) {
+         vals.addAll(headerData.getHttpHeaders().get(key));
+      }
+      return vals;
+   }
+
+   @Override
+   public Collection<String> getPropertyNames() {
+      List<String> names = new ArrayList<String>();
+      if (!isClosed() && isSetPropsAllowed) {
+         names.addAll(headerData.getHttpHeaders().keySet());
+      }
+      return names;
    }
 
    public void close() {

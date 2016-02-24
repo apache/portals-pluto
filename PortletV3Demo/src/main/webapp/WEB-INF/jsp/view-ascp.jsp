@@ -27,9 +27,8 @@ limitations under the License.
 <portlet:defineObjects />
 
 
-<h3>Authenticated URL & Status Code Test Portlet</h3>
-<p>V3 portlet that displays a resource URL link that causes a status code to be set
-and other URLs that are marked as authenticated.</p>
+<h3>Status Code Test Portlet</h3>
+<p>V3 portlet that displays a resource URL link that causes a status code to be set.</p>
 <p>Use the form below to enter the HTTP status code.</p>
 <%
    ActionURL aurl = renderResponse.createActionURL();
@@ -55,26 +54,5 @@ and other URLs that are marked as authenticated.</p>
       out.print(resurl.toString());
       out.println("'>Resource URL, status code = " + sc + "</a></p>");
    }
-   
-   RenderURL renurl = renderResponse.createRenderURL(ALL);
-   renurl.setAuthenticated(true);
-   out.print("<p><a href='");
-   out.print(renurl.toString());
-   out.println("'>Render URL with setAuthenticated(true)</a></p>");
-   
-   ResourceURL resurl = renderResponse.createResourceURL();
-   resurl.setAuthenticated(true);
-   out.print("<p><a href='");
-   out.print(resurl.toString());
-   out.println("'>Resource URL with setAuthenticated(true)</a></p>");
-   
-   ActionURL acturl = renderResponse.createActionURL(ALL);
-   acturl.setAuthenticated(true);
-   StringBuilder txt = new StringBuilder();
-   txt.append("<form  METHOD='POST' ACTION='").append(acturl.toString()).append("'>")
-      .append("<button type='submit'>").append("Action URL with setAuthenticated(true)")
-      .append("</button>")
-      .append("</form>");
-   out.println(txt.toString());
 %>
 <p><hr/></p>

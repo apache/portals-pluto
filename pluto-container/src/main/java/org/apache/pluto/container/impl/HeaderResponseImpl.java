@@ -21,10 +21,8 @@ import java.util.Collection;
 
 import javax.portlet.HeaderResponse;
 import javax.portlet.PortletMode;
-import javax.portlet.RenderResponse;
 
 import org.apache.pluto.container.PortletHeaderResponseContext;
-import org.apache.pluto.container.PortletRenderResponseContext;
 import org.apache.pluto.container.util.ArgumentUtility;
 
 

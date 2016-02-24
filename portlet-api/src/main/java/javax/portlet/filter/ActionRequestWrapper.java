@@ -31,7 +31,7 @@ import javax.portlet.ActionRequest;
  * <span class="changed_modified_3_0">The</span> 
  * <code>ActionRequestWrapper</code> provides a convenient 
  * implementation of the <code>ActionRequest</code> interface 
- * that can be subclassed by developers wishing to adapt the request.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  *
@@ -39,8 +39,6 @@ import javax.portlet.ActionRequest;
  * @see ActionRequest
  */
 public class ActionRequestWrapper extends ClientDataRequestWrapper implements ActionRequest {
-
-   ActionRequest request;
 
    /**
     * Creates an <code>ActionRequest</code> adaptor 
@@ -51,7 +49,6 @@ public class ActionRequestWrapper extends ClientDataRequestWrapper implements Ac
     */
    public ActionRequestWrapper(ActionRequest request) {
       super(request);
-      this.request = request;
    }
 
    /**
@@ -60,7 +57,7 @@ public class ActionRequestWrapper extends ClientDataRequestWrapper implements Ac
     * @return the wrapped request
     */
    public ActionRequest getRequest() {
-      return request;
+      return (ActionRequest) super.getRequest();
    }
 
    /**
@@ -70,11 +67,7 @@ public class ActionRequestWrapper extends ClientDataRequestWrapper implements Ac
     * @throws java.lang.IllegalArgumentException   if the request is null.
     */
    public void setRequest(ActionRequest request) {
-      if ( request == null) {
-         throw new java.lang.IllegalArgumentException("Request is null");
-      }
       super.setRequest(request);
-      this.request = request;
    }
 
    /**
@@ -84,7 +77,7 @@ public class ActionRequestWrapper extends ClientDataRequestWrapper implements Ac
     * </div>
     */
    public ActionParameters getActionParameters() {
-      return request.getActionParameters();
+      return ((ActionRequest)wrapped).getActionParameters();
    }
 
 }

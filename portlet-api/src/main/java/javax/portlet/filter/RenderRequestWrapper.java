@@ -30,7 +30,7 @@ import javax.portlet.RenderRequest;
  * <span class="changed_modified_3_0">The</span> 
  * <code>RenderRequestWrapper</code> provides a convenient 
  * implementation of the <code>RenderRequest</code> interface 
- * that can be subclassed by developers wishing to adapt the request.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  *
@@ -38,8 +38,6 @@ import javax.portlet.RenderRequest;
  * @see RenderRequest
  */
 public class RenderRequestWrapper extends PortletRequestWrapper implements RenderRequest {
-
-   RenderRequest request;
 
    /**
     * Creates an <code>RenderRequest</code> adaptor 
@@ -50,7 +48,6 @@ public class RenderRequestWrapper extends PortletRequestWrapper implements Rende
     */
    public RenderRequestWrapper(RenderRequest request) {
       super(request);
-      this.request = request;
    }
 
 
@@ -61,7 +58,7 @@ public class RenderRequestWrapper extends PortletRequestWrapper implements Rende
     * @return the wrapped request
     */
    public RenderRequest getRequest() {
-      return request;
+      return (RenderRequest) super.getRequest();
    }
 
    /**
@@ -71,11 +68,7 @@ public class RenderRequestWrapper extends PortletRequestWrapper implements Rende
     * @throws java.lang.IllegalArgumentException   if the request is null.
     */
    public void setRequest(RenderRequest request) {
-      if ( request == null) {
-         throw new java.lang.IllegalArgumentException("Request is null");
-      }
       super.setRequest(request);
-      this.request = request;
    }
 
    /**
@@ -83,7 +76,7 @@ public class RenderRequestWrapper extends PortletRequestWrapper implements Rende
     * <code>getETag()</code> on the wrapped request object.
     */
    public String getETag() {
-      return request.getETag();
+      return ((RenderRequest)wrapped).getETag();
    }
 
 

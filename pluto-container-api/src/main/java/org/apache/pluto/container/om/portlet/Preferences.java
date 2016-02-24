@@ -26,4 +26,7 @@ public interface Preferences {
 
    String getPreferencesValidator();
    void setPreferencesValidator(String preferencesValidator);
+
+   boolean isNullValidator();
+   void setNullValidator(boolean isNullValidator);
 }

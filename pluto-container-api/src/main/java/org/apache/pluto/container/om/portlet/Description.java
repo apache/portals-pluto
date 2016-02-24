@@ -16,15 +16,6 @@
  */
 package org.apache.pluto.container.om.portlet;
 
-import java.util.Locale;
 
-public interface Description {
-
-    String getLang();
-   void setLang(String lang);
-    
-	String getDescription();
-	void setDescription(String description);
-
-	Locale getLocale();
+public interface Description extends LocaleText {
 }

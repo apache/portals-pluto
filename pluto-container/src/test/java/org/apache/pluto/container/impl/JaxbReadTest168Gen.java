@@ -30,7 +30,6 @@ import org.apache.pluto.container.om.portlet10.impl.PortletAppType;
 import org.apache.pluto.container.om.portlet10.impl.PortletType;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Low-level test to read a deployment descriptor
@@ -53,8 +52,6 @@ public class JaxbReadTest168Gen {
          Unmarshaller um = cntxt.createUnmarshaller();
          JAXBElement<?> jel = (JAXBElement<?>) um.unmarshal(in);
          assertNotNull(jel.getValue());
-         System.out.println("===> Object type: "
-               + jel.getValue().getClass().getCanonicalName());
          assertTrue(jel.getValue() instanceof PortletAppType);
          portletApp = (PortletAppType) jel.getValue();
       } catch (Exception e) {

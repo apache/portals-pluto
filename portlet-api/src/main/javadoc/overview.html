@@ -5,7 +5,11 @@
   </HEAD>
   <BODY>
     This document provides the interface descriptions for the JSR 362 Portlet Specification 3.0 Working Document.
-    <P>The interfaces described here are not normative and are subject to change at any time.</P>
+    The interfaces described here are not normative and are subject to change at any time.
+    <p>
+    The portlet hub JavaScript API documentation can be found
+    <a href="../jsdoc/index.html" target="_top">here</a>.
+    </p>
     <p>Color coding for description changes in Version 3.0:
     <span class="changed_modified_3_0">Changed text</span> ::  
     <span class="changed_added_3_0">Added text</span> :: 
@@ -16,6 +20,204 @@
     <!-- change class below to "indexContainer" to activate color changebars in the change history -->
     <div class="indexContainer-not">
     <ul>
+    <li>
+    20160128:
+    Added a new PortalContext wrapper class according to 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-62">PORTLETSPEC3-62</a>:
+    {@link javax.portlet.filter.PortalContextWrapper PortalContextWrapper}.
+    Removed the annotation ConditionalDispatchMethod along with the associated interfaces
+    MethodToken and ConditionalDispatcher, as they will not be included in the V3 specification.
+    </li>
+    <li>
+    20160126:
+    Added new PortletContext methods according to 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-53">PORTLETSPEC3-53</a>:
+    {@link javax.portlet.PortletContext#getClassLoader() getClassLoader},
+    {@link javax.portlet.PortletContext#getContextPath() getContextPath},
+    {@link javax.portlet.PortletContext#getEffectiveMajorVersion() getEffectiveMajorVersion}, and
+    {@link javax.portlet.PortletContext#getEffectiveMinorVersion() getEffectiveMinorVersion}.
+    Added new PortletResponse methods according to 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-60">PORTLETSPEC3-60</a>:
+    {@link javax.portlet.PortletResponse#getProperty(String) getProperty},
+    {@link javax.portlet.PortletResponse#getPropertyNames() getPropertyNames}, and
+    {@link javax.portlet.PortletResponse#getPropertyValues(String) getPropertyValues}.
+    Added new ResourceResponse methods according to 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-60">PORTLETSPEC3-60</a>:
+    {@link javax.portlet.ResourceResponse#setContentLengthLong(long) setContentLengthLong} and
+    {@link javax.portlet.ResourceResponse#getStatus() getStatus}.
+    </li>
+    <li>
+    20160125:
+    Added clarification to 
+    {@link javax.portlet.PortletResponse PortletResponse} addProperty and setProperty 
+    method descriptions.
+    Removed {@link javax.portlet.BaseURL BaseURL} getAuthenticated and setAuthenticated methods.
+    Added wrappers according to 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-62">PORTLETSPEC3-62</a>,
+    (see {@link javax.portlet.filter filter package}).
+    Update following annotations for consistency with spec & RI:
+    {@link javax.portlet.annotations.DestroyMethod DestroyMethod},
+    {@link javax.portlet.annotations.EventMethod EventMethod},
+    {@link javax.portlet.annotations.HeaderMethod HeaderMethod},
+    {@link javax.portlet.annotations.InitMethod InitMethod},
+    {@link javax.portlet.annotations.PortletSessionScoped PortletSessionScoped}.
+    Added {@link javax.portlet.annotations.PortletRequestScoped PortletRequestScoped} annotation.
+    </li>
+    <li>
+    20151208: 
+    Several changes to portlet annotations to improve consistency with respect to the portlet
+    deployment descriptor. Updated classes:
+    {@link javax.portlet.annotations.InitParameter InitParameter},
+    {@link javax.portlet.annotations.PortletConfiguration PortletConfiguration},
+    {@link javax.portlet.annotations.PortletRequestFilter PortletRequestFilter},
+    {@link javax.portlet.annotations.RuntimeOption RuntimeOption},
+    {@link javax.portlet.annotations.SecurityRoleRef SecurityRoleRef},
+    {@link javax.portlet.annotations.Supports Supports}.
+    </li>
+    <li>
+    20151005: 
+    Added annotations and interfaces for conditional dispatching: 
+    ConditionalDispatcher, MethodToken, and ConditionalDispatchMethod.
+    Updated 
+    {@link javax.portlet.annotations.HeaderMethod HeaderMethod}, 
+    {@link javax.portlet.annotations.RenderMethod RenderMethod}, and 
+    {@link javax.portlet.annotations.ServeResourceMethod ServeResourceMethod}.
+    </li>
+    <li>
+    20150930: 
+    Added 
+    {@link javax.portlet.filter.HeaderFilterChain HeaderFilterChain}
+    and updated 
+    {@link javax.portlet.filter.HeaderFilter HeaderFilter} to use it.
+    </li>
+    <li>
+    20150923: 
+    Added method annotations 
+    {@link javax.portlet.annotations.InitMethod}, and
+    {@link javax.portlet.annotations.DestroyMethod}.
+    Added filter and wrappers for header phase. Added new wrappers
+    for requests and responses not yet wrapped and modified
+    existing wrappers to use them. New classes:
+    {@link javax.portlet.filter.ClientDataRequestWrapper},
+    {@link javax.portlet.filter.HeaderFilter},
+    {@link javax.portlet.filter.HeaderRequestWrapper},
+    {@link javax.portlet.filter.HeaderResponseWrapper},
+    {@link javax.portlet.filter.MimeResponseWrapper}, and
+    {@link javax.portlet.filter.StateAwareResponseWrapper}.
+    Modified classes:
+    {@link javax.portlet.filter.ActionRequestWrapper},
+    {@link javax.portlet.filter.ActionResponseWrapper},
+    {@link javax.portlet.filter.RenderRequestWrapper},
+    {@link javax.portlet.filter.RenderResponseWrapper},
+    {@link javax.portlet.filter.EventRequestWrapper},
+    {@link javax.portlet.filter.EventResponseWrapper},
+    {@link javax.portlet.filter.PortletRequestWrapper},
+    {@link javax.portlet.filter.PortletResponseWrapper},
+    {@link javax.portlet.filter.ResourceRequestWrapper}, and
+    {@link javax.portlet.filter.ResourceResponseWrapper}.
+    </li>
+    <li>
+    20150922: 
+    Added interfaces and annotations for conditional dispatching.
+    Added classes:
+    MethodToken, ConditionalDispatcher, and ConditionalDispatchMethod.
+    </li>
+    <li>
+    20150921: Modified annotation classes to conform to latest spec draft.
+    Added dedicated HeaderRequest and HeaderResponse interfaces to allow portlets
+    to add response headers and generate markup for the overall portal 
+    response document <code>HEAD</code> section.
+    Deprecated {@link javax.portlet.RenderResponse#setTitle RenderResponse#setTitle}
+    since it is more appropriate on the HeaderResponse object.
+    Added classes:
+    {@link javax.portlet.HeaderRequest},
+    {@link javax.portlet.HeaderResponse}, and
+    {@link javax.portlet.HeaderPortlet}.
+    Modified classes:
+    {@link javax.portlet.annotations.RenderMethod},
+    {@link javax.portlet.annotations.HeaderMethod}, and
+    {@link javax.portlet.annotations.ServeResourceMethod}.
+    </li>
+    <li>
+    20150911: Modified and added annotation classes in order to allow complete
+    portlet application configuration and portlet configuration through annotations.
+    Added classes:
+    {@link javax.portlet.annotations.UserAttribute},
+    {@link javax.portlet.annotations.EventDefinition},
+    {@link javax.portlet.annotations.PortletApplication},
+    {@link javax.portlet.annotations.PortletConfigurations},
+    {@link javax.portlet.annotations.PublicRenderParameterDefinition}, and
+    {@link javax.portlet.annotations.SecurityRoleRef}.
+    Modified classes:
+    {@link javax.portlet.annotations.ActionMethod},
+    {@link javax.portlet.annotations.CustomPortletMode},
+    {@link javax.portlet.annotations.CustomWindowState},
+    {@link javax.portlet.annotations.Dependency},
+    {@link javax.portlet.annotations.EventMethod},
+    {@link javax.portlet.annotations.PortletConfiguration},
+    {@link javax.portlet.annotations.PortletQName},
+    {@link javax.portlet.annotations.PortletStateScoped},
+    {@link javax.portlet.annotations.Preference}, and
+    {@link javax.portlet.annotations.Supports}.
+    </li>
+    <li>
+    20150907: Modified classes for configuration through annotations. 
+    Added class {@link javax.portlet.annotations.PortletConfigurations} to allow 
+    for configuration of multiple portlets within a single annotation.
+    </li>
+    <li>20150817: Fixed some inconsistencies associated with the custom CDI scope annotations.  
+    Changed classes:
+    {@link javax.portlet.PortletURL#setBeanParameter PortletURL.setBeanParameter}.
+    Updated annotations:
+    {@link javax.portlet.annotations.PortletSessionScoped} and
+    {@link javax.portlet.annotations.URLFactory}.
+    </li>
+    <li>20150812: Update for 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-56">PORTLETSPEC3-56</a>,
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-55">PORTLETSPEC3-55</a>, and
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-49">PORTLETSPEC3-49</a>.
+    Changed classes:
+    {@link javax.portlet.MimeResponse.Copy}.
+    Added method:
+    {@link javax.portlet.ActionResponse#getRedirectURL ActionResponse.getRedirectURL()}.
+    Updated annotations:
+    {@link javax.portlet.annotations.HeaderMethod},
+    {@link javax.portlet.annotations.RenderMethod}, and
+    {@link javax.portlet.annotations.ServeResourceMethod}.
+    </li>
+    <li>20150806: Update for 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-54"> 
+    PORTLETSPEC3-54
+    </a>
+    Add Configuration Annotations for Custom Portlet Mode and Window State.
+    Changed class:
+    {@link javax.portlet.annotations.PortletConfiguration}.
+    Added annotation classes:
+    {@link javax.portlet.annotations.Supports},
+    {@link javax.portlet.annotations.CustomPortletMode},
+    {@link javax.portlet.annotations.CustomWindowState}.
+    </li>
+    <li>20150629: Added API proposal for injectable bean portlet objects. See:
+    {@link javax.portlet.annotations Annotations package info file}.
+    </li>
+    <li>20150618: Added API proposal for an annotation-based configuration interface. See:
+    {@link javax.portlet.annotations Annotations package info file}.
+    </li>
+    <li>20150225: Update for PORTLETSPEC3-50: Updated methods
+    {@link javax.portlet.MimeResponse#createRenderURL MimeResponse.createRenderURL())},
+    {@link javax.portlet.MimeResponse#createActionURL MimeResponse.createActionURL())},
+    {@link javax.portlet.MutablePortletParameters#set MutablePortletParameters.set()},
+    {@link javax.portlet.MutablePortletParameters#add MutablePortletParameters.add()},
+    {@link javax.portlet.PortletURLGenerationListener#filterRenderURL PortletURLGenerationListener.filterRenderURL()},
+    {@link javax.portlet.PortletURLGenerationListener#filterActionURL PortletURLGenerationListener.filterActionURL()}.
+    Added method 
+    {@link javax.portlet.PortletParameters#size PortletParameters.size()}.
+    See 
+    <a href="https://java.net/projects/portletspec3/pages/PortletConfiguration#PORTLETSPEC3-50"> 
+    PORTLETSPEC3-50
+    </a>
+    for discussion.
+    </li>
     <li>20150202: Updated PORTLETSPEC3-18: Updated methods
     {@link javax.portlet.PortletConfig#getPortletModes PortletConfig.getPortletModes(String)} and
     {@link javax.portlet.PortletConfig#getWindowStates PortletConfig.getWindowStates(String)}.
@@ -37,7 +239,7 @@
     <a href="../jsdoc/PortletInit.html#newParameters">newParameters</a>, 
     <a href="../jsdoc/PortletInit.html#newState">newState</a>. 
     <br>
-    Added {@link javax.portlet.ResourceRequest#getPageState ResourceRequest#getPageState()} method
+    Added {@link javax.portlet.ResourceRequest#PAGE_STATE ResourceRequest#PAGE_STATE} constant
     in support of the Portlet Hub partial action processing sequence.
     </li>
     <li>20140603: Resolved PORTLETSPEC3-43: Renamed some methods to reduce redundancy. See:
@@ -95,23 +297,21 @@
     <li>20130829: PORTLETSPEC3-32: Changes in public render parameter handling on action URL. See
     method descriptions 
     {@link javax.portlet.MimeResponse#createActionURL() createActionURL()} and
-    {@link javax.portlet.MimeResponse#createActionURL(ParameterCopyOption) createActionURL(ParameterCopyOption)}.
+    {@link javax.portlet.MimeResponse#createActionURL(Copy) createActionURL(Copy)}.
     See updated spec description
     <a href="https://java.net/projects/portletspec3/pages/PortletURLs#PORTLETSPEC3-32"> 
     portlet URLs
     </a>.
     </li>
     <li>20130829: PORTLETSPEC3-30: Added new URL create methods to MimeResponse:
-    {@link javax.portlet.MimeResponse#createRenderURL(ParameterCopyOption) createRenderURL(ParameterCopyOption)} and
-    {@link javax.portlet.MimeResponse#createActionURL(ParameterCopyOption) createActionURL(ParameterCopyOption)}.
+    {@link javax.portlet.MimeResponse#createRenderURL(Copy) createRenderURL(Copy)} and
+    {@link javax.portlet.MimeResponse#createActionURL(Copy) createActionURL(Copy)}.
     Updated 
     {@link javax.portlet.filter.RenderResponseWrapper RenderResponseWrapper} and
     {@link javax.portlet.filter.ResourceResponseWrapper ResourceResponseWrapper}
     accordingly.
     </li>
     <li>20130828: PORTLETSPEC3-13: Added several methods to BaseURL:
-    {@link javax.portlet.BaseURL#setAuthenticated setAuthenticated},
-    {@link javax.portlet.BaseURL#getAuthenticated getAuthenticated},
     {@link javax.portlet.RenderURL#setFragmentIdentifier setFragmentIdentifier} and 
     {@link javax.portlet.RenderURL#getFragmentIdentifier getFragmentIdentifier}.
     See 

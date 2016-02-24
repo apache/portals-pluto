@@ -35,6 +35,7 @@ public class PreferencesImpl implements Preferences {
    
    private final Map<String, Preference> prefs = new HashMap<String, Preference>();
    private String prefVal;
+   private boolean isNullValidator = false;
 
    /**
     * Default constructor
@@ -51,6 +52,7 @@ public class PreferencesImpl implements Preferences {
          prefs.put(pref.getName(), new PreferenceImpl(pref));
       }
       prefVal = pr.getPreferencesValidator();
+      isNullValidator = pr.isNullValidator();
    }
 
    /* (non-Javadoc)
@@ -97,6 +99,22 @@ public class PreferencesImpl implements Preferences {
    @Override
    public void setPreferencesValidator(String preferencesValidator) {
       prefVal = preferencesValidator;
+   }
+
+   /**
+    * @return the isNullValidator
+    */
+   @Override
+   public boolean isNullValidator() {
+      return isNullValidator;
+   }
+
+   /**
+    * @param isNullValidator the isNullValidator to set
+    */
+   @Override
+   public void setNullValidator(boolean isNullValidator) {
+      this.isNullValidator = isNullValidator;
    }
 
 }

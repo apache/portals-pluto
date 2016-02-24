@@ -31,4 +31,10 @@ public interface Listener {
    DisplayName getDisplayName(Locale locale);
    List<DisplayName> getDisplayNames();
    void addDisplayName(DisplayName dispName);
+   
+   String getListenerName();
+   void setListenerName(String listenerName);
+   
+   int getOrdinal();
+   void setOrdinal(int ordinal);
 }

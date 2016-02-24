@@ -33,7 +33,7 @@ import javax.portlet.ResourceRequest;
  * <span class="changed_modified_3_0">The</span>  
  * <code>ResourceRequestWrapper</code> provides a convenient 
  * implementation of the <code>ResourceRequest</code> interface 
- * that can be subclassed by developers wishing to adapt the request.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  *
@@ -41,8 +41,6 @@ import javax.portlet.ResourceRequest;
  * @see ResourceRequest
  */
 public class ResourceRequestWrapper extends ClientDataRequestWrapper implements ResourceRequest {
-
-   ResourceRequest request;
 
    /**
     * Creates an <code>ResourceRequest</code> adaptor 
@@ -53,7 +51,6 @@ public class ResourceRequestWrapper extends ClientDataRequestWrapper implements 
     */
    public ResourceRequestWrapper(ResourceRequest request) {
       super(request);
-      this.request = request;
    }
 
    /**
@@ -62,7 +59,7 @@ public class ResourceRequestWrapper extends ClientDataRequestWrapper implements 
     * @return the wrapped request
     */
    public ResourceRequest getRequest() {
-      return request;
+      return (ResourceRequest) super.getRequest();
    }
 
    /**
@@ -72,11 +69,7 @@ public class ResourceRequestWrapper extends ClientDataRequestWrapper implements 
     * @throws java.lang.IllegalArgumentException   if the request is null.
     */
    public void setRequest(ResourceRequest request) {
-      if ( request == null) {
-         throw new java.lang.IllegalArgumentException("Request is null");
-      }
       super.setRequest(request);
-      this.request = request;
    }
 
    /**
@@ -84,7 +77,7 @@ public class ResourceRequestWrapper extends ClientDataRequestWrapper implements 
     * <code>getETag()</code> on the wrapped request object.
     */
    public String getETag() {
-      return request.getETag();
+      return ((ResourceRequest)wrapped).getETag();
    }
 
    /**
@@ -92,7 +85,7 @@ public class ResourceRequestWrapper extends ClientDataRequestWrapper implements 
     * <code>getResourceID()</code> on the wrapped request object.
     */
    public String getResourceID() {
-      return request.getResourceID();
+      return ((ResourceRequest)wrapped).getResourceID();
    }
 
    /**
@@ -101,7 +94,7 @@ public class ResourceRequestWrapper extends ClientDataRequestWrapper implements 
     */
    @Deprecated
    public Map<String, String[]> getPrivateRenderParameterMap() {
-      return request.getPrivateRenderParameterMap();
+      return ((ResourceRequest)wrapped).getPrivateRenderParameterMap();
    }
 
    /**
@@ -109,7 +102,7 @@ public class ResourceRequestWrapper extends ClientDataRequestWrapper implements 
     * <code>getCacheability()</code> on the wrapped response object.
     */
    public String getCacheability() {
-      return request.getCacheability();
+      return ((ResourceRequest)wrapped).getCacheability();
    }
 
    /**
@@ -119,7 +112,7 @@ public class ResourceRequestWrapper extends ClientDataRequestWrapper implements 
     * </div>
     */
    public ResourceParameters getResourceParameters() {
-      return request.getResourceParameters();
+      return ((ResourceRequest)wrapped).getResourceParameters();
    }
 
 }

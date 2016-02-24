@@ -62,7 +62,7 @@ public @interface PortletSessionScoped {
     * PortletSession.PORTLET_SCOPE - scopes the bean to the portlet session
     * </li>
     * <li>
-    * PortletSession.APPLICATION_SCOPED - Scopes the bean to the portlet application session.
+    * PortletSession.APPLICATION_SCOPE - Scopes the bean to the portlet application session.
     * The effect of this scope is the same as using the CDI @SessionScoped annotation.
     * </li>
     * </ul>

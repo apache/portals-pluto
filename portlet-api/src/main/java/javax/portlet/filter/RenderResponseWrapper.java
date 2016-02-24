@@ -32,7 +32,7 @@ import javax.portlet.RenderResponse;
 /**
  * <span class="changed_modified_3_0">The</span> <code>RenderResponseWrapper</code> provides a convenient 
  * implementation of the <code>RenderResponse</code> interface 
- * that can be subclassed by developers wishing to adapt the response.
+ * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped response object.
  *
@@ -41,8 +41,6 @@ import javax.portlet.RenderResponse;
  */
 
 public class RenderResponseWrapper extends MimeResponseWrapper implements RenderResponse {
-
-   RenderResponse response;
 
    /**
     * Creates an <code>RenderResponse</code> adaptor 
@@ -53,7 +51,6 @@ public class RenderResponseWrapper extends MimeResponseWrapper implements Render
     */
    public RenderResponseWrapper(RenderResponse response) {
       super(response);
-      this.response = response;
    }
 
    /**
@@ -62,7 +59,7 @@ public class RenderResponseWrapper extends MimeResponseWrapper implements Render
     * @return the wrapped response
     */
    public RenderResponse getResponse() {
-      return response;
+      return (RenderResponse) response;
    }
 
    /**
@@ -72,20 +69,16 @@ public class RenderResponseWrapper extends MimeResponseWrapper implements Render
     * @throws java.lang.IllegalArgumentException   if the response is null.
     */
    public void setResponse(RenderResponse response) {
-      if ( response == null) {
-         throw new java.lang.IllegalArgumentException("Response is null");
-      }
       super.setResponse(response);
-      this.response = response;
    }
 
    /**
     * The default behavior of this method is to call 
     * <code>setTitle(title)</code> on the wrapped response object.
     */
-   @SuppressWarnings("deprecation")
+   @Deprecated
    public void setTitle(String title) {
-      response.setTitle(title);
+      ((RenderResponse)response).setTitle(title);
    }
 
    /**
@@ -93,7 +86,7 @@ public class RenderResponseWrapper extends MimeResponseWrapper implements Render
     * <code>setNextPossiblePortletModes()</code> on the wrapped response object.
     */
    public void setNextPossiblePortletModes(Collection<? extends PortletMode> portletModes) {
-      response.setNextPossiblePortletModes(portletModes);
+      ((RenderResponse)response).setNextPossiblePortletModes(portletModes);
    }
 
 }
