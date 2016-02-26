@@ -27,32 +27,32 @@ package javax.portlet;
 /**
  * <div class="changed_modified_3_0">The
  * <CODE>StateAwareResponse</CODE> represents a response that can modify
- * portlet state information or send events.
+ * render state information or send events.
  * <p>
- * If the portlet state is modified through this interface, the changes take
+ * If the render state is modified through this interface, the changes take
  * effect for subsequent portlet render phase processing. 
  * </div>
  * 
  * @since 2.0
- * @see PortletState
+ * @see RenderState
  * @see PortletResponse
  */
-public interface StateAwareResponse extends PortletResponse, MutablePortletState {
+public interface StateAwareResponse extends PortletResponse, MutableRenderState {
 
    /**
     * <span class="changed_modified_3_0">Sets</span> 
     * a parameter map for the render request.
     * <div class="changed_deleted_3_0">
-     * <p>
-     * These parameters will be accessible in all sub-sequent render calls via
-     * the <code>PortletRequest.getParameter</code> call until a new request
-     * is targeted to the portlet.
-     * <p>
-     * The given parameters do not need to be encoded prior to calling this
-     * method.
-     * <p>
-     * The portlet should not modify the map any further after calling
-     * this method.
+    * <p>
+    * These parameters will be accessible in all sub-sequent render calls via
+    * the <code>PortletRequest.getParameter</code> call until a new request
+    * is targeted to the portlet.
+    * <p>
+    * The given parameters do not need to be encoded prior to calling this
+    * method.
+    * <p>
+    * The portlet should not modify the map any further after calling
+    * this method.
     * </div> 
     * <div class="changed_added_3_0"> 
     * <p>
@@ -70,8 +70,8 @@ public interface StateAwareResponse extends PortletResponse, MutablePortletState
     * <p>
     * The portlet should not modify the map any further after calling this method.
     * </div>
-     * 
-     * @param parameters
+    * 
+    * @param parameters
     * <span class="changed_modified_3_0">
     * Map containing parameter names for the render phase as keys and
     * parameter values as map values. The keys in the parameter map must be of type
@@ -80,79 +80,79 @@ public interface StateAwareResponse extends PortletResponse, MutablePortletState
     * The values array may not be null;
     * however, the values array elements may be null.
     * </span>
-     * 
-     * @exception java.lang.IllegalArgumentException
+    * 
+    * @exception java.lang.IllegalArgumentException
     * <span class="changed_modified_3_0">
-     *                if parameters is <code>null</code>, if any of the
-     *                keys in the Map are <code>null</code>, if any of
+    *                if parameters is <code>null</code>, if any of the
+    *                keys in the Map are <code>null</code>, if any of
     *                the keys is not a String, or if any of the values is not a
     *                String array. 
     * </span>
-     * @exception java.lang.IllegalStateException
-     *                if the method is invoked after <code>sendRedirect</code>
-     *                has been called.
+    * @exception java.lang.IllegalStateException
+    *                if the method is invoked after <code>sendRedirect</code>
+    *                has been called.
     *                
     * @deprecated As of version 3.0. Use {@link #getRenderParameters()} instead.
-     */
+    */
 
    @Deprecated
-	public void setRenderParameters(java.util.Map<String, String[]> parameters);
+   public void setRenderParameters(java.util.Map<String, String[]> parameters);
 
-	/**
+   /**
     * <span class="changed_modified_3_0">Sets</span> 
     * a String parameter for the render request.
-     * <p>
+    * <p>
     * <span class="changed_modified_3_0"> 
     * These parameters will be accessible in all subsequent render calls 
     * until an action or render request is
-     * targeted to the portlet.
+    * targeted to the portlet.
     * </span>
-     * <p>
-     * This method replaces all parameters with the given key.
-     * <p>
-     * The given parameter do not need to be encoded prior to calling this
-     * method.
+    * <p>
+    * This method replaces all parameters with the given key.
+    * <p>
+    * The given parameter do not need to be encoded prior to calling this
+    * method.
     * <p>
     * <span class="changed_added_3_0"> 
     * A parameter value of <code>null</code> indicates that this
     * parameter should be removed. 
     * However, an empty string value ("") is allowed.
     * </span>
-     * 
-     * @param key
-     *            key of the render parameter
-     * @param value
-     *            value of the render parameter
-     * 
-     * @exception java.lang.IllegalArgumentException
+    * 
+    * @param key
+    *            key of the render parameter
+    * @param value
+    *            value of the render parameter
+    * 
+    * @exception java.lang.IllegalArgumentException
     *                if key is <code>null</code>;
     * <span class="changed_added_3_0"> 
     *                if an attempt is made to set a public render parameter to <code>null</code>.
     * </span>                 
-     * @exception java.lang.IllegalStateException
-     *                if the method is invoked after <code>sendRedirect</code>
-     *                has been called.
+    * @exception java.lang.IllegalStateException
+    *                if the method is invoked after <code>sendRedirect</code>
+    *                has been called.
     *                
     * @deprecated As of version 3.0. Use {@link #getRenderParameters()} instead.
-     */
+    */
 
    @Deprecated
-	public void setRenderParameter(String key, String value);
+   public void setRenderParameter(String key, String value);
 
-	/**
+   /**
     * <span class="changed_modified_3_0">Sets
     * a multi-valued String</span> parameter for the render request.
-     * <p>
+    * <p>
     * <span class="changed_added_3_0"> 
     * These parameters will be accessible in all subsequent render calls 
     * until an action or render request is
-     * targeted to the portlet.
+    * targeted to the portlet.
     * </span>
-     * <p>
+    * <p>
     * This method replaces all parameter values with the given key.
-     * <p>
-     * The given parameter do not need to be encoded prior to calling this
-     * method.
+    * <p>
+    * The given parameter do not need to be encoded prior to calling this
+    * method.
     * <p>
     * <span class="changed_added_3_0"> 
     * A values parameter of <code>null</code> indicates that this
@@ -162,124 +162,125 @@ public interface StateAwareResponse extends PortletResponse, MutablePortletState
     * <span class="changed_added_3_0"> 
     * If the values parameter is not null, elements of the array may be null. 
     * </span>
-     * 
-     * @param key
-     *            key of the render parameter
-     * @param values
-     *            values of the render parameter
-     * 
-     * @exception java.lang.IllegalArgumentException
+    * 
+    * @param key
+    *            key of the render parameter
+    * @param values
+    *            values of the render parameter
+    * 
+    * @exception java.lang.IllegalArgumentException
     *                if name is <code>null</code>; 
     * <span class="changed_added_3_0"> 
     *                if an element of the values array is <code>null</code>; 
     *                if an attempt is made to set a public render parameter to <code>null</code>. 
     * </span>
-     * @exception java.lang.IllegalStateException
-     *                if the method is invoked after <code>sendRedirect</code>
-     *                has been called.
+    * @exception java.lang.IllegalStateException
+    *                if the method is invoked after <code>sendRedirect</code>
+    *                has been called.
     *                
     * @deprecated As of version 3.0. Use {@link #getRenderParameters()} instead.
-     */
+    */
 
    @Deprecated
    public void setRenderParameter(String key, String... values);
 
-	/**
-     * Publishes an Event with the given payload.
-     * <p>
-     * The object type of the value must be compliant with the specified event
-     * type in the portlet deployment descriptor.
-     * <p>
-     * The value must have a valid JAXB binding and be serializable.
-     * 
-     * @param name
-     *            the event name to publish, must not be <code>null</code>
-     * @param value
-     *            the value of this event, must have a valid JAXB binding and 
-     *            be serializable, or <code>null</code>.
-     * 
-     * @exception java.lang.IllegalArgumentException
-     *                if name is <code>null</code>, the value is not
-     *                serializable, the value does not have a valid JAXB binding, the
-     *                object type of the value is not the same as specified in
-     *                the portlet deployment descriptor for this event name.
-     * @since 2.0
-     */
-	public void setEvent(javax.xml.namespace.QName name, java.io.Serializable value);
+   /**
+    * Publishes an Event with the given payload.
+    * <p>
+    * The object type of the value must be compliant with the specified event
+    * type in the portlet deployment descriptor.
+    * <p>
+    * The value must have a valid JAXB binding and be serializable.
+    * 
+    * @param name
+    *            the event name to publish, must not be <code>null</code>
+    * @param value
+    *            the value of this event, must have a valid JAXB binding and 
+    *            be serializable, or <code>null</code>.
+    * 
+    * @exception java.lang.IllegalArgumentException
+    *                if name is <code>null</code>, the value is not
+    *                serializable, the value does not have a valid JAXB binding, the
+    *                object type of the value is not the same as specified in
+    *                the portlet deployment descriptor for this event name.
+    * @since 2.0
+    */
+   public void setEvent(javax.xml.namespace.QName name, java.io.Serializable value);
 
-	/**
-     * Publishes an Event with the given payload in the default namespace.
-     * <p>
-     * The name is treated as local part of the event QName and the namespace
-     * is either taken from the <code>default-event-namespace</code> element
-     * in the portlet deployment descriptor, or if this element is not provided
-     * the XML default namespace XMLConstants.NULL_NS_URI is used.
-     * <p>
-     * The object type of the value must be compliant with the specified event
-     * type in the portlet deployment descriptor.
-     * <p>
-     * The value must have a valid JAXB binding and be serializable.
-     * 
-     * @param name
-     *            the local part of the event name to publish, must not be <code>null</code>
-     * @param value
-     *            the value of this event, must have a valid JAXB binding and 
-     *            be serializable, or <code>null</code>.
-     * 
-     * @exception java.lang.IllegalArgumentException
-     *                if name is <code>null</code>, the value is not
-     *                serializable, the value does not have a valid JAXB binding, the
-     *                object type of the value is not the same as specified in
-     *                the portlet deployment descriptor for this event name.
-     * @since 2.0
-     */
-	public void setEvent(String name, java.io.Serializable value);
+   /**
+    * Publishes an Event with the given payload in the default namespace.
+    * <p>
+    * The name is treated as local part of the event QName and the namespace
+    * is either taken from the <code>default-event-namespace</code> element
+    * in the portlet deployment descriptor, or if this element is not provided
+    * the XML default namespace XMLConstants.NULL_NS_URI is used.
+    * <p>
+    * The object type of the value must be compliant with the specified event
+    * type in the portlet deployment descriptor.
+    * <p>
+    * The value must have a valid JAXB binding and be serializable.
+    * 
+    * @param name
+    *            the local part of the event name to publish, must not be <code>null</code>
+    * @param value
+    *            the value of this event, must have a valid JAXB binding and 
+    *            be serializable, or <code>null</code>.
+    * 
+    * @exception java.lang.IllegalArgumentException
+    *                if name is <code>null</code>, the value is not
+    *                serializable, the value does not have a valid JAXB binding, the
+    *                object type of the value is not the same as specified in
+    *                the portlet deployment descriptor for this event name.
+    * @since 2.0
+    */
+   public void setEvent(String name, java.io.Serializable value);
 
 
-	/**
+   /**
     * <span class="changed_modified_3_0">Returns</span> a <code>Map</code> of the render parameters currently set on
-     * this response.
-     * <p>
+    * this response.
+    * <p>
     * The values in the returned <code>Map</code> are of type String array (<code>String[]</code>).
     * <p class="changed_added_3_0">
     * The contents of the returned map are immutable in the sense that modifying the map does not directly 
     * affect the render parameters. In order to set the parameters using the modified map, 
     * the {@link StateAwareResponse#setRenderParameters(Map)} method must be used.
     * </p>
-     * <p>
-     * If no parameters exist this method returns an empty <code>Map</code>.
-     * 
-     * @since 2.0
-     * 
-     * @return <code>Map</code> containing render parameter names as keys and
-     *         parameter values as map values, or an empty <code>Map</code> if
-     *         no parameters exist. The keys in the parameter map are of type
-     *         String. The values in the parameter map are of type String array (<code>String[]</code>).
+    * <p>
+    * If no parameters exist this method returns an empty <code>Map</code>.
+    * 
+    * @since 2.0
+    * 
+    * @return <code>Map</code> containing render parameter names as keys and
+    *         parameter values as map values, or an empty <code>Map</code> if
+    *         no parameters exist. The keys in the parameter map are of type
+    *         String. The values in the parameter map are of type String array (<code>String[]</code>).
     *         
     * @deprecated As of version 3.0. Use {@link #getRenderParameters()} instead.
-     */
+    */
 
    @Deprecated
-	public java.util.Map<String, String[]> getRenderParameterMap();
+   public java.util.Map<String, String[]> getRenderParameterMap();
 
 
-	/**
-	 * Removes the specified public render parameter.
-	 * The name must reference a public render parameter defined
-	 * in the portlet deployment descriptor under the
-	 * <code>public-render-parameter</code> element with the
-	 * <code>identifier</code> mapping to the parameter name.
-	 * 
-	 * @param name			a <code>String</code> specifying 
-	 *					the name of the public render parameter to be removed
-	 *
-	 * @exception  java.lang.IllegalArgumentException 
-	 *                            if name is <code>null</code>.
-	 * @since 2.0
+   /**
+    * Removes the specified public render parameter.
+    * The name must reference a public render parameter defined
+    * in the portlet deployment descriptor under the
+    * <code>public-render-parameter</code> element with the
+    * <code>identifier</code> mapping to the parameter name.
+    * 
+    * @param name       a <code>String</code> specifying 
+    *             the name of the public render parameter to be removed
+    *
+    * @exception  java.lang.IllegalArgumentException 
+    *                            if name is <code>null</code>.
+    * @since 2.0
     * 
     * @deprecated As of version 3.0. Use {@link #getRenderParameters()} instead.
-	 */
+    */
    
    @Deprecated
-	public void removePublicRenderParameter(String name);
+   public void removePublicRenderParameter(String name);
+
 }

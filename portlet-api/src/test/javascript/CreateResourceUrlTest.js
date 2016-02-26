@@ -501,7 +501,7 @@ describe('The portlet hub allows the portlet client to create a resource URL.',f
          }
       });
       
-      it('returns a URL with the portlet state set when cacheability = cacheLevelPage',function(){
+      it('returns a URL with the render state set when cacheability = cacheLevelPage',function(){
          var parms  = {rp1 : ["resVal"], rp2 : ["resVal2"]}, cache="cacheLevelPage", url, str;
          var testFunc = function () {
             return hubB.createResourceUrl(parms, cache);
@@ -517,7 +517,7 @@ describe('The portlet hub allows the portlet client to create a resource URL.',f
          }); 
       });
       
-      it('returns a URL with the portlet state set when cacheability = cacheLevelPortlet',function(){
+      it('returns a URL with the render state set when cacheability = cacheLevelPortlet',function(){
          var parms  = {rp1 : ["resVal"], rp2 : ["resVal2"]}, cache="cacheLevelPortlet", url, str;
          var testFunc = function () {
             return hubB.createResourceUrl(parms, cache);
@@ -533,7 +533,7 @@ describe('The portlet hub allows the portlet client to create a resource URL.',f
          }); 
       });
       
-      it('returns a URL with no portlet state set when cacheability = cacheLevelFull',function(){
+      it('returns a URL with no render state set when cacheability = cacheLevelFull',function(){
          var parms  = {rp1 : ["resVal"], rp2 : ["resVal2"]}, cache="cacheLevelFull", url, str, state;
          var testFunc = function () {
             return hubB.createResourceUrl(parms, cache);

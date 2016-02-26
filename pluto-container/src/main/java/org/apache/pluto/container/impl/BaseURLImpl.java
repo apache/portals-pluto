@@ -174,21 +174,21 @@ public abstract class BaseURLImpl implements BaseURL {
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletState#getRenderParameters()
+    * @see javax.portlet.RenderState#getRenderParameters()
     */
    public RenderParameters getRenderParameters() {
       return new RenderParametersImpl(urlProvider, windowId);
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletState#getPortletMode()
+    * @see javax.portlet.RenderState#getPortletMode()
     */
    public PortletMode getPortletMode() {
       return urlProvider.getPortletMode();
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletState#getWindowState()
+    * @see javax.portlet.RenderState#getWindowState()
     */
    public WindowState getWindowState() {
       return urlProvider.getWindowState();

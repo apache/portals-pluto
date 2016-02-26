@@ -49,7 +49,7 @@ import javax.servlet.http.Cookie;
  * @since 2.0
  * @see PortletRequest
  */
-public class PortletRequestWrapper extends PortletStateWrapper implements PortletRequest {
+public class PortletRequestWrapper extends RenderStateWrapper implements PortletRequest {
 
 
    /**

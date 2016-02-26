@@ -51,7 +51,7 @@ import javax.portlet.annotations.PortletSerializable;
  * special tokens that will be converted to a valid URL, by the portal, 
  * before the content is returned to the client.
  */
-public interface PortletURL extends BaseURL, MutablePortletState
+public interface PortletURL extends BaseURL, MutableRenderState
 {
 
 
@@ -76,17 +76,17 @@ public interface PortletURL extends BaseURL, MutablePortletState
   public void removePublicRenderParameter(String name); 
    
    /**
-    * Sets the value of a {@literal @}PortletStateScoped bean
+    * Sets the value of a {@literal @}RenderStateScoped bean
     * on an action or render URL. 
     * Calling this method copies the bean state to the URL so that the values are
     * available to the portlet when the URL is activated.
     *  
-    * @param bean    The {@literal @}PortletStateScoped bean
+    * @param bean    The {@literal @}RenderStateScoped bean
     * 
     * @exception java.lang.IllegalArgumentException
-    *                if the bean is not an {@literal @}PortletStateScoped bean.
+    *                if the bean is not an {@literal @}RenderStateScoped bean.
     *                
-    * @see  javax.portlet.annotations.PortletStateScoped
+    * @see  javax.portlet.annotations.RenderStateScoped
     */
    public void setBeanParameter(PortletSerializable bean);
 }

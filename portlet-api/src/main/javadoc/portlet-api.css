@@ -589,7 +589,7 @@ h1.hidden {
 .indexContainer a[href*="PortletResources.html"],
 .indexContainer a[href*="PortletSerializable.html"],
 .indexContainer a[href*="PortletSessionScoped.html"],
-.indexContainer a[href*="PortletStateScoped.html"],
+.indexContainer a[href*="RenderStateScoped.html"],
 .indexContainer a[href*="PortletListener.html"],
 .indexContainer a[href*="PortletListener.URLType.html"],
 .indexContainer a[href*="Preference.html"],
@@ -613,7 +613,7 @@ h1.hidden {
 .indexContainer a[href*="BaseURLWrapper.html"],
 .indexContainer a[href*="MutableActionParametersWrapper.html"],
 .indexContainer a[href*="MutablePortletParametersWrapper.html"],
-.indexContainer a[href*="MutablePortletStateWrapper.html"],
+.indexContainer a[href*="MutableRenderStateWrapper.html"],
 .indexContainer a[href*="MutableRenderParametersWrapper.html"],
 .indexContainer a[href*="MutableResourceParametersWrapper.html"],
 .indexContainer a[href*="PortletConfigWrapper.html"],
@@ -622,7 +622,7 @@ h1.hidden {
 .indexContainer a[href*="PortletParametersWrapper.html"],
 .indexContainer a[href*="PortletRequestDispatcherWrapper.html"],
 .indexContainer a[href*="PortletSessionWrapper.html"],
-.indexContainer a[href*="PortletStateWrapper.html"],
+.indexContainer a[href*="RenderStateWrapper.html"],
 .indexContainer a[href*="PortletURLWrapper.html"],
 .indexContainer a[href*="RenderParametersWrapper.html"],
 .indexContainer a[href*="RenderURLWrapper.html"],
@@ -641,8 +641,8 @@ h1.hidden {
 .indexContainer a[href*="ResourceParameters.html"],
 .indexContainer a[href*="MutableActionParameters.html"],
 .indexContainer a[href*="ActionParameters.html"],
-.indexContainer a[href*="MutablePortletState.html"],
-.indexContainer a[href*="PortletState.html"]
+.indexContainer a[href*="MutableRenderState.html"],
+.indexContainer a[href*="RenderState.html"]
 { 
    cursor: url(resources/changed_added_3_0_cursor.png), auto;
    background: url(resources/changed_added_3_0.png); 

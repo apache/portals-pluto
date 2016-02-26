@@ -37,11 +37,11 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * <div class='changed_added_3_0'>
- * Provides a CDI custom scope that is scoped to the portlet state. 
+ * Provides a CDI custom scope that is scoped to the render state. 
  * The purpose of this scope is to allow portlet render parameters to be handled like
  * beans.
  * <p>
- * If an <code>{@literal @}PortletStateScoped</code> bean is injected into a class containing 
+ * If an <code>{@literal @}RenderStateScoped</code> bean is injected into a class containing 
  * an <code>{@literal @}EventMethod</code> or an <code>{@literal @}ActionMethod</code>,
  * the bean is associated with the corresponding portlet.
  * The bean state is stored as a render parameter of the that portlet.
@@ -49,9 +49,9 @@ import static java.lang.annotation.RetentionPolicy.*;
  * A bean annotated with this scope must implement the {@link PortletSerializable} 
  * interface,
  * which provides methods used by the portlet bean container to synchronize the bean
- * according to the portlet state.
+ * according to the render state.
  * <p>
- * An <code>{@literal @}PortletStateScoped</code> bean is similar to an 
+ * An <code>{@literal @}RenderStateScoped</code> bean is similar to an 
  * <code>{@literal @}RequestScoped</code> bean in that a new instance is created at the
  * beginning of each request.
  * However, for <code>{@literal @}PortletStateScopedScoped</code> beans, the portlet bean 
@@ -61,11 +61,11 @@ import static java.lang.annotation.RetentionPolicy.*;
  * {@link PortletSerializable#serialize() PortletSerializable#serialize} method
  * at the end of an action request or event request to obtain the serialized bean data.
  * <p>
- * A <code>{@literal @}PortletStateScoped</code> bean must be a valid bean and
+ * A <code>{@literal @}RenderStateScoped</code> bean must be a valid bean and
  * must provide a default constructor.
  * <p>
  * Note that only changes made to the bean state during <code>ActionMethod</code>
- * or <code>EventMethod</code> execution are stored in the portlet state.
+ * or <code>EventMethod</code> execution are stored in the render state.
  * Changes made during <code>RenderMethod</code>, <code>ServeResourceMethod</code>,
  * or <code>HeaderMethod</code> execution will not be available during subsequent requests.
  * </div>
@@ -77,7 +77,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 @Target({TYPE})
 @NormalScope()
 @Inherited
-public @interface PortletStateScoped {
+public @interface RenderStateScoped {
    
    /**
     * The name of the render parameter under which the bean state is to be stored.

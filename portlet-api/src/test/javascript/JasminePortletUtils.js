@@ -39,7 +39,7 @@ var portlet = portlet || {};
 
          this.retType           = null;
          this.retErrorData      = null;
-         this.retPortletState   = null;
+         this.retRenderState   = null;
          this.retRenderData     = null;
          this.retPayload        = null;
       },
@@ -70,8 +70,8 @@ var portlet = portlet || {};
       // Meant to be called after the listener has been added 
       // & the callback has added the state
       getState        : function () {
-         if (this.retPortletState !== null) {
-            return this.cloneState(this.retPortletState);
+         if (this.retRenderState !== null) {
+            return this.cloneState(this.retRenderState);
          } else {
             return this.cloneState(this.pageState[this.portletId]);
          }
@@ -94,10 +94,10 @@ var portlet = portlet || {};
       },
       
       // onStateChange handler
-      onStateChange      : function (type, portletState, renderData) {
+      onStateChange      : function (type, RenderState, renderData) {
          this.complete = true;
          this.retType = type;
-         this.retPortletState = portletState;
+         this.retRenderState = RenderState;
          this.retRenderData = renderData;
          return;
       },
@@ -115,8 +115,8 @@ var portlet = portlet || {};
                };
             }
          }
-         return function(type, portletState, renderData) {
-            that.onStateChange(type, portletState, renderData);
+         return function(type, RenderState, renderData) {
+            that.onStateChange(type, RenderState, renderData);
          };
       },
       

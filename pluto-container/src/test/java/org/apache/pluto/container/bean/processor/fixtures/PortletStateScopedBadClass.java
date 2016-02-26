@@ -19,15 +19,15 @@
 
 package org.apache.pluto.container.bean.processor.fixtures;
 
-import javax.portlet.annotations.PortletStateScoped;
+import javax.portlet.annotations.RenderStateScoped;
 
 /**
- * Verifies that an {@literal @}PortletStateScoped bean not implementing 
+ * Verifies that an {@literal @}RenderStateScoped bean not implementing 
  * <code>PortletSerializable</code> is recognized.
  *  
  * @author Scott Nicklous
  */
-@PortletStateScoped
+@RenderStateScoped
 public class PortletStateScopedBadClass {
 
 }

@@ -119,7 +119,7 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
       // Set the portlet session bean holder for the thread & session
       PortletSessionBeanHolder.setBeanHolder(req, acb.getSessionScopedConfig());
 
-      // Set the portlet state scoped bean holder
+      // Set the render state scoped bean holder
       PortletStateScopedBeanHolder.setBeanHolder(req, acb.getStateScopedConfig());
 
       // Set up the artifact producer with request, response, and portlet config
@@ -138,7 +138,7 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
       // Remove the portlet session bean holder for the thread
       PortletSessionBeanHolder.removeBeanHolder();
 
-      // Remove the portlet state bean holder. pass response if we're
+      // Remove the render state bean holder. pass response if we're
       // dealing with a StateAwareResponse. The response is used for state
       // storage.
 

@@ -126,7 +126,7 @@ describe('The portlet hub allows the portlet client to set its state.',function(
      
    });
        
-   describe('The portlet hub setPortletState function: ',function(){
+   describe('The portlet hub setRenderState function: ',function(){
 
       // The tests in this section use just a single portlet - portletA
       var cbA = new portlet.jasmine.JasminePortletUtils(portletA, pageState);
@@ -152,33 +152,33 @@ describe('The portlet hub allows the portlet client to set its state.',function(
       });
 
       it('is present in the register return object and is a function',function(){
-         expect(typeof hubA.setPortletState).toEqual('function');
+         expect(typeof hubA.setRenderState).toEqual('function');
       });
 
       it('throws an IllegalArgumentException if no argument is provided',function(){
          var testFunc = function () {
-            hubA.setPortletState();
+            hubA.setRenderState();
          }
          expect(testFunc).toThrowCustomException("IllegalArgumentException");
       });
 
       it('throws an IllegalArgumentException if too many (>1) arguments are provided',function(){
          var testFunc = function () {
-            hubA.setPortletState("parm1", "parm2");
+            hubA.setRenderState("parm1", "parm2");
          }
          expect(testFunc).toThrowCustomException("IllegalArgumentException");
       });
 
       it('throws an IllegalArgumentException if the argument is not an object',function(){
          var testFunc = function () {
-            hubA.setPortletState(89);
+            hubA.setRenderState(89);
          }
          expect(testFunc).toThrowCustomException("IllegalArgumentException");
       });
 
       it('throws an IllegalArgumentException if the argument is null',function(){
          var testFunc = function () {
-            hubA.setPortletState(null);
+            hubA.setRenderState(null);
          }
          expect(testFunc).toThrowCustomException("IllegalArgumentException");
       });
@@ -189,7 +189,7 @@ describe('The portlet hub allows the portlet client to set its state.',function(
                windowState : "NORMAL",
          };
          var testFunc = function () {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }
          expect(testFunc).toThrowCustomException("IllegalArgumentException");
       });
@@ -200,7 +200,7 @@ describe('The portlet hub allows the portlet client to set its state.',function(
                portletMode : "VIEW",
          };
          var testFunc = function () {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }
          expect(testFunc).toThrowCustomException("IllegalArgumentException");
       });
@@ -211,16 +211,16 @@ describe('The portlet hub allows the portlet client to set its state.',function(
                windowState : "NORMAL",
          };
          var testFunc = function () {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }
          expect(testFunc).toThrowCustomException("IllegalArgumentException");
       });
 
-      it('throws an AccessDeniedException if setPortletState is called twice',function(){
+      it('throws an AccessDeniedException if setRenderState is called twice',function(){
          var state = cbA.getState();
          var testFunc = function () {
-            hubA.setPortletState(state);
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
+            hubA.setRenderState(state);
          }
          expect(testFunc).toThrowCustomException("AccessDeniedException");
       });
@@ -228,7 +228,7 @@ describe('The portlet hub allows the portlet client to set its state.',function(
       it('throws an NotInitializedException if no onStateChange listener is registered',function(){
          var state = cbA.getState();
          var testFunc = function () {
-            hubB.setPortletState(state);
+            hubB.setRenderState(state);
          }
          expect(testFunc).toThrowCustomException("NotInitializedException");
       });
@@ -237,7 +237,7 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbA.getState();
          state.windowState = "ABNORMAL";
          var testFunc = function () {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }
          expect(testFunc).toThrowCustomException("IllegalArgumentException");
       });
@@ -246,7 +246,7 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbA.getState();
          state.portletMode = "ABNORMAL";
          var testFunc = function () {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }
          expect(testFunc).toThrowCustomException("IllegalArgumentException");
       });
@@ -256,7 +256,7 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var testFunc = function () {
             hubA.removeEventListener(cbA.oscHandle);
             cbA.oscHandle = null;
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }
          expect(testFunc).toThrowCustomException("NotInitializedException");
       });
@@ -265,7 +265,7 @@ describe('The portlet hub allows the portlet client to set its state.',function(
         var state = pageState[portletA].state;
          runs(function() {
             var testFunc = function () {
-               hubA.setPortletState(state);
+               hubA.setRenderState(state);
             }
             expect(testFunc).not.toThrow();
          }); 
@@ -275,7 +275,7 @@ describe('The portlet hub allows the portlet client to set its state.',function(
       it('causes the onStateChange listener to be called',function(){
          var state = pageState[portletA].state;
          runs(function() {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }); 
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
       });
@@ -284,11 +284,11 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbA.getState();
          state.portletMode = "EDIT";
          runs(function() {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }); 
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbA.retPortletState.portletMode).toEqual("EDIT");
+            expect(cbA.retRenderState.portletMode).toEqual("EDIT");
          }); 
       });
 
@@ -296,11 +296,11 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbA.getState();
          state.portletMode = "VIEW";
          runs(function() {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }); 
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbA.retPortletState.portletMode).toEqual("VIEW");
+            expect(cbA.retRenderState.portletMode).toEqual("VIEW");
          }); 
       });
 
@@ -308,11 +308,11 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbA.getState();
          state.windowState = "MAXIMIZED";
          runs(function() {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }); 
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbA.retPortletState.windowState).toEqual("MAXIMIZED");
+            expect(cbA.retRenderState.windowState).toEqual("MAXIMIZED");
          }); 
       });
 
@@ -320,11 +320,11 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbA.getState();
          state.windowState = "NORMAL";
          runs(function() {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }); 
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbA.retPortletState.windowState).toEqual("NORMAL");
+            expect(cbA.retRenderState.windowState).toEqual("NORMAL");
          }); 
       });
 
@@ -332,11 +332,11 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbA.getState();
          state.parameters["NewParm"] = ["NewVal"];
          runs(function() {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }); 
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbA.retPortletState.parameters["NewParm"]).toEqual(["NewVal"]);
+            expect(cbA.retRenderState.parameters["NewParm"]).toEqual(["NewVal"]);
          }); 
       });
 
@@ -345,11 +345,11 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var val = ["NewVal1", "NewVal2"];
          state.parameters["NewParm"] = val;
          runs(function() {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }); 
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbA.retPortletState.parameters["NewParm"]).toEqual(val);
+            expect(cbA.retRenderState.parameters["NewParm"]).toEqual(val);
          }); 
       });
 
@@ -357,11 +357,11 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbA.getState();
          delete state.parameters["NewParm"];
          runs(function() {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }); 
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbA.retPortletState.parameters["NewParm"]).not.toEqual(["NewVal"]);
+            expect(cbA.retRenderState.parameters["NewParm"]).not.toEqual(["NewVal"]);
          }); 
       });
 
@@ -369,12 +369,12 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbA.getState();
          state.parameters = {};
          runs(function() {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }); 
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
             // count the parameters
-            var cnt = 0, parms = cbA.retPortletState.parameters;
+            var cnt = 0, parms = cbA.retRenderState.parameters;
             for (var parm in parms) {
                if (parms.hasOwnProperty(parm)) {
                   cnt++;
@@ -393,22 +393,22 @@ describe('The portlet hub allows the portlet client to set its state.',function(
                };
          state.parameters = newParms;
          runs(function() {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }); 
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbA.retPortletState.parameters).toEqual(hubA.newParameters(newParms));
+            expect(cbA.retRenderState.parameters).toEqual(hubA.newParameters(newParms));
          }); 
       });
 
       it('allows setting the state back to the original test data',function(){
          var state = cbA.getState();
          runs(function() {
-            hubA.setPortletState(state);
+            hubA.setRenderState(state);
          }); 
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbA.retPortletState).toEqual(hubA.newState(state));
+            expect(cbA.retRenderState).toEqual(hubA.newState(state));
          }); 
       });
 
@@ -416,7 +416,7 @@ describe('The portlet hub allows the portlet client to set its state.',function(
 
       
        
-   describe('The portlet hub setPortletState function handles public render parameters: ',function(){
+   describe('The portlet hub setRenderState function handles public render parameters: ',function(){
 
       // The tests in this section use three portlets that have public render parameters defined
       var cbB = new portlet.jasmine.JasminePortletUtils(portletB, pageState);
@@ -459,14 +459,14 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          }
       });
 
-      it('throws an AccessDeniedException if called before previous set portlet state completes',function(){
+      it('throws an AccessDeniedException if called before previous set render state completes',function(){
          var parms  = {rp1 : ["resVal"]};
          var el = document.createElement("form");
          runs(function() {
             var state = cbB.getState();
             state.parameters["pubparm1"] = ["NewVal"];
             var testFunc = function () {
-               hubB.setPortletState(state);
+               hubB.setRenderState(state);
             }
             expect(testFunc).not.toThrow();
          }); 
@@ -474,7 +474,7 @@ describe('The portlet hub allows the portlet client to set its state.',function(
             var state = cbC.getState();
             state.parameters["someparm1"] = ["NewVal"];
             var testFunc = function () {
-               hubC.setPortletState(state);
+               hubC.setRenderState(state);
             }
             expect(testFunc).toThrowCustomException("AccessDeniedException");
          }); 
@@ -485,11 +485,11 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbB.getState();
          state.parameters["pubparm1"] = ["NewVal"];
          runs(function() {
-            hubB.setPortletState(state);
+            hubB.setRenderState(state);
          }); 
          waitsFor(cbB.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbB.retPortletState.parameters["pubparm1"]).toEqual(["NewVal"]);
+            expect(cbB.retRenderState.parameters["pubparm1"]).toEqual(["NewVal"]);
          }); 
       });
 
@@ -497,11 +497,11 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbB.getState();
          state.parameters["pubparm1"] = ["NewVal2"];
          runs(function() {
-            hubB.setPortletState(state);
+            hubB.setRenderState(state);
          }); 
          waitsFor(cbC.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbC.retPortletState.parameters["pubparm1"]).toEqual(["NewVal2"]);
+            expect(cbC.retRenderState.parameters["pubparm1"]).toEqual(["NewVal2"]);
          }); 
       });
 
@@ -509,7 +509,7 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbB.getState();
          state.parameters["pubparm1"] = ["NewVal"];
          runs(function() {
-            hubB.setPortletState(state);
+            hubB.setRenderState(state);
          }); 
          waitsFor(cbB.getIsComplete(), "The onStateChange callback should be called", 100);
          waitsFor(cbC.getIsComplete(), "The onStateChange callback should be called", 100);
@@ -522,7 +522,7 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbC.getState();
          state.parameters["pubparm1"] = ["newVal4"];
          runs(function() {
-            hubC.setPortletState(state);
+            hubC.setRenderState(state);
          }); 
          waitsFor(cbB.getIsComplete(), "The onStateChange callback should be called", 100);
          waitsFor(cbC.getIsComplete(), "The onStateChange callback should be called", 100);
@@ -535,13 +535,13 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbD.getState();
          state.parameters["pubparm1"] = ["NewVal5"];
          runs(function() {
-            hubD.setPortletState(state);
+            hubD.setRenderState(state);
          }); 
          waitsFor(cbD.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
             expect(cbB.isComplete()).toBeFalsy();
             expect(cbC.isComplete()).toBeFalsy();
-            expect(cbD.retPortletState.parameters["pubparm1"]).toEqual(["NewVal5"]);
+            expect(cbD.retRenderState.parameters["pubparm1"]).toEqual(["NewVal5"]);
          }); 
       });
 
@@ -550,18 +550,18 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          prp1 = state.parameters.pubparm1 = ["NewVal5", "NewVal6"];
          prp2 = state.parameters.pubparm2 = ["NewVal7", "NewVal8"];
          runs(function() {
-            hubC.setPortletState(state);
+            hubC.setRenderState(state);
          }); 
          waitsFor(cbB.getIsComplete(), "The onStateChange callback should be called", 100);
          waitsFor(cbC.getIsComplete(), "The onStateChange callback should be called", 100);
          waitsFor(cbD.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbB.retPortletState.parameters["pubparm1"]).toEqual(prp1);
-            expect(cbC.retPortletState.parameters["pubparm1"]).toEqual(prp1);
-            expect(cbC.retPortletState.parameters["pubparm2"]).toEqual(prp2);
-            expect(cbD.retPortletState.parameters["pubparm2"]).toEqual(prp2);
+            expect(cbB.retRenderState.parameters["pubparm1"]).toEqual(prp1);
+            expect(cbC.retRenderState.parameters["pubparm1"]).toEqual(prp1);
+            expect(cbC.retRenderState.parameters["pubparm2"]).toEqual(prp2);
+            expect(cbD.retRenderState.parameters["pubparm2"]).toEqual(prp2);
             // pubparm1 is private parm for portletD
-            expect(cbD.retPortletState.parameters["pubparm1"]).not.toEqual(prp1);
+            expect(cbD.retRenderState.parameters["pubparm1"]).not.toEqual(prp1);
          }); 
       });
 
@@ -569,13 +569,13 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbB.getState();
          delete state.parameters["pubparm1"];
          runs(function() {
-            hubB.setPortletState(state);
+            hubB.setRenderState(state);
          }); 
          waitsFor(cbB.getIsComplete(), "The onStateChange callback should be called", 100);
          waitsFor(cbC.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbB.retPortletState.parameters["pubparm1"]).toBeUndefined();
-            expect(cbC.retPortletState.parameters["pubparm1"]).toBeUndefined();
+            expect(cbB.retRenderState.parameters["pubparm1"]).toBeUndefined();
+            expect(cbC.retRenderState.parameters["pubparm1"]).toBeUndefined();
          }); 
       });
 
@@ -583,13 +583,13 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbB.getState();
          state.parameters["pubparm1"] = ["NewVal2", "NewVal3"];
          runs(function() {
-            hubB.setPortletState(state);
+            hubB.setRenderState(state);
          }); 
          waitsFor(cbB.getIsComplete(), "The onStateChange callback should be called", 100);
          waitsFor(cbC.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbB.retPortletState.parameters["pubparm1"]).toEqual(["NewVal2", "NewVal3"]);
-            expect(cbC.retPortletState.parameters["pubparm1"]).toEqual(["NewVal2", "NewVal3"]);
+            expect(cbB.retRenderState.parameters["pubparm1"]).toEqual(["NewVal2", "NewVal3"]);
+            expect(cbC.retRenderState.parameters["pubparm1"]).toEqual(["NewVal2", "NewVal3"]);
             expect(cbD.isComplete()).toBeFalsy();
          }); 
       });
@@ -598,7 +598,7 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbB.getState();
          delete state.parameters["pubparm1"];
          runs(function() {
-            hubB.setPortletState(state);
+            hubB.setRenderState(state);
          }); 
          waitsFor(cbB.getIsComplete(), "The onStateChange callback should be called", 100);
          waitsFor(cbC.getIsComplete(), "The onStateChange callback should be called", 100);
@@ -612,16 +612,16 @@ describe('The portlet hub allows the portlet client to set its state.',function(
              prp1 = ["NewVal10", "NewVal11"];
          state.parameters["pubparm1"] = prp1;
          runs(function() {
-            hubC.setPortletState(state);
+            hubC.setRenderState(state);
          }); 
          waitsFor(cbB.getIsComplete(), "The onStateChange callback should be called", 100);
          waitsFor(cbC.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbB.retPortletState.parameters["pubparm1"]).toEqual(prp1);
-            expect(cbC.retPortletState.parameters["pubparm1"]).toEqual(prp1);
+            expect(cbB.retRenderState.parameters["pubparm1"]).toEqual(prp1);
+            expect(cbC.retRenderState.parameters["pubparm1"]).toEqual(prp1);
             // pubparm1 is private parameter for portlet D 
             expect(cbD.isComplete()).toBeFalsy();
-            expect(cbD.retPortletState.parameters["pubparm1"]).not.toEqual(prp1);
+            expect(cbD.retRenderState.parameters["pubparm1"]).not.toEqual(prp1);
          }); 
       });
 
@@ -629,17 +629,17 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var state = cbC.getState();
          state.parameters = {};
          runs(function() {
-            hubC.setPortletState(state);
+            hubC.setRenderState(state);
          }); 
          waitsFor(cbB.getIsComplete(), "The onStateChange callback should be called", 100);
          waitsFor(cbC.getIsComplete(), "The onStateChange callback should be called", 100);
          waitsFor(cbD.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbB.retPortletState.parameters["pubparm1"]).toBeUndefined();
-            expect(cbC.retPortletState.parameters["pubparm1"]).toBeUndefined();
-            expect(cbC.retPortletState.parameters["pubparm2"]).toBeUndefined();
-            expect(cbD.retPortletState.parameters["pubparm2"]).toBeUndefined();
-            expect(cbD.retPortletState.parameters["pubparm1"]).toBeDefined();
+            expect(cbB.retRenderState.parameters["pubparm1"]).toBeUndefined();
+            expect(cbC.retRenderState.parameters["pubparm1"]).toBeUndefined();
+            expect(cbC.retRenderState.parameters["pubparm2"]).toBeUndefined();
+            expect(cbD.retRenderState.parameters["pubparm2"]).toBeUndefined();
+            expect(cbD.retRenderState.parameters["pubparm1"]).toBeDefined();
          }); 
       });
 
@@ -648,17 +648,17 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          var prp1 = state.parameters.pubparm1;
          var prp2 = state.parameters.pubparm2;
          runs(function() {
-            hubC.setPortletState(state);
+            hubC.setRenderState(state);
          }); 
          waitsFor(cbB.getIsComplete(), "The onStateChange callback should be called", 100);
          waitsFor(cbC.getIsComplete(), "The onStateChange callback should be called", 100);
          waitsFor(cbD.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbB.retPortletState.parameters["pubparm1"]).toEqual(prp1);
-            expect(cbC.retPortletState.parameters["pubparm1"]).toEqual(prp1);
-            expect(cbC.retPortletState.parameters["pubparm2"]).toEqual(prp2);
-            expect(cbD.retPortletState.parameters["pubparm2"]).toEqual(prp2);
-            expect(cbD.retPortletState.parameters["pubparm1"]).not.toEqual(prp1);
+            expect(cbB.retRenderState.parameters["pubparm1"]).toEqual(prp1);
+            expect(cbC.retRenderState.parameters["pubparm1"]).toEqual(prp1);
+            expect(cbC.retRenderState.parameters["pubparm2"]).toEqual(prp2);
+            expect(cbD.retRenderState.parameters["pubparm2"]).toEqual(prp2);
+            expect(cbD.retRenderState.parameters["pubparm1"]).not.toEqual(prp1);
          }); 
       });
 
@@ -670,25 +670,25 @@ describe('The portlet hub allows the portlet client to set its state.',function(
              prp2 = stateC.parameters.pubparm2;
          
          runs(function() {
-            hubB.setPortletState(stateB);
+            hubB.setRenderState(stateB);
          }); 
          waitsFor(cbB.getIsComplete(), "The onStateChange callback should be called", 100);
          
          runs(function() {
-            hubC.setPortletState(stateC);
+            hubC.setRenderState(stateC);
          }); 
          waitsFor(cbC.getIsComplete(), "The onStateChange callback should be called", 100);
          
          runs(function() {
-            hubD.setPortletState(stateD);
+            hubD.setRenderState(stateD);
          }); 
          waitsFor(cbD.getIsComplete(), "The onStateChange callback should be called", 100);
          
          runs(function() {
-            expect(cbB.retPortletState.parameters["pubparm1"]).toEqual(prp1);
-            expect(cbC.retPortletState.parameters["pubparm1"]).toEqual(prp1);
-            expect(cbC.retPortletState.parameters["pubparm2"]).toEqual(prp2);
-            expect(cbD.retPortletState.parameters["pubparm2"]).toEqual(prp2);
+            expect(cbB.retRenderState.parameters["pubparm1"]).toEqual(prp1);
+            expect(cbC.retRenderState.parameters["pubparm1"]).toEqual(prp1);
+            expect(cbC.retRenderState.parameters["pubparm2"]).toEqual(prp2);
+            expect(cbD.retRenderState.parameters["pubparm2"]).toEqual(prp2);
          }); 
       });
    

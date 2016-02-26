@@ -37,7 +37,7 @@ public class WindowStateException extends PortletException
   private static final long serialVersionUID = 1L;
 
   /**
-   * Constructs a new portlet state exception with the given text. The
+   * Constructs a new window state exception with the given text. The
    * portlet container may use the text write it to a log.
    *
    * @param   text
@@ -53,7 +53,7 @@ public class WindowStateException extends PortletException
   }
 
   /**
-   * Constructs a new portlet state exception when the portlet needs to do
+   * Constructs a new window state exception when the portlet needs to do
    * the following:
    * <ul>
    * <il>throw an exception 
@@ -77,7 +77,7 @@ public class WindowStateException extends PortletException
   }
 
   /**
-   * Constructs a new portlet state exception when the portlet needs to throw an
+   * Constructs a new window state exception when the portlet needs to throw an
    * exception. The exception message is based on the localized message
    * of the underlying exception.
    *
@@ -94,7 +94,7 @@ public class WindowStateException extends PortletException
   }
 
   /**
-   * Returns the portlet state causing this exception.
+   * Returns the window state causing this exception.
    * 
    * @return  the window state causing this exception
    */

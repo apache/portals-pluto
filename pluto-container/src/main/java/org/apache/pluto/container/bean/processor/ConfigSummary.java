@@ -43,7 +43,7 @@ public class ConfigSummary {
    // Per-class error messages for portlet session scoped bean deployment problems
    private final Map<Class<?>, String> badSessionBeans = new HashMap<Class<?>, String>();
 
-   // Per-class error messages for portlet state scoped bean deployment problems
+   // Per-class error messages for render state scoped bean deployment problems
    private final Map<Class<?>, String> badStateBeans = new HashMap<Class<?>, String>();
    
    // Per-portlet error messages for deployment problems. Key is the portlet name.
@@ -89,7 +89,7 @@ public class ConfigSummary {
    }
    
    /**
-    * Stores an error string to document portlet state scoped bean deployment problems.
+    * Stores an error string to document render state scoped bean deployment problems.
     * 
     * @param portletName
     * @param msg
@@ -109,7 +109,7 @@ public class ConfigSummary {
    }
    
    /**
-    * Returns a list of all portlet state scoped bean classes with deployment problems.
+    * Returns a list of all render state scoped bean classes with deployment problems.
     * 
     * @return
     */

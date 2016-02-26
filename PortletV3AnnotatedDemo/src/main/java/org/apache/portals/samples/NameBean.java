@@ -31,16 +31,16 @@ import javax.portlet.annotations.ActionMethod;
 import javax.portlet.annotations.ActionParam;
 import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.PortletSerializable;
-import javax.portlet.annotations.PortletStateScoped;
+import javax.portlet.annotations.RenderStateScoped;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.URLFactory;
 import javax.portlet.MimeResponse.Copy;
 
 /**
- * Portlet state scoped bean. The bean is stored as a render parameter,
+ * Render state scoped bean. The bean is stored as a render parameter,
  * so it needs to be portlet serializable.
  */
-@PortletStateScoped
+@RenderStateScoped
 public class NameBean implements PortletSerializable {
    
    // Inject the portlet namespace 

@@ -20,14 +20,14 @@
 package javax.portlet.filter;
 
 import javax.portlet.PortletMode;
-import javax.portlet.PortletState;
+import javax.portlet.RenderState;
 import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
 
 /**
  * <div class="changed_added_3_0">
- * The <code>PortletStateWrapper</code> provides a convenient 
- * implementation of the <code>PortletState</code> interface 
+ * The <code>RenderStateWrapper</code> provides a convenient 
+ * implementation of the <code>RenderState</code> interface 
  * that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
@@ -36,15 +36,15 @@ import javax.portlet.WindowState;
  * @author Scott Nicklous
  *
  */
-public class PortletStateWrapper implements PortletState {
+public class RenderStateWrapper implements RenderState {
    
-   protected PortletState wrapped;
+   protected RenderState wrapped;
    
    /**
     * @param wrapped   the wrapped object to set.
-    * @throws java.lang.IllegalArgumentException   if the PortletState is null.
+    * @throws java.lang.IllegalArgumentException   if the RenderState is null.
     */
-   public PortletStateWrapper(PortletState wrapped) {
+   public RenderStateWrapper(RenderState wrapped) {
       if (wrapped == null) {
          throw new java.lang.IllegalArgumentException("Object to wrap is null");
       }
@@ -57,7 +57,7 @@ public class PortletStateWrapper implements PortletState {
     * 
     * @return the wrapped object.
     */
-   public PortletState getWrapped() {
+   public RenderState getWrapped() {
       return wrapped;
    }
 
@@ -66,9 +66,9 @@ public class PortletStateWrapper implements PortletState {
     * Sets the wrapped object.
     * 
     * @param wrapped   the wrapped object to set.
-    * @throws java.lang.IllegalArgumentException   if the PortletState is null.
+    * @throws java.lang.IllegalArgumentException   if the RenderState is null.
     */
-   public void setWrapped(PortletState wrapped) {
+   public void setWrapped(RenderState wrapped) {
       if (wrapped == null) {
          throw new java.lang.IllegalArgumentException("Object to wrap is null");
       }
@@ -76,7 +76,7 @@ public class PortletStateWrapper implements PortletState {
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletState#getRenderParameters()
+    * @see javax.portlet.RenderState#getRenderParameters()
     */
    @Override
    public RenderParameters getRenderParameters() {
@@ -84,7 +84,7 @@ public class PortletStateWrapper implements PortletState {
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletState#getPortletMode()
+    * @see javax.portlet.RenderState#getPortletMode()
     */
    @Override
    public PortletMode getPortletMode() {
@@ -92,7 +92,7 @@ public class PortletStateWrapper implements PortletState {
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletState#getWindowState()
+    * @see javax.portlet.RenderState#getWindowState()
     */
    @Override
    public WindowState getWindowState() {

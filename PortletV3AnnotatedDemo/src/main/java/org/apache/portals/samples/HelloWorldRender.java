@@ -28,7 +28,7 @@ import javax.portlet.annotations.RenderMethod;
  */
 public class HelloWorldRender {
    
-   // This is an @PortletStateScoped bean containing the name 
+   // This is an @RenderStateScoped bean containing the name 
    // entered through the form.
    @Inject
    private NameBean nameBean;

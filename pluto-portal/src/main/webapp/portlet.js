@@ -67,12 +67,12 @@
  */
 
 /**
- * Represents the portlet state.
+ * Represents the render state.
  * <p>
- * PortletState objects obtained from the Portlet Hub define some helper
+ * RenderState objects obtained from the Portlet Hub define some helper
  * functions for accessing the parameter values.
  * <p>
- * @typedef    PortletState
+ * @typedef    RenderState
  * @property   {PortletParameters}   parameters     The portlet parameters
  * @property   {PortletParameters}   p              an alias for the 'parameters' property
  * @property   {string}             portletMode    The portlet mode
@@ -103,7 +103,7 @@
 
 /**
  * Optional render data that may be provided by the portlet hub when
- * a portlet state change occurs.
+ * a render state change occurs.
  *
  * @typedef    RenderData
  * @property   {string}             renderData     The render data
@@ -119,29 +119,29 @@
  * event type through the {@link addEventListener} function.
  * <p>
  * When the portlet hub calls the onStateChange callback, it will pass
- * a copy of the current portlet state as a parameter.
- * The portlet client can make changes to the PortletState object
- * without affecting the actual portlet state, which is maintained by the
+ * a copy of the current render state as a parameter.
+ * The portlet client can make changes to the RenderState object
+ * without affecting the actual render state, which is maintained by the
  * portlet hub.
- * The portlet client uses the {@link setPortletState} method to
- * make changes to the local copy of the PortletState object active.
+ * The portlet client uses the {@link setRenderState} method to
+ * make changes to the local copy of the RenderState object active.
  * <p>
  * Optionally, the portlet hub will make a RenderData object available
  * to the portlet client.
  * When the RenderData object is available, it contains the same data
  * as would be available through a portlet resource request using the
- * current portlet state with no additional resource parameters and with
+ * current render state with no additional resource parameters and with
  * the resource URL cacheability option set to "PAGE".
  * <p>
  * The portlet client may not call portlet hub functions that can
- * cause state to be updated ({@link action}, {@link updatePortletState},
+ * cause state to be updated ({@link action}, {@link updateRenderState},
  * {@link startPartialAction})
  * during onStateChange execution.
  *
  * @name       onStateChange
  * @callback   onStateChange
  * @param      {string}       type           The event type "portlet.onStateChange".
- * @param      {PortletState} portletState   The portlet state
+ * @param      {RenderState} portletState   The render state
  * @param      {RenderData}   renderData     The render data.
  *                                           Optionally provided by the portlet hub.
  */
@@ -234,7 +234,7 @@
  * </dd>
  * </dl>
  * <h5>
- * Changing the Portlet State
+ * Changing the render state
  * </h5>
  * <p>
  * The portlet client can use portlet hub functions to initiate state changes.
@@ -261,7 +261,7 @@
  * portlets will not be updated with new page state information before the
  * page refresh is carried out.
  * <h5>
- * Receiving Portlet State Updates
+ * Receiving render state Updates
  * </h5>
  * <p>
  * When a state change occurs that affects a portlet, the portlet hub informs the
@@ -301,14 +301,14 @@
  * The portlet hub calls the portlet client callback functions in several situations as described
  * above.
  * When the portlet hub calls the portlet client, the portlet client may navigate
- * to a different page or may initiate another change to the portlet state
+ * to a different page or may initiate another change to the render state
  * that could potentially cause a page refresh.
  * <p>
- * Due to this behavior, the delivery of neither portlet state updates nor
+ * Due to this behavior, the delivery of neither render state updates nor
  * portlet client events can be guaranteed.
  * <p>
  * The portlet hub provides for orderly state transitions by allowing only a
- * single blocking operation ({@link action}, {@link setPortletState},
+ * single blocking operation ({@link action}, {@link setRenderState},
  * {@link startPartialAction}) to be active at any one time.
  * <p>
  * The state transition is considered to be active from the initial portlet
@@ -322,7 +322,7 @@
  * <li>
  * It is not possible to initiate a sequence of blocking operations.
  * <p>
- * For example, once a portlet client calls the {@link setPortletState} method,
+ * For example, once a portlet client calls the {@link setRenderState} method,
  * it cannot call any additional blocking method until after its
  * onStateChange listener function has been called.
  * </li>
@@ -447,7 +447,7 @@ var portlet = portlet || {};
     * for each portlet
     *
     * @typedef    PortletData
-    * @property   {PortletState} state       The current PortletState object
+    * @property   {RenderState} state       The current RenderState object
     * @property   {string[]}     pubParms    String array declaring the public
     *                                        parameters for the portlet
     * @property   {RenderData}   renderData  Render data for the portlet
@@ -813,7 +813,7 @@ var portlet = portlet || {};
    },
 
    /**
-    * Accepts an object containing changed portlet states. Updates
+    * Accepts an object containing changed render states. Updates
     * the state for each portlet present.
     *
     * @param    {string}   upids  array of portlet IDs to be updated 
@@ -858,14 +858,14 @@ var portlet = portlet || {};
    },
 
    /**
-    * Updates the portlet state, taking the public render
+    * Updates the render state, taking the public render
     * parameters into account.
     * The portlet client requesting the change, represented
     * by the supplied portelt ID, is updated, along with each portlet
     * that has a public render parameter update.
     *
     * @param      {string}       pid      The portlet ID
-    * @param      {PortletState} state    The new portlet state
+    * @param      {RenderState} state    The new render state
     * @throws  {AccessDeniedException}
     *                   Thrown if a blocking operation is
     *                   already in progress.
@@ -1017,7 +1017,7 @@ var portlet = portlet || {};
     * for the portlet.
     *
     * @param      {string}       pid      The portlet ID
-    * @param      {PortletState} state    The portlet state object to check
+    * @param      {RenderState} state    The render state object to check
     * @private
     * @throws  {IllegalArgumentException}
     *             Thrown if any component of the state is incorrect
@@ -1237,7 +1237,7 @@ var portlet = portlet || {};
              * <dl>
              * <dt>portlet.onStateChange</dt>
              * <dd>
-             * Fired when the portlet state changes.
+             * Fired when the render state changes.
              * In order to participate in the portlet Ajax support, a portlet client must register
              * an {@link onStateChange} event listener for this event type.
              * <p>
@@ -1360,31 +1360,31 @@ var portlet = portlet || {};
             },
          
             /**
-             * Sets the portlet state, which consists of the public and private
+             * Sets the render state, which consists of the public and private
              * render parameters, the portlet mode, and the window state.
              * <p>
-             * When the portlet state has been successfully set, a copy of the portlet state
+             * When the render state has been successfully set, a copy of the render state
              * will be provided to the portlet client
              * through the {@link onStateChange} listener function.
              * A portlet client can modify this state object and pass it to the
-             * setPortletState function to update the portlet state.
+             * setRenderState function to update the render state.
              * <p>
              * However, it is also possible for the portal to completely refresh the
-             * page as a response to setting the portlet state.
+             * page as a response to setting the render state.
              * This may occur in order to support portlets on the page that do not participate
              * in the Portlet 3.0 Ajax support or due to configuration settings, for example.
              * <p>
              * If the page is completely refreshed, it will be rendered according to
              * render parameters set on the server.
              * <p>
-             * Setting the portlet state is a blocking operation.
+             * Setting the render state is a blocking operation.
              * To allow for orderly state transitions, the portlet hub does not allow
              * this function to be used while a blocking operation is in progress.
              * A blocking operation is considered to be in progress
              * from the initial call until the final onStateChange event for that
              * operation has been fired. See {@link portlet} for further information.
              *
-             * @param   {PortletState}    state    The new state to be set
+             * @param   {RenderState}    state    The new state to be set
              *
              * @throws  {IllegalArgumentException}
              *                   Thrown if the input parameters are invalid
@@ -1397,15 +1397,15 @@ var portlet = portlet || {};
              *
              * @memberOf   PortletInit
              */
-            setPortletState : function (state) {
+            setRenderState : function (state) {
 
-               console.log("setPortletState", state);
+               console.log("setRenderState", state);
 
                // check for exactly 1 argument of type 'object'
                // make sure an onStateChange listener is registered by providing portlet ID
                checkArguments(arguments, 1, 1, ['object']);
          
-               // validate portlet state & throw exception if incorrect
+               // validate render state & throw exception if incorrect
                validateState(portletId, state);
          
                // Ok so far, so do the update. Throws if busy or no callback registered
@@ -1424,8 +1424,8 @@ var portlet = portlet || {};
              * the server-side serveResource method.
              * <p>
              * Resource parameters are optional parameters attached to a resource
-             * URL in addition to any portlet state values that may be present.
-             * Resource parameters do not influence the portlet state.
+             * URL in addition to any render state values that may be present.
+             * Resource parameters do not influence the render state.
              * <p>
              * The resource parameters must be an object containing properties
              * representing parameter names whose values must be an array of string
@@ -1538,11 +1538,11 @@ var portlet = portlet || {};
              * Initiates a portlet action using the specified action parameters and element
              * arguments.
              * <p>
-             * When the action has successfully completed, a copy of the portlet state
+             * When the action has successfully completed, a copy of the render state
              * will be provided to the portlet client
              * through the {@link onStateChange} listener function.
              * A portlet client can modify this state object and pass it to the
-             * setPortletState function to update the portlet state.
+             * setRenderState function to update the render state.
              * <p>
              * However, it is also possible for the portal to completely refresh the
              * page as a response to the action.
@@ -1553,8 +1553,8 @@ var portlet = portlet || {};
              * render parameters set on the server.
              * <p>
              * Action parameters are optional parameters attached to a action
-             * URL in addition to any portlet state values that may be present.
-             * Action parameters do not influence the portlet state.
+             * URL in addition to any render state values that may be present.
+             * Action parameters do not influence the render state.
              * <p>
              * The action parameters must be an object containing properties
              * representing parameter names whose values must be an array of string
@@ -1702,7 +1702,7 @@ var portlet = portlet || {};
              * action and event processing on the server resulting from the partial action.
              * <p>
              * After the <code>setPageState</code> function has been called,
-             * a copy of the portlet state will be provided to each affected portlet client
+             * a copy of the render state will be provided to each affected portlet client
              * through the {@link onStateChange} listener function.
              * <p>
              * However, it is also possible for the portal to completely refresh the
@@ -1714,8 +1714,8 @@ var portlet = portlet || {};
              * render parameters set on the server.
              * <p>
              * Action parameters are optional parameters attached to a action
-             * URL in addition to any portlet state values that may be present.
-             * Action parameters do not influence the portlet state.
+             * URL in addition to any render state values that may be present.
+             * Action parameters do not influence the render state.
              * <p>
              * The action parameters must be an object containing properties
              * representing parameter names whose values must be an array of string
@@ -1797,14 +1797,14 @@ var portlet = portlet || {};
              * state change is in progress before initiating a blocking operation.
              * <p>
              * Note that if the portlet client uses this function to implement
-             * a waiting function, the portlet state may be changed during the
+             * a waiting function, the render state may be changed during the
              * time that the portlet client waits.
              * Also note that the portal may choose to refresh the page as a response
              * to a blocking operation, in which case the waiting function would not
              * complete.
              * <p>
              * The portlet hub provides for orderly state transitions by allowing only a
-             * single blocking operation ({@link action}, {@link setPortletState},
+             * single blocking operation ({@link action}, {@link setRenderState},
              * {@link startPartialAction}) to be active at any one time.
              * <p>
              * The state transition is considered to be active from the initial portlet
@@ -1852,9 +1852,9 @@ var portlet = portlet || {};
              * Take for example a scenario where a portlet issues an event to
              * several other portlets, perhaps including itself.
              * Due to the event, each portlet updates parameters
-             * through use of the {@link setPortletState} function.
+             * through use of the {@link setRenderState} function.
              * <p>
-             * The <code>setPortletState</code> function can cause a page refresh
+             * The <code>setRenderState</code> function can cause a page refresh
              * depending on the situation.
              * If all portlets on the page participate in the JSR 362 Ajax support,
              * the portlet hub might not cause a page refresh.
@@ -1915,15 +1915,15 @@ var portlet = portlet || {};
             },
             
             /**
-             * Creates and returns a new PortletState object.
+             * Creates and returns a new RenderState object.
              * <p>
-             * If no argument is provided, an empty PortletState object will be
-             * returned. If an existing PortletState object is provided as argument,
+             * If no argument is provided, an empty RenderState object will be
+             * returned. If an existing RenderState object is provided as argument,
              * a clone of the input object will be returned.
              *
-             * @param   {PortletState}   s     An optional PortletState object to be copied
+             * @param   {RenderState}   s     An optional RenderState object to be copied
              *
-             * @returns {PortletState}         The new PortletState object
+             * @returns {RenderState}         The new RenderState object
              *
              * @memberOf   PortletInit
              */

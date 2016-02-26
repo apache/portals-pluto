@@ -27,7 +27,7 @@ package javax.portlet;
 
 /**
  * <div class="changed_added_3_0">
- * Provides access to render parameters, which make up part of the portlet state.
+ * Provides access to render parameters, which make up part of the render state.
  * </div>
  * @see     PortletParameters
  * @see     MutableRenderParameters

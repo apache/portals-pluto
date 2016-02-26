@@ -396,13 +396,13 @@ describe('The portlet hub allows the portlet client test for a blocking operatio
          }); 
       });
 
-      it('returns true when setPortletState has been called but the updates have not been dispatched',function(){
+      it('returns true when setRenderState has been called but the updates have not been dispatched',function(){
          var parms  = {ap1 : ["actionVal"]};
          runs(function() {
             var state = cbC.getState();
             state.parameters["someparm1"] = ["NewVal"];
             var testFunc = function () {
-               hubC.setPortletState(state);
+               hubC.setRenderState(state);
             }
             expect(testFunc).not.toThrow();
          }); 
@@ -414,13 +414,13 @@ describe('The portlet hub allows the portlet client test for a blocking operatio
          waitsFor(cbC.getIsComplete(), "The onStateChange callback should be called", 100);
       });
 
-      it('returns true through a different hub when setPortletState has been called but the updates have not been dispatched',function(){
+      it('returns true through a different hub when setRenderState has been called but the updates have not been dispatched',function(){
          var parms  = {ap1 : ["actionVal"]};
          runs(function() {
             var state = cbC.getState();
             state.parameters["someparm1"] = ["NewVal"];
             var testFunc = function () {
-               hubC.setPortletState(state);
+               hubC.setRenderState(state);
             }
             expect(testFunc).not.toThrow();
          }); 
@@ -432,13 +432,13 @@ describe('The portlet hub allows the portlet client test for a blocking operatio
          waitsFor(cbC.getIsComplete(), "The onStateChange callback should be called", 100);
       });
 
-      it('returns false after setPortletState updates have been dispatched',function(){
+      it('returns false after setRenderState updates have been dispatched',function(){
          var parms  = {ap1 : ["actionVal"]};
          runs(function() {
             var state = cbC.getState();
             state.parameters["someparm1"] = ["NewVal"];
             var testFunc = function () {
-               hubC.setPortletState(state);
+               hubC.setRenderState(state);
             }
             expect(testFunc).not.toThrow();
          }); 

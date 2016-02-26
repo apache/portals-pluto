@@ -28,32 +28,32 @@ package javax.portlet;
 
 /**
  * <div class="changed_added_3_0">
- * Provides read-write access to the portlet state.
- * The portlet state is represented by the render parameters,
+ * Provides read-write access to the render state.
+ * The render state is represented by the render parameters,
  * portlet mode and window state.
  * <p>
- * The mutable portlet state is available through certain portlet response and 
+ * The mutable render state is available through certain portlet response and 
  * portlet URL interfaces.
  * <p>
- * When changed on one of these interfaces, the modified portlet state becomes
+ * When changed on one of these interfaces, the modified render state becomes
  * active according to the rules of the originating object.
- * If the portlet state is modified on a response, it becomes active for
+ * If the render state is modified on a response, it becomes active for
  * subsequent portlet render phases.
- * If the portlet state is modified on a URL, it becomes active when the URL
+ * If the render state is modified on a URL, it becomes active when the URL
  * containing the modified state is activated.
  * <p>
  * For example, the methods defined here can be used to set a new portlet mode and 
  * render parameters on a {@link PortletURL} object. 
- * When the portlet URL containing this modified portlet state is activated,
+ * When the portlet URL containing this modified render state is activated,
  * the portlet will have the portlet mode and render parameter values set as they
  * were applied to the portlet URL.
  * </div>
  *
  * @since 3.0
- * @see      PortletState 
+ * @see      RenderState 
  * @see      MutablePortletParameters 
  */
-public interface MutablePortletState extends PortletState, Mutable {
+public interface MutableRenderState extends RenderState, Mutable {
 
 
    /**
@@ -113,10 +113,9 @@ public interface MutablePortletState extends PortletState, Mutable {
     *                
     * @since 3.0
     */
-   
+
    public void setPortletMode(PortletMode portletMode)
          throws PortletModeException;
-
 
    /**
     * <div class="changed_added_3_0">

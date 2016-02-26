@@ -43,7 +43,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * The type of the injection target must be <code>String</code> or <code>String[]</code>.
  * <p>
  * This annotation may only be used in an <code>{@literal @}RequestScoped</code> or
- * <code>{@literal @}PortletStateScoped</code> bean.
+ * <code>{@literal @}RenderStateScoped</code> bean.
  * <p>
  * Example:
  * <div class='codebox'>      

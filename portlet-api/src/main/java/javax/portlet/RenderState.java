@@ -26,27 +26,27 @@ package javax.portlet;
 
 /**
  * <div class="changed_added_3_0">
- * Provides read-only access to the portlet state.
- * The portlet state is represented by the render parameters,
+ * Provides read-only access to the render state.
+ * The render state is represented by the render parameters,
  * portlet mode and window state.
  * <p>
- * During render or resource request processing, the portlet state is constant and 
+ * During render or resource request processing, the render state is constant and 
  * can be accessed through methods provided by this interface.
  * <p>
- * During portlet action or event request ptocessing, the portlet state can be modified for 
+ * During portlet action or event request ptocessing, the render state can be modified for 
  * subsequent render phase processing.
- * During the portlet render or resource phases, URLs containing modified portlet state 
+ * During the portlet render or resource phases, URLs containing modified render state 
  * can be created.
- * When a portlet URL containing modified portlet state is triggered, the corresponding portlet
- * phase is executed with the modified portlet state.
+ * When a portlet URL containing modified render state is triggered, the corresponding portlet
+ * phase is executed with the modified render state.
  * <p>
- * The portlet state is modified through {@link MutablePortletState}.
+ * The render state is modified through {@link MutableRenderState}.
  * </div> 
  * @since      3.0
- * @see        MutablePortletState
+ * @see        MutableRenderState
  * @see        PortletParameters
  */
-public interface PortletState {
+public interface RenderState {
    
    
    /**

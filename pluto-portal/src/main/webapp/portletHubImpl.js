@@ -58,7 +58,7 @@ var portlet = portlet || {};
    
    /**
     * Callback function provided to the portlet hub to allow the the implementation
-    * to initiate an unsolicited portlet state update for an array of portlet IDs.
+    * to initiate an unsolicited render state update for an array of portlet IDs.
     * @param   {string[]}  pid      An array of portlet IDs
     * @returns {void}
     * @function
@@ -188,11 +188,11 @@ var portlet = portlet || {};
    },
 
    /**
-    * Compares the values of the named parameter in the new portlet state
+    * Compares the values of the named parameter in the new render state
     * with the values of that parameter in the current state.
     *
     * @param      {string}       pid      The portlet ID
-    * @param      {PortletState} state    The new portlet state
+    * @param      {RenderState} state    The new render state
     * @param      {string}       name     The parameter name to check
     * @returns    {boolean}               true if the new parm value is different
     *                                     from the current value
@@ -229,13 +229,13 @@ var portlet = portlet || {};
 
    /**
     * Gets the updated public parameters for the given portlet
-    * ID and new portlet state.
+    * ID and new render state.
     * Returns an object whose properties are the gruop indexes of the
     * updated public parameters. The values are the new public
     * parameter values.
     *
     * @param      {string}       pid      The portlet ID
-    * @param      {PortletState} state    The new portlet state
+    * @param      {RenderState} state    The new render state
     * @returns    {object}                object containing the updated PRPs
     * @private
     */
@@ -256,12 +256,12 @@ var portlet = portlet || {};
 
       
    /**
-    * Returns a deep-copy clone of the input portlet state object.
+    * Returns a deep-copy clone of the input render state object.
     * Used to provide the portlet client with a copy of the current 
     * state data rather than a reference to the live state itself.
     * 
-    * @param      {PortletState} state    The portlet state object to check
-    * @returns    {PortletState}          Clone of the input portlet state
+    * @param      {RenderState} state    The render state object to check
+    * @returns    {RenderState}          Clone of the input render state
     * @private
     */
    cloneState = function (aState) {
@@ -922,12 +922,12 @@ var portlet = portlet || {};
          getRenderData : function () {return getRenderData(pid);},
    
          /**
-          * Get current portlet state
+          * Get current render state
           */
          getState : function () {return getState(pid);},
    
          /**
-          * Set new portlet state. Returns promise fullfilled with an array of
+          * Set new render state. Returns promise fullfilled with an array of
           * IDs of portlets whose state have been modified.
           */
          setState : function (state) {return setState(pid, state);},

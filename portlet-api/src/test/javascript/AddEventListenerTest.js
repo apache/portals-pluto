@@ -55,7 +55,7 @@ describe('The portlet hub provides the ability to add and remove event listeners
        complete = false,
        retType,
        retErrorData,
-       retPortletState,
+       retRenderState,
        retRenderData,
        
        // handler for portlet client event
@@ -71,9 +71,9 @@ describe('The portlet hub provides the ability to add and remove event listeners
        },
        
        // onStateChange handler
-       onStateChange = function (type, portletState, renderData) {
+       onStateChange = function (type, RenderState, renderData) {
           retType = type;
-          retPortletState = portletState;
+          retRenderState = RenderState;
           retRenderData = renderData;
           complete = true;
           return;
@@ -343,8 +343,8 @@ describe('The portlet hub provides the ability to add and remove event listeners
          expect(retType).toEqual("portlet.onStateChange");
       });
 
-      it('is passed a PortletState parameter that is an object',function(){
-         expect(typeof retPortletState).toEqual('object');
+      it('is passed a RenderState parameter that is an object',function(){
+         expect(typeof retRenderState).toEqual('object');
       });
 
       // portlet A is set up not to have render data
@@ -352,30 +352,30 @@ describe('The portlet hub provides the ability to add and remove event listeners
          expect(typeof retRenderData).toEqual('undefined');
       });
 
-      it('is passed a PortletState parameter that has 4 properties',function(){
+      it('is passed a RenderState parameter that has 4 properties',function(){
          var cnt = 0, prop;
-         for (prop in retPortletState) {
-            if (retPortletState.hasOwnProperty(prop)) {
+         for (prop in retRenderState) {
+            if (retRenderState.hasOwnProperty(prop)) {
                cnt = cnt + 1;
             }
          }
          expect(cnt).toEqual(4);
       });
 
-      it('is passed a PortletState object with a "parameters" property',function(){
-         expect(typeof retPortletState.parameters).not.toEqual('undefined');
+      it('is passed a RenderState object with a "parameters" property',function(){
+         expect(typeof retRenderState.parameters).not.toEqual('undefined');
       });
 
-      it('is passed a PortletState object with a "portletMode" property',function(){
-         expect(typeof retPortletState.portletMode).not.toEqual('undefined');
+      it('is passed a RenderState object with a "portletMode" property',function(){
+         expect(typeof retRenderState.portletMode).not.toEqual('undefined');
       });
 
-      it('is passed a PortletState object with a "windowState" property',function(){
-         expect(typeof retPortletState.windowState).not.toEqual('undefined');
+      it('is passed a RenderState object with a "windowState" property',function(){
+         expect(typeof retRenderState.windowState).not.toEqual('undefined');
       });
 
-      it('its PortletState "parameters" property is an object',function(){
-         expect(typeof retPortletState.parameters).toEqual('object');
+      it('its RenderState "parameters" property is an object',function(){
+         expect(typeof retRenderState.parameters).toEqual('object');
       });
       
       var parmCnt = 0, parms = pageState[portletA].state.parameters;
@@ -385,8 +385,8 @@ describe('The portlet hub provides the ability to add and remove event listeners
          }
       }
 
-      it('its PortletState has ' + parmCnt + " parameters",function(){
-         var retParmCnt = 0, parms = retPortletState.parameters;
+      it('its RenderState has ' + parmCnt + " parameters",function(){
+         var retParmCnt = 0, parms = retRenderState.parameters;
          for (var prop in parms) {
             if (parms.hasOwnProperty(prop)) {
                retParmCnt = retParmCnt + 1;
@@ -395,33 +395,33 @@ describe('The portlet hub provides the ability to add and remove event listeners
          expect(retParmCnt).toEqual(parmCnt);
       });
 
-      it('its PortletState "windowState" property is a string',function(){
-         expect(typeof retPortletState.windowState).toEqual('string');
+      it('its RenderState "windowState" property is a string',function(){
+         expect(typeof retRenderState.windowState).toEqual('string');
       });
 
-      it('its PortletState "portletMode" property is a string',function(){
-         expect(typeof retPortletState.portletMode).toEqual('string');
+      it('its RenderState "portletMode" property is a string',function(){
+         expect(typeof retRenderState.portletMode).toEqual('string');
       });
 
-      it('its PortletState has windowState=' + 
+      it('its RenderState has windowState=' + 
             pageState[portletA].state.windowState,function(){
-         expect(retPortletState.windowState)
+         expect(retRenderState.windowState)
             .toEqual(pageState[portletA].state.windowState);
       });
 
-      it('its PortletState has portletMode=' + 
+      it('its RenderState has portletMode=' + 
             pageState[portletA].state.portletMode,function(){
-         expect(retPortletState.portletMode)
+         expect(retRenderState.portletMode)
             .toEqual(pageState[portletA].state.portletMode);
       });
 
-      it('its PortletState parameter is not identical to the test state object"',function(){
-         expect(retPortletState).not.toBe(pageState[portletA].state);
+      it('its RenderState parameter is not identical to the test state object"',function(){
+         expect(retRenderState).not.toBe(pageState[portletA].state);
       });
 
-      it('its PortletState parameter equals the test state object"',function(){
+      it('its RenderState parameter equals the test state object"',function(){
          var ts = hubA.newState(pageState[portletA].state);
-         expect(retPortletState).toEqual(ts);
+         expect(retRenderState).toEqual(ts);
       });
    
    });
@@ -460,39 +460,39 @@ describe('The portlet hub provides the ability to add and remove event listeners
          expect(retType).toEqual("portlet.onStateChange");
       });
 
-      it('is passed a PortletState parameter that is an object',function(){
-         expect(typeof retPortletState).toEqual('object');
+      it('is passed a RenderState parameter that is an object',function(){
+         expect(typeof retRenderState).toEqual('object');
       });
 
-      it('is passed a PortletState parameter that has 4 properties',function(){
+      it('is passed a RenderState parameter that has 4 properties',function(){
          var cnt = 0;
-         for (var prop in retPortletState) {
-            if (retPortletState.hasOwnProperty(prop)) {
+         for (var prop in retRenderState) {
+            if (retRenderState.hasOwnProperty(prop)) {
                cnt = cnt + 1;
             }
          }
          expect(cnt).toEqual(4);
       });
 
-      it('is passed a PortletState object with a "parameters" property',function(){
-         expect(typeof retPortletState.parameters).not.toEqual('undefined');
+      it('is passed a RenderState object with a "parameters" property',function(){
+         expect(typeof retRenderState.parameters).not.toEqual('undefined');
       });
 
-      it('is passed a PortletState object with a "portletMode" property',function(){
-         expect(typeof retPortletState.portletMode).not.toEqual('undefined');
+      it('is passed a RenderState object with a "portletMode" property',function(){
+         expect(typeof retRenderState.portletMode).not.toEqual('undefined');
       });
 
-      it('is passed a PortletState object with a "windowState" property',function(){
-         expect(typeof retPortletState.windowState).not.toEqual('undefined');
+      it('is passed a RenderState object with a "windowState" property',function(){
+         expect(typeof retRenderState.windowState).not.toEqual('undefined');
       });
 
-      it('its PortletState parameter is not identical to the test state object"',function(){
-         expect(retPortletState).not.toBe(pageState[portletB].state);
+      it('its RenderState parameter is not identical to the test state object"',function(){
+         expect(retRenderState).not.toBe(pageState[portletB].state);
       });
 
-      it('its PortletState parameter equals the test state object"',function(){
+      it('its RenderState parameter equals the test state object"',function(){
          var ts = hubA.newState(pageState[portletB].state);
-         expect(retPortletState).toEqual(ts);
+         expect(retRenderState).toEqual(ts);
       });
 
       // portlet B is set up to have render data

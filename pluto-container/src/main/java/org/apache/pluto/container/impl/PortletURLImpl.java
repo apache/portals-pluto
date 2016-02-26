@@ -164,7 +164,7 @@ public abstract class PortletURLImpl extends BaseURLImpl implements PortletURL {
       
       if (name == null) {
          StringBuilder txt = new StringBuilder(128);
-         txt.append("Given bean is not @PortletStateScoped.");
+         txt.append("Given bean is not @RenderStateScoped.");
          txt.append(", bean: ").append(bean);
          LOGGER.info(txt.toString());
          throw new IllegalArgumentException(txt.toString());
