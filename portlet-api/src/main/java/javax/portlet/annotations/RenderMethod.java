@@ -35,8 +35,6 @@ import java.lang.annotation.Target;
  * <div class='changed_added_3_0'>
  * Designates a method corresponding to the portlet API render method.
  * The annotated method must have one of the following signatures:
- * <p>
- * The annotated method must have one of the following signatures:
  * <ul>
  * <li>
  * <code>public void &lt;methodName&gt;(RenderRequest, RenderResponse)</code>

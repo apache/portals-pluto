@@ -1,3 +1,27 @@
+/*  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+
+/*
+ * This source code implements specifications defined by the Java
+ * Community Process. In order to remain compliant with the specification
+ * DO NOT add / change / or delete method signatures!
+ */
+
 package javax.portlet;
 
 
@@ -51,47 +75,6 @@ public interface MutablePortletState extends PortletState, Mutable {
 
    /**
     * <div class="changed_added_3_0">
-    * Sets the window state of a portlet to the given window state.
-    * <p>
-    * Possible values are the standard window states and any custom window
-    * states supported by the portal and the portlet. Standard window states
-    * are:
-    * <ul>
-    * <li>MINIMIZED
-    * <li>NORMAL
-    * <li>MAXIMIZED
-    * </ul>
-    * <p>
-    * Not more than one window state can be set.
-    * If more than one window state is set, only the last one set
-    * is valid.
-    * </div>
-    * 
-    * @param windowState
-    *            the new portlet window state
-    * 
-    * @exception WindowStateException
-    *                   if the portlet cannot switch to this state,
-    *                   because the portal does not support this state, the portlet has not 
-    *                   declared in its deployment descriptor that it supports this state, or the current
-    *                   user is not allowed to switch to this state.
-    *                   The <code>PortletRequest.isWindowStateAllowed()</code> method can be used
-    *                   to check if the portlet can set a given window state.
-    * @exception java.lang.IllegalStateException
-    *                if the method is invoked after <code>sendRedirect</code>
-    *                has been called.
-    * @exception java.lang.IllegalArgumentException
-    *                if the input parameter is <code>null</code>.
-    * 
-    * @since 3.0
-    * 
-    */
-
-   public void setWindowState(WindowState windowState)
-         throws WindowStateException;
-
-   /**
-    * <div class="changed_added_3_0">
     * Sets the portlet mode of a portlet to the given portlet mode.
     * <p>
     * Possible values are the standard portlet modes and any custom portlet
@@ -130,8 +113,50 @@ public interface MutablePortletState extends PortletState, Mutable {
     *                
     * @since 3.0
     */
-
+   
    public void setPortletMode(PortletMode portletMode)
          throws PortletModeException;
+
+
+   /**
+    * <div class="changed_added_3_0">
+    * Sets the window state of a portlet to the given window state.
+    * <p>
+    * Possible values are the standard window states and any custom window
+    * states supported by the portal and the portlet. Standard window states
+    * are:
+    * <ul>
+    * <li>MINIMIZED
+    * <li>NORMAL
+    * <li>MAXIMIZED
+    * </ul>
+    * <p>
+    * Not more than one window state can be set.
+    * If more than one window state is set, only the last one set
+    * is valid.
+    * </div>
+    * 
+    * @param windowState
+    *            the new portlet window state
+    * 
+    * @exception WindowStateException
+    *                   if the portlet cannot switch to this state,
+    *                   because the portal does not support this state, the portlet has not 
+    *                   declared in its deployment descriptor that it supports this state, or the current
+    *                   user is not allowed to switch to this state.
+    *                   The <code>PortletRequest.isWindowStateAllowed()</code> method can be used
+    *                   to check if the portlet can set a given window state.
+    * @exception java.lang.IllegalStateException
+    *                if the method is invoked after <code>sendRedirect</code>
+    *                has been called.
+    * @exception java.lang.IllegalArgumentException
+    *                if the input parameter is <code>null</code>.
+    * 
+    * @since 3.0
+    * 
+    */
+
+   public void setWindowState(WindowState windowState)
+         throws WindowStateException;
 
 }
