@@ -329,7 +329,7 @@ public class RequestTests_PortletRequest_ApiRender implements Portlet, ResourceS
       /* Details: "Method getPortletSession(): Returns current                */
       /* PortletSession if one already exists"                                */
       TestResult tr22 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPORTLETSESSIONA1);
-      PortletSession ps=portletReq.getPortletSession();
+      
       
       tr22.writeTo(writer);
 

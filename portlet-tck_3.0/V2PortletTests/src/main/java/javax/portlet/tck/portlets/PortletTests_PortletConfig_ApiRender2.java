@@ -160,8 +160,9 @@ private static final String XMLConstants = null;
       /* Details: "Method getPublishingEventQNames(): Returns an empty        */
       /* Enumeration if there are no processing events are defined"           */
       TestResult tr4 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPUBLISHINGEVENTQNAMES2);
-      
-       tr4.writeTo(writer);
+      Enumeration<QName> evntqnames=portletConfig.getPublishingEventQNames();
+      tr4.appendTcDetail("PublishingEvnet"+evntqnames.toString());
+      tr4.writeTo(writer);
 
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender2_getProcessingEventQNames2 */

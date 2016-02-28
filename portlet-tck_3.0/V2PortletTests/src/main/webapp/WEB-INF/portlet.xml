@@ -73,9 +73,8 @@
       </supports>
       <portlet-info>
          <title>PortletTests_PortletConfig_ApiRender2</title>
-      </portlet-info>
-   
-      </portlet>
+      </portlet-info> 
+    </portlet>
 
    <portlet>
       <portlet-name>PortletTests_PortletMode_ApiRender</portlet-name>

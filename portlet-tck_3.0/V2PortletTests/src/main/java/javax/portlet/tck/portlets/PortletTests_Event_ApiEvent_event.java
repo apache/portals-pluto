@@ -57,6 +57,9 @@ public class PortletTests_Event_ApiEvent_event implements Portlet, EventPortlet,
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
+      QName eventQName = new QName(TCKNAMESPACE,
+              "PortletTests_Event_ApiEvent");
+       portletResp.setEvent(eventQName, "Hi!");
    }
 
    @Override
@@ -107,9 +110,13 @@ public class PortletTests_Event_ApiEvent_event implements Portlet, EventPortlet,
       /* Details: "Method getQName(): Returned value may not be null"         */
       TestResult tr1 = tcd.getTestResultSucceeded(V2PORTLETTESTS_EVENT_APIEVENT_GETQNAME2);
       QName qn1 = evt.getQName();
+      StringBuilder txt1=new StringBuilder(128);
+      txt1.append(qn1);
       if (qn1 == null) {
-         tr0.appendTcDetail("QName is null.");
+         tr1.appendTcDetail("QName is null.");
+         tr1.appendTcDetail(txt1.toString());
       } 
+      tr1.setTcSuccess(true);
       tr1.writeTo(writer);
       
       /* TestCase: V2PortletTests_Event_ApiEvent_getName1                     */
@@ -121,11 +128,11 @@ public class PortletTests_Event_ApiEvent_event implements Portlet, EventPortlet,
       if(qn2==null) {
     	  tr2.appendTcDetail("Local Part of Event name is Null.");
       } else if(!qn2.equals(evtname)) {
-      StringBuilder txt = new StringBuilder(128);
-      txt.append("EventName is not expected value.");
-      txt.append(" Expected: ").append(evtname);
-      txt.append(" Actual: ").append(qn2);
-      tr2.appendTcDetail(txt.toString());
+      StringBuilder txt2 = new StringBuilder(128);
+      txt2.append("EventName is not expected value.");
+      txt2.append(" Expected: ").append(evtname);
+      txt2.append(" Actual: ").append(qn2);
+      tr2.appendTcDetail(txt2.toString());
       }
       
       tr2.writeTo(writer);
@@ -150,11 +157,11 @@ public class PortletTests_Event_ApiEvent_event implements Portlet, EventPortlet,
     	  tr4.appendTcDetail("EventPayload is null");
       } 
       if ((val instanceof String)) {
-    	  String txt = (String) val;
-    	  if (txt.equals("Hi!")) {
+    	  String txt4 = (String) val;
+    	  if (txt4.equals("Hi!")) {
             tr4.setTcSuccess(true);  
     	  } else {  
-			tr4.appendTcDetail("The EventPayloadvalue did not match actual value :" + txt);	
+			tr4.appendTcDetail("The EventPayloadvalue did not match actual value :" + txt4);	
     	    }
        } 
       } catch(Exception e) {tr4.appendTcDetail(e.toString());}
@@ -163,10 +170,12 @@ public class PortletTests_Event_ApiEvent_event implements Portlet, EventPortlet,
       /* TestCase: V2PortletTests_Event_ApiEvent_getValue2                    */
       /* Details: "Method getValue(String, String): Returned value is null    */
       /* if the event has no payload"                                         */
-      TestResult tr5 = tcd.getTestResultSucceeded(V2PORTLETTESTS_EVENT_APIEVENT_GETVALUE2);
+      TestResult tr5 = tcd.getTestResultFailed(V2PORTLETTESTS_EVENT_APIEVENT_GETVALUE2);
       Serializable val1=evt.getValue();
       if(val1==null) {
-    	  tr5.appendTcDetail("EventPayload is null");
+    	  tr5.setTcSuccess(true);
+      } else {
+    	  tr5.appendTcDetail("EventPayload has a value:"+val1.toString());
       }
       tr5.writeTo(writer);
       

@@ -71,10 +71,16 @@ public class PortletTests_Event_ApiEvent implements Portlet, ResourceServingPort
       portletReq.setAttribute(THREADID_ATTR, tid);
 
       StringWriter writer = new StringWriter();
-
+      
       QName eventQName = new QName(TCKNAMESPACE,
              "PortletTests_Event_ApiEvent");
-      portletResp.setEvent(eventQName, "Hi!");
+      String val = portletReq.getParameter(BUTTON_PARAM_NAME);
+      if (val != null  && val.equals(V2PORTLETTESTS_EVENT_APIEVENT_GETVALUE2)) {  
+            portletResp.setEvent(eventQName,null);
+      }
+      else { 
+    	    portletResp.setEvent(eventQName,"Hi!");
+      }
    }
 
    @Override

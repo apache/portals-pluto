@@ -95,9 +95,10 @@ public class PortletTests_WindowState_ApiRender implements Portlet, ResourceServ
       portletReq.setAttribute(THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
-
+      
       JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
-
+      
+      WindowState state=portletReq.getWindowState();
       // Create result objects for the tests
 
       ClassChecker cc = new ClassChecker(portletReq.getWindowState().getClass());
@@ -106,19 +107,25 @@ public class PortletTests_WindowState_ApiRender implements Portlet, ResourceServ
       /* Details: "The constructor WindowState(java.lang.String): allows a    */
       /* WindowState object of the specified name to be constructed"          */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_CONSTRUCTOR1);
-      try {
-          Class<?>[] parms = {String.class};
-          tr0.setTcSuccess(cc.hasConstructor(parms));
-       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
+      WindowState ws=new WindowState("newstate");
+      if(ws!=null && ws.toString().equals("newstate")) {
+    	  tr0.setTcSuccess(true);
+      } else {
+    	  tr0.appendTcDetail("The Window State is null");
+      }
        tr0.writeTo(writer);
 
       /* TestCase: V2PortletTests_WindowState_ApiRender_constructor2          */
       /* Details: "The constructor WindowState(java.lang.String): converts    */
       /* any upper case letters in the name parameter to lower case"          */
       TestResult tr1 = tcd.getTestResultFailed(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_CONSTRUCTOR2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
-      tr1.writeTo(writer);
+      WindowState ws1=new WindowState("NEWSTATE");
+      if(ws1!=null && ws1.toString().equals("newstate")) {
+    	  tr1.setTcSuccess(true);
+      } else {
+    	  tr1.appendTcDetail("The Window State is null");
+      }
+       tr1.writeTo(writer);
 
       /* TestCase: V2PortletTests_WindowState_ApiRender_fieldMAXIMIZED        */
       /* Details: "Has WindowState field MAXIMIZED with value of              */
@@ -149,40 +156,44 @@ public class PortletTests_WindowState_ApiRender implements Portlet, ResourceServ
 
       /* TestCase: V2PortletTests_WindowState_ApiRender_toString              */
       /* Details: "Method toString(): Returns a String representation of      */
-      /* the portlet mode"                                                    */
+      /* the Window State"                                                    */
       TestResult tr5 = tcd.getTestResultFailed(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_TOSTRING);
-      try {
-          String name = "toString";
-          Class<?> retType = String.class;
-          Class<?>[] parms = null;
-          tr5.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
-       } catch(Exception e) {tr5.appendTcDetail(e.toString());}
+      String tstring=state.toString();
+      if(tstring.equals("normal")) {
+    	  tr5.setTcSuccess(true);
+      } else {
+          tr5.appendTcDetail("String Representation of Window State: "+state.toString());  
+         }
        tr5.writeTo(writer);
 
       /* TestCase: V2PortletTests_WindowState_ApiRender_hashCode              */
       /* Details: "Method hashCode(): Returns an int containing the has       */
-      /* code for the portlet mode"                                           */
-      TestResult tr6 = tcd.getTestResultFailed(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_HASHCODE);
-      try {
-          String name = "hashCode";
-          Class<?> retType = int.class;
-          Class<?>[] parms = null;
-          tr6.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
-       } catch(Exception e) {tr6.appendTcDetail(e.toString());}
+      /* code for the Window State"                                           */
+      TestResult tr6 = tcd.getTestResultSucceeded(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_HASHCODE);
+      Object hcode=state.hashCode();
+      if(!hcode.equals(hcode)) {
+    	  tr6.setTcSuccess(true);
+    	  tr6.appendTcDetail("hashCode code value for Window State: "+hcode.toString());
+       }
        tr6.writeTo(writer);
 
       /* TestCase: V2PortletTests_WindowState_ApiRender_equals                */
       /* Details: "Method equals(): Returns true if the WindowState equals    */
       /* the specified WindowState"                                           */
       TestResult tr7 = tcd.getTestResultFailed(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_EQUALS);
-      try {
-          String name = "equals";
-          Class<?> retType = boolean.class;
-          Class<?>[] parms = {Object.class};
-          tr7.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
-       } catch(Exception e) {tr7.appendTcDetail(e.toString());}
+      Object obj=portletReq.getWindowState();
+      if(obj instanceof WindowState) {
+    	  tr7.setTcSuccess(true);
+      }  else {
+    		  tr7.appendTcDetail("The WindowState does not equals the expected state"+obj.toString());
+      }
        tr7.writeTo(writer);
 
    }
+
+private void WindowState() {
+	// TODO Auto-generated method stub
+	
+}
 
 }

@@ -97,7 +97,9 @@ public class PortletTests_PortletMode_ApiRender implements Portlet, ResourceServ
       PrintWriter writer = portletResp.getWriter();
 
       JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
-
+     
+      PortletMode mode=portletReq.getPortletMode();
+      
       // Create result objects for the tests
 
       ClassChecker cc = new ClassChecker(portletReq.getPortletMode().getClass());
@@ -106,18 +108,24 @@ public class PortletTests_PortletMode_ApiRender implements Portlet, ResourceServ
       /* Details: "The constructor PortletMode(java.lang.String): allows a    */
       /* PortletMode object of the specified name to be constructed"          */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_CONSTRUCTOR1);
-      try {
-          Class<?>[] parms = {String.class};
-          tr0.setTcSuccess(cc.hasConstructor(parms));
-       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
+      WindowState ws=new WindowState("newmode");
+      if(ws!=null && ws.toString().equals("newmode")) {
+    	  tr0.setTcSuccess(true);
+      } else {
+    	  tr0.appendTcDetail("The Portlet Mode is null");
+      }
        tr0.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletMode_ApiRender_constructor2          */
       /* Details: "The constructor PortletMode(java.lang.String): converts    */
       /* any upper case letters in the name parameter to lower case"          */
       TestResult tr1 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_CONSTRUCTOR2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      WindowState ws1=new WindowState("NEWMODE");
+      if(ws1!=null && ws1.toString().equals("newmode")) {
+    	  tr1.setTcSuccess(true);
+      } else {
+    	  tr1.appendTcDetail("The Portlet Mode is null");
+      }
       tr1.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletMode_ApiRender_fieldEDIT             */
@@ -151,37 +159,38 @@ public class PortletTests_PortletMode_ApiRender implements Portlet, ResourceServ
       /* Details: "Method toString(): Returns a String representation of      */
       /* the portlet mode"                                                    */
       TestResult tr5 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_TOSTRING);
-      try {
-          String name = "toString";
-          Class<?> retType = String.class;
-          Class<?>[] parms = null;
-          tr5.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
-       } catch(Exception e) {tr5.appendTcDetail(e.toString());}
+      String tstring=mode.toString();
+      if(tstring.equals("view")) {
+    	  tr5.setTcSuccess(true);
+      } else {
+          tr5.appendTcDetail("String Representation of Portlet Mode: "+mode.toString());  
+         }
        tr5.writeTo(writer);
+      
 
       /* TestCase: V2PortletTests_PortletMode_ApiRender_hashCode              */
       /* Details: "Method hashCode(): Returns an int containing the has       */
       /* code for the portlet mode"                                           */
-      TestResult tr6 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_HASHCODE);
-      try {
-          String name = "hashCode";
-          Class<?> retType = int.class;
-          Class<?>[] parms = null;
-          tr6.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
-       } catch(Exception e) {tr6.appendTcDetail(e.toString());}
+      TestResult tr6 = tcd.getTestResultSucceeded(V2PORTLETTESTS_PORTLETMODE_APIRENDER_HASHCODE);
+      Object hcode=mode.hashCode();
+      if(!hcode.equals(hcode)) {
+    	  tr6.setTcSuccess(true);
+    	  tr6.appendTcDetail("hashCode code value for Portlet Mode: "+hcode.toString());
+       }
        tr6.writeTo(writer);
+      
 
       /* TestCase: V2PortletTests_PortletMode_ApiRender_equals                */
       /* Details: "Method equals(): Returns true if the PortletMode equals    */
       /* the specified PortletMode"                                           */
       TestResult tr7 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_EQUALS);
-      try {
-          String name = "equals";
-          Class<?> retType = boolean.class;
-          Class<?>[] parms = {Object.class};
-          tr7.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
-       } catch(Exception e) {tr7.appendTcDetail(e.toString());}
-       tr7.writeTo(writer);
+      Object obj=portletReq.getPortletMode();
+      if(obj instanceof PortletMode) {
+    	  tr7.setTcSuccess(true);
+      }  else {
+    		  tr7.appendTcDetail("The PortletMode does not equals the expected value"+obj.toString());
+      }
+      tr7.writeTo(writer);
    }
 
 }
