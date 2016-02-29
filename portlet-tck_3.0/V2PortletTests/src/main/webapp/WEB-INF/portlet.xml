@@ -38,14 +38,14 @@
          <name>param3</name>
          <value>value3</value>
       </init-param>
-      
+       
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       
-     <resource-bundle>org.apache.pluto.container.om.portlet.TestBundle</resource-bundle>
+     <resource-bundle>content/TestBundle</resource-bundle>
      
       <portlet-info>
          <title>PortletTests_PortletConfig_ApiRender</title>
@@ -55,13 +55,10 @@
       </supported-publishing-event>
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    <container-runtime-option>
-         <name>Runtime-Option1</name>
-         <value>true</value>
+         <name>javax.portlet.escape.Xml</name>
+         <value>false</value>
       </container-runtime-option>
-      <container-runtime-option>
-         <name>Runtime-Option2</name>
-         <value>value2</value>
-      </container-runtime-option>
+      
    </portlet>
 
    <portlet>
@@ -239,8 +236,8 @@
       <identifier>tckPRP1</identifier>
       <qname>tck:tckPRP1</qname>
    </public-render-parameter>
-  <container-runtime-option>
-      <name>Runtime-Option-Portlet-App</name>
-      <value>false</value>
-   </container-runtime-option>
+   <container-runtime-option>
+         <name>javax.portlet.escape.Xml</name>
+         <value>false</value>
+      </container-runtime-option>
 </portlet-app>

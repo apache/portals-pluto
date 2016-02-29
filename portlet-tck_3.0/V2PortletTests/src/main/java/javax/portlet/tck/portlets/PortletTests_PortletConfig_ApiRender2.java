@@ -160,16 +160,27 @@ private static final String XMLConstants = null;
       /* Details: "Method getPublishingEventQNames(): Returns an empty        */
       /* Enumeration if there are no processing events are defined"           */
       TestResult tr4 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPUBLISHINGEVENTQNAMES2);
-      Enumeration<QName> evntqnames=portletConfig.getPublishingEventQNames();
-      tr4.appendTcDetail("PublishingEvnet"+evntqnames.toString());
-      tr4.writeTo(writer);
+      Enumeration<QName> pubevntqname=portletConfig.getPublishingEventQNames();
+      List<QName> list4=Collections.list(pubevntqname);
+      if(list4.size()==0) {
+    	  tr4.setTcSuccess(true);
+      } else {
+    	  tr4.appendTcDetail("The Publish Event Qnames are "+list4.toString());
+      }
+       tr4.writeTo(writer);
 
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender2_getProcessingEventQNames2 */
       /* Details: "Method getProcessingEventQNames(): Returns an empty        */
       /* Enumeration if there are no processing events are defined"           */
       TestResult tr5 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPROCESSINGEVENTQNAMES2);
-      
+      Enumeration<QName> proevntqname=portletConfig.getProcessingEventQNames();
+      List<QName> list5=Collections.list(proevntqname);
+      if(list5.size()==0) {
+    	  tr5.setTcSuccess(true);
+      } else {
+    	  tr5.appendTcDetail("The Process Event Qnames are "+list5.toString());
+      }
       tr5.writeTo(writer);
 
 

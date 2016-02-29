@@ -105,35 +105,26 @@ public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
       /* Details: "Method getPortletConfig(): Returns the PortletConfig       */
       /* object for the portlet"                                              */
       TestResult tr31 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_GETPORTLETCONFIG);
-      PortletConfig pc = getPortletConfig();
-      
-      StringBuilder txt=new StringBuilder(128);
-      txt.append("The value is:").append(pc);
-      tr31.appendTcDetail(txt.toString());
+      String pc=getPortletConfig().getPortletName();
+      if(pc.equals("PortletTests_GenericPortlet_ApiRender")) {
+    	  tr31.setTcSuccess(true);
+      } else {
+    	  tr31.appendTcDetail("The PortletName does not match the actual name :"+pc.toString());
+      }
       tr31.writeTo(writer);
       
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_initA              */
       /* Details: "Method init(): Called when the portlet is initialized"     */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_INITA);
-      try {
-          String name = "init";
-          Class<?> retType = void.class;
-          Class<?>[] parms = null;
-          tr0.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
-       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
-       tr0.writeTo(writer);
-
+      if(this.initCalled==true) {
+    	  tr0.setTcSuccess(true);
+      }
+      tr0.writeTo(writer);
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_initB              */
       /* Details: "Method init(PortletConfig): Called when the portlet is     */
       /* initialized"                                                         */
       TestResult tr1 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_INITB);
-      try {
-          String name = "init";
-          Class<?> retType = void.class;
-          Class<?>[] parms = {PortletConfig.class};
-          tr1.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
-       } catch(Exception e) {tr1.appendTcDetail(e.toString());}
-       tr1.writeTo(writer);
+      
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_processAction1     */
       /* Details: "Method processAction(ActionRequest, ActionResponse): If    */

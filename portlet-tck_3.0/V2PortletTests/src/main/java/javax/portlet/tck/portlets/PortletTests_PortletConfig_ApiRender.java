@@ -127,23 +127,16 @@ private static final Locale Locale = null;
     	 tr1.setTcSuccess(false);
     	 StringBuilder txt=new StringBuilder(128);
          txt.append("The Portlet Context is null");
-         tr1.appendTcDetail(txt.toString());
-    	  
+         tr1.appendTcDetail(txt.toString());	  
       }
-      
       tr1.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getResourceBundle   */
       /* Details: "Method getResourceBundle(Locale): Returns the              */
       /* ResourceBundle for the specified locale"                             */
       TestResult tr2 = tcd.getTestResultSucceeded(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETRESOURCEBUNDLE);
-      Locale loc=java.util.Locale.getDefault();
-      ResourceBundle rb=portletConfig.getResourceBundle(loc);
-      StringBuilder txt2=new StringBuilder(128);
-      txt2.append("The value is").append(rb);
-      tr2.appendTcDetail(txt2.toString());
+      ResourceBundle rb=portletConfig.getResourceBundle(portletReq.getLocale());
       tr2.writeTo(writer);
-
       
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getInitParameter1   */
       /* Details: "Method getInitParameter(String): Returns a String          */
@@ -217,12 +210,10 @@ private static final Locale Locale = null;
       /* parameters as defined in the deployment descriptor"                  */
       TestResult tr7 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETDEFAULTNAMESPACE1);
       String str =portletConfig.getDefaultNamespace();
-      StringBuilder txt7=new StringBuilder(128);
       if(str.equals("https://www.apache.org")) {
     	  tr7.setTcSuccess(true);
       } else { 
-          txt7.append("The default namespace is :").append(str);
-          tr7.appendTcDetail(txt7.toString());
+          tr7.appendTcDetail("The default namespace is :"+str.toString());
          }   
       tr7.writeTo(writer);
       
@@ -230,18 +221,19 @@ private static final Locale Locale = null;
       /* Details: "Method getPublishingEventQNames(): Returns an              */
       /* java.util.Enumeration&lt;java.lang.String&gt; containing the         */
       /* publishing event qnames as defined in the deployment descriptor"     */
-      TestResult tr8 = tcd.getTestResultSucceeded(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPUBLISHINGEVENTQNAMES1);
+      TestResult tr8 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPUBLISHINGEVENTQNAMES1);
       Enumeration<QName> eventqname=portletConfig.getPublishingEventQNames();
       List<QName> list8=Collections.list(eventqname);
-      StringBuilder txt8=new StringBuilder(128);
-      txt8.append("Number of entries: ").append(list8.size()).append(", Values: ");
-      String sep = "";
       for (QName qn : list8) {
-    	  txt8.append(sep).append(qn.toString());
-    	  sep = ", ";
-      }
-      tr8.appendTcDetail(txt8.toString());
-      tr8.writeTo(writer);
+         if(list8.size()==1) {
+    	       if(list8.equals(qn.toString())) {
+    			 tr8.setTcSuccess(true); 
+    	       } 
+    	  } else {
+    	         tr8.appendTcDetail("EventQnames had invalid length" +list1.size());
+    	    }
+       }
+       tr8.writeTo(writer);
       
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getProcessingEventQNames1 */
       /* Details: "Method getProcessingEventQNames(): Returns an              */
@@ -287,11 +279,11 @@ private static final Locale Locale = null;
       /* deployment descriptor"                                               */
       TestResult tr11 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS1);
       Map<String,String[]> runoption=portletConfig.getContainerRuntimeOptions();
-      String[] val2 = runoption.get("somename");
-      Set<String> keys = runoption.keySet();
-    		  
-    
+      int val1=runoption.size();
+      tr11.appendTcDetail("The values"+val1);
       
+      tr11.writeTo(writer);
+    
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getContainerRuntimeOptions2 */
       /* Details: "Method getContainerRuntimeOptions(): If the same option    */
@@ -315,7 +307,7 @@ private static final Locale Locale = null;
       /* Details: "Method getContainerRuntimeOptions(): Returns an empty      */
       /* map if no container runtime options have been defined "              */
       TestResult tr14 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS4);
-
+      
    }
 
 }
