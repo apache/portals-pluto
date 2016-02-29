@@ -222,15 +222,15 @@ private static final Locale Locale = null;
       /* java.util.Enumeration&lt;java.lang.String&gt; containing the         */
       /* publishing event qnames as defined in the deployment descriptor"     */
       TestResult tr8 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPUBLISHINGEVENTQNAMES1);
-      Enumeration<QName> eventqname=portletConfig.getPublishingEventQNames();
-      List<QName> list8=Collections.list(eventqname);
+      Enumeration<QName> pubeventqname=portletConfig.getPublishingEventQNames();
+      List<QName> list8=Collections.list(pubeventqname);
       for (QName qn : list8) {
          if(list8.size()==1) {
     	       if(list8.equals(qn.toString())) {
     			 tr8.setTcSuccess(true); 
     	       } 
     	  } else {
-    	         tr8.appendTcDetail("EventQnames had invalid length" +list1.size());
+    	         tr8.appendTcDetail("Publish EventQnames had invalid length" +list1.size());
     	    }
        }
        tr8.writeTo(writer);
@@ -240,18 +240,18 @@ private static final Locale Locale = null;
       /* java.util.Enumeration&lt;java.lang.String&gt; containing the         */
       /* processing event qnames as defined in the deployment descriptor"     */
       TestResult tr9 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPROCESSINGEVENTQNAMES1);
-      Enumeration<QName> nm1=portletConfig.getProcessingEventQNames();
-      QName qname1=new QName("http://www.apache.org/portals/pluto/portlet-tck_3.0", "PortletTests_Event_ApiEvent");
-      if (nm1 == null) {
-          tr9.appendTcDetail("PublishEventQName is null.");
-       } else if (!nm1.equals(qname1)) {
-          StringBuilder txt9 = new StringBuilder(128);
-          txt9.append("PublishEventQName is not expected value.");
-          txt9.append(" Expected: ").append(qname1);
-          txt9.append(" Actual: ").append(nm1);
-          tr9.appendTcDetail(txt9.toString());
-         }
-        tr9.writeTo(writer);
+      Enumeration<QName> proeventqname=portletConfig.getProcessingEventQNames();
+      List<QName> list9=Collections.list(proeventqname);
+      for (QName qn : list9) {
+         if(list9.size()==1) {
+    	       if(list9.equals(qn.toString())) {
+    			 tr9.setTcSuccess(true); 
+    	       } 
+    	  } else {
+    	         tr9.appendTcDetail("Process EventQnames had invalid length" +list1.size());
+    	    }
+       }
+       tr9.writeTo(writer);
 
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getSupportedLocales1 */
@@ -279,9 +279,7 @@ private static final Locale Locale = null;
       /* deployment descriptor"                                               */
       TestResult tr11 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS1);
       Map<String,String[]> runoption=portletConfig.getContainerRuntimeOptions();
-      int val1=runoption.size();
-      tr11.appendTcDetail("The values"+val1);
-      
+      tr11.appendTcDetail("The values");
       tr11.writeTo(writer);
     
 

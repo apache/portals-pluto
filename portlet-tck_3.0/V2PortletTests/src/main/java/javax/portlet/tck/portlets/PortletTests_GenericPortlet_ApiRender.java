@@ -116,7 +116,7 @@ public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_initA              */
       /* Details: "Method init(): Called when the portlet is initialized"     */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_INITA);
-      if(this.initCalled==true) {
+      if(initCalled==true) {
     	  tr0.setTcSuccess(true);
       }
       tr0.writeTo(writer);
@@ -541,12 +541,7 @@ public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
       /* Details: "Method getNextPossiblePortletModes(): Is called during     */
       /* generic portlet render request processing"                           */
       TestResult tr41 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_GETNEXTPOSSIBLEPORTLETMODES1);
-      try {
-          String name = "getNextPossiblePortletModes";
-          Class<?> retType = java.util.Collection.class;
-          Class<?>[] parms = {RenderRequest.class};
-          tr41.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
-       } catch(Exception e) {tr41.appendTcDetail(e.toString());}
+      
        tr41.writeTo(writer);
 
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_getNextPossiblePortletModes2 */
