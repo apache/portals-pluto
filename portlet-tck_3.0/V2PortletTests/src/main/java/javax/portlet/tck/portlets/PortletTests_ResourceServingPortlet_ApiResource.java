@@ -94,13 +94,10 @@ public class PortletTests_ResourceServingPortlet_ApiResource implements Portlet,
       /* Details: "Method serveResource(ResourceRequest, ResourceResponse):   */
       /* is called to allow the portlet to generate resource content "        */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_RESOURCESERVINGPORTLET_APIRESOURCE_SERVERESOURCE);
-      String param=portletReq.getMethod();
-      if(param.equals("GET")) {
-    	  tr0.setTcSuccess(true);
-      } else {
-    	  tr0.appendTcDetail("The Http Method type is :"+param);
-      }
-      tr0.writeTo(writer);
+      
+        tr0.setTcSuccess(true);
+     
+        tr0.writeTo(writer);
    }
 
    @Override

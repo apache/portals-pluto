@@ -51,6 +51,7 @@
          <title>PortletTests_PortletConfig_ApiRender</title>
       </portlet-info>
       <supported-publishing-event>
+      
          <qname>tck:PortletTests_Event_ApiEvent</qname>
       </supported-publishing-event>
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>

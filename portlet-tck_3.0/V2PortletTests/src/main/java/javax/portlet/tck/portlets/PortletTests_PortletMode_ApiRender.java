@@ -108,11 +108,11 @@ public class PortletTests_PortletMode_ApiRender implements Portlet, ResourceServ
       /* Details: "The constructor PortletMode(java.lang.String): allows a    */
       /* PortletMode object of the specified name to be constructed"          */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_CONSTRUCTOR1);
-      WindowState ws=new WindowState("newmode");
-      if(ws!=null && ws.toString().equals("newmode")) {
+      PortletMode pm=new PortletMode("newmode");
+      if(pm!=null && pm.toString().equals("newmode")) {
     	  tr0.setTcSuccess(true);
       } else {
-    	  tr0.appendTcDetail("The Portlet Mode is null");
+    	  tr0.appendTcDetail("The Portlet Mode has null value");
       }
        tr0.writeTo(writer);
 
@@ -120,11 +120,11 @@ public class PortletTests_PortletMode_ApiRender implements Portlet, ResourceServ
       /* Details: "The constructor PortletMode(java.lang.String): converts    */
       /* any upper case letters in the name parameter to lower case"          */
       TestResult tr1 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_CONSTRUCTOR2);
-      WindowState ws1=new WindowState("NEWMODE");
-      if(ws1!=null && ws1.toString().equals("newmode")) {
+      PortletMode pm1=new PortletMode("NEWMODE");
+      if(pm1!=null && pm1.toString().equals("newmode")) {
     	  tr1.setTcSuccess(true);
       } else {
-    	  tr1.appendTcDetail("The Portlet Mode is null");
+    	  tr1.appendTcDetail("The Portlet Mode has null value");
       }
       tr1.writeTo(writer);
 
@@ -173,24 +173,26 @@ public class PortletTests_PortletMode_ApiRender implements Portlet, ResourceServ
       /* code for the portlet mode"                                           */
       TestResult tr6 = tcd.getTestResultSucceeded(V2PORTLETTESTS_PORTLETMODE_APIRENDER_HASHCODE);
       Object hcode=mode.hashCode();
-      if(!hcode.equals(hcode)) {
+      if(hcode!=null) {
     	  tr6.setTcSuccess(true);
-    	  tr6.appendTcDetail("hashCode code value for Portlet Mode: "+hcode.toString());
-       }
-       tr6.writeTo(writer);
-      
+      } else {
+    	  tr6.appendTcDetail("The hascode has null value");
+         }
+      tr6.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletMode_ApiRender_equals                */
       /* Details: "Method equals(): Returns true if the PortletMode equals    */
       /* the specified PortletMode"                                           */
       TestResult tr7 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_EQUALS);
-      Object obj=portletReq.getPortletMode();
-      if(obj instanceof PortletMode) {
+      PortletMode pmn1=new PortletMode("NewMode");
+      PortletMode pmn2=new PortletMode("newmode");
+      if(pmn1.equals(pmn2)) {
     	  tr7.setTcSuccess(true);
-      }  else {
-    		  tr7.appendTcDetail("The PortletMode does not equals the expected value"+obj.toString());
+      } else {
+    	  tr7.appendTcDetail("The Portlet Modes are not equal");
       }
-      tr7.writeTo(writer);
+      
+     tr7.writeTo(writer);
    }
 
 }

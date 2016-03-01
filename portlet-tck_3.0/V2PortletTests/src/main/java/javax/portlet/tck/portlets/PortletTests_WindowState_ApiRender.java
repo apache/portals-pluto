@@ -111,7 +111,7 @@ public class PortletTests_WindowState_ApiRender implements Portlet, ResourceServ
       if(ws!=null && ws.toString().equals("newstate")) {
     	  tr0.setTcSuccess(true);
       } else {
-    	  tr0.appendTcDetail("The Window State is null");
+    	  tr0.appendTcDetail("The Window State has null state");
       }
        tr0.writeTo(writer);
 
@@ -123,7 +123,7 @@ public class PortletTests_WindowState_ApiRender implements Portlet, ResourceServ
       if(ws1!=null && ws1.toString().equals("newstate")) {
     	  tr1.setTcSuccess(true);
       } else {
-    	  tr1.appendTcDetail("The Window State is null");
+    	  tr1.appendTcDetail("The Window State has null state");
       }
        tr1.writeTo(writer);
 
@@ -132,7 +132,7 @@ public class PortletTests_WindowState_ApiRender implements Portlet, ResourceServ
       /* WindowState.MAXIMIZED "                                              */
       TestResult tr2 = tcd.getTestResultFailed(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_FIELDMAXIMIZED);
       try {
-         tr2.setTcSuccess(cc.hasField("MAXIMIZED", WindowState.MAXIMIZED));
+         tr2.setTcSuccess(cc.hasField("MAXIMIZED",WindowState.MAXIMIZED));
       } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
@@ -171,29 +171,25 @@ public class PortletTests_WindowState_ApiRender implements Portlet, ResourceServ
       /* code for the Window State"                                           */
       TestResult tr6 = tcd.getTestResultSucceeded(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_HASHCODE);
       Object hcode=state.hashCode();
-      if(!hcode.equals(hcode)) {
+      if(hcode!=null) {
     	  tr6.setTcSuccess(true);
-    	  tr6.appendTcDetail("hashCode code value for Window State: "+hcode.toString());
-       }
+      } else {
+    	  tr6.appendTcDetail("The hascode has null value");
+      }
        tr6.writeTo(writer);
-
       /* TestCase: V2PortletTests_WindowState_ApiRender_equals                */
       /* Details: "Method equals(): Returns true if the WindowState equals    */
       /* the specified WindowState"                                           */
       TestResult tr7 = tcd.getTestResultFailed(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_EQUALS);
-      Object obj=portletReq.getWindowState();
-      if(obj instanceof WindowState) {
+      WindowState wsn1=new WindowState("NewState1");
+      WindowState wsn2=new WindowState("newstate1");
+      if(wsn1.equals(wsn2)) {
     	  tr7.setTcSuccess(true);
-      }  else {
-    		  tr7.appendTcDetail("The WindowState does not equals the expected state"+obj.toString());
+      } else {
+    	  tr7.appendTcDetail("The Windowstates are not equal");
       }
        tr7.writeTo(writer);
 
    }
-
-private void WindowState() {
-	// TODO Auto-generated method stub
-	
-}
 
 }

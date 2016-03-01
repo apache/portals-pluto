@@ -112,7 +112,7 @@ private static final String XMLConstants = null;
       if (val == null) {
          tr0.setTcSuccess(true);
       } else {
-         tr0.appendTcDetail(" The value for the parameter is : " +val);
+         tr0.appendTcDetail(" The Paramater has the values : " +val);
     
       }
       tr0.writeTo(writer);
@@ -126,7 +126,7 @@ private static final String XMLConstants = null;
       if (list1.size() == 0 ) {
             tr1.setTcSuccess(true);
       } else {
-            tr1.appendTcDetail("The Init Parameter names are : " +list1.toString());
+            tr1.appendTcDetail("InitParameterNames has the values : " +list1.toString());
            }
       tr1.writeTo(writer);   
       
@@ -139,7 +139,7 @@ private static final String XMLConstants = null;
       if (list2.size() == 0 ) {
     	       tr2.setTcSuccess(true);
            } else {
-    	        tr2.appendTcDetail("Public render Parameters are  :" +list2.toString());
+    	        tr2.appendTcDetail("PublicRenderParamterNames has values  :" +list2.toString());
              }
       tr2.writeTo(writer);
 
@@ -152,7 +152,7 @@ private static final String XMLConstants = null;
       if(str==null || str.equals("https://www.apache.org")) {
     	  tr3.setTcSuccess(true);
       } else {
-    	  tr3.appendTcDetail("The default Namespace is :" +str);
+    	  tr3.appendTcDetail("The DefaultNamespace has the values:" +str);
       }
        tr3.writeTo(writer);
 
@@ -165,7 +165,7 @@ private static final String XMLConstants = null;
       if(list4.size()==0) {
     	  tr4.setTcSuccess(true);
       } else {
-    	  tr4.appendTcDetail("The Publish Event Qnames are "+list4.toString());
+    	  tr4.appendTcDetail("The PublishingEventQNames has the values "+list4.toString());
       }
        tr4.writeTo(writer);
 
@@ -179,7 +179,7 @@ private static final String XMLConstants = null;
       if(list5.size()==0) {
     	  tr5.setTcSuccess(true);
       } else {
-    	  tr5.appendTcDetail("The Process Event Qnames are "+list5.toString());
+    	  tr5.appendTcDetail("The ProcessingEventQNames has the values "+list5.toString());
       }
       tr5.writeTo(writer);
 
@@ -193,7 +193,7 @@ private static final String XMLConstants = null;
       if (list10.size() == 0 ) {
    	       tr6.setTcSuccess(true);
           } else {
-   	        tr6.appendTcDetail("The supported Locales are :" +list10.toString());
+   	        tr6.appendTcDetail("The Supported Locales are :" +list10.toString());
           }
        tr6.writeTo(writer);
 

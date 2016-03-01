@@ -159,7 +159,7 @@ private static final Locale Locale = null;
       try {
          try {
             String val1 = portletConfig.getInitParameter(null);
-            tr4.appendTcDetail("Method did not throw an exception.");
+            tr4.appendTcDetail("Method did not throw an exception."+val1);
          } catch (IllegalArgumentException iae) {
             tr4.setTcSuccess(true);
          } catch (Exception e) {
@@ -261,11 +261,12 @@ private static final Locale Locale = null;
       TestResult tr10 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETSUPPORTEDLOCALES1);
       Enumeration<java.util.Locale> locale=portletConfig.getSupportedLocales();
       List<Locale> list10 = Collections.list(locale);
+      StringBuilder txt=new StringBuilder(128);
       if (list10.size() == 1 ) {
-          if (list10.contains(Locale.forLanguageTag("en_us"))) {
+          if (list10.contains(Locale.forLanguageTag("en-us"))) {
    	       tr10.setTcSuccess(true);
           } else {
-   	        tr10.appendTcDetail("Locales did not match  :" +list10.toString());
+   	        tr10.appendTcDetail("Locales did not match   :" +list10.toString());
             }
      } else {
    	  tr10.appendTcDetail("Locales had invalid length" +list10.size());
