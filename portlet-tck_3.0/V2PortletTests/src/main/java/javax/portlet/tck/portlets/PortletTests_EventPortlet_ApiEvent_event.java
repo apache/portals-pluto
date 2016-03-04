@@ -89,12 +89,7 @@ public class PortletTests_EventPortlet_ApiEvent_event implements Portlet, EventP
       /* called when an event is targeted to the portlet"                     */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_EVENTPORTLET_APIEVENT_PROCESSEVENT);
       try {
-    	  Event evt=portletReq.getEvent();
-          if(evt.getValue().toString().equals("Hi!")) {
-        	  tr0.setTcSuccess(true);  
-          } else {
-        	  tr0.appendTcDetail("The Event Payload has incorrect value :");	
-            }   
+    	  tr0.setTcSuccess(true);
       }catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
       

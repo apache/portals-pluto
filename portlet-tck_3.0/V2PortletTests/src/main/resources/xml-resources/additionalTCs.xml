@@ -34,11 +34,9 @@
 <entry key="V2PortletTests_PortletConfig_ApiRender_getContainerRuntimeOptions1">V2PortletTests</entry>
 <entry key="V2PortletTests_PortletConfig_ApiRender_getContainerRuntimeOptions2">V2PortletTests</entry>
 <entry key="V2PortletTests_PortletConfig_ApiRender_getContainerRuntimeOptions3">V2PortletTests</entry>
-<entry key="V2PortletTests_PortletConfig_ApiRender_getContainerRuntimeOptions4">V2PortletTests</entry>
 <entry key="V2PortletTests_PortletConfig_ApiRender2_getInitParameter2">V2PortletTests</entry>
 <entry key="V2PortletTests_PortletConfig_ApiRender2_getInitParameterNames2">V2PortletTests</entry>
 <entry key="V2PortletTests_PortletConfig_ApiRender2_getPublicRenderParameterNames2">V2PortletTests</entry>
-<entry key="V2PortletTests_PortletConfig_ApiRender2_getDefaultNamespace2">V2PortletTests</entry>
 <entry key="V2PortletTests_PortletConfig_ApiRender2_getPublishingEventQNames2">V2PortletTests</entry>
 <entry key="V2PortletTests_PortletConfig_ApiRender2_getProcessingEventQNames2">V2PortletTests</entry>
 <entry key="V2PortletTests_PortletConfig_ApiRender2_getSupportedLocales2">V2PortletTests</entry>

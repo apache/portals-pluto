@@ -1146,7 +1146,6 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
    public final static String V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETINITPARAMETER2 = "V2PortletTests_PortletConfig_ApiRender2_getInitParameter2";
    public final static String V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETINITPARAMETERNAMES2 = "V2PortletTests_PortletConfig_ApiRender2_getInitParameterNames2";
    public final static String V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPUBLICRENDERPARAMETERNAMES2 = "V2PortletTests_PortletConfig_ApiRender2_getPublicRenderParameterNames2";
-   public final static String V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETDEFAULTNAMESPACE2 = "V2PortletTests_PortletConfig_ApiRender2_getDefaultNamespace2";
    public final static String V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPUBLISHINGEVENTQNAMES2 = "V2PortletTests_PortletConfig_ApiRender2_getPublishingEventQNames2";
    public final static String V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPROCESSINGEVENTQNAMES2 = "V2PortletTests_PortletConfig_ApiRender2_getProcessingEventQNames2";
    public final static String V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETSUPPORTEDLOCALES2 = "V2PortletTests_PortletConfig_ApiRender2_getSupportedLocales2";
@@ -2664,7 +2663,6 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETINITPARAMETER2, "Method getInitParameter(String): Returns null if the specified initialization parameter does not exist");
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETINITPARAMETERNAMES2, "Method getInitParameterNames(): Returns an empty Enumeration if there are no initialization parameters available ");
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPUBLICRENDERPARAMETERNAMES2, "Method getPublicRenderParameterNames(): Returns an empty Enumeration if there are no public render parameters are defined ");
-      tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETDEFAULTNAMESPACE2, "Method getDefaultNamespace(): Returns XMLConstants.NULL_NS_URI if no default namespace is defined in the deployment descriptor ");
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPUBLISHINGEVENTQNAMES2, "Method getPublishingEventQNames(): Returns an empty Enumeration if there are no processing events are defined");
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPROCESSINGEVENTQNAMES2, "Method getProcessingEventQNames(): Returns an empty Enumeration if there are no processing events are defined");
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETSUPPORTEDLOCALES2, "Method getSupportedLocales(): Returns an empty Enumeration if there are no supported locales are defined");

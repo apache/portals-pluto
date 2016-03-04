@@ -143,18 +143,6 @@ private static final String XMLConstants = null;
              }
       tr2.writeTo(writer);
 
-      /* TestCase: V2PortletTests_PortletConfig_ApiRender2_getDefaultNamespace2 */
-      /* Details: "Method getDefaultNamespace(): Returns                      */
-      /* XMLConstants.NULL_NS_URI if no default namespace is defined in the   */
-      /* deployment descriptor "                                              */
-      TestResult tr3 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETDEFAULTNAMESPACE2);
-      String str =portletConfig.getDefaultNamespace();
-      if(str==null || str.equals("https://www.apache.org")) {
-    	  tr3.setTcSuccess(true);
-      } else {
-    	  tr3.appendTcDetail("The DefaultNamespace has the values:" +str);
-      }
-       tr3.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender2_getPublishingEventQNames2 */
       /* Details: "Method getPublishingEventQNames(): Returns an empty        */

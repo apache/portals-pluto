@@ -117,7 +117,7 @@ public class TestModule3_Portlet2 implements Portlet {
          // (expected to succeed)
          if (test.equals(TEST3)) {
             String val = request.getParameter(TM3PRP3a);
-            if (val != null) {
+            if (val == null) {
                tr = tcd.getTestResultSucceeded(TEST3);
             } else {
                tr = tcd.getTestResultFailed(TEST3);

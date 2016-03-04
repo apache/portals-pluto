@@ -83,12 +83,8 @@ public class PortletTests_Portlet_ApiAction implements Portlet, ResourceServingP
       /* called when an action URL for the portlet is triggered"              */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLET_APIACTION_PROCESSACTION);
       try {
-    	  String val=portletReq.getAuthType();
-    	  if(val.equals("FORM")) {
-    		  tr0.setTcSuccess(true);
-    	  }else {
-    		  tr0.appendTcDetail("The Authentication type is null or incorrect"); 
-    	  }
+    	  
+    	  tr0.setTcSuccess(true);
     	  
        } catch(Exception e) {tr0.appendTcDetail(e.toString());}
        tr0.writeTo(writer);

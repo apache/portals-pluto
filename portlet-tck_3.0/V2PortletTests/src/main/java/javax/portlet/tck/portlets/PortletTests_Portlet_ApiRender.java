@@ -51,12 +51,15 @@ public class PortletTests_Portlet_ApiRender implements Portlet, ResourceServingP
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
-
+   
+   private boolean initCalled = false;
    @Override
    public void init(PortletConfig config) throws PortletException {
       this.portletConfig = config;
+      initCalled=true;
    }
-
+   
+   
    @Override
    public void destroy() {
    }
@@ -106,48 +109,38 @@ public class PortletTests_Portlet_ApiRender implements Portlet, ResourceServingP
       /* Details: "Method init(PortletConfig): is called for the portlet      */
       /* defined in the deployment descriptor"                                */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLET_APIRENDER_INIT1);
+      String name=portletConfig.getPortletName();
       try {
-          String name = "init";
-          Class<?> retType = void.class;
-          Class<?>[] parms = {PortletConfig.class};
-          tr0.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
-       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
-       tr0.writeTo(writer);
+         if(name.equals(this.getClass().getSimpleName()) && initCalled==true) 
+    	       tr0.setTcSuccess(true);
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
+      
+      tr0.writeTo(writer);
+      
       /* TestCase: V2PortletTests_Portlet_ApiRender_init2                     */
       /* Details: "Method init(PortletConfig): If the init method throws a    */
       /* PortletException, the portlet will not be placed in service"         */
       TestResult tr1 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLET_APIRENDER_INIT2);
-      try {
-          String name = "init";
-          Class<?>[] exceptions = {PortletException.class};
-          Class<?>[] parms = {PortletConfig.class};
-          tr1.setTcSuccess(cc.hasMethod(name, parms, exceptions));
-       } catch(Exception e) {tr1.appendTcDetail(e.toString());}
-       tr1.writeTo(writer);
+      
+      tr1.writeTo(writer);
 
       /* TestCase: V2PortletTests_Portlet_ApiRender_render1                   */
       /* Details: "Method render(RenderRequest, RenderResponse): is called    */
       /* when the portlet is to be rendered"                                  */
       TestResult tr2 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLET_APIRENDER_RENDER1);
-      try {
-          String name = "render";
-          Class<?> retType = void.class;
-          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
-          tr2.setTcSuccess(cc.methodHasReturnType(name, retType, parms));
-       } catch(Exception e) {tr2.appendTcDetail(e.toString());}
-       tr2.writeTo(writer);
+      tr2.setTcSuccess(true);
+      tr2.writeTo(writer);
 
       /* TestCase: V2PortletTests_Portlet_ApiRender_render2                   */
       /* Details: "Method render(RenderRequest, RenderResponse): is called    */
       /* when a Render URL for the portlet is triggered"                      */
       TestResult tr3 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLET_APIRENDER_RENDER2);
-      try {
-          String name = "render";
-          Class<?>[] exceptions = {PortletException.class, java.io.IOException.class};
-          Class<?>[] parms = {RenderRequest.class, RenderResponse.class};
-          tr3.setTcSuccess(cc.hasMethod(name, parms, exceptions));
-       } catch(Exception e) {tr3.appendTcDetail(e.toString());}
-       tr3.writeTo(writer);
+      {
+          PortletURL rurl = portletResp.createRenderURL();
+          rurl.setPortletMode(PortletMode.VIEW);
+          tr3.setTcSuccess(true);       
+          tr3.writeTo(writer);
+       }
    }
 
 }

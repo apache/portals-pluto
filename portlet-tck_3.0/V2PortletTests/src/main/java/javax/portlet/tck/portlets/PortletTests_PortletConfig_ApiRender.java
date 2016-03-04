@@ -34,6 +34,7 @@ import static javax.portlet.tck.constants.Constants.*;
 import static javax.portlet.PortletSession.*;
 import static javax.portlet.ResourceURL.*;
 
+
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
  * are defined in the /src/main/resources/xml-resources/additionalTCs.xml
@@ -135,7 +136,13 @@ private static final Locale Locale = null;
       /* Details: "Method getResourceBundle(Locale): Returns the              */
       /* ResourceBundle for the specified locale"                             */
       TestResult tr2 = tcd.getTestResultSucceeded(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETRESOURCEBUNDLE);
-      ResourceBundle rb=portletConfig.getResourceBundle(portletReq.getLocale());
+      Locale loc=portletReq.getLocale();
+      ResourceBundle rb=portletConfig.getResourceBundle(loc);
+      if(rb!=null) {
+    	  tr2.setTcSuccess(true);
+      } else {
+    	  tr2.appendTcDetail("The Resource Bundle Does not exist");
+      }
       tr2.writeTo(writer);
       
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getInitParameter1   */
@@ -224,16 +231,17 @@ private static final Locale Locale = null;
       TestResult tr8 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPUBLISHINGEVENTQNAMES1);
       Enumeration<QName> pubeventqname=portletConfig.getPublishingEventQNames();
       List<QName> list8=Collections.list(pubeventqname);
-      for (QName qn : list8) {
-         if(list8.size()==1) {
-    	       if(list8.equals(qn.toString())) {
-    			 tr8.setTcSuccess(true); 
-    	       } 
-    	  } else {
-    	         tr8.appendTcDetail("Publish EventQnames had invalid length" +list1.size());
-    	    }
-       }
-       tr8.writeTo(writer);
+      if (list8.size() == 1) {
+          QName goodQN = new QName("http://www.apache.org/portals/pluto/portlet-tck_3.0", "PortletTests_Event_ApiEvent");
+          if (goodQN.equals(list8.get(0))) {
+             tr8.setTcSuccess(true);
+          } else {
+             tr8.appendTcDetail("The PublishingEventQNames does not match the actual value :" +list8.toString());
+            }
+      } else {
+    	  tr8.appendTcDetail("PublishingEventQNames had invalid length" +list8.size());
+      }
+      tr8.writeTo(writer);
       
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getProcessingEventQNames1 */
       /* Details: "Method getProcessingEventQNames(): Returns an              */
@@ -242,16 +250,17 @@ private static final Locale Locale = null;
       TestResult tr9 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPROCESSINGEVENTQNAMES1);
       Enumeration<QName> proeventqname=portletConfig.getProcessingEventQNames();
       List<QName> list9=Collections.list(proeventqname);
-      for (QName qn : list9) {
-         if(list9.size()==1) {
-    	       if(list9.equals(qn.toString())) {
-    			 tr9.setTcSuccess(true); 
-    	       } 
-    	  } else {
-    	         tr9.appendTcDetail("Process EventQnames had invalid length" +list1.size());
-    	    }
-       }
-       tr9.writeTo(writer);
+      if (list9.size() == 1) {
+          QName goodQN = new QName("http://www.apache.org/portals/pluto/portlet-tck_3.0", "PortletTests_Event_ApiEvent");
+          if (goodQN.equals(list9.get(0))) {
+             tr9.setTcSuccess(true);
+          } else {
+             tr9.appendTcDetail("The ProcessingEventQNames does not match the actual value :" +list9.toString());
+            }
+      } else {
+    	  tr9.appendTcDetail("PublishingEventQNames had invalid length" +list9.size());
+      }
+      tr9.writeTo(writer);
 
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getSupportedLocales1 */
@@ -259,11 +268,9 @@ private static final Locale Locale = null;
       /* java.util.Enumeration&lt;java.lang.String&gt; containing the names   */
       /* of the supported locales as defined in the deployment descriptor"    */
       TestResult tr10 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETSUPPORTEDLOCALES1);
-      Enumeration<java.util.Locale> locale=portletConfig.getSupportedLocales();
-      List<Locale> list10 = Collections.list(locale);
-      StringBuilder txt=new StringBuilder(128);
+      ArrayList<Locale> list10 = Collections.list(portletConfig.getSupportedLocales());
       if (list10.size() == 1 ) {
-          if (list10.contains(Locale.forLanguageTag("en-us"))) {
+          if (list10.contains(Locale.forLanguageTag(Locale.forLanguageTag("en").toLanguageTag()))) {
    	       tr10.setTcSuccess(true);
           } else {
    	        tr10.appendTcDetail("Locales did not match   :" +list10.toString());
@@ -279,8 +286,17 @@ private static final Locale Locale = null;
       /* containing the container runtime options as defined in the           */
       /* deployment descriptor"                                               */
       TestResult tr11 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS1);
-      Map<String,String[]> runoption=portletConfig.getContainerRuntimeOptions();
-      tr11.appendTcDetail("The values");
+      Map<String,String[]> runoption1=portletConfig.getContainerRuntimeOptions();
+      if(runoption1.size()==2) {
+    	  	if(runoption1!=null && runoption1.containsKey("javax.portlet.servletDefaultSessionScope")) {
+        	  tr11.setTcSuccess(true);
+            } else {
+        	  tr11.appendTcDetail("No supported runtime options are defined in deployment descriptor");
+              }
+      } else {
+    	   tr11.appendTcDetail("The container Runtime Options had invalid length" +runoption1.size());  
+        }
+   
       tr11.writeTo(writer);
     
 
@@ -289,24 +305,36 @@ private static final Locale Locale = null;
       /* is defined at the portlet application and at the portlet level,      */
       /* the definition at the portlet level takes precedence"                */
       TestResult tr12 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS2);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
+      Map<String,String[]> runoption2=portletConfig.getContainerRuntimeOptions();
+      String[] val5=runoption2.get("javax.portlet.servletDefaultSessionScope");
+      if(runoption2.size()==2) {
+            if(runoption2!=null && runoption2.containsKey("javax.portlet.servletDefaultSessionScope") && val5[0].equals("PORTLET_SCOPE")) {
+    	        tr12.setTcSuccess(true);
+            } else {
+    	        tr12.appendTcDetail("No supported runtime options are defined in deployment descriptor");
+              }
+      } else {
+    	   tr12.appendTcDetail("The container Runtime Options had invalid length" +runoption2.size());  
+      }
       tr12.writeTo(writer);
-
+    
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getContainerRuntimeOptions3 */
       /* Details: "Method getContainerRuntimeOptions(): If the portlet        */
       /* container does not support a runtime option defined in the portlet   */
       /* descriptor, that option will not be returned in this map"            */
       TestResult tr13 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS3);
-      /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
+      Map<String,String[]> runoption3=portletConfig.getContainerRuntimeOptions();
+      if(runoption3.size()==2) {
+             if(runoption3!=null && !runoption3.equals("newruntimeoption")){
+    	        tr13.setTcSuccess(true);
+             } else {
+    	        tr13.appendTcDetail("No supported runtime options are defined in deployment descriptor");
+               }
+      } else {
+    	  tr13.appendTcDetail("The container Runtime Options had invalid length" +runoption3.size());  
+      }
       tr13.writeTo(writer);
 
-      /* TestCase: V2PortletTests_PortletConfig_ApiRender_getContainerRuntimeOptions4 */
-      /* Details: "Method getContainerRuntimeOptions(): Returns an empty      */
-      /* map if no container runtime options have been defined "              */
-      TestResult tr14 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS4);
-      
    }
 
 }
