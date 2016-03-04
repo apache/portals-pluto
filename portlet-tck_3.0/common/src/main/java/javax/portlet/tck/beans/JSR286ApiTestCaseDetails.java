@@ -38,7 +38,6 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
    public final static String V2FILTERTESTS_FILTERCHAIN_APIACTIONFILTER_INVOKEACTIONEXCEPTION = "V2FilterTests_FilterChain_ApiActionFilter_invokeActionException";
    public final static String V2FILTERTESTS_FILTERCHAIN_APIEVENTFILTER_INVOKEEVENTFILTER = "V2FilterTests_FilterChain_ApiEventFilter_invokeEventFilter";
    public final static String V2FILTERTESTS_FILTERCHAIN_APIEVENTFILTER_INVOKEEVENTFILTER2 = "V2FilterTests_FilterChain_ApiEventFilter_invokeEventFilter2";
-   public final static String V2FILTERTESTS_FILTERCHAIN_APIEVENTFILTER_INVOKEEVENTEXCEPTION = "V2FilterTests_FilterChain_ApiEventFilter_invokeEventException";
    public final static String V2FILTERTESTS_FILTERCHAIN_APIRENDERFILTER_INVOKERENDERFILTER = "V2FilterTests_FilterChain_ApiRenderFilter_invokeRenderFilter";
    public final static String V2FILTERTESTS_FILTERCHAIN_APIRENDERFILTER_INVOKERENDERFILTER2 = "V2FilterTests_FilterChain_ApiRenderFilter_invokeRenderFilter2";
    public final static String V2FILTERTESTS_FILTERCHAIN_APIRENDERFILTER_INVOKERENDEREXCEPTION = "V2FilterTests_FilterChain_ApiRenderFilter_invokeRenderException";
@@ -1142,7 +1141,6 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
    public final static String V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS1 = "V2PortletTests_PortletConfig_ApiRender_getContainerRuntimeOptions1";
    public final static String V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS2 = "V2PortletTests_PortletConfig_ApiRender_getContainerRuntimeOptions2";
    public final static String V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS3 = "V2PortletTests_PortletConfig_ApiRender_getContainerRuntimeOptions3";
-   public final static String V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS4 = "V2PortletTests_PortletConfig_ApiRender_getContainerRuntimeOptions4";
    public final static String V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETINITPARAMETER2 = "V2PortletTests_PortletConfig_ApiRender2_getInitParameter2";
    public final static String V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETINITPARAMETERNAMES2 = "V2PortletTests_PortletConfig_ApiRender2_getInitParameterNames2";
    public final static String V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPUBLICRENDERPARAMETERNAMES2 = "V2PortletTests_PortletConfig_ApiRender2_getPublicRenderParameterNames2";
@@ -2659,7 +2657,6 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS1, "Method getContainerRuntimeOptions(): Returns an java.util.Map&lt;java.lang.String,java.lang.String[]&gt; object containing the container runtime options as defined in the deployment descriptor");
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS2, "Method getContainerRuntimeOptions(): If the same option is defined at the portlet application and at the portlet level, the definition at the portlet level takes precedence");
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS3, "Method getContainerRuntimeOptions(): If the portlet container does not support a runtime option defined in the portlet descriptor, that option will not be returned in this map");
-      tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS4, "Method getContainerRuntimeOptions(): Returns an empty map if no container runtime options have been defined ");
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETINITPARAMETER2, "Method getInitParameter(String): Returns null if the specified initialization parameter does not exist");
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETINITPARAMETERNAMES2, "Method getInitParameterNames(): Returns an empty Enumeration if there are no initialization parameters available ");
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPUBLICRENDERPARAMETERNAMES2, "Method getPublicRenderParameterNames(): Returns an empty Enumeration if there are no public render parameters are defined ");
