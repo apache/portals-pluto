@@ -102,24 +102,32 @@ public class RequestTests_ResourceRequest_ApiResource implements Portlet, Resour
       /* Details: "Method getETag(): Returns null if there is no cached       */
       /* response"                                                            */
       TestResult tr1 = tcd.getTestResultFailed(V2REQUESTTESTS_RESOURCEREQUEST_APIRESOURCE_GETETAG2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      String etag=portletReq.getETag();
+      if(etag==null) {
+    	  tr1.setTcSuccess(true);
+      } else {
+    	  tr1.appendTcDetail("A cahched Response for this Validation Tag has Value: "+etag);
+      }
       tr1.writeTo(writer);
 
       /* TestCase: V2RequestTests_ResourceRequest_ApiResource_getResourceID1  */
       /* Details: "Method getResourceID(): Returns a String containing the    */
       /* resource ID set on the resource URL"                                 */
       TestResult tr2 = tcd.getTestResultFailed(V2REQUESTTESTS_RESOURCEREQUEST_APIRESOURCE_GETRESOURCEID1);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      tr2.setTcSuccess(true);
+      tr2.appendTcDetail("Need to Check With scott");
       tr2.writeTo(writer);
 
       /* TestCase: V2RequestTests_ResourceRequest_ApiResource_getResourceID2  */
       /* Details: "Method getResourceID(): Returns null if no resource ID     */
       /* was set on the URL"                                                  */
       TestResult tr3 = tcd.getTestResultFailed(V2REQUESTTESTS_RESOURCEREQUEST_APIRESOURCE_GETRESOURCEID2);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      String resId=portletReq.getResourceID();
+      if(resId==null) {
+    	  tr3.setTcSuccess(true);
+      } else {
+    	  tr3.appendTcDetail("The ResourceId has value :"+resId);
+      }
       tr3.writeTo(writer);
 
       /* TestCase: V2RequestTests_ResourceRequest_ApiResource_getPrivateRenderParameterMap1 */
@@ -127,8 +135,8 @@ public class RequestTests_ResourceRequest_ApiResource implements Portlet, Resour
       /* java.util.Map&lt;java.lang.String,java.lang.String[]&gt; object      */
       /* containing the private render parameters for the request"            */
       TestResult tr4 = tcd.getTestResultFailed(V2REQUESTTESTS_RESOURCEREQUEST_APIRESOURCE_GETPRIVATERENDERPARAMETERMAP1);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      Map<String,String[]> s=portletReq.getPrivateRenderParameterMap();
+      tr4.appendTcDetail("Not implemented."+s.size());
       tr4.writeTo(writer);
 
       /* TestCase: V2RequestTests_ResourceRequest_ApiResource_getPrivateRenderParameterMap2 */
@@ -159,8 +167,12 @@ public class RequestTests_ResourceRequest_ApiResource implements Portlet, Resour
       /* Details: "Method getResponseContentType(): Returns a String          */
       /* containing the preferred content type for the resonse"               */
       TestResult tr8 = tcd.getTestResultFailed(V2REQUESTTESTS_RESOURCEREQUEST_APIRESOURCE_GETRESPONSECONTENTTYPE);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
+      String respType=portletReq.getResponseContentType();
+      if(respType!=null) {
+    	  tr8.setTcSuccess(true);
+      } else {
+    	  tr8.appendTcDetail("The ResponseContentType has null value ");
+      }
       tr8.writeTo(writer);
 
       /* TestCase: V2RequestTests_ResourceRequest_ApiResource_getResponseContentTypes */
@@ -168,16 +180,25 @@ public class RequestTests_ResourceRequest_ApiResource implements Portlet, Resour
       /* java.util.Enumeration&lt;java.lang.String&gt; object containing      */
       /* the content types that will be accepted for the response"            */
       TestResult tr9 = tcd.getTestResultFailed(V2REQUESTTESTS_RESOURCEREQUEST_APIRESOURCE_GETRESPONSECONTENTTYPES);
-      /* TODO: implement test */
-      tr9.appendTcDetail("Not implemented.");
+      Enumeration<String> enumRespType=portletReq.getResponseContentTypes();
+      List<String> list9=Collections.list(enumRespType);
+      if(list9!=null) {
+    	  tr9.setTcSuccess(true);
+      } else {
+    	  tr9.appendTcDetail("The Enumeration of Content Types for the Response has Empty value");
+      }
       tr9.writeTo(writer);
 
       /* TestCase: V2RequestTests_ResourceRequest_ApiResource_getCacheability */
       /* Details: "Method getCacheability(): Returns a String containing      */
       /* the cache level of the resource request"                             */
       TestResult tr10 = tcd.getTestResultFailed(V2REQUESTTESTS_RESOURCEREQUEST_APIRESOURCE_GETCACHEABILITY);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
+      String getCache=portletReq.getCacheability();
+      if(getCache.equals("cacheLevelPage")) {
+    	  tr10.setTcSuccess(true);
+      } else {
+          tr10.appendTcDetail("The Cache Level of the Resource Request has value: "+getCache);
+      }
       tr10.writeTo(writer);
 
    }

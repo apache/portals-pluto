@@ -57,6 +57,9 @@ public class RequestTests_EventRequest_ApiEvent_event implements Portlet, EventP
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
+      QName eventQName = new QName(TCKNAMESPACE,
+              "PortletTests_Event_ApiEvent");
+       portletResp.setEvent(eventQName, "Hi!");
    }
 
    @Override
@@ -88,16 +91,22 @@ public class RequestTests_EventRequest_ApiEvent_event implements Portlet, EventP
       /* Details: "Method getEvent(): Returns the Event object that           */
       /* triggered the call to the processEvent method"                       */
       TestResult tr0 = tcd.getTestResultFailed(V2REQUESTTESTS_EVENTREQUEST_APIEVENT_GETEVENT);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      Event evt=portletReq.getEvent();
+      if(evt!=null) {
+    	  tr0.setTcSuccess(true);
+      } 
       tr0.writeTo(writer);
 
       /* TestCase: V2RequestTests_EventRequest_ApiEvent_getMethod             */
       /* Details: "Method getMethod(): Returns a String containing the name   */
       /* of the HTTP method with which the request was made"                  */
       TestResult tr1 = tcd.getTestResultFailed(V2REQUESTTESTS_EVENTREQUEST_APIEVENT_GETMETHOD);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      String getmethod=portletReq.getMethod();
+      if(getmethod.equals("POST")) {
+    	  tr1.setTcSuccess(true);
+      } else {
+    	  tr1.appendTcDetail("The getMethod() for HTTP Request has the value :" +getmethod);  
+      }
       tr1.writeTo(writer);
 
       portletReq.getPortletSession().setAttribute(

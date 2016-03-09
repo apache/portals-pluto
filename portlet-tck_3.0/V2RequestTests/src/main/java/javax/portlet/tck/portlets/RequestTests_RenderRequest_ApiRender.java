@@ -114,8 +114,12 @@ public class RequestTests_RenderRequest_ApiRender implements Portlet, ResourceSe
       /* Details: "Method getETag(): Returns null if there is no cached       */
       /* response"                                                            */
       TestResult tr1 = tcd.getTestResultFailed(V2REQUESTTESTS_RENDERREQUEST_APIRENDER_GETETAG2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      String etag=portletReq.getETag();
+      if(etag==null) {
+    	  tr1.setTcSuccess(true);
+      } else {
+    	  tr1.appendTcDetail("A cahched Response for this Validation Tag has Value: "+etag);
+      }
       tr1.writeTo(writer);
 
    }

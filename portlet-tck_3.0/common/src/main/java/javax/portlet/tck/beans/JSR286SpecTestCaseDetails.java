@@ -63,6 +63,7 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
    public final static String V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETCONTAINERRUNTIMEOPTIONS8 = "V2AddlPortletTests_SPEC2_6_RenderConfig_getContainerRuntimeOptions8";
    public final static String V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETCONTAINERRUNTIMEOPTIONS9 = "V2AddlPortletTests_SPEC2_6_RenderConfig_getContainerRuntimeOptions9";
    public final static String V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETDEFAULTNAMESPACE2 = "V2AddlPortletTests_SPEC2_6_RenderConfig_getDefaultNamespace2";
+   public final static String V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETCONTAINERRUNTIMEOPTIONS4 = "V2AddlPortletTests_SPEC2_6_RenderConfig_getContainerRuntimeOptions4";
    public final static String V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG2_GETRESOURCEBUNDLE8 = "V2AddlPortletTests_SPEC2_6_RenderConfig2_getResourceBundle8";
    public final static String V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG2_GETRESOURCEBUNDLE9 = "V2AddlPortletTests_SPEC2_6_RenderConfig2_getResourceBundle9";
    public final static String V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG2_GETRESOURCEBUNDLE10 = "V2AddlPortletTests_SPEC2_6_RenderConfig2_getResourceBundle10";
@@ -775,6 +776,7 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
       tcd.put(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETCONTAINERRUNTIMEOPTIONS8, "If the deployment descriptor contains &lt;container-runtime-option&gt; elements defined at both the portlet and the portlet application levels, the returned Map contains a merger of all values");
       tcd.put(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETCONTAINERRUNTIMEOPTIONS9, "If the deployment descriptor contains &lt;container-runtime-option&gt; elements of the same name defined at both the portlet and the portlet application levels, the returned Map contains a the value defined at the portlet level");
       tcd.put(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETDEFAULTNAMESPACE2,"Method getDefaultNamespace(): Returns XMLConstants.NULL_NS_URI if no default namespace is defined in the deployment descriptor");
+      tcd.put(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETCONTAINERRUNTIMEOPTIONS4, "Method getContainerRuntimeOptions(): Returns an empty map if no container runtime options have been defined ");
       tcd.put(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG2_GETRESOURCEBUNDLE8, "If no resource bundle is defined, the value defined in the deployment descriptor &lt;title&gt; element is returned by the corresponding getString method call");
       tcd.put(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG2_GETRESOURCEBUNDLE9, "If no resource bundle is defined, the value defined in the deployment descriptor &lt;short-title&gt; element is returned by the corresponding getString method call");
       tcd.put(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG2_GETRESOURCEBUNDLE10, "If no resource bundle is defined, the value defined in the deployment descriptor &lt;keywords&gt; element is returned by the corresponding getString method call");

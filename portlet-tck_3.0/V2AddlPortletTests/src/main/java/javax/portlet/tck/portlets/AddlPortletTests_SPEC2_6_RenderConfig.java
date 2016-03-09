@@ -224,7 +224,7 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet, ResourceS
       tr12.appendTcDetail("Not implemented");
       tr12.writeTo(writer);
 
-      /* TestCase: V2PortletTests_PortletConfig_ApiRender_getContainerRuntimeOptions4 */
+      /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig_getContainerRuntimeOptions4 */
       /* Details: "Method getContainerRuntimeOptions(): Returns an empty      */
       /* map if no container runtime options have been defined "              */
       TestResult tr13= tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETCONTAINERRUNTIMEOPTIONS9);

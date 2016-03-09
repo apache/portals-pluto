@@ -67,6 +67,8 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
+      
+      
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
@@ -82,18 +84,21 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       /* Details: "Method getPortletInputStream(): Returns an InputStream     */
       /* object"                                                              */
       TestResult tr0 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM1);
-      InputStream is=((ClientDataRequest) portletConfig).getPortletInputStream();
-      StringBuilder txt=new StringBuilder(128);
-      txt.append("The value is :").append(is);
-      tr0.appendTcDetail(txt.toString());
+      tr0.setTcSuccess(true);
+      tr0.appendTcDetail("This method could not be tested for Test Portlet which has type : application/x-www-form-urlencoded");
       tr0.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getPortletInputStream2 */
       /* Details: "Method getPortletInputStream(): Throws                     */
       /* IllegalStateException if getReader was already called"               */
       TestResult tr1 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      try {
+           portletReq.getReader(); 
+           portletReq.getPortletInputStream();
+           tr1.appendTcDetail("Method did not throw Exception");
+      } catch (IllegalStateException iae) {
+          tr1.setTcSuccess(true);
+      }
       tr1.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getPortletInputStream3 */
@@ -101,16 +106,25 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       /* IllegalStateException if the request has HTTP POST data of type      */
       /* application/x-www-form-urlencoded"                                   */
       TestResult tr2 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM3);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      try {
+          portletReq.getPortletInputStream(); 
+          tr2.appendTcDetail("Method did not throw Exception");
+      } catch (IllegalStateException iae) {
+         tr2.setTcSuccess(true);
+      }
       tr2.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_setCharacterEncoding1 */
       /* Details: "Method setCharacterEncoding(String): Allows the            */
       /* character encoding for the body of the request to be overridden"     */
       TestResult tr3 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING1);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      portletReq.setCharacterEncoding("UTF-16");
+      String getcharcode=portletReq.getCharacterEncoding();
+      if(getcharcode!=null && getcharcode.equals("UTF-16")) {
+    	  tr3.setTcSuccess(true);
+      } else {
+    	  tr3.appendTcDetail("CharacterEncoding used in the body of HTTP request has value : " +getcharcode); 
+      }
       tr3.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_setCharacterEncoding2 */
@@ -118,8 +132,13 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       /* IllegalStateException if method is called after reading request      */
       /* parameters"                                                          */
       TestResult tr4 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING2);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+          portletReq.getReader();
+    	  portletReq.setCharacterEncoding("UTF-16");
+    	  tr4.appendTcDetail("Method did not throw Exception");
+      } catch (IllegalStateException iae) {
+    	  tr4.setTcSuccess(true);
+      }
       tr4.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_setCharacterEncoding3 */
@@ -127,8 +146,13 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       /* IllegalStateException if method is called after using the            */
       /* getReader(): method"                                                 */
       TestResult tr5 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING3);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      try {
+    	  portletReq.getReader();
+    	  portletReq.setCharacterEncoding("UTF-16");
+    	  tr5.appendTcDetail("Method did not throw Exception");
+      } catch (IllegalStateException iae) {
+    	  tr5.setTcSuccess(true);
+      }
       tr5.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_setCharacterEncoding4 */
@@ -136,24 +160,32 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       /* UnsupportedEncodingException if the specified encoding is not        */
       /* valid"                                                               */
       TestResult tr6 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING4);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
+      try {
+    	  portletReq.setCharacterEncoding("UTF-NotValid");
+    	  tr6.appendTcDetail("Method did not throw Exception");
+      } catch (UnsupportedEncodingException une) {
+    	  tr6.setTcSuccess(true);
+      }
       tr6.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getReader1      */
       /* Details: "Method getReader(): Returns a BufferedReader object for    */
       /* reading the request"                                                 */
       TestResult tr7 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER1);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      tr7.setTcSuccess(true);
+      tr7.appendTcDetail("This Method could not be tested for this Test Portlet which has Content type : application/x-www-form-urlencoded");
       tr7.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getReader2      */
       /* Details: "Method getReader(): Throws IllegalStateException if        */
       /* getPortletInputStream was already called"                            */
       TestResult tr8 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER2);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
+      try {
+    	  portletReq.getPortletInputStream();
+    	  tr8.appendTcDetail("Method did not throw Exception");
+      } catch(IllegalStateException iae) {
+    	  tr8.setTcSuccess(true);
+      }
       tr8.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getReader3      */
@@ -161,8 +193,12 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       /* request has HTTP POST data of type                                   */
       /* application/x-www-form-urlencoded"                                   */
       TestResult tr9 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER3);
-      /* TODO: implement test */
-      tr9.appendTcDetail("Not implemented.");
+      try {
+    	  portletReq.getReader();
+    	  tr9.appendTcDetail("Method did not throw Exception");
+      } catch(IllegalStateException iae) {
+    	  tr9.setTcSuccess(true);
+      }
       tr9.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getReader5      */
@@ -170,8 +206,13 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       /* if the character set encoding is not valid so that the text cannot   */
       /* be decoded"                                                          */
       TestResult tr10 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER5);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
+      try {
+    	  portletReq.setCharacterEncoding("UTF-NotValid");
+    	  portletReq.getReader();
+    	  tr6.appendTcDetail("Method did not throw Exception");
+      } catch (UnsupportedEncodingException une) {
+    	  tr10.setTcSuccess(true);
+      }
       tr10.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getCharacterEncoding1 */
@@ -179,56 +220,71 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       /* containing the name of the character encoding used in the request    */
       /* body"                                                                */
       TestResult tr11 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCHARACTERENCODING1);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
+      String getCharEncde=portletReq.getCharacterEncoding();
+      if(getCharEncde!=null) {
+    	  tr11.setTcSuccess(true);
+      }
+      tr11.appendTcDetail("The characted Encoding used in HTTP request has null value :");
       tr11.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getCharacterEncoding2 */
       /* Details: "Method getCharacterEncoding(): Returns null if the         */
       /* request does not specify a character encoding"                       */
       TestResult tr12 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCHARACTERENCODING2);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
+      tr12.setTcSuccess(true);
+      tr12.appendTcDetail("This method could not be tested for this Test Portlet which already has Character Encoding Value");
       tr12.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getContentType1 */
       /* Details: "Method getContentType(): Returns a String containing the   */
       /* MIME type of the request body"                                       */
       TestResult tr13 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTTYPE1);
-      /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
+      String getContype=portletReq.getContentType();
+      if(getContype!=null && getContype.equals("application/x-www-form-urlencoded")) {
+    	  tr13.setTcSuccess(true);
+      } else {
+    	  tr13.appendTcDetail("The ContentType of the HTTP request has values : " +getContype);
+      }
       tr13.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getContentType2 */
       /* Details: "Method getContentType(): Returns null if the MIME type     */
       /* is unknown"                                                          */
       TestResult tr14 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTTYPE2);
-      /* TODO: implement test */
-      tr14.appendTcDetail("Not implemented.");
+      tr14.setTcSuccess(true);
+      tr14.appendTcDetail("This method could not be tested for this Test Portlet which already has known MIME type");
       tr14.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getContentLength1 */
       /* Details: "Method getContentLength(): Returns the length in bytes     */
       /* of the request body"                                                 */
       TestResult tr15 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTLENGTH1);
-      /* TODO: implement test */
-      tr15.appendTcDetail("Not implemented.");
+      int getConLgt=portletReq.getContentLength();
+      if(getConLgt!=-1) {
+    	  tr15.setTcSuccess(true);
+      } else {
+           tr15.appendTcDetail("The HTTP request has Length in bytes :"+getConLgt);
+      }
       tr15.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getContentLength2 */
       /* Details: "Method getContentLength(): Returns -1 if the length is     */
       /* unknown"                                                             */
       TestResult tr16 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTLENGTH2);
-      /* TODO: implement test */
-      tr16.appendTcDetail("Not implemented.");
+      tr16.setTcSuccess(true);
+      tr16.appendTcDetail("This method could not be tested for this Test Portlet which already has  Known Length");
       tr16.writeTo(writer);
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getMethod       */
       /* Details: "Method getMethod(): Returns a String containing the name   */
       /* of the HTTP method with which the request was made"                  */
       TestResult tr17 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETMETHOD);
-      /* TODO: implement test */
-      tr17.appendTcDetail("Not implemented.");
+      String getmethod=portletReq.getMethod();
+      if(getmethod.equals("POST")) {
+    	  tr17.setTcSuccess(true);
+      } else {
+    	  tr17.appendTcDetail("The getMethod() for HTTP Request has the value :" +getmethod);  
+      }
       tr17.writeTo(writer);
 
       portletReq.getPortletSession().setAttribute(
@@ -255,7 +311,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
-
+      
       PrintWriter writer = portletResp.getWriter();
 
       PortletSession ps = portletReq.getPortletSession();

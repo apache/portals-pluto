@@ -117,29 +117,22 @@ public class PortletTests_Portlet_ApiRender implements Portlet, ResourceServingP
       
       tr0.writeTo(writer);
       
-      /* TestCase: V2PortletTests_Portlet_ApiRender_init2                     */
-      /* Details: "Method init(PortletConfig): If the init method throws a    */
-      /* PortletException, the portlet will not be placed in service"         */
-      TestResult tr1 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLET_APIRENDER_INIT2);
-      
-      tr1.writeTo(writer);
-
       /* TestCase: V2PortletTests_Portlet_ApiRender_render1                   */
       /* Details: "Method render(RenderRequest, RenderResponse): is called    */
       /* when the portlet is to be rendered"                                  */
-      TestResult tr2 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLET_APIRENDER_RENDER1);
-      tr2.setTcSuccess(true);
-      tr2.writeTo(writer);
+      TestResult tr1 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLET_APIRENDER_RENDER1);
+      tr1.setTcSuccess(true);
+      tr1.writeTo(writer);
 
       /* TestCase: V2PortletTests_Portlet_ApiRender_render2                   */
       /* Details: "Method render(RenderRequest, RenderResponse): is called    */
       /* when a Render URL for the portlet is triggered"                      */
-      TestResult tr3 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLET_APIRENDER_RENDER2);
+      TestResult tr2 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLET_APIRENDER_RENDER2);
       {
           PortletURL rurl = portletResp.createRenderURL();
           rurl.setPortletMode(PortletMode.VIEW);
-          tr3.setTcSuccess(true);       
-          tr3.writeTo(writer);
+          tr2.setTcSuccess(true);       
+          tr2.writeTo(writer);
        }
    }
 
