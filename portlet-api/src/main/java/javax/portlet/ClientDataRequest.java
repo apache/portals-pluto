@@ -25,7 +25,8 @@
 package javax.portlet;
 
 /**
- * The <CODE>ClientDataRequest</CODE> represents the request information 
+ * <span class="changed_modified_3_0">The</span>
+ * <CODE>ClientDataRequest</CODE> represents the request information 
  * of the HTTP request issued from the client to the portal.<BR>
  * It extends the PortletRequest interface.
  * 
