@@ -25,6 +25,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortalContext;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -173,6 +174,11 @@ public class MockPortletRequest implements PortletRequest {
     */
    @Override
    public PortalContext getPortalContext() {
+      return null;
+   }
+
+   @Override
+   public PortletContext getPortletContext() {
       return null;
    }
 

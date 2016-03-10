@@ -66,6 +66,12 @@ public abstract class ClientDataRequestImpl extends PortletRequestImpl implement
         return getServletRequest().getContentLength();
     }
 
+    @Override
+    public long getContentLengthLong()
+    {
+        return getServletRequest().getContentLengthLong();
+    }
+
     public java.lang.String getContentType()
     {
         return getServletRequest().getContentType();

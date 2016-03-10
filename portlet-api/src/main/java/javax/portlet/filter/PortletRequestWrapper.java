@@ -30,6 +30,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortalContext;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -182,6 +183,11 @@ public class PortletRequestWrapper extends RenderStateWrapper implements Portlet
     */
    public PortalContext getPortalContext() {
       return ((PortletRequest)wrapped).getPortalContext();
+   }
+
+   @Override
+   public PortletContext getPortletContext() {
+      return ((PortletRequest)wrapped).getPortletContext();
    }
 
    /**

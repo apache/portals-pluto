@@ -303,7 +303,20 @@ public interface PortletRequest extends RenderState
    * @since 2.0
    */
   public static final String ACTION_SCOPE_ID = "javax.portlet.as";
-  
+
+  /**
+   * <div class="changed_added_3_0">
+   * A constant that can be used as the property name to obtain 
+   * the user agent string 
+   * through the <code>getProperty</code> and <code>getProperties</code>
+   * methods.
+   * </div>
+   * <p>
+   * The value is <code>User-Agent</code>.
+   * @since 3.0
+   */
+  public static final String USER_AGENT = "User-Agent";
+ 
   
   
  /**
@@ -477,6 +490,23 @@ public interface PortletRequest extends RenderState
    */
 
   public PortalContext getPortalContext();
+
+
+  /**
+   * <div class="changed_added_3_0">
+   * Returns the <code>PortletContext</code> of the portlet application 
+   * the portlet is in.
+   * </div>
+   *
+   * @return   a <code>PortletContext</code> object, used by the 
+   *           caller to interact with its portlet container
+   *
+   * @see PortletContext
+   * @since 3.0
+   * 
+   */
+
+  public PortletContext getPortletContext ();
 
 
   /**

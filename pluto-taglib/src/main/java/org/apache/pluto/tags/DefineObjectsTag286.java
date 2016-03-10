@@ -108,8 +108,10 @@ public class DefineObjectsTag286 extends TagSupport {
     private void setPortletRequestResponseAttribute(PortletRequest request, 
     		PortletResponse response ){
     	
-    	String phase = (
-    			String)request.getAttribute(PortletRequest.LIFECYCLE_PHASE);
+    	String phase = (String)request.getAttribute(PortletRequest.LIFECYCLE_PHASE);
+    	
+      setAttribute(request, "portletRequest");
+      setAttribute(response, "portletResponse");
     	
     	//check where request and response where included from
     	if(PortletRequest.ACTION_PHASE.equals(phase)){
@@ -124,6 +126,10 @@ public class DefineObjectsTag286 extends TagSupport {
     		setAttribute(request, "renderRequest");
     		setAttribute(response, "renderResponse");
     	}    	
+      else if(PortletRequest.HEADER_PHASE.equals(phase)){
+         setAttribute(request, "headerRequest");
+         setAttribute(response, "headerResponse");
+      }     
     	else if(PortletRequest.RESOURCE_PHASE.equals(phase)){
     		setAttribute(request, "resourceRequest");
     		setAttribute(response, "resourceResponse");

@@ -48,6 +48,11 @@ public class MockClientDataRequest extends MockPortletRequest implements ClientD
       return 0;
    }
 
+   @Override
+   public long getContentLengthLong() {
+      return 0;
+   }
+
    /* (non-Javadoc)
     * @see javax.portlet.ClientDataRequest#getContentType()
     */

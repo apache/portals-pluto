@@ -181,11 +181,6 @@ public abstract class PortletRequestImpl implements PortletRequest
         return requestContext;
     }
 
-    protected PortletContext getPortletContext()
-    {
-        return requestContext.getPortletConfig().getPortletContext();
-    }
-
     protected PortletWindow getPortletWindow()
     {
         return requestContext.getPortletWindow();
@@ -261,6 +256,10 @@ public abstract class PortletRequestImpl implements PortletRequest
                 ccppProfile = getPortletContainer().getContainerServices().getCCPPProfileService().getCCPPProfile(getServletRequest());
             }
             return ccppProfile;
+        }
+        else if (name.equals("javax.portlet.debug.ServletRequest"))
+        {
+            return requestContext.getServletRequest();
         }
         return requestContext.getAttribute(name);
     }
@@ -350,6 +349,12 @@ public abstract class PortletRequestImpl implements PortletRequest
     public PortalContext getPortalContext()
     {
         return portalContext;
+    }
+
+    @Override
+    public PortletContext getPortletContext()
+    {
+        return requestContext.getPortletConfig().getPortletContext();
     }
 
     public PortletMode getPortletMode()

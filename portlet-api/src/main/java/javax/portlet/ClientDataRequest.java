@@ -140,8 +140,7 @@ public interface ClientDataRequest extends PortletRequest {
     /**
      * Returns the length, in bytes, of the request body 
      * which is made available by the input stream, or -1 if the
-     * length is not known. 
-     *
+     * length is not known.
      *
      * @return      an integer containing the length of the 
      *          request body or -1 if the length is not known
@@ -149,6 +148,24 @@ public interface ClientDataRequest extends PortletRequest {
      */
 
     public int getContentLength();
+
+
+    /**
+     * <div class="changed_added_3_0">
+     * Returns the length, in bytes, of the request body 
+     * which is made available by the input stream, or -1 if the
+     * length is not known. 
+     * </div> 
+     *
+     *
+     * @return      a <code>long</code> containing the length of the 
+     *          request body or -1 if the length is not known
+     *          
+     * @since  3.0
+     *
+     */
+
+    public long getContentLengthLong();
       
     /**
      * Returns the name of the HTTP method with which this request was made, 

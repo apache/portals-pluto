@@ -37,7 +37,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * The listener method will be invoked before a URL of the corresponding type is
  * generated.
  * <p>
- * The annotated method must implement the <code>PortletListener</code> interface.
+ * The annotated method must implement the <code>PortletURLGenerationListener</code> interface.
  * </div>
  *    
  * @see javax.portlet.PortletURLGenerationListener

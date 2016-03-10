@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 import javax.portlet.ClientDataRequest;
+import javax.portlet.PortletContext;
 
 /**
  * <div class="changed_added_3_0"> The <code>ClientDataRequestWrapper</code>
@@ -117,6 +118,11 @@ public class ClientDataRequestWrapper extends PortletRequestWrapper implements C
       return ((ClientDataRequest)wrapped).getContentLength();
    }
 
+   @Override
+   public long getContentLengthLong() {
+      return ((ClientDataRequest)wrapped).getContentLengthLong();
+   }
+
    /*
     * (non-Javadoc)
     * 
@@ -124,6 +130,11 @@ public class ClientDataRequestWrapper extends PortletRequestWrapper implements C
     */
    public String getMethod() {
       return ((ClientDataRequest)wrapped).getMethod();
+   }
+
+   @Override
+   public PortletContext getPortletContext() {
+      return null;
    }
 
 }
