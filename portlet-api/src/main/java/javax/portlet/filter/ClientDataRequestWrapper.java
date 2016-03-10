@@ -132,9 +132,4 @@ public class ClientDataRequestWrapper extends PortletRequestWrapper implements C
       return ((ClientDataRequest)wrapped).getMethod();
    }
 
-   @Override
-   public PortletContext getPortletContext() {
-      return null;
-   }
-
 }
