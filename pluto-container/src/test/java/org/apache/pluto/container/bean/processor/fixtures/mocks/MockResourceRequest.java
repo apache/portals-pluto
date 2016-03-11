@@ -23,6 +23,9 @@ import java.util.Map;
 
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.servlet.AsyncContext;
+import javax.servlet.DispatcherType;
 
 /**
  * @author Scott Nicklous
@@ -83,6 +86,36 @@ public class MockResourceRequest extends MockClientDataRequest implements Resour
     */
    @Override
    public ResourceParameters getResourceParameters() {
+      return null;
+   }
+
+   @Override
+   public AsyncContext startAsync() throws IllegalStateException {
+      return null;
+   }
+
+   @Override
+   public AsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
+      return null;
+   }
+
+   @Override
+   public boolean isAsyncStarted() {
+      return false;
+   }
+
+   @Override
+   public boolean isAsyncSupported() {
+      return false;
+   }
+
+   @Override
+   public AsyncContext getAsyncContext() {
+      return null;
+   }
+
+   @Override
+   public DispatcherType getDispatcherType() {
       return null;
    }
 

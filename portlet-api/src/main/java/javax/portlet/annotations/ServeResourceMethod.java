@@ -154,4 +154,15 @@ public @interface ServeResourceMethod {
     * @return     The ordinal number
     */
    int        ordinal() default 0;
+   
+   /**
+    * Declares whether the serve resource method supports asynchronous operation mode.
+    * <p>
+    * If this flag is set, any portlet to which this annotated method applies will
+    * be marked as supporting asynchronous operation.
+    * Asynchronous support applies to resource methods only.
+    *  
+    * @return  <code>true</code> if the method supports asynchronous mode.
+    */
+   boolean asyncSupported() default false;
 }

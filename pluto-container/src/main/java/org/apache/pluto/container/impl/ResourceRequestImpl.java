@@ -23,6 +23,9 @@ import javax.portlet.CacheControl;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.servlet.AsyncContext;
+import javax.servlet.DispatcherType;
 
 import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletResourceResponseContext;
@@ -106,5 +109,35 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
 
    public ResourceParameters getResourceParameters() {
       return requestContext.getResourceParameters();
+   }
+
+   @Override
+   public AsyncContext startAsync() throws IllegalStateException {
+      return null;
+   }
+
+   @Override
+   public AsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
+      return null;
+   }
+
+   @Override
+   public boolean isAsyncStarted() {
+      return false;
+   }
+
+   @Override
+   public boolean isAsyncSupported() {
+      return false;
+   }
+
+   @Override
+   public AsyncContext getAsyncContext() {
+      return null;
+   }
+
+   @Override
+   public DispatcherType getDispatcherType() {
+      return null;
    }
 }

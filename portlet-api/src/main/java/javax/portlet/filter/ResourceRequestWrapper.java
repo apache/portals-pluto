@@ -28,6 +28,9 @@ import java.util.Map;
 
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.servlet.AsyncContext;
+import javax.servlet.DispatcherType;
 
 /**
  * <span class="changed_modified_3_0">The</span>  
@@ -113,6 +116,36 @@ public class ResourceRequestWrapper extends ClientDataRequestWrapper implements 
     */
    public ResourceParameters getResourceParameters() {
       return ((ResourceRequest)wrapped).getResourceParameters();
+   }
+
+   @Override
+   public AsyncContext startAsync() throws IllegalStateException {
+      return ((ResourceRequest)wrapped).startAsync();
+   }
+
+   @Override
+   public AsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
+      return ((ResourceRequest)wrapped).startAsync(request, response);
+   }
+
+   @Override
+   public boolean isAsyncStarted() {
+      return ((ResourceRequest)wrapped).isAsyncStarted();
+   }
+
+   @Override
+   public boolean isAsyncSupported() {
+      return ((ResourceRequest)wrapped).isAsyncSupported();
+   }
+
+   @Override
+   public AsyncContext getAsyncContext() {
+      return ((ResourceRequest)wrapped).getAsyncContext();
+   }
+
+   @Override
+   public DispatcherType getDispatcherType() {
+      return ((ResourceRequest)wrapped).getDispatcherType();
    }
 
 }

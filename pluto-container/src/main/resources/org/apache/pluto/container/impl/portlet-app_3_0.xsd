@@ -142,7 +142,8 @@
 			<element name="default-namespace" type="xs:anyURI" minOccurs="0"/>
 			<element name="event-definition" type="portlet:event-definitionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="public-render-parameter" type="portlet:public-render-parameterType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="listener" type="portlet:listenerType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="listener" type="portlet:listenerType" minOccurs="0" maxOccurs="unbounded"/>
+
 			<element name="container-runtime-option" type="portlet:container-runtime-optionType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
 		<attribute name="version" type="portlet:string" use="required"/>
@@ -305,7 +306,15 @@
 			<element name="supported-publishing-event" type="portlet:event-definition-referenceType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="supported-public-render-parameter" type="portlet:string" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="container-runtime-option" type="portlet:container-runtime-optionType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="dependency" type="portlet:dependencyType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="dependency" type="portlet:dependencyType" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="async-supported" type="boolean" minOccurs="0" maxOccurs="1">
+               <annotation>
+                  <documentation>
+                     If set to 'true', the portlet will support
+                     asynchronous processing in resource requests.
+                  </documentation>
+               </annotation>
+            </element>
 		</sequence>
 		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
@@ -425,7 +434,8 @@
 			<element name="name" type="xs:NCName"/>
 		</choice>
 		<attribute name="id" type="portlet:string" use="optional"/>
-	</complexType>
+	</complexType>
+
 	<complexType name="listenerType">
 		<annotation>
 			<documentation>
