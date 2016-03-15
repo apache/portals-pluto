@@ -93,6 +93,7 @@
          <name>AngularJS</name>
          <min-version>1.4.8</min-version>
       </dependency>
+      <async-supported>false</async-supported>
    </portlet>
    <custom-portlet-mode id="mode1">
       <description xml:lang="de">description</description>

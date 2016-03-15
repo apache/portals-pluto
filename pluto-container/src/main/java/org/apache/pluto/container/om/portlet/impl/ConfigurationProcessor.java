@@ -25,6 +25,7 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.portlet.Portlet;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.ServeResourceMethod;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
@@ -391,10 +392,30 @@ public abstract class ConfigurationProcessor {
       
       for (String pn : portletNames) {
          
+         // copy data from the method store to the portlet definition
+         
          PortletDefinition pd = pad.getPortlet(pn);
          if (pd == null) {
             pd = new PortletDefinitionImpl(pn, pad);
          }
+         
+         // if one of the @serveResourceMethod annotations has its ayncSupported
+         // flag set to true, set the flag to true in the portlet definition
+         
+         Set<MethodIdentifier> mis = ams.getMethodIDsForPortlet(pn);
+         for (MethodIdentifier mi : mis) {
+            if (mi.getType() == MethodType.RESOURCE) {
+               List<AnnotatedMethod> meths = ams.getMethods(mi);
+               for (AnnotatedMethod meth : meths) {
+                  ServeResourceMethod srm = (ServeResourceMethod) meth.getAnnotation();
+                  if (srm != null && srm.asyncSupported()) {
+                     pd.setAsyncSupported(true);
+                  }
+               }
+            }
+         }
+         
+         // The processing event references
          
          List<EventDefinitionReference> edrs = pd.getSupportedProcessingEvents();
          for (QName qn : ams.getProcessingEventRefs(pn)) {
@@ -417,6 +438,8 @@ public abstract class ConfigurationProcessor {
                pd.addSupportedProcessingEvent(newedr);
             }
          }
+         
+         // The publishing event references
          
          edrs = pd.getSupportedPublishingEvents();
          for (QName qn : ams.getPublishingEventRefs(pn)) {

@@ -74,7 +74,8 @@ import javax.portlet.annotations.Supports;
    }, dependencies = {
       @Dependency(name="Dojo", minVersion="3.1.4"),
       @Dependency(name="AngularJS", minVersion="1.4.8")
-   }
+   },
+   asyncSupported = true
    
 )
 public class TestAnnotatedPortlet {

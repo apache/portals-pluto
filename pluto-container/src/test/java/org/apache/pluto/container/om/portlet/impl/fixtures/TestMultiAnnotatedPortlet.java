@@ -66,8 +66,26 @@ import javax.portlet.annotations.PortletConfigurations;
          @LocaleString(locale="DE", value="Ein Portlet")
       }, keywords={
          @LocaleString(locale="DE", value="Eins, Zwei, Drei")
-      }
-   )
+      },
+      asyncSupported=true
+   ),
+   @PortletConfiguration(portletName="Portlet3", 
+   initParams = {
+         @InitParameter(name="color", value="#def"),
+      },
+      description={
+         @LocaleString(locale="de", value="Dieses Portlet zeigt die Zeit in verschiedenen Zeitzonen an")
+      }, displayName={
+         @LocaleString(locale="de", value="ZeitzonenPortlet")
+      }, title={
+         @LocaleString(locale="DE", value="Annotiertes Portlet")
+      }, shortTitle={
+         @LocaleString(locale="DE", value="Ein Portlet")
+      }, keywords={
+         @LocaleString(locale="DE", value="Eins, Zwei, Drei")
+      },
+      asyncSupported=false
+   ),
 })
 public class TestMultiAnnotatedPortlet extends GenericPortlet {
    // add portlet methods

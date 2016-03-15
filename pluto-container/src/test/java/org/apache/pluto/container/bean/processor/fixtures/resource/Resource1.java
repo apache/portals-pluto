@@ -56,7 +56,7 @@ public class Resource1 {
       meths.addMethod(this.getClass().getSimpleName() + "#resource2a");
    }
    
-   @ServeResourceMethod(portletNames="portlet2", resourceID="edit")
+   @ServeResourceMethod(portletNames="portlet2", resourceID="edit", asyncSupported=false)
    public void resource2b(ResourceRequest req, ResourceResponse resp) {
       meths.addMethod(this.getClass().getSimpleName() + "#resource2b");
    }
@@ -71,7 +71,7 @@ public class Resource1 {
       meths.addMethod(this.getClass().getSimpleName() + "#resource3a");
    }
    
-   @ServeResourceMethod(portletNames="portlet3", ordinal=300)
+   @ServeResourceMethod(portletNames="portlet3", ordinal=300, asyncSupported=true)
    public void resource3b() {
       meths.addMethod(this.getClass().getSimpleName() + "#resource3b");
    }

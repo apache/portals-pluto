@@ -867,6 +867,11 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             Dependency dep = new DependencyImpl(dt.getName().getValue(), dt.getMinVersion().getValue());
             pd.addDependency(dep);
          }
+         
+         // Async supported
+         if (portlet.isAsyncSupported() != null) {
+            pd.setAsyncSupported(portlet.isAsyncSupported());
+         }
 
          pad.addPortlet(pd);
 
@@ -1286,11 +1291,12 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             pd.addInitParam(plutoInitParam);
          }
 
-         // cache scope, expiration time, resource bundle
+         // cache scope, expiration time, resource bundle, async flag
 
          pd.setCacheScope(pc.cacheScopePublic() ? "public" : "private");
          pd.setExpirationCache(pc.cacheExpirationTime());
          pd.setResourceBundle(pc.resourceBundle());
+         pd.setAsyncSupported(pc.asyncSupported());
 
          // handle portlet info - title, short title, keywords
 

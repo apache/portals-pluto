@@ -19,10 +19,7 @@
 package org.apache.pluto.container.bean.processor.tests;
 
 import static org.apache.pluto.container.bean.processor.MethodType.RESOURCE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -41,6 +38,9 @@ import org.apache.pluto.container.bean.processor.MethodIdentifier;
 import org.apache.pluto.container.bean.processor.PortletCDIExtension;
 import org.apache.pluto.container.bean.processor.fixtures.resource.Resource1;
 import org.apache.pluto.container.bean.processor.fixtures.resource.Resource2;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
 import org.jglue.cdiunit.AdditionalClasses;
 import org.jglue.cdiunit.AdditionalPackages;
 import org.jglue.cdiunit.CdiRunner;
@@ -64,6 +64,7 @@ public class ResourceTest {
 
    private AnnotatedMethodStore ams     = null;
    private ConfigSummary        summary = null;
+   private PortletApplicationDefinition pad = null;
 
    @Before
    public void setUp() {
@@ -73,6 +74,11 @@ public class ResourceTest {
 
       assertNotNull(ams);
       assertNotNull(summary);
+      
+      ConfigurationHolder ch = new ConfigurationHolder();
+      ch.reconcileBeanConfig(ams);
+      pad = ch.getPad();
+      assertNotNull(pad);
    }
 
    @Test
@@ -372,4 +378,23 @@ public class ResourceTest {
       assertEquals(0, qns.size());
    }
 
+   @Test
+   public void testAsyncSupported() throws Exception {
+      PortletDefinition pd;
+      
+      // asyncSupported default value
+      pd = pad.getPortlet("portlet1");
+      assertNotNull(pd);
+      assertFalse(pd.isAsyncSupported());
+      
+      // set to false
+      pd = pad.getPortlet("portlet2");
+      assertNotNull(pd);
+      assertFalse(pd.isAsyncSupported());
+      
+      // set to true
+      pd = pad.getPortlet("portlet3");
+      assertNotNull(pd);
+      assertTrue(pd.isAsyncSupported());
+   }
 }

@@ -73,8 +73,8 @@ public class PortletDefinitionImpl implements PortletDefinition {
    private final List<InitParam> iparms = new ArrayList<InitParam>(); 
    private final List<SecurityRoleRef> secRefs = new ArrayList<SecurityRoleRef>(); 
    private final List<Supports> supps = new ArrayList<Supports>();
-   
    private final List<Dependency> dependencies = new ArrayList<Dependency>(); 
+   private boolean asyncSupported = false;
 
    /**
     * Copy constructor
@@ -126,6 +126,7 @@ public class PortletDefinitionImpl implements PortletDefinition {
       for (Dependency dep : pd.getDependencies()) {
          this.dependencies.add(dep);
       }
+      this.asyncSupported = pd.isAsyncSupported();
    }
    
    /**
@@ -594,6 +595,22 @@ public class PortletDefinitionImpl implements PortletDefinition {
          LOG.debug(txt.toString());
       }
       crtOptions.add(new ContainerRuntimeOptionImpl(cro));
+   }
+
+   /**
+    * @return the asyncSupported
+    */
+   @Override
+   public boolean isAsyncSupported() {
+      return asyncSupported;
+   }
+
+   /**
+    * @param asyncSupported the asyncSupported to set
+    */
+   @Override
+   public void setAsyncSupported(boolean asyncSupported) {
+      this.asyncSupported = asyncSupported;
    }
 
    /* (non-Javadoc)

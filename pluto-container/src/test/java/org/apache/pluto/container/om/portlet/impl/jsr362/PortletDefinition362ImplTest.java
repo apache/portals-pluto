@@ -19,10 +19,7 @@
 
 package org.apache.pluto.container.om.portlet.impl.jsr362;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -873,6 +870,23 @@ public class PortletDefinition362ImplTest {
       assertNotNull(deps);
       assertEquals(2, deps.size());
       assertTrue(deps.contains(dep));
+   }
+   
+   @Test
+   public void testAsyncSupported() throws Exception {
+      assertTrue(cut.isAsyncSupported());
+   }
+   
+   @Test
+   public void testSetAsyncSupportedTrue() throws Exception {
+      cut.setAsyncSupported(true);
+      assertTrue(cut.isAsyncSupported());
+   }
+   
+   @Test
+   public void testSetAsyncSupportedFalse() throws Exception {
+      cut.setAsyncSupported(false);
+      assertFalse(cut.isAsyncSupported());
    }
 
 }

@@ -86,4 +86,7 @@ public interface PortletDefinition {
    List<Dependency> getDependencies();
    Dependency getDependency(String name);
 
+   boolean isAsyncSupported();
+   void setAsyncSupported(boolean asyncSupported);
+
 }
