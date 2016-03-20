@@ -34,6 +34,7 @@ limitations under the License.
   <filter>
     <filter-name>plutoPortalDriver</filter-name>
     <filter-class>org.apache.pluto.driver.PortalDriverFilter</filter-class>
+    <async-supported>true</async-supported>
   </filter>
 
   <filter-mapping>
@@ -55,6 +56,7 @@ limitations under the License.
     <display-name>Pluto Portal Driver</display-name>
     <servlet-name>plutoPortalDriver</servlet-name>
     <servlet-class>org.apache.pluto.driver.PortalDriverServlet</servlet-class>
+    <async-supported>true</async-supported>
   </servlet>
 
   <servlet>
@@ -62,6 +64,7 @@ limitations under the License.
     <display-name>Pluto Portal Driver</display-name>
     <servlet-name>plutoPortalDriverLogout</servlet-name>
     <servlet-class>org.apache.pluto.driver.PortalDriverLogoutServlet</servlet-class>
+    <async-supported>true</async-supported>
   </servlet>
 
   <servlet>

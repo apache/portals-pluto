@@ -53,6 +53,7 @@ public class PathDisplay {
    
    private String type;
    private String caller;
+   private boolean isAsyncSupported = false;
 
    public PathDisplay(HttpServletRequest req, String caller) {
       this.caller = caller;
@@ -82,6 +83,7 @@ public class PathDisplay {
       method_query_string = req.getQueryString();
       
       type = req.getDispatcherType().name();
+      isAsyncSupported = req.isAsyncSupported();
 }
 
    public PathDisplay(PortletRequest req, String caller) {
@@ -137,6 +139,9 @@ public class PathDisplay {
          txt.append("</tr><tr>");
          txt.append("<td>async_query_string:</td><td>").append(async_query_string).append("</td>\n");
       }
+      txt.append("</tr><tr>");
+      txt.append("<td>isAsyncSupported:</td><td>").append(isAsyncSupported).append("</td>\n");
+
       txt.append("</tr><tr><td style='padding-top:8px;'/></tr><tr>");
 
       if ((forward_request_uri == null) && (forward_context_path == null) && (forward_servlet_path == null)

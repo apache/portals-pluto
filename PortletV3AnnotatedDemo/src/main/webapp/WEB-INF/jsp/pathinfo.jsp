@@ -4,7 +4,7 @@
 <%@ page import="org.apache.portals.samples.*" %>
 <%@ page import="java.util.*" %>
 
-<portlet:defineObjects />
+<!--   portlet:defineObjects /  -->
 
 <p>Message from included JSP.</p>
 <%

@@ -261,6 +261,14 @@ public abstract class PortletRequestImpl implements PortletRequest
         {
             return requestContext.getServletRequest();
         }
+        else if (name.equals("javax.portlet.debug.ServletResponse"))
+        {
+            return requestContext.getServletResponse();
+        }
+        else if (name.equals("javax.portlet.debug.ServletContext"))
+        {
+            return requestContext.getServletContext();
+        }
         return requestContext.getAttribute(name);
     }
 
