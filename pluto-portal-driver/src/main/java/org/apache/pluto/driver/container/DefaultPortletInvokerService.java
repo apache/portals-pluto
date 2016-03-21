@@ -31,6 +31,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.AsyncContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -239,7 +240,15 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
 
                 if (methodID.equals(PortletInvokerService.METHOD_RESOURCE))
                 {
-                    dispatcher.forward(containerRequest, containerResponse);
+                    if (portletWindow.getPortletDefinition().isAsyncSupported()) {
+                       LOG.debug("Async dispatching resource request to portlet servlet.");
+                       AsyncContext actx = containerRequest.startAsync(containerRequest, containerResponse);
+                       actx.dispatch(servletContext, uri);
+                    } else {
+                       LOG.debug("Request dispatcher forward resource request to portlet servlet.");
+                       dispatcher.forward(containerRequest, containerResponse);
+                    }
+                    LOG.debug("Dispatch complete.");
                 }
                 else
                 {
@@ -275,10 +284,12 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
                 }
 
             } finally {
-                containerRequest.removeAttribute(PortletInvokerService.METHOD_ID);
-                containerRequest.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
-                containerRequest.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
-                containerRequest.removeAttribute(PortletInvokerService.FILTER_MANAGER);
+                if (!portletWindow.getPortletDefinition().isAsyncSupported()) {
+                   containerRequest.removeAttribute(PortletInvokerService.METHOD_ID);
+                   containerRequest.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
+                   containerRequest.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
+                   containerRequest.removeAttribute(PortletInvokerService.FILTER_MANAGER);
+                }
             }
         } else {
             String msg = EXCEPTIONS.getString(

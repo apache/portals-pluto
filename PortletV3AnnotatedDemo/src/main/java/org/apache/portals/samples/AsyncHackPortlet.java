@@ -19,9 +19,12 @@
 package org.apache.portals.samples;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
+import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
@@ -29,12 +32,15 @@ import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
 import javax.portlet.annotations.URLFactory;
+import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Resource portlet for viewing path information.
  */
-public class PathInfoPortlet {
+public class AsyncHackPortlet {
+   private static final Logger LOGGER = Logger.getLogger(AsyncHackPortlet.class.getName());
 
    public static final String RESPARAM_DISPLAY = "display";
 
@@ -45,11 +51,12 @@ public class PathInfoPortlet {
    @Inject
    private URLFactory         uf;
 
-   @RenderMethod(portletNames = { "PathInfoPortlet" }, ordinal = 100)
+   @RenderMethod(portletNames = { "AsyncHackPortlet" }, ordinal = 100)
    public String getImageInclude() {
+      LOGGER.fine("Rendering async hack portlet");
 
       StringBuilder txt = new StringBuilder(128);
-      txt.append("<h3>Path Info Portlet</h3>");
+      txt.append("<h3>Async Hack Portlet</h3>");
 
       ResourceURL resurl = uf.createResourceURL();
 
@@ -72,14 +79,16 @@ public class PathInfoPortlet {
    }
 
    /**
-    * This resource method generates some output directly, then includes output
-    * from a JSP as specified in the annotation.
+    * This resource method generates some output directly, then includes output from a JSP as specified in the
+    * annotation.
     * 
     * @return The string for inclusion in the output.
     * @throws IOException
+    * @throws PortletException 
     */
-   @ServeResourceMethod(portletNames = { "PathInfoPortlet" }, include="/WEB-INF/jsp/pathinfo.jsp")
-   public void getPathInfo(ResourceRequest req, ResourceResponse resp) throws IOException {
+   @ServeResourceMethod(portletNames = { "AsyncHackPortlet" }, asyncSupported = true)
+   public void getPathInfo(ResourceRequest req, ResourceResponse resp) throws IOException, PortletException {
+      LOGGER.fine("Doing async hack resource request");
 
       @SuppressWarnings("unchecked")
       ArrayList<String> pathInfo = (ArrayList<String>) req.getAttribute("pathInfo");
@@ -88,15 +97,51 @@ public class PathInfoPortlet {
       }
 
       HttpServletRequest hreq = (HttpServletRequest) req.getAttribute("javax.portlet.debug.ServletRequest");
+      HttpServletResponse hresp = (HttpServletResponse) req.getAttribute("javax.portlet.debug.ServletResponse");
       PathDisplay pd;
       if (hreq != null) {
          pd = new PathDisplay(hreq, "Resource Method (Servlet)");
+         hreq.setAttribute("pathInfo", pathInfo);
       } else {
          pd = new PathDisplay(req, "Resource Method (Resource)");
+         req.setAttribute("pathInfo", pathInfo);
       }
       pathInfo.add(pd.toMarkup());
 
-      req.setAttribute("pathInfo", pathInfo);
+      PrintWriter writer = resp.getWriter();
+      writer.append("<h5>Async Hack Resource Request</h5>");
+      
+      StringBuilder txt = new StringBuilder(128);
+      txt.append("Trying to start async. Servlet context: ").append(hreq.getServletContext().getContextPath());
+
+      String jsp = "/WEB-INF/jsp/pathinfo.jsp";
+//      String jsp = "/ais";
+//      RequestDispatcher rd = null;
+//      rd = hreq.getRequestDispatcher(jsp);
+//      txt.append("Request dispatcher: ").append(rd);
+      LOGGER.fine(txt.toString());
+      txt.setLength(0);
+      
+      if (hreq != null && hresp != null) {
+         try {
+            
+            AsyncContext context = hreq.startAsync(hreq, hresp);
+            context.setTimeout(1000);
+            
+            txt.append("Async context: ").append((context == null) ? "null." : "not null.");
+            txt.append(" Now dispatching ... ");
+
+//            context.dispatch(hreq.getServletContext(), jsp);
+            context.dispatch(jsp);
+            
+            txt.append(" done. ");
+         } catch (Exception e) {
+            txt.append(" ... didn't work. Exception: ").append(e.toString());
+         }
+         
+         LOGGER.fine(txt.toString());
+         txt.setLength(0);
+      }
 
    }
 
