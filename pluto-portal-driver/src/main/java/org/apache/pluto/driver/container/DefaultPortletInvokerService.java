@@ -17,6 +17,8 @@
 package org.apache.pluto.driver.container;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -240,14 +242,8 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
 
                 if (methodID.equals(PortletInvokerService.METHOD_RESOURCE))
                 {
-                    if (portletWindow.getPortletDefinition().isAsyncSupported()) {
-                       LOG.debug("Async dispatching resource request to portlet servlet.");
-                       AsyncContext actx = containerRequest.startAsync(containerRequest, containerResponse);
-                       actx.dispatch(servletContext, uri);
-                    } else {
-                       LOG.debug("Request dispatcher forward resource request to portlet servlet.");
-                       dispatcher.forward(containerRequest, containerResponse);
-                    }
+                    LOG.debug("Request dispatcher forward resource request to portlet servlet.");
+                    dispatcher.forward(containerRequest, containerResponse);
                     LOG.debug("Dispatch complete.");
                 }
                 else
@@ -284,11 +280,14 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
                 }
 
             } finally {
-                if (!portletWindow.getPortletDefinition().isAsyncSupported()) {
+                if (!containerRequest.isAsyncSupported() || !containerRequest.isAsyncStarted()) {
+                   LOG.debug("After invocation, removing attributes.");
                    containerRequest.removeAttribute(PortletInvokerService.METHOD_ID);
                    containerRequest.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
                    containerRequest.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
                    containerRequest.removeAttribute(PortletInvokerService.FILTER_MANAGER);
+                } else {
+                   LOG.debug("After invocation, async started for resource request. attributes not removed.");
                 }
             }
         } else {

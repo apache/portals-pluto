@@ -145,51 +145,6 @@ public class PortalDriverServlet extends HttpServlet {
             LOG.debug("Processing " + reqType + " request for window: " + portletWindow.getId().getStringId());
          }
 
-         
-//          String portletName = portletWindow.getPortletName();
-//          if (portletName.equals("AsyncHackPortlet")
-//                && portalURL.getType() == URLType.Resource) {
-// 
-//             String uri =  PortletInvokerService.URIPREFIX + portletWindow.getPortletDefinition().getPortletName();
-//             String ctxpath =  "/PortletV3AnnotatedDemo";
-//             String jsp = "/WEB-INF/jsp/pathinfo.jsp";
-//             
-// //            LOG.debug("Directly doing async dispatch to JSP. uri: " + uri + ", jsp: " + jsp);
-//             LOG.debug("Directly dispatching to portlet servlet. uri: " + uri);
-//             
-//             ServletContext ctx = request.getServletContext().getContext(ctxpath);
-//             RequestDispatcher rd = ctx.getRequestDispatcher(uri);
-//             rd.forward(request, response);
-//             LOG.debug("Completed the dispatch.");
-//             return;
-//             
-// //             ServletContext ctx = request.getServletContext().getContext(ctxpath);
-// //             if (ctx == null) {
-// //                LOG.debug("couldn't get context for uri.");
-// //             } else {
-// //                LOG.debug("Got context, path: >>>" + ctx.getContextPath() + "<<<");
-// // 
-// //                AsyncContext context = request.startAsync();
-// //                context.dispatch(ctx, jsp);
-// //                
-// //                LOG.debug("Completed the dispatch.");
-// //                return;
-// // 
-// //                
-// //               RequestDispatcher rd = ctx.getRequestDispatcher(jsp);
-// //               if (rd == null) {
-// //                  LOG.debug("couldn't get request dispatcher for context.");
-// //               } else {
-// //                  LOG.debug("Got the request dispatcher.");
-// // //                  PrintWriter writer = response.getWriter();
-// // //                  writer.append("<h5>Greetings from portal driver servlet!</h5>");
-// //                  rd.include(request, response);
-// //                  LOG.debug("Dispatch seemed to go OK.");
-// //                  return;
-// //               }
-// //             }
-//          }
-
          try {
             PageState ps;
             String jsondata;

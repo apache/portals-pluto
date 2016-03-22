@@ -44,6 +44,26 @@ public class AsyncHackPortlet {
 
    public static final String RESPARAM_DISPLAY = "display";
 
+   private AsyncContext context;
+   private static final String jsp = "/WEB-INF/jsp/pathinfo.jsp";
+//   private static final String jsp = "/ais";
+
+   
+   private class AsyncHackRunnable implements Runnable {
+
+      @Override
+      public void run() {
+         try {
+            Thread.sleep(1000);
+         } catch (InterruptedException e) {}
+         LOGGER.fine("Slept, now dispatching.");
+         HttpServletRequest hreq = (HttpServletRequest) context.getRequest();
+         context.dispatch(hreq.getServletContext(), jsp);
+//       context.dispatch(jsp);
+      }
+      
+   }
+
    // Injecting the namespace & URLFactory
    @Inject
    @Namespace
@@ -114,8 +134,6 @@ public class AsyncHackPortlet {
       StringBuilder txt = new StringBuilder(128);
       txt.append("Trying to start async. Servlet context: ").append(hreq.getServletContext().getContextPath());
 
-      String jsp = "/WEB-INF/jsp/pathinfo.jsp";
-//      String jsp = "/ais";
 //      RequestDispatcher rd = null;
 //      rd = hreq.getRequestDispatcher(jsp);
 //      txt.append("Request dispatcher: ").append(rd);
@@ -125,14 +143,14 @@ public class AsyncHackPortlet {
       if (hreq != null && hresp != null) {
          try {
             
-            AsyncContext context = hreq.startAsync(hreq, hresp);
-            context.setTimeout(1000);
+            context = hreq.startAsync(hreq, hresp);
+            context.setTimeout(4000);
             
             txt.append("Async context: ").append((context == null) ? "null." : "not null.");
-            txt.append(" Now dispatching ... ");
+            txt.append(" Now starting thread ... ");
 
-//            context.dispatch(hreq.getServletContext(), jsp);
-            context.dispatch(jsp);
+            AsyncHackRunnable ahr = new AsyncHackRunnable();
+            context.start(ahr);
             
             txt.append(" done. ");
          } catch (Exception e) {

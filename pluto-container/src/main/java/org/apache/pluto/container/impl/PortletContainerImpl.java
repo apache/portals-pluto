@@ -268,22 +268,19 @@ public class PortletContainerImpl implements PortletContainer
 
         FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.RESOURCE_PHASE);
         
-        if (portletWindow.getPortletDefinition().isAsyncSupported()) {
-           LOG.debug("invoking for async ... no resource release");
+        try
+        {
            invoker.serveResource(requestContext, portletRequest, portletResponse, filterManager);
-           
-        } else {
-           LOG.debug("invocation through request dispatcher.");
-           try
-           {
-              invoker.serveResource(requestContext, portletRequest, portletResponse, filterManager);
-              // Mark portlet interaction is completed: backend implementation can flush response state now
-              responseContext.close();
-           }
-           finally
-           {
-              responseContext.release();
-           }
+        }
+        finally
+        {
+            if (!request.isAsyncSupported() || !request.isAsyncStarted()) {
+                // Mark portlet interaction is completed: backend implementation can flush response state now
+                responseContext.close();
+                responseContext.release();
+            } else {
+               LOG.debug("Async started for resource request. responseContext not released.");
+            }
         }
 
         debugWithName("Portlet resource done for: " + portletWindow.getPortletDefinition().getPortletName());
