@@ -19,6 +19,7 @@ package org.apache.pluto.container;
 import java.util.Map;
 
 import javax.portlet.ResourceParameters;
+import javax.portlet.ResourceResponse;
 
 /**
  * @version $Id$
@@ -41,4 +42,16 @@ public interface PortletResourceRequestContext extends PortletRequestContext
      * @return
      */
     ResourceParameters getResourceParameters();
+    
+    /**
+     * Returns the resource response needed for async support. V3 method.
+     * @return
+     */
+    ResourceResponse getResponse();
+    
+    /**
+     * Sets the resource response needed for async support. V3 method.
+     * @return
+     */
+    void setResponse(ResourceResponse response);
 }

@@ -38,14 +38,21 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
    /** Internal logger. */
    private static final Logger LOG = LoggerFactory.getLogger(ResourceRequestImpl.class);
 
-    private PortletResourceRequestContext requestContext;
     private CacheControl cacheControl;
     
     public ResourceRequestImpl(PortletResourceRequestContext requestContext, PortletResourceResponseContext responseContext)
     {
         super(requestContext, responseContext, PortletRequest.RESOURCE_PHASE);
-        this.requestContext = requestContext;
         this.cacheControl = responseContext.getCacheControl();
+    }
+    
+    @Override
+    protected PortletResourceRequestContext getRequestContext() {
+       return (PortletResourceRequestContext) requestContext;
+    }
+    
+    protected PortletResourceResponseContext getResponseContext() {
+       return (PortletResourceResponseContext) responseContext;
     }
     
     @Override
@@ -57,7 +64,7 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
 
     public String getCacheability()
     {
-        return requestContext.getCacheability();
+        return getRequestContext().getCacheability();
     }
 
     public String getETag()
@@ -67,12 +74,12 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
 
     public Map<String, String[]> getPrivateRenderParameterMap()
     {
-        return cloneParameterMap(requestContext.getPrivateRenderParameterMap());
+        return cloneParameterMap(getRequestContext().getPrivateRenderParameterMap());
     }
 
     public String getResourceID()
 	{
-		return requestContext.getResourceID();
+		return getRequestContext().getResourceID();
 	}
 
     public String getResponseContentType()
@@ -108,12 +115,13 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
    }
 
    public ResourceParameters getResourceParameters() {
-      return requestContext.getResourceParameters();
+      return getRequestContext().getResourceParameters();
    }
 
    @Override
    public AsyncContext startAsync() throws IllegalStateException {
-      return null;
+      ResourceResponse resp = getRequestContext().getResponse();
+      return startAsync(this, resp);
    }
 
    @Override
@@ -123,21 +131,21 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
 
    @Override
    public boolean isAsyncStarted() {
-      return false;
+      return getRequestContext().getServletRequest().isAsyncStarted();
    }
 
    @Override
    public boolean isAsyncSupported() {
-      return false;
+      return getRequestContext().getServletRequest().isAsyncSupported();
    }
 
    @Override
    public AsyncContext getAsyncContext() {
-      return null;
+      return getRequestContext().getServletRequest().getAsyncContext();
    }
 
    @Override
    public DispatcherType getDispatcherType() {
-      return null;
+      return getRequestContext().getServletRequest().getDispatcherType();
    }
 }

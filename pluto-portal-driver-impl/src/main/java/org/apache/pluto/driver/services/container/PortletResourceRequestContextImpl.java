@@ -19,6 +19,7 @@ package org.apache.pluto.driver.services.container;
 import java.util.Map;
 
 import javax.portlet.ResourceParameters;
+import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,6 +36,8 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
                 PortletResourceRequestContext
 {
    private String pageState;
+   private ResourceResponse response;
+   
    
     public PortletResourceRequestContextImpl(PortletContainer container, HttpServletRequest containerRequest,
                                              HttpServletResponse containerResponse, PortletWindow window,
@@ -47,16 +50,19 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
         this.pageState = pageState;
     }
 
+    @Override
     public String getCacheability()
     {
         return getPortalURL().getCacheability();
     }
 
+    @Override
     public Map<String, String[]> getPrivateRenderParameterMap()
     {
         return paramFactory.getResourceRenderParameterMap(window.getId().getStringId());
     }
 
+    @Override
     public String getResourceID()
     {
         return getPortalURL().getResourceID();
@@ -65,11 +71,29 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
    /* (non-Javadoc)
     * @see org.apache.pluto.container.PortletResourceRequestContext#getPageState()
     */
+    @Override
    public String getPageState() {
       return pageState;
    }
 
+    @Override
    public ResourceParameters getResourceParameters() {
       return new ResourceParametersImpl(urlProvider, windowId);
+   }
+
+   /**
+    * @return the response
+    */
+    @Override
+   public ResourceResponse getResponse() {
+      return response;
+   }
+
+   /**
+    * @param response the response to set
+    */
+    @Override
+   public void setResponse(ResourceResponse response) {
+      this.response = response;
    }
 }

@@ -265,6 +265,7 @@ public class PortletContainerImpl implements PortletContainer
         responseContext.setPropsAllowed(true);
         ResourceRequest portletRequest = envService.createResourceRequest(requestContext, responseContext);
         ResourceResponse portletResponse = envService.createResourceResponse(responseContext, requestContext.getCacheability());
+        requestContext.setResponse(portletResponse);     // for async support
 
         FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.RESOURCE_PHASE);
         
