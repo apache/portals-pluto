@@ -91,9 +91,9 @@ public class PathInfoPortlet {
       PathDisplay pd;
       if (hreq != null) {
          pd = new PathDisplay(hreq, "Resource Method (Servlet)");
-      } else {
-         pd = new PathDisplay(req, "Resource Method (Resource)");
+         pathInfo.add(pd.toMarkup());
       }
+      pd = new PathDisplay(req, "Resource Method (ResourceRequest)");
       pathInfo.add(pd.toMarkup());
 
       req.setAttribute("pathInfo", pathInfo);
