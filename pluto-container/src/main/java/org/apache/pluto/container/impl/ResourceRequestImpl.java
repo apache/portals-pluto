@@ -20,13 +20,20 @@ import java.util.Enumeration;
 import java.util.Map;
 
 import javax.portlet.CacheControl;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.pluto.container.PortletInvokerService;
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletResourceResponseContext;
 import org.slf4j.Logger;
@@ -126,7 +133,23 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
 
    @Override
    public AsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
-      return null;
+      
+      HttpServletRequest hreq = getRequestContext().getServletRequest();
+      HttpServletResponse hresp = getRequestContext().getServletResponse();
+      ServletContext ctx = getRequestContext().getServletContext();
+      HttpSession sess = getSession();
+      PortletConfig cfg =getRequestContext().getPortletConfig(); 
+      
+      HttpServletRequest wreq = new HttpServletPortletRequestWrapper(hreq, ctx, sess, request, false, false);
+      HttpServletResponse wresp = new HttpServletPortletResponseWrapper(hresp, request, response, false);
+   
+      request.setAttribute(PortletInvokerService.PORTLET_CONFIG, cfg);
+      request.setAttribute(PortletInvokerService.PORTLET_REQUEST, request);
+      request.setAttribute(PortletInvokerService.PORTLET_RESPONSE, response);
+      
+      AsyncContext actx = hreq.startAsync(wreq, wresp);
+
+      return actx;
    }
 
    @Override
@@ -147,5 +170,23 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
    @Override
    public DispatcherType getDispatcherType() {
       return getRequestContext().getServletRequest().getDispatcherType();
+   }
+
+   // For use within the wrapper. 
+   // PLT.10.4.3. Proxied session is created and passed if 
+   // javax.portlet.servletDefaultSessionScope == PORTLET_SCOPE
+   private HttpSession getSession() {
+      HttpSession sess = null;
+
+      PortletConfig portletConfig = getRequestContext().getPortletConfig();
+      Map<String, String[]> containerRuntimeOptions = portletConfig.getContainerRuntimeOptions();
+      String[] values = containerRuntimeOptions.get("javax.portlet.servletDefaultSessionScope");
+
+      if ((values != null) && (values.length > 0) && "PORTLET_SCOPE".equals(values[0])) {
+         String portletWindowId = getRequestContext().getPortletWindow().getId().getStringId();
+         sess = ServletPortletSessionProxy.createProxy(getRequestContext().getServletRequest(), portletWindowId);
+      }
+
+      return sess;
    }
 }
