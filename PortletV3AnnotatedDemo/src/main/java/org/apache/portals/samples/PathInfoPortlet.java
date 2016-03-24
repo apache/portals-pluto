@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
@@ -50,6 +52,7 @@ public class PathInfoPortlet {
 
       StringBuilder txt = new StringBuilder(128);
       txt.append("<h3>Path Info Portlet</h3>");
+      txt.append("<h5>Include:</h5>");
 
       ResourceURL resurl = uf.createResourceURL();
 
@@ -61,6 +64,26 @@ public class PathInfoPortlet {
       txt.append("      if (xhr.readyState==4 && xhr.status==200) {\n");
       txt.append("         document.getElementById('").append(pid)
             .append("-putResourceHere').innerHTML=xhr.responseText;\n");
+      txt.append("      }\n");
+      txt.append("   };\n");
+      txt.append("   xhr.open(\"GET\",\"").append(resurl.toString()).append("\",true);\n");
+      txt.append("   xhr.send();\n");
+      txt.append("})();\n");
+      txt.append("</script>\n");
+
+      txt.append("<h5>Forward:</h5>");
+
+      resurl = uf.createResourceURL();
+      resurl.setResourceID("fwd");
+
+      txt.append("<div class='infobox' id='").append(pid).append("-puReHe'></div>\n");
+      txt.append("<script>\n");
+      txt.append("(function () {\n");
+      txt.append("   var xhr = new XMLHttpRequest();\n");
+      txt.append("   xhr.onreadystatechange=function() {\n");
+      txt.append("      if (xhr.readyState==4 && xhr.status==200) {\n");
+      txt.append("         document.getElementById('").append(pid)
+            .append("-puReHe').innerHTML=xhr.responseText;\n");
       txt.append("      }\n");
       txt.append("   };\n");
       txt.append("   xhr.open(\"GET\",\"").append(resurl.toString()).append("\",true);\n");
@@ -97,6 +120,14 @@ public class PathInfoPortlet {
       pathInfo.add(pd.toMarkup());
 
       req.setAttribute("pathInfo", pathInfo);
+
+   }
+
+   @ServeResourceMethod(portletNames = { "PathInfoPortlet" }, resourceID="fwd")
+   public void getPathInfo2(ResourceRequest req, ResourceResponse resp) throws IOException, PortletException {
+
+      PortletRequestDispatcher prd = req.getPortletContext().getRequestDispatcher("/WEB-INF/jsp/pathinfo.jsp");
+      prd.forward(req, resp);
 
    }
 
