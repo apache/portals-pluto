@@ -252,7 +252,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
    }
 
    public void setResourceID(String resourceID) {
-      url.setCacheability(resourceID);
+      url.setResourceID(resourceID);
    }
 
    public String toURL() {
