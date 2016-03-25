@@ -22,6 +22,7 @@ import static javax.portlet.ActionRequest.ACTION_NAME;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -47,8 +48,10 @@ import javax.portlet.StateAwareResponse;
 import javax.portlet.annotations.HeaderMethod;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
+import javax.servlet.DispatcherType;
 import javax.xml.namespace.QName;
 
+import org.apache.pluto.container.PortletInvokerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -260,7 +263,28 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
       String id = (req.getResourceID() != null) ? req.getResourceID() : "";
       MethodIdentifier mi = new MethodIdentifier(portletName, id, MethodType.RESOURCE);
 
-      List<AnnotatedMethod> meths = getMethods(mi);
+      List<AnnotatedMethod> meths = new ArrayList<AnnotatedMethod>();
+      if (req.getDispatcherType() == DispatcherType.ASYNC) {
+         
+         // Handle AsyncContest#dispatch() case
+         
+         MethodIdentifier ami = (MethodIdentifier) req.getAttribute(PortletInvokerService.ASYNC_METHOD);
+         AnnotatedMethod meth = null;
+         if (ami != null) {
+            meth = acb.getMethodStore().getMethod(mi);
+         }
+         if (meth == null) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("Async processing error. ServeResource method not found for method identifier: ");
+            txt.append((ami == null) ? "null" : ami.toString());
+            LOG.warn(txt.toString());
+            return;
+         }
+         meths.add(meth);
+      } else {
+         meths = getMethods(mi);
+      }
+      
       if (meths.size() == 0) {
 
          // If a resource URL was activated, but no resource method could be
@@ -302,21 +326,36 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
             // invoke the resource method
 
             result = invokePortletMethod(meth, args);
+            
+            if (req.isAsyncStarted()) {
+               
+               // If async processing was started, handle the special case.
+               // It doesn't make sense to write output, as the resource method may
+               // be writing output through an async thread. Set up to process async dispatch.
+               // also, after async is started, no further methods can be invoked.
+               
+               LOG.debug("Async processing was started during method: " + meth.toString());
+               req.setAttribute(PortletInvokerService.ASYNC_METHOD, meth);
+               break;
+               
+            } else {
 
-            // If output is to be expected, write it to the writer
+               // No async processing.
+               // If output is to be expected, write it to the writer
 
-            if (meth.getDescription().getVariant() == SignatureVariant.STRING_VOID) {
-               if (result != null) {
-                  assert result instanceof String;
-                  resp.getWriter().write((String) result);
+               if (meth.getDescription().getVariant() == SignatureVariant.STRING_VOID) {
+                  if (result != null) {
+                     assert result instanceof String;
+                     resp.getWriter().write((String) result);
+                  }
                }
-            }
 
-            // If an include resource is provided, include it
+               // If an include resource is provided, include it
 
-            if ((rm != null) && (rm.include().length() > 0)) {
-               PortletRequestDispatcher prd = config.getPortletContext().getRequestDispatcher(rm.include());
-               prd.include(req, resp);
+               if ((rm != null) && (rm.include().length() > 0)) {
+                  PortletRequestDispatcher prd = config.getPortletContext().getRequestDispatcher(rm.include());
+                  prd.include(req, resp);
+               }
             }
          }
       } finally {

@@ -19,7 +19,10 @@ package org.apache.pluto.container;
 import java.util.Map;
 
 import javax.portlet.ResourceParameters;
+import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.AsyncContext;
+import javax.servlet.DispatcherType;
 
 /**
  * @version $Id$
@@ -54,4 +57,15 @@ public interface PortletResourceRequestContext extends PortletRequestContext
      * @return
      */
     void setResponse(ResourceResponse response);
+    
+    /**
+     * For async support
+     */
+    
+    AsyncContext startAsync(ResourceRequest request) throws IllegalStateException;
+    AsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException;
+    boolean isAsyncStarted();
+    boolean isAsyncSupported();
+    AsyncContext getAsyncContext() throws IllegalStateException;
+    DispatcherType getDispatcherType();
 }

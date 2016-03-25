@@ -280,6 +280,7 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
                 }
 
             } finally {
+                // If async is running, resources will be released by the PortletAsyncListener
                 if (!containerRequest.isAsyncSupported() || !containerRequest.isAsyncStarted()) {
                    LOG.debug("After invocation, removing attributes.");
                    containerRequest.removeAttribute(PortletInvokerService.METHOD_ID);

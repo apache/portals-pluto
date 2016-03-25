@@ -63,6 +63,12 @@ public interface PortletInvokerService {
     String PORTLET_CONFIG = "javax.portlet.config";
 
     /**
+     * The key used to bind the <code>MethodIdentifier</code> to the ResourceRequest
+     * for asyc processing
+     */
+    String ASYNC_METHOD = "javax.portlet.asyncMethod";
+
+    /**
      * The request attribute key used to retrieve the <code>PortletRequestContext</code> instance
      */
     String REQUEST_CONTEXT = PortletRequestContext.class.getName();

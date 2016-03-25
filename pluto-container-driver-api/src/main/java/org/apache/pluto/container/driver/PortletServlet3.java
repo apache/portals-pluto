@@ -35,6 +35,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.UnavailableException;
+import javax.servlet.DispatcherType;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -261,12 +262,8 @@ public class PortletServlet3 extends HttpServlet {
       final PortletResponseContext responseContext = (PortletResponseContext) portletRequest
             .getAttribute(PortletInvokerService.RESPONSE_CONTEXT);
 
-      final FilterManager filterManager = (FilterManager) request.getAttribute(PortletInvokerService.FILTER_MANAGER);
-
-      request.removeAttribute(PortletInvokerService.METHOD_ID);
-      request.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
-      request.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
-      request.removeAttribute(PortletInvokerService.FILTER_MANAGER);
+      final FilterManager filterManager = 
+            (FilterManager) request.getAttribute(PortletInvokerService.FILTER_MANAGER);
 
       requestContext.init(portletConfig, getServletContext(), request, response);
       responseContext.init(request, response);
@@ -371,6 +368,17 @@ public class PortletServlet3 extends HttpServlet {
          notify(event, false, ex);
          throw new ServletException(ex);
 
+      } finally {
+         // If an async request is running or has been dispatched, resources will
+         // be released by the PortletAsyncListener. Otherwise release here.
+         if (!request.isAsyncStarted() && (request.getDispatcherType() != DispatcherType.ASYNC)) {
+
+            request.removeAttribute(PortletInvokerService.METHOD_ID);
+            request.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
+            request.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
+            request.removeAttribute(PortletInvokerService.FILTER_MANAGER);
+
+         }
       }
    }
 

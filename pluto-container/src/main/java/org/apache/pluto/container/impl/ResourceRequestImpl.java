@@ -127,66 +127,31 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
 
    @Override
    public AsyncContext startAsync() throws IllegalStateException {
-      ResourceResponse resp = getRequestContext().getResponse();
-      return startAsync(this, resp);
+      return getRequestContext().startAsync(this);
    }
 
    @Override
    public AsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
-      
-      HttpServletRequest hreq = getRequestContext().getServletRequest();
-      HttpServletResponse hresp = getRequestContext().getServletResponse();
-      ServletContext ctx = getRequestContext().getServletContext();
-      HttpSession sess = getSession();
-      PortletConfig cfg =getRequestContext().getPortletConfig(); 
-      
-      HttpServletRequest wreq = new HttpServletPortletRequestWrapper(hreq, ctx, sess, request, false, false);
-      HttpServletResponse wresp = new HttpServletPortletResponseWrapper(hresp, request, response, false);
-   
-      request.setAttribute(PortletInvokerService.PORTLET_CONFIG, cfg);
-      request.setAttribute(PortletInvokerService.PORTLET_REQUEST, request);
-      request.setAttribute(PortletInvokerService.PORTLET_RESPONSE, response);
-      
-      AsyncContext actx = hreq.startAsync(wreq, wresp);
-
-      return actx;
+      return getRequestContext().startAsync(request, response);
    }
 
    @Override
    public boolean isAsyncStarted() {
-      return getRequestContext().getServletRequest().isAsyncStarted();
+      return getRequestContext().isAsyncStarted();
    }
 
    @Override
    public boolean isAsyncSupported() {
-      return getRequestContext().getServletRequest().isAsyncSupported();
+      return getRequestContext().isAsyncSupported();
    }
 
    @Override
    public AsyncContext getAsyncContext() {
-      return getRequestContext().getServletRequest().getAsyncContext();
+      return getRequestContext().getAsyncContext();
    }
 
    @Override
    public DispatcherType getDispatcherType() {
-      return getRequestContext().getServletRequest().getDispatcherType();
-   }
-
-   // For use within the wrapper. 
-   // PLT.10.4.3. Proxied session is created and passed if 
-   // javax.portlet.servletDefaultSessionScope == PORTLET_SCOPE
-   private HttpSession getSession() {
-      HttpSession sess = null;
-
-      PortletConfig portletConfig = getRequestContext().getPortletConfig();
-      Map<String, String[]> containerRuntimeOptions = portletConfig.getContainerRuntimeOptions();
-      String[] values = containerRuntimeOptions.get("javax.portlet.servletDefaultSessionScope");
-
-      if ((values != null) && (values.length > 0) && "PORTLET_SCOPE".equals(values[0])) {
-         String portletWindowId = getRequestContext().getPortletWindow().getId().getStringId();
-         sess = ServletPortletSessionProxy.createProxy(getRequestContext().getServletRequest(), portletWindowId);
-      }
-
-      return sess;
+      return getRequestContext().getDispatcherType();
    }
 }
