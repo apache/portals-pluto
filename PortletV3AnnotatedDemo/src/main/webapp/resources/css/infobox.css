@@ -12,7 +12,7 @@
    border-style:solid; 
    border-width:2px; 
    padding:4px; 
-   margin:3px;
+   margin:0 0 3px 0;
    overflow:auto;
    border-color:#008800; 
    background:#E0FFE0;
