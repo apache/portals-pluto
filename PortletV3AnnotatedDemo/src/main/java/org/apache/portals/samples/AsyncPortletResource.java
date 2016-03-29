@@ -19,7 +19,6 @@
 package org.apache.portals.samples;
 
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -47,6 +46,7 @@ public class AsyncPortletResource {
    private final static String JSP         = "/WEB-INF/jsp/asyncOutput.jsp";
    private final static String ATTRIB_REPS = "reps";
    private final static String ATTRIB_AUTO = "auto";
+   private final static String ATTRIB_TITLE = "title";
 
    private class AsyncRunnable implements Runnable {
 
@@ -60,6 +60,13 @@ public class AsyncPortletResource {
          this.delay = delay;
          this.type = type;
          this.done = done;
+         
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Constructing runnable.");
+         txt.append(" delay: ").append(delay);
+         txt.append(", type: ").append(type);
+         txt.append(", done: ").append(done);
+         LOGGER.fine(txt.toString());
       }
 
       @Override
@@ -75,8 +82,8 @@ public class AsyncPortletResource {
             case TEXT:
                LOGGER.fine("Producing text output.");
                StringBuilder txt = new StringBuilder(128);
-               txt.append("<p>AsyncRunnable.");
-               txt.append(" dispatcher type: ").append(hreq.getDispatcherType().toString());
+               txt.append("<h5>Thread producing text output</h5>");
+               txt.append("<p>dispatcher type: ").append(hreq.getDispatcherType().toString());
                txt.append("</p>");
                hresp.getWriter().write(txt.toString());
                if (done) {
@@ -90,10 +97,12 @@ public class AsyncPortletResource {
                break;
             case DISPATCH:
                LOGGER.fine("Dispatching to JSP.");
+               hreq.setAttribute(ATTRIB_TITLE, "Thread dispatching to JSP");
                ctx.dispatch(JSP);
                break;
             case FWD:
                LOGGER.fine("Doing request dispatcher forward to JSP.");
+               hreq.setAttribute(ATTRIB_TITLE, "Thread forwarding to JSP");
                rd = hreq.getRequestDispatcher(JSP);
                rd.forward(hreq, hresp);
                if (done) {
@@ -102,6 +111,7 @@ public class AsyncPortletResource {
                break;
             case INC:
                LOGGER.fine("Doing request dispatcher include of JSP.");
+               hreq.setAttribute(ATTRIB_TITLE, "Thread including JSP");
                rd = hreq.getRequestDispatcher(JSP);
                rd.include(hreq, hresp);
                if (done) {
@@ -144,19 +154,19 @@ public class AsyncPortletResource {
          try {
             ctx = req.getAsyncContext();
          } catch (Exception e) {}
+         
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Producing output.");
+         txt.append(" delay: ").append(adb.getDelay());
+         txt.append(", type: ").append(adb.getType());
+         txt.append(", reps: ").append(reps);
+         txt.append(", total reps: ").append(adb.getReps());
+         txt.append(", recursive: ").append(adb.isAutoDispatch());
+         txt.append(", dispatched from work thread: ").append(auto);
+         txt.append(", asyncContext: ").append((ctx == null) ? "null" : "not null");
+         LOGGER.fine(txt.toString());
 
          switch (adb.getType()) {
-         case TEXT:
-            LOGGER.fine("Producing text output.");
-            StringBuilder txt = new StringBuilder(128);
-            txt.append("<p>AsyncRunnable.");
-            txt.append(" dispatcher type: ").append(req.getDispatcherType().toString());
-            txt.append("</p>");
-            resp.getWriter().write(txt.toString());
-            if (done && ctx != null) {
-               ctx.complete();
-            }
-            break;
          case DISPATCH:
             LOGGER.fine("Dispatching to JSP.");
             if (ctx != null) {
@@ -165,6 +175,7 @@ public class AsyncPortletResource {
             break;
          case FWD:
             LOGGER.fine("Doing request dispatcher forward to JSP.");
+            req.setAttribute(ATTRIB_TITLE, "Resource Method forwarding to JSP");
             rd = req.getPortletContext().getRequestDispatcher(JSP);
             rd.forward(req, resp);
             if (done && ctx != null) {
@@ -173,6 +184,7 @@ public class AsyncPortletResource {
             break;
          case INC:
             LOGGER.fine("Doing request dispatcher include of JSP.");
+            req.setAttribute(ATTRIB_TITLE, "Resource Method including JSP");
             rd = req.getPortletContext().getRequestDispatcher(JSP);
             rd.include(req, resp);
             if (done && ctx != null) {
@@ -180,6 +192,15 @@ public class AsyncPortletResource {
             }
             break;
          default:
+            LOGGER.fine("Producing text output.");
+            txt.setLength(0);
+            txt.append("<h5>Async portlet resource method producing text output</h5>");
+            txt.append("<p>dispatcher type: ").append(req.getDispatcherType().toString());
+            txt.append("</p>");
+            resp.getWriter().write(txt.toString());
+            if (done && ctx != null) {
+               ctx.complete();
+            }
             break;
          }
       }

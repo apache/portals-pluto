@@ -20,7 +20,6 @@ package org.apache.portals.samples;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.inject.Named;
@@ -213,12 +212,12 @@ public class AsyncDialogBean implements PortletSerializable {
       String auto = req.getActionParameters().getValue(PARAM_AUTO);
       if (auto != null) {
          autoDispatch = true;
+      } else {
+         autoDispatch = false;
          if (reps > 1) {
             msg = "Repetitions cannot be > 1 for non-recursive use.";
             reps = 1;
          }
-      } else {
-         autoDispatch = false;
       }
 
       String[] state = {""+delay, ""+reps, type.toString(), msg, ""+autoDispatch};

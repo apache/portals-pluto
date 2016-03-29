@@ -4,6 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 
-<h5>Async JSP Output</h5>
+<h5><%=request.getAttribute("title") %></h5>
 <p>Dispatch type: <%=request.getDispatcherType() %></p>
 <hr>
