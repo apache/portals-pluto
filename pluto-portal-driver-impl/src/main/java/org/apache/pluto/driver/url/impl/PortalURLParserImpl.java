@@ -436,7 +436,8 @@ public class PortalURLParserImpl implements PortalURLParser {
 
       // Start the pathInfo with the path to the render URL (page).
       if (portalURL.getRenderPath() != null) {
-         buffer.append(portalURL.getRenderPath());
+         String p = portalURL.getRenderPath().replaceAll(" ", "%20");
+         buffer.append(p);
       }
 
       // Add the portletIds with references
