@@ -243,6 +243,15 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
     {
         HttpServletPortletRequestWrapper req = getWrappedRequest(request);
         HttpServletPortletResponseWrapper res = getWrappedResponse(response);
+        
+        if (isDebug) {
+           StringBuilder txt = new StringBuilder();
+           txt.append("Forwarding ... ");
+           txt.append(" hreq: ").append((req == null) ? "null" : "not null");
+           txt.append(" hresp: ").append((res == null) ? "null" : "not null");
+           LOG.debug(txt.toString());
+        }
+        
         res.resetBuffer();
         
         // cache the current dispatch state
