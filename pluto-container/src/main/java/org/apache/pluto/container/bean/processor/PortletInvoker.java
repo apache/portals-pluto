@@ -268,15 +268,10 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
          
          // Handle AsyncContest#dispatch() case
          
-         MethodIdentifier ami = (MethodIdentifier) req.getAttribute(PortletInvokerService.ASYNC_METHOD);
-         AnnotatedMethod meth = null;
-         if (ami != null) {
-            meth = acb.getMethodStore().getMethod(mi);
-         }
+         AnnotatedMethod meth = (AnnotatedMethod) req.getAttribute(PortletInvokerService.ASYNC_METHOD);;
          if (meth == null) {
             StringBuilder txt = new StringBuilder(128);
             txt.append("Async processing error. ServeResource method not found for method identifier: ");
-            txt.append((ami == null) ? "null" : ami.toString());
             LOG.warn(txt.toString());
             return;
          }

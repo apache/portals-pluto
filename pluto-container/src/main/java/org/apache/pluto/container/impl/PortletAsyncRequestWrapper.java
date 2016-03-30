@@ -19,6 +19,8 @@
 
 package org.apache.pluto.container.impl;
 
+import java.util.Enumeration;
+
 import javax.portlet.PortletRequest;
 import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;
@@ -26,50 +28,90 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
 /**
  * @author Scott Nicklous
  *
  */
-public class PortletAsyncRequestWrapper extends HttpServletPortletRequestWrapper {
+public class PortletAsyncRequestWrapper extends HttpServletRequestWrapper {
+   
+   private final PortletRequest preq;
 
-   /**
-    * Modifies the behavior of the underlying wrapper to allow access to the
-    * async methods.
-    * 
-    * @param request
-    * @param servletContext
-    * @param session
-    * @param portletRequest
-    */
-   public PortletAsyncRequestWrapper(HttpServletRequest request, ServletContext servletContext, HttpSession session,
-         PortletRequest portletRequest) {
-      super(request, servletContext, session, portletRequest, false, false);
-      
+   public PortletAsyncRequestWrapper(HttpServletRequest hreq, PortletRequest preq) {
+      super(hreq);
+      this.preq = preq;
    }
    
-
-
+   
+   
    @Override
-   public AsyncContext startAsync() throws IllegalStateException {
-      return getRequest().startAsync();
+   public Object getAttribute(String name) {
+      return preq.getAttribute(name);
    }
-
+   
    @Override
-   public AsyncContext startAsync(ServletRequest request, ServletResponse response) throws IllegalStateException {
-      return getRequest().startAsync(request, response);
+   public Enumeration<String> getAttributeNames() {
+      return preq.getAttributeNames();
    }
-
+   
    @Override
-   public boolean isAsyncStarted() {
-      return getRequest().isAsyncStarted();
+   public void setAttribute(String name, Object o) {
+      preq.setAttribute(name, o);
    }
-
+   
    @Override
-   public boolean isAsyncSupported() {
-      return getRequest().isAsyncSupported();
+   public void removeAttribute(String name) {
+      preq.removeAttribute(name);
    }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   // saved methods below.
 
+//    /**
+//     * Modifies the behavior of the underlying wrapper to allow access to the
+//     * async methods.
+//     * 
+//     * @param request
+//     * @param servletContext
+//     * @param session
+//     * @param portletRequest
+//     */
+//    public PortletAsyncRequestWrapper(HttpServletRequest request, ServletContext servletContext, HttpSession session,
+//          PortletRequest portletRequest) {
+//       super(request, servletContext, session, portletRequest, false, false);
+//       
+//    }
+//    
+// 
+// 
+//    @Override
+//    public AsyncContext startAsync() throws IllegalStateException {
+//       return getRequest().startAsync();
+//    }
+// 
+//    @Override
+//    public AsyncContext startAsync(ServletRequest request, ServletResponse response) throws IllegalStateException {
+//       return getRequest().startAsync(request, response);
+//    }
+// 
+//    @Override
+//    public boolean isAsyncStarted() {
+//       return getRequest().isAsyncStarted();
+//    }
+// 
+//    @Override
+//    public boolean isAsyncSupported() {
+//       return getRequest().isAsyncSupported();
+//    }
+// 
 
 }

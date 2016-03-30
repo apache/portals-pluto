@@ -244,6 +244,13 @@ public class PortletServlet3 extends HttpServlet {
     * @throws IOException
     */
    private void dispatch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      if (LOG.isDebugEnabled()) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Processing request.");
+         txt.append(" Dispatcher type: ").append(request.getDispatcherType());
+         txt.append(", request URI: ").append(request.getRequestURI());
+         LOG.debug(txt.toString());
+      }
       if (invoker == null) {
          throw new javax.servlet.UnavailableException("Portlet " + portletName + " unavailable");
       }
@@ -265,8 +272,11 @@ public class PortletServlet3 extends HttpServlet {
       final FilterManager filterManager = 
             (FilterManager) request.getAttribute(PortletInvokerService.FILTER_MANAGER);
 
-      requestContext.init(portletConfig, getServletContext(), request, response);
-      responseContext.init(request, response);
+      if (request.getDispatcherType() != DispatcherType.ASYNC) {
+         // the contexts are already initialized if this is part of a resource request async sequence
+         requestContext.init(portletConfig, getServletContext(), request, response);
+         responseContext.init(request, response);
+      }
 
       PortletWindow window = requestContext.getPortletWindow();
 

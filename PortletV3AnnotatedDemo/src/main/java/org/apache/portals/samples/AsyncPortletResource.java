@@ -19,9 +19,12 @@
 package org.apache.portals.samples;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.ResourceRequest;
@@ -77,28 +80,69 @@ public class AsyncPortletResource {
             HttpServletRequest hreq = (HttpServletRequest) ctx.getRequest();
             HttpServletResponse hresp = (HttpServletResponse) ctx.getResponse();
             RequestDispatcher rd;
+            
+            {
+               List<String> attrNames = Collections.list(hreq.getAttributeNames());
+               StringBuilder txt = new StringBuilder(128);
+               txt.append("Runnable:");
+               txt.append("\nAttribute names: ").append(attrNames);
+               txt.append("\nasync_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.async.request_uri"));
+               txt.append("\nasync_context_path:      ").append((String) hreq.getAttribute("javax.servlet.async.context_path"));
+               txt.append("\nasync_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.async.servlet_path"));
+               txt.append("\nasync_path_info:      ").append((String) hreq.getAttribute("javax.servlet.async.path_info"));
+               txt.append("\nasync_query_string:      ").append((String) hreq.getAttribute("javax.servlet.async.query_string"));
+               txt.append("\nforward_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.forward.request_uri"));
+               txt.append("\nforward_context_path:      ").append((String) hreq.getAttribute("javax.servlet.forward.context_path"));
+               txt.append("\nforward_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.forward.servlet_path"));
+               txt.append("\nforward_path_info:      ").append((String) hreq.getAttribute("javax.servlet.forward.path_info"));
+               txt.append("\nforward_query_string:      ").append((String) hreq.getAttribute("javax.servlet.forward.query_string"));
+               txt.append("\ninclude_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.include.request_uri"));
+               txt.append("\ninclude_context_path:      ").append((String) hreq.getAttribute("javax.servlet.include.context_path"));
+               txt.append("\ninclude_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.include.servlet_path"));
+               txt.append("\ninclude_path_info:      ").append((String) hreq.getAttribute("javax.servlet.include.path_info"));
+               txt.append("\ninclude_query_string:      ").append((String) hreq.getAttribute("javax.servlet.include.query_string"));
+               txt.append("\nmethod_request_uri:      ").append(hreq.getRequestURI());
+               txt.append("\nmethod_context_path:      ").append(hreq.getContextPath());
+               txt.append("\nmethod_servlet_path:      ").append(hreq.getServletPath());
+               txt.append("\nmethod_path_info:      ").append(hreq.getPathInfo());
+               txt.append("\nmethod_query_string:      ").append(hreq.getQueryString());
+               LOGGER.fine(txt.toString());
+            }
+
+            
+            PortletConfig config = (PortletConfig) hreq.getAttribute("javax.portlet.config");
+            String portletName = "Could not get PortletConfig";
+            if (config != null) {
+               portletName = config.getPortletName();
+            }
 
             switch (type) {
             case TEXT:
                LOGGER.fine("Producing text output.");
                StringBuilder txt = new StringBuilder(128);
-               txt.append("<h5>Thread producing text output</h5>");
+               txt.append("<h5>Thread producing text output for portlet: " + portletName + "</h5>");
                txt.append("<p>dispatcher type: ").append(hreq.getDispatcherType().toString());
                txt.append("</p>");
                hresp.getWriter().write(txt.toString());
                if (done) {
                   ctx.complete();
+               } else {
+                  hresp.flushBuffer();
                }
                break;
             case AUTO:
-               LOGGER.fine("Dispatching to resource method.");
+               StringBuilder str = new StringBuilder(128);
+               str.append("Dispatching to resource method.");
+               str.append(" context path: ").append(hreq.getServletContext().getContextPath());
+               str.append(", Servlet patch: ").append(hreq.getServletPath());
+               LOGGER.fine(str.toString());
                hreq.setAttribute(ATTRIB_AUTO, new Boolean(true));
-               ctx.dispatch();
+               ctx.dispatch(hreq.getServletContext(), hreq.getServletPath());
                break;
             case DISPATCH:
                LOGGER.fine("Dispatching to JSP.");
                hreq.setAttribute(ATTRIB_TITLE, "Thread dispatching to JSP");
-               ctx.dispatch(JSP);
+               ctx.dispatch(hreq.getServletContext(), JSP);
                break;
             case FWD:
                LOGGER.fine("Doing request dispatcher forward to JSP.");
@@ -107,6 +151,8 @@ public class AsyncPortletResource {
                rd.forward(hreq, hresp);
                if (done) {
                   ctx.complete();
+               } else {
+                  hresp.flushBuffer();
                }
                break;
             case INC:
@@ -116,6 +162,8 @@ public class AsyncPortletResource {
                rd.include(hreq, hresp);
                if (done) {
                   ctx.complete();
+               } else {
+                  hresp.flushBuffer();
                }
                break;
             }
@@ -133,52 +181,111 @@ public class AsyncPortletResource {
    @ServeResourceMethod(portletNames = "AsyncPortlet", asyncSupported = true)
    public void getResource(ResourceRequest req, ResourceResponse resp) throws IOException, PortletException {
 
+      Boolean auto = (Boolean) req.getAttribute(ATTRIB_AUTO);
+      if (auto == null) {
+         auto = false;
+      }
+      req.removeAttribute(ATTRIB_AUTO);
+
       Integer reps = (Integer) req.getAttribute(ATTRIB_REPS);
+      boolean done = false;
       if (reps == null) {
          reps = adb.getReps();
       }
-
-      boolean done = false;
-      if (--reps <= 0 || !adb.isAutoDispatch()) {
+      if (reps <= 0) {
          done = true;
       }
-      req.setAttribute(ATTRIB_REPS, reps);
+      
+      StringBuilder txt = new StringBuilder(128);
+      txt.append("Resource method.");
+      txt.append(" delay: ").append(adb.getDelay());
+      txt.append(", type: ").append(adb.getType());
+      txt.append(", reps: ").append(reps);
+      txt.append(", total reps: ").append(adb.getReps());
+      txt.append(", auto: ").append(adb.isAutoDispatch());
+      txt.append(", auto-dispatch: ").append(auto);
+      txt.append(", done: ").append(done);
+      LOGGER.fine(txt.toString());
+      
+      AsyncContext ctx = null;
 
-      Boolean auto = (Boolean) req.getAttribute(ATTRIB_AUTO);
-      req.removeAttribute(ATTRIB_AUTO);
+      if (!done) {
+         reps--;
+         req.setAttribute(ATTRIB_REPS, reps);
+         
+         ctx = req.startAsync();
+         ctx.setTimeout(4000);
+      }
 
-      if ((adb.getDelay() <= 0) || (auto != null)) {
+      if (auto || (adb.getDelay() <= 0)) {
+         
+         // produce output if dispatched from work thread or if there is no delay requested
          
          PortletRequestDispatcher rd;
-         AsyncContext ctx = null;
-         try {
-            ctx = req.getAsyncContext();
-         } catch (Exception e) {}
          
-         StringBuilder txt = new StringBuilder(128);
-         txt.append("Producing output.");
-         txt.append(" delay: ").append(adb.getDelay());
-         txt.append(", type: ").append(adb.getType());
-         txt.append(", reps: ").append(reps);
-         txt.append(", total reps: ").append(adb.getReps());
-         txt.append(", recursive: ").append(adb.isAutoDispatch());
-         txt.append(", dispatched from work thread: ").append(auto);
-         txt.append(", asyncContext: ").append((ctx == null) ? "null" : "not null");
-         LOGGER.fine(txt.toString());
+         if (ctx == null) {
+            // last iteration of auto-dispatch
+            try {
+               ctx = req.getAsyncContext();
+            } catch (Exception e) {
+               txt.setLength(0);
+               txt.append("Could not get AsyncContext. Exception: ").append(e.toString());
+               LOGGER.warning(txt.toString());
+               resp.getWriter().write(txt.toString());
+               return;
+            }
+         }
+
+         HttpServletRequest hreq = (HttpServletRequest) req.getAttribute("javax.portlet.debug.ServletRequest");
+         
+         {
+            List<String> attrNames = Collections.list(hreq.getAttributeNames());
+            StringBuilder txt2 = new StringBuilder(128);
+            txt2.append("During content generation:");
+            txt2.append("\nAttribute names: ").append(attrNames);
+            txt2.append("\nasync_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.async.request_uri"));
+            txt2.append("\nasync_context_path:      ").append((String) hreq.getAttribute("javax.servlet.async.context_path"));
+            txt2.append("\nasync_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.async.servlet_path"));
+            txt2.append("\nasync_path_info:      ").append((String) hreq.getAttribute("javax.servlet.async.path_info"));
+            txt2.append("\nasync_query_string:      ").append((String) hreq.getAttribute("javax.servlet.async.query_string"));
+            txt2.append("\nforward_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.forward.request_uri"));
+            txt2.append("\nforward_context_path:      ").append((String) hreq.getAttribute("javax.servlet.forward.context_path"));
+            txt2.append("\nforward_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.forward.servlet_path"));
+            txt2.append("\nforward_path_info:      ").append((String) hreq.getAttribute("javax.servlet.forward.path_info"));
+            txt2.append("\nforward_query_string:      ").append((String) hreq.getAttribute("javax.servlet.forward.query_string"));
+            txt2.append("\ninclude_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.include.request_uri"));
+            txt2.append("\ninclude_context_path:      ").append((String) hreq.getAttribute("javax.servlet.include.context_path"));
+            txt2.append("\ninclude_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.include.servlet_path"));
+            txt2.append("\ninclude_path_info:      ").append((String) hreq.getAttribute("javax.servlet.include.path_info"));
+            txt2.append("\ninclude_query_string:      ").append((String) hreq.getAttribute("javax.servlet.include.query_string"));
+            txt2.append("\nmethod_request_uri:      ").append(hreq.getRequestURI());
+            txt2.append("\nmethod_context_path:      ").append(hreq.getContextPath());
+            txt2.append("\nmethod_servlet_path:      ").append(hreq.getServletPath());
+            txt2.append("\nmethod_path_info:      ").append(hreq.getPathInfo());
+            txt2.append("\nmethod_query_string:      ").append(hreq.getQueryString());
+            LOGGER.fine(txt2.toString());
+         }
+
+         
+         // HttpServletRequest hreq = (HttpServletRequest) ctx.getRequest();
+         PortletConfig config = (PortletConfig) req.getAttribute("javax.portlet.config");
+         String portletName = "Could not get PortletConfig";
+         if (config != null) {
+            portletName = config.getPortletName();
+         }
 
          switch (adb.getType()) {
          case DISPATCH:
             LOGGER.fine("Dispatching to JSP.");
-            if (ctx != null) {
-               ctx.dispatch(JSP);
-            }
+            ctx.dispatch(JSP);
             break;
          case FWD:
             LOGGER.fine("Doing request dispatcher forward to JSP.");
             req.setAttribute(ATTRIB_TITLE, "Resource Method forwarding to JSP");
             rd = req.getPortletContext().getRequestDispatcher(JSP);
             rd.forward(req, resp);
-            if (done && ctx != null) {
+            resp.flushBuffer();
+            if (!auto) {
                ctx.complete();
             }
             break;
@@ -187,32 +294,36 @@ public class AsyncPortletResource {
             req.setAttribute(ATTRIB_TITLE, "Resource Method including JSP");
             rd = req.getPortletContext().getRequestDispatcher(JSP);
             rd.include(req, resp);
-            if (done && ctx != null) {
+            resp.flushBuffer();
+            if (!auto) {
                ctx.complete();
             }
             break;
          default:
             LOGGER.fine("Producing text output.");
             txt.setLength(0);
-            txt.append("<h5>Async portlet resource method producing text output</h5>");
+            txt.append("<h5>Async portlet resource method producing text output for portlet: " + portletName + "</h5>");
             txt.append("<p>dispatcher type: ").append(req.getDispatcherType().toString());
             txt.append("</p>");
             resp.getWriter().write(txt.toString());
-            if (done && ctx != null) {
+            resp.flushBuffer();
+            if (!auto) {
                ctx.complete();
             }
             break;
          }
       }
       
-      if (adb.getDelay() > 0 && (!done || auto == null)) {
-         AsyncContext ctx = req.startAsync();
-         ctx.setTimeout(4000);
+      if (adb.getDelay() > 0 && req.isAsyncStarted()) {
+         
+         // now start the executor thread 
+         
          OutputType type = adb.getType();
          if (adb.isAutoDispatch()) {
             type = OutputType.AUTO;
          }
-         AsyncRunnable ar = new AsyncRunnable(ctx, adb.getDelay(), type, done);
+
+         AsyncRunnable ar = new AsyncRunnable(ctx, adb.getDelay(), type, (reps<=0));
          ctx.start(ar);
       }
 

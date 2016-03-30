@@ -180,15 +180,6 @@ public class AsyncDialogBean implements PortletSerializable {
       
       msg = null;
       
-      String strType = req.getActionParameters().getValue(PARAM_TYPE);
-      if (strType != null) {
-         try {
-            type = OutputType.valueOf(strType);
-         } catch (Exception e) {
-            msg = "try again. bad type: " + strType;
-         }
-      }
-      
       String strReps = req.getActionParameters().getValue(PARAM_REPS);
       if (strReps != null) {
          try {
@@ -206,6 +197,19 @@ public class AsyncDialogBean implements PortletSerializable {
             if (delay < 0) throw new Exception("broken");
          } catch (Exception e) {
             msg = "try again. bad delay.";
+         }
+      }
+      
+      String strType = req.getActionParameters().getValue(PARAM_TYPE);
+      if (strType != null) {
+         try {
+            type = OutputType.valueOf(strType);
+            if (type == OutputType.FWD && reps > 1) {
+               msg = "Repetitions cannot be > 1 for forwards.";
+               reps = 1;
+            }
+         } catch (Exception e) {
+            msg = "try again. bad type: " + strType;
          }
       }
 
