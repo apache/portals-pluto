@@ -95,7 +95,7 @@ public class AsyncPortletResource {
                StringBuilder txt = new StringBuilder(128);
                txt.append("<h5>Thread producing text output for portlet: " + portletName + "</h5>");
                txt.append("<p>dispatcher type: ").append(hreq.getDispatcherType().toString());
-               txt.append("</p>");
+               txt.append("</p><hr>");
                hresp.getWriter().write(txt.toString());
                ctx.complete();
                break;
@@ -154,6 +154,11 @@ public class AsyncPortletResource {
          reps = adb.getReps();
       }
       
+      boolean done = (reps <= 0) || (adb.getDelay() <= 0);
+
+      reps--;
+      req.setAttribute(ATTRIB_REPS, reps);
+      
       StringBuilder txt = new StringBuilder(128);
       txt.append("Resource method.");
       txt.append(" delay: ").append(adb.getDelay());
@@ -164,35 +169,14 @@ public class AsyncPortletResource {
       txt.append(", auto-dispatch: ").append(auto);
       LOGGER.fine(txt.toString());
       
-      AsyncContext ctx = null;
-
-      if (reps > 0) {
-         reps--;
-         req.setAttribute(ATTRIB_REPS, reps);
-         
-         ctx = req.startAsync();
-         ctx.setTimeout(4000);
-      }
+      AsyncContext ctx = req.startAsync();
+      ctx.setTimeout(4000);
 
       if (auto || (adb.getDelay() <= 0)) {
          
          // produce output if dispatched from work thread or if there is no delay requested
          
          PortletRequestDispatcher rd;
-         
-         if (ctx == null) {
-            // last iteration of auto-dispatch
-            LOGGER.fine("Retrieving async context for the last run.");
-            try {
-               ctx = req.getAsyncContext();
-            } catch (Exception e) {
-               txt.setLength(0);
-               txt.append("Could not get AsyncContext. Exception: ").append(e.toString());
-               LOGGER.warning(txt.toString());
-               resp.getWriter().write(txt.toString());
-               return;
-            }
-         }
 
          HttpServletRequest hreq = (HttpServletRequest) req.getAttribute("javax.portlet.debug.ServletRequest");
          trace(hreq, "Resource method: ");
@@ -207,7 +191,8 @@ public class AsyncPortletResource {
          switch (adb.getType()) {
          case DISPATCH:
             LOGGER.fine("Dispatching to JSP.");
-            ctx.dispatch(JSP);
+            req.setAttribute(ATTRIB_TITLE, "Resource Method dispatching to JSP");
+            ctx.dispatch(hreq.getServletContext(), JSP);
             break;
          case FWD:
             LOGGER.fine("Doing request dispatcher forward to JSP.");
@@ -215,7 +200,7 @@ public class AsyncPortletResource {
             rd = req.getPortletContext().getRequestDispatcher(JSP);
             rd.forward(req, resp);
             resp.flushBuffer();
-            if (!auto) {
+            if (done) {
                ctx.complete();
             }
             break;
@@ -225,26 +210,26 @@ public class AsyncPortletResource {
             rd = req.getPortletContext().getRequestDispatcher(JSP);
             rd.include(req, resp);
             resp.flushBuffer();
-            if (!auto) {
+            if (done) {
                ctx.complete();
             }
             break;
          default:
             LOGGER.fine("Producing text output.");
             txt.setLength(0);
-            txt.append("<h5>Async portlet resource method producing text output for portlet: " + portletName + "</h5>");
+            txt.append("<h5>Resource method producing text output for portlet: " + portletName + "</h5>");
             txt.append("<p>dispatcher type: ").append(req.getDispatcherType().toString());
-            txt.append("</p>");
+            txt.append("</p><hr>");
             resp.getWriter().write(txt.toString());
             resp.flushBuffer();
-            if (!auto) {
+            if (done) {
                ctx.complete();
             }
             break;
          }
       }
       
-      if (adb.getDelay() > 0 && req.isAsyncStarted()) {
+      if (!done) {
          
          // now start the executor thread 
          

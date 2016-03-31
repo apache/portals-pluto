@@ -35,28 +35,30 @@ import javax.portlet.annotations.RenderStateScoped;
  * Render state scoped bean. The bean is stored as a render parameter, so it
  * needs to be portlet serializable.
  */
-@RenderStateScoped @Named("adb")
+@RenderStateScoped
+@Named("adb")
 public class AsyncDialogBean implements PortletSerializable {
    private static final Logger LOGGER = Logger.getLogger(AsyncDialogBean.class.getName());
-   
-   public enum OutputType {TEXT, INC, FWD, DISPATCH, AUTO}
-   
-   public static final String PARAM_MSG = "msg";
-   public static final String PARAM_DELAY = "delay";
-   public static final String PARAM_REPS = "reps";
-   public static final String PARAM_AUTO = "auto";
-   public static final String PARAM_TYPE = "type";
+
+   public enum OutputType {
+      TEXT, INC, FWD, DISPATCH, AUTO
+   }
+
+   public static final String PARAM_MSG      = "msg";
+   public static final String PARAM_DELAY    = "delay";
+   public static final String PARAM_REPS     = "reps";
+   public static final String PARAM_AUTO     = "auto";
+   public static final String PARAM_TYPE     = "type";
    public static final String PARAM_TYPE_TXT = OutputType.TEXT.toString();
    public static final String PARAM_TYPE_INC = OutputType.INC.toString();
    public static final String PARAM_TYPE_FWD = OutputType.FWD.toString();
    public static final String PARAM_TYPE_DIS = OutputType.DISPATCH.toString();
 
-   
-   private int delay;
-   private int reps;
-   private OutputType type;
-   private String msg;
-   private boolean autoDispatch;
+   private int                delay;
+   private int                reps;
+   private OutputType         type;
+   private String             msg;
+   private boolean            autoDispatch;
 
    /**
     * This method is called by the portlet container to initialize the bean at
@@ -86,11 +88,10 @@ public class AsyncDialogBean implements PortletSerializable {
     */
    @Override
    public String[] serialize() {
-      String[] state = {""+delay, ""+reps, type.toString(), msg, ""+autoDispatch};
+      String[] state = { "" + delay, "" + reps, type.toString(), msg, "" + autoDispatch };
       LOGGER.fine("serialized: " + Arrays.asList(state).toString());
       return state;
    }
-
 
    /**
     * @return the delay
@@ -100,7 +101,8 @@ public class AsyncDialogBean implements PortletSerializable {
    }
 
    /**
-    * @param delay the delay to set
+    * @param delay
+    *           the delay to set
     */
    public void setDelay(int delay) {
       this.delay = delay;
@@ -114,7 +116,8 @@ public class AsyncDialogBean implements PortletSerializable {
    }
 
    /**
-    * @param reps the reps to set
+    * @param reps
+    *           the reps to set
     */
    public void setReps(int reps) {
       this.reps = reps;
@@ -128,7 +131,8 @@ public class AsyncDialogBean implements PortletSerializable {
    }
 
    /**
-    * @param type the type to set
+    * @param type
+    *           the type to set
     */
    public void setType(OutputType type) {
       this.type = type;
@@ -142,7 +146,8 @@ public class AsyncDialogBean implements PortletSerializable {
    }
 
    /**
-    * @param msg the msg to set
+    * @param msg
+    *           the msg to set
     */
    public void setMsg(String msg) {
       this.msg = msg;
@@ -156,7 +161,8 @@ public class AsyncDialogBean implements PortletSerializable {
    }
 
    /**
-    * @param autoDispatch the autoDispatch to set
+    * @param autoDispatch
+    *           the autoDispatch to set
     */
    public void setAutoDispatch(boolean autoDispatch) {
       this.autoDispatch = autoDispatch;
@@ -167,8 +173,7 @@ public class AsyncDialogBean implements PortletSerializable {
     * 
     * @return the action form as string
     */
-   @RenderMethod(portletNames = "AsyncPortlet", ordinal = 100, 
-         include = "/WEB-INF/jsp/asyncDialog.jsp")
+   @RenderMethod(portletNames = "AsyncPortlet", ordinal = 100, include = "/WEB-INF/jsp/asyncDialog.jsp")
    public void getDialog() {
    }
 
@@ -177,36 +182,40 @@ public class AsyncDialogBean implements PortletSerializable {
     */
    @ActionMethod(portletName = "AsyncPortlet")
    public void handleDialog(ActionRequest req, ActionResponse resp) throws PortletException, IOException {
-      
+
       msg = null;
-      
+
       String strReps = req.getActionParameters().getValue(PARAM_REPS);
       if (strReps != null) {
          try {
             reps = Integer.parseInt(strReps);
-            if (reps <= 0 || reps > 8) throw new Exception("broken");
+            if (reps <= 0 || reps > 8)
+               throw new Exception("broken");
          } catch (Exception e) {
             msg = "try again. bad repetitions.";
          }
       }
-      
+
       String strDelay = req.getActionParameters().getValue(PARAM_DELAY);
       if (strDelay != null) {
          try {
             delay = Integer.parseInt(strDelay);
-            if (delay < 0) throw new Exception("broken");
+            if (delay < 0)
+               throw new Exception("broken");
          } catch (Exception e) {
             msg = "try again. bad delay.";
          }
       }
-      
+
       String strType = req.getActionParameters().getValue(PARAM_TYPE);
       if (strType != null) {
          try {
             type = OutputType.valueOf(strType);
-            if (type == OutputType.FWD && reps > 1) {
-               msg = "Repetitions cannot be > 1 for forwards.";
-               reps = 1;
+            if (reps > 1) {
+               if ((type == OutputType.FWD) || (type == OutputType.DISPATCH)) {
+                  msg = "Repetitions cannot be > 1 for forwards or dispatches.";
+                  reps = 1;
+               }
             }
          } catch (Exception e) {
             msg = "try again. bad type: " + strType;
@@ -224,7 +233,7 @@ public class AsyncDialogBean implements PortletSerializable {
          }
       }
 
-      String[] state = {""+delay, ""+reps, type.toString(), msg, ""+autoDispatch};
+      String[] state = { "" + delay, "" + reps, type.toString(), msg, "" + autoDispatch };
       LOGGER.fine("Resulting params: " + Arrays.asList(state).toString());
    }
 
