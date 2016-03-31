@@ -26,7 +26,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -35,7 +34,6 @@ import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.impl.HttpServletPortletRequestWrapper;
 import org.apache.pluto.container.impl.HttpServletPortletResponseWrapper;
 import org.apache.pluto.container.impl.PortletAsyncRequestWrapper;
 import org.apache.pluto.container.impl.ResourceParametersImpl;
@@ -53,6 +51,7 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
    
    /** Logger. */
    private static final Logger LOG = LoggerFactory.getLogger(PortletResourceRequestContextImpl.class);
+   @SuppressWarnings("unused")
    private static final boolean isDebug = LOG.isDebugEnabled();
    private static final boolean isTrace = LOG.isTraceEnabled();
    
@@ -130,11 +129,11 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
        
        HttpServletRequest hreq = getServletRequest();
        HttpServletResponse hresp = getServletResponse();
-       ServletContext ctx = getServletContext();
-       HttpSession sess = getSession();
+//       ServletContext ctx = getServletContext();
+//       HttpSession sess = getSession();
        PortletConfig cfg = getPortletConfig(); 
        
-       if (isDebug) {
+       if (isTrace) {
           List<String> attrNames = Collections.list(hreq.getAttributeNames());
           StringBuilder txt = new StringBuilder(128);
           txt.append("Start async before:");
@@ -171,7 +170,8 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
 
        // Wrap http req & response. 
        
-       HttpServletRequest wreq = new PortletAsyncRequestWrapper(hreq, request);
+       HttpServletRequest wreq = new PortletAsyncRequestWrapper(hreq, request, this);
+//       HttpServletRequest wreq = new HttpServletPortletRequestWrapper(hreq, ctx, sess, request, true, false);
        HttpServletResponse wresp = new HttpServletPortletResponseWrapper(hresp, request, response, false);
 
        // get the original container req & resp to pass to listener for resource releasing
@@ -192,31 +192,31 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
        }
 
        
-       if (isDebug) {
+       if (isTrace) {
           List<String> attrNames = Collections.list(hreq.getAttributeNames());
           StringBuilder txt = new StringBuilder(128);
-          txt.append("Start async after:");
+          txt.append("Start async after (wreq):");
           txt.append("\nAttribute names: ").append(attrNames);
-          txt.append("\nasync_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.async.request_uri"));
-          txt.append("\nasync_context_path:      ").append((String) hreq.getAttribute("javax.servlet.async.context_path"));
-          txt.append("\nasync_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.async.servlet_path"));
-          txt.append("\nasync_path_info:      ").append((String) hreq.getAttribute("javax.servlet.async.path_info"));
-          txt.append("\nasync_query_string:      ").append((String) hreq.getAttribute("javax.servlet.async.query_string"));
-          txt.append("\nforward_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.forward.request_uri"));
-          txt.append("\nforward_context_path:      ").append((String) hreq.getAttribute("javax.servlet.forward.context_path"));
-          txt.append("\nforward_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.forward.servlet_path"));
-          txt.append("\nforward_path_info:      ").append((String) hreq.getAttribute("javax.servlet.forward.path_info"));
-          txt.append("\nforward_query_string:      ").append((String) hreq.getAttribute("javax.servlet.forward.query_string"));
-          txt.append("\ninclude_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.include.request_uri"));
-          txt.append("\ninclude_context_path:      ").append((String) hreq.getAttribute("javax.servlet.include.context_path"));
-          txt.append("\ninclude_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.include.servlet_path"));
-          txt.append("\ninclude_path_info:      ").append((String) hreq.getAttribute("javax.servlet.include.path_info"));
-          txt.append("\ninclude_query_string:      ").append((String) hreq.getAttribute("javax.servlet.include.query_string"));
-          txt.append("\nmethod_request_uri:      ").append(hreq.getRequestURI());
-          txt.append("\nmethod_context_path:      ").append(hreq.getContextPath());
-          txt.append("\nmethod_servlet_path:      ").append(hreq.getServletPath());
-          txt.append("\nmethod_path_info:      ").append(hreq.getPathInfo());
-          txt.append("\nmethod_query_string:      ").append(hreq.getQueryString());
+          txt.append("\nasync_request_uri:      ").append((String) wreq.getAttribute("javax.servlet.async.request_uri"));
+          txt.append("\nasync_context_path:      ").append((String) wreq.getAttribute("javax.servlet.async.context_path"));
+          txt.append("\nasync_servlet_path:      ").append((String) wreq.getAttribute("javax.servlet.async.servlet_path"));
+          txt.append("\nasync_path_info:      ").append((String) wreq.getAttribute("javax.servlet.async.path_info"));
+          txt.append("\nasync_query_string:      ").append((String) wreq.getAttribute("javax.servlet.async.query_string"));
+          txt.append("\nforward_request_uri:      ").append((String) wreq.getAttribute("javax.servlet.forward.request_uri"));
+          txt.append("\nforward_context_path:      ").append((String) wreq.getAttribute("javax.servlet.forward.context_path"));
+          txt.append("\nforward_servlet_path:      ").append((String) wreq.getAttribute("javax.servlet.forward.servlet_path"));
+          txt.append("\nforward_path_info:      ").append((String) wreq.getAttribute("javax.servlet.forward.path_info"));
+          txt.append("\nforward_query_string:      ").append((String) wreq.getAttribute("javax.servlet.forward.query_string"));
+          txt.append("\ninclude_request_uri:      ").append((String) wreq.getAttribute("javax.servlet.include.request_uri"));
+          txt.append("\ninclude_context_path:      ").append((String) wreq.getAttribute("javax.servlet.include.context_path"));
+          txt.append("\ninclude_servlet_path:      ").append((String) wreq.getAttribute("javax.servlet.include.servlet_path"));
+          txt.append("\ninclude_path_info:      ").append((String) wreq.getAttribute("javax.servlet.include.path_info"));
+          txt.append("\ninclude_query_string:      ").append((String) wreq.getAttribute("javax.servlet.include.query_string"));
+          txt.append("\nmethod_request_uri:      ").append(wreq.getRequestURI());
+          txt.append("\nmethod_context_path:      ").append(wreq.getContextPath());
+          txt.append("\nmethod_servlet_path:      ").append(wreq.getServletPath());
+          txt.append("\nmethod_path_info:      ").append(wreq.getPathInfo());
+          txt.append("\nmethod_query_string:      ").append(wreq.getQueryString());
           LOG.debug(txt.toString());
        }
 
@@ -246,7 +246,8 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
     // For use within the wrapper. 
     // PLT.10.4.3. Proxied session is created and passed if 
     // javax.portlet.servletDefaultSessionScope == PORTLET_SCOPE
-    private HttpSession getSession() {
+    @SuppressWarnings("unused")
+   private HttpSession getSession() {
        HttpSession sess = null;
 
        PortletConfig portletConfig = getPortletConfig();

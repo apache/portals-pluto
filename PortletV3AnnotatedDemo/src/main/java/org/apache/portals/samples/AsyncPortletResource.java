@@ -21,6 +21,7 @@ package org.apache.portals.samples;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -44,31 +45,30 @@ import org.apache.portals.samples.AsyncDialogBean.OutputType;
  * 
  */
 public class AsyncPortletResource {
-   private static final Logger LOGGER      = Logger.getLogger(AsyncPortletResource.class.getName());
-
+   private static final Logger LOGGER = Logger.getLogger(AsyncPortletResource.class.getName());
+   private static final boolean isDebug = LOGGER.isLoggable(Level.FINE);
+   private static final boolean isTrace = LOGGER.isLoggable(Level.FINEST);
+   
    private final static String JSP         = "/WEB-INF/jsp/asyncOutput.jsp";
    private final static String ATTRIB_REPS = "reps";
    private final static String ATTRIB_AUTO = "auto";
-   private final static String ATTRIB_TITLE = "title";
+   public  final static String ATTRIB_TITLE = "title";
 
    private class AsyncRunnable implements Runnable {
 
       private final AsyncContext ctx;
       private final int          delay;
       private final OutputType   type;
-      private final boolean      done;
 
-      public AsyncRunnable(AsyncContext ctx, int delay, OutputType type, boolean done) {
+      public AsyncRunnable(AsyncContext ctx, int delay, OutputType type) {
          this.ctx = ctx;
          this.delay = delay;
          this.type = type;
-         this.done = done;
          
          StringBuilder txt = new StringBuilder(128);
          txt.append("Constructing runnable.");
          txt.append(" delay: ").append(delay);
          txt.append(", type: ").append(type);
-         txt.append(", done: ").append(done);
          LOGGER.fine(txt.toString());
       }
 
@@ -81,34 +81,7 @@ public class AsyncPortletResource {
             HttpServletResponse hresp = (HttpServletResponse) ctx.getResponse();
             RequestDispatcher rd;
             
-            {
-               List<String> attrNames = Collections.list(hreq.getAttributeNames());
-               StringBuilder txt = new StringBuilder(128);
-               txt.append("Runnable:");
-               txt.append("\nAttribute names: ").append(attrNames);
-               txt.append("\nasync_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.async.request_uri"));
-               txt.append("\nasync_context_path:      ").append((String) hreq.getAttribute("javax.servlet.async.context_path"));
-               txt.append("\nasync_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.async.servlet_path"));
-               txt.append("\nasync_path_info:      ").append((String) hreq.getAttribute("javax.servlet.async.path_info"));
-               txt.append("\nasync_query_string:      ").append((String) hreq.getAttribute("javax.servlet.async.query_string"));
-               txt.append("\nforward_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.forward.request_uri"));
-               txt.append("\nforward_context_path:      ").append((String) hreq.getAttribute("javax.servlet.forward.context_path"));
-               txt.append("\nforward_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.forward.servlet_path"));
-               txt.append("\nforward_path_info:      ").append((String) hreq.getAttribute("javax.servlet.forward.path_info"));
-               txt.append("\nforward_query_string:      ").append((String) hreq.getAttribute("javax.servlet.forward.query_string"));
-               txt.append("\ninclude_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.include.request_uri"));
-               txt.append("\ninclude_context_path:      ").append((String) hreq.getAttribute("javax.servlet.include.context_path"));
-               txt.append("\ninclude_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.include.servlet_path"));
-               txt.append("\ninclude_path_info:      ").append((String) hreq.getAttribute("javax.servlet.include.path_info"));
-               txt.append("\ninclude_query_string:      ").append((String) hreq.getAttribute("javax.servlet.include.query_string"));
-               txt.append("\nmethod_request_uri:      ").append(hreq.getRequestURI());
-               txt.append("\nmethod_context_path:      ").append(hreq.getContextPath());
-               txt.append("\nmethod_servlet_path:      ").append(hreq.getServletPath());
-               txt.append("\nmethod_path_info:      ").append(hreq.getPathInfo());
-               txt.append("\nmethod_query_string:      ").append(hreq.getQueryString());
-               LOGGER.fine(txt.toString());
-            }
-
+            AsyncPortletResource.trace(hreq, "Runnable: ");
             
             PortletConfig config = (PortletConfig) hreq.getAttribute("javax.portlet.config");
             String portletName = "Could not get PortletConfig";
@@ -124,11 +97,7 @@ public class AsyncPortletResource {
                txt.append("<p>dispatcher type: ").append(hreq.getDispatcherType().toString());
                txt.append("</p>");
                hresp.getWriter().write(txt.toString());
-               if (done) {
-                  ctx.complete();
-               } else {
-                  hresp.flushBuffer();
-               }
+               ctx.complete();
                break;
             case AUTO:
                StringBuilder str = new StringBuilder(128);
@@ -145,26 +114,19 @@ public class AsyncPortletResource {
                ctx.dispatch(hreq.getServletContext(), JSP);
                break;
             case FWD:
-               LOGGER.fine("Doing request dispatcher forward to JSP.");
+               LOGGER.fine("Doing request dispatcher forward to JSP: " + JSP);
                hreq.setAttribute(ATTRIB_TITLE, "Thread forwarding to JSP");
                rd = hreq.getRequestDispatcher(JSP);
                rd.forward(hreq, hresp);
-               if (done) {
-                  ctx.complete();
-               } else {
-                  hresp.flushBuffer();
-               }
+               LOGGER.fine("After request dispatcher forward to JSP.");
+               ctx.complete();
                break;
             case INC:
-               LOGGER.fine("Doing request dispatcher include of JSP.");
+               LOGGER.fine("Including JSP: " + JSP);
                hreq.setAttribute(ATTRIB_TITLE, "Thread including JSP");
                rd = hreq.getRequestDispatcher(JSP);
                rd.include(hreq, hresp);
-               if (done) {
-                  ctx.complete();
-               } else {
-                  hresp.flushBuffer();
-               }
+               ctx.complete();
                break;
             }
 
@@ -188,12 +150,8 @@ public class AsyncPortletResource {
       req.removeAttribute(ATTRIB_AUTO);
 
       Integer reps = (Integer) req.getAttribute(ATTRIB_REPS);
-      boolean done = false;
       if (reps == null) {
          reps = adb.getReps();
-      }
-      if (reps <= 0) {
-         done = true;
       }
       
       StringBuilder txt = new StringBuilder(128);
@@ -204,12 +162,11 @@ public class AsyncPortletResource {
       txt.append(", total reps: ").append(adb.getReps());
       txt.append(", auto: ").append(adb.isAutoDispatch());
       txt.append(", auto-dispatch: ").append(auto);
-      txt.append(", done: ").append(done);
       LOGGER.fine(txt.toString());
       
       AsyncContext ctx = null;
 
-      if (!done) {
+      if (reps > 0) {
          reps--;
          req.setAttribute(ATTRIB_REPS, reps);
          
@@ -225,6 +182,7 @@ public class AsyncPortletResource {
          
          if (ctx == null) {
             // last iteration of auto-dispatch
+            LOGGER.fine("Retrieving async context for the last run.");
             try {
                ctx = req.getAsyncContext();
             } catch (Exception e) {
@@ -237,35 +195,7 @@ public class AsyncPortletResource {
          }
 
          HttpServletRequest hreq = (HttpServletRequest) req.getAttribute("javax.portlet.debug.ServletRequest");
-         
-         {
-            List<String> attrNames = Collections.list(hreq.getAttributeNames());
-            StringBuilder txt2 = new StringBuilder(128);
-            txt2.append("During content generation:");
-            txt2.append("\nAttribute names: ").append(attrNames);
-            txt2.append("\nasync_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.async.request_uri"));
-            txt2.append("\nasync_context_path:      ").append((String) hreq.getAttribute("javax.servlet.async.context_path"));
-            txt2.append("\nasync_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.async.servlet_path"));
-            txt2.append("\nasync_path_info:      ").append((String) hreq.getAttribute("javax.servlet.async.path_info"));
-            txt2.append("\nasync_query_string:      ").append((String) hreq.getAttribute("javax.servlet.async.query_string"));
-            txt2.append("\nforward_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.forward.request_uri"));
-            txt2.append("\nforward_context_path:      ").append((String) hreq.getAttribute("javax.servlet.forward.context_path"));
-            txt2.append("\nforward_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.forward.servlet_path"));
-            txt2.append("\nforward_path_info:      ").append((String) hreq.getAttribute("javax.servlet.forward.path_info"));
-            txt2.append("\nforward_query_string:      ").append((String) hreq.getAttribute("javax.servlet.forward.query_string"));
-            txt2.append("\ninclude_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.include.request_uri"));
-            txt2.append("\ninclude_context_path:      ").append((String) hreq.getAttribute("javax.servlet.include.context_path"));
-            txt2.append("\ninclude_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.include.servlet_path"));
-            txt2.append("\ninclude_path_info:      ").append((String) hreq.getAttribute("javax.servlet.include.path_info"));
-            txt2.append("\ninclude_query_string:      ").append((String) hreq.getAttribute("javax.servlet.include.query_string"));
-            txt2.append("\nmethod_request_uri:      ").append(hreq.getRequestURI());
-            txt2.append("\nmethod_context_path:      ").append(hreq.getContextPath());
-            txt2.append("\nmethod_servlet_path:      ").append(hreq.getServletPath());
-            txt2.append("\nmethod_path_info:      ").append(hreq.getPathInfo());
-            txt2.append("\nmethod_query_string:      ").append(hreq.getQueryString());
-            LOGGER.fine(txt2.toString());
-         }
-
+         trace(hreq, "Resource method: ");
          
          // HttpServletRequest hreq = (HttpServletRequest) ctx.getRequest();
          PortletConfig config = (PortletConfig) req.getAttribute("javax.portlet.config");
@@ -323,8 +253,38 @@ public class AsyncPortletResource {
             type = OutputType.AUTO;
          }
 
-         AsyncRunnable ar = new AsyncRunnable(ctx, adb.getDelay(), type, (reps<=0));
+         AsyncRunnable ar = new AsyncRunnable(ctx, adb.getDelay(), type);
          ctx.start(ar);
+      }
+   }
+   
+   public static void trace(HttpServletRequest hreq, String src) {
+      if (isTrace) {
+         List<String> attrNames = Collections.list(hreq.getAttributeNames());
+         StringBuilder txt = new StringBuilder(128);
+         txt.append(src);
+         txt.append("\nAttribute names: ").append(attrNames);
+         txt.append("\nasync_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.async.request_uri"));
+         txt.append("\nasync_context_path:      ").append((String) hreq.getAttribute("javax.servlet.async.context_path"));
+         txt.append("\nasync_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.async.servlet_path"));
+         txt.append("\nasync_path_info:      ").append((String) hreq.getAttribute("javax.servlet.async.path_info"));
+         txt.append("\nasync_query_string:      ").append((String) hreq.getAttribute("javax.servlet.async.query_string"));
+         txt.append("\nforward_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.forward.request_uri"));
+         txt.append("\nforward_context_path:      ").append((String) hreq.getAttribute("javax.servlet.forward.context_path"));
+         txt.append("\nforward_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.forward.servlet_path"));
+         txt.append("\nforward_path_info:      ").append((String) hreq.getAttribute("javax.servlet.forward.path_info"));
+         txt.append("\nforward_query_string:      ").append((String) hreq.getAttribute("javax.servlet.forward.query_string"));
+         txt.append("\ninclude_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.include.request_uri"));
+         txt.append("\ninclude_context_path:      ").append((String) hreq.getAttribute("javax.servlet.include.context_path"));
+         txt.append("\ninclude_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.include.servlet_path"));
+         txt.append("\ninclude_path_info:      ").append((String) hreq.getAttribute("javax.servlet.include.path_info"));
+         txt.append("\ninclude_query_string:      ").append((String) hreq.getAttribute("javax.servlet.include.query_string"));
+         txt.append("\nmethod_request_uri:      ").append(hreq.getRequestURI());
+         txt.append("\nmethod_context_path:      ").append(hreq.getContextPath());
+         txt.append("\nmethod_servlet_path:      ").append(hreq.getServletPath());
+         txt.append("\nmethod_path_info:      ").append(hreq.getPathInfo());
+         txt.append("\nmethod_query_string:      ").append(hreq.getQueryString());
+         LOGGER.fine(txt.toString());
       }
 
    }
