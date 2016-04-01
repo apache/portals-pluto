@@ -26,10 +26,13 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.pluto.container.PortletAsyncContext;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletResourceRequestContext;
@@ -43,62 +46,61 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @version $Id$
- *
+ * 
  */
 public class PortletResourceRequestContextImpl extends PortletRequestContextImpl implements
-                PortletResourceRequestContext
-{
-   
+      PortletResourceRequestContext {
+
    /** Logger. */
-   private static final Logger LOG = LoggerFactory.getLogger(PortletResourceRequestContextImpl.class);
+   private static final Logger  LOG     = LoggerFactory.getLogger(PortletResourceRequestContextImpl.class);
    @SuppressWarnings("unused")
    private static final boolean isDebug = LOG.isDebugEnabled();
    private static final boolean isTrace = LOG.isTraceEnabled();
-   
-   
-   private String pageState;
-   private ResourceResponse response;
-   private AsyncContext actx = null;
-   
-   
-    public PortletResourceRequestContextImpl(PortletContainer container, HttpServletRequest containerRequest,
-                                             HttpServletResponse containerResponse, PortletWindow window,
-                                             String pageState)
-    {
-       // if pageState != null, we're dealing with a Partial Action request, so 
-       // the servlet parameters are not to be used. Otherwise, resource params could be
-       // passed as servlet parameters.
-        super(container, containerRequest, containerResponse, window, (pageState==null));
-        this.pageState = pageState;
-    }
 
-    @Override
-    public String getCacheability()
-    {
-        return getPortalURL().getCacheability();
-    }
+   private String               pageState;
+   private ResourceResponse     response;
+   private PortletAsyncContextImpl  actx;
 
-    @Override
-    public Map<String, String[]> getPrivateRenderParameterMap()
-    {
-        return paramFactory.getResourceRenderParameterMap(window.getId().getStringId());
-    }
+   public PortletResourceRequestContextImpl(PortletContainer container, HttpServletRequest containerRequest,
+         HttpServletResponse containerResponse, PortletWindow window, String pageState) {
+      // if pageState != null, we're dealing with a Partial Action request, so
+      // the servlet parameters are not to be used. Otherwise, resource params could be
+      // passed as servlet parameters.
+      super(container, containerRequest, containerResponse, window, (pageState == null));
+      this.pageState = pageState;
+   }
+   
+   @Override
+   public PortletAsyncContext getPortletAsyncContext() {
+      return actx;
+   }
 
-    @Override
-    public String getResourceID()
-    {
-        return getPortalURL().getResourceID();
-    }
+   @Override
+   public String getCacheability() {
+      return getPortalURL().getCacheability();
+   }
 
-   /* (non-Javadoc)
+   @Override
+   public Map<String, String[]> getPrivateRenderParameterMap() {
+      return paramFactory.getResourceRenderParameterMap(window.getId().getStringId());
+   }
+
+   @Override
+   public String getResourceID() {
+      return getPortalURL().getResourceID();
+   }
+
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.PortletResourceRequestContext#getPageState()
     */
-    @Override
+   @Override
    public String getPageState() {
       return pageState;
    }
 
-    @Override
+   @Override
    public ResourceParameters getResourceParameters() {
       return new ResourceParametersImpl(urlProvider, windowId);
    }
@@ -106,159 +108,193 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
    /**
     * @return the response
     */
-    @Override
+   @Override
    public ResourceResponse getResponse() {
       return response;
    }
 
    /**
-    * @param response the response to set
+    * @param response
+    *           the response to set
     */
-    @Override
+   @Override
    public void setResponse(ResourceResponse response) {
       this.response = response;
    }
 
-    @Override
-    public AsyncContext startAsync(ResourceRequest request) throws IllegalStateException {
-       return startAsync(request, response);
-    }
+   @Override
+   public AsyncContext startAsync(ResourceRequest request) throws IllegalStateException {
+      return startAsync(request, response);
+   }
 
-    @Override
-    public AsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
-       
-       HttpServletRequest hreq = getServletRequest();
-       HttpServletResponse hresp = getServletResponse();
-//       ServletContext ctx = getServletContext();
-//       HttpSession sess = getSession();
-       PortletConfig cfg = getPortletConfig(); 
-       
-       if (isTrace) {
-          List<String> attrNames = Collections.list(hreq.getAttributeNames());
-          StringBuilder txt = new StringBuilder(128);
-          txt.append("Start async before:");
-          txt.append("\nAttribute names: ").append(attrNames);
-          txt.append("\nasync_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.async.request_uri"));
-          txt.append("\nasync_context_path:      ").append((String) hreq.getAttribute("javax.servlet.async.context_path"));
-          txt.append("\nasync_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.async.servlet_path"));
-          txt.append("\nasync_path_info:      ").append((String) hreq.getAttribute("javax.servlet.async.path_info"));
-          txt.append("\nasync_query_string:      ").append((String) hreq.getAttribute("javax.servlet.async.query_string"));
-          txt.append("\nforward_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.forward.request_uri"));
-          txt.append("\nforward_context_path:      ").append((String) hreq.getAttribute("javax.servlet.forward.context_path"));
-          txt.append("\nforward_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.forward.servlet_path"));
-          txt.append("\nforward_path_info:      ").append((String) hreq.getAttribute("javax.servlet.forward.path_info"));
-          txt.append("\nforward_query_string:      ").append((String) hreq.getAttribute("javax.servlet.forward.query_string"));
-          txt.append("\ninclude_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.include.request_uri"));
-          txt.append("\ninclude_context_path:      ").append((String) hreq.getAttribute("javax.servlet.include.context_path"));
-          txt.append("\ninclude_servlet_path:      ").append((String) hreq.getAttribute("javax.servlet.include.servlet_path"));
-          txt.append("\ninclude_path_info:      ").append((String) hreq.getAttribute("javax.servlet.include.path_info"));
-          txt.append("\ninclude_query_string:      ").append((String) hreq.getAttribute("javax.servlet.include.query_string"));
-          txt.append("\nmethod_request_uri:      ").append(hreq.getRequestURI());
-          txt.append("\nmethod_context_path:      ").append(hreq.getContextPath());
-          txt.append("\nmethod_servlet_path:      ").append(hreq.getServletPath());
-          txt.append("\nmethod_path_info:      ").append(hreq.getPathInfo());
-          txt.append("\nmethod_query_string:      ").append(hreq.getQueryString());
-          LOG.debug(txt.toString());
-       }
+   @Override
+   public AsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
 
+      HttpServletRequest hreq = getServletRequest();
+      HttpServletResponse hresp = getServletResponse();
+      PortletConfig cfg = getPortletConfig();
 
-       // Set portlet-scoped attributes directly on resource request
-       
-       request.setAttribute(PortletInvokerService.PORTLET_CONFIG, cfg);
-       request.setAttribute(PortletInvokerService.PORTLET_REQUEST, request);
-       request.setAttribute(PortletInvokerService.PORTLET_RESPONSE, response);
+      if (isTrace) {
+         List<String> attrNames = Collections.list(hreq.getAttributeNames());
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Start async before:");
+         txt.append("\nAttribute names: ").append(attrNames);
+         txt.append("\nasync_request_uri:      ").append((String) hreq.getAttribute("javax.servlet.async.request_uri"));
+         txt.append("\nasync_context_path:      ").append(
+               (String) hreq.getAttribute("javax.servlet.async.context_path"));
+         txt.append("\nasync_servlet_path:      ").append(
+               (String) hreq.getAttribute("javax.servlet.async.servlet_path"));
+         txt.append("\nasync_path_info:      ").append((String) hreq.getAttribute("javax.servlet.async.path_info"));
+         txt.append("\nasync_query_string:      ").append(
+               (String) hreq.getAttribute("javax.servlet.async.query_string"));
+         txt.append("\nforward_request_uri:      ").append(
+               (String) hreq.getAttribute("javax.servlet.forward.request_uri"));
+         txt.append("\nforward_context_path:      ").append(
+               (String) hreq.getAttribute("javax.servlet.forward.context_path"));
+         txt.append("\nforward_servlet_path:      ").append(
+               (String) hreq.getAttribute("javax.servlet.forward.servlet_path"));
+         txt.append("\nforward_path_info:      ").append((String) hreq.getAttribute("javax.servlet.forward.path_info"));
+         txt.append("\nforward_query_string:      ").append(
+               (String) hreq.getAttribute("javax.servlet.forward.query_string"));
+         txt.append("\ninclude_request_uri:      ").append(
+               (String) hreq.getAttribute("javax.servlet.include.request_uri"));
+         txt.append("\ninclude_context_path:      ").append(
+               (String) hreq.getAttribute("javax.servlet.include.context_path"));
+         txt.append("\ninclude_servlet_path:      ").append(
+               (String) hreq.getAttribute("javax.servlet.include.servlet_path"));
+         txt.append("\ninclude_path_info:      ").append((String) hreq.getAttribute("javax.servlet.include.path_info"));
+         txt.append("\ninclude_query_string:      ").append(
+               (String) hreq.getAttribute("javax.servlet.include.query_string"));
+         txt.append("\nmethod_request_uri:      ").append(hreq.getRequestURI());
+         txt.append("\nmethod_context_path:      ").append(hreq.getContextPath());
+         txt.append("\nmethod_servlet_path:      ").append(hreq.getServletPath());
+         txt.append("\nmethod_path_info:      ").append(hreq.getPathInfo());
+         txt.append("\nmethod_query_string:      ").append(hreq.getQueryString());
+         LOG.debug(txt.toString());
+      }
 
-       // Wrap http req & response. 
-       
-       HttpServletRequest wreq = new PortletAsyncRequestWrapper(hreq, request, this);
-//       HttpServletRequest wreq = new HttpServletPortletRequestWrapper(hreq, ctx, sess, request, true, false);
-       HttpServletResponse wresp = new HttpServletPortletResponseWrapper(hresp, request, response, false);
+      // Set portlet-scoped attributes directly on resource request
 
-       // get the original container req & resp to pass to listener for resource releasing
+      request.setAttribute(PortletInvokerService.PORTLET_CONFIG, cfg);
+      request.setAttribute(PortletInvokerService.PORTLET_REQUEST, request);
+      request.setAttribute(PortletInvokerService.PORTLET_RESPONSE, response);
 
-       HttpServletRequest creq = getContainerRequest();     
-       HttpServletResponse cresp = getContainerResponse();
+      // Wrap http req & response.
 
-       // Start async, add listener to release resources upon async complete only once.
-       
-       if (actx == null) {
-          actx = hreq.startAsync(wreq, wresp);
-//          actx = hreq.startAsync(hreq, hresp);
-          PortletAsyncListener pal = new PortletAsyncListener();
-          actx.addListener(pal, creq, cresp);
-       } else {
-//          actx = hreq.startAsync(hreq, hresp);
-          actx = hreq.startAsync(wreq, wresp);
-       }
+      HttpServletRequest wreq = new PortletAsyncRequestWrapper(hreq, request, this);
+      HttpServletResponse wresp = new HttpServletPortletResponseWrapper(hresp, request, response, false);
 
-       
-       if (isTrace) {
-          List<String> attrNames = Collections.list(hreq.getAttributeNames());
-          StringBuilder txt = new StringBuilder(128);
-          txt.append("Start async after (wreq):");
-          txt.append("\nAttribute names: ").append(attrNames);
-          txt.append("\nasync_request_uri:      ").append((String) wreq.getAttribute("javax.servlet.async.request_uri"));
-          txt.append("\nasync_context_path:      ").append((String) wreq.getAttribute("javax.servlet.async.context_path"));
-          txt.append("\nasync_servlet_path:      ").append((String) wreq.getAttribute("javax.servlet.async.servlet_path"));
-          txt.append("\nasync_path_info:      ").append((String) wreq.getAttribute("javax.servlet.async.path_info"));
-          txt.append("\nasync_query_string:      ").append((String) wreq.getAttribute("javax.servlet.async.query_string"));
-          txt.append("\nforward_request_uri:      ").append((String) wreq.getAttribute("javax.servlet.forward.request_uri"));
-          txt.append("\nforward_context_path:      ").append((String) wreq.getAttribute("javax.servlet.forward.context_path"));
-          txt.append("\nforward_servlet_path:      ").append((String) wreq.getAttribute("javax.servlet.forward.servlet_path"));
-          txt.append("\nforward_path_info:      ").append((String) wreq.getAttribute("javax.servlet.forward.path_info"));
-          txt.append("\nforward_query_string:      ").append((String) wreq.getAttribute("javax.servlet.forward.query_string"));
-          txt.append("\ninclude_request_uri:      ").append((String) wreq.getAttribute("javax.servlet.include.request_uri"));
-          txt.append("\ninclude_context_path:      ").append((String) wreq.getAttribute("javax.servlet.include.context_path"));
-          txt.append("\ninclude_servlet_path:      ").append((String) wreq.getAttribute("javax.servlet.include.servlet_path"));
-          txt.append("\ninclude_path_info:      ").append((String) wreq.getAttribute("javax.servlet.include.path_info"));
-          txt.append("\ninclude_query_string:      ").append((String) wreq.getAttribute("javax.servlet.include.query_string"));
-          txt.append("\nmethod_request_uri:      ").append(wreq.getRequestURI());
-          txt.append("\nmethod_context_path:      ").append(wreq.getContextPath());
-          txt.append("\nmethod_servlet_path:      ").append(wreq.getServletPath());
-          txt.append("\nmethod_path_info:      ").append(wreq.getPathInfo());
-          txt.append("\nmethod_query_string:      ").append(wreq.getQueryString());
-          LOG.debug(txt.toString());
-       }
+      // Start async, add listener to release resources upon async complete only once.
 
-       return actx;
-    }
+      actx = new PortletAsyncContextImpl(hreq.startAsync(wreq, wresp), wreq);
 
-    @Override
-    public boolean isAsyncStarted() {
-       return getServletRequest().isAsyncStarted();
-    }
+      if (isTrace) {
+         List<String> attrNames = Collections.list(hreq.getAttributeNames());
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Start async after (wreq):");
+         txt.append("\nAttribute names: ").append(attrNames);
+         txt.append("\nasync_request_uri:      ").append((String) wreq.getAttribute("javax.servlet.async.request_uri"));
+         txt.append("\nasync_context_path:      ").append(
+               (String) wreq.getAttribute("javax.servlet.async.context_path"));
+         txt.append("\nasync_servlet_path:      ").append(
+               (String) wreq.getAttribute("javax.servlet.async.servlet_path"));
+         txt.append("\nasync_path_info:      ").append((String) wreq.getAttribute("javax.servlet.async.path_info"));
+         txt.append("\nasync_query_string:      ").append(
+               (String) wreq.getAttribute("javax.servlet.async.query_string"));
+         txt.append("\nforward_request_uri:      ").append(
+               (String) wreq.getAttribute("javax.servlet.forward.request_uri"));
+         txt.append("\nforward_context_path:      ").append(
+               (String) wreq.getAttribute("javax.servlet.forward.context_path"));
+         txt.append("\nforward_servlet_path:      ").append(
+               (String) wreq.getAttribute("javax.servlet.forward.servlet_path"));
+         txt.append("\nforward_path_info:      ").append((String) wreq.getAttribute("javax.servlet.forward.path_info"));
+         txt.append("\nforward_query_string:      ").append(
+               (String) wreq.getAttribute("javax.servlet.forward.query_string"));
+         txt.append("\ninclude_request_uri:      ").append(
+               (String) wreq.getAttribute("javax.servlet.include.request_uri"));
+         txt.append("\ninclude_context_path:      ").append(
+               (String) wreq.getAttribute("javax.servlet.include.context_path"));
+         txt.append("\ninclude_servlet_path:      ").append(
+               (String) wreq.getAttribute("javax.servlet.include.servlet_path"));
+         txt.append("\ninclude_path_info:      ").append((String) wreq.getAttribute("javax.servlet.include.path_info"));
+         txt.append("\ninclude_query_string:      ").append(
+               (String) wreq.getAttribute("javax.servlet.include.query_string"));
+         txt.append("\nmethod_request_uri:      ").append(wreq.getRequestURI());
+         txt.append("\nmethod_context_path:      ").append(wreq.getContextPath());
+         txt.append("\nmethod_servlet_path:      ").append(wreq.getServletPath());
+         txt.append("\nmethod_path_info:      ").append(wreq.getPathInfo());
+         txt.append("\nmethod_query_string:      ").append(wreq.getQueryString());
+         LOG.debug(txt.toString());
+      }
 
-    @Override
-    public boolean isAsyncSupported() {
-       return getServletRequest().isAsyncSupported();
-    }
+      return actx;
+   }
 
-    @Override
-    public AsyncContext getAsyncContext() {
-       return getServletRequest().getAsyncContext();
-    }
+   // For wrapper use
+   @Override
+   public AsyncContext startAsync() {
+      AsyncContext ac = getServletRequest().startAsync();
+      if (actx == null) {
+         // this should not happen, the wrapper is created during the resource request
+         LOG.error("====>>> Wrapper invocation invalid before resource async started.");
+      } else {
+         actx.setWrapped(ac);
+      }
+      return actx;
+   }
 
-    @Override
-    public DispatcherType getDispatcherType() {
-       return getServletRequest().getDispatcherType();
-    }
+   // for wrapper use
+   @Override
+   public AsyncContext startAsync(ServletRequest request, ServletResponse response) {
+      AsyncContext ac = getServletRequest().startAsync(request, response);
+      if (actx == null) {
+         // this should not happen, the wrapper is created during the resource request
+         LOG.error("====>>> Wrapper invocation invalid before resource async started.");
+      } else {
+         actx.setWrapped(ac);
+      }
+      return actx;
+   }
 
-    // For use within the wrapper. 
-    // PLT.10.4.3. Proxied session is created and passed if 
-    // javax.portlet.servletDefaultSessionScope == PORTLET_SCOPE
-    @SuppressWarnings("unused")
-   private HttpSession getSession() {
-       HttpSession sess = null;
+   @Override
+   public boolean isAsyncStarted() {
+      return getServletRequest().isAsyncStarted();
+   }
 
-       PortletConfig portletConfig = getPortletConfig();
-       Map<String, String[]> containerRuntimeOptions = portletConfig.getContainerRuntimeOptions();
-       String[] values = containerRuntimeOptions.get("javax.portlet.servletDefaultSessionScope");
+   @Override
+   public boolean isAsyncSupported() {
+      return getServletRequest().isAsyncSupported();
+   }
 
-       if ((values != null) && (values.length > 0) && "PORTLET_SCOPE".equals(values[0])) {
-          String portletWindowId = getPortletWindow().getId().getStringId();
-          sess = ServletPortletSessionProxy.createProxy(getServletRequest(), portletWindowId);
-       }
+   @Override
+   public AsyncContext getAsyncContext() {
+      if (actx != null) {
+         return actx;
+      }
+      return getServletRequest().getAsyncContext();
+   }
 
-       return sess;
-    }
+   @Override
+   public DispatcherType getDispatcherType() {
+      return getServletRequest().getDispatcherType();
+   }
+
+   // For use within the wrapper.
+   // PLT.10.4.3. Proxied session is created and passed if
+   // javax.portlet.servletDefaultSessionScope == PORTLET_SCOPE
+   @Override
+   public HttpSession getSession() {
+      HttpSession sess = null;
+
+      PortletConfig portletConfig = getPortletConfig();
+      Map<String, String[]> containerRuntimeOptions = portletConfig.getContainerRuntimeOptions();
+      String[] values = containerRuntimeOptions.get("javax.portlet.servletDefaultSessionScope");
+
+      if ((values != null) && (values.length > 0) && "PORTLET_SCOPE".equals(values[0])) {
+         String portletWindowId = getPortletWindow().getId().getStringId();
+         sess = ServletPortletSessionProxy.createProxy(getServletRequest(), portletWindowId);
+      }
+
+      return sess;
+   }
 }

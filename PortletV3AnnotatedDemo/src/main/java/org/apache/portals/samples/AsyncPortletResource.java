@@ -46,7 +46,6 @@ import org.apache.portals.samples.AsyncDialogBean.OutputType;
  */
 public class AsyncPortletResource {
    private static final Logger LOGGER = Logger.getLogger(AsyncPortletResource.class.getName());
-   private static final boolean isDebug = LOGGER.isLoggable(Level.FINE);
    private static final boolean isTrace = LOGGER.isLoggable(Level.FINEST);
    
    private final static String JSP         = "/WEB-INF/jsp/asyncOutput.jsp";
@@ -106,12 +105,12 @@ public class AsyncPortletResource {
                str.append(", Servlet patch: ").append(hreq.getServletPath());
                LOGGER.fine(str.toString());
                hreq.setAttribute(ATTRIB_AUTO, new Boolean(true));
-               ctx.dispatch(hreq.getServletContext(), hreq.getServletPath());
+               ctx.dispatch();
                break;
             case DISPATCH:
                LOGGER.fine("Dispatching to JSP.");
                hreq.setAttribute(ATTRIB_TITLE, "Thread dispatching to JSP");
-               ctx.dispatch(hreq.getServletContext(), JSP);
+               ctx.dispatch(JSP);
                break;
             case FWD:
                LOGGER.fine("Doing request dispatcher forward to JSP: " + JSP);
@@ -178,8 +177,7 @@ public class AsyncPortletResource {
          
          PortletRequestDispatcher rd;
 
-         HttpServletRequest hreq = (HttpServletRequest) req.getAttribute("javax.portlet.debug.ServletRequest");
-         trace(hreq, "Resource method: ");
+         trace(req, "Resource method: ");
          
          // HttpServletRequest hreq = (HttpServletRequest) ctx.getRequest();
          PortletConfig config = (PortletConfig) req.getAttribute("javax.portlet.config");
@@ -192,7 +190,7 @@ public class AsyncPortletResource {
          case DISPATCH:
             LOGGER.fine("Dispatching to JSP.");
             req.setAttribute(ATTRIB_TITLE, "Resource Method dispatching to JSP");
-            ctx.dispatch(hreq.getServletContext(), JSP);
+            ctx.dispatch(JSP);
             break;
          case FWD:
             LOGGER.fine("Doing request dispatcher forward to JSP.");
@@ -241,6 +239,11 @@ public class AsyncPortletResource {
          AsyncRunnable ar = new AsyncRunnable(ctx, adb.getDelay(), type);
          ctx.start(ar);
       }
+   }
+   
+   public static void trace(ResourceRequest req, String src) {
+      HttpServletRequest hreq = (HttpServletRequest) req.getAttribute("javax.portlet.debug.ServletRequest");
+      trace(hreq, src);
    }
    
    public static void trace(HttpServletRequest hreq, String src) {

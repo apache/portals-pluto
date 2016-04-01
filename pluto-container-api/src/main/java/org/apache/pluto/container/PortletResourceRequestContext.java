@@ -23,6 +23,9 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @version $Id$
@@ -68,4 +71,8 @@ public interface PortletResourceRequestContext extends PortletRequestContext
     boolean isAsyncSupported();
     AsyncContext getAsyncContext() throws IllegalStateException;
     DispatcherType getDispatcherType();
+    HttpSession getSession();
+    AsyncContext startAsync();
+    AsyncContext startAsync(ServletRequest request, ServletResponse response);
+    PortletAsyncContext getPortletAsyncContext();
 }

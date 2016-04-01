@@ -51,7 +51,10 @@ import javax.portlet.annotations.ServeResourceMethod;
 import javax.servlet.DispatcherType;
 import javax.xml.namespace.QName;
 
+import org.apache.pluto.container.PortletAsyncContext;
 import org.apache.pluto.container.PortletInvokerService;
+import org.apache.pluto.container.PortletResourceRequestContext;
+import org.apache.pluto.container.impl.PortletAsyncRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -275,6 +278,7 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
             LOG.warn(txt.toString());
             return;
          }
+         LOG.debug("Processing async dispatch. method: " + meth.toString());
          meths.add(meth);
       } else {
          meths = getMethods(mi);
@@ -331,6 +335,21 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
                
                LOG.debug("Async processing was started during method: " + meth.toString());
                req.setAttribute(PortletInvokerService.ASYNC_METHOD, meth);
+               
+               PortletResourceRequestContext reqctx = (PortletResourceRequestContext) req.getAttribute(PortletInvokerService.REQUEST_CONTEXT);
+               if (reqctx != null) {
+                  PortletAsyncContext pac = reqctx.getPortletAsyncContext();
+                  if (pac != null) {
+                     pac.requestComplete(reqctx);
+                  } else {
+                     LOG.warn("Couldn't get portlet async context.");
+                  }
+               } else {
+                  LOG.warn("Couldn't get request context.");
+               }
+            
+               
+               
                break;
                
             } else {

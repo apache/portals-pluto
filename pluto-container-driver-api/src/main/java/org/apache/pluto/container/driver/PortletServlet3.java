@@ -39,6 +39,10 @@ import javax.servlet.DispatcherType;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletRequestWrapper;
+import javax.servlet.ServletResponse;
+import javax.servlet.ServletResponseWrapper;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,6 +56,7 @@ import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
 import org.apache.pluto.container.bean.processor.PortletInvoker;
+import org.apache.pluto.container.impl.PortletAsyncRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -272,10 +277,67 @@ public class PortletServlet3 extends HttpServlet {
       final FilterManager filterManager = 
             (FilterManager) request.getAttribute(PortletInvokerService.FILTER_MANAGER);
 
-      if (request.getDispatcherType() != DispatcherType.ASYNC) {
+      if (LOG.isTraceEnabled()) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("\nRequest wrapper stack: ");
+         ServletRequest wreq = request;
+         ServletRequest tstreq = requestContext.getServletRequest();
+         int n = 1;
+         while (wreq instanceof ServletRequestWrapper) {
+            txt.append("\nLevel ").append(n++).append(": ").append(wreq.getClass().getCanonicalName());
+            txt.append(", dispatch type: ").append(wreq.getDispatcherType());
+            txt.append(", equal to req context req: ").append(wreq == tstreq);
+            wreq = ((ServletRequestWrapper) wreq).getRequest();
+         }
+         txt.append("\nLevel ").append(n++).append(": ").append(wreq.getClass().getCanonicalName());
+         txt.append(", dispatch type: ").append(wreq.getDispatcherType());
+         txt.append(", equal to req context req: ").append(wreq == tstreq);
+
+         txt.append("\n\nResponse wrapper stack: ");
+         ServletResponse wresp = response;
+         ServletResponse tstresp = requestContext.getServletResponse();
+         n = 1;
+         while (wresp instanceof ServletResponseWrapper) {
+            txt.append("\nLevel ").append(n++).append(": ").append(wresp.getClass().getCanonicalName());
+            txt.append(", equal to req context resp: ").append(wresp == tstresp);
+            wresp = ((ServletResponseWrapper) wresp).getResponse();
+         }
+         txt.append("\nLevel ").append(n++).append(": ").append(wresp.getClass().getCanonicalName());
+         txt.append(", equal to req context resp: ").append(wresp == tstresp);
+         LOG.debug(txt.toString());
+      }
+      
+      if (request.getDispatcherType() == DispatcherType.ASYNC) {
+         
+         // have to reinitialize the request context with the request under our wrapper.
+         
+         ServletRequest wreq = request;
+         while ((wreq instanceof ServletRequestWrapper) &&
+               !(wreq instanceof PortletAsyncRequestWrapper) ) {
+            wreq = ((ServletRequestWrapper) wreq).getRequest();
+         }
+         
+         
+         if (wreq instanceof PortletAsyncRequestWrapper) {
+            
+            HttpServletRequest hreq = (HttpServletRequest) ((PortletAsyncRequestWrapper) wreq).getRequest();
+            HttpServletResponse hresp = requestContext.getServletResponse();
+            
+            LOG.debug("Extracted wrapped request. Dispatch type: " + hreq.getDispatcherType());
+
+            requestContext.init(portletConfig, getServletContext(), hreq, hresp);
+            responseContext.init(hreq, hresp);
+            
+         } else {
+            LOG.debug("Couldn't find the portlet async wrapper.");
+         }
+         
+      } else {
+         
          // the contexts are already initialized if this is part of a resource request async sequence
          requestContext.init(portletConfig, getServletContext(), request, response);
          responseContext.init(request, response);
+      
       }
 
       PortletWindow window = requestContext.getPortletWindow();

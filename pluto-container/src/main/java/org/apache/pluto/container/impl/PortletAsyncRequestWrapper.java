@@ -24,16 +24,12 @@ import java.util.Collections;
 import java.util.Enumeration;
 
 import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 import javax.servlet.AsyncContext;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.apache.pluto.container.NamespaceMapper;
-import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletWindowID;
 import org.slf4j.Logger;
@@ -52,13 +48,14 @@ public class PortletAsyncRequestWrapper extends HttpServletPortletRequestWrapper
    private static final boolean isTrace = LOG.isTraceEnabled();
    
    
+   @SuppressWarnings("unused")
    private final ResourceRequest preq;
    private final PortletResourceRequestContext reqctx;
    private final NamespaceMapper mapper;
    private final PortletWindowID winId;
 
    public PortletAsyncRequestWrapper(HttpServletRequest hreq, ResourceRequest preq, PortletResourceRequestContext reqctx) {
-      super(hreq, reqctx.getServletContext(), null, preq, true, false);
+      super(hreq, reqctx.getServletContext(), reqctx.getSession(), preq, true, false);
       this.preq = preq;
       this.reqctx = reqctx;
       this.mapper = reqctx.getContainer().getContainerServices().getNamespaceMapper();
@@ -213,22 +210,27 @@ public class PortletAsyncRequestWrapper extends HttpServletPortletRequestWrapper
 // 
    @Override
    public AsyncContext startAsync() throws IllegalStateException {
-      return getRequest().startAsync();
+      return reqctx.startAsync();
    }
 
    @Override
    public AsyncContext startAsync(ServletRequest request, ServletResponse response) throws IllegalStateException {
-      return getRequest().startAsync(request, response);
+      return reqctx.startAsync(request, response);
    }
 
    @Override
    public boolean isAsyncStarted() {
-      return getRequest().isAsyncStarted();
+      return reqctx.isAsyncStarted();
    }
 
    @Override
    public boolean isAsyncSupported() {
-      return getRequest().isAsyncSupported();
+      return reqctx.isAsyncSupported();
+   }
+   
+   @Override
+   public AsyncContext getAsyncContext() {
+      return reqctx.getAsyncContext();
    }
 
 
