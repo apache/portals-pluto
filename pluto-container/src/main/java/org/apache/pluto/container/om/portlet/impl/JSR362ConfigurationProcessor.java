@@ -460,12 +460,12 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          List<PortletModeType> pmlist = st.getPortletMode();
          if (pmlist.size() == 0) {
             String info = "No portlet modes found in Supports block.";
-            LOG.debug(info);
+            LOG.trace(info);
          }
          List<WindowStateType> wslist = st.getWindowState();
          if (wslist.size() == 0) {
             String info = "No window states found in Supports block.";
-            LOG.debug(info);
+            LOG.trace(info);
          }
 
          // set up Supports

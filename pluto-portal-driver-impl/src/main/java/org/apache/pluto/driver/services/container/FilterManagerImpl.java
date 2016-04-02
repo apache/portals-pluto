@@ -90,6 +90,7 @@ public class FilterManagerImpl implements FilterManager{
     /**
      * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.EventRequest, javax.portlet.EventResponse, javax.portlet.EventPortlet, javax.portlet.PortletContext)
      */
+    @Override
     public void processFilter(EventRequest req, EventResponse res, EventPortlet eventPortlet,PortletContext portletContext)throws PortletException, IOException{
         filterchain.processFilter(req, res, eventPortlet, portletContext);
     }
@@ -97,13 +98,16 @@ public class FilterManagerImpl implements FilterManager{
     /**
      * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.ResourceRequest, javax.portlet.ResourceResponse, javax.portlet.ResourceServingPortlet, javax.portlet.PortletContext)
      */
+    @Override
     public void processFilter(ResourceRequest req, ResourceResponse res, ResourceServingPortlet resourceServingPortlet,PortletContext portletContext)throws PortletException, IOException{
+        filterchain.reset();     // for async processing
         filterchain.processFilter(req, res, resourceServingPortlet, portletContext);
     }
 
     /**
      * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.RenderRequest, javax.portlet.RenderResponse, javax.portlet.Portlet, javax.portlet.PortletContext)
      */
+    @Override
     public void processFilter(RenderRequest req, RenderResponse res, Portlet portlet,PortletContext portletContext) throws PortletException, IOException{
         filterchain.processFilter(req, res, portlet, portletContext);
     }
@@ -111,6 +115,7 @@ public class FilterManagerImpl implements FilterManager{
     /**
      * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.RenderRequest, javax.portlet.HeaderResponse, javax.portlet.HeaderPortlet, javax.portlet.PortletContext)
      */
+    @Override
     public void processFilter(HeaderRequest req, HeaderResponse res, HeaderPortlet portlet,PortletContext portletContext) throws PortletException, IOException{
         filterchain.processFilter(req, res, portlet, portletContext);
     }
@@ -118,6 +123,7 @@ public class FilterManagerImpl implements FilterManager{
     /**
      * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.ActionRequest, javax.portlet.ActionResponse, javax.portlet.Portlet, javax.portlet.PortletContext)
      */
+    @Override
     public void processFilter(ActionRequest req, ActionResponse res, Portlet portlet,PortletContext portletContext) throws PortletException, IOException{
         filterchain.processFilter(req, res, portlet, portletContext);
     }

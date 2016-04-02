@@ -71,6 +71,13 @@ public class FilterChainImpl implements FilterChain, HeaderFilterChain {
    public FilterChainImpl(String lifeCycle) {
       this.lifeCycle = lifeCycle;
    }
+   
+   /**
+    * For async processing, the filter chain needs to be executed multiple times.
+    */
+   public void reset() {
+      filterListIndex = 0;
+   }
 
    public void processFilter(EventRequest req, EventResponse res, EventPortlet eventPortlet,
          PortletContext portletContext) throws IOException, PortletException {
@@ -116,6 +123,7 @@ public class FilterChainImpl implements FilterChain, HeaderFilterChain {
       filterList.add(filter);
    }
 
+   @Override
    public void doFilter(ActionRequest request, ActionResponse response) throws IOException, PortletException {
       if (filterListIndex < filterList.size()) {
          Filter filter = filterList.get(filterListIndex);
@@ -139,6 +147,7 @@ public class FilterChainImpl implements FilterChain, HeaderFilterChain {
       }
    }
 
+   @Override
    public void doFilter(EventRequest request, EventResponse response) throws IOException, PortletException {
       if (filterListIndex < filterList.size()) {
          Filter filter = filterList.get(filterListIndex);
@@ -162,6 +171,7 @@ public class FilterChainImpl implements FilterChain, HeaderFilterChain {
       }
    }
 
+   @Override
    public void doFilter(RenderRequest request, RenderResponse response) throws IOException, PortletException {
       if (filterListIndex < filterList.size()) {
          Filter filter = filterList.get(filterListIndex);
@@ -185,6 +195,7 @@ public class FilterChainImpl implements FilterChain, HeaderFilterChain {
       }
    }
 
+   @Override
    public void doFilter(HeaderRequest request, HeaderResponse response) throws IOException, PortletException {
       if (filterListIndex < filterList.size()) {
          Filter filter = filterList.get(filterListIndex);
@@ -208,6 +219,7 @@ public class FilterChainImpl implements FilterChain, HeaderFilterChain {
       }
    }
 
+   @Override
    public void doFilter(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
       if (filterListIndex < filterList.size()) {
          Filter filter = filterList.get(filterListIndex);

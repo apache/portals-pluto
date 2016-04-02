@@ -27,6 +27,7 @@ import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -34,6 +35,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.StateAwareResponse;
 import javax.portlet.UnavailableException;
 import javax.servlet.DispatcherType;
 import javax.servlet.ServletConfig;
@@ -48,6 +50,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.FilterManager;
+import org.apache.pluto.container.PortletAsyncContext;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
@@ -55,7 +58,11 @@ import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
+import org.apache.pluto.container.bean.processor.PortletArtifactProducer;
 import org.apache.pluto.container.bean.processor.PortletInvoker;
+import org.apache.pluto.container.bean.processor.PortletRequestScopedBeanHolder;
+import org.apache.pluto.container.bean.processor.PortletSessionBeanHolder;
+import org.apache.pluto.container.bean.processor.PortletStateScopedBeanHolder;
 import org.apache.pluto.container.impl.PortletAsyncRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -348,6 +355,8 @@ public class PortletServlet3 extends HttpServlet {
       
       try {
 
+         beforeInvoke(portletRequest, portletResponse, portletConfig);
+         
          // The requested method is RENDER: call Portlet.render(..)
          if (methodId == PortletInvokerService.METHOD_RENDER) {
             RenderRequest renderRequest = (RenderRequest) portletRequest;
@@ -439,10 +448,12 @@ public class PortletServlet3 extends HttpServlet {
 
       } finally {
          
+         requestContext.setExecutingRequestBody(false);
+         afterInvoke(portletResponse);
+         
          // If an async request is running or has been dispatched, resources
          // will be released by the PortletAsyncListener. Otherwise release here.
          
-         requestContext.setExecutingRequestBody(false);
          if (!request.isAsyncStarted()) {
             
             LOG.debug("Async not started, releasing resources. executing req body: " + requestContext.isExecutingRequestBody());
@@ -457,6 +468,24 @@ public class PortletServlet3 extends HttpServlet {
             }
          } else {
             LOG.debug("Async started, not releasing resources. executing req body: " + requestContext.isExecutingRequestBody());
+
+            // Initialize the async context after the request during which async is 
+            // first started.
+            
+            if (request.getDispatcherType() != DispatcherType.ASYNC) {
+               if (requestContext instanceof PortletResourceRequestContext) {
+                  PortletResourceRequestContext resctx = (PortletResourceRequestContext)requestContext;
+                  PortletAsyncContext pac = resctx.getPortletAsyncContext();
+                  if (pac != null) {
+                     pac.init(resctx);
+                  } else {
+                     LOG.warn("Couldn't get portlet async context.");
+                  }
+               } else {
+                  LOG.warn("Wrong kind of request context: " + requestContext.getClass().getCanonicalName());
+               }
+            }            
+            
          }
       }
    }
@@ -473,5 +502,51 @@ public class PortletServlet3 extends HttpServlet {
             listener.onError(event, e);
          }
       }
+   }
+
+
+   /**
+    * To be called before bean method invocation begins
+    */
+   private void beforeInvoke(PortletRequest req, PortletResponse resp, PortletConfig config) {
+
+      // Set the portlet session bean holder for the thread & session
+      PortletRequestScopedBeanHolder.setBeanHolder();
+
+      // Set the portlet session bean holder for the thread & session
+      PortletSessionBeanHolder.setBeanHolder(req, acb.getSessionScopedConfig());
+
+      // Set the render state scoped bean holder
+      PortletStateScopedBeanHolder.setBeanHolder(req, acb.getStateScopedConfig());
+
+      // Set up the artifact producer with request, response, and portlet config
+      PortletArtifactProducer.setPrecursors(req, resp, config);
+   }
+
+   /**
+    * must be called after all method invocations have taken place, even if an
+    * exception occurs.
+    */
+   private void afterInvoke(PortletResponse resp) {
+
+      // Remove the portlet session bean holder for the thread
+      PortletRequestScopedBeanHolder.removeBeanHolder();
+
+      // Remove the portlet session bean holder for the thread
+      PortletSessionBeanHolder.removeBeanHolder();
+
+      // Remove the render state bean holder. pass response if we're
+      // dealing with a StateAwareResponse. The response is used for state
+      // storage.
+
+      StateAwareResponse sar = null;
+      if (resp instanceof StateAwareResponse) {
+         sar = (StateAwareResponse) resp;
+      }
+      PortletStateScopedBeanHolder.removeBeanHolder(sar);
+
+      // remove the portlet artifact producer
+      PortletArtifactProducer.remove();
+
    }
 }

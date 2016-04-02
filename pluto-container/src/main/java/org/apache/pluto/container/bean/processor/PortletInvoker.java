@@ -36,24 +36,19 @@ import javax.portlet.HeaderResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceServingPortlet;
-import javax.portlet.StateAwareResponse;
 import javax.portlet.annotations.HeaderMethod;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
 import javax.servlet.DispatcherType;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.container.PortletAsyncContext;
 import org.apache.pluto.container.PortletInvokerService;
-import org.apache.pluto.container.PortletResourceRequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,13 +59,13 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPortlet, HeaderPortlet {
-   private static final Logger             LOG     = LoggerFactory.getLogger(PortletInvoker.class);
-   private static final boolean            isDebug = LOG.isDebugEnabled();
+   private static final Logger       LOG     = LoggerFactory.getLogger(PortletInvoker.class);
+   private static final boolean      isDebug = LOG.isDebugEnabled();
 
    private final AnnotatedConfigBean acb;
-   private final String                    portletName;
-   private PortletConfig                   config;
-   
+   private final String              portletName;
+   private PortletConfig             config;
+
    /**
     * Construct for given portlet name.
     */
@@ -101,7 +96,7 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
       List<AnnotatedMethod> meths = acb.getMethodStore().getMethods(mi);
       if (meths.isEmpty()) {
          Object id = mi.getId();
-         if ((id != null) && (id instanceof String) && ((String)id).length() > 0) {
+         if ((id != null) && (id instanceof String) && ((String) id).length() > 0) {
             mi.setId("");
             if (isDebug) {
                LOG.debug("Retrying retrieval with method identifier: " + mi.toString());
@@ -111,51 +106,6 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
       }
 
       return meths;
-   }
-
-   /**
-    * To be called before bean method invocation begins
-    */
-   private void beforeInvoke(PortletRequest req, PortletResponse resp) {
-
-      // Set the portlet session bean holder for the thread & session
-      PortletRequestScopedBeanHolder.setBeanHolder();
-
-      // Set the portlet session bean holder for the thread & session
-      PortletSessionBeanHolder.setBeanHolder(req, acb.getSessionScopedConfig());
-
-      // Set the render state scoped bean holder
-      PortletStateScopedBeanHolder.setBeanHolder(req, acb.getStateScopedConfig());
-
-      // Set up the artifact producer with request, response, and portlet config
-      PortletArtifactProducer.setPrecursors(req, resp, config);
-   }
-
-   /**
-    * must be called after all method invocations have taken place, even if an
-    * exception occurs.
-    */
-   private void afterInvoke(PortletResponse resp) {
-
-      // Remove the portlet session bean holder for the thread
-      PortletRequestScopedBeanHolder.removeBeanHolder();
-
-      // Remove the portlet session bean holder for the thread
-      PortletSessionBeanHolder.removeBeanHolder();
-
-      // Remove the render state bean holder. pass response if we're
-      // dealing with a StateAwareResponse. The response is used for state
-      // storage.
-
-      StateAwareResponse sar = null;
-      if (resp instanceof StateAwareResponse) {
-         sar = (StateAwareResponse) resp;
-      }
-      PortletStateScopedBeanHolder.removeBeanHolder(sar);
-
-      // remove the portlet artifact producer
-      PortletArtifactProducer.remove();
-
    }
 
    /**
@@ -227,7 +177,8 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
       Object[] args = new Object[] { config };
       try {
          invokePortletMethod(meth, args);
-      } catch (Exception e) {}
+      } catch (Exception e) {
+      }
 
    }
 
@@ -256,7 +207,8 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
       Object[] args = new Object[] {};
       try {
          invokePortletMethod(meth, args);
-      } catch (Exception e) {}
+      } catch (Exception e) {
+      }
    }
 
    @Override
@@ -267,14 +219,15 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
 
       List<AnnotatedMethod> meths = new ArrayList<AnnotatedMethod>();
       if (req.getDispatcherType() == DispatcherType.ASYNC) {
-         
+
          // Handle AsyncContest#dispatch() case
-         
-         AnnotatedMethod meth = (AnnotatedMethod) req.getAttribute(PortletInvokerService.ASYNC_METHOD);;
+
+         AnnotatedMethod meth = (AnnotatedMethod) req.getAttribute(PortletInvokerService.ASYNC_METHOD);
+         ;
          if (meth == null) {
             StringBuilder txt = new StringBuilder(128);
-            txt.append("Async processing error. ServeResource method not found for method identifier: ");
-            LOG.warn(txt.toString());
+            txt.append("Async processing error. ServeResource method attribute could not be retrieved.");
+            LOG.error(txt.toString());
             return;
          }
          LOG.debug("Processing async dispatch. method: " + meth.toString());
@@ -282,7 +235,7 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
       } else {
          meths = getMethods(mi);
       }
-      
+
       if (meths.size() == 0) {
 
          // If a resource URL was activated, but no resource method could be
@@ -296,87 +249,63 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
 
       // now do the invocation
 
-      try {
-         beforeInvoke(req, resp);
+      for (AnnotatedMethod meth : meths) {
 
-         for (AnnotatedMethod meth : meths) {
+         // Set the character encoding & content type, if available
 
-            // Set the character encoding & content type, if available
-
-            ServeResourceMethod rm = (ServeResourceMethod) meth.getAnnotation();
-            if (rm != null) {
-               if (rm.characterEncoding().length() > 0) {
-                  resp.setCharacterEncoding(rm.characterEncoding());
-               }
-               if (rm.contentType().length() > 0) {
-                  resp.setContentType(rm.contentType());
-               }
+         ServeResourceMethod rm = (ServeResourceMethod) meth.getAnnotation();
+         if (rm != null) {
+            if (rm.characterEncoding().length() > 0) {
+               resp.setCharacterEncoding(rm.characterEncoding());
             }
-
-            // Set up the method arguments based on the signature variant
-
-            Object[] args = {};
-            Object result;
-            if (meth.getDescription().getVariant() == SignatureVariant.VOID_RESOURCEREQ_RESOURCERESP) {
-               args = new Object[] { req, resp };
-            }
-
-            // invoke the resource method
-
-            result = invokePortletMethod(meth, args);
-            
-            if (req.isAsyncStarted()) {
-               
-               // If async processing was started, handle the special case.
-               // It doesn't make sense to write output, as the resource method may
-               // be writing output through an async thread. Set up to process async dispatch.
-               // also, after async is started, no further methods can be invoked.
-               
-               LOG.debug("Async processing was started during method: " + meth.toString());
-               req.setAttribute(PortletInvokerService.ASYNC_METHOD, meth);
-
-               // Initialize the async context after the request during which async is 
-               // first started.
-               
-               if (req.getDispatcherType() != DispatcherType.ASYNC) {
-                  PortletResourceRequestContext reqctx = (PortletResourceRequestContext) req
-                        .getAttribute(PortletInvokerService.REQUEST_CONTEXT);
-                  if (reqctx != null) {
-                     PortletAsyncContext pac = reqctx.getPortletAsyncContext();
-                     if (pac != null) {
-                        pac.init(reqctx);
-                     } else {
-                        LOG.warn("Couldn't get portlet async context.");
-                     }
-                  } else {
-                     LOG.warn("Couldn't get request context.");
-                  }
-               }            
-               
-               break;
-               
-            } else {
-
-               // No async processing.
-               // If output is to be expected, write it to the writer
-
-               if (meth.getDescription().getVariant() == SignatureVariant.STRING_VOID) {
-                  if (result != null) {
-                     assert result instanceof String;
-                     resp.getWriter().write((String) result);
-                  }
-               }
-
-               // If an include resource is provided, include it
-
-               if ((rm != null) && (rm.include().length() > 0)) {
-                  PortletRequestDispatcher prd = config.getPortletContext().getRequestDispatcher(rm.include());
-                  prd.include(req, resp);
-               }
+            if (rm.contentType().length() > 0) {
+               resp.setContentType(rm.contentType());
             }
          }
-      } finally {
-         afterInvoke(resp);
+
+         // Set up the method arguments based on the signature variant
+
+         Object[] args = {};
+         Object result;
+         if (meth.getDescription().getVariant() == SignatureVariant.VOID_RESOURCEREQ_RESOURCERESP) {
+            args = new Object[] { req, resp };
+         }
+
+         // invoke the resource method
+
+         result = invokePortletMethod(meth, args);
+
+         if (req.isAsyncStarted()) {
+
+            // If async processing was started, handle the special case.
+            // It doesn't make sense to write output, as the resource method may
+            // be writing output through an async thread. Set up to process
+            // async dispatch.
+            // also, after async is started, no further methods can be invoked.
+
+            LOG.debug("Async processing was started during method: " + meth.toString());
+            req.setAttribute(PortletInvokerService.ASYNC_METHOD, meth);
+            break;
+
+         } else {
+
+            // No async processing.
+            // If output is to be expected, write it to the writer
+
+            if (meth.getDescription().getVariant() == SignatureVariant.STRING_VOID) {
+               if (result != null) {
+                  assert result instanceof String;
+                  resp.getWriter().write((String) result);
+               }
+            }
+
+            // If an include resource is provided, include it
+
+            if ((rm != null) && (rm.include().length() > 0)) {
+               PortletRequestDispatcher prd = config.getPortletContext().getRequestDispatcher(rm.include());
+               prd.include(req, resp);
+            }
+         }
       }
    }
 
@@ -388,8 +317,9 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
 
       List<AnnotatedMethod> meths = getMethods(mi);
       if (meths.size() == 0) {
-         
-         // retry with empty string (for portlet class processEvent method, for example)
+
+         // retry with empty string (for portlet class processEvent method, for
+         // example)
          mi.setId("");
          meths = getMethods(mi);
          if (meths.size() == 0) {
@@ -409,12 +339,7 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
       // Set up the method arguments and do the incovation
 
       Object[] args = new Object[] { req, resp };
-      try {
-         beforeInvoke(req, resp);
-         invokePortletMethod(meth, args);
-      } finally {
-         afterInvoke(resp);
-      }
+      invokePortletMethod(meth, args);
    }
 
    @Override
@@ -427,7 +352,8 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
       List<AnnotatedMethod> meths = getMethods(mi);
       if (meths.size() == 0) {
 
-         // If an action URL was activated, but action method could not be found,
+         // If an action URL was activated, but action method could not be
+         // found,
          // add appropriate error string.
 
          StringBuilder txt = new StringBuilder(128);
@@ -441,12 +367,7 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
       // Set up the method arguments and do the incovation
 
       Object[] args = new Object[] { req, resp };
-      try {
-         beforeInvoke(req, resp);
-         invokePortletMethod(meth, args);
-      } finally {
-         afterInvoke(resp);
-      }
+      invokePortletMethod(meth, args);
 
    }
 
@@ -466,52 +387,44 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
          return;
       }
 
-      try {
-         beforeInvoke(req, resp);
+      for (AnnotatedMethod meth : meths) {
 
-         for (AnnotatedMethod meth : meths) {
+         // Set the content type, if available (determined by first render
+         // method)
 
-            // Set the content type, if available (determined by first render
-            // method)
+         RenderMethod rm = (RenderMethod) meth.getAnnotation();
+         if ((rm != null) && rm.contentType().length() > 0) {
+            resp.setContentType(rm.contentType());
+         }
 
-            RenderMethod rm = (RenderMethod) meth.getAnnotation();
-            if ((rm != null) && rm.contentType().length() > 0) {
-               resp.setContentType(rm.contentType());
-            }
+         // Set up the method arguments based on the signature variant
 
-            // Set up the method arguments based on the signature variant
+         Object[] args = {};
+         Object result;
+         if (meth.getDescription().getVariant() == SignatureVariant.VOID_RENDERREQ_RENDERRESP) {
+            args = new Object[] { req, resp };
+         }
 
-            Object[] args = {};
-            Object result;
-            if (meth.getDescription().getVariant() == SignatureVariant.VOID_RENDERREQ_RENDERRESP) {
-               args = new Object[] { req, resp };
-            }
+         // invoke the render method
 
-            // invoke the render method
+         result = invokePortletMethod(meth, args);
 
-            result = invokePortletMethod(meth, args);
+         // If output is to be expected, write it to the writer
 
-            // If output is to be expected, write it to the writer
-
-            if (meth.getDescription().getVariant() == SignatureVariant.STRING_VOID) {
-               if (result != null) {
-                  assert result instanceof String;
-                  resp.getWriter().write((String) result);
-               }
-            }
-
-            // If an include resource is provided, include it
-
-            if ((rm != null) && (rm.include().length() > 0)) {
-               PortletRequestDispatcher prd = config.getPortletContext().getRequestDispatcher(rm.include());
-               prd.include(req, resp);
+         if (meth.getDescription().getVariant() == SignatureVariant.STRING_VOID) {
+            if (result != null) {
+               assert result instanceof String;
+               resp.getWriter().write((String) result);
             }
          }
 
-      } finally {
-         afterInvoke(resp);
-      }
+         // If an include resource is provided, include it
 
+         if ((rm != null) && (rm.include().length() > 0)) {
+            PortletRequestDispatcher prd = config.getPortletContext().getRequestDispatcher(rm.include());
+            prd.include(req, resp);
+         }
+      }
    }
 
    @Override
@@ -530,50 +443,43 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
          return;
       }
 
-      try {
-         beforeInvoke(req, resp);
+      for (AnnotatedMethod meth : meths) {
 
-         for (AnnotatedMethod meth : meths) {
+         // Set the content type, if available (determined by first render
+         // method)
 
-            // Set the content type, if available (determined by first render
-            // method)
+         HeaderMethod hm = (HeaderMethod) meth.getAnnotation();
+         if ((hm != null) && hm.contentType().length() > 0) {
+            resp.setContentType(hm.contentType());
+         }
 
-            HeaderMethod hm = (HeaderMethod) meth.getAnnotation();
-            if ((hm != null) && hm.contentType().length() > 0) {
-               resp.setContentType(hm.contentType());
-            }
+         // Set up the method arguments based on the signature variant
 
-            // Set up the method arguments based on the signature variant
+         Object[] args = {};
+         Object result;
+         if (meth.getDescription().getVariant() == SignatureVariant.VOID_HEADERREQ_HEADERRESP) {
+            args = new Object[] { req, resp };
+         }
 
-            Object[] args = {};
-            Object result;
-            if (meth.getDescription().getVariant() == SignatureVariant.VOID_HEADERREQ_HEADERRESP) {
-               args = new Object[] { req, resp };
-            }
+         // invoke the render method
 
-            // invoke the render method
+         result = invokePortletMethod(meth, args);
 
-            result = invokePortletMethod(meth, args);
+         // If output is to be expected, write it to the writer
 
-            // If output is to be expected, write it to the writer
-
-            if (meth.getDescription().getVariant() == SignatureVariant.STRING_VOID) {
-               if (result != null) {
-                  assert result instanceof String;
-                  resp.getWriter().write((String) result);
-               }
-            }
-
-            // If an include resource is provided, include it
-
-            if ((hm != null) && (hm.include().length() > 0)) {
-               PortletRequestDispatcher prd = config.getPortletContext().getRequestDispatcher(hm.include());
-               prd.include(req, resp);
+         if (meth.getDescription().getVariant() == SignatureVariant.STRING_VOID) {
+            if (result != null) {
+               assert result instanceof String;
+               resp.getWriter().write((String) result);
             }
          }
 
-      } finally {
-         afterInvoke(resp);
+         // If an include resource is provided, include it
+
+         if ((hm != null) && (hm.include().length() > 0)) {
+            PortletRequestDispatcher prd = config.getPortletContext().getRequestDispatcher(hm.include());
+            prd.include(req, resp);
+         }
       }
    }
 
