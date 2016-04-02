@@ -53,7 +53,7 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
     * @see org.apache.pluto.driver.services.container.PortletAsyncContext#requestComplete(org.apache.pluto.container.PortletResourceRequestContext)
     */
    @Override
-   public void requestComplete(PortletResourceRequestContext prctx) {
+   public void init(PortletResourceRequestContext prctx) {
 
       // get the original container req & resp to pass to listener for resource releasing
 

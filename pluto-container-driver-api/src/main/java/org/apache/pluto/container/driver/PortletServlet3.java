@@ -336,6 +336,7 @@ public class PortletServlet3 extends HttpServlet {
          
          // the contexts are already initialized if this is part of a resource request async sequence
          requestContext.init(portletConfig, getServletContext(), request, response);
+         requestContext.setExecutingRequestBody(true);
          responseContext.init(request, response);
       
       }
@@ -343,12 +344,8 @@ public class PortletServlet3 extends HttpServlet {
       PortletWindow window = requestContext.getPortletWindow();
 
       PortletInvocationEvent event = new PortletInvocationEvent(portletRequest, window, methodId.intValue());
-
       notify(event, true, null);
-
-      // FilterManager filtermanager = (FilterManager) request.getAttribute(
-      // "filter-manager");
-
+      
       try {
 
          // The requested method is RENDER: call Portlet.render(..)
@@ -441,15 +438,25 @@ public class PortletServlet3 extends HttpServlet {
          throw new ServletException(ex);
 
       } finally {
-         // If an async request is running or has been dispatched, resources will
-         // be released by the PortletAsyncListener. Otherwise release here.
-         if (!request.isAsyncStarted() && (request.getDispatcherType() != DispatcherType.ASYNC)) {
+         
+         // If an async request is running or has been dispatched, resources
+         // will be released by the PortletAsyncListener. Otherwise release here.
+         
+         requestContext.setExecutingRequestBody(false);
+         if (!request.isAsyncStarted()) {
+            
+            LOG.debug("Async not started, releasing resources. executing req body: " + requestContext.isExecutingRequestBody());
+            
+            if (request.getDispatcherType() != DispatcherType.ASYNC) {
 
-            request.removeAttribute(PortletInvokerService.METHOD_ID);
-            request.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
-            request.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
-            request.removeAttribute(PortletInvokerService.FILTER_MANAGER);
+               request.removeAttribute(PortletInvokerService.METHOD_ID);
+               request.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
+               request.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
+               request.removeAttribute(PortletInvokerService.FILTER_MANAGER);
 
+            }
+         } else {
+            LOG.debug("Async started, not releasing resources. executing req body: " + requestContext.isExecutingRequestBody());
          }
       }
    }

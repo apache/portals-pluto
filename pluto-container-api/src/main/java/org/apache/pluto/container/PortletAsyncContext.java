@@ -4,7 +4,7 @@ import javax.servlet.AsyncContext;
 
 public interface PortletAsyncContext extends AsyncContext {
 
-   void requestComplete(PortletResourceRequestContext prctx);
+   void init(PortletResourceRequestContext prctx);
 
    /**
     * @param actx the async context to set

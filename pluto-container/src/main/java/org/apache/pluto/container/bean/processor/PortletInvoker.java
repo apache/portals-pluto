@@ -54,7 +54,6 @@ import javax.xml.namespace.QName;
 import org.apache.pluto.container.PortletAsyncContext;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletResourceRequestContext;
-import org.apache.pluto.container.impl.PortletAsyncRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -335,20 +334,24 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
                
                LOG.debug("Async processing was started during method: " + meth.toString());
                req.setAttribute(PortletInvokerService.ASYNC_METHOD, meth);
+
+               // Initialize the async context after the request during which async is 
+               // first started.
                
-               PortletResourceRequestContext reqctx = (PortletResourceRequestContext) req.getAttribute(PortletInvokerService.REQUEST_CONTEXT);
-               if (reqctx != null) {
-                  PortletAsyncContext pac = reqctx.getPortletAsyncContext();
-                  if (pac != null) {
-                     pac.requestComplete(reqctx);
+               if (req.getDispatcherType() != DispatcherType.ASYNC) {
+                  PortletResourceRequestContext reqctx = (PortletResourceRequestContext) req
+                        .getAttribute(PortletInvokerService.REQUEST_CONTEXT);
+                  if (reqctx != null) {
+                     PortletAsyncContext pac = reqctx.getPortletAsyncContext();
+                     if (pac != null) {
+                        pac.init(reqctx);
+                     } else {
+                        LOG.warn("Couldn't get portlet async context.");
+                     }
                   } else {
-                     LOG.warn("Couldn't get portlet async context.");
+                     LOG.warn("Couldn't get request context.");
                   }
-               } else {
-                  LOG.warn("Couldn't get request context.");
-               }
-            
-               
+               }            
                
                break;
                

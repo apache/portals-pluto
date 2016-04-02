@@ -274,11 +274,6 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
       return getServletRequest().getAsyncContext();
    }
 
-   @Override
-   public DispatcherType getDispatcherType() {
-      return getServletRequest().getDispatcherType();
-   }
-
    // For use within the wrapper.
    // PLT.10.4.3. Proxied session is created and passed if
    // javax.portlet.servletDefaultSessionScope == PORTLET_SCOPE

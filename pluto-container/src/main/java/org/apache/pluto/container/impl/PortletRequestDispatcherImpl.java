@@ -159,6 +159,10 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
                                                                                       request,
                                                                                       response,
                                                                                       included);
+        
+        boolean executingReqBody = requestContext.isExecutingRequestBody();
+        requestContext.setExecutingRequestBody(false);
+        
         try
         {
             request.setAttribute(PortletInvokerService.PORTLET_CONFIG, requestContext.getPortletConfig());
@@ -192,6 +196,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
             request.removeAttribute(PortletInvokerService.PORTLET_CONFIG);
             request.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
             request.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
+            requestContext.setExecutingRequestBody(executingReqBody);
         }
     }
     
