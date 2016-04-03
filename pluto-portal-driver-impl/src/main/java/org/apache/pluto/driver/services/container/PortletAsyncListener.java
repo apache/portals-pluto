@@ -25,7 +25,9 @@ import javax.portlet.ResourceRequest;
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
 import javax.servlet.AsyncListener;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletResourceResponseContext;
@@ -134,7 +136,34 @@ public class PortletAsyncListener implements AsyncListener {
       long delta = System.currentTimeMillis() - start;
       StringBuilder txt = new StringBuilder(128);
       txt.append("Timeout after ").append(delta).append(" milliseconds.");
-      LOGGER.fine(txt.toString());
+      
+      // if the application has properly registered a listener and has not processed the 
+      // timeout by calling onComplete or dispatch, complete the request.
+      
+      boolean warn = false;
+      AsyncContext ctx = evt.getAsyncContext();
+      try {
+         ctx.getRequest();
+         
+         try {
+            ctx.complete();
+            txt.append(" Portlet container completed request processing on behalf of the application.");
+            warn = true;
+         } catch (IllegalStateException e) {
+            txt.append(" An earlier listener has dispatched again.");
+         } catch (Exception e) {
+            txt.append(" Exception occured while completing request: " + e.toString());
+         }
+         
+      } catch(Exception e) {
+         txt.append(" Async processing was completed by the application.");
+      }
+
+      if (warn) {
+         LOGGER.warning(txt.toString());
+      } else {
+         LOGGER.fine(txt.toString());
+      }
    }
 
 }

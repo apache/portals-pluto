@@ -129,6 +129,8 @@ public class AsyncPortletResource {
                break;
             }
 
+         } catch (IllegalStateException e) {
+            LOGGER.warning("Request may have timed out before it could complete. Exception: " + e.toString());
          } catch (Exception e) {
             LOGGER.warning("Exception during async processing: " + e.toString());
          }
@@ -170,6 +172,8 @@ public class AsyncPortletResource {
       
       AsyncContext ctx = req.startAsync();
       ctx.setTimeout(4000);
+      AsyncPortletListener apl = new AsyncPortletListener();
+      ctx.addListener(apl);
 
       if (auto || (adb.getDelay() <= 0)) {
          
