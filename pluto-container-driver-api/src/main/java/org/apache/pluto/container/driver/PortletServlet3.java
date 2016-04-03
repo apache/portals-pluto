@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -87,8 +88,8 @@ public class PortletServlet3 extends HttpServlet {
 
    // Private Member Variables ------------------------------------------------
    
-   @Inject
-   private AnnotatedConfigBean acb;
+   @Inject private AnnotatedConfigBean acb;
+   @Inject private BeanManager beanmgr;
 
    /**
     * The portlet name as defined in the portlet app descriptor.
@@ -283,6 +284,7 @@ public class PortletServlet3 extends HttpServlet {
 
       final FilterManager filterManager = 
             (FilterManager) request.getAttribute(PortletInvokerService.FILTER_MANAGER);
+      filterManager.setBeanManager(beanmgr);
 
       if (LOG.isTraceEnabled()) {
          StringBuilder txt = new StringBuilder(128);
@@ -521,6 +523,8 @@ public class PortletServlet3 extends HttpServlet {
 
       // Set up the artifact producer with request, response, and portlet config
       PortletArtifactProducer.setPrecursors(req, resp, config);
+      
+      LOG.debug("CDI context is now set up.");
    }
 
    /**
@@ -548,5 +552,6 @@ public class PortletServlet3 extends HttpServlet {
       // remove the portlet artifact producer
       PortletArtifactProducer.remove();
 
+      LOG.debug("CDI context is now deactivated.");
    }
 }

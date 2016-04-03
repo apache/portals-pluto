@@ -18,6 +18,7 @@ package org.apache.pluto.container;
 
 import java.io.IOException;
 
+import javax.enterprise.inject.spi.BeanManager;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventPortlet;
@@ -48,4 +49,9 @@ public interface FilterManager {
     void processFilter(RenderRequest req, RenderResponse res, Portlet portlet, PortletContext portletContext) throws PortletException, IOException;
     void processFilter(ResourceRequest req, ResourceResponse res, ResourceServingPortlet resourceServingPortlet, PortletContext portletContext)throws PortletException, IOException;
     void processFilter(EventRequest req, EventResponse res, EventPortlet eventPortlet, PortletContext portletContext)throws PortletException, IOException;
+
+    /**
+    * To enable contextual support in filters
+    */
+   void setBeanManager(BeanManager bm);
 }

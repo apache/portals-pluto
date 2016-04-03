@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.inject.Inject;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -29,6 +30,7 @@ import javax.portlet.annotations.PortletRequestFilter;
 import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.ResourceFilter;
+import javax.servlet.DispatcherType;
 
 /**
  * Filter for the async portlet. logs the dispatcher type and sometimes
@@ -40,6 +42,9 @@ import javax.portlet.filter.ResourceFilter;
 @PortletRequestFilter(portletNames="AsyncPortlet")
 public class AsyncPortletFilter implements ResourceFilter {
    private static final Logger LOGGER = Logger.getLogger(AsyncPortletFilter.class.getName());
+   
+   @Inject private PortletRequestRandomNumberBean reqnum;
+   @Inject private AsyncDialogBean adb;
 
    @Override
    public void init(FilterConfig filterConfig) throws PortletException {
@@ -53,7 +58,21 @@ public class AsyncPortletFilter implements ResourceFilter {
    public void doFilter(ResourceRequest request, ResourceResponse response, FilterChain chain) throws IOException,
          PortletException {
       
-      LOGGER.fine("Entering request. Dispatcher type: " + request.getDispatcherType());
+      DispatcherType type = request.getDispatcherType();
+      
+      StringBuilder txt = new StringBuilder(128);
+      txt.append("Entering request. Dispatcher type: ").append(type);
+      txt.append(", request #: ").append(reqnum.getRandomNumber());
+      LOGGER.fine(txt.toString());
+      
+      if (type != DispatcherType.ASYNC && adb.isUseFilter()) {
+         txt.setLength(0);
+         txt.append("<div class='msgbox'>");
+         txt.append("Filter: Request number: ").append(reqnum.getRandomNumber());
+         txt.append(", dispatcher type: ").append(request.getDispatcherType());
+         txt.append("</div>");
+         response.getWriter().write(txt.toString());
+      }
       
       chain.doFilter(request, response);
       

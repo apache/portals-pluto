@@ -19,7 +19,10 @@ package org.apache.pluto.driver.services.container;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import javax.enterprise.inject.spi.Bean;
+import javax.enterprise.inject.spi.BeanManager;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventPortlet;
@@ -45,17 +48,23 @@ import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
 
 import org.apache.pluto.container.om.portlet.Filter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * A <code>FilterChain</code> is an object provided by the portlet container to the developer giving a view into the
- * invocation chain of a filtered request for a portlet. Filters use the <code>FilterChain</code> to invoke the next
- * filter in the chain, or if the calling filter is the last filter in the chain, to invoke the portlet at the end of
- * the chain.
+ * A <code>FilterChain</code> is an object provided by the portlet container to
+ * the developer giving a view into the invocation chain of a filtered request
+ * for a portlet. Filters use the <code>FilterChain</code> to invoke the next
+ * filter in the chain, or if the calling filter is the last filter in the
+ * chain, to invoke the portlet at the end of the chain.
  * 
  * @since 29/05/2007
  * @version 2.0
  */
 public class FilterChainImpl implements FilterChain, HeaderFilterChain {
+   private static final Logger LOG = LoggerFactory.getLogger(FilterChainImpl.class);
+   private static final boolean isDebug = LOG.isDebugEnabled();
+   
 
    private List<Filter>   filterList      = new ArrayList<Filter>();
    @SuppressWarnings("unused")
@@ -68,12 +77,53 @@ public class FilterChainImpl implements FilterChain, HeaderFilterChain {
    PortletContext         portletContext;
    int                    filterListIndex = 0;
 
+   private BeanManager    beanmgr;
+
    public FilterChainImpl(String lifeCycle) {
       this.lifeCycle = lifeCycle;
    }
-   
+
+   /** 
+    * enables contextual support
+    */
+   public void setBeanManager(BeanManager bm) {
+      beanmgr = bm;
+   }
+
+   private Object loadFilter(Filter filter) throws InstantiationException, IllegalAccessException,
+         ClassNotFoundException {
+      Object obj = null;
+      Class<?> fcls = loader.loadClass(filter.getFilterClass());
+      if (fcls != null) {
+         if (beanmgr == null) {
+            // CDI is not active
+            obj = fcls.newInstance();
+         } else {
+            // CDI active ... instantiate as bean to enable contextual features
+            Set<Bean<?>> beans = beanmgr.getBeans(fcls);
+            Bean<?> bean = beanmgr.resolve(beans);
+            if (bean != null) {
+               obj = beanmgr.getReference(bean, bean.getBeanClass(), beanmgr.createCreationalContext(bean));
+            } else {
+               LOG.warn("Could not get bean reference: " + filter.getFilterClass());
+               obj = fcls.newInstance();
+            }
+         }
+         if (isDebug) {
+            StringBuilder txt = new StringBuilder();
+            txt.append("Loaded filter for: ").append(fcls.getCanonicalName());
+            txt.append(", bean manager active: ").append(beanmgr != null);
+            LOG.debug(txt.toString());
+         }
+      } else {
+         LOG.error("Could not load class: " + filter.getFilterClass());
+      }
+      return obj;
+   }
+
    /**
-    * For async processing, the filter chain needs to be executed multiple times.
+    * For async processing, the filter chain needs to be executed multiple
+    * times.
     */
    public void reset() {
       filterListIndex = 0;
@@ -129,7 +179,7 @@ public class FilterChainImpl implements FilterChain, HeaderFilterChain {
          Filter filter = filterList.get(filterListIndex);
          filterListIndex++;
          try {
-            ActionFilter actionFilter = (ActionFilter) loader.loadClass(filter.getFilterClass()).newInstance();
+            ActionFilter actionFilter = (ActionFilter) loadFilter(filter);
             FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(), filter.getInitParams(),
                   portletContext);
             actionFilter.init(filterConfig);
@@ -153,7 +203,7 @@ public class FilterChainImpl implements FilterChain, HeaderFilterChain {
          Filter filter = filterList.get(filterListIndex);
          filterListIndex++;
          try {
-            EventFilter eventFilter = (EventFilter) loader.loadClass(filter.getFilterClass()).newInstance();
+            EventFilter eventFilter = (EventFilter) loadFilter(filter);;
             FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(), filter.getInitParams(),
                   portletContext);
             eventFilter.init(filterConfig);
@@ -177,7 +227,7 @@ public class FilterChainImpl implements FilterChain, HeaderFilterChain {
          Filter filter = filterList.get(filterListIndex);
          filterListIndex++;
          try {
-            RenderFilter renderFilter = (RenderFilter) loader.loadClass(filter.getFilterClass()).newInstance();
+            RenderFilter renderFilter = (RenderFilter) loadFilter(filter);;
             FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(), filter.getInitParams(),
                   portletContext);
             renderFilter.init(filterConfig);
@@ -201,7 +251,7 @@ public class FilterChainImpl implements FilterChain, HeaderFilterChain {
          Filter filter = filterList.get(filterListIndex);
          filterListIndex++;
          try {
-            HeaderFilter headerFilter = (HeaderFilter) loader.loadClass(filter.getFilterClass()).newInstance();
+            HeaderFilter headerFilter = (HeaderFilter) loadFilter(filter);;
             FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(), filter.getInitParams(),
                   portletContext);
             headerFilter.init(filterConfig);
@@ -225,7 +275,7 @@ public class FilterChainImpl implements FilterChain, HeaderFilterChain {
          Filter filter = filterList.get(filterListIndex);
          filterListIndex++;
          try {
-            ResourceFilter resourceFilter = (ResourceFilter) loader.loadClass(filter.getFilterClass()).newInstance();
+            ResourceFilter resourceFilter = (ResourceFilter) loadFilter(filter);;
             FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(), filter.getInitParams(),
                   portletContext);
             resourceFilter.init(filterConfig);

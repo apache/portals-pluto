@@ -37,21 +37,23 @@ ${adb.getMsg()}
    </td><td>
    <input id='<portlet:namespace/>-reps' name='<%=PARAM_REPS%>' type='text' value='${adb.getReps() }' size='5' maxlength='5'>
    </td><td>
-   <input name='<%=PARAM_AUTO%>' value='<%=PARAM_AUTO%>' type='checkbox' ${adb.isAutoDispatch() ? "checked" : "" } >recursive
+   <input name='<%=PARAM_AUTO%>' value='<%=PARAM_AUTO%>' type='checkbox' ${adb.isAutoDispatch() ? "checked" : "" } > recursive
 
    </td></tr><tr><td>
    Output type:
    </td><td>
-   <input type='radio' name='<%=PARAM_TYPE%>' value='<%=PARAM_TYPE_TXT%>' ${adb.getType() == "TEXT" ? "checked" : "" } >text
+   <input type='radio' name='<%=PARAM_TYPE%>' value='<%=PARAM_TYPE_TXT%>' ${adb.getType() == "TEXT" ? "checked" : "" } > text
    </td><td>
-   <input type='radio' name='<%=PARAM_TYPE%>' value='<%=PARAM_TYPE_INC%>' ${adb.getType() == "INC" ? "checked" : "" } >include
+   <input type='radio' name='<%=PARAM_TYPE%>' value='<%=PARAM_TYPE_INC%>' ${adb.getType() == "INC" ? "checked" : "" } > include
    </td><td>
-   <input type='radio' name='<%=PARAM_TYPE%>' value='<%=PARAM_TYPE_FWD%>' ${adb.getType() == "FWD" ? "checked" : "" } >forward
+   <input type='radio' name='<%=PARAM_TYPE%>' value='<%=PARAM_TYPE_FWD%>' ${adb.getType() == "FWD" ? "checked" : "" } > forward
    </td><td>
-   <input type='radio' name='<%=PARAM_TYPE%>' value='<%=PARAM_TYPE_DIS%>' ${adb.getType() == "DISPATCH" ? "checked" : "" } >dispatch
+   <input type='radio' name='<%=PARAM_TYPE%>' value='<%=PARAM_TYPE_DIS%>' ${adb.getType() == "DISPATCH" ? "checked" : "" } > dispatch
 
    </td></tr><tr><td>
    <INPUT id ='<portlet:namespace/>-send' VALUE='execute' TYPE='submit'>
+   </td><td>
+   <input name='<%=PARAM_FILTER%>' value='<%=PARAM_FILTER%>' type='checkbox' ${adb.isUseFilter() ? "checked" : "" } > show filter
    </td></tr></table>
 </FORM>
 </div>

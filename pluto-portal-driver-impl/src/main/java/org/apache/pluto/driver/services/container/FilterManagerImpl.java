@@ -18,7 +18,10 @@ package org.apache.pluto.driver.services.container;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
+import javax.enterprise.inject.spi.Bean;
+import javax.enterprise.inject.spi.BeanManager;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventPortlet;
@@ -42,6 +45,8 @@ import org.apache.pluto.container.om.portlet.Filter;
 import org.apache.pluto.container.om.portlet.FilterMapping;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -51,6 +56,8 @@ import org.apache.pluto.container.om.portlet.PortletDefinition;
  * @version 2.0
  */
 public class FilterManagerImpl implements FilterManager{
+   private static final Logger LOG = LoggerFactory.getLogger(FilterManagerImpl.class);
+   
     private FilterChainImpl filterchain;
     private PortletApplicationDefinition portletApp;
     private String portletName;
@@ -63,6 +70,14 @@ public class FilterManagerImpl implements FilterManager{
         this.lifeCycle = lifeCycle;
         filterchain = new FilterChainImpl(lifeCycle);
         initFilterChain();
+    }
+    
+    /**
+     * passing thru bean manager to enable contextual support in filters.
+     */
+    @Override
+    public void setBeanManager(BeanManager bm) {
+       filterchain.setBeanManager(bm);
     }
 
     private void initFilterChain(){

@@ -30,6 +30,7 @@ import javax.portlet.annotations.ActionMethod;
 import javax.portlet.annotations.PortletSerializable;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.RenderStateScoped;
+import javax.servlet.DispatcherType;
 
 /**
  * Render state scoped bean. The bean is stored as a render parameter, so it
@@ -48,6 +49,7 @@ public class AsyncDialogBean implements PortletSerializable {
    public static final String PARAM_DELAY    = "delay";
    public static final String PARAM_REPS     = "reps";
    public static final String PARAM_AUTO     = "auto";
+   public static final String PARAM_FILTER   = "filter";
    public static final String PARAM_TYPE     = "type";
    public static final String PARAM_TYPE_TXT = OutputType.TEXT.toString();
    public static final String PARAM_TYPE_INC = OutputType.INC.toString();
@@ -59,6 +61,7 @@ public class AsyncDialogBean implements PortletSerializable {
    private OutputType         type;
    private String             msg;
    private boolean            autoDispatch;
+   private boolean            useFilter;
 
    /**
     * This method is called by the portlet container to initialize the bean at
@@ -72,12 +75,14 @@ public class AsyncDialogBean implements PortletSerializable {
          type = OutputType.TEXT;
          msg = null;
          autoDispatch = true;
+         useFilter = false;
       } else {
          delay = Integer.parseInt(state[0]);
          reps = Integer.parseInt(state[1]);
          type = OutputType.valueOf(state[2]);
          msg = state[3];
          autoDispatch = Boolean.parseBoolean(state[4]);
+         useFilter = Boolean.parseBoolean(state[5]);
       }
       LOGGER.fine("deserialized: " + Arrays.asList(state).toString());
    }
@@ -88,7 +93,7 @@ public class AsyncDialogBean implements PortletSerializable {
     */
    @Override
    public String[] serialize() {
-      String[] state = { "" + delay, "" + reps, type.toString(), msg, "" + autoDispatch };
+      String[] state = { "" + delay, "" + reps, type.toString(), msg, ""+autoDispatch, ""+useFilter };
       LOGGER.fine("serialized: " + Arrays.asList(state).toString());
       return state;
    }
@@ -169,6 +174,20 @@ public class AsyncDialogBean implements PortletSerializable {
    }
 
    /**
+    * @return the useFilter
+    */
+   public boolean isUseFilter() {
+      return useFilter;
+   }
+
+   /**
+    * @param useFilter the useFilter to set
+    */
+   public void setUseFilter(boolean useFilter) {
+      this.useFilter = useFilter;
+   }
+
+   /**
     * Displays the dialog
     * 
     * @return the action form as string
@@ -231,6 +250,17 @@ public class AsyncDialogBean implements PortletSerializable {
             msg = "Repetitions cannot be > 1 for non-recursive use.";
             reps = 1;
          }
+      }
+
+      String filter = req.getActionParameters().getValue(PARAM_FILTER);
+      if (filter != null) {
+         useFilter = true;
+         if ((type == OutputType.FWD)) {
+            msg = "Filter can't generate output with forward processing.";
+            useFilter = false;
+         }
+      } else {
+         useFilter = false;
       }
 
       String[] state = { "" + delay, "" + reps, type.toString(), msg, "" + autoDispatch };
