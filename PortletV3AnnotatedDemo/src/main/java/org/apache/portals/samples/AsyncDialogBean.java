@@ -30,7 +30,6 @@ import javax.portlet.annotations.ActionMethod;
 import javax.portlet.annotations.PortletSerializable;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.RenderStateScoped;
-import javax.servlet.DispatcherType;
 
 /**
  * Render state scoped bean. The bean is stored as a render parameter, so it
@@ -41,8 +40,15 @@ import javax.servlet.DispatcherType;
 public class AsyncDialogBean implements PortletSerializable {
    private static final Logger LOGGER = Logger.getLogger(AsyncDialogBean.class.getName());
 
+   // defines how output is to be generated
    public enum OutputType {
       TEXT, INC, FWD, DISPATCH, AUTO
+   }
+   
+   // defines how timeouts are to be handled by the listener
+   // Ignore, complete, or dispatch
+   public enum TimeoutType {
+      NOP, CPL, DIS;
    }
 
    public static final String PARAM_MSG      = "msg";
@@ -55,6 +61,10 @@ public class AsyncDialogBean implements PortletSerializable {
    public static final String PARAM_TYPE_INC = OutputType.INC.toString();
    public static final String PARAM_TYPE_FWD = OutputType.FWD.toString();
    public static final String PARAM_TYPE_DIS = OutputType.DISPATCH.toString();
+   public static final String PARAM_TO     = "toType";
+   public static final String PARAM_TO_NOP = TimeoutType.NOP.toString();
+   public static final String PARAM_TO_CPL = TimeoutType.CPL.toString();
+   public static final String PARAM_TO_DIS = TimeoutType.DIS.toString();
 
    private int                delay;
    private int                reps;
@@ -62,6 +72,7 @@ public class AsyncDialogBean implements PortletSerializable {
    private String             msg;
    private boolean            autoDispatch;
    private boolean            useFilter;
+   private TimeoutType        handleTimeout;
 
    /**
     * This method is called by the portlet container to initialize the bean at
@@ -70,12 +81,14 @@ public class AsyncDialogBean implements PortletSerializable {
    @Override
    public void deserialize(String[] state) {
       if (state.length == 0) {
+         // set default values
          delay = 1000;
          reps = 1;
          type = OutputType.TEXT;
          msg = null;
          autoDispatch = true;
          useFilter = false;
+         handleTimeout = TimeoutType.CPL;
       } else {
          delay = Integer.parseInt(state[0]);
          reps = Integer.parseInt(state[1]);
@@ -83,6 +96,7 @@ public class AsyncDialogBean implements PortletSerializable {
          msg = state[3];
          autoDispatch = Boolean.parseBoolean(state[4]);
          useFilter = Boolean.parseBoolean(state[5]);
+         handleTimeout = TimeoutType.valueOf(state[6]);
       }
       LOGGER.fine("deserialized: " + Arrays.asList(state).toString());
    }
@@ -93,7 +107,8 @@ public class AsyncDialogBean implements PortletSerializable {
     */
    @Override
    public String[] serialize() {
-      String[] state = { "" + delay, "" + reps, type.toString(), msg, ""+autoDispatch, ""+useFilter };
+      String[] state = { "" + delay, "" + reps, type.toString(), msg, 
+            ""+autoDispatch, ""+useFilter, handleTimeout.toString() };
       LOGGER.fine("serialized: " + Arrays.asList(state).toString());
       return state;
    }
@@ -188,6 +203,20 @@ public class AsyncDialogBean implements PortletSerializable {
    }
 
    /**
+    * @return the handleTimeout
+    */
+   public TimeoutType getHandleTimeout() {
+      return handleTimeout;
+   }
+
+   /**
+    * @param handleTimeout the handleTimeout to set
+    */
+   public void setHandleTimeout(TimeoutType handleTimeout) {
+      this.handleTimeout = handleTimeout;
+   }
+
+   /**
     * Displays the dialog
     * 
     * @return the action form as string
@@ -263,7 +292,17 @@ public class AsyncDialogBean implements PortletSerializable {
          useFilter = false;
       }
 
-      String[] state = { "" + delay, "" + reps, type.toString(), msg, "" + autoDispatch };
+      String strto = req.getActionParameters().getValue(PARAM_TO);
+      if (strto != null) {
+         try {
+            handleTimeout = TimeoutType.valueOf(strto);
+         } catch (Exception e) {
+            msg = "try again. bad timeout handling: " + strto;
+         }
+      }
+
+      String[] state = { "" + delay, "" + reps, type.toString(), msg, 
+            ""+autoDispatch, ""+useFilter, handleTimeout.toString() };
       LOGGER.fine("Resulting params: " + Arrays.asList(state).toString());
    }
 

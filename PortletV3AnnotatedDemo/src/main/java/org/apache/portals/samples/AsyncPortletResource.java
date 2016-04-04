@@ -53,19 +53,21 @@ public class AsyncPortletResource {
    private final static String ATTRIB_AUTO = "auto";
    public  final static String ATTRIB_TITLE = "title";
 
-   private class AsyncRunnable implements Runnable {
+   public static class AsyncRunnable implements Runnable {
 
-      private final AsyncContext ctx;
-      private final int          delay;
-      private final OutputType   type;
+      private AsyncContext ctx;
+      private int          delay;
+      private OutputType   type;
+      
+      @Inject private PortletRequestRandomNumberBean reqnum;
 
-      public AsyncRunnable(AsyncContext ctx, int delay, OutputType type) {
+      public void init(AsyncContext ctx, int delay, OutputType type) {
          this.ctx = ctx;
          this.delay = delay;
          this.type = type;
          
          StringBuilder txt = new StringBuilder(128);
-         txt.append("Constructing runnable.");
+         txt.append("Initializing runnable.");
          txt.append(" delay: ").append(delay);
          txt.append(", type: ").append(type);
          LOGGER.fine(txt.toString());
@@ -93,8 +95,12 @@ public class AsyncPortletResource {
                LOGGER.fine("Producing text output.");
                StringBuilder txt = new StringBuilder(128);
                txt.append("<h5>Thread producing text output for portlet: " + portletName + "</h5>");
-               txt.append("<p>dispatcher type: ").append(hreq.getDispatcherType().toString());
-               txt.append("</p><hr>");
+               txt.append("<p>Dispatcher type: ").append(hreq.getDispatcherType().toString());
+               txt.append("<span style='margin-left: 2em;'>Request #: ");
+               try { // in case context not active
+                  txt.append(reqnum.getRandomNumber());
+               } catch (Exception e) {}
+               txt.append("</span></p><hr>");
                hresp.getWriter().write(txt.toString());
                ctx.complete();
                break;
@@ -138,8 +144,9 @@ public class AsyncPortletResource {
 
    }
 
-   @Inject
-   private AsyncDialogBean adb;
+   @Inject private AsyncDialogBean adb;
+   @Inject private PortletRequestRandomNumberBean reqnum;
+   @Inject private AsyncRunnable runner;
 
    @ServeResourceMethod(portletNames = "AsyncPortlet", asyncSupported = true)
    public void getResource(ResourceRequest req, ResourceResponse resp) throws IOException, PortletException {
@@ -221,7 +228,9 @@ public class AsyncPortletResource {
             txt.setLength(0);
             txt.append("<h5>Resource method producing text output for portlet: " + portletName + "</h5>");
             txt.append("<p>dispatcher type: ").append(req.getDispatcherType().toString());
-            txt.append("</p><hr>");
+            txt.append("<span style='margin-left: 2em;'>Request #: ");
+            txt.append(reqnum.getRandomNumber());
+            txt.append("</span></p><hr>");
             resp.getWriter().write(txt.toString());
             resp.flushBuffer();
             if (done) {
@@ -240,8 +249,8 @@ public class AsyncPortletResource {
             type = OutputType.AUTO;
          }
 
-         AsyncRunnable ar = new AsyncRunnable(ctx, adb.getDelay(), type);
-         ctx.start(ar);
+         runner.init(ctx, adb.getDelay(), type);
+         ctx.start(runner);
       }
    }
    

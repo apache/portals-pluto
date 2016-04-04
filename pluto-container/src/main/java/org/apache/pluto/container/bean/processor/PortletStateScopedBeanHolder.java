@@ -104,7 +104,9 @@ public class PortletStateScopedBeanHolder implements Serializable {
    public static void removeBeanHolder(StateAwareResponse resp) {
       
       PortletStateScopedBeanHolder bh = getBeanHolder();
-      bh.removeAll(resp);
+      if (bh != null) {
+         bh.removeAll(resp);
+      }
       holders.remove();
 
       if (isTrace) {
@@ -122,6 +124,27 @@ public class PortletStateScopedBeanHolder implements Serializable {
     */
    public static PortletStateScopedBeanHolder getBeanHolder() {
       return holders.get();
+   }
+   
+   /**
+    * Removes the bean holder for the current thread and
+    * returns the removed instance to the caller.
+    * 
+    * @return  the removed bean holder
+    */
+   public static PortletStateScopedBeanHolder deregister() {
+      PortletStateScopedBeanHolder holder = holders.get();
+      holders.remove();
+      return holder;
+   }
+   
+   /**
+    * Registers the provided bean holder for the current thread.
+    * 
+    * @param holder the bean holder to register
+    */
+   public static void register(PortletStateScopedBeanHolder holder) {
+      holders.set(holder);
    }
 
    /**

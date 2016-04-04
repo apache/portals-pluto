@@ -25,10 +25,9 @@ import javax.portlet.ResourceRequest;
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
 import javax.servlet.AsyncListener;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import org.apache.pluto.container.PortletAsyncContext;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletResourceResponseContext;
 
@@ -40,7 +39,12 @@ import org.apache.pluto.container.PortletResourceResponseContext;
 public class PortletAsyncListener implements AsyncListener {
    private static final Logger LOGGER = Logger.getLogger(PortletAsyncListener.class.getName());
 
-   private long                start  = System.currentTimeMillis();
+   private long start  = System.currentTimeMillis();
+   private final PortletAsyncContext pactx;
+ 
+   public PortletAsyncListener(PortletAsyncContext pactx) {
+      this.pactx = pactx;
+   }
 
    /*
     * (non-Javadoc)
@@ -87,8 +91,11 @@ public class PortletAsyncListener implements AsyncListener {
          hreq.removeAttribute(PortletInvokerService.FILTER_MANAGER);
 
       } else {
-         txt.append("... nothing. Couldn't get servlet request.");
+         txt.append("... no servlet request stuff. Couldn't get servlet request.");
       }
+      
+      txt.append(" Removing contextual info.");
+      pactx.removeContext();
 
       LOGGER.fine(txt.toString());
 
@@ -104,6 +111,18 @@ public class PortletAsyncListener implements AsyncListener {
       long delta = System.currentTimeMillis() - start;
       StringBuilder txt = new StringBuilder(128);
       txt.append("Error after ").append(delta).append(" milliseconds.");
+
+      // attempt to complete
+
+      try {
+         AsyncContext ctx = evt.getAsyncContext();
+         ctx.complete();
+         txt.append(" Portlet container completed request processing on behalf of the application.");
+      } catch (IllegalStateException e) {
+         txt.append(" An earlier listener has already dispatched or completed request.");
+      } catch (Exception e) {
+      }
+
       txt.append(", Exception: ").append(evt.getThrowable().getMessage());
       LOGGER.fine(txt.toString());
    }

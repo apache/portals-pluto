@@ -326,7 +326,6 @@ public class PortletServlet3 extends HttpServlet {
             wreq = ((ServletRequestWrapper) wreq).getRequest();
          }
          
-         
          if (wreq instanceof PortletAsyncRequestWrapper) {
             
             HttpServletRequest hreq = (HttpServletRequest) ((PortletAsyncRequestWrapper) wreq).getRequest();
@@ -340,13 +339,20 @@ public class PortletServlet3 extends HttpServlet {
          } else {
             LOG.debug("Couldn't find the portlet async wrapper.");
          }
+
+         // enable contextual support for async
+         ((PortletResourceRequestContext)requestContext).getPortletAsyncContext().registerContext();
          
       } else {
          
-         // the contexts are already initialized if this is part of a resource request async sequence
+         // Not an async dispatch
+         
          requestContext.init(portletConfig, getServletContext(), request, response);
          requestContext.setExecutingRequestBody(true);
          responseContext.init(request, response);
+
+         // enable contextual support
+         beforeInvoke(portletRequest, portletResponse, portletConfig);
       
       }
 
@@ -356,8 +362,6 @@ public class PortletServlet3 extends HttpServlet {
       notify(event, true, null);
       
       try {
-
-         beforeInvoke(portletRequest, portletResponse, portletConfig);
          
          // The requested method is RENDER: call Portlet.render(..)
          if (methodId == PortletInvokerService.METHOD_RENDER) {
@@ -451,43 +455,40 @@ public class PortletServlet3 extends HttpServlet {
       } finally {
          
          requestContext.setExecutingRequestBody(false);
-         afterInvoke(portletResponse);
          
          // If an async request is running or has been dispatched, resources
          // will be released by the PortletAsyncListener. Otherwise release here.
          
-         if (!request.isAsyncStarted()) {
-            
-            LOG.debug("Async not started, releasing resources. executing req body: " + requestContext.isExecutingRequestBody());
-            
-            if (request.getDispatcherType() != DispatcherType.ASYNC) {
+         if (!request.isAsyncStarted() && (request.getDispatcherType() != DispatcherType.ASYNC)) {
 
-               request.removeAttribute(PortletInvokerService.METHOD_ID);
-               request.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
-               request.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
-               request.removeAttribute(PortletInvokerService.FILTER_MANAGER);
+            LOG.debug("Async not being processed, releasing resources. executing req body: " + requestContext.isExecutingRequestBody());
 
-            }
+            request.removeAttribute(PortletInvokerService.METHOD_ID);
+            request.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
+            request.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
+            request.removeAttribute(PortletInvokerService.FILTER_MANAGER);
+
+            afterInvoke(portletResponse);
+
          } else {
             LOG.debug("Async started, not releasing resources. executing req body: " + requestContext.isExecutingRequestBody());
 
-            // Initialize the async context after the request during which async is 
-            // first started.
-            
-            if (request.getDispatcherType() != DispatcherType.ASYNC) {
-               if (requestContext instanceof PortletResourceRequestContext) {
-                  PortletResourceRequestContext resctx = (PortletResourceRequestContext)requestContext;
-                  PortletAsyncContext pac = resctx.getPortletAsyncContext();
-                  if (pac != null) {
-                     pac.init(resctx);
-                  } else {
-                     LOG.warn("Couldn't get portlet async context.");
+            if (requestContext instanceof PortletResourceRequestContext) {
+               PortletResourceRequestContext resctx = (PortletResourceRequestContext)requestContext;
+               PortletAsyncContext pac = resctx.getPortletAsyncContext();
+               if (pac != null) {
+                  if (request.getDispatcherType() != DispatcherType.ASYNC) {
+                     // initialize only on the first time thru
+                     pac.init(resctx, (ResourceRequest) portletRequest, beanmgr);
                   }
+                  pac.deregisterContext();
                } else {
-                  LOG.warn("Wrong kind of request context: " + requestContext.getClass().getCanonicalName());
+                  LOG.warn("Couldn't get portlet async context.");
                }
-            }            
-            
+            } else {
+               LOG.warn("Wrong kind of request context: " + requestContext.getClass().getCanonicalName());
+            }
+
          }
       }
    }

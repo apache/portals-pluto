@@ -120,6 +120,27 @@ public class PortletSessionBeanHolder implements Serializable {
    public static PortletSessionBeanHolder getBeanHolder() {
       return holders.get();
    }
+   
+   /**
+    * Removes the bean holder for the current thread and
+    * returns the removed instance to the caller.
+    * 
+    * @return  the removed bean holder
+    */
+   public static PortletSessionBeanHolder deregister() {
+      PortletSessionBeanHolder holder = holders.get();
+      holders.remove();
+      return holder;
+   }
+   
+   /**
+    * Registers the provided bean holder for the current thread.
+    * 
+    * @param holder the bean holder to register
+    */
+   public static void register(PortletSessionBeanHolder holder) {
+      holders.set(holder);
+   }
 
    /**
     * Returns an instance for the contextual type, or null if none available.

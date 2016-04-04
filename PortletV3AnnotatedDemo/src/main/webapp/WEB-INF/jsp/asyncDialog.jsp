@@ -25,7 +25,6 @@ limitations under the License.
 
 <h3>Async Portlet</h3>
 <div class='parmbox'>
-${adb.getMsg()}
 <FORM  ACTION='<portlet:actionURL/>' id='<portlet:namespace/>-setParams' method='POST' enctype='application/x-www-form-urlencoded'>
    <table style='width:100%;'><tr><td align='left'>
 
@@ -38,6 +37,15 @@ ${adb.getMsg()}
    <input id='<portlet:namespace/>-reps' name='<%=PARAM_REPS%>' type='text' value='${adb.getReps() }' size='5' maxlength='5'>
    </td><td>
    <input name='<%=PARAM_AUTO%>' value='<%=PARAM_AUTO%>' type='checkbox' ${adb.isAutoDispatch() ? "checked" : "" } > recursive
+
+   </td></tr><tr><td>
+   Handle timeout:
+   </td><td>
+   <input type='radio' name='<%=PARAM_TO%>' value='<%=PARAM_TO_NOP%>' ${adb.getHandleTimeout() == "NOP" ? "checked" : "" } > ignore
+   </td><td>
+   <input type='radio' name='<%=PARAM_TO%>' value='<%=PARAM_TO_CPL%>' ${adb.getHandleTimeout() == "CPL" ? "checked" : "" } > complete
+   </td><td>
+   <input type='radio' name='<%=PARAM_TO%>' value='<%=PARAM_TO_DIS%>' ${adb.getHandleTimeout() == "DIS" ? "checked" : "" } > dispatch
 
    </td></tr><tr><td>
    Output type:
@@ -56,6 +64,10 @@ ${adb.getMsg()}
    <input name='<%=PARAM_FILTER%>' value='<%=PARAM_FILTER%>' type='checkbox' ${adb.isUseFilter() ? "checked" : "" } > show filter
    </td></tr></table>
 </FORM>
+<p>
+Request #: ${reqnum.getRandomNumber()}
+<span style='margin-left: 2em;'>${adb.getMsg()}</span>
+</p>
 </div>
 <div class='infobox' id='<portlet:namespace/>putResourceHere'></div>
 
