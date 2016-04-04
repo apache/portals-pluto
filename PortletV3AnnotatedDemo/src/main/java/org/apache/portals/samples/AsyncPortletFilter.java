@@ -65,7 +65,7 @@ public class AsyncPortletFilter implements ResourceFilter {
       txt.append(", request #: ").append(reqnum.getRandomNumber());
       LOGGER.fine(txt.toString());
       
-      if (type != DispatcherType.ASYNC && adb.isUseFilter()) {
+      if (adb.isUseFilter()) {
          txt.setLength(0);
          txt.append("<div class='msgbox'>");
          txt.append("Filter: Request number: ").append(reqnum.getRandomNumber());

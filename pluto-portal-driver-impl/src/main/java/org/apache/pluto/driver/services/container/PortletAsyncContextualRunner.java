@@ -54,9 +54,12 @@ public class PortletAsyncContextualRunner implements Runnable {
          LOG.debug("Initializing contextual environment and launching runner in thread: " + Thread.currentThread().getId());
       }
 
-      pactx.registerContext();
       try {
+         pactx.registerContext();
          targetRunner.run();
+      } catch (Exception e) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Exception running thread: ").append(e.toString());
       } finally {
          if (isDebug) {
             LOG.debug("Shutting down contextual environment for thread: " + Thread.currentThread().getId());

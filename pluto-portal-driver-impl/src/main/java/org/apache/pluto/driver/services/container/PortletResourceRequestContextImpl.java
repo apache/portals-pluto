@@ -184,9 +184,13 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
       HttpServletRequest wreq = new PortletAsyncRequestWrapper(hreq, request, this);
       HttpServletResponse wresp = new HttpServletPortletResponseWrapper(hresp, request, response, false);
 
-      // Start async, add listener to release resources upon async complete only once.
+      // Start async, create portlet async context first time only.
 
-      actx = new PortletAsyncContextImpl(hreq.startAsync(wreq, wresp), wreq);
+      if (actx != null) {
+         actx.setWrapped(hreq.startAsync(wreq, wresp));
+      } else {
+         actx = new PortletAsyncContextImpl(hreq.startAsync(wreq, wresp), wreq);
+      }
 
       if (isTrace) {
          List<String> attrNames = Collections.list(hreq.getAttributeNames());
