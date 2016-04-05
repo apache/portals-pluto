@@ -20,21 +20,32 @@ package org.apache.portals.samples;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.logging.Logger;
 
+import javax.inject.Inject;
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
 import javax.servlet.AsyncListener;
-import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import static org.apache.portals.samples.AsyncDialogBean.TimeoutType;
+import static org.apache.portals.samples.AsyncPortletResource.*;
 
 /**
  * @author Scott Nicklous
- *
+ * 
  */
 public class AsyncPortletListener implements AsyncListener {
-   private static final Logger LOGGER = Logger.getLogger(AsyncPortletListener.class.getName());
+   private static final Logger            LOGGER = Logger.getLogger(AsyncPortletListener.class.getName());
 
-   private long                start  = System.currentTimeMillis();
+   private long                           start  = System.currentTimeMillis();
+
+   @Inject
+   private PortletRequestRandomNumberBean reqnum;
+   @Inject
+   private AsyncDialogBean                adb;
 
    /*
     * (non-Javadoc)
@@ -88,7 +99,33 @@ public class AsyncPortletListener implements AsyncListener {
       // complete.
 
       AsyncContext ctx = evt.getAsyncContext();
-      ctx.addListener(this);
+      // ctx.addListener(this);
+
+      // Try to write some output.
+
+      try {
+         if (adb.isShowListener()) {
+            HttpServletRequest req = (HttpServletRequest) ctx.getRequest();
+            HttpServletResponse resp = (HttpServletResponse) ctx.getResponse();
+            txt.setLength(0);
+            txt.append("<div class='orangebox'>");
+            txt.append("Listener: restarting async.");
+            txt.append("<span style='margin-left: 2em;'>");
+            txt.append("Request number: ").append(reqnum.getRandomNumber());
+            txt.append("</span>");
+            txt.append("<span style='margin-left: 2em;'>");
+            txt.append("Dispatcher type: ").append(req.getDispatcherType());
+            txt.append("</span>");
+            txt.append("</div>");
+            resp.getWriter().write(txt.toString());
+         }
+      } catch (Exception e) {
+         StringWriter sw = new StringWriter();
+         PrintWriter pw = new PrintWriter(sw);
+         e.printStackTrace(pw);
+         pw.flush();
+         LOGGER.fine("Exception producing output: \n" + sw.toString());
+      }
    }
 
    /*
@@ -100,19 +137,35 @@ public class AsyncPortletListener implements AsyncListener {
    public void onTimeout(AsyncEvent evt) throws IOException {
       long delta = System.currentTimeMillis() - start;
 
-      StringBuilder txt = new StringBuilder(128);
-      txt.append("Listener: Timeout after ").append(delta).append(" milliseconds.");
-
       try {
-         PrintWriter writer = evt.getAsyncContext().getResponse().getWriter();
-         writer.println("<p>");
-         writer.println(txt.toString());
-         writer.println("</p>");
-         evt.getAsyncContext().complete();
+         HttpServletRequest req = (HttpServletRequest) evt.getAsyncContext().getRequest();
+         if (adb.isShowListener()) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("<div class='orangebox'>");
+            txt.append("AsyncPortletListener: Timeout after ").append(delta).append(" milliseconds.");
+            txt.append("<span style='margin-left: 2em;'>");
+            txt.append("Action: ").append(adb.getHandleTimeout().toString());
+            txt.append("</span>");
+            txt.append("<span style='margin-left: 2em;'>");
+            txt.append("Request number: ").append(reqnum.getRandomNumber());
+            txt.append("</span>");
+            txt.append("<span style='margin-left: 2em;'>");
+            txt.append("Dispatcher type: ").append(req.getDispatcherType());
+            txt.append("</span>");
+            txt.append("</div>");
+            PrintWriter writer = evt.getAsyncContext().getResponse().getWriter();
+            writer.println(txt.toString());
+         }
+         
+         if (adb.getHandleTimeout() == TimeoutType.CPL) {
+            evt.getAsyncContext().complete();
+         } else if (adb.getHandleTimeout() == TimeoutType.DIS) {
+            req.setAttribute(ATTRIB_TIMEOUT, ATTRIB_TIMEOUT);
+            evt.getAsyncContext().dispatch();
+         }
       } catch (Exception e) {
-         txt.append(" Couldn't get response and complete. Exception: " + e.toString());
+         LOGGER.warning(" Couldn't get response to generate output. Exception: " + e.toString());
       }
-      LOGGER.fine(txt.toString());
    }
 
 }

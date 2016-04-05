@@ -56,6 +56,7 @@ public class AsyncDialogBean implements PortletSerializable {
    public static final String PARAM_REPS     = "reps";
    public static final String PARAM_AUTO     = "auto";
    public static final String PARAM_FILTER   = "filter";
+   public static final String PARAM_LISTENER = "listener";
    public static final String PARAM_TYPE     = "type";
    public static final String PARAM_TYPE_TXT = OutputType.TEXT.toString();
    public static final String PARAM_TYPE_INC = OutputType.INC.toString();
@@ -71,8 +72,9 @@ public class AsyncDialogBean implements PortletSerializable {
    private OutputType         type;
    private String             msg;
    private boolean            autoDispatch;
-   private boolean            useFilter;
+   private boolean            showFilter;
    private TimeoutType        handleTimeout;
+   private boolean            showListener;
 
    /**
     * This method is called by the portlet container to initialize the bean at
@@ -87,16 +89,18 @@ public class AsyncDialogBean implements PortletSerializable {
          type = OutputType.TEXT;
          msg = null;
          autoDispatch = true;
-         useFilter = false;
+         showFilter = false;
          handleTimeout = TimeoutType.CPL;
+         showListener = false;
       } else {
          delay = Integer.parseInt(state[0]);
          reps = Integer.parseInt(state[1]);
          type = OutputType.valueOf(state[2]);
          msg = state[3];
          autoDispatch = Boolean.parseBoolean(state[4]);
-         useFilter = Boolean.parseBoolean(state[5]);
+         showFilter = Boolean.parseBoolean(state[5]);
          handleTimeout = TimeoutType.valueOf(state[6]);
+         showListener = Boolean.parseBoolean(state[7]);
       }
       LOGGER.fine("deserialized: " + Arrays.asList(state).toString());
    }
@@ -108,7 +112,7 @@ public class AsyncDialogBean implements PortletSerializable {
    @Override
    public String[] serialize() {
       String[] state = { "" + delay, "" + reps, type.toString(), msg, 
-            ""+autoDispatch, ""+useFilter, handleTimeout.toString() };
+            ""+autoDispatch, ""+showFilter, handleTimeout.toString(), ""+showListener };
       LOGGER.fine("serialized: " + Arrays.asList(state).toString());
       return state;
    }
@@ -189,20 +193,6 @@ public class AsyncDialogBean implements PortletSerializable {
    }
 
    /**
-    * @return the useFilter
-    */
-   public boolean isUseFilter() {
-      return useFilter;
-   }
-
-   /**
-    * @param useFilter the useFilter to set
-    */
-   public void setUseFilter(boolean useFilter) {
-      this.useFilter = useFilter;
-   }
-
-   /**
     * @return the handleTimeout
     */
    public TimeoutType getHandleTimeout() {
@@ -214,6 +204,34 @@ public class AsyncDialogBean implements PortletSerializable {
     */
    public void setHandleTimeout(TimeoutType handleTimeout) {
       this.handleTimeout = handleTimeout;
+   }
+
+   /**
+    * @return the showFilter
+    */
+   public boolean isShowFilter() {
+      return showFilter;
+   }
+
+   /**
+    * @param showFilter the showFilter to set
+    */
+   public void setShowFilter(boolean showFilter) {
+      this.showFilter = showFilter;
+   }
+
+   /**
+    * @return the showListener
+    */
+   public boolean isShowListener() {
+      return showListener;
+   }
+
+   /**
+    * @param showListener the showListener to set
+    */
+   public void setShowListener(boolean showListener) {
+      this.showListener = showListener;
    }
 
    /**
@@ -283,13 +301,13 @@ public class AsyncDialogBean implements PortletSerializable {
 
       String filter = req.getActionParameters().getValue(PARAM_FILTER);
       if (filter != null) {
-         useFilter = true;
+         showFilter = true;
          if ((type == OutputType.FWD)) {
             msg = "Filter can't generate output with forward processing.";
-            useFilter = false;
+            showFilter = false;
          }
       } else {
-         useFilter = false;
+         showFilter = false;
       }
 
       String strto = req.getActionParameters().getValue(PARAM_TO);
@@ -301,8 +319,19 @@ public class AsyncDialogBean implements PortletSerializable {
          }
       }
 
+      String lstnr = req.getActionParameters().getValue(PARAM_LISTENER);
+      if (lstnr != null) {
+         showListener = true;
+         if ((type == OutputType.FWD)) {
+            msg = "Listener can't generate output with forward processing.";
+            showListener = false;
+         }
+      } else {
+         showListener = false;
+      }
+
       String[] state = { "" + delay, "" + reps, type.toString(), msg, 
-            ""+autoDispatch, ""+useFilter, handleTimeout.toString() };
+            ""+autoDispatch, ""+showFilter, handleTimeout.toString() };
       LOGGER.fine("Resulting params: " + Arrays.asList(state).toString());
    }
 

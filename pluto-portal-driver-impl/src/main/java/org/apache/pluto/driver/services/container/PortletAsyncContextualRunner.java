@@ -55,7 +55,7 @@ public class PortletAsyncContextualRunner implements Runnable {
       }
 
       try {
-         pactx.registerContext();
+         pactx.registerContext(false);
          targetRunner.run();
       } catch (Exception e) {
          StringBuilder txt = new StringBuilder(128);
@@ -64,7 +64,7 @@ public class PortletAsyncContextualRunner implements Runnable {
          if (isDebug) {
             LOG.debug("Shutting down contextual environment for thread: " + Thread.currentThread().getId());
          }
-         pactx.deregisterContext();
+         pactx.deregisterContext(false);
       }
 }
 

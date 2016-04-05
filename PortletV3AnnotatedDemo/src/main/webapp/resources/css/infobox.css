@@ -18,6 +18,16 @@
    background:#ddaadd;
 }
 
+.orangebox {
+   border-style:solid; 
+   border-width:2px; 
+   padding:4px; 
+   margin-bottom:4px;
+   overflow:auto;
+   border-color:#e68a00; 
+   background:#ffdd99;
+}
+
 .parmbox {
    border-style:solid; 
    border-width:2px; 

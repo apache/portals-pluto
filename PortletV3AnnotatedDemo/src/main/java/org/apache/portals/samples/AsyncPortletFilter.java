@@ -19,7 +19,6 @@
 package org.apache.portals.samples;
 
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -65,7 +64,7 @@ public class AsyncPortletFilter implements ResourceFilter {
       txt.append(", request #: ").append(reqnum.getRandomNumber());
       LOGGER.fine(txt.toString());
       
-      if (adb.isUseFilter()) {
+      if (adb.isShowFilter()) {
          txt.setLength(0);
          txt.append("<div class='msgbox'>");
          txt.append("Filter: Request number: ").append(reqnum.getRandomNumber());

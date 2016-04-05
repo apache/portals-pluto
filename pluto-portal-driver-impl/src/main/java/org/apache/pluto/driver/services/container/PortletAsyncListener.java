@@ -19,31 +19,67 @@
 package org.apache.pluto.driver.services.container;
 
 import java.io.IOException;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
 import javax.servlet.AsyncListener;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.container.PortletAsyncContext;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletResourceResponseContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Releases portal resources when the async request completes.
+ * Manages the listeners registered by the application. Releases portal resources when 
+ * the async request completes and provides contextual services for the listeners. 
  * 
  * @author Scott Nicklous
  */
 public class PortletAsyncListener implements AsyncListener {
-   private static final Logger LOGGER = Logger.getLogger(PortletAsyncListener.class.getName());
-
+   
+   /** Logger. */
+   private static final Logger LOG = LoggerFactory.getLogger(PortletAsyncListener.class);
+   private static final boolean isDebug = LOG.isDebugEnabled();
+   @SuppressWarnings("unused")
+   private static final boolean isTrace = LOG.isTraceEnabled();
+   
+   
+   // Data for one listener
+   private class Entry {
+      public Entry(AsyncListener lis, ServletRequest req, ServletResponse resp) {
+         this.lis = lis;
+         this.req = req;
+         this.resp = resp;
+      }
+      public AsyncListener   lis;
+      public ServletRequest  req;
+      public ServletResponse resp;
+   }
+   
+   // The registered listeners
+   List<Entry> listeners = new ArrayList<Entry>();
+   
    private long start  = System.currentTimeMillis();
    private final PortletAsyncContext pactx;
+   
  
    public PortletAsyncListener(PortletAsyncContext pactx) {
       this.pactx = pactx;
+   }
+   
+   public void addListener(AsyncListener l) {
+      listeners.add(new Entry(l, null, null));
+   }
+   
+   public void addListener(AsyncListener l, ServletRequest req, ServletResponse resp) {
+      listeners.add(new Entry(l, req, resp));
    }
 
    /*
@@ -53,6 +89,22 @@ public class PortletAsyncListener implements AsyncListener {
     */
    @Override
    public void onComplete(AsyncEvent evt) throws IOException {
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Firing onComplete event for ");
+         txt.append(listeners.size()).append(" listeners.");
+         LOG.debug(txt.toString());
+      }
+      
+      pactx.registerContext(true);
+      for (Entry listener : listeners) {
+         AsyncEvent lisevt = new AsyncEvent(pactx, listener.req, listener.resp);
+         listener.lis.onComplete(lisevt);
+      }
+      pactx.deregisterContext(true);
+      pactx.setComplete(true);
+      
       long delta = System.currentTimeMillis() - start;
       StringBuilder txt = new StringBuilder(128);
       txt.append("Completed. Execution time: ").append(delta).append(" milliseconds.");
@@ -97,7 +149,9 @@ public class PortletAsyncListener implements AsyncListener {
       txt.append(" Removing contextual info.");
       pactx.removeContext();
 
-      LOGGER.fine(txt.toString());
+      if (isDebug) {
+         LOG.debug(txt.toString());
+      }
 
    }
 
@@ -108,6 +162,21 @@ public class PortletAsyncListener implements AsyncListener {
     */
    @Override
    public void onError(AsyncEvent evt) throws IOException {
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Firing onError event for ");
+         txt.append(listeners.size()).append(" listeners.");
+         LOG.debug(txt.toString());
+      }
+      
+      pactx.registerContext(true);
+      for (Entry listener : listeners) {
+         AsyncEvent lisevt = new AsyncEvent(pactx, listener.req, listener.resp, evt.getThrowable());
+         listener.lis.onError(lisevt);
+      }
+      pactx.deregisterContext(true);
+      
       long delta = System.currentTimeMillis() - start;
       StringBuilder txt = new StringBuilder(128);
       txt.append("Error after ").append(delta).append(" milliseconds.");
@@ -124,7 +193,9 @@ public class PortletAsyncListener implements AsyncListener {
       }
 
       txt.append(", Exception: ").append(evt.getThrowable().getMessage());
-      LOGGER.fine(txt.toString());
+      if (isDebug) {
+         LOG.debug(txt.toString());
+      }
    }
 
    /*
@@ -134,10 +205,33 @@ public class PortletAsyncListener implements AsyncListener {
     */
    @Override
    public void onStartAsync(AsyncEvent evt) throws IOException {
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Firing onStartAsync event for ");
+         txt.append(listeners.size()).append(" listeners.");
+         LOG.debug(txt.toString());
+      }
+      
+      // copy & clear the original listener list. If a listener wants to be notified
+      // again, it will add itself again.
+      
+      ArrayList<Entry> entries = new ArrayList<Entry>(listeners);
+      listeners.clear();
+
+      pactx.registerContext(true);
+      for (Entry listener : entries) {
+         AsyncEvent lisevt = new AsyncEvent(pactx, listener.req, listener.resp);
+         listener.lis.onStartAsync(lisevt);
+      }
+      pactx.deregisterContext(true);
+      
       long delta = System.currentTimeMillis() - start;
       StringBuilder txt = new StringBuilder(128);
       txt.append("Async started again after ").append(delta).append(" milliseconds.");
-      LOGGER.fine(txt.toString());
+      if (isDebug) {
+         LOG.debug(txt.toString());
+      }
 
       // need to add this listener again so it gets called when finally complete.
 
@@ -152,6 +246,21 @@ public class PortletAsyncListener implements AsyncListener {
     */
    @Override
    public void onTimeout(AsyncEvent evt) throws IOException {
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Firing onTimeout event for ");
+         txt.append(listeners.size()).append(" listeners.");
+         LOG.debug(txt.toString());
+      }
+      
+      pactx.registerContext(true);
+      for (Entry listener : listeners) {
+         AsyncEvent lisevt = new AsyncEvent(pactx, listener.req, listener.resp);
+         listener.lis.onTimeout(lisevt);
+      }
+      pactx.deregisterContext(true);
+      
       long delta = System.currentTimeMillis() - start;
       StringBuilder txt = new StringBuilder(128);
       txt.append("Timeout after ").append(delta).append(" milliseconds.");
@@ -179,9 +288,11 @@ public class PortletAsyncListener implements AsyncListener {
       }
 
       if (warn) {
-         LOGGER.warning(txt.toString());
+         LOG.warn(txt.toString());
       } else {
-         LOGGER.fine(txt.toString());
+         if (isDebug) {
+            LOG.debug(txt.toString());
+         }
       }
    }
 

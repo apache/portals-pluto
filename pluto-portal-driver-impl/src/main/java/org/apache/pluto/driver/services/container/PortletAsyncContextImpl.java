@@ -51,58 +51,81 @@ import org.slf4j.LoggerFactory;
 public class PortletAsyncContextImpl implements PortletAsyncContext {
    private static final Logger LOG = LoggerFactory.getLogger(PortletAsyncContextImpl.class);
    private static final boolean isDebug = LOG.isDebugEnabled();
+   @SuppressWarnings("unused")
    private static final boolean isTrace = LOG.isTraceEnabled();
    
-   
-
    private AsyncContext                   actx;
+   
    private final HttpServletRequest       hreq;
+   private final PortletAsyncListener     pal;
+   private final PortletResourceRequestContext  prctx;
 
-   private PortletResourceRequestContext  prctx;
    private ResourceRequest                resreq;
    private PortletSessionBeanHolder       sessbh;
    private PortletStateScopedBeanHolder   statebh;
    private PortletRequestScopedBeanHolder reqbh;
    private BeanManager                    beanmgr;
-
    private Runnable                       pendingRunner;
+   private boolean                        doDeregister = true;
+   private boolean                        complete = false;
 
-   public PortletAsyncContextImpl(AsyncContext actx, HttpServletRequest hreq) {
+   public PortletAsyncContextImpl(AsyncContext actx, PortletResourceRequestContext prctx, ResourceRequest resreq) {
       this.actx = actx;
-      this.hreq = hreq;
-   }
-
-   /*
-    * (non-Javadoc)
-    * 
-    * @see org.apache.pluto.driver.services.container.PortletAsyncContext#requestComplete(org.apache.pluto.container.
-    * PortletResourceRequestContext)
-    */
-   @Override
-   public void init(PortletResourceRequestContext prctx, ResourceRequest resreq, BeanManager beanmgr) {
       this.prctx = prctx;
       this.resreq = resreq;
-      this.beanmgr = beanmgr;
+      this.hreq = (HttpServletRequest) actx.getRequest();
+      this.beanmgr = prctx.getBeanManager();
 
       // get the original container req & resp to pass to listener for resource releasing
 
       HttpServletRequest creq = prctx.getContainerRequest();
       HttpServletResponse cresp = prctx.getContainerResponse();
 
-      PortletAsyncListener pal = new PortletAsyncListener(this);
+      pal = new PortletAsyncListener(this);
       actx.addListener(pal, creq, cresp);
+   }
 
+   /**
+    * @return the complete
+    */
+   @Override
+   public boolean isComplete() {
+      return complete;
+   }
+
+   /**
+    * @param complete the complete to set
+    */
+   @Override
+   public void setComplete(boolean complete) {
+      this.complete = complete;
    }
 
    /**
     * Called when a new thread begins running in order to set up contextual support
     */
    @Override
-   public void registerContext() {
-      PortletSessionBeanHolder.register(sessbh);
-      PortletStateScopedBeanHolder.register(statebh);
-      PortletRequestScopedBeanHolder.register(reqbh);
-      PortletArtifactProducer.setPrecursors(resreq, prctx.getResponse(), prctx.getPortletConfig());
+   public void registerContext(boolean isListener) {
+      
+      // if the context is already active, then ignore register / deregister calls.
+      if (complete || (isListener && PortletRequestScopedBeanHolder.getBeanHolder() != null)) {
+         doDeregister = false;
+      } else {
+         doDeregister = true;
+         PortletSessionBeanHolder.register(sessbh);
+         PortletStateScopedBeanHolder.register(statebh);
+         PortletRequestScopedBeanHolder.register(reqbh);
+         PortletArtifactProducer.setPrecursors(resreq, prctx.getResponse(), prctx.getPortletConfig());
+      }
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Registered context.");
+         txt.append(" complete: ").append(complete);
+         txt.append(", isListener: ").append(isListener);
+         txt.append(", doRegister: ").append(doDeregister);
+         LOG.debug(txt.toString());
+      }
    }
 
    /**
@@ -110,11 +133,30 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
     * saved rather than destroyed.
     */
    @Override
-   public void deregisterContext() {
-      this.sessbh = PortletSessionBeanHolder.deregister();
-      this.statebh = PortletStateScopedBeanHolder.deregister();
-      this.reqbh = PortletRequestScopedBeanHolder.deregister();
-      PortletArtifactProducer.remove();
+   public void deregisterContext(boolean isListener) {
+      if (!complete && (!isListener || doDeregister)) {
+         this.sessbh = PortletSessionBeanHolder.deregister();
+         this.statebh = PortletStateScopedBeanHolder.deregister();
+         this.reqbh = PortletRequestScopedBeanHolder.deregister();
+         PortletArtifactProducer.remove();
+      }
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Deregistered context.");
+         txt.append(" complete: ").append(complete);
+         txt.append(", isListener: ").append(isListener);
+         txt.append(", doRegister: ").append(doDeregister);
+         LOG.debug(txt.toString());
+      }
+   }
+
+   /**
+    * Launches any runner that was registered for execution. To be called when 
+    * leaving the portlet servlet. 
+    */
+   @Override
+   public void launchRunner() {
 
       // now if a runner is pending, initialize the contextual runnable and start it
 
@@ -163,7 +205,7 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
     */
    @Override
    public void addListener(AsyncListener l) {
-      actx.addListener(l);
+      pal.addListener(l);
    }
 
    /*
@@ -174,7 +216,7 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
     */
    @Override
    public void addListener(AsyncListener l, ServletRequest req, ServletResponse resp) {
-      actx.addListener(l, req, resp);
+      pal.addListener(l, req, resp);
    }
 
    /*
@@ -192,9 +234,30 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
     * 
     * @see javax.servlet.AsyncContext#createListener(java.lang.Class)
     */
+   @SuppressWarnings("unchecked")
    @Override
    public <T extends AsyncListener> T createListener(Class<T> cls) throws ServletException {
-      return actx.createListener(cls);
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Creating listener.");
+         txt.append(" Bean manager: ").append(beanmgr);
+         txt.append(", listener class: ").append(cls.getCanonicalName());
+         LOG.debug(txt.toString());
+      }
+      T lis = null;
+      if (beanmgr != null) {
+         Set<Bean<?>> beans = beanmgr.getBeans(cls);
+         Bean<?> bean = beanmgr.resolve(beans);
+         if (bean != null) {
+            lis = (T) beanmgr.getReference(bean, bean.getBeanClass(), beanmgr.createCreationalContext(bean));
+         } else {
+            LOG.warn("Could not get bean reference for: " + cls.getCanonicalName());
+            lis = actx.createListener(cls);
+         }
+      } else {
+         lis = actx.createListener(cls);
+      }
+      return lis;
    }
 
    /*

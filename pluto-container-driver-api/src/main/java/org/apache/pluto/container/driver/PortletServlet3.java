@@ -341,7 +341,7 @@ public class PortletServlet3 extends HttpServlet {
          }
 
          // enable contextual support for async
-         ((PortletResourceRequestContext)requestContext).getPortletAsyncContext().registerContext();
+         ((PortletResourceRequestContext)requestContext).getPortletAsyncContext().registerContext(false);
          
       } else {
          
@@ -394,6 +394,8 @@ public class PortletServlet3 extends HttpServlet {
             if (ps != null) {
                resourceRequest.setAttribute(ResourceRequest.PAGE_STATE, ps);
             }
+            
+            rc.setBeanManager(beanmgr);
 
             ResourceResponse resourceResponse = (ResourceResponse) portletResponse;
             filterManager.processFilter(resourceRequest, resourceResponse, invoker, portletContext);
@@ -477,11 +479,8 @@ public class PortletServlet3 extends HttpServlet {
                PortletResourceRequestContext resctx = (PortletResourceRequestContext)requestContext;
                PortletAsyncContext pac = resctx.getPortletAsyncContext();
                if (pac != null) {
-                  if (request.getDispatcherType() != DispatcherType.ASYNC) {
-                     // initialize only on the first time thru
-                     pac.init(resctx, (ResourceRequest) portletRequest, beanmgr);
-                  }
-                  pac.deregisterContext();
+                  pac.deregisterContext(false);
+                  pac.launchRunner();
                } else {
                   LOG.warn("Couldn't get portlet async context.");
                }

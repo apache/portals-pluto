@@ -20,12 +20,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.enterprise.inject.spi.BeanManager;
 import javax.portlet.PortletConfig;
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.AsyncContext;
-import javax.servlet.DispatcherType;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -57,9 +57,10 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
    private static final boolean isDebug = LOG.isDebugEnabled();
    private static final boolean isTrace = LOG.isTraceEnabled();
 
-   private String               pageState;
-   private ResourceResponse     response;
+   private String                   pageState;
+   private ResourceResponse         response;
    private PortletAsyncContextImpl  actx;
+   private BeanManager              beanmgr;
 
    public PortletResourceRequestContextImpl(PortletContainer container, HttpServletRequest containerRequest,
          HttpServletResponse containerResponse, PortletWindow window, String pageState) {
@@ -120,6 +121,22 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
    @Override
    public void setResponse(ResourceResponse response) {
       this.response = response;
+   }
+
+   /**
+    * @return the beanmgr
+    */
+   @Override
+   public BeanManager getBeanManager() {
+      return beanmgr;
+   }
+
+   /**
+    * @param beanmgr the beanmgr to set
+    */
+   @Override
+   public void setBeanManager(BeanManager beanmgr) {
+      this.beanmgr = beanmgr;
    }
 
    @Override
@@ -189,7 +206,7 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
       if (actx != null) {
          actx.setWrapped(hreq.startAsync(wreq, wresp));
       } else {
-         actx = new PortletAsyncContextImpl(hreq.startAsync(wreq, wresp), wreq);
+         actx = new PortletAsyncContextImpl(hreq.startAsync(wreq, wresp), this, request);
       }
 
       if (isTrace) {

@@ -61,7 +61,9 @@ limitations under the License.
    </td></tr><tr><td>
    <INPUT id ='<portlet:namespace/>-send' VALUE='execute' TYPE='submit'>
    </td><td>
-   <input name='<%=PARAM_FILTER%>' value='<%=PARAM_FILTER%>' type='checkbox' ${adb.isUseFilter() ? "checked" : "" } > show filter
+   <input name='<%=PARAM_FILTER%>' value='<%=PARAM_FILTER%>' type='checkbox' ${adb.isShowFilter() ? "checked" : "" } > show filter
+   </td><td>
+   <input name='<%=PARAM_LISTENER%>' value='<%=PARAM_LISTENER%>' type='checkbox' ${adb.isShowListener() ? "checked" : "" } > show listener
    </td></tr></table>
 </FORM>
 <p>

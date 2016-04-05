@@ -19,6 +19,8 @@
 package org.apache.portals.samples;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -33,6 +35,7 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.annotations.ServeResourceMethod;
 import javax.servlet.AsyncContext;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -52,6 +55,7 @@ public class AsyncPortletResource {
    private final static String ATTRIB_REPS = "reps";
    private final static String ATTRIB_AUTO = "auto";
    public  final static String ATTRIB_TITLE = "title";
+   public  final static String ATTRIB_TIMEOUT = "timeout";
 
    public static class AsyncRunnable implements Runnable {
 
@@ -150,6 +154,19 @@ public class AsyncPortletResource {
 
    @ServeResourceMethod(portletNames = "AsyncPortlet", asyncSupported = true)
    public void getResource(ResourceRequest req, ResourceResponse resp) throws IOException, PortletException {
+      
+      if (req.getAttribute(ATTRIB_TIMEOUT) != null) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("<p>Resource method: listener reports timout.");
+         txt.append("<span style='margin-left: 2em;'>Request #: ");
+         txt.append("dispatcher type: ").append(req.getDispatcherType().toString());
+         txt.append("</span>");
+         txt.append("<span style='margin-left: 2em;'>Request #: ");
+         txt.append(reqnum.getRandomNumber());
+         txt.append("</span></p><hr>");
+         resp.getWriter().write(txt.toString());
+         return;
+      }
 
       Boolean auto = (Boolean) req.getAttribute(ATTRIB_AUTO);
       if (auto == null) {
@@ -179,8 +196,15 @@ public class AsyncPortletResource {
       
       AsyncContext ctx = req.startAsync();
       ctx.setTimeout(4000);
-      AsyncPortletListener apl = new AsyncPortletListener();
-      ctx.addListener(apl);
+      try {
+         ctx.addListener(ctx.createListener(AsyncPortletListener.class));
+      } catch (ServletException e) {
+         StringWriter sw = new StringWriter();
+         PrintWriter pw = new PrintWriter(sw);
+         e.printStackTrace(pw);
+         pw.flush();
+         LOGGER.fine("Exception adding listener: \n" + sw.toString());
+      }
 
       if (auto || (adb.getDelay() <= 0)) {
          

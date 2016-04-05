@@ -18,6 +18,7 @@ package org.apache.pluto.container;
 
 import java.util.Map;
 
+import javax.enterprise.inject.spi.BeanManager;
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -75,4 +76,6 @@ public interface PortletResourceRequestContext extends PortletRequestContext
     AsyncContext startAsync();
     AsyncContext startAsync(ServletRequest request, ServletResponse response);
     PortletAsyncContext getPortletAsyncContext();
+    BeanManager getBeanManager();
+    void setBeanManager(BeanManager beanmgr);
 }
