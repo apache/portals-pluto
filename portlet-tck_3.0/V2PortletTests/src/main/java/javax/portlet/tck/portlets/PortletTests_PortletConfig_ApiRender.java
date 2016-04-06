@@ -148,7 +148,7 @@ private static final Locale Locale = null;
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getInitParameter1   */
       /* Details: "Method getInitParameter(String): Returns a String          */
       /* containing the initialization parameter value for the given name"    */
-      TestResult tr3 = tcd.getTestResultSucceeded(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETINITPARAMETERNAMES1);
+      TestResult tr3 = tcd.getTestResultSucceeded(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETINITPARAMETER1);
       String val = portletConfig.getInitParameter("param1");
       if ((val == null) || !val.equals("value1")) {
          tr3.setTcSuccess(false);

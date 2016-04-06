@@ -26,6 +26,7 @@
       <portlet-name>EnvironmentTests_CacheControl_ApiRender</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_CacheControl_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
+      <cache-scope>public</cache-scope>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>

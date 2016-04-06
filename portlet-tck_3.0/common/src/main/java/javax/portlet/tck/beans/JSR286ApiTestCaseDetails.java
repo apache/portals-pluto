@@ -1185,7 +1185,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
    public final static String V2PORTLETTESTS_GENERICPORTLET_APIRENDER_DODISPATCH1 = "V2PortletTests_GenericPortlet_ApiRender_doDispatch1";
    public final static String V2PORTLETTESTS_GENERICPORTLET_APIRENDER_DOVIEW1 = "V2PortletTests_GenericPortlet_ApiRender_doView1";
    public final static String V2PORTLETTESTS_GENERICPORTLET_APIRENDER_GETPORTLETCONFIG = "V2PortletTests_GenericPortlet_ApiRender_getPortletConfig";
-   public final static String V2PORTLETTESTS_GENERICPORTLET_APIRENDER_PROCESSEVENT2 = "V2PortletTests_GenericPortlet_ApiRender_processEvent2";
+   
    public final static String V2PORTLETTESTS_GENERICPORTLET_APIRENDER_GETNEXTPOSSIBLEPORTLETMODES1 = "V2PortletTests_GenericPortlet_ApiRender_getNextPossiblePortletModes1";
    public final static String V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETEXPIRATIONTIME1 = "V2EnvironmentTests_CacheControl_ApiRender_getExpirationTime1";
    public final static String V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETEXPIRATIONTIME2 = "V2EnvironmentTests_CacheControl_ApiRender_getExpirationTime2";
@@ -2668,7 +2668,6 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_DODISPATCH1, "Method doDispatch(RenderRequest, RenderResponse): If overridden, is called when markup is to be generated");
       tcd.put(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_DOVIEW1, "Method doView(RenderRequest, RenderResponse): If overridden, is called when a render request in view mode occurs");
       tcd.put(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_GETPORTLETCONFIG, "Method getPortletConfig(): Returns the PortletConfig object for the portlet");
-      tcd.put(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_PROCESSEVENT2, "Method processEvent(EventRequest, EventResponse): The @ProcessEvent annotated method matching the current Event is called ");
       tcd.put(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_GETNEXTPOSSIBLEPORTLETMODES1, "Method getNextPossiblePortletModes(): Is called during generic portlet render request processing");
       tcd.put(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETEXPIRATIONTIME1, "Method getExpirationTime(): Returns the expiration time set through setExpirationTime");
       tcd.put(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETEXPIRATIONTIME2, "Method getExpirationTime(): Returns the default expiration time from the deployment descriptor if the expiration time has not been set");

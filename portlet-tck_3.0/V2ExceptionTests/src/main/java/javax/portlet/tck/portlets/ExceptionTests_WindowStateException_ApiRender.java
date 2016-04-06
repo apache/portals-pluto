@@ -106,8 +106,7 @@ public class ExceptionTests_WindowStateException_ApiRender implements Portlet, R
       /* Details: "Method getState(): Returns the WindowState object          */
       /* causing this exception"                                              */
       TestResult tr0 = tcd.getTestResultFailed(V2EXCEPTIONTESTS_WINDOWSTATEEXCEPTION_APIRENDER_GETSTATE);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      
       tr0.writeTo(writer);
 
    }

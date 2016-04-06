@@ -60,11 +60,12 @@ public class AnnotationTests_ProcessAction_ApiAction implements Portlet, Resourc
    @Override
    public void destroy() {
    }
-
+   
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
+      
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
@@ -83,10 +84,14 @@ public class AnnotationTests_ProcessAction_ApiAction implements Portlet, Resourc
       /* executed if the parameter \"javax.portlet.action\" matches the       */
       /* name field"                                                          */
       TestResult tr0 = tcd.getTestResultFailed(V2ANNOTATIONTESTS_PROCESSACTION_APIACTION_NAME);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
-
+      String nme=portletReq.getParameter(ActionRequest.ACTION_NAME);
+ 	  if(nme.equals(V2ANNOTATIONTESTS_PROCESSACTION_APIACTION_NAME)) {
+ 		 tr0.setTcSuccess(true);
+ 	  } else {
+ 		 tr0.setTcSuccess(false);
+ 	  }
+ 	  tr0.writeTo(writer);
+ 	  
       portletReq.getPortletSession().setAttribute(
                    Constants.RESULT_ATTR_PREFIX + "AnnotationTests_ProcessAction_ApiAction",
                    writer.toString(), APPLICATION_SCOPE);
@@ -127,7 +132,7 @@ public class AnnotationTests_ProcessAction_ApiAction implements Portlet, Resourc
       /* name field"                                                          */
       {
          PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
+         aurl.setParameter(ActionRequest.ACTION_NAME,V2ANNOTATIONTESTS_PROCESSACTION_APIACTION_NAME);
          TestButton tb = new TestButton("V2AnnotationTests_ProcessAction_ApiAction_name", aurl);
          tb.writeTo(writer);
       }

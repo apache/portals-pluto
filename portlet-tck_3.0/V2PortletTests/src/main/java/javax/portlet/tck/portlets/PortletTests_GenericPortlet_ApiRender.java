@@ -52,6 +52,7 @@ public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
    
    private boolean initCalled = false;
    private boolean pcInitCalled = false;
+   
    @Override
    public void init() {
 	   initCalled = true;
@@ -72,7 +73,6 @@ public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
 	 if(nme.equals(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_PROCESSACTION2)) {
 		 portletResp.setRenderParameter(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_PROCESSACTION2, "true");
 	 }
-	   
    }
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
@@ -136,6 +136,7 @@ public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
    }
    
    
+
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
@@ -148,9 +149,25 @@ public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
 
    }
    
+  
+   
+   @Override
+   protected Collection<PortletMode> getNextPossiblePortletModes(
+           RenderRequest request) {
+	   
+	   return null;
+   }
+   
    public void processEvent(EventRequest portletReq, EventResponse portletResp)
 	         throws PortletException, IOException {
+	   
+	   JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+	   Event evt=portletReq.getEvent();
+	   portletResp.setRenderParameters(portletReq);
+	   
    }
+   
+   
    
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
@@ -169,6 +186,9 @@ public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
       ClassChecker cc = new ClassChecker(GenericPortlet.class);
         
       super.render(portletReq, portletResp);
+     
+    
+  
       
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_initA              */
       /* Details: "Method init(): Called when the portlet is initialized"     */
@@ -187,24 +207,22 @@ public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
       }
       tr1.writeTo(writer);
 
-
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_processAction2     */
       /* Details: "Method processAction(ActionRequest, ActionResponse):       */
       /* Dispatches to @ProcessAction annotated method matching the           */
       /* ActionRequest.ACTION_NAME parameter"                                 */
       TestResult tr2 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_PROCESSACTION2); 
-      String getparam=portletReq.getParameter(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_PROCESSACTION2);
-      if(getparam!=null) {
+      String parm=portletReq.getParameter(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_PROCESSACTION2);
+      if(parm!=null) {
     	  tr2.setTcSuccess(true);
+    	  tr2.writeTo(writer);
       } else {
-    	  tr2.appendTcDetail("Could not dispatch to ProcessAction annotated method");
-        }
-      PortletURL aurl=portletResp.createActionURL();
-	  aurl.setParameter(ActionRequest.ACTION_NAME, V2PORTLETTESTS_GENERICPORTLET_APIRENDER_PROCESSACTION2);
-	  TestButton tb=new TestButton(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_PROCESSACTION2,aurl);
-      tb.writeTo(writer);
+    	  PortletURL aurl=portletResp.createActionURL();
+    	  aurl.setParameter(ActionRequest.ACTION_NAME,V2PORTLETTESTS_GENERICPORTLET_APIRENDER_PROCESSACTION2);
+    	  TestLink t2=new TestLink(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_PROCESSACTION2,aurl);
+    	  t2.writeTo(writer);;
+      }
       tr2.writeTo(writer);
-      
       
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_getTitle1          */
       /* Details: "Method getTitle(): If overridden, the String returned by   */
@@ -223,14 +241,14 @@ public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
       /* from the portlet resource bundle under the key                       */
       /* \"javax.portlet.title\""                                             */
       TestResult tr5 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_GETTITLE2);
-      ResourceBundle rb1=ResourceBundle.getBundle("javax.portlet.tck.portlets.TestBundle");
-      String portletTitle1=rb1.getString("javax.portlet.title");
-      if(portletTitle1.equals("Resource Bundle Test")) {
+      ResourceBundle rb2=ResourceBundle.getBundle("javax.portlet.tck.portlets.TestBundle2");
+      String portletTitle2=rb2.getString("javax.portlet.title");
+      if(portletTitle2.equals("TestTitle")) {
     	  tr5.setTcSuccess(true);
       } else {
-    	  tr5.appendTcDetail("The Title doesnot match the actual value in ResourceBundle" +portletTitle1);
+    	  tr5.appendTcDetail("The ResourceBundle has a title" +portletTitle2);
       }
-       tr5.writeTo(writer);
+      tr5.writeTo(writer);
        
        /* TestCase: V2PortletTests_GenericPortlet_ApiRender_getPortletConfig   */
        /* Details: "Method getPortletConfig(): Returns the PortletConfig       */
@@ -244,19 +262,11 @@ public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
        }
        tr8.writeTo(writer);
 
-      /* TestCase: V2PortletTests_GenericPortlet_ApiRender_processEvent2      */
-      /* Details: "Method processEvent(EventRequest, EventResponse): The      */
-      /* @ProcessEvent annotated method matching the current Event is         */
-      /* called "                                                             */
-      TestResult tr9 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_PROCESSEVENT2);
-      tr9.setTcSuccess(true);
-      tr9.writeTo(writer);
-
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_getNextPossiblePortletModes1 */
       /* Details: "Method getNextPossiblePortletModes(): Is called during     */
       /* generic portlet render request processing"                           */
       TestResult tr10 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_GETNEXTPOSSIBLEPORTLETMODES1);
-      Collection<PortletMode> nextmode=getNextPossiblePortletModes(portletReq);
+      super.getNextPossiblePortletModes(portletReq);
       tr10.setTcSuccess(true);
       tr10.writeTo(writer);
 

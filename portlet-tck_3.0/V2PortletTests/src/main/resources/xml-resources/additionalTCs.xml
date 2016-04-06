@@ -76,6 +76,5 @@
 <entry key="V2PortletTests_GenericPortlet_ApiRender_doDispatch1">V2PortletTests</entry>
 <entry key="V2PortletTests_GenericPortlet_ApiRender_doView1">V2PortletTests</entry>
 <entry key="V2PortletTests_GenericPortlet_ApiRender_getPortletConfig">V2PortletTests</entry>
-<entry key="V2PortletTests_GenericPortlet_ApiRender_processEvent2">V2PortletTests</entry>
 <entry key="V2PortletTests_GenericPortlet_ApiRender_getNextPossiblePortletModes1">V2PortletTests</entry>
 </properties>

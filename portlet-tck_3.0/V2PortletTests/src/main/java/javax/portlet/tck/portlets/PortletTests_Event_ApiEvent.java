@@ -79,7 +79,7 @@ public class PortletTests_Event_ApiEvent implements Portlet, ResourceServingPort
             portletResp.setEvent(eventQName,null);
       }
       else { 
-    	    portletResp.setEvent(eventQName,"Hi!");
+    	    portletResp.setEvent(eventQName,"Hi");
       }
    }
 

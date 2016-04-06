@@ -57,9 +57,6 @@ public class PortletTests_Event_ApiEvent_event implements Portlet, EventPortlet,
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
-      QName eventQName = new QName(TCKNAMESPACE,
-              "PortletTests_Event_ApiEvent");
-       portletResp.setEvent(eventQName, "Hi!");
    }
 
    @Override
@@ -116,7 +113,6 @@ public class PortletTests_Event_ApiEvent_event implements Portlet, EventPortlet,
          tr1.appendTcDetail("QName is null.");
          tr1.appendTcDetail(txt1.toString());
       } 
-      tr1.setTcSuccess(true);
       tr1.writeTo(writer);
       
       /* TestCase: V2PortletTests_Event_ApiEvent_getName1                     */
@@ -134,7 +130,6 @@ public class PortletTests_Event_ApiEvent_event implements Portlet, EventPortlet,
       txt2.append(" Actual: ").append(qn2);
       tr2.appendTcDetail(txt2.toString());
       }
-      
       tr2.writeTo(writer);
       
       /* TestCase: V2PortletTests_Event_ApiEvent_getName2                     */
@@ -143,7 +138,6 @@ public class PortletTests_Event_ApiEvent_event implements Portlet, EventPortlet,
       if(qn2==null) {
     	  tr3.appendTcDetail("Event name is Null.");
       } 
-      
       tr3.writeTo(writer);
 
       /* TestCase: V2PortletTests_Event_ApiEvent_getValue1                    */
@@ -158,7 +152,7 @@ public class PortletTests_Event_ApiEvent_event implements Portlet, EventPortlet,
       } 
       if ((val instanceof String)) {
     	  String txt4 = (String) val;
-    	  if (txt4.equals("Hi!")) {
+    	  if (txt4.equals("Hi")) {
             tr4.setTcSuccess(true);  
     	  } else {  
 			tr4.appendTcDetail("The EventPayloadvalue did not match actual value :" + txt4);	
