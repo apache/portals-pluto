@@ -18,9 +18,7 @@ package org.apache.pluto.driver.services.container;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
-import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -56,6 +54,7 @@ import org.slf4j.LoggerFactory;
  * @version 2.0
  */
 public class FilterManagerImpl implements FilterManager{
+   @SuppressWarnings("unused")
    private static final Logger LOG = LoggerFactory.getLogger(FilterManagerImpl.class);
    
     private FilterChainImpl filterchain;

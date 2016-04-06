@@ -22,7 +22,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.PortletAsyncEvent;
+import javax.portlet.PortletAsyncListener;
 import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
 import javax.servlet.AsyncListener;
@@ -30,7 +33,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.pluto.container.PortletAsyncContext;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletResourceResponseContext;
 import org.slf4j.Logger;
@@ -42,10 +44,10 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Scott Nicklous
  */
-public class PortletAsyncListener implements AsyncListener {
+public class PortletAsyncContextListener implements AsyncListener {
    
    /** Logger. */
-   private static final Logger LOG = LoggerFactory.getLogger(PortletAsyncListener.class);
+   private static final Logger LOG = LoggerFactory.getLogger(PortletAsyncContextListener.class);
    private static final boolean isDebug = LOG.isDebugEnabled();
    @SuppressWarnings("unused")
    private static final boolean isTrace = LOG.isTraceEnabled();
@@ -53,24 +55,35 @@ public class PortletAsyncListener implements AsyncListener {
    
    // Data for one listener
    private class Entry {
+
+      public AsyncListener          hlis;
+      public ServletRequest         hreq;
+      public ServletResponse        hresp;
+      public PortletAsyncListener   plis;
+      public ResourceRequest        preq;
+      public ResourceResponse       presp;
+
       public Entry(AsyncListener lis, ServletRequest req, ServletResponse resp) {
-         this.lis = lis;
-         this.req = req;
-         this.resp = resp;
+         this.hlis  = lis;
+         this.hreq  = req;
+         this.hresp = resp;
       }
-      public AsyncListener   lis;
-      public ServletRequest  req;
-      public ServletResponse resp;
+      
+      public Entry(PortletAsyncListener lis, ResourceRequest req, ResourceResponse resp) {
+         this.plis  = lis;
+         this.preq  = req;
+         this.presp = resp;
+      }
    }
    
    // The registered listeners
    List<Entry> listeners = new ArrayList<Entry>();
    
    private long start  = System.currentTimeMillis();
-   private final PortletAsyncContext pactx;
+   private final PortletAsyncContextImpl pactx;
    
  
-   public PortletAsyncListener(PortletAsyncContext pactx) {
+   public PortletAsyncContextListener(PortletAsyncContextImpl pactx) {
       this.pactx = pactx;
    }
    
@@ -81,6 +94,30 @@ public class PortletAsyncListener implements AsyncListener {
    public void addListener(AsyncListener l, ServletRequest req, ServletResponse resp) {
       listeners.add(new Entry(l, req, resp));
    }
+   
+   public void addListener(PortletAsyncListener l) {
+      listeners.add(new Entry(l, null, null));
+   }
+   
+   public void addListener(PortletAsyncListener l, ResourceRequest req, ResourceResponse resp) {
+      listeners.add(new Entry(l, req, resp));
+   }
+   
+   private void trace (String meth) {
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Firing ").append(meth).append(" event for ");
+         txt.append(listeners.size()).append(" listeners.");
+         int hcnt=0, pcnt=0;
+         for (Entry e : listeners) {
+            if (e.hlis != null) hcnt++;
+            if (e.plis != null) pcnt++;
+         }
+         txt.append(", # AsyncListeners: ").append(hcnt);
+         txt.append(", # PortletAsyncListeners: ").append(pcnt);
+         LOG.debug(txt.toString());
+      }
+   }
 
    /*
     * (non-Javadoc)
@@ -89,18 +126,18 @@ public class PortletAsyncListener implements AsyncListener {
     */
    @Override
    public void onComplete(AsyncEvent evt) throws IOException {
-      
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder();
-         txt.append("Firing onComplete event for ");
-         txt.append(listeners.size()).append(" listeners.");
-         LOG.debug(txt.toString());
-      }
+
+      trace("onComplete");
       
       pactx.registerContext(true);
-      for (Entry listener : listeners) {
-         AsyncEvent lisevt = new AsyncEvent(pactx, listener.req, listener.resp);
-         listener.lis.onComplete(lisevt);
+      for (Entry l : listeners) {
+         if (l.hlis != null) {
+            AsyncEvent lisevt = new AsyncEvent(pactx, l.hreq, l.hresp);
+            l.hlis.onComplete(lisevt);
+         } else {
+            PortletAsyncEvent lisevt = new PortletAsyncEvent(pactx, l.preq, l.presp);
+            l.plis.onComplete(lisevt);
+         }
       }
       pactx.deregisterContext(true);
       pactx.setComplete(true);
@@ -163,17 +200,16 @@ public class PortletAsyncListener implements AsyncListener {
    @Override
    public void onError(AsyncEvent evt) throws IOException {
       
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder();
-         txt.append("Firing onError event for ");
-         txt.append(listeners.size()).append(" listeners.");
-         LOG.debug(txt.toString());
-      }
-      
+      trace("onError");      
       pactx.registerContext(true);
-      for (Entry listener : listeners) {
-         AsyncEvent lisevt = new AsyncEvent(pactx, listener.req, listener.resp, evt.getThrowable());
-         listener.lis.onError(lisevt);
+      for (Entry l : listeners) {
+         if (l.hlis != null) {
+            AsyncEvent lisevt = new AsyncEvent(pactx, l.hreq, l.hresp);
+            l.hlis.onError(lisevt);
+         } else {
+            PortletAsyncEvent lisevt = new PortletAsyncEvent(pactx, l.preq, l.presp);
+            l.plis.onError(lisevt);
+         }
       }
       pactx.deregisterContext(true);
       
@@ -205,13 +241,8 @@ public class PortletAsyncListener implements AsyncListener {
     */
    @Override
    public void onStartAsync(AsyncEvent evt) throws IOException {
-      
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder();
-         txt.append("Firing onStartAsync event for ");
-         txt.append(listeners.size()).append(" listeners.");
-         LOG.debug(txt.toString());
-      }
+
+      trace("onStartAsync");
       
       // copy & clear the original listener list. If a listener wants to be notified
       // again, it will add itself again.
@@ -220,9 +251,14 @@ public class PortletAsyncListener implements AsyncListener {
       listeners.clear();
 
       pactx.registerContext(true);
-      for (Entry listener : entries) {
-         AsyncEvent lisevt = new AsyncEvent(pactx, listener.req, listener.resp);
-         listener.lis.onStartAsync(lisevt);
+      for (Entry l : entries) {
+         if (l.hlis != null) {
+            AsyncEvent lisevt = new AsyncEvent(pactx, l.hreq, l.hresp);
+            l.hlis.onStartAsync(lisevt);
+         } else {
+            PortletAsyncEvent lisevt = new PortletAsyncEvent(pactx, l.preq, l.presp);
+            l.plis.onStartAsync(lisevt);
+         }
       }
       pactx.deregisterContext(true);
       
@@ -246,18 +282,18 @@ public class PortletAsyncListener implements AsyncListener {
     */
    @Override
    public void onTimeout(AsyncEvent evt) throws IOException {
-      
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder();
-         txt.append("Firing onTimeout event for ");
-         txt.append(listeners.size()).append(" listeners.");
-         LOG.debug(txt.toString());
-      }
+
+      trace("onTimeout");
       
       pactx.registerContext(true);
-      for (Entry listener : listeners) {
-         AsyncEvent lisevt = new AsyncEvent(pactx, listener.req, listener.resp);
-         listener.lis.onTimeout(lisevt);
+      for (Entry l : listeners) {
+         if (l.hlis != null) {
+            AsyncEvent lisevt = new AsyncEvent(pactx, l.hreq, l.hresp);
+            l.hlis.onTimeout(lisevt);
+         } else {
+            PortletAsyncEvent lisevt = new PortletAsyncEvent(pactx, l.preq, l.presp);
+            l.plis.onTimeout(lisevt);
+         }
       }
       pactx.deregisterContext(true);
       

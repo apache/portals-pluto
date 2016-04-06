@@ -24,10 +24,12 @@ import java.io.IOException;
 /**
  * <div class="changed_added_3_0">
  * Listener that will be notified in the event that an asynchronous operation
- * initiated on a ResourceRequest to which the listener had been added has
+ * initiated on a <code>ResourceRequest</code> to which the listener had been added has
  * completed, timed out, or resulted in an error.
  * </div>
  * 
+ * @see     PortletAsyncContext
+ * @see     PortletAsyncEvent
  * @since   3.0
  */
 public interface PortletAsyncListener {
@@ -47,12 +49,14 @@ public interface PortletAsyncListener {
     * <code>ResourceRequest</code> and <code>ResourceResponse</code> objects may
     * be retrieved by calling <code>getSuppliedRequest</code> and
     * <code>getSuppliedResponse</code>, respectively, on the given event.
-    *
+    * <p>
+    * The <code>PortletAsyncContext</code> dispatch and complete methods may not be invoked
+    * within this method.
     * </div>
     * 
     * @since   3.0
     * 
-    * @param evt  the PortletAsyncEvent indicating that an asynchronous operation has been completed 
+    * @param evt  the <code>PortletAsyncEvent</code> indicating that an asynchronous operation has been completed 
     * @throws IOException  if an I/O related error has occurred during the processing
     */
    public void onComplete(PortletAsyncEvent evt) throws IOException;
@@ -72,6 +76,9 @@ public interface PortletAsyncListener {
     * <code>ResourceRequest</code> and <code>ResourceResponse</code> objects may
     * be retrieved by calling <code>getSuppliedRequest</code> and
     * <code>getSuppliedResponse</code>, respectively, on the given event.
+    * <p>
+    * The <code>PortletAsyncContext</code> dispatch and complete methods may be invoked
+    * within this method.
     * </div>
     * 
     * @since   3.0
@@ -129,6 +136,9 @@ public interface PortletAsyncListener {
     * <code>ResourceRequest</code> and <code>ResourceResponse</code> objects may
     * be retrieved by calling <code>getSuppliedRequest</code> and
     * <code>getSuppliedResponse</code>, respectively, on the given event.
+    * <p>
+    * The <code>PortletAsyncContext</code> dispatch and complete methods may be invoked
+    * within this method.
     * 
     * </div>
     * 

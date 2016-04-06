@@ -21,10 +21,10 @@ package org.apache.pluto.container.bean.processor.fixtures.mocks;
 
 import java.util.Map;
 
+import javax.portlet.PortletAsyncContext;
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;
 
 /**
@@ -90,12 +90,12 @@ public class MockResourceRequest extends MockClientDataRequest implements Resour
    }
 
    @Override
-   public AsyncContext startAsync() throws IllegalStateException {
+   public PortletAsyncContext startAsync() throws IllegalStateException {
       return null;
    }
 
    @Override
-   public AsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
+   public PortletAsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
       return null;
    }
 
@@ -110,7 +110,7 @@ public class MockResourceRequest extends MockClientDataRequest implements Resour
    }
 
    @Override
-   public AsyncContext getAsyncContext() {
+   public PortletAsyncContext getAsyncContext() {
       return null;
    }
 

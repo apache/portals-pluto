@@ -6,7 +6,7 @@
 
 <portlet:defineObjects />
 
-<h5><%=request.getAttribute("title") %> for portlet: <%=portletConfig.getPortletName() %></h5>
+<h5><%=request.getAttribute("title") %> for portlet: ${portletConfig.getPortletName()}</h5>
 <p>Dispatch type: <%=request.getDispatcherType() %>
 <c:catch var ="catchException">
    <span style='margin-left: 2em;'>Request #: ${reqnum.getRandomNumber()}</span>

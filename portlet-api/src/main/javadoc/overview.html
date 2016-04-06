@@ -21,6 +21,19 @@
     <div class="indexContainer-not">
     <ul>
     <li>
+    20160406:
+    Added new classes to implement 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-68">PORTLETSPEC3-68 Add Async Support</a>:
+    {@link javax.portlet.PortletAsyncContext PortletAsyncContext}, 
+    {@link javax.portlet.PortletAsyncListener PortletAsyncListener}, and
+    {@link javax.portlet.PortletAsyncEvent PortletAsyncEvent}.
+    Modified 
+    {@link javax.portlet.ResourceRequest#startAsync() ResourceRequest#startAsync()}, 
+    {@link javax.portlet.ResourceRequest#startAsync(ResourceRequest, ResourceResponse) ResourceRequest#startAsync(ResourceRequest, ResourceResponse)}, and 
+    {@link javax.portlet.ResourceRequest#getAsyncContext() ResourceRequest#getAsyncContext()}
+    along with the corresponding wrapper class accordingly.
+    </li>
+    <li>
     20160316:
     Added new methods, configuration elements, and documentation to implement 
     <a href="https://java.net/jira/browse/PORTLETSPEC3-68">PORTLETSPEC3-68 Add Async Support</a>:

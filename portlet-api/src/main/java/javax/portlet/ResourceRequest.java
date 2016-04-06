@@ -24,7 +24,6 @@
 
 package javax.portlet;
 
-import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;
 
 /**
@@ -296,7 +295,7 @@ public interface ResourceRequest extends ClientDataRequest {
     * @see     javax.portlet.filter.ResourceFilter
     */
 
-   public AsyncContext startAsync() throws IllegalStateException;
+   public PortletAsyncContext startAsync() throws IllegalStateException;
 
 
    /**
@@ -363,7 +362,7 @@ public interface ResourceRequest extends ClientDataRequest {
     * @see     javax.portlet.filter.ResourceFilter
     */
 
-   public AsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException;
+   public PortletAsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException;
 
 
    /**
@@ -417,7 +416,7 @@ public interface ResourceRequest extends ClientDataRequest {
     * @see      javax.servlet.AsyncContext 
     */
    
-   public AsyncContext getAsyncContext();
+   public PortletAsyncContext getAsyncContext();
 
 
    /**

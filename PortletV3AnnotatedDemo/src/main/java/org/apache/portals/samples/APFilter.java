@@ -39,8 +39,8 @@ import javax.servlet.DispatcherType;
  *
  */
 @PortletRequestFilter(portletNames="AsyncPortlet")
-public class AsyncPortletFilter implements ResourceFilter {
-   private static final Logger LOGGER = Logger.getLogger(AsyncPortletFilter.class.getName());
+public class APFilter implements ResourceFilter {
+   private static final Logger LOGGER = Logger.getLogger(APFilter.class.getName());
    
    @Inject private PortletRequestRandomNumberBean reqnum;
    @Inject private AsyncDialogBean adb;

@@ -26,10 +26,10 @@ package javax.portlet.filter;
 
 import java.util.Map;
 
+import javax.portlet.PortletAsyncContext;
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;
 
 /**
@@ -119,12 +119,12 @@ public class ResourceRequestWrapper extends ClientDataRequestWrapper implements 
    }
 
    @Override
-   public AsyncContext startAsync() throws IllegalStateException {
+   public PortletAsyncContext startAsync() throws IllegalStateException {
       return ((ResourceRequest)wrapped).startAsync();
    }
 
    @Override
-   public AsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
+   public PortletAsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
       return ((ResourceRequest)wrapped).startAsync(request, response);
    }
 
@@ -139,7 +139,7 @@ public class ResourceRequestWrapper extends ClientDataRequestWrapper implements 
    }
 
    @Override
-   public AsyncContext getAsyncContext() {
+   public PortletAsyncContext getAsyncContext() {
       return ((ResourceRequest)wrapped).getAsyncContext();
    }
 

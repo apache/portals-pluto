@@ -55,10 +55,15 @@ import javax.portlet.PortletException;
  * if asynchronous mode has been started.
  * <p>
  * If resources must be allocated in this way during inbound processing, the portlet should
+ * use a {@link javax.portlet.PortletAsyncListener} to release the resources upon request 
+ * completion even when error conditions or timeouts occur. 
+ * <p>
+ * Alternatively, the portlet may
  * use the <code>AsyncContext#dispatch()</code> method at the end of asynchronous processing
  * in order to cause the portlet resource method to be invoked again with the same
  * <code>ResourceRequest</code> and <code>ResourceResponse</code> objects.
- * The resources can be released during asynchronous dispatch outbound processing.
+ * The resources can be released during asynchronous dispatch outbound processing if
+ * asynchronous mode is not active.
  * <p>
  * The <code>ResourceRequest#isAsyncStarted()</code> method will return <code>true</code>
  * if the portlet is currently in asynchronous mode.

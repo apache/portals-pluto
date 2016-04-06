@@ -8,7 +8,7 @@ body {
     background-color:#ffffff;
     color:#353833;
     font-family:Arial, Helvetica, sans-serif;
-    font-size:76%;
+    font-size:100%;
     margin:0;
 }
 a:link, a:visited {
@@ -630,6 +630,10 @@ h1.hidden {
 .indexContainer a[href*="RenderURLWrapper.html"],
 .indexContainer a[href*="ResourceParametersWrapper.html"],
 .indexContainer a[href*="ResourceURLWrapper.html"],
+
+.indexContainer a[href*="PortletAsyncContext.html"],
+.indexContainer a[href*="PortletAsyncListener.html"],
+.indexContainer a[href*="PortletAsyncEvent.html"],
 
 .indexContainer a[href*="ActionURL.html"],
 .indexContainer a[href*="RenderURL.html"],

@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.pluto.container.PortletAsyncContext;
+import org.apache.pluto.container.PortletAsyncManager;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletResourceRequestContext;
@@ -72,7 +72,7 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
    }
    
    @Override
-   public PortletAsyncContext getPortletAsyncContext() {
+   public PortletAsyncManager getPortletAsyncContext() {
       return actx;
    }
 
@@ -146,6 +146,10 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
 
    @Override
    public AsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
+      if (actx != null && actx.isComplete()) {
+         return null;
+      }
+
 
       HttpServletRequest hreq = getServletRequest();
       HttpServletResponse hresp = getServletResponse();
@@ -254,6 +258,9 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
    // For wrapper use
    @Override
    public AsyncContext startAsync() {
+      if (actx != null && actx.isComplete()) {
+         return null;
+      }
       AsyncContext ac = getServletRequest().startAsync();
       if (actx == null) {
          // this should not happen, the wrapper is created during the resource request
@@ -267,6 +274,9 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
    // for wrapper use
    @Override
    public AsyncContext startAsync(ServletRequest request, ServletResponse response) {
+      if (actx != null && actx.isComplete()) {
+         return null;
+      }
       AsyncContext ac = getServletRequest().startAsync(request, response);
       if (actx == null) {
          // this should not happen, the wrapper is created during the resource request
@@ -290,6 +300,9 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
    @Override
    public AsyncContext getAsyncContext() {
       if (actx != null) {
+         if (actx.isComplete()) {
+            return null;
+         }
          return actx;
       }
       return getServletRequest().getAsyncContext();

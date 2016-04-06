@@ -2,7 +2,7 @@ package org.apache.pluto.container;
 
 import javax.servlet.AsyncContext;
 
-public interface PortletAsyncContext extends AsyncContext {
+public interface PortletAsyncManager {
 
    void setWrapped(AsyncContext actx);
    void registerContext(boolean isListener);

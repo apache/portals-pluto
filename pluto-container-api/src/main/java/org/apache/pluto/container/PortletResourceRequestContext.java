@@ -75,7 +75,7 @@ public interface PortletResourceRequestContext extends PortletRequestContext
     HttpSession getSession();
     AsyncContext startAsync();
     AsyncContext startAsync(ServletRequest request, ServletResponse response);
-    PortletAsyncContext getPortletAsyncContext();
+    PortletAsyncManager getPortletAsyncContext();
     BeanManager getBeanManager();
     void setBeanManager(BeanManager beanmgr);
 }

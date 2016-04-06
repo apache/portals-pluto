@@ -18,27 +18,28 @@
 
 package org.apache.portals.samples;
 
+import static org.apache.portals.samples.AsyncPortlet.ATTRIB_TIMEOUT;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
-import javax.servlet.AsyncContext;
-import javax.servlet.AsyncEvent;
-import javax.servlet.AsyncListener;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.portlet.PortletAsyncContext;
+import javax.portlet.PortletAsyncEvent;
+import javax.portlet.PortletAsyncListener;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
-import static org.apache.portals.samples.AsyncDialogBean.TimeoutType;
-import static org.apache.portals.samples.AsyncPortletResource.*;
+import org.apache.portals.samples.AsyncDialogBean.TimeoutType;
 
 /**
  * @author Scott Nicklous
  * 
  */
-public class AsyncPortletListener implements AsyncListener {
-   private static final Logger            LOGGER = Logger.getLogger(AsyncPortletListener.class.getName());
+public class APListener implements PortletAsyncListener {
+   private static final Logger            LOGGER = Logger.getLogger(APListener.class.getName());
 
    private long                           start  = System.currentTimeMillis();
 
@@ -53,7 +54,7 @@ public class AsyncPortletListener implements AsyncListener {
     * @see javax.servlet.AsyncListener#onComplete(javax.servlet.AsyncEvent)
     */
    @Override
-   public void onComplete(AsyncEvent evt) throws IOException {
+   public void onComplete(PortletAsyncEvent evt) throws IOException {
       long delta = System.currentTimeMillis() - start;
 
       StringBuilder txt = new StringBuilder(128);
@@ -68,7 +69,7 @@ public class AsyncPortletListener implements AsyncListener {
     * @see javax.servlet.AsyncListener#onError(javax.servlet.AsyncEvent)
     */
    @Override
-   public void onError(AsyncEvent evt) throws IOException {
+   public void onError(PortletAsyncEvent evt) throws IOException {
 
       // this doesn't seem to get called when an error occurs in the executor
       // thread.
@@ -80,7 +81,7 @@ public class AsyncPortletListener implements AsyncListener {
       txt.append(", Exception: ").append(evt.getThrowable().getMessage());
 
       LOGGER.fine(txt.toString());
-      evt.getAsyncContext().complete();
+      evt.getPortletAsyncContext().complete();
    }
 
    /*
@@ -89,7 +90,7 @@ public class AsyncPortletListener implements AsyncListener {
     * @see javax.servlet.AsyncListener#onStartAsync(javax.servlet.AsyncEvent)
     */
    @Override
-   public void onStartAsync(AsyncEvent evt) throws IOException {
+   public void onStartAsync(PortletAsyncEvent evt) throws IOException {
       long delta = System.currentTimeMillis() - start;
       StringBuilder txt = new StringBuilder(128);
       txt.append("Async started again after ").append(delta).append(" milliseconds.");
@@ -98,15 +99,15 @@ public class AsyncPortletListener implements AsyncListener {
       // need to add this listener again so it gets called when finally
       // complete.
 
-      AsyncContext ctx = evt.getAsyncContext();
+      PortletAsyncContext ctx = evt.getPortletAsyncContext();
       // ctx.addListener(this);
 
       // Try to write some output.
 
       try {
          if (adb.isShowListener()) {
-            HttpServletRequest req = (HttpServletRequest) ctx.getRequest();
-            HttpServletResponse resp = (HttpServletResponse) ctx.getResponse();
+            ResourceRequest req = ctx.getResourceRequest();
+            ResourceResponse resp = ctx.getResourceResponse();
             txt.setLength(0);
             txt.append("<div class='orangebox'>");
             txt.append("Listener: restarting async.");
@@ -134,15 +135,15 @@ public class AsyncPortletListener implements AsyncListener {
     * @see javax.servlet.AsyncListener#onTimeout(javax.servlet.AsyncEvent)
     */
    @Override
-   public void onTimeout(AsyncEvent evt) throws IOException {
+   public void onTimeout(PortletAsyncEvent evt) throws IOException {
       long delta = System.currentTimeMillis() - start;
 
       try {
-         HttpServletRequest req = (HttpServletRequest) evt.getAsyncContext().getRequest();
+         ResourceRequest req = evt.getPortletAsyncContext().getResourceRequest();
          if (adb.isShowListener()) {
             StringBuilder txt = new StringBuilder(128);
             txt.append("<div class='orangebox'>");
-            txt.append("AsyncPortletListener: Timeout after ").append(delta).append(" milliseconds.");
+            txt.append("APListener: Timeout after ").append(delta).append(" milliseconds.");
             txt.append("<span style='margin-left: 2em;'>");
             txt.append("Action: ").append(adb.getHandleTimeout().toString());
             txt.append("</span>");
@@ -153,15 +154,15 @@ public class AsyncPortletListener implements AsyncListener {
             txt.append("Dispatcher type: ").append(req.getDispatcherType());
             txt.append("</span>");
             txt.append("</div>");
-            PrintWriter writer = evt.getAsyncContext().getResponse().getWriter();
+            PrintWriter writer = evt.getPortletAsyncContext().getResourceResponse().getWriter();
             writer.println(txt.toString());
          }
          
          if (adb.getHandleTimeout() == TimeoutType.CPL) {
-            evt.getAsyncContext().complete();
+            evt.getPortletAsyncContext().complete();
          } else if (adb.getHandleTimeout() == TimeoutType.DIS) {
             req.setAttribute(ATTRIB_TIMEOUT, ATTRIB_TIMEOUT);
-            evt.getAsyncContext().dispatch();
+            evt.getPortletAsyncContext().dispatch();
          }
       } catch (Exception e) {
          LOGGER.warning(" Couldn't get response to generate output. Exception: " + e.toString());

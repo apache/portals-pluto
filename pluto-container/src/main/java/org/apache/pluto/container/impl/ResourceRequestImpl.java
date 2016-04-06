@@ -20,11 +20,11 @@ import java.util.Enumeration;
 import java.util.Map;
 
 import javax.portlet.CacheControl;
+import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;
 
 import org.apache.pluto.container.PortletResourceRequestContext;
@@ -119,13 +119,13 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
    }
 
    @Override
-   public AsyncContext startAsync() throws IllegalStateException {
-      return getRequestContext().startAsync(this);
+   public PortletAsyncContext startAsync() throws IllegalStateException {
+      return (PortletAsyncContext) getRequestContext().startAsync(this);
    }
 
    @Override
-   public AsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
-      return getRequestContext().startAsync(request, response);
+   public PortletAsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
+      return (PortletAsyncContext) getRequestContext().startAsync(request, response);
    }
 
    @Override
@@ -139,8 +139,8 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
    }
 
    @Override
-   public AsyncContext getAsyncContext() {
-      return getRequestContext().getAsyncContext();
+   public PortletAsyncContext getAsyncContext() {
+      return (PortletAsyncContext) getRequestContext().getAsyncContext();
    }
 
    @Override

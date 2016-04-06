@@ -19,7 +19,7 @@
 
 package org.apache.pluto.driver.services.container;
 
-import org.apache.pluto.container.PortletAsyncContext;
+import org.apache.pluto.container.PortletAsyncManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,13 +37,13 @@ public class PortletAsyncContextualRunner implements Runnable {
    private static final boolean isTrace = LOG.isTraceEnabled();
    
 
-   private PortletAsyncContext pactx;
+   private PortletAsyncManager pactx;
    private Runnable targetRunner; 
 
    public PortletAsyncContextualRunner() {
    }
    
-   public void init(PortletAsyncContext pactx, Runnable targetRunner) {
+   public void init(PortletAsyncManager pactx, Runnable targetRunner) {
       this.pactx = pactx;
       this.targetRunner = targetRunner;
    }

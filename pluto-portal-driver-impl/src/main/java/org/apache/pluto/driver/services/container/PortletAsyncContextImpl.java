@@ -22,7 +22,10 @@ import java.util.Set;
 
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
+import javax.portlet.PortletAsyncContext;
+import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncListener;
 import javax.servlet.ServletContext;
@@ -32,7 +35,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.pluto.container.PortletAsyncContext;
+import org.apache.pluto.container.PortletAsyncManager;
 import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.bean.processor.PortletArtifactProducer;
 import org.apache.pluto.container.bean.processor.PortletRequestScopedBeanHolder;
@@ -48,7 +51,7 @@ import org.slf4j.LoggerFactory;
  * @author Scott Nicklous
  * 
  */
-public class PortletAsyncContextImpl implements PortletAsyncContext {
+public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContext, PortletAsyncContext {
    private static final Logger LOG = LoggerFactory.getLogger(PortletAsyncContextImpl.class);
    private static final boolean isDebug = LOG.isDebugEnabled();
    @SuppressWarnings("unused")
@@ -57,7 +60,7 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
    private AsyncContext                   actx;
    
    private final HttpServletRequest       hreq;
-   private final PortletAsyncListener     pal;
+   private final PortletAsyncContextListener     pal;
    private final PortletResourceRequestContext  prctx;
 
    private ResourceRequest                resreq;
@@ -81,7 +84,7 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
       HttpServletRequest creq = prctx.getContainerRequest();
       HttpServletResponse cresp = prctx.getContainerResponse();
 
-      pal = new PortletAsyncListener(this);
+      pal = new PortletAsyncContextListener(this);
       actx.addListener(pal, creq, cresp);
    }
 
@@ -237,27 +240,7 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
    @SuppressWarnings("unchecked")
    @Override
    public <T extends AsyncListener> T createListener(Class<T> cls) throws ServletException {
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder();
-         txt.append("Creating listener.");
-         txt.append(" Bean manager: ").append(beanmgr);
-         txt.append(", listener class: ").append(cls.getCanonicalName());
-         LOG.debug(txt.toString());
-      }
-      T lis = null;
-      if (beanmgr != null) {
-         Set<Bean<?>> beans = beanmgr.getBeans(cls);
-         Bean<?> bean = beanmgr.resolve(beans);
-         if (bean != null) {
-            lis = (T) beanmgr.getReference(bean, bean.getBeanClass(), beanmgr.createCreationalContext(bean));
-         } else {
-            LOG.warn("Could not get bean reference for: " + cls.getCanonicalName());
-            lis = actx.createListener(cls);
-         }
-      } else {
-         lis = actx.createListener(cls);
-      }
-      return lis;
+      return (T) createInstance(cls);
    }
 
    /*
@@ -350,6 +333,67 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
    @Override
    public void start(Runnable run) {
       pendingRunner = run;
+   }
+
+   @Override
+   public void addListener(javax.portlet.PortletAsyncListener listener) throws IllegalStateException {
+      pal.addListener(listener);
+   }
+
+   @Override
+   public void addListener(javax.portlet.PortletAsyncListener listener, ResourceRequest request,
+         ResourceResponse response) throws IllegalStateException {
+      pal.addListener(listener, request, response);
+   }
+
+   @SuppressWarnings("unchecked")
+   @Override
+   public <T extends javax.portlet.PortletAsyncListener> T createPortletAsyncListener(Class<T> cls)
+         throws PortletException {
+      return (T) createInstance(cls);
+   }
+
+   @Override
+   public ResourceRequest getResourceRequest() throws IllegalStateException {
+      return resreq;
+   }
+
+   @Override
+   public ResourceResponse getResourceResponse() throws IllegalStateException {
+      return prctx.getResponse();
+   }
+   
+   private Object createInstance(Class<?> cls) {
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Creating listener.");
+         txt.append(" Bean manager: ").append(beanmgr);
+         txt.append(", listener class: ").append(cls.getCanonicalName());
+         LOG.debug(txt.toString());
+      }
+      
+      Object lis = null;
+      if (beanmgr != null) {
+         Set<Bean<?>> beans = beanmgr.getBeans(cls);
+         Bean<?> bean = beanmgr.resolve(beans);
+         if (bean != null) {
+            lis = beanmgr.getReference(bean, bean.getBeanClass(), beanmgr.createCreationalContext(bean));
+         } else {
+            LOG.warn("Could not get bean reference for: " + cls.getCanonicalName());
+         }
+      } 
+      
+      if (lis == null) {
+         LOG.debug("Instantiating class directly: " + cls.getCanonicalName());
+         try {
+            lis = cls.newInstance();
+         } catch (Exception e) {
+            LOG.warn("Could not instantiate class: " + cls.getCanonicalName());
+         }
+      }
+      
+      return lis;
+
    }
 
 }

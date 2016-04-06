@@ -23,11 +23,14 @@ package javax.portlet;
 /**
  * <div class="changed_added_3_0">
  * Event that gets fired when the asynchronous operation initiated on a
- * ResourceRequest (via a call to ResourceRequest#startAsync or
- * ResourceRequest#startAsync(ResourceRequest, ResouceResponse)) has completed, timed
+ * <code>ResourceRequest</code> (via a call to <code>ResourceRequest#startAsync</code> or
+ * <code>ResourceRequest#startAsync(ResourceRequest, ResouceResponse))</code> has completed, timed
  * out, or produced an error.
  * </div>
  * 
+ * @see     PortletAsyncContext
+ * @see     PortletAsyncEvent
+ * @see     ResourceRequest
  * @since   3.0
  */
 public class PortletAsyncEvent {
@@ -39,8 +42,9 @@ public class PortletAsyncEvent {
    
    /**
     * <div class="changed_added_3_0">
-    * Constructs a PortletAsyncEvent from the given 
-    * PortletAsyncContext, ResourceRequest, ResourceResponse, and Throwable.
+    * Constructs a <code>PortletAsyncEvent</code> from the given 
+    * <code>PortletAsyncContext</code>, <code>ResourceRequest</code>, <code>ResourceResponse</code>, 
+    * and <code>Throwable</code>.
     * </div>
     * 
     * @since   3.0
@@ -59,8 +63,8 @@ public class PortletAsyncEvent {
 
    /**
     * <div class="changed_added_3_0">
-    * Constructs a PortletAsyncEvent from the given 
-    * PortletAsyncContext, ResourceRequest, and ResourceResponse.
+    * Constructs a <code>PortletAsyncEvent</code> from the given 
+    * <code>PortletAsyncContext</code>, <code>ResourceRequest</code>, and <code>ResourceResponse</code>.
     * </div>
     * 
     * @since   3.0
@@ -77,8 +81,8 @@ public class PortletAsyncEvent {
 
    /**
     * <div class="changed_added_3_0">
-    * Constructs a PortletAsyncEvent from the given 
-    * PortletAsyncContext and Throwable.
+    * Constructs a <code>PortletAsyncEvent</code> from the given 
+    * <code>PortletAsyncContext</code> and <code>Throwable</code>.
     * </div>
     * 
     * @since   3.0
@@ -95,8 +99,8 @@ public class PortletAsyncEvent {
 
    /**
     * <div class="changed_added_3_0">
-    * Constructs a PortletAsyncEvent from the given 
-    * PortletAsyncContext.
+    * Constructs a <code>PortletAsyncEvent</code> from the given 
+    * <code>PortletAsyncContext</code>.
     * </div>
     * 
     * @since   3.0
@@ -125,7 +129,13 @@ public class PortletAsyncEvent {
 
    /**
     * <div class="changed_added_3_0">
-    * Gets the resource request associated with the event.
+    * Gets the resource request associated with the listener when it was added through the 
+    * <code>PortletAsyncContext#addListener(PortletAsyncListener, ResourceRequest, ResourceResponse)</code>
+    * method. 
+    * <p>
+    * If the listener was added through the 
+    * <code>PortletAsyncContext#addListener(PortletAsyncListener)</code> method,
+    * the returned resource request will be <code>null</code>.
     * </div>
     * 
     * @since   3.0
@@ -139,7 +149,13 @@ public class PortletAsyncEvent {
 
    /**
     * <div class="changed_added_3_0">
-    * Gets the resource response associated with the event.
+    * Gets the resource response associated with the listener when it was added through the 
+    * <code>PortletAsyncContext#addListener(PortletAsyncListener, ResourceRequest, ResourceResponse)</code>
+    * method. 
+    * <p>
+    * If the listener was added through the 
+    * <code>PortletAsyncContext#addListener(PortletAsyncListener)</code> method,
+    * the returned resource response will be <code>null</code>.
     * </div>
     * 
     * @since   3.0

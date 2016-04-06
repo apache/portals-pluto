@@ -51,7 +51,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.FilterManager;
-import org.apache.pluto.container.PortletAsyncContext;
+import org.apache.pluto.container.PortletAsyncManager;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
@@ -477,7 +477,7 @@ public class PortletServlet3 extends HttpServlet {
 
             if (requestContext instanceof PortletResourceRequestContext) {
                PortletResourceRequestContext resctx = (PortletResourceRequestContext)requestContext;
-               PortletAsyncContext pac = resctx.getPortletAsyncContext();
+               PortletAsyncManager pac = resctx.getPortletAsyncContext();
                if (pac != null) {
                   pac.deregisterContext(false);
                   pac.launchRunner();

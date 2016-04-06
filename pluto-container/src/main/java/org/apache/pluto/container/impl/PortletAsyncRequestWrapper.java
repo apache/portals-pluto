@@ -30,6 +30,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.container.NamespaceMapper;
+import org.apache.pluto.container.PortletAsyncManager;
 import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletWindowID;
 import org.slf4j.Logger;
@@ -99,6 +100,10 @@ public class PortletAsyncRequestWrapper extends HttpServletPortletRequestWrapper
    
    @Override
    public void setAttribute(String name, Object o) {
+      PortletAsyncManager actx = reqctx.getPortletAsyncContext();
+      if (actx != null && actx.isComplete()) {
+         return;
+      }
       boolean encoded = false;
       Object val = getRequest().getAttribute(mapper.encode(winId, name));
       if (val != null) {
@@ -119,6 +124,10 @@ public class PortletAsyncRequestWrapper extends HttpServletPortletRequestWrapper
    
    @Override
    public void removeAttribute(String name) {
+      PortletAsyncManager actx = reqctx.getPortletAsyncContext();
+      if (actx != null && actx.isComplete()) {
+         return;
+      }
       boolean encoded = false;
       Object val = getRequest().getAttribute(mapper.encode(winId, name));
       if (val != null) {
@@ -161,53 +170,6 @@ public class PortletAsyncRequestWrapper extends HttpServletPortletRequestWrapper
       return info;
    }
    
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-//    @Override
-//    public RequestDispatcher getRequestDispatcher(String path) {
-//       RequestDispatcher rd = super.getRequestDispatcher(path);
-//       if (rd != null) {
-//          PortletRequestDispatcherImpl prd =  new PortletRequestDispatcherImpl(rd, false);
-//          prd.setPortletRequest(preq);
-//          prd.setPortletResponse(reqctx.getResponse());
-//          return prd;
-//       }
-//       return null;
-//    }
-   
-   
-   
-   
-   
-   
-   
-   // saved methods below.
-
-//    /**
-//     * Modifies the behavior of the underlying wrapper to allow access to the
-//     * async methods.
-//     * 
-//     * @param request
-//     * @param servletContext
-//     * @param session
-//     * @param portletRequest
-//     */
-//    public PortletAsyncRequestWrapper(HttpServletRequest request, ServletContext servletContext, HttpSession session,
-//          PortletRequest portletRequest) {
-//       super(request, servletContext, session, portletRequest, false, false);
-//       
-//    }
-//    
-// 
-// 
    @Override
    public AsyncContext startAsync() throws IllegalStateException {
       return reqctx.startAsync();
