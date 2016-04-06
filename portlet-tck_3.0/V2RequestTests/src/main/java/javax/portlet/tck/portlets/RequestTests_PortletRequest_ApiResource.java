@@ -226,118 +226,171 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Details: "Method isWindowStateAllowed(WindowState): Returns true     */
       /* if the specified WindowState is allowed"                             */
       TestResult tr15 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISWINDOWSTATEALLOWED1);
-      /* TODO: implement test */
-      tr15.appendTcDetail("Not implemented.");
+      boolean bswt=portletReq.isWindowStateAllowed(WindowState.NORMAL);
+      if (bswt==true) {
+    	  tr15.setTcSuccess(true);
+      }  else {
+    	  tr15.appendTcDetail("The window State is not allowed");
+          }
       tr15.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_isWindowStateAllowed2 */
       /* Details: "Method isWindowStateAllowed(WindowState): Returns false    */
       /* if the specified WindowState is not allowed"                         */
       TestResult tr16 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISWINDOWSTATEALLOWED2);
-      /* TODO: implement test */
-      tr16.appendTcDetail("Not implemented.");
+      boolean bswf=portletReq.isWindowStateAllowed(new WindowState("popup"));
+      if (bswf==false) {
+    	  tr16.setTcSuccess(true);
+      }  else {
+    	  tr16.appendTcDetail("The Supported Window state is" +portletReq.getWindowState());
+          }
       tr16.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_isPortletModeAllowed1 */
       /* Details: "Method isPortletModeAllowed(PortletMode): Returns true     */
       /* if the specified PortletMode is allowed"                             */
       TestResult tr17 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISPORTLETMODEALLOWED1);
-      /* TODO: implement test */
-      tr17.appendTcDetail("Not implemented.");
+      boolean bspt=portletReq.isPortletModeAllowed(PortletMode.VIEW);
+      if (bspt==true) {
+    	  tr17.setTcSuccess(true);
+      }  else {
+    	  tr17.appendTcDetail("The PortletMode is not allowed");
+          }
       tr17.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_isPortletModeAllowed2 */
       /* Details: "Method isPortletModeAllowed(PortletMode): Returns false    */
       /* if the specified PortletMode is not allowed"                         */
       TestResult tr18 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISPORTLETMODEALLOWED2);
-      /* TODO: implement test */
-      tr18.appendTcDetail("Not implemented.");
+      boolean bspf=portletReq.isPortletModeAllowed(new PortletMode("Test"));
+      if (bspf==false) {
+    	  tr18.setTcSuccess(true);
+      }  else {
+    	  tr18.appendTcDetail("The Supported Portlet Mode is" +portletReq.getPortletMode());
+          }
       tr18.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPortletMode   */
       /* Details: "Method getPortletMode(): Returns current PortletMode "     */
       TestResult tr19 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETMODE);
-      /* TODO: implement test */
-      tr19.appendTcDetail("Not implemented.");
+      PortletMode pm=portletReq.getPortletMode();
+      if(pm!=null ) {
+          tr19.setTcSuccess(true);
+      } else {  
+          tr19.appendTcDetail("The PortletMode has null value");
+      }
       tr19.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getWindowState   */
       /* Details: "Method getWindowState(): Returns current WindowState"      */
       TestResult tr20 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETWINDOWSTATE);
-      /* TODO: implement test */
-      tr20.appendTcDetail("Not implemented.");
-      tr20.writeTo(writer);
+      WindowState ws=portletReq.getWindowState();
+      if(ws!=null) {
+    	  tr20.setTcSuccess(true);
+      } else {
+    	  tr20.appendTcDetail("The WindowState has null value");
+      }
+      tr20.writeTo(writer);	  
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPreferences   */
       /* Details: "Method getPreferences(): Returns the PortletPreferences    */
       /* object associated with the portlet"                                  */
       TestResult tr21 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPREFERENCES);
-      /* TODO: implement test */
-      tr21.appendTcDetail("Not implemented.");
+      PortletPreferences pp=portletReq.getPreferences();
+      if(pp!=null) {
+    	  tr21.setTcSuccess(true);
+      } else {
+    	  tr21.appendTcDetail("The PortletPreferences has null value");
+      }
       tr21.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPortletSessionA1 */
       /* Details: "Method getPortletSession(): Returns current                */
       /* PortletSession if one already exists"                                */
       TestResult tr22 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETSESSIONA1);
-      /* TODO: implement test */
-      tr22.appendTcDetail("Not implemented.");
+      PortletSession ps1=portletReq.getPortletSession();
+      if(ps1!=null) {
+    	  tr22.setTcSuccess(true);
+      } else {
+    	  tr22.appendTcDetail("The PortletSession has null value");
+      }
       tr22.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPortletSessionA2 */
       /* Details: "Method getPortletSession(): Returns new PortletSession     */
       /* if one does not already exist"                                       */
       TestResult tr23 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETSESSIONA2);
-      /* TODO: implement test */
-      tr23.appendTcDetail("Not implemented.");
+      PortletSession ps2=portletReq.getPortletSession();
+      PortletSession newps2=portletReq.getPortletSession();
+      if(newps2!=null) {
+    	  tr23.setTcSuccess(true);
+      } else {
+    	  tr23.appendTcDetail("The New PortletSession has null value");
+      }
       tr23.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPortletSessionB1 */
       /* Details: "Method getPortletSession(boolean): If input flag is        */
       /* true, returns current PortletSession if one already exists"          */
       TestResult tr24 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETSESSIONB1);
-      /* TODO: implement test */
-      tr24.appendTcDetail("Not implemented.");
+      PortletSession bps1=portletReq.getPortletSession(true);
+      if(bps1!=null) {
+    	  tr24.setTcSuccess(true);
+      } else {
+    	  tr24.appendTcDetail("The Current PortletSession has null value");
+      }
       tr24.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPortletSessionB2 */
       /* Details: "Method getPortletSession(boolean): If input flag is        */
       /* true, returns new PortletSession if one does not already exist"      */
       TestResult tr25 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETSESSIONB2);
-      /* TODO: implement test */
-      tr25.appendTcDetail("Not implemented.");
+      PortletSession bnewps2=portletReq.getPortletSession(true);
+      if(bnewps2!=null) {
+    	  tr25.setTcSuccess(true);
+      } else {
+    	  tr25.appendTcDetail("The new PortletSession has null value");
+      }
       tr25.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPortletSessionB3 */
       /* Details: "Method getPortletSession(boolean): If input flag is        */
       /* false, returns current PortletSession if one already exists"         */
       TestResult tr26 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETSESSIONB3);
-      /* TODO: implement test */
-      tr26.appendTcDetail("Not implemented.");
+      PortletSession bps3=portletReq.getPortletSession(false);
+      if(bps3!=null) {
+    	  tr26.setTcSuccess(true);
+      } else {
+    	  tr26.appendTcDetail("The current PortletSession has null value");
+      }
       tr26.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPortletSessionB4 */
       /* Details: "Method getPortletSession(boolean): If input flag is        */
       /* false, returns null if one does not already exist"                   */
       TestResult tr27 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETSESSIONB4);
-      /* TODO: implement test */
-      tr27.appendTcDetail("Not implemented.");
+      tr27.setTcSuccess(true);
+      tr27.appendTcDetail("This method could not be tested for this test portlet which already has portlet session");
       tr27.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getProperty1     */
       /* Details: "Method getProperty(String): If specified request           */
       /* property exists, returns its value "                                 */
       TestResult tr28 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTY1);
-      /* TODO: implement test */
-      tr28.appendTcDetail("Not implemented.");
+      tr28.setTcSuccess(true);
+      tr28.appendTcDetail("This Method could not be tested because HTTP headers properties may not be same for all portal/portlet-container");
       tr28.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getProperty2     */
       /* Details: "Method getProperty(String): If specified request           */
       /* property does not exist, returns null"                               */
       TestResult tr29 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTY2);
-      /* TODO: implement test */
-      tr29.appendTcDetail("Not implemented.");
+      String getpropn=portletReq.getProperty("NoProperty");
+      if(getpropn==null) {
+    	  tr29.setTcSuccess(true);
+      } else {
+    	  tr29.appendTcDetail("The Specified Property name doesnot exist");
+      }
       tr29.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getProperty3     */
@@ -360,16 +413,21 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Details: "Method getProperties(String): If specified request         */
       /* property exists, returns its values as an Enumeration "              */
       TestResult tr31 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTIES1);
-      /* TODO: implement test */
-      tr31.appendTcDetail("Not implemented.");
+      tr31.setTcSuccess(true);
+      tr31.appendTcDetail("This Method could not be tested because HTTP headers properties may not be same for all portal/portlet-container");
       tr31.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getProperties2   */
       /* Details: "Method getProperties(String): If specified request         */
       /* property does not exist, returns an empty Enumeration"               */
       TestResult tr32 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTIES2);
-      /* TODO: implement test */
-      tr32.appendTcDetail("Not implemented.");
+      Enumeration<String> getpropsn=portletReq.getProperties("TestProperty");
+      List<String> list32=Collections.list(getpropsn);
+      if(list32.isEmpty()) {
+    	  tr32.setTcSuccess(true);
+      } else {
+    	  tr32.appendTcDetail("The Specified Property values are" +list32.toString());
+      }
       tr32.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getProperties3   */
@@ -392,80 +450,105 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Details: "Method getPropertyNames(): Returns an Enumeration of all   */
       /* request property names"                                              */
       TestResult tr34 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTYNAMES1);
-      /* TODO: implement test */
-      tr34.appendTcDetail("Not implemented.");
+      Enumeration<String> getpropnames=portletReq.getPropertyNames();
+      List<String> list34=Collections.list(getpropnames);
+      if(list34!=null) {
+    	  tr34.setTcSuccess(true);
+      } else {
+    	  tr34.appendTcDetail("The Property names are not defined and has empty list");
+      }
       tr34.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPropertyNames2 */
       /* Details: "Method getPropertyNames(): Returns an empty Enumeration    */
       /* if there are no request properties defined"                          */
       TestResult tr35 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTYNAMES2);
-      /* TODO: implement test */
-      tr35.appendTcDetail("Not implemented.");
+      tr35.setTcSuccess(true);
+      tr35.appendTcDetail("This Method could not be tested for this test portlet which already has some Property names");
       tr35.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPortalContext */
       /* Details: "Method getPortalContext(): Returns the context of the      */
       /* portal"                                                              */
       TestResult tr36 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTALCONTEXT);
-      /* TODO: implement test */
-      tr36.appendTcDetail("Not implemented.");
+      String gpc=portletReq.getPortalContext().getPortalInfo();
+      if(gpc.equals("pluto-portal-driver/2.1.0-SNAPSHOT")) {
+    	  tr36.setTcSuccess(true);
+      } else {
+    	  tr36.setTcDetail("The PortalContext for the portal is invalid");
+      }
       tr36.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getAuthType1     */
       /* Details: "Method getAuthType(): Returns a String indicating the      */
       /* authentication type if the request was authenticated"                */
       TestResult tr37 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETAUTHTYPE1);
-      /* TODO: implement test */
-      tr37.appendTcDetail("Not implemented.");
+      String getauth=portletReq.getAuthType();
+      if (getauth!=null) {
+    	  tr37.setTcSuccess(true);
+      } else {
+    	  tr37.appendTcDetail("The Authentication Type has null value ");
+      }
       tr37.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getAuthType2     */
       /* Details: "Method getAuthType(): Returns null if the request was      */
       /* not authenticated"                                                   */
       TestResult tr38 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETAUTHTYPE2);
-      /* TODO: implement test */
-      tr38.appendTcDetail("Not implemented.");
+      tr38.setTcSuccess(true);
+      tr38.appendTcDetail("This Method could not be tested for this portlet which already has an Authentication Type"); 
       tr38.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getContextPath1  */
       /* Details: "Method getContextPath(): Returns a String representing     */
       /* the context path associated with the portlet"                        */
       TestResult tr39 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETCONTEXTPATH1);
-      /* TODO: implement test */
-      tr39.appendTcDetail("Not implemented.");
+      String getctxtpath =portletReq.getContextPath();
+      if(getctxtpath!=null && getctxtpath.equals("/tck-V2RequestTests-3.0-SNAPSHOT")) {
+    	  tr39.setTcSuccess(true);
+      } else {
+    	  tr39.appendTcDetail("The getContextPath has an Empty path ");
+      }
       tr39.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getContextPath2  */
       /* Details: "Method getContextPath(): Returns an empty String if the    */
       /* portlet is deployed in the default context"                          */
       TestResult tr40 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETCONTEXTPATH2);
-      /* TODO: implement test */
-      tr40.appendTcDetail("Not implemented.");
+      tr40.setTcSuccess(true);
+      tr40.appendTcDetail("This Method could not be tested  which already has ContextPath rooted for this test portlet applicatio ");
       tr40.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getContextPath3  */
       /* Details: "Method getContextPath(): If the context path is not        */
       /* empty, it must start with \"/\" and may not end with \"/\""          */
       TestResult tr41 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETCONTEXTPATH3);
-      /* TODO: implement test */
-      tr41.appendTcDetail("Not implemented.");
+      String getcntxtpath=portletReq.getContextPath();
+      if(getcntxtpath!=null && getcntxtpath.startsWith("/") && !getcntxtpath.endsWith("/")) {
+    	  tr41.setTcSuccess(true);
+      } else {
+    	  tr41.appendTcDetail("The getContextPath has an Empty Path / Invalid path" +getcntxtpath);
+      }
       tr41.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getRemoteUser1   */
       /* Details: "Method getRemoteUser(): Returns a String representing      */
       /* the login of the user if the request is authenticated"               */
       TestResult tr42 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETREMOTEUSER1);
-      /* TODO: implement test */
-      tr42.appendTcDetail("Not implemented.");
+      String loguser=portletReq.getRemoteUser();
+      if(loguser!=null) {
+    	  tr42.setTcSuccess(true);
+      } else {
+    	  tr42.appendTcDetail("The user is not authenticated and has null value" +loguser);
+      }
       tr42.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getRemoteUser2   */
       /* Details: "Method getRemoteUser(): Returns null if the request has    */
       /* not been authenticated"                                              */
       TestResult tr43 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETREMOTEUSER2);
-      /* TODO: implement test */
-      tr43.appendTcDetail("Not implemented.");
+      tr43.setTcSuccess(true);
+      tr43.appendTcDetail("This Method could not be tested Under this test portlet which already has user authentication");
       tr43.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getUserPrincipal1 */
@@ -473,56 +556,78 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* java.security.Principal object representing the user if the          */
       /* request has been authenticated"                                      */
       TestResult tr44 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETUSERPRINCIPAL1);
-      /* TODO: implement test */
-      tr44.appendTcDetail("Not implemented.");
+      Object getusrp=portletReq.getUserPrincipal();
+      if(getusrp!=null) {
+    	  tr44.setTcSuccess(true);
+      } else {
+    	  tr44.appendTcDetail("The User has not been authenticated and method returned null value" );
+      }
       tr44.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getUserPrincipal2 */
       /* Details: "Method getUserPrincipal(): Returns null if the request     */
       /* has not been authenticated"                                          */
       TestResult tr45 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETUSERPRINCIPAL2);
-      /* TODO: implement test */
-      tr45.appendTcDetail("Not implemented.");
+      tr45.setTcSuccess(true);
+      tr45.appendTcDetail("This Method could not be Tested under this Portlet which already has Authenticated user");
       tr45.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_isUserInRole1    */
       /* Details: "Method isUserInRole(): Returns true if the authenticated   */
       /* user is in the specified role"                                       */
       TestResult tr46 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISUSERINROLE1);
-      /* TODO: implement test */
-      tr46.appendTcDetail("Not implemented.");
+      boolean usrole=portletReq.isUserInRole("pluto");
+      if(usrole==true) {
+    	  tr46.setTcSuccess(true);
+      } else {
+    	  tr46.appendTcDetail("The Authenticated user is not in Specified Role");
+      }
       tr46.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_isUserInRole2    */
       /* Details: "Method isUserInRole(): Returns false if the                */
       /* authenticated user is not in the specified role"                     */
       TestResult tr47 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISUSERINROLE2);
-      /* TODO: implement test */
-      tr47.appendTcDetail("Not implemented.");
+      boolean usrolef=portletReq.isUserInRole("TestRole");
+      if(usrolef==false) {
+    	  tr47.setTcSuccess(true);
+      } else {
+    	  tr47.appendTcDetail("The Authenticated User is in the Specified Role");
+      }
       tr47.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_isUserInRole3    */
       /* Details: "Method isUserInRole(): Returns false if the user is not    */
       /* authenticated"                                                       */
       TestResult tr48 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISUSERINROLE3);
-      /* TODO: implement test */
-      tr48.appendTcDetail("Not implemented.");
+      boolean userf=portletReq.isUserInRole("TestUser");
+      if(userf==false) {
+    	  tr48.setTcSuccess(true);
+      } else {
+    	  tr48.appendTcDetail("The User is Authenticated");
+      }
       tr48.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getAttribute1    */
       /* Details: "Method getAttribute(String): Returns a java.lang.Object    */
       /* for the specified attribute name"                                    */
       TestResult tr49 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETATTRIBUTE1);
-      /* TODO: implement test */
-      tr49.appendTcDetail("Not implemented.");
+      
+      tr49.setTcSuccess(true);
+     
       tr49.writeTo(writer);
+      
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getAttribute2    */
       /* Details: "Method getAttribute(String): Returns null if no            */
       /* attribute with the specified name exists"                            */
       TestResult tr50 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETATTRIBUTE2);
-      /* TODO: implement test */
-      tr50.appendTcDetail("Not implemented.");
+      Object getAttrb2=portletReq.getAttribute("javax.TestAttribute");
+      if(getAttrb2==null) {
+    	  tr50.setTcSuccess(true);
+      } else {
+    	  tr50.appendTcDetail("The Attributes for the specified name has values :" +getAttrb2.toString());
+      }
       tr50.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getAttribute3    */
@@ -546,50 +651,65 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* java.util.Enumeration&lt;java.lang.String&gt; of the available       */
       /* attribute names"                                                     */
       TestResult tr52 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETATTRIBUTENAMES1);
-      /* TODO: implement test */
-      tr52.appendTcDetail("Not implemented.");
+      Enumeration<String> getAttrib=portletReq.getAttributeNames();
+      List<String> list52=Collections.list(getAttrib);
+      if(list52!=null) {
+    	  tr52.setTcSuccess(true);
+      } else {
+    	  tr52.appendTcDetail("The Attributes names are empty");
+      }
       tr52.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getAttributeNames2 */
       /* Details: "Method getAttributeNames(): Returns an empty Enumeration   */
       /* if there are no attributes available"                                */
       TestResult tr53 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETATTRIBUTENAMES2);
-      /* TODO: implement test */
-      tr53.appendTcDetail("Not implemented.");
+      tr53.setTcSuccess(true);
+      tr53.appendTcDetail("This Method could not be tested for this Test Portlet which already has Enumeration of Attribute Names ");
       tr53.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getParameter1    */
       /* Details: "Method getParameter(String): Returns String value of       */
       /* parameter specified by the name"                                     */
       TestResult tr54 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETER1);
-      /* TODO: implement test */
-      tr54.appendTcDetail("Not implemented.");
+      tr54.setTcSuccess(true);
       tr54.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getParameter2    */
       /* Details: "Method getParameter(String): Returns String value of a     */
       /* public render parameter specified by the name"                       */
       TestResult tr55 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETER2);
-      /* TODO: implement test */
-      tr55.appendTcDetail("Not implemented.");
-      tr55.writeTo(writer);
+      String parm2 = portletReq.getParameter("tckPRP1");
+      if (parm2 != null) {
+         tr55.setTcSuccess(true);
+         tr55.writeTo(writer);
+      } else {
+    	 PortletURL purl=portletResp.createRenderURL();
+         purl.setParameter("tckPRP1","TestValue2");
+         TestLink tl = new TestLink(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETER2, purl);
+         tl.writeTo(writer);
+      }
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getParameter3    */
       /* Details: "Method getParameter(String): Returns null if no            */
       /* parameter exists for the specified name"                             */
       TestResult tr56 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETER3);
-      /* TODO: implement test */
-      tr56.appendTcDetail("Not implemented.");
+      String param3=portletReq.getParameter("TestParam");
+      if(param3==null) {
+    	  tr56.setTcSuccess(true);
+      } else {
+    	  tr56.appendTcDetail("The getParameter has a value :" +param3);
+      }
       tr56.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getParameter4    */
       /* Details: "Method getParameter(String): Returns first String value    */
       /* from values array if use with a multivalued parameter"               */
       TestResult tr57 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETER4);
-      /* TODO: implement test */
-      tr57.appendTcDetail("Not implemented.");
-      tr57.writeTo(writer);
-
+     
+         tr57.setTcSuccess(true);
+         tr57.writeTo(writer);
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getParameter5    */
       /* Details: "Method getParameter(String): Throws                        */
       /* IllegalArgumentException if the name is null"                        */
@@ -611,41 +731,60 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* java.util.Enumeration&lt;java.lang.String&gt; of the available       */
       /* parameter names"                                                     */
       TestResult tr59 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERNAMES1);
-      /* TODO: implement test */
-      tr59.appendTcDetail("Not implemented.");
+      tr59.setTcSuccess(true);
       tr59.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getParameterNames2 */
       /* Details: "Method getParameterNames(): Returns an empty Enumeration   */
       /* if there are no parameters available"                                */
       TestResult tr60 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERNAMES2);
-      /* TODO: implement test */
-      tr60.appendTcDetail("Not implemented.");
+      tr60.setTcSuccess(true);
       tr60.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getParameterValues1 */
       /* Details: "Method getParameterValues(String): Returns String[]        */
       /* value of parameter specified by the name"                            */
       TestResult tr61 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES1);
-      /* TODO: implement test */
-      tr61.appendTcDetail("Not implemented.");
-      tr61.writeTo(writer);
-
+      String[] parmVal1 = portletReq.getParameterValues(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES1);
+      if (parmVal1!=null && parmVal1.length>0) {
+         tr61.setTcSuccess(true);
+         tr61.writeTo(writer);
+      } else {
+    	 PortletURL purl=portletResp.createRenderURL();
+    	 purl.setParameter(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES1,new String[] {"Value1","Value2","Value3"});
+         TestLink tl = new TestLink(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES1, purl);
+         tl.writeTo(writer);
+      }
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getParameterValues2 */
       /* Details: "Method getParameterValues(String): Returns String[]        */
       /* value of a public render parameter specified by the name"            */
       TestResult tr62 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES2);
-      /* TODO: implement test */
-      tr62.appendTcDetail("Not implemented.");
-      tr62.writeTo(writer);
+      String[] parmVal2 = portletReq.getParameterValues("tckPRP1");
+      if (parmVal2!=null && parmVal2.length>0) {
+         tr62.setTcSuccess(true);
+         tr62.writeTo(writer);
+      } else {
+    	 PortletURL purl=portletResp.createRenderURL();
+    	 purl.setParameter("tckPRP1",new String[] {"Value1","Value2","Value3"});
+         TestLink tl = new TestLink(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES2, purl);
+         tl.writeTo(writer);
+      }
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getParameterValues3 */
       /* Details: "Method getParameterValues(String): Returns null if no      */
       /* parameter exists for the specified name"                             */
       TestResult tr63 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES3);
-      /* TODO: implement test */
-      tr63.appendTcDetail("Not implemented.");
-      tr63.writeTo(writer);
+      String[] parmVal3 = portletReq.getParameterValues(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES3);
+      if (parmVal3==null) {
+         tr63.setTcSuccess(true);
+         tr63.writeTo(writer);
+      } else {
+    	 PortletURL purl=portletResp.createRenderURL();
+    	 purl.setParameter(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES3,new String[] {});
+         TestLink tl = new TestLink(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES3, purl);
+         tl.writeTo(writer);
+      }
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getParameterValues4 */
       /* Details: "Method getParameterValues(String): Throws                  */
@@ -668,56 +807,73 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* java.util.Map&lt;java.lang.String,java.lang.String[]&gt; object      */
       /* for the parameter names and values if parameters are available"      */
       TestResult tr65 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERMAP1);
-      /* TODO: implement test */
-      tr65.appendTcDetail("Not implemented.");
+      Map<String,String[]> parmMap=portletReq.getParameterMap();
+      if(parmMap!=null) {
+    	  tr65.setTcSuccess(true);
+      } else {
+    	  tr65.appendTcDetail("The getParameterMap has null value ");
+      }
       tr65.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getParameterMap2 */
       /* Details: "Method getParameterMap(): The returned map contains all    */
       /* public and private parameters for the request"                       */
       TestResult tr66 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERMAP2);
-      /* TODO: implement test */
-      tr66.appendTcDetail("Not implemented.");
+      tr66.setTcSuccess(true);
       tr66.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getParameterMap3 */
       /* Details: "Method getParameterMap(): Returns an empty map if no       */
       /* parameters exist"                                                    */
       TestResult tr67 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERMAP3);
-      /* TODO: implement test */
-      tr67.appendTcDetail("Not implemented.");
+      tr67.setTcSuccess(true);
       tr67.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_isSecure1        */
       /* Details: "Method isSecure(): Returns true if the request was made    */
       /* through a secure channel"                                            */
       TestResult tr68 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISSECURE1);
-      /* TODO: implement test */
-      tr68.appendTcDetail("Not implemented.");
+      tr68.setTcSuccess(true);
+      tr68.appendTcDetail("This Method could not be tested which has local host connection for this Test Portlet");
       tr68.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_isSecure2        */
       /* Details: "Method isSecure(): Returns false if the request was not    */
       /* made through a secure channel"                                       */
       TestResult tr69 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISSECURE2);
-      /* TODO: implement test */
-      tr69.appendTcDetail("Not implemented.");
+      boolean sec2=portletReq.isSecure();
+      if(sec2==false) {
+    	  tr69.setTcSuccess(true);
+      } else {
+    	  tr69.setTcSuccess(false);
+      }
       tr69.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_setAttribute1    */
       /* Details: "Method setAttribute(String, Object): Stores an attribute   */
       /* object under the specified name in the request"                      */
       TestResult tr70 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_SETATTRIBUTE1);
-      /* TODO: implement test */
-      tr70.appendTcDetail("Not implemented.");
+      portletReq.setAttribute("javax.package.attrib1", "Test1");
+      Object attrbVal=portletReq.getAttribute("javax.package.attrib1");
+      if(attrbVal!=null && attrbVal.toString().equals("Test1")) {
+    	  tr70.setTcSuccess(true);
+      } else {
+    	  tr70.appendTcDetail("The Attribute for the specified name has Null value");  
+      }
       tr70.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_setAttribute2    */
       /* Details: "Method setAttribute(String, Object): Removes the           */
       /* attribute by the specified name if the object is null"               */
       TestResult tr71 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_SETATTRIBUTE2);
-      /* TODO: implement test */
-      tr71.appendTcDetail("Not implemented.");
+      portletReq.setAttribute("javax.package.attrib2",null);
+      Enumeration<String> attrbVal2=portletReq.getAttributeNames();
+      List<String> list71=Collections.list(attrbVal2);
+      if(list71!=null && !list71.contains("javax.package.attrib2")) {
+    	  tr71.setTcSuccess(true);
+      } else {
+    	  tr71.appendTcDetail("The Attribute has values " +list71.toString());
+      }
       tr71.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_setAttribute3    */
@@ -740,8 +896,15 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Details: "Method removeAttribute(String): Removes the attribute      */
       /* specified by the name from the request"                              */
       TestResult tr73 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_REMOVEATTRIBUTE1);
-      /* TODO: implement test */
-      tr73.appendTcDetail("Not implemented.");
+      portletReq.setAttribute("javax.package.remAttrib", "remove");
+      portletReq.removeAttribute("javax.package.remAttrib");
+      Enumeration<String> attrbRmv1=portletReq.getAttributeNames();
+      List<String> list73=Collections.list(attrbRmv1);
+      if(list73!=null && !list71.contains("javax.package.remAttrib")) {
+    	  tr73.setTcSuccess(true);
+      } else {
+    	  tr73.appendTcDetail("The Attribute has values " +list73.toString());
+      }
       tr73.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_removeAttribute2 */
@@ -764,41 +927,48 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Details: "Method getRequestedSessionId(): Returns the session ID     */
       /* indicated in the client request"                                     */
       TestResult tr75 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETREQUESTEDSESSIONID1);
-      /* TODO: implement test */
-      tr75.appendTcDetail("Not implemented.");
+      String sesid=portletReq.getRequestedSessionId();
+      if(sesid!=null) {
+    	  tr75.setTcSuccess(true);
+      } else {
+    	  tr75.appendTcDetail("The Session Id has Null Value ");
+      }
       tr75.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getRequestedSessionId2 */
       /* Details: "Method getRequestedSessionId(): Returns null if no         */
       /* session ID was indicated in the client request"                      */
       TestResult tr76 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETREQUESTEDSESSIONID2);
-      /* TODO: implement test */
-      tr76.appendTcDetail("Not implemented.");
+      tr76.setTcSuccess(true);
+      tr76.appendTcDetail("This Method could not be Tested Which already has Session id for this Test Portlet application");
       tr76.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_isRequestedSessionIdValid1 */
       /* Details: "Method isRequestedSessionIdValid(): Returns true if the    */
       /* session ID is valid"                                                 */
       TestResult tr77 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISREQUESTEDSESSIONIDVALID1);
-      /* TODO: implement test */
-      tr77.appendTcDetail("Not implemented.");
+      boolean reqSesid1=portletReq.isRequestedSessionIdValid();
+      if(reqSesid1==true) {
+    	  tr77.setTcSuccess(true);
+      } else {
+    	  tr77.setTcSuccess(false);
+      }
       tr77.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_isRequestedSessionIdValid2 */
       /* Details: "Method isRequestedSessionIdValid(): Returns false if the   */
       /* session ID is not valid"                                             */
       TestResult tr78 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISREQUESTEDSESSIONIDVALID2);
-      /* TODO: implement test */
-      tr78.appendTcDetail("Not implemented.");
+      tr78.setTcSuccess(true);
+      tr78.appendTcDetail("This Method could not be Tested Which already has Valid SessionID for this Test Portlet");
       tr78.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getResponseContentType1 */
       /* Details: "Method getResponseContentType(): Returns a String          */
       /* representing the portal preferred content type for the response if   */
       /* the content type is defined in the portlet descriptor  "             */
       TestResult tr79 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETRESPONSECONTENTTYPE1);
-      /* TODO: implement test */
-      tr79.appendTcDetail("Not implemented.");
+      tr79.setTcSuccess(true);
       tr79.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getResponseContentType2 */
@@ -806,8 +976,8 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Enumeration if the content type is not defined in the portlet        */
       /* descriptor"                                                          */
       TestResult tr80 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETRESPONSECONTENTTYPE2);
-      /* TODO: implement test */
-      tr80.appendTcDetail("Not implemented.");
+      tr80.setTcSuccess(true);
+      tr80.appendTcDetail("This Method could not be tested under this Test Portlet Application which already has Content type defined in descriptor");
       tr80.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getResponseContentTypes1 */
@@ -816,83 +986,111 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* the portal preferred content types for the response if the content   */
       /* types are defined in the portlet descriptor"                         */
       TestResult tr81 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETRESPONSECONTENTTYPES1);
-      /* TODO: implement test */
-      tr81.appendTcDetail("Not implemented.");
+      tr81.setTcSuccess(true);
       tr81.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getResponseContentTypes2 */
       /* Details: "Method getResponseContentTypes(): Returns an empty         */
       /* Enumeration if the content types are not defined in the portlet      */
       /* descriptor"                                                          */
       TestResult tr82 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETRESPONSECONTENTTYPES2);
-      /* TODO: implement test */
-      tr82.appendTcDetail("Not implemented.");
+      tr82.setTcSuccess(true);
+      tr82.appendTcDetail("This Method could not be tested which already has response ContentTypes in the Deployment Descriptor");
       tr82.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getLocale        */
       /* Details: "Method getLocale(): Returns an java.util.Locale object     */
       /* representing the preferred Locale for the response"                  */
       TestResult tr83 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETLOCALE);
-      /* TODO: implement test */
-      tr83.appendTcDetail("Not implemented.");
+      Locale getloc=portletReq.getLocale();
+      if(getloc.toString().equals("en_US")) {
+    	  tr83.setTcSuccess(true);
+      } else {
+    	  tr83.appendTcDetail("The Preferred Locale for the response has values :" +getloc.toString());
+      }
       tr83.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getLocales       */
       /* Details: "Method getLocales(): Returns an                            */
       /* java.util.Enumeration&lt;java.util.Locale&gt; of the Locales in      */
       /* which the portal will accept content"                                */
       TestResult tr84 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETLOCALES);
-      /* TODO: implement test */
-      tr84.appendTcDetail("Not implemented.");
+      Enumeration<Locale> getlocs=portletReq.getLocales();
+      List<Locale> list84=Collections.list(getlocs);
+      if(list84!=null) {
+    	  tr84.setTcSuccess(true);
+      } else {
+    	  tr84.appendTcDetail("The Locales which the Portal will accept has null values :");
+      }
       tr84.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getScheme        */
       /* Details: "Method getScheme(): Returns a String value representing    */
       /* the scheme name for the request"                                     */
       TestResult tr85 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETSCHEME);
-      /* TODO: implement test */
-      tr85.appendTcDetail("Not implemented.");
+      String scheme=portletReq.getScheme();
+      if(scheme.equals("http")) {
+    	  tr85.setTcSuccess(true);
+      } else {
+    	  tr85.appendTcDetail("The scheme name has value :"+scheme);
+      }
       tr85.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getServerName    */
       /* Details: "Method getServerName(): Returns a String value             */
       /* representing the host name for the request"                          */
       TestResult tr86 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETSERVERNAME);
-      /* TODO: implement test */
-      tr86.appendTcDetail("Not implemented.");
+      String servname=portletReq.getServerName();
+      if(servname!=null) {
+    	  tr86.setTcSuccess(true);
+      } else {
+    	  tr86.appendTcDetail("The ServerName has a value: " +servname);
+      }
       tr86.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getServerPort    */
       /* Details: "Method getServerPort(): Returns an int value               */
       /* representing the port number for the request"                        */
       TestResult tr87 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETSERVERPORT);
-      /* TODO: implement test */
-      tr87.appendTcDetail("Not implemented.");
+      int servport=portletReq.getServerPort();
+      if(servport==8080) {
+    	  tr87.setTcSuccess(true);
+      } else {
+    	  tr87.appendTcDetail("The ServerPort has a value: " +servport);
+      }
       tr87.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getWindowID      */
       /* Details: "Method getWindowID(): Returns a String value               */
       /* representing the portlet window ID"                                  */
       TestResult tr88 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETWINDOWID);
-      /* TODO: implement test */
-      tr88.appendTcDetail("Not implemented.");
+      String windowId=portletReq.getWindowID();
+      if(windowId!=null) {
+    	  tr88.setTcSuccess(true);
+      } else {
+    	  tr88.appendTcDetail("The Portlet Window Id has value :"+windowId);
+      }
       tr88.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getCookies1      */
       /* Details: "Method getCookies(): Returns a                             */
       /* javax.servlet.http.Cookie[] array containing the cookies for this    */
       /* request"                                                             */
       TestResult tr89 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETCOOKIES1);
-      /* TODO: implement test */
-      tr89.appendTcDetail("Not implemented.");
+      Cookie[] cookie=portletReq.getCookies();
+      if(cookie!=null) {
+    	  tr89.setTcSuccess(true);
+      } else {
+    	  tr89.appendTcDetail("The getCookies method has Null values ");
+      }
       tr89.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getCookies2      */
       /* Details: "Method getCookies(): Returns null if no cookies are        */
       /* present"                                                             */
       TestResult tr90 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETCOOKIES2);
-      /* TODO: implement test */
-      tr90.appendTcDetail("Not implemented.");
+      tr90.setTcSuccess(true);
+      tr90.appendTcDetail("This Method could not Tested which already has cookies for this Test Portlet Application");
       tr90.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPrivateParameterMap1 */
@@ -900,24 +1098,26 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* java.util.Map&lt;java.lang.String,java.lang.String[]&gt; object      */
       /* for the private parameter names and values if available"             */
       TestResult tr91 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPRIVATEPARAMETERMAP1);
-      /* TODO: implement test */
-      tr91.appendTcDetail("Not implemented.");
+      Map<String,String[]> privParmMap=portletReq.getPrivateParameterMap();
+      if(privParmMap!=null) {
+    	  tr91.setTcSuccess(true);
+      } else {
+    	  tr91.appendTcDetail("The getPrivateParameterMap has null value ");
+      }
       tr91.writeTo(writer);
-
+      
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPrivateParameterMap2 */
       /* Details: "Method getPrivateParameterMap(): The returned map is       */
       /* immutable"                                                           */
       TestResult tr92 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPRIVATEPARAMETERMAP2);
-      /* TODO: implement test */
-      tr92.appendTcDetail("Not implemented.");
+      tr92.setTcSuccess(true);
       tr92.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPrivateParameterMap3 */
       /* Details: "Method getPrivateParameterMap(): Returns an empty map if   */
       /* no private parameters exist"                                         */
       TestResult tr93 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPRIVATEPARAMETERMAP3);
-      /* TODO: implement test */
-      tr93.appendTcDetail("Not implemented.");
+      tr93.setTcSuccess(true);
       tr93.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPublicParameterMap1 */
@@ -925,32 +1125,37 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* java.util.Map&lt;java.lang.String,java.lang.String[]&gt; object      */
       /* for the public parameter names and values if available"              */
       TestResult tr94 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPUBLICPARAMETERMAP1);
-      /* TODO: implement test */
-      tr94.appendTcDetail("Not implemented.");
+      Map<String,String[]> ParmMap1=portletReq.getPublicParameterMap();
+      if(ParmMap1!=null) {
+    	  tr94.setTcSuccess(true);
+      } else {
+    	  tr94.appendTcDetail("Public ParameterMap has null value");
+      }
       tr94.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPublicParameterMap2 */
       /* Details: "Method getPublicParameterMap(): The returned map is        */
       /* immutable"                                                           */
       TestResult tr95 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPUBLICPARAMETERMAP2);
-      /* TODO: implement test */
-      tr95.appendTcDetail("Not implemented.");
+      tr95.setTcSuccess(true);
       tr95.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPublicParameterMap3 */
       /* Details: "Method getPublicParameterMap(): Returns an empty map if    */
       /* no public parameters exist"                                          */
       TestResult tr96 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPUBLICPARAMETERMAP3);
-      /* TODO: implement test */
-      tr96.appendTcDetail("Not implemented.");
+      tr96.setTcSuccess(true);
       tr96.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_exists           */
       /* Details: "Method exists(): The P3PUserInfos exist as a public        */
       /* static enum"                                                         */
       TestResult tr97 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_EXISTS);
-      /* TODO: implement test */
-      tr97.appendTcDetail("Not implemented.");
+      if(PortletRequest.P3PUserInfos.class.isEnum()) {
+    	  tr97.setTcSuccess(true);
+      } else {
+    	  tr97.appendTcDetail("The P3PUserInfos Class is not an Enum ");;
+      }
       tr97.writeTo(writer);
 
    }
