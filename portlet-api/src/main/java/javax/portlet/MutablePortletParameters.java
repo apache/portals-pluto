@@ -29,14 +29,14 @@ import java.util.Set;
 /**
  * <div class="changed_added_3_0">
  * The <CODE>MutablePortletParameters</CODE> provides methods that allow  
- * setting parameters to define a potential future portlet state.
+ * setting parameters to define a potential future render state.
  * <p>
- * {@link PortletState} provides a description of the portlet state.
+ * {@link RenderState} provides a description of the render state.
  * {@link PortletParameters} provides a description of the parameter concept.
  * </div>
- * @see   PortletState
+ * @see   RenderState
  * @see   PortletParameters
- * @see   MutablePortletState
+ * @see   MutableRenderState
  * @since 3.0
  */
 public interface MutablePortletParameters extends PortletParameters, Mutable {

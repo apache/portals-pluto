@@ -21,6 +21,16 @@
     <div class="indexContainer-not">
     <ul>
     <li>
+    20160226:
+    Renamed PortletState to RenderState and MutablePortletState to MutableRenderState.
+    Updated references in affected files.
+    Updated documentation and license text in files:
+    {@link javax.portlet.RenderState RenderState}, 
+    {@link javax.portlet.MutableRenderState MutableRenderState}, 
+    {@link javax.portlet.annotations.HeaderMethod HeaderMethod}, and 
+    {@link javax.portlet.annotations.RenderMethod RenderMethod}.
+    </li>
+    <li>
     20160128:
     Added a new PortalContext wrapper class according to 
     <a href="https://java.net/jira/browse/PORTLETSPEC3-62">PORTLETSPEC3-62</a>:
@@ -156,7 +166,7 @@
     {@link javax.portlet.annotations.EventMethod},
     {@link javax.portlet.annotations.PortletConfiguration},
     {@link javax.portlet.annotations.PortletQName},
-    {@link javax.portlet.annotations.PortletStateScoped},
+    {@link javax.portlet.annotations.RenderStateScoped},
     {@link javax.portlet.annotations.Preference}, and
     {@link javax.portlet.annotations.Supports}.
     </li>
@@ -233,7 +243,7 @@
     Updated the following data structures:
     <a href="../jsdoc/global.html#PortletConstants">PortletConstants</a>, 
     <a href="../jsdoc/global.html#PortletParameters">PortletParameters</a>, and
-    <a href="../jsdoc/global.html#PortletState">PortletState</a>. 
+    <a href="../jsdoc/global.html#RenderState">RenderState</a>. 
     <br>Added the following Portlet Hub methods and members: 
     <a href="../jsdoc/PortletInit.html#constants">constants</a>, 
     <a href="../jsdoc/PortletInit.html#newParameters">newParameters</a>, 
@@ -272,7 +282,7 @@
     {@link javax.portlet.RenderParameters}, {@link javax.portlet.MutableRenderParameters},
     {@link javax.portlet.ResourceParameters}, {@link javax.portlet.MutableResourceParameters},
     {@link javax.portlet.ActionParameters}, {@link javax.portlet.MutableActionParameters},
-    {@link javax.portlet.PortletState}, {@link javax.portlet.MutablePortletState},  
+    {@link javax.portlet.RenderState}, {@link javax.portlet.MutableRenderState},  
     {@link javax.portlet.ActionURL}, {@link javax.portlet.RenderURL}.
     <br>  
     <span style="font-weight:bold;">Updated:</span> {@link javax.portlet.BaseURL}, {@link javax.portlet.PortletURL},

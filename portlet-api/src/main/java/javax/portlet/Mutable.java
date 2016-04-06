@@ -30,7 +30,7 @@ package javax.portlet;
  * This is a marker interface indicating that the implementing object contains
  * methods for updating portelt state information.
  * </div>
- * @see     MutablePortletState
+ * @see     MutableRenderState
  * @see     MutablePortletParameters
  * @since   3.0
  */

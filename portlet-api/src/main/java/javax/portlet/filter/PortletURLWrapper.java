@@ -71,7 +71,7 @@ public class PortletURLWrapper extends BaseURLWrapper implements PortletURL {
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.MutablePortletState#getRenderParameters()
+    * @see javax.portlet.MutableRenderState#getRenderParameters()
     */
    @Override
    public MutableRenderParameters getRenderParameters() {
@@ -79,7 +79,7 @@ public class PortletURLWrapper extends BaseURLWrapper implements PortletURL {
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.MutablePortletState#setWindowState(javax.portlet.WindowState)
+    * @see javax.portlet.MutableRenderState#setWindowState(javax.portlet.WindowState)
     */
    @Override
    public void setWindowState(WindowState windowState) throws WindowStateException {
@@ -87,7 +87,7 @@ public class PortletURLWrapper extends BaseURLWrapper implements PortletURL {
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.MutablePortletState#setPortletMode(javax.portlet.PortletMode)
+    * @see javax.portlet.MutableRenderState#setPortletMode(javax.portlet.PortletMode)
     */
    @Override
    public void setPortletMode(PortletMode portletMode) throws PortletModeException {

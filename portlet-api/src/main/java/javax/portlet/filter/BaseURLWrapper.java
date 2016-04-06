@@ -38,7 +38,7 @@ import javax.portlet.PortletSecurityException;
  * @author Scott Nicklous
  *
  */
-public class BaseURLWrapper extends PortletStateWrapper implements BaseURL {
+public class BaseURLWrapper extends RenderStateWrapper implements BaseURL {
    
    /**
     * @param wrapped   the wrapped object to set.

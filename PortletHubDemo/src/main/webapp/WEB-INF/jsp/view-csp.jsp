@@ -161,7 +161,7 @@ limitations under the License.
       } else {
          newState = currState.clone();
          newState.p.setValue('color', newColor);
-         hub.setPortletState(newState);
+         hub.setRenderState(newState);
       }
    };
    

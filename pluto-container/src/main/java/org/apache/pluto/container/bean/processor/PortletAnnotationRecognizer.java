@@ -50,7 +50,7 @@ import javax.portlet.annotations.HeaderMethod;
 import javax.portlet.annotations.InitMethod;
 import javax.portlet.annotations.PortletSerializable;
 import javax.portlet.annotations.PortletSessionScoped;
-import javax.portlet.annotations.PortletStateScoped;
+import javax.portlet.annotations.RenderStateScoped;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
 
@@ -69,7 +69,7 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
          new HashSet<Class<? extends Annotation>>();
    
    static {
-      classAnnotations.add(PortletStateScoped.class);
+      classAnnotations.add(RenderStateScoped.class);
       classAnnotations.add(PortletSessionScoped.class);
       classAnnotations.add(SessionScoped.class);
       classAnnotations.add(RequestScoped.class);
@@ -210,20 +210,20 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
       String typeName = aType.getJavaClass().getCanonicalName();
       Class<?> theClass = aType.getJavaClass();
       
-      if (anno instanceof PortletStateScoped) {
+      if (anno instanceof RenderStateScoped) {
          
-         // Verify the portlet state scoped class, store the annotation &
+         // Verify the render state scoped class, store the annotation &
          // bean type with the corresponding bean holder.
          
          if (!PortletSerializable.class.isAssignableFrom(theClass)) {
             StringBuilder txt = new StringBuilder(128);
-            txt.append("Annotation problem: An @PortletStateScoped bean must implement PortletSerializable. ");
+            txt.append("Annotation problem: An @RenderStateScoped bean must implement PortletSerializable. ");
             txt.append("Annotation: ").append(anno.annotationType().getSimpleName());
             txt.append(", Class: ").append(typeName);
             LOG.debug(txt.toString());
             summary.addStateBeanErrorString(theClass, txt.toString());
          } else {
-            stateScopedConfig.addAnnotation(theClass, (PortletStateScoped) anno);
+            stateScopedConfig.addAnnotation(theClass, (RenderStateScoped) anno);
          }
          
       }  else if (anno instanceof PortletSessionScoped) {

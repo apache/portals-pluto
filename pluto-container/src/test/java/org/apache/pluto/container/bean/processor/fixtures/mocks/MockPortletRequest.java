@@ -57,7 +57,7 @@ public class MockPortletRequest implements PortletRequest {
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletState#getPortletMode()
+    * @see javax.portlet.RenderState#getPortletMode()
     */
    @Override
    public PortletMode getPortletMode() {
@@ -65,7 +65,7 @@ public class MockPortletRequest implements PortletRequest {
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletState#getRenderParameters()
+    * @see javax.portlet.RenderState#getRenderParameters()
     */
    @Override
    public RenderParameters getRenderParameters() {
@@ -73,7 +73,7 @@ public class MockPortletRequest implements PortletRequest {
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletState#getWindowState()
+    * @see javax.portlet.RenderState#getWindowState()
     */
    @Override
    public WindowState getWindowState() {

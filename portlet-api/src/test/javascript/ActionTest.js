@@ -278,11 +278,11 @@ describe('The portlet hub allows the portlet client to execute a portlet action'
             str = portlet.test.data.updateStrings[portletA];
             states = portlet.test.decodeUpdateString(str, portletA);
             stateA = hubA.newState(states[portletA]);
-            expect(cbA.retPortletState).toEqual(stateA);
+            expect(cbA.retRenderState).toEqual(stateA);
          }); 
       });
       
-      it('allows a resource URL to be created containing the portlet state',function(){
+      it('allows a resource URL to be created containing the render state',function(){
          var parms  = {rp1 : ["resVal"], rp2 : ["resVal2"]}, cache="cacheLevelPage", url, str;
          var testFunc = function () {
             return hubA.createResourceUrl(parms, cache);
@@ -384,9 +384,9 @@ describe('The portlet hub allows the portlet client to execute a portlet action'
             str = portlet.test.data.updateStrings[portletB];
             states = portlet.test.decodeUpdateString(str, portletB);
             state = hubB.newState(states[portletB]);
-            expect(cbB.retPortletState).toEqual(state);
+            expect(cbB.retRenderState).toEqual(state);
             state = hubC.newState(states[portletC]);
-            expect(cbC.retPortletState).toEqual(state);
+            expect(cbC.retRenderState).toEqual(state);
             expect(cbA.isComplete()).toBeFalsy();
             expect(cbD.isComplete()).toBeFalsy();
          }); 
@@ -408,16 +408,16 @@ describe('The portlet hub allows the portlet client to execute a portlet action'
             states = portlet.test.decodeUpdateString(str, portletC);
             
             state = hubA.newState(states[portletA]);
-            expect(cbA.retPortletState).toEqual(state);
+            expect(cbA.retRenderState).toEqual(state);
             
             state = hubB.newState(states[portletB]);
-            expect(cbB.retPortletState).toEqual(state);
+            expect(cbB.retRenderState).toEqual(state);
             
             state = hubC.newState(states[portletC]);
-            expect(cbC.retPortletState).toEqual(state);
+            expect(cbC.retRenderState).toEqual(state);
             
             state = hubD.newState(states[portletD]);
-            expect(cbD.retPortletState).toEqual(state);
+            expect(cbD.retRenderState).toEqual(state);
          
          }); 
       });

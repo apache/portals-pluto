@@ -65,10 +65,10 @@
  * </li>
  * <li>
  * Using the scope annotation
- * {@link javax.portlet.annotations.PortletStateScoped} 
- * associates the bean lifecycle with the portlet state, which conceptually is stored 
+ * {@link javax.portlet.annotations.RenderStateScoped} 
+ * associates the bean lifecycle with the render state, which conceptually is stored 
  * on the URL.
- * If you use PortletStateScoped beans, your bean state will be automatically stored as
+ * If you use RenderStateScoped beans, your bean state will be automatically stored as
  * render parameters for the portlet setting the state.      
  * </li>
  * </ul>
@@ -93,7 +93,7 @@
  * Most of these beans are dependent on the portlet request being executed, but could not themselves 
  * be declared as {@literal @}RequestScoped due to technical limitations. 
  * These beans should be used within enclosing beans that are either
- * {@literal @}PortletStateScoped or {@literal @}RequestScoped to allow the portlet container to properly manage 
+ * {@literal @}RenderStateScoped or {@literal @}RequestScoped to allow the portlet container to properly manage 
  * the lifecycle of the injected object.
  * The required enclosing bean scope is noted in the table.
  * <table class='ovtable' width='100%'>
@@ -188,7 +188,7 @@
  * <td>
  * {@literal @}RequestScoped
  * or
- * {@literal @}PortletStateScoped
+ * {@literal @}RenderStateScoped
  * </td>
  * <td>
  * <div class='codebox'>
@@ -205,7 +205,7 @@
  * <td>
  * {@literal @}RequestScoped
  * or
- * {@literal @}PortletStateScoped
+ * {@literal @}RenderStateScoped
  * </td>
  * <td>
  * <div class='codebox'>
@@ -223,7 +223,7 @@
  * <td>
  * {@literal @}RequestScoped
  * or
- * {@literal @}PortletStateScoped
+ * {@literal @}RenderStateScoped
  * </td>
  * <td>
  * <div class='codebox'>
@@ -241,7 +241,7 @@
  * <td>
  * {@literal @}RequestScoped
  * or
- * {@literal @}PortletStateScoped
+ * {@literal @}RenderStateScoped
  * </td>
  * <td>
  * <div class='codebox'>
@@ -259,7 +259,7 @@
  * <td>
  * {@literal @}RequestScoped
  * or
- * {@literal @}PortletStateScoped
+ * {@literal @}RenderStateScoped
  * </td>
  * <td>
  * <div class='codebox'>
@@ -270,13 +270,13 @@
  * </tr>
  * </tbody>
  * </table>
- * <h4>Using the {@literal @}PortletStateScoped Annotation</h4>
+ * <h4>Using the {@literal @}RenderStateScoped Annotation</h4>
  * <p>
- * The {@literal @}PortletStateScoped Annotation allows portlet render parameters
+ * The {@literal @}RenderStateScoped Annotation allows portlet render parameters
  * to be treated as beans.
  * The bean state is stored as a portlet render parameter.
  * The annotation documentation for 
- * {@link  javax.portlet.annotations.PortletStateScoped PortletStateScoped}
+ * {@link  javax.portlet.annotations.RenderStateScoped RenderStateScoped}
  * describes the necessary prerequisites.
  * </p>
  * <p>
@@ -286,9 +286,9 @@
  * generate a parameter name.
  * </p>
  * <p>
- * When resource URLs are generated, {@literal @}PortletStateScoped beans valid for the
+ * When resource URLs are generated, {@literal @}RenderStateScoped beans valid for the
  * current request are automatically stored on the URL as render parameters.
- * When creating render or action URLs, {@literal @}PortletStateScoped beans can be
+ * When creating render or action URLs, {@literal @}RenderStateScoped beans can be
  * automatically stored on the URL with the state valid for the current request by
  * using the appropriate option with the <code>URLFactory</code>
  * {@link  javax.portlet.annotations.URLFactory#createActionURL createActionURL} and
@@ -296,7 +296,7 @@
  * methods.
  * </p>
  * <p>
- * However, you might want to set a modified {@literal @}PortletStateScoped bean value
+ * However, you might want to set a modified {@literal @}RenderStateScoped bean value
  * on your URL.
  * You can do this using the <code>PortletURL</code> interface
  * {@link  javax.portlet.PortletURL#setBeanParameter setBeanParameter}
@@ -306,9 +306,9 @@
  * </p>
  * <p>
  * <span style="font-weight:bold; text-decoration:underline;">Tip:</span> 
- * It might be useful to provide your {@literal @}PortletStateScoped
+ * It might be useful to provide your {@literal @}RenderStateScoped
  * bean with a copy constructor <b>in addition to</b> the required default constructor.
- * You could then create a new {@literal @}PortletStateScoped bean based on the 
+ * You could then create a new {@literal @}RenderStateScoped bean based on the 
  * current state of the injected bean and then update the fields on the new bean as required.
  * </p>
  */

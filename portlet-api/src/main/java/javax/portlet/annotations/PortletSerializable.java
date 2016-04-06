@@ -26,23 +26,23 @@ package javax.portlet.annotations;
 
 /**
  * <div class='changed_added_3_0'>
- * This interface must be implemented by {@link PortletStateScoped} beans
+ * This interface must be implemented by {@link RenderStateScoped} beans
  * in order to allow the bean portlet container to intialize the bean at the
  * beginning of a request and passivate the bean at the end of the request.
  * <p>
  * These methods are not intended to be called by application code.
  * <p>
- * A <code>{@literal @}PortletStateScoped</code> bean must be a valid bean; in particular,
+ * A <code>{@literal @}RenderStateScoped</code> bean must be a valid bean; in particular,
  * it must provide a default constructor or be constructable through an 
  * <code>{@literal @}Produces</code> method or field.
  * <p>
  * Note that only changes made to the bean state during <code>ActionMethod</code>
- * or <code>EventMethod</code> execution are stored in the portlet state.
+ * or <code>EventMethod</code> execution are stored in the render state.
  * Changes made during <code>RenderMethod</code>, <code>ServeResourceMethod</code>,
  * or <code>HeaderMethod</code> execution will not be available during subsequent requests.
  * </div>
  * 
- * @see PortletStateScoped
+ * @see RenderStateScoped
  */
 public interface PortletSerializable {
    
@@ -66,7 +66,7 @@ public interface PortletSerializable {
     * The bean portlet container calls this method at the beginning of every portlet
     * request method that uses the bean. 
     * <p> 
-    * The string array portlet state data is the same array provided to the container
+    * The string array render state data is the same array provided to the container
     * by the {@link PortletSerializable#serialize() serialize} method.
     * The bean should reconstruct its internal state during execution of this method.
     * <p>

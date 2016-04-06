@@ -39,10 +39,10 @@ package javax.portlet;
  * The modified parameters will be available during requests
  * triggered by the URL.
  * <p>
- * {@link PortletState} provides a description of the portlet state.
+ * {@link RenderState} provides a description of the render state.
  * {@link PortletParameters} provides a description of the parameter concept.
  * </div>
- * @see     PortletState
+ * @see     RenderState
  * @see     PortletParameters
  * @see     ResourceParameters
  * @see     ResourceRequest

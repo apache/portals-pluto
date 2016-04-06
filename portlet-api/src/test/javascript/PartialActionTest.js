@@ -271,7 +271,7 @@ describe('The portlet hub allows the portlet client to initiate a partial action
          runs(function() {
             var states = portlet.test.decodeUpdateString(ustr, portletA),
             stateA = hubA.newState(states[portletA]);
-            expect(cbA.retPortletState).toEqual(stateA);
+            expect(cbA.retRenderState).toEqual(stateA);
          }); 
       });
 
@@ -378,7 +378,7 @@ describe('The portlet hub allows the portlet client to initiate a partial action
             str = portlet.test.data.updateStrings[portletA];
             states = portlet.test.decodeUpdateString(str, portletA);
             stateA = hubA.newState(states[portletA]);
-            expect(cbA.retPortletState).toEqual(stateA);
+            expect(cbA.retRenderState).toEqual(stateA);
          }); 
       });
 
@@ -541,7 +541,7 @@ describe('The portlet hub allows the portlet client to initiate a partial action
          }); 
       });
 
-      it('allows a resource URL to be created containing the portlet state',function(){
+      it('allows a resource URL to be created containing the render state',function(){
          var parms  = {ap1 : ["actionVal"], ap2 : ["actionVal2"]}, 
              cache="cacheLevelPage", url = null, str;
          runs(function() {
@@ -633,9 +633,9 @@ describe('The portlet hub allows the portlet client to initiate a partial action
          runs(function() {
             states = portlet.test.decodeUpdateString(ustr, portletB);
             state = hubA.newState(states[portletB]);
-            expect(cbB.retPortletState).toEqual(state);
+            expect(cbB.retRenderState).toEqual(state);
             state = hubC.newState(states[portletC]);
-            expect(cbC.retPortletState).toEqual(state);
+            expect(cbC.retRenderState).toEqual(state);
             expect(cbA.isComplete()).toBeFalsy();
             expect(cbD.isComplete()).toBeFalsy();
          }); 
@@ -663,16 +663,16 @@ describe('The portlet hub allows the portlet client to initiate a partial action
             states = portlet.test.decodeUpdateString(ustr, portletC);
 
             state = hubA.newState(states[portletA]);
-            expect(cbA.retPortletState).toEqual(state);
+            expect(cbA.retRenderState).toEqual(state);
 
             state = hubB.newState(states[portletB]);
-            expect(cbB.retPortletState).toEqual(state);
+            expect(cbB.retRenderState).toEqual(state);
 
             state = hubC.newState(states[portletC]);
-            expect(cbC.retPortletState).toEqual(state);
+            expect(cbC.retRenderState).toEqual(state);
 
             state = hubD.newState(states[portletD]);
-            expect(cbD.retPortletState).toEqual(state);
+            expect(cbD.retRenderState).toEqual(state);
 
          }); 
       });
@@ -724,7 +724,7 @@ describe('The portlet hub allows the portlet client to initiate a partial action
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
       });
 
-      it('Blocks the setPortletState method for a different portlet until setPageState is called',function(){
+      it('Blocks the setRenderState method for a different portlet until setPageState is called',function(){
          var parms  = {ap1 : ["actionVal"]};
          var ustr = portlet.test.data.updateStrings[portletA];
          runs(function() {
@@ -738,7 +738,7 @@ describe('The portlet hub allows the portlet client to initiate a partial action
             var state = cbC.getState();
             state.parameters["someparm1"] = ["NewVal"];
             var testFunc = function () {
-               hubC.setPortletState(state);
+               hubC.setRenderState(state);
             }
             expect(testFunc).toThrowCustomException("AccessDeniedException");
          }); 

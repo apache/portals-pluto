@@ -68,14 +68,14 @@ public class StateAwareResponseWrapper extends PortletResponseWrapper implements
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.MutablePortletState#getRenderParameters()
+    * @see javax.portlet.MutableRenderState#getRenderParameters()
     */
    public MutableRenderParameters getRenderParameters() {
       return ((StateAwareResponse)response).getRenderParameters();
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.MutablePortletState#setWindowState(javax.portlet.WindowState)
+    * @see javax.portlet.MutableRenderState#setWindowState(javax.portlet.WindowState)
     */
    public void setWindowState(WindowState windowState)
          throws WindowStateException {
@@ -83,7 +83,7 @@ public class StateAwareResponseWrapper extends PortletResponseWrapper implements
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.MutablePortletState#setPortletMode(javax.portlet.PortletMode)
+    * @see javax.portlet.MutableRenderState#setPortletMode(javax.portlet.PortletMode)
     */
    public void setPortletMode(PortletMode portletMode)
          throws PortletModeException {
@@ -91,14 +91,14 @@ public class StateAwareResponseWrapper extends PortletResponseWrapper implements
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletState#getPortletMode()
+    * @see javax.portlet.RenderState#getPortletMode()
     */
    public PortletMode getPortletMode() {
       return ((StateAwareResponse)response).getPortletMode();
    }
 
    /* (non-Javadoc)
-    * @see javax.portlet.PortletState#getWindowState()
+    * @see javax.portlet.RenderState#getWindowState()
     */
    public WindowState getWindowState() {
       return ((StateAwareResponse)response).getWindowState();

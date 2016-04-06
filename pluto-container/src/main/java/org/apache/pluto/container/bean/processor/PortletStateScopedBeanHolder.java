@@ -35,7 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This is a container for PortletStateScoped CDI beans.
+ * This is a container for RenderStateScoped CDI beans.
  * 
  * @author Scott Nicklous
  *
@@ -80,13 +80,13 @@ public class PortletStateScopedBeanHolder implements Serializable {
     * portlet session. If no bean holder exists in the session, a new one is created.
     * 
     * @param  req    The portlet request
-    * @return        The portlet state bean holder
+    * @return        The render state bean holder
     */
    public static void setBeanHolder(PortletRequest req, PortletStateScopedConfig config) {
       
       if (isTrace) {
          StringBuilder txt = new StringBuilder(80);
-         txt.append("Setting portlet state bean holder.");
+         txt.append("Setting render state bean holder.");
          txt.append(" ThreadId=").append(Thread.currentThread().getId());
          LOG.trace(txt.toString());
       }
@@ -109,7 +109,7 @@ public class PortletStateScopedBeanHolder implements Serializable {
 
       if (isTrace) {
          StringBuilder txt = new StringBuilder(80);
-         txt.append("Removed portlet state bean holder.");
+         txt.append("Removed render state bean holder.");
          txt.append(" ThreadId=").append(Thread.currentThread().getId());
          LOG.trace(txt.toString());
       }
@@ -195,7 +195,7 @@ public class PortletStateScopedBeanHolder implements Serializable {
       
       if (isTrace) {
          StringBuilder txt = new StringBuilder(80);
-         txt.append("Removing portlet state scoped bean: ");
+         txt.append("Removing render state scoped bean: ");
          if (bean instanceof Bean<?>) {
             Bean<?> b = (Bean<?>) bean;
             txt.append(b.getBeanClass().getSimpleName());

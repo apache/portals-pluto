@@ -36,10 +36,23 @@ import java.lang.annotation.Target;
  * <div class='changed_added_3_0'>
  * Designates a method corresponding to the renderHeaders method of 
  * the <code>HeaderPortlet</code> interface.
- * The annotated method must have the following signature:
+ * The annotated method must have one of the following signatures:
+ * <ul>
+ * <li>
+ * <code>public void &lt;methodName&gt;(HeaderRequest, HeaderResponse)</code>
  * <p>
- *    <code>public void &lt;methodName&gt;(HeaderRequest, HeaderResponse)</code>
- * <p>   
+ * This corresponds to the <code>renderHeaders</code> method.
+ * </li>   
+ * <li>
+ * <code>public String &lt;methodName&gt;()</code>
+ * <p>
+ * The String returned by the method will be made available to the portal for
+ * inclusion in the document head section. 
+ * </li>   
+ * <li>
+ * <code>public void &lt;methodName&gt;()</code>
+ * </li>   
+ * </ul> 
  * where the method name can be freely selected.
  * <p>
  * The method declaration may contain a throws clause. Exceptions declared in the 

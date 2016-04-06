@@ -263,14 +263,14 @@ describe('If the PortletHub mock implementation is present, simulated error cond
             var state = cbErr.getState();
             state.parameters["NewParm"] = ["NewVal"];
             runs(function() {
-               hubErr.setPortletState(state);
+               hubErr.setRenderState(state);
             }); 
             waitsFor(cbErr.getIsComplete(), "The onStateChange callback should be called", 100);
             runs(function() {
                expect(cbErr.retType).not.toEqual('portlet.onError');
-               expect(cbErr.retPortletState).not.toEqual(null);
+               expect(cbErr.retRenderState).not.toEqual(null);
                expect(cbErr.retErrorData).toEqual(null);
-               expect(cbErr.retPortletState.parameters["NewParm"]).toEqual(["NewVal"]);
+               expect(cbErr.retRenderState.parameters["NewParm"]).toEqual(["NewVal"]);
             }); 
          });
 
@@ -278,7 +278,7 @@ describe('If the PortletHub mock implementation is present, simulated error cond
             var state = cbErr.getState();
             state.parameters["SimulateError"] = ["reject"];
             runs(function() {
-               hubErr.setPortletState(state);
+               hubErr.setRenderState(state);
             }); 
             waitsFor(cbErr.getIsComplete(), "The onStateChange callback should be called", 100);
             runs(function() {
@@ -295,7 +295,7 @@ describe('If the PortletHub mock implementation is present, simulated error cond
             waitsFor(cbErr.getIsComplete(), "The onStateChange callback should be called", 100);
             runs(function() {
                expect(cbErr.retType).not.toEqual('portlet.onError');
-               expect(cbErr.retPortletState).not.toEqual(null);
+               expect(cbErr.retRenderState).not.toEqual(null);
                expect(cbErr.retErrorData).toEqual(null);
             }); 
          });

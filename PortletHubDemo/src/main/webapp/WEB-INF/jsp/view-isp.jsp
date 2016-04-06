@@ -61,7 +61,7 @@ limitations under the License.
       if (currState.parameters.imgName !== this.value) {
          var newState = currState.clone();
          newState.p.setValue('imgName', this.value);
-         hub.setPortletState(newState);
+         hub.setRenderState(newState);
       }
    },
    
@@ -72,7 +72,7 @@ limitations under the License.
       if (currState.parameters.imgName !== this.value) {
          var newState = currState.clone();
          newState.p.setValue('imgName', this.value);
-         hub.setPortletState(newState);
+         hub.setRenderState(newState);
       }
    },
    
@@ -157,7 +157,7 @@ limitations under the License.
       if (currState.parameters.selType !==  this.value) {
          var newState = currState.clone();
          newState.p.setValue('selType', this.value);
-         hub.setPortletState(newState);
+         hub.setRenderState(newState);
       }
    };
    

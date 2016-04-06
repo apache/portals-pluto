@@ -35,20 +35,20 @@ import java.util.Locale;
  * The portlet container creates these objects and 
  * passes them as arguments to the corresponding request processing methods.
  * <p>
- * The <code>PortletRequest</code> also provides access to the portlet state.
+ * The <code>PortletRequest</code> also provides access to the render state.
  * </div>
  * 
- * @see PortletState
+ * @see RenderState
  * @see ActionRequest
  * @see EventRequest
  * @see RenderRequest
  * @see ResourceRequest
  */
-public interface PortletRequest extends PortletState
+public interface PortletRequest extends RenderState
 {
-    
+
    
-  /** Used to retrieve user information attributes with the 
+   /** Used to retrieve user information attributes with the 
    * <code>getAttribute</code> call. The user information is returned 
    * as a <code>Map</code> object. The portlet must define the 
    * user information attribute it is interested in inside the 
@@ -306,35 +306,35 @@ public interface PortletRequest extends PortletState
   
   
   
-  /**
-   * Returns true, if the given window state is valid
-   * to be set for this portlet in the context
-   * of the current request.
-   *
-   * @param  state    window state to checked
-   *
-   * @return    true, if it is valid for this portlet
-   *             in this request to change to the
-   *            given window state
-   *
-   */
-  public boolean isWindowStateAllowed(WindowState state);
+ /**
+  * Returns true, if the given window state is valid
+  * to be set for this portlet in the context
+  * of the current request.
+  *
+  * @param  state    window state to checked
+  *
+  * @return    true, if it is valid for this portlet
+  *             in this request to change to the
+  *            given window state
+  *
+  */
+ public boolean isWindowStateAllowed(WindowState state);
 
 
  /**
-   * Returns true, if the given portlet mode is a valid
-   * one to set for this portlet  in the context
-   * of the current request.
-   *
-   * @param  mode    portlet mode to check
-   *
-   * @return    true, if it is valid for this portlet
-   *             in this request to change to the
-   *            given portlet mode
-   *
-   */
+  * Returns true, if the given portlet mode is a valid
+  * one to set for this portlet  in the context
+  * of the current request.
+  *
+  * @param  mode    portlet mode to check
+  *
+  * @return    true, if it is valid for this portlet
+  *             in this request to change to the
+  *            given portlet mode
+  *
+  */
 
-  public boolean isPortletModeAllowed(PortletMode mode);
+ public boolean isPortletModeAllowed(PortletMode mode);
 
 
   /**
@@ -931,7 +931,7 @@ public interface PortletRequest extends PortletState
    * @see PortletResponse#addProperty(Cookie) 
    */
   public javax.servlet.http.Cookie[] getCookies();
-  
+
   
   /**
    * <span class="changed_modified_3_0"> 

@@ -30,13 +30,13 @@ import java.util.Set;
 import javax.enterprise.context.spi.Contextual;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
-import javax.portlet.annotations.PortletStateScoped;
+import javax.portlet.annotations.RenderStateScoped;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Configuration for PortletStateScoped CDI beans.
+ * Configuration for RenderStateScoped CDI beans.
  * 
  * @author Scott Nicklous
  *
@@ -47,17 +47,17 @@ public class PortletStateScopedConfig  implements Serializable {
    private final boolean isTrace = LOG.isTraceEnabled();
    
    
-   // Contains a sorted list of PortletStateScoped annotated class names. The sorted list
+   // Contains a sorted list of RenderStateScoped annotated class names. The sorted list
    // is used to generate indexes for the assigned render parameter names.
    private final List<String> sortedAnnotatedClassNames = new ArrayList<String>();
    
    // Prefix used when generating render parameter names
    private static final String   RP_PREFIX = "\uFE34";
 
-   // Description for the PortletStateScoped bean
+   // Description for the RenderStateScoped bean
    private class PSSDescription implements Serializable {
       private static final long serialVersionUID = 4089751663717085089L;
-      PortletStateScoped      pssAnno;
+      RenderStateScoped      pssAnno;
       String                  paramName;
    }
    
@@ -77,12 +77,12 @@ public class PortletStateScopedConfig  implements Serializable {
    
    /**
     * Called by the CDI extension during the scanning phase to add information about 
-    * a <code>{@literal @}PortletStateScoped</code> bean.
+    * a <code>{@literal @}RenderStateScoped</code> bean.
     * 
     * @param beanClass     The bean class
     * @param anno          The annotation
     */
-   public void addAnnotation(Class<?> beanClass, PortletStateScoped anno) {
+   public void addAnnotation(Class<?> beanClass, RenderStateScoped anno) {
       PSSDescription desc = new PSSDescription();
       desc.pssAnno = anno;
       class2Anno.put(beanClass, desc);
@@ -141,7 +141,7 @@ public class PortletStateScopedConfig  implements Serializable {
    }
    
    /**
-    * Returns the portlet state scoped annotated classes. 
+    * Returns the render state scoped annotated classes. 
     * <p>
     * Used for test / validation purposes.
     * 
@@ -152,7 +152,7 @@ public class PortletStateScopedConfig  implements Serializable {
    }
    
    /**
-    * Returns a portlet state scoped bean summary for display
+    * Returns a render state scoped bean summary for display
     * 
     * @return  The configuration summary string
     * 

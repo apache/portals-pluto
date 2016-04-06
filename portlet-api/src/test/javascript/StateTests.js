@@ -26,7 +26,7 @@
  */
 
 
-describe('The Portlet Hub provides accessor functions for the portlet state and parameters.',function(){
+describe('The Portlet Hub provides accessor functions for the render state and parameters.',function(){
    'use strict'
 
    // get the portlet IDs provided by the system under test. The function must

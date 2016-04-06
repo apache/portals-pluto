@@ -48,7 +48,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Test class for PortletStateScoped beans
+ * Test class for RenderStateScoped beans
  * 
  * @author Scott Nicklous
  *

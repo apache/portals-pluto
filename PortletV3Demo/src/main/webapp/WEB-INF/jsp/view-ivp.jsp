@@ -118,7 +118,7 @@ limitations under the License.
          cacheability = c;
          nstate = currState.clone();
          nstate.p.setValue('ca', c);
-         hub.setPortletState(nstate);
+         hub.setRenderState(nstate);
       }
    };
    
@@ -137,7 +137,7 @@ limitations under the License.
       } else {
          nstate.p.remove('bo');
       }
-      hub.setPortletState(nstate);
+      hub.setRenderState(nstate);
    };
    
    // Register this portlet with the Portlet Hub and add event listener for 

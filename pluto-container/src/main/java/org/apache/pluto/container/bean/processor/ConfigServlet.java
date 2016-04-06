@@ -89,7 +89,7 @@ public class ConfigServlet extends HttpServlet {
          errorString.append("<h4>Available annotated portlet artifacts:</h4>");
 //         formatToErrorString(ams.getConfigAsString().split("\n"));
          formatToErrorString(ams.getMethodsAsString().split("\n"));
-         errorString.append("<h4>PortletStateScoped Bean Configuration:</h4>");
+         errorString.append("<h4>RenderStateScoped Bean Configuration:</h4>");
          formatToErrorString(config.getConfigAsString().split("\n"));
       } else {
          

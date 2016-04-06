@@ -25,10 +25,10 @@ import javax.enterprise.context.ContextNotActiveException;
 import javax.enterprise.context.spi.Context;
 import javax.enterprise.context.spi.Contextual;
 import javax.enterprise.context.spi.CreationalContext;
-import javax.portlet.annotations.PortletStateScoped;
+import javax.portlet.annotations.RenderStateScoped;
 
 /**
- * This is the Context implementation for the PortletStateScoped custom CDI scope.
+ * This is the Context implementation for the RenderStateScoped custom CDI scope.
  * 
  * @author nick
  *
@@ -45,7 +45,7 @@ public class PortletStateScopedContext implements Context {
    public <T> T get(Contextual<T> bean) {
       PortletStateScopedBeanHolder holder = PortletStateScopedBeanHolder.getBeanHolder();
       if (holder == null) {
-         throw new ContextNotActiveException("The portlet state context is not active.");
+         throw new ContextNotActiveException("The render state context is not active.");
       }
       return holder.getBean(bean);
    }
@@ -58,7 +58,7 @@ public class PortletStateScopedContext implements Context {
       PortletStateScopedBeanHolder holder = PortletStateScopedBeanHolder.getBeanHolder();
       
       if (holder == null) {
-         throw new ContextNotActiveException("The portlet state context is not active.");
+         throw new ContextNotActiveException("The render state context is not active.");
       }
       
       // The bean hoder will return an existing bean instance or create a new one
@@ -72,7 +72,7 @@ public class PortletStateScopedContext implements Context {
     */
    @Override
    public Class<? extends Annotation> getScope() {
-      return PortletStateScoped.class;
+      return RenderStateScoped.class;
    }
 
    /* (non-Javadoc)

@@ -115,7 +115,7 @@ Leaving the value field empty will set the parameter to an array containing a si
          }
       }
       
-      hub.setPortletState(nstate);
+      hub.setRenderState(nstate);
       
       event.preventDefault();
    });

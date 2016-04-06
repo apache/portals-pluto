@@ -27,7 +27,7 @@ package javax.portlet;
 /**
  * <div class="changed_added_3_0">
  * Provides methods that allow  
- * setting parameters to define a potential future portlet state.
+ * setting parameters to define a potential future render state.
  * <p>
  * For example, these methods can be used to set render parameters on 
  * a <code>PortletURL</code> object. 
@@ -39,11 +39,11 @@ package javax.portlet;
  * The modified parameters will be available during subsequent requests as defined 
  * by the response or URL object. 
  * <p>
- * {@link PortletState} provides a description of the portlet state.
+ * {@link RenderState} provides a description of the render state.
  * {@link PortletParameters} provides a description of the parameter concept.
  * </div>
  *
- * @see   PortletState
+ * @see   RenderState
  * @see   MutablePortletParameters
  * @see   RenderParameters
  * @since 3.0
