@@ -21,9 +21,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.portlet.Event;
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
@@ -38,9 +35,10 @@ import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.driver.PlutoServices;
 import org.apache.pluto.container.impl.MutableRenderParametersImpl;
-import org.apache.pluto.container.impl.PortletURLImpl;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @version $Id$

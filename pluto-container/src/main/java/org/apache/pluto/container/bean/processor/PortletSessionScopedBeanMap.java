@@ -186,8 +186,8 @@ public class PortletSessionScopedBeanMap implements HttpSessionBindingListener, 
     */
    @Override
    public void valueUnbound(HttpSessionBindingEvent evt) {
-      if (isDebug) {
-         LOG.debug("PortletSessionBeanHolder unbound from session. ID=" + evt.getName());
+      if (isTrace) {
+         LOG.trace("PortletSessionBeanHolder unbound from session. ID=" + evt.getName());
       }
       
       synchronized(beans) {

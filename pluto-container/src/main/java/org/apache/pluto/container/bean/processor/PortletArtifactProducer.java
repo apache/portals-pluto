@@ -66,7 +66,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PortletArtifactProducer {
    private static final Logger LOG = LoggerFactory.getLogger(PortletArtifactProducer.class);
-   private static final boolean isDebug = LOG.isDebugEnabled();
    private static final boolean isTrace = LOG.isTraceEnabled();
    
    
@@ -570,14 +569,14 @@ public class PortletArtifactProducer {
     * @param pval
     */
    private static void trace(String anno, String sig, String pname, String pval) {
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Parameter injection trace.");
          txt.append(" Annotation: ").append(anno);
          txt.append(" Signature: ").append(sig);
          txt.append(" Param name: ").append(pname);
          txt.append(" Param value(s): ").append(pval);
-         LOG.debug(txt.toString());
+         LOG.trace(txt.toString());
       }
    }
 }

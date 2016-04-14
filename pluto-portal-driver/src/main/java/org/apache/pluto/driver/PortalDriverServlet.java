@@ -192,7 +192,7 @@ public class PortalDriverServlet extends HttpServlet {
             throw new ServletException(ex);
          }
          if (LOG.isDebugEnabled()) {
-            LOG.debug(reqType + " request processed.\n\n");
+            LOG.debug(reqType + " request processed.\n");
          }
 
       }
@@ -233,7 +233,7 @@ public class PortalDriverServlet extends HttpServlet {
          dispatcher.forward(request, response);
 
          if (LOG.isDebugEnabled()) {
-            LOG.debug("Render request processed.\n\n");
+            LOG.debug("Render request processed.\n");
          }
       }
    }

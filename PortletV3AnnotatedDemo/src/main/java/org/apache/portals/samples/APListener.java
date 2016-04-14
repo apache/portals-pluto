@@ -43,10 +43,9 @@ public class APListener implements PortletAsyncListener {
 
    private long                           start  = System.currentTimeMillis();
 
-   @Inject
-   private PortletRequestRandomNumberBean reqnum;
-   @Inject
-   private AsyncDialogBean                adb;
+   @Inject private PortletRequestRandomNumberBean reqnum;
+   @Inject private AsyncDialogBean                adb;
+   @Inject private APComplete                     completeBean;
 
    /*
     * (non-Javadoc)
@@ -59,8 +58,9 @@ public class APListener implements PortletAsyncListener {
 
       StringBuilder txt = new StringBuilder(128);
       txt.append("Listener: Completed. Execution time: ").append(delta).append(" milliseconds.");
-
       LOGGER.fine(txt.toString());
+      
+      completeBean.setComplete(true);
    }
 
    /*

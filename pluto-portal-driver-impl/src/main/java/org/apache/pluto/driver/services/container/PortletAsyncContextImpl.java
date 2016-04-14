@@ -53,8 +53,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContext, PortletAsyncContext {
    private static final Logger LOG = LoggerFactory.getLogger(PortletAsyncContextImpl.class);
-   private static final boolean isDebug = LOG.isDebugEnabled();
-   @SuppressWarnings("unused")
    private static final boolean isTrace = LOG.isTraceEnabled();
    
    private AsyncContext                   actx;
@@ -121,13 +119,13 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
          PortletArtifactProducer.setPrecursors(resreq, prctx.getResponse(), prctx.getPortletConfig());
       }
       
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder();
          txt.append("Registered context.");
          txt.append(" complete: ").append(complete);
          txt.append(", isListener: ").append(isListener);
          txt.append(", doRegister: ").append(doDeregister);
-         LOG.debug(txt.toString());
+         LOG.trace(txt.toString());
       }
    }
 
@@ -144,13 +142,13 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
          PortletArtifactProducer.remove();
       }
       
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder();
          txt.append("Deregistered context.");
          txt.append(" complete: ").append(complete);
          txt.append(", isListener: ").append(isListener);
          txt.append(", doRegister: ").append(doDeregister);
-         LOG.debug(txt.toString());
+         LOG.trace(txt.toString());
       }
    }
 
@@ -166,10 +164,10 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
       if (pendingRunner != null) {
          PortletAsyncContextualRunner runner = new PortletAsyncContextualRunner();
 
-         if (isDebug) {
+         if (isTrace) {
             StringBuilder txt = new StringBuilder();
             txt.append("Executing Portlet Runnable: " + pendingRunner.getClass().getCanonicalName());
-            LOG.debug(txt.toString());
+            LOG.trace(txt.toString());
          }
 
          runner.init(this, pendingRunner);
@@ -364,12 +362,12 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
    }
    
    private Object createInstance(Class<?> cls) {
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder();
          txt.append("Creating listener.");
          txt.append(" Bean manager: ").append(beanmgr);
          txt.append(", listener class: ").append(cls.getCanonicalName());
-         LOG.debug(txt.toString());
+         LOG.trace(txt.toString());
       }
       
       Object lis = null;
@@ -384,7 +382,7 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
       } 
       
       if (lis == null) {
-         LOG.debug("Instantiating class directly: " + cls.getCanonicalName());
+         LOG.trace("Instantiating class directly: " + cls.getCanonicalName());
          try {
             lis = cls.newInstance();
          } catch (Exception e) {

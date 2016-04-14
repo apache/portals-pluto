@@ -36,7 +36,7 @@ public class PortletResourceResponseContextImpl extends PortletMimeResponseConte
                 PortletResourceResponseContext
 {
    private static final Logger    LOGGER  = LoggerFactory.getLogger(PortletResourceResponseContextImpl.class);
-   private static final boolean   isDebug = LOGGER.isDebugEnabled();
+   private static final boolean   isTrace = LOGGER.isTraceEnabled();
     
     public PortletResourceResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
                                               HttpServletResponse containerResponse, PortletWindow window)
@@ -47,11 +47,11 @@ public class PortletResourceResponseContextImpl extends PortletMimeResponseConte
 
     public void setCharacterEncoding(String charset)
     {
-        if (isDebug) {
+        if (isTrace) {
            StringBuilder txt = new StringBuilder("Setting character encoding.");
            txt.append(" charset: ").append(charset);
            txt.append(" isClosed: ").append(isClosed());
-           LOGGER.debug(txt.toString());
+           LOGGER.trace(txt.toString());
         }
         if (!isClosed())
         {
@@ -85,11 +85,11 @@ public class PortletResourceResponseContextImpl extends PortletMimeResponseConte
     }
 
    public void setStatus(int sc) {
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("Setting character encoding.");
          txt.append(" status code: ").append(sc);
          txt.append(" isClosed: ").append(isClosed());
-         LOGGER.debug(txt.toString());
+         LOGGER.trace(txt.toString());
       }
       if (!isClosed()) {
          getServletResponse().setStatus(sc);

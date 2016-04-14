@@ -49,7 +49,6 @@ public class PortletAsyncContextListener implements AsyncListener {
    /** Logger. */
    private static final Logger LOG = LoggerFactory.getLogger(PortletAsyncContextListener.class);
    private static final boolean isDebug = LOG.isDebugEnabled();
-   @SuppressWarnings("unused")
    private static final boolean isTrace = LOG.isTraceEnabled();
    
    
@@ -104,7 +103,7 @@ public class PortletAsyncContextListener implements AsyncListener {
    }
    
    private void trace (String meth) {
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder();
          txt.append("Firing ").append(meth).append(" event for ");
          txt.append(listeners.size()).append(" listeners.");
@@ -115,7 +114,7 @@ public class PortletAsyncContextListener implements AsyncListener {
          }
          txt.append(", # AsyncListeners: ").append(hcnt);
          txt.append(", # PortletAsyncListeners: ").append(pcnt);
-         LOG.debug(txt.toString());
+         LOG.trace(txt.toString());
       }
    }
 

@@ -56,7 +56,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PortletRequestContextImpl implements PortletRequestContext {
    private static final Logger LOG = LoggerFactory.getLogger(PortletRequestContextImpl.class);
-   private static final boolean isDebug = LOG.isDebugEnabled();
    private static final boolean isTrace = LOG.isTraceEnabled();
    
 
@@ -259,11 +258,11 @@ public class PortletRequestContextImpl implements PortletRequestContext {
    @Override
    public DispatcherType getDispatcherType() {
       DispatcherType type = getServletRequest().getDispatcherType();
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder();
          txt.append("Dispatcher type: ").append(type);
          txt.append(", executing request body: ").append(executingRequestBody);
-         LOG.debug(txt.toString());
+         LOG.trace(txt.toString());
       }
       if (executingRequestBody && (type != DispatcherType.ASYNC)) {
          type = DispatcherType.REQUEST;

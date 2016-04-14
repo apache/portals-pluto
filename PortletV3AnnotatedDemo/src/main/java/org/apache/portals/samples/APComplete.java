@@ -19,31 +19,33 @@
 
 package org.apache.portals.samples;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.portlet.annotations.PortletRequestScoped;
 
 /**
+ * Requestscoped bean to mark if timout occurs.
+ * 
  * @author Scott Nicklous
- *
  */
-@WebServlet(urlPatterns="/ais")
-public class AsyncHackIncludedServlet extends HttpServlet {
-   private static final long serialVersionUID = 1L;
+@PortletRequestScoped
+public class APComplete {
 
-   public AsyncHackIncludedServlet() {
+   private boolean complete = false;
+   
+   public APComplete() {
    }
 
-   @Override
-   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      
-      PrintWriter writer = resp.getWriter();
-      writer.append("<p>Hello from dispatched servlet!</p>");
-
+   /**
+    * @return the complete
+    */
+   public boolean isComplete() {
+      return complete;
    }
+
+   /**
+    * @param complete the complete to set
+    */
+   public void setComplete(boolean complete) {
+      this.complete = complete;
+   }
+
 }

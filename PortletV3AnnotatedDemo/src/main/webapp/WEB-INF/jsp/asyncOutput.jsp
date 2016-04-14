@@ -6,9 +6,19 @@
 
 <portlet:defineObjects />
 
-<h5><%=request.getAttribute("title") %> for portlet: ${portletConfig.getPortletName()}</h5>
-<p>Dispatch type: <%=request.getDispatcherType() %>
-<c:catch var ="catchException">
+<h5><%=request.getAttribute("title") %> for portlet: 
+<c:catch var ="exp">
+   <!-- try to get portlet name using named bean from portlet artifact producer. -->
+   <!-- Works in the case of PortletRequestDispatcher include / forward. -->
+   ${portletConfig.getPortletName()} (using named bean)
+</c:catch>
+<c:if test = "${exp != null}">
+   <!-- Contextual context not available during async dispatch -->
+   <%=portletConfig.getPortletName() %> (using JSP expression)
+</c:if>
+</h5>
+<p>Dispatch type: <%=resourceRequest.getDispatcherType() %>
+<c:catch var ="exp">
    <span style='margin-left: 2em;'>Request #: ${reqnum.getRandomNumber()}</span>
 </c:catch>
 </p>

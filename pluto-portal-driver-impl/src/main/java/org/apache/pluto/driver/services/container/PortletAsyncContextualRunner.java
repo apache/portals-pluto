@@ -32,8 +32,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PortletAsyncContextualRunner implements Runnable {
    private static final Logger LOG = LoggerFactory.getLogger(PortletAsyncContextualRunner.class);
-   private static final boolean isDebug = LOG.isDebugEnabled();
-   @SuppressWarnings("unused")
    private static final boolean isTrace = LOG.isTraceEnabled();
    
 
@@ -50,8 +48,8 @@ public class PortletAsyncContextualRunner implements Runnable {
 
    @Override
    public void run() {
-      if (isDebug) {
-         LOG.debug("Initializing contextual environment and launching runner in thread: " + Thread.currentThread().getId());
+      if (isTrace) {
+         LOG.trace("Initializing contextual environment and launching runner in thread: " + Thread.currentThread().getId());
       }
 
       try {
@@ -61,8 +59,8 @@ public class PortletAsyncContextualRunner implements Runnable {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Exception running thread: ").append(e.toString());
       } finally {
-         if (isDebug) {
-            LOG.debug("Shutting down contextual environment for thread: " + Thread.currentThread().getId());
+         if (isTrace) {
+            LOG.trace("Shutting down contextual environment for thread: " + Thread.currentThread().getId());
          }
          pactx.deregisterContext(false);
       }

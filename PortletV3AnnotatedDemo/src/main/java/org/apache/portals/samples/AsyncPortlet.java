@@ -60,6 +60,7 @@ public class AsyncPortlet {
       private OutputType   type;
       
       @Inject private PortletRequestRandomNumberBean reqnum;
+      @Inject private APComplete complete;
 
       public void init(PortletAsyncContext ctx, int delay, OutputType type) {
          this.ctx = ctx;
@@ -77,6 +78,11 @@ public class AsyncPortlet {
       public void run() {
          try {
             Thread.sleep(delay);
+            
+            if (complete.isComplete()) {
+               LOGGER.warning("Request completed before work was finished. processing will be aborted.");
+               return;
+            }
 
             ResourceRequest req = ctx.getResourceRequest();
             ResourceResponse resp = ctx.getResourceResponse();
