@@ -325,7 +325,7 @@ public interface PortletAsyncContext {
     * 
     * @since   3.0
     * 
-    * @return
+    * @return The resource request object
     * @throws IllegalStateException
     * if one of the dispatch methods has been called but the <code>startAsync</code> method has not
     * been called during the resulting dispatch, or if <code>complete()</code> was called
@@ -340,7 +340,7 @@ public interface PortletAsyncContext {
     * 
     * @since   3.0
     * 
-    * @return
+    * @return The resource response object
     * @throws IllegalStateException
     * if one of the dispatch methods has been called but the <code>startAsync</code> method has not
     * been called during the resulting dispatch, or if <code>complete()</code> was called

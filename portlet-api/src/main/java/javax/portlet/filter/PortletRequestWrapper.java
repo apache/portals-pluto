@@ -408,4 +408,9 @@ public class PortletRequestWrapper extends RenderStateWrapper implements Portlet
       return ((PortletRequest)wrapped).getPublicParameterMap();
    }
 
+   @Override
+   public String getUserAgent() {
+      return ((PortletRequest)wrapped).getUserAgent();
+   }
+
 }

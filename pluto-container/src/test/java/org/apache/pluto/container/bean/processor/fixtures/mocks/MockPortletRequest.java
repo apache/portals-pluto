@@ -372,4 +372,9 @@ public class MockPortletRequest implements PortletRequest {
    public void setAttribute(String arg0, Object arg1) {
    }
 
+   @Override
+   public String getUserAgent() {
+      return null;
+   }
+
 }

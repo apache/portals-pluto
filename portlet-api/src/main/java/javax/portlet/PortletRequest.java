@@ -303,20 +303,6 @@ public interface PortletRequest extends RenderState
    * @since 2.0
    */
   public static final String ACTION_SCOPE_ID = "javax.portlet.as";
-
-  /**
-   * <div class="changed_added_3_0">
-   * A constant that can be used as the property name to obtain 
-   * the user agent string 
-   * through the <code>getProperty</code> and <code>getProperties</code>
-   * methods.
-   * </div>
-   * <p>
-   * The value is <code>User-Agent</code>.
-   * @since 3.0
-   */
-  public static final String USER_AGENT = "User-Agent";
- 
   
   
  /**
@@ -1014,5 +1000,16 @@ public interface PortletRequest extends RenderState
 
   @Deprecated
   public java.util.Map<String, String[]> getPublicParameterMap();
+
+
+  /**
+   * <div class="changed_added_3_0">
+   * Returns the user agent for the request.
+   * </div>
+   * 
+   * @return   The user agent string.
+   * @since 3.0
+   */
+  public String getUserAgent();
 
 }

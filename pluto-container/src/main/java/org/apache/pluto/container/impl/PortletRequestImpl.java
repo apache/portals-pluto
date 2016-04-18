@@ -65,7 +65,8 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class PortletRequestImpl implements PortletRequest
 {
-    public static final String ACCEPT_LANGUAGE = "Accept-Language";
+   public static final String ACCEPT_LANGUAGE = "Accept-Language";
+   public static final String USER_AGENT = "User-Agent";
 
     private static final Logger LOG = LoggerFactory.getLogger(PortletRequestImpl.class);
     private static boolean isDebug = LOG.isDebugEnabled();
@@ -722,5 +723,9 @@ public abstract class PortletRequestImpl implements PortletRequest
 
     public RenderParameters getRenderParameters() {
        return requestContext.getRenderParameters();
+    }
+    
+    public String getUserAgent() {
+       return getProperty(USER_AGENT);
     }
 }

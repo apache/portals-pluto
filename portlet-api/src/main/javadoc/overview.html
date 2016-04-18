@@ -21,6 +21,14 @@
     <div class="indexContainer-not">
     <ul>
     <li>
+    20160418:
+    Added new method to implement 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-63">PORTLETSPEC3-63 Make user agent available to Portlets</a>:
+    {@link javax.portlet.PortletRequest#getUserAgent() PortletRequest#getUserAgent()}. 
+    and altered the corresponding wrapper class accordingly.
+    Removed the PortletRequest#USER_AGENT constant, as an alternative implementation was agreed upon.
+    </li>
+    <li>
     20160406:
     Added new classes to implement 
     <a href="https://java.net/jira/browse/PORTLETSPEC3-68">PORTLETSPEC3-68 Add Async Support</a>:
@@ -55,7 +63,6 @@
     <a href="https://java.net/jira/browse/PORTLETSPEC3-63">PORTLETSPEC3-63</a>
     and
     <a href="https://java.net/jira/browse/PORTLETSPEC3-64">PORTLETSPEC3-64</a>:
-    {@link javax.portlet.PortletRequest#USER_AGENT PortletRequest#USER_AGENT}, 
     {@link javax.portlet.PortletRequest#getPortletContext() PortletRequest#getPortletContext()} and 
     {@link javax.portlet.ClientDataRequest#getContentLengthLong() ClientDataRequest#getContentLengthLong()}.
     Updated affected wrapper classes accordingly.
