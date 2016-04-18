@@ -307,14 +307,15 @@
 			<element name="supported-public-render-parameter" type="portlet:string" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="container-runtime-option" type="portlet:container-runtime-optionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="dependency" type="portlet:dependencyType" minOccurs="0" maxOccurs="unbounded"/>
-            <element name="async-supported" type="boolean" minOccurs="0" maxOccurs="1">
-               <annotation>
-                  <documentation>
-                     If set to 'true', the portlet will support
-                     asynchronous processing in resource requests.
-                  </documentation>
-               </annotation>
-            </element>
+         <element name="async-supported" type="boolean" minOccurs="0" maxOccurs="1">
+            <annotation>
+               <documentation>
+                  If set to 'true', the portlet will support
+                  asynchronous processing in resource requests.
+               </documentation>
+            </annotation>
+         </element>
+         <element name="multipart-config" type="portlet:multipartType" minOccurs="0" maxOccurs="1"/>
 		</sequence>
 		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
@@ -673,6 +674,19 @@
       <sequence>
          <element name="name" type="portlet:resourceNameType"/>
          <element name="min-version" type="portlet:resourceVersionType"/>
+      </sequence>
+   </complexType>
+   <complexType name="multipartType">
+      <annotation>
+         <documentation>
+         Provides multipart configuration information.
+         </documentation>
+      </annotation>
+      <sequence>
+         <element name="location" type="portlet:string" minOccurs="0" maxOccurs="1"/>
+         <element name="max-file-size" type="xs:long" minOccurs="0" maxOccurs="1"/>
+         <element name="max-request-size" type="xs:long" minOccurs="0" maxOccurs="1"/>
+         <element name="file-size-threshold" type="xs:int" minOccurs="0" maxOccurs="1"/>
       </sequence>
    </complexType>
 	<complexType name="supported-localeType">

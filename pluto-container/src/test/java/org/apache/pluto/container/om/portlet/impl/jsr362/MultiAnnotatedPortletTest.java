@@ -358,5 +358,25 @@ public class MultiAnnotatedPortletTest {
    public void testAsyncSupportedFalse() throws Exception {
       assertFalse(portlet3.isAsyncSupported());
    }
+   
+   @Test
+   public void testMultipartSupportedDefault() throws Exception {
+      assertFalse(portlet1.isMultipartSupported());
+   }
+   
+   @Test
+   public void testMultipartSupportedTrue() throws Exception {
+      assertFalse(portlet2.isMultipartSupported());
+   }
+   
+   @Test
+   public void testMultipartSupportedFalse() throws Exception {
+      assertTrue(portlet3.isMultipartSupported());
+
+      assertEquals("/home", portlet3.getLocation());
+      assertEquals(new Integer(11), portlet3.getFileSizeThreshold());
+      assertEquals(new Long(22), portlet3.getMaxFileSize());
+      assertEquals(new Long(33), portlet3.getMaxRequestSize());
+   }
 
 }

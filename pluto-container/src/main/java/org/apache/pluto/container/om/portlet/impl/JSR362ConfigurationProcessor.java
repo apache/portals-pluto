@@ -31,6 +31,7 @@ import javax.portlet.PortletURLGenerationListener;
 import javax.portlet.PreferencesValidator;
 import javax.portlet.annotations.InitParameter;
 import javax.portlet.annotations.LocaleString;
+import javax.portlet.annotations.Multipart;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletListener;
@@ -81,6 +82,7 @@ import org.apache.pluto.container.om.portlet30.impl.InitParamType;
 import org.apache.pluto.container.om.portlet30.impl.KeywordsType;
 import org.apache.pluto.container.om.portlet30.impl.ListenerType;
 import org.apache.pluto.container.om.portlet30.impl.MimeTypeType;
+import org.apache.pluto.container.om.portlet30.impl.MultipartType;
 import org.apache.pluto.container.om.portlet30.impl.PortletAppType;
 import org.apache.pluto.container.om.portlet30.impl.PortletInfoType;
 import org.apache.pluto.container.om.portlet30.impl.PortletModeType;
@@ -872,6 +874,16 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          if (portlet.isAsyncSupported() != null) {
             pd.setAsyncSupported(portlet.isAsyncSupported());
          }
+         
+         // multipart config
+         MultipartType muty = portlet.getMultipartConfig(); 
+         if (muty != null) {
+            pd.setMultipartSupported(true);
+            pd.setLocation(muty.getLocation());
+            pd.setFileSizeThreshold(muty.getFileSizeThreshold());
+            pd.setMaxFileSize(muty.getMaxFileSize());
+            pd.setMaxRequestSize(muty.getMaxRequestSize());
+         }
 
          pad.addPortlet(pd);
 
@@ -1297,6 +1309,17 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          pd.setExpirationCache(pc.cacheExpirationTime());
          pd.setResourceBundle(pc.resourceBundle());
          pd.setAsyncSupported(pc.asyncSupported());
+         
+         // multipart config
+         
+         if (pc.multipart().supported() == true) {
+            Multipart mp = pc.multipart();
+            pd.setMultipartSupported(true);
+            pd.setLocation(mp.location());
+            pd.setFileSizeThreshold(mp.fileSizeThreshold());
+            pd.setMaxFileSize(mp.maxFileSize());
+            pd.setMaxRequestSize(mp.maxRequestSize());
+         }
 
          // handle portlet info - title, short title, keywords
 

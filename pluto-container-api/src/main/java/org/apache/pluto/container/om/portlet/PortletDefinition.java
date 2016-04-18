@@ -88,5 +88,18 @@ public interface PortletDefinition {
 
    boolean isAsyncSupported();
    void setAsyncSupported(boolean asyncSupported);
+   
+   // multipart config
+   
+   boolean isMultipartSupported();
+   void setMultipartSupported(boolean multipartSupported);
+   String getLocation();
+   void setLocation(String location);
+   Integer getFileSizeThreshold();
+   void setFileSizeThreshold(Integer fileSizeThreshold);
+   Long getMaxRequestSize();
+   void setMaxRequestSize(Long maxRequestSize);
+   Long getMaxFileSize();
+   void setMaxFileSize(Long maxFileSize);
 
 }

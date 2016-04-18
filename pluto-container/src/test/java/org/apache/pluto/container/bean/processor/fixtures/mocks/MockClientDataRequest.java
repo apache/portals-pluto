@@ -23,8 +23,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
 
 import javax.portlet.ClientDataRequest;
+import javax.portlet.PortletException;
+import javax.servlet.http.Part;
 
 /**
  * @author Scott
@@ -90,6 +93,16 @@ public class MockClientDataRequest extends MockPortletRequest implements ClientD
     */
    @Override
    public void setCharacterEncoding(String arg0) throws UnsupportedEncodingException {
+   }
+
+   @Override
+   public Part getPart(String name) throws IOException, PortletException {
+      return null;
+   }
+
+   @Override
+   public Collection<Part> getParts() throws IOException, PortletException {
+      return null;
    }
 
 }

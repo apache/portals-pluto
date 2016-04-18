@@ -888,5 +888,30 @@ public class PortletDefinition362ImplTest {
       cut.setAsyncSupported(false);
       assertFalse(cut.isAsyncSupported());
    }
+   
+   @Test
+   public void testSetMultipartSupportedTrue() throws Exception {
+      cut.setMultipartSupported(true);
+      assertTrue(cut.isMultipartSupported());
+   }
+   
+   @Test
+   public void testSetMultipartSupportedFalse() throws Exception {
+      cut.setMultipartSupported(false);
+      assertFalse(cut.isMultipartSupported());
+   }
+   
+   @Test
+   public void testGetSetMultipartValues() throws Exception {
+      cut.setLocation("there");
+      cut.setFileSizeThreshold(10);
+      cut.setMaxFileSize(20L);
+      cut.setMaxRequestSize(30L);
+      
+      assertEquals("there", cut.getLocation());
+      assertEquals(new Integer(10), cut.getFileSizeThreshold());
+      assertEquals(new Long(20), cut.getMaxFileSize());
+      assertEquals(new Long(30), cut.getMaxRequestSize());
+   }
 
 }

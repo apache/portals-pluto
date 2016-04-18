@@ -21,8 +21,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
 
 import javax.portlet.ClientDataRequest;
+import javax.portlet.PortletException;
+import javax.servlet.ServletException;
+import javax.servlet.http.Part;
 
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletResponseContext;
@@ -70,6 +74,26 @@ public abstract class ClientDataRequestImpl extends PortletRequestImpl implement
     public long getContentLengthLong()
     {
         return getServletRequest().getContentLengthLong();
+    }
+
+    @Override
+    public Part getPart(String name) throws IOException, PortletException
+    {
+       try {
+          return getServletRequest().getPart(name);
+       } catch (ServletException e) {
+          throw new PortletException(e);
+       }
+    }
+
+    @Override
+    public Collection<Part> getParts() throws IOException, PortletException
+    {
+       try {
+          return getServletRequest().getParts();
+       } catch (ServletException e) {
+          throw new PortletException(e);
+       }
     }
 
     public java.lang.String getContentType()

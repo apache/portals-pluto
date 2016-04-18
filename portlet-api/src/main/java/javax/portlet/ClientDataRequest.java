@@ -24,6 +24,11 @@
 
 package javax.portlet;
 
+import java.io.IOException;
+import java.util.Collection;
+
+import javax.servlet.http.Part;
+
 /**
  * <span class="changed_modified_3_0">The</span>
  * <CODE>ClientDataRequest</CODE> represents the request information 
@@ -150,7 +155,6 @@ public interface ClientDataRequest extends PortletRequest {
 
     public int getContentLength();
 
-
     /**
      * <div class="changed_added_3_0">
      * Returns the length, in bytes, of the request body 
@@ -165,7 +169,6 @@ public interface ClientDataRequest extends PortletRequest {
      * @since  3.0
      *
      */
-
     public long getContentLengthLong();
       
     /**
@@ -177,6 +180,52 @@ public interface ClientDataRequest extends PortletRequest {
      *          this request was made
      */
     public String getMethod();
+
+    /**
+     * <div class="changed_added_3_0">
+     * Gets the Part with the given name.
+     * </div> 
+     *
+     * @param name - the name of the requested Part
+     *
+     * @return The Part with the given name, or null if this request is of type 
+     *      multipart/form-data, but does not contain the requested Part
+     *
+     *
+     * @throws IOException if an I/O error occurred during the retrieval of the Part components of 
+     *    this request
+     * @throws PortletException if this request is not of type multipart/form-data
+     * @throws IllegalStateException if the request body is larger than maxRequestSize, or any Part in 
+     *    the request is larger than maxFileSize, or there is no multipart configuration 
+     *    present
+     *          
+     * @since  3.0
+     *
+     */
+    public Part getPart(String name) throws IOException, PortletException;
+
+    /**
+     * <div class="changed_added_3_0">
+     * Gets all the Part components of this request, provided that it is of type multipart/form-data.
+     * <p>
+     * If this request is of type multipart/form-data, but does not contain any Part components, the returned Collection will be empty.
+     * <p>
+     * Any changes to the returned Collection must not affect this request object.
+     * </div> 
+     *
+     * @return      a (possibly empty) Collection of the Part components of this request
+     *
+     * @throws IOException if an I/O error occurred during the retrieval of the Part components of 
+     *    this request
+     * @throws PortletException if this request is not of type multipart/form-data
+     * @throws IllegalStateException if the request body is larger than maxRequestSize, or any Part in 
+     *    the request is larger than maxFileSize, or there is no multipart configuration 
+     *    present
+     *           
+     * @since  3.0
+     *
+     */
+    public Collection<Part> getParts() throws IOException, PortletException;
 
 
 }

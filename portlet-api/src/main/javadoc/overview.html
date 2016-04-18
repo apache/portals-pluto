@@ -27,6 +27,14 @@
     {@link javax.portlet.PortletRequest#getUserAgent() PortletRequest#getUserAgent()}. 
     and altered the corresponding wrapper class accordingly.
     Removed the PortletRequest#USER_AGENT constant, as an alternative implementation was agreed upon.
+    <p>
+    Added multipart support to fulfill
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-67">PORTLETSPEC3-67</a>. 
+    See 
+    {@link javax.portlet.annotations.PortletConfiguration#multipart() PortletConfiguration#multipart()}, 
+    {@link javax.portlet.annotations.Multipart Multipart},
+    {@link javax.portlet.ClientDataRequest#getPart(String)}, and 
+    {@link javax.portlet.ClientDataRequest#getParts()}.
     </li>
     <li>
     20160406:

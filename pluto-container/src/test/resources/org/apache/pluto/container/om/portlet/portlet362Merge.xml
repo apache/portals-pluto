@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <portlet-app id="id1" version="3.0"
-   xmlns="http://xmlns.jcp.org/xml/ns/portlet" 
-   xmlns:portlet="http://xmlns.jcp.org/xml/ns/portlet" 
-   xmlns:xml="http://www.w3.org/XML/1998/namespace"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/portlet portlet-app_3_0.xsd ">
+   xmlns="http://xmlns.jcp.org/xml/ns/portlet" xmlns:portlet="http://xmlns.jcp.org/xml/ns/portlet"
+   xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/portlet portlet-app_3_0.xsd "
+>
 
    <!-- JSR 362 portlet DD test file -->
 
    <portlet id="id2">
-      <description xml:lang="de">multi 
-      line 
-      description</description>
+      <description xml:lang="de">multi
+         line
+         description
+      </description>
       <portlet-name>AnnotatedPortlet</portlet-name>
       <display-name xml:lang="de">display-name</display-name>
-      <portlet-class>org.apache.pluto.container.om.portlet.impl.fixtures.TestPortlet</portlet-class>
+      <portlet-class>org.apache.pluto.container.om.portlet.impl.fixtures.TestPortlet
+      </portlet-class>
       <init-param id="init1">
          <description xml:lang="de">description</description>
          <name>name</name>
@@ -43,7 +44,8 @@
          <window-state>window-state3</window-state>
       </supports>
       <supported-locale>supported-locale</supported-locale>
-      <resource-bundle>org.apache.pluto.container.om.portlet.GoodBundle</resource-bundle>
+      <resource-bundle>org.apache.pluto.container.om.portlet.GoodBundle
+      </resource-bundle>
       <portlet-info id="info1">
          <title xml:lang="de">Titel</title>
          <short-title xml:lang="de">Kurztitel</short-title>
@@ -94,13 +96,20 @@
          <min-version>1.4.8</min-version>
       </dependency>
       <async-supported>false</async-supported>
+      <multipart-config>
+         <location>/tmp</location>
+         <max-file-size>101</max-file-size>
+         <max-request-size>102</max-request-size>
+         <file-size-threshold>103</file-size-threshold>
+      </multipart-config>
    </portlet>
+
    <custom-portlet-mode id="mode1">
       <description xml:lang="de">description</description>
       <portlet-mode>portlet-mode</portlet-mode>
       <portal-managed>false</portal-managed>
    </custom-portlet-mode>
-    <custom-portlet-mode id="mode1">
+   <custom-portlet-mode id="mode1">
       <description xml:lang="de">description</description>
       <portlet-mode>aMode</portlet-mode>
       <portal-managed>false</portal-managed>
@@ -131,12 +140,14 @@
          <transport-guarantee>NONE</transport-guarantee>
       </user-data-constraint>
    </security-constraint>
-   <resource-bundle>org.apache.pluto.container.om.portlet.GoodBundle</resource-bundle>
+   <resource-bundle>org.apache.pluto.container.om.portlet.GoodBundle
+   </resource-bundle>
    <filter>
       <description xml:lang="de">description</description>
       <display-name xml:lang="de">display-name</display-name>
       <filter-name>filter-name</filter-name>
-      <filter-class>org.apache.pluto.container.om.portlet.impl.fixtures.TestFilter</filter-class>
+      <filter-class>org.apache.pluto.container.om.portlet.impl.fixtures.TestFilter
+      </filter-class>
       <lifecycle>lifecycle</lifecycle>
       <init-param id="init2">
          <description xml:lang="de">description</description>
@@ -152,7 +163,8 @@
    <event-definition id="event1">
       <description xml:lang="de">description</description>
       <name>another-event</name>
-      <value-type>org.apache.pluto.container.om.portlet.impl.fixtures.TestEventType</value-type>
+      <value-type>org.apache.pluto.container.om.portlet.impl.fixtures.TestEventType
+      </value-type>
    </event-definition>
    <event-definition id="event2">
       <description xml:lang="de">description</description>
@@ -173,7 +185,8 @@
       <listener-name>test listener</listener-name>
       <description xml:lang="de">description</description>
       <display-name xml:lang="de">display-name</display-name>
-      <listener-class>org.apache.pluto.container.om.portlet.impl.fixtures.TestListener</listener-class>
+      <listener-class>org.apache.pluto.container.om.portlet.impl.fixtures.TestListener
+      </listener-class>
    </listener>
    <container-runtime-option>
       <name>Runtime-Option-Portlet-App</name>
