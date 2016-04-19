@@ -57,6 +57,9 @@ limitations under the License.
     <servlet-name>plutoPortalDriver</servlet-name>
     <servlet-class>org.apache.pluto.driver.PortalDriverServlet</servlet-class>
     <async-supported>true</async-supported>
+    <multipart-config>
+      <file-size-threshold>1048576</file-size-threshold>
+    </multipart-config>
   </servlet>
 
   <servlet>
