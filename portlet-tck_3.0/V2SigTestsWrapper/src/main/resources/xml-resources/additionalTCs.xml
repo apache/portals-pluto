@@ -21,7 +21,6 @@
 <properties>
 <!-- JSR 286 API SigTestsWrapper test case names and page mappings -->
 <entry key="V2SigTestsWrapper_ActionRequestWrapper_SIGRender_constructor">V2SigTestsWrapper</entry>
-<entry key="V2SigTestsWrapper_ActionRequestWrapper_SIGRender_extendsPortletRequestWrapper">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ActionRequestWrapper_SIGRender_hasGetCharacterEncoding">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ActionRequestWrapper_SIGRender_hasGetCharacterEncodingReturns">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ActionRequestWrapper_SIGRender_hasGetContentLength">V2SigTestsWrapper</entry>
@@ -44,7 +43,6 @@
 <entry key="V2SigTestsWrapper_ActionRequestWrapper_SIGRender_hasSetRequestReturns">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ActionRequestWrapper_SIGRender_implementsActionRequest">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ActionResponseWrapper_SIGRender_constructor">V2SigTestsWrapper</entry>
-<entry key="V2SigTestsWrapper_ActionResponseWrapper_SIGRender_extendsPortletResponseWrapper">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ActionResponseWrapper_SIGRender_hasGetPortletMode">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ActionResponseWrapper_SIGRender_hasGetPortletModeReturns">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ActionResponseWrapper_SIGRender_hasGetRenderParameterMap">V2SigTestsWrapper</entry>
@@ -79,7 +77,6 @@
 <entry key="V2SigTestsWrapper_ActionResponseWrapper_SIGRender_hasSetWindowStateReturns">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ActionResponseWrapper_SIGRender_implementsActionResponse">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_EventRequestWrapper_SIGRender_constructor">V2SigTestsWrapper</entry>
-<entry key="V2SigTestsWrapper_EventRequestWrapper_SIGRender_extendsPortletRequestWrapper">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_EventRequestWrapper_SIGRender_hasGetEvent">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_EventRequestWrapper_SIGRender_hasGetEventReturns">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_EventRequestWrapper_SIGRender_hasGetMethod">V2SigTestsWrapper</entry>
@@ -92,7 +89,6 @@
 <entry key="V2SigTestsWrapper_EventRequestWrapper_SIGRender_hasSetRequestReturns">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_EventRequestWrapper_SIGRender_implementsEventRequest">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_EventResponseWrapper_SIGRender_constructor">V2SigTestsWrapper</entry>
-<entry key="V2SigTestsWrapper_EventResponseWrapper_SIGRender_extendsPortletResponseWrapper">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_EventResponseWrapper_SIGRender_hasGetPortletMode">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_EventResponseWrapper_SIGRender_hasGetPortletModeReturns">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_EventResponseWrapper_SIGRender_hasGetRenderParameterMap">V2SigTestsWrapper</entry>
@@ -227,7 +223,6 @@
 <entry key="V2SigTestsWrapper_PortletResponseWrapper_SIGRender_hasSetResponseReturns">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_PortletResponseWrapper_SIGRender_implementsPortletResponse">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_RenderRequestWrapper_SIGRender_constructor">V2SigTestsWrapper</entry>
-<entry key="V2SigTestsWrapper_RenderRequestWrapper_SIGRender_extendsPortletRequestWrapper">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_RenderRequestWrapper_SIGRender_hasGetETag">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_RenderRequestWrapper_SIGRender_hasGetETagReturns">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_RenderRequestWrapper_SIGRender_hasGetRequest">V2SigTestsWrapper</entry>
@@ -238,7 +233,6 @@
 <entry key="V2SigTestsWrapper_RenderRequestWrapper_SIGRender_hasSetRequestReturns">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_RenderRequestWrapper_SIGRender_implementsRenderRequest">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_RenderResponseWrapper_SIGRender_constructor">V2SigTestsWrapper</entry>
-<entry key="V2SigTestsWrapper_RenderResponseWrapper_SIGRender_extendsPortletResponseWrapper">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_RenderResponseWrapper_SIGRender_hasCreateActionURL">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_RenderResponseWrapper_SIGRender_hasCreateActionURLReturns">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_RenderResponseWrapper_SIGRender_hasCreateRenderURL">V2SigTestsWrapper</entry>
@@ -283,7 +277,6 @@
 <entry key="V2SigTestsWrapper_RenderResponseWrapper_SIGRender_hasSetTitleReturns">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_RenderResponseWrapper_SIGRender_implementsRenderResponse">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ResourceRequestWrapper_SIGRender_constructor">V2SigTestsWrapper</entry>
-<entry key="V2SigTestsWrapper_ResourceRequestWrapper_SIGRender_extendsPortletRequestWrapper">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ResourceRequestWrapper_SIGRender_hasGetCacheability">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ResourceRequestWrapper_SIGRender_hasGetCacheabilityReturns">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ResourceRequestWrapper_SIGRender_hasGetCharacterEncoding">V2SigTestsWrapper</entry>
@@ -314,7 +307,6 @@
 <entry key="V2SigTestsWrapper_ResourceRequestWrapper_SIGRender_hasSetRequestReturns">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ResourceRequestWrapper_SIGRender_implementsResourceRequest">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ResourceResponseWrapper_SIGRender_constructor">V2SigTestsWrapper</entry>
-<entry key="V2SigTestsWrapper_ResourceResponseWrapper_SIGRender_extendsPortletResponseWrapper">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ResourceResponseWrapper_SIGRender_hasCreateActionURL">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ResourceResponseWrapper_SIGRender_hasCreateActionURLReturns">V2SigTestsWrapper</entry>
 <entry key="V2SigTestsWrapper_ResourceResponseWrapper_SIGRender_hasCreateRenderURL">V2SigTestsWrapper</entry>
