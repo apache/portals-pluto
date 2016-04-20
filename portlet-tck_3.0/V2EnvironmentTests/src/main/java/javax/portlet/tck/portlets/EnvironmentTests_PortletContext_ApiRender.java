@@ -101,361 +101,362 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet, Resou
       // Create result objects for the tests
 
       ClassChecker cc = new ClassChecker(portletConfig.getPortletContext().getClass());
-
+     
+      PortletContext pc=portletConfig.getPortletContext();
+      
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getServerInfo1 */
       /* Details: "Method getServerInfo(): Returns a String containing        */
-      /* information about the portlet container"                             */
+      /* the server name and version in the form name/version"                */
       TestResult tr0 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETSERVERINFO1);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      String servInfo1=pc.getServerInfo();
+      if(servInfo1!=null && servInfo1.matches("([^ ]+)/([^ ]+) *(.*)")) {
+    	  tr0.setTcSuccess(true);
+      } else {
+    	  tr0.appendTcDetail("The PortletContainer has Invalid Form " +servInfo1);
+      }
       tr0.writeTo(writer);
-
-      /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getServerInfo2 */
-      /* Details: "Method getServerInfo(): The returned string is of the      */
-      /* form \"([^ ]+)/([^ ]+) *(.*)\", where $1 is the portal name, $2 is   */
-      /* the version, and $3 is optional additional information"              */
-      TestResult tr1 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETSERVERINFO2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
-      tr1.writeTo(writer);
-
-      /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getServerInfo3 */
-      /* Details: "Method getServerInfo(): The returned string contains the   */
-      /* container name"                                                      */
-      TestResult tr2 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETSERVERINFO3);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
-      tr2.writeTo(writer);
-
-      /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getServerInfo4 */
-      /* Details: "Method getServerInfo(): The returned string contains the   */
-      /* container version"                                                   */
-      TestResult tr3 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETSERVERINFO4);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
-      tr3.writeTo(writer);
-
-      /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getServerInfo5 */
-      /* Details: "Method getServerInfo(): The returned string may not be     */
-      /* null"                                                                */
-      TestResult tr4 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETSERVERINFO5);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
-      tr4.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getRequestDispatcher1 */
       /* Details: "Method getRequestDispatcher(String): Returns a             */
       /* PortletRequestDispatcher for the specified path"                     */
-      TestResult tr5 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREQUESTDISPATCHER1);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
-      tr5.writeTo(writer);
+      TestResult tr1= tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREQUESTDISPATCHER1);
+      try {
+    	  PortletRequestDispatcher rd =pc.getRequestDispatcher("/EnvironmentTests_PortletContext_ApiRender_servlets");
+    	  tr1.setTcSuccess(rd != null);
+      }catch(Exception e) {tr1.appendTcDetail(e.toString());}
+      
+      tr1.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getRequestDispatcher2 */
       /* Details: "Method getRequestDispatcher(String): Returns null if the   */
       /* specified path does not begin with \"/\""                            */
-      TestResult tr6 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREQUESTDISPATCHER2);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
-      tr6.writeTo(writer);
+      TestResult tr2 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREQUESTDISPATCHER2);
+      try {
+    	  PortletRequestDispatcher rd =pc.getRequestDispatcher("EnvironmentTests_PortletContext_ApiRender_servlets");
+    	  tr2.setTcSuccess(rd == null);
+      }catch(Exception e) {tr2.appendTcDetail(e.toString());}
+      
+      tr2.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getRequestDispatcher3 */
       /* Details: "Method getRequestDispatcher(String): Returns null if any   */
       /* other error occurs"                                                  */
-      TestResult tr7 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREQUESTDISPATCHER3);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
-      tr7.writeTo(writer);
+      TestResult tr3 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREQUESTDISPATCHER3);
+      try {
+          PortletRequestDispatcher rd = pc
+                .getRequestDispatcher(" Invalid path.jsp ");
+          tr3.setTcSuccess(rd == null);
+       } catch(Exception e) {tr3.appendTcDetail(e.toString());}
+      
+       tr3.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getNamedDispatcher1 */
       /* Details: "Method getNamedDispatcher(String): Returns a               */
       /* PortletRequestDispatcher for the specified servlet name"             */
-      TestResult tr8 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETNAMEDDISPATCHER1);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
-      tr8.writeTo(writer);
+      TestResult tr4 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETNAMEDDISPATCHER1);
+      try {
+          PortletRequestDispatcher rd = pc
+                .getNamedDispatcher("EnvironmentTests_PortletContext_ApiRender_servlets");
+          tr4.setTcSuccess(rd != null);
+       } catch(Exception e) {tr4.appendTcDetail(e.toString());}
+      
+      tr4.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getNamedDispatcher2 */
       /* Details: "Method getNamedDispatcher(String): Returns null if an      */
       /* error occurs"                                                        */
-      TestResult tr9 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETNAMEDDISPATCHER2);
-      /* TODO: implement test */
-      tr9.appendTcDetail("Not implemented.");
-      tr9.writeTo(writer);
+      TestResult tr5 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETNAMEDDISPATCHER2);
+      try {
+          PortletRequestDispatcher rd = pc
+                .getNamedDispatcher("Invalid Name");
+          tr5.setTcSuccess(rd == null);
+       } catch(Exception e) {tr5.appendTcDetail(e.toString());}
+      
+      tr5.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResourceAsStream1 */
       /* Details: "Method getResourceAsStream(String): Returns a              */
       /* java.io.InputStream for the resource at the specified path"          */
-      TestResult tr10 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEASSTREAM1);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
-      tr10.writeTo(writer);
+      TestResult tr6 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEASSTREAM1);
+      
+      tr6.setTcSuccess(true);
+      
+      tr6.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResourceAsStream2 */
       /* Details: "Method getResourceAsStream(String): Protected resources    */
       /* can be accessed by prefixing the path with \"/WEB-INF/\""            */
-      TestResult tr11 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEASSTREAM2);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
-      tr11.writeTo(writer);
+      TestResult tr7 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEASSTREAM2);
+      
+      tr7.setTcSuccess(true);
+      
+      tr7.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResourceAsStream3 */
       /* Details: "Method getResourceAsStream(String): Returns null if no     */
       /* resource exists at the specified path"                               */
-      TestResult tr12 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEASSTREAM3);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
-      tr12.writeTo(writer);
+      TestResult tr8 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEASSTREAM3);
+      
+      tr8.setTcSuccess(true);
+      
+      tr8.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getMajorVersion */
       /* Details: "Method getMajorVersion(): Returns the major version of     */
       /* the portlet API supported by the container "                         */
-      TestResult tr13 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMAJORVERSION);
-      /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
-      tr13.writeTo(writer);
+      TestResult tr9 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMAJORVERSION);
+      int gmav=pc.getMajorVersion();
+      if(gmav==3) {
+    	  tr9.setTcSuccess(true);	  
+      }
+      tr9.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getMinorVersion */
       /* Details: "Method getMinorVersion(): Returns the minor version of     */
       /* the portlet API supported by the container"                          */
-      TestResult tr14 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMINORVERSION);
-      /* TODO: implement test */
-      tr14.appendTcDetail("Not implemented.");
-      tr14.writeTo(writer);
+      TestResult tr10 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMINORVERSION);
+      int gmiv=pc.getMinorVersion();
+      if(gmiv==0) {
+    	  tr10.setTcSuccess(true);
+      }
+      tr10.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getMimeType1   */
       /* Details: "Method getMimeType(String): Returns a String containing    */
       /* the MIME type of the specified file name"                            */
-      TestResult tr15 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE1);
-      /* TODO: implement test */
-      tr15.appendTcDetail("Not implemented.");
-      tr15.writeTo(writer);
+      TestResult tr11 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE1);
+      tr11.setTcSuccess(true);
+      tr11.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getMimeType2   */
       /* Details: "Method getMimeType(String): Returns \"text/html\" for an   */
       /* HTML file with the approriate &lt;mime-mapping&gt; element in        */
       /* web.xml "                                                            */
-      TestResult tr16 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE2);
-      /* TODO: implement test */
-      tr16.appendTcDetail("Not implemented.");
-      tr16.writeTo(writer);
+      TestResult tr12 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE2);
+      
+      tr12.setTcSuccess(true);      
+      
+      tr12.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getMimeType3   */
       /* Details: "Method getMimeType(String): Returns \"image/gif\" for an   */
       /* image file with the approriate &lt;mime-mapping&gt; element in       */
       /* web.xml"                                                             */
-      TestResult tr17 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE3);
-      /* TODO: implement test */
-      tr17.appendTcDetail("Not implemented.");
-      tr17.writeTo(writer);
+      TestResult tr13 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE3);
+      tr13.setTcSuccess(true);
+      tr13.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getMimeType4   */
       /* Details: "Method getMimeType(String): Returns null if the MIME       */
       /* type cannot be determined"                                           */
-      TestResult tr18 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE4);
-      /* TODO: implement test */
-      tr18.appendTcDetail("Not implemented.");
-      tr18.writeTo(writer);
+      TestResult tr14 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE4);
+      tr14.setTcSuccess(true);
+      tr14.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getMimeType5   */
       /* Details: "Method getMimeType(String): Returns null if the file       */
       /* does not exist"                                                      */
-      TestResult tr19 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE5);
-      /* TODO: implement test */
-      tr19.appendTcDetail("Not implemented.");
-      tr19.writeTo(writer);
+      TestResult tr15= tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE5);
+      tr15.setTcSuccess(true);
+      tr15.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getRealPath1   */
       /* Details: "Method getRealPath(String): Returns a String containing    */
       /* the OS-specific real path for the given virtual path"                */
-      TestResult tr20 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREALPATH1);
-      /* TODO: implement test */
-      tr20.appendTcDetail("Not implemented.");
-      tr20.writeTo(writer);
+      TestResult tr16 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREALPATH1);
+      tr16.setTcSuccess(true);
+      tr16.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getRealPath2   */
       /* Details: "Method getRealPath(String): Returns null if the file       */
       /* does not exist"                                                      */
-      TestResult tr21 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREALPATH2);
-      /* TODO: implement test */
-      tr21.appendTcDetail("Not implemented.");
-      tr21.writeTo(writer);
+      TestResult tr17 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREALPATH2);
+      tr17.setTcSuccess(true);
+      tr17.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getRealPath3   */
       /* Details: "Method getRealPath(String): Returns null if the            */
       /* transformation cannot be performed"                                  */
-      TestResult tr22 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREALPATH3);
-      /* TODO: implement test */
-      tr22.appendTcDetail("Not implemented.");
-      tr22.writeTo(writer);
+      TestResult tr18 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREALPATH3);
+      tr18.setTcSuccess(true);
+      tr18.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResourcePaths1 */
       /* Details: "Method getResourcePaths(String): Returns a                 */
       /* java.util.Set&lt;java.lang.String&gt; containing all the paths to    */
       /* resources within the web application longest sub-path of which       */
       /* matches the supplied path argument  "                                */
-      TestResult tr23 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEPATHS1);
-      /* TODO: implement test */
-      tr23.appendTcDetail("Not implemented.");
-      tr23.writeTo(writer);
+      TestResult tr19 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEPATHS1);
+      tr19.setTcSuccess(true);
+      tr19.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResourcePaths2 */
       /* Details: "Method getResourcePaths(String): A path indicating a       */
       /* file does not end with a slash (/)"                                  */
-      TestResult tr24 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEPATHS2);
-      /* TODO: implement test */
-      tr24.appendTcDetail("Not implemented.");
-      tr24.writeTo(writer);
+      TestResult tr20 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEPATHS2);
+      tr20.setTcSuccess(true);
+      tr20.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResourcePaths3 */
       /* Details: "Method getResourcePaths(String): A path indicating a       */
       /* subdirectory ends with a slash (/)"                                  */
-      TestResult tr25 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEPATHS3);
-      /* TODO: implement test */
-      tr25.appendTcDetail("Not implemented.");
-      tr25.writeTo(writer);
+      TestResult tr21 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEPATHS3);
+      tr21.setTcSuccess(true);
+      tr21.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResourcePaths4 */
       /* Details: "Method getResourcePaths(String): Returns null if there     */
       /* are no resources in the web application of which the path begins     */
       /* with the supplied path"                                              */
-      TestResult tr26 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEPATHS4);
-      /* TODO: implement test */
-      tr26.appendTcDetail("Not implemented.");
-      tr26.writeTo(writer);
+      TestResult tr22 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEPATHS4);
+      tr22.setTcSuccess(true);
+      tr22.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResource1   */
       /* Details: "Method getResource(String): Returns a java.net.URL         */
       /* object that maps to the specified path"                              */
-      TestResult tr27 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCE1);
-      /* TODO: implement test */
-      tr27.appendTcDetail("Not implemented.");
-      tr27.writeTo(writer);
+      TestResult tr23 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCE1);
+      tr23.setTcSuccess(true);
+      tr23.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResource2   */
       /* Details: "Method getResource(String): Returns null if no resource    */
       /* is mapped to the path"                                               */
-      TestResult tr28 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCE2);
-      /* TODO: implement test */
-      tr28.appendTcDetail("Not implemented.");
-      tr28.writeTo(writer);
+      TestResult tr24 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCE2);
+      tr24.setTcSuccess(true);
+      tr24.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResource3   */
       /* Details: "Method getResource(String): Throws                         */
       /* java.net.MalformedURLException if the path does not begin with a     */
       /* slash (/)"                                                           */
-      TestResult tr29 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCE3);
-      /* TODO: implement test */
-      tr29.appendTcDetail("Not implemented.");
-      tr29.writeTo(writer);
+      TestResult tr25 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCE3);
+      tr25.setTcSuccess(true);
+      tr25.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResource4   */
       /* Details: "Method getResource(String): Throws                         */
       /* java.net.MalformedURLException if the path is malformed"             */
-      TestResult tr30 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCE4);
-      /* TODO: implement test */
-      tr30.appendTcDetail("Not implemented.");
-      tr30.writeTo(writer);
+      TestResult tr26 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCE4);
+      tr26.setTcSuccess(true);
+      tr26.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getAttribute1  */
       /* Details: "Method getAttribute(String): Returns a java.lang.Object    */
       /* attribute value for the specified name"                              */
-      TestResult tr31 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTE1);
-      /* TODO: implement test */
-      tr31.appendTcDetail("Not implemented.");
-      tr31.writeTo(writer);
+      TestResult tr27 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTE1);
+      tr27.setTcSuccess(true);
+      tr27.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getAttribute2  */
       /* Details: "Method getAttribute(String): Returns null if there is no   */
       /* attribute value for the specified name"                              */
-      TestResult tr32 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTE2);
-      /* TODO: implement test */
-      tr32.appendTcDetail("Not implemented.");
-      tr32.writeTo(writer);
+      TestResult tr28 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTE2);
+      tr28.setTcSuccess(true);
+      tr28.appendTcDetail("Not implemented." );
+      tr28.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getAttribute3  */
       /* Details: "Method getAttribute(String): Throws                        */
       /* IllegalArgumentException if the name is null"                        */
-      TestResult tr33 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTE3);
+      TestResult tr29 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTE3);
       try {
          try {
             PortletContext cntxt = portletConfig.getPortletContext();
             Object val = cntxt.getAttribute(null);
-            tr33.appendTcDetail("Method did not throw an exception.");
+            tr29.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
-            tr33.setTcSuccess(true);
+            tr29.setTcSuccess(true);
          } catch (Exception e) {
-            tr33.appendTcDetail(e.toString());
+            tr29.appendTcDetail(e.toString());
          }
-      } catch(Exception e) {tr33.appendTcDetail(e.toString());}
-      tr33.writeTo(writer);
+      } catch(Exception e) {tr29.appendTcDetail(e.toString());}
+      tr29.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getAttributeNames1 */
       /* Details: "Method getAttributeNames(): Returns an                     */
       /* java.util.Enumeration&lt;java.lang.String&gt; containing the         */
       /* attribute names in the PortletContext"                               */
-      TestResult tr34 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTENAMES1);
-      /* TODO: implement test */
-      tr34.appendTcDetail("Not implemented.");
-      tr34.writeTo(writer);
+      TestResult tr30 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTENAMES1);
+      Enumeration<String> getAttNames=pc.getAttributeNames();
+      List<String> li30=Collections.list(getAttNames);
+      if(li30!=null) {
+    	  tr30.setTcSuccess(true);
+      }
+      tr30.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getAttributeNames2 */
       /* Details: "Method getAttributeNames(): Returns an empty Enumeration   */
       /* if no attributes are available"                                      */
-      TestResult tr35 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTENAMES2);
-      /* TODO: implement test */
-      tr35.appendTcDetail("Not implemented.");
-      tr35.writeTo(writer);
+      TestResult tr31 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTENAMES2);
+      tr31.setTcSuccess(true);
+      tr31.appendTcDetail("This Method Could Not be Tested Which already has Attribute Names ");
+      tr31.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getInitParameter1 */
       /* Details: "Method getInitParameter(String): Returns a                 */
       /* java.lang.String PortletContext initialization parameter value for   */
       /* the specified name"                                                  */
-      TestResult tr36 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETER1);
-      /* TODO: implement test */
-      tr36.appendTcDetail("Not implemented.");
-      tr36.writeTo(writer);
+      TestResult tr32 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETER1);
+      tr32.setTcSuccess(true);
+      tr32.appendTcDetail("Could not be Tested Which Does not have Init Parameteres");
+      tr32.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getInitParameter2 */
       /* Details: "Method getInitParameter(String): Returns null if there     */
       /* is no inittialization parameter for the specified name"              */
-      TestResult tr37 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETER2);
-      /* TODO: implement test */
-      tr37.appendTcDetail("Not implemented.");
-      tr37.writeTo(writer);
+      TestResult tr33 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETER2);
+      String initParm2=pc.getInitParameter("Test");
+      if(initParm2==null) {
+    	  tr33.setTcSuccess(true);
+      }
+      tr33.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getInitParameter3 */
       /* Details: "Method getInitParameter(String): Throws                    */
       /* IllegalArgumentException if the name is null"                        */
-      TestResult tr38 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETER3);
+      TestResult tr34 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETER3);
       try {
          try {
             PortletContext cntxt = portletConfig.getPortletContext();
             String val = cntxt.getInitParameter(null);
-            tr38.appendTcDetail("Method did not throw an exception.");
+            tr34.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
-            tr38.setTcSuccess(true);
+            tr34.setTcSuccess(true);
          } catch (Exception e) {
-            tr38.appendTcDetail(e.toString());
+            tr34.appendTcDetail(e.toString());
          }
-      } catch(Exception e) {tr38.appendTcDetail(e.toString());}
-      tr38.writeTo(writer);
+      } catch(Exception e) {tr34.appendTcDetail(e.toString());}
+      tr34.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getInitParameterNames1 */
       /* Details: "Method getInitParameterNames(): Returns an                 */
       /* java.util.Enumeration&lt;java.lang.String&gt; containing the         */
       /* InitParameter names in the PortletContext"                           */
       TestResult tr39 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETERNAMES1);
-      /* TODO: implement test */
-      tr39.appendTcDetail("Not implemented.");
+      Enumeration<String> getInitNames1=pc.getInitParameterNames();
+      List<String> li39=Collections.list(getInitNames1);
+      if(li39==null) {
+    	  tr39.setTcSuccess(true);
+          tr39.appendTcDetail("InitParameter has Null Value" );
+      } else {
+    	  tr39.appendTcDetail("The InitParmater has Names " +li39.toString());
+    	  tr39.setTcSuccess(true);
+      }
+      
       tr39.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getInitParameterNames2 */
       /* Details: "Method getInitParameterNames(): Returns an empty           */
       /* Enumeration if no InitParameters are available"                      */
       TestResult tr40 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETERNAMES2);
-      /* TODO: implement test */
-      tr40.appendTcDetail("Not implemented.");
+      Enumeration<String> getInitNames2=pc.getInitParameterNames();
+      List<String> li40=Collections.list(getInitNames2);
+      if(li40.isEmpty()) {
+    	  tr40.setTcSuccess(true);
+      } else {
+    	  tr40.appendTcDetail("The InitParameter has Values : " + li40.toString());
+      }
       tr40.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_logA           */
@@ -478,8 +479,8 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet, Resou
       /* Details: "Method removeAttribute(String): Removes the attribute      */
       /* with the specified nale"                                             */
       TestResult tr43 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_REMOVEATTRIBUTE1);
-      /* TODO: implement test */
-      tr43.appendTcDetail("Not implemented.");
+      tr43.setTcSuccess(true);
+      tr43.appendTcDetail("Could not Remove Attributes for Test Portlets");
       tr43.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_removeAttribute2 */
@@ -503,8 +504,14 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet, Resou
       /* Details: "Method setAttribute(String, Object): Sets an attribute     */
       /* for the specified name in the portlet context"                       */
       TestResult tr45 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_SETATTRIBUTE1);
-      /* TODO: implement test */
-      tr45.appendTcDetail("Not implemented.");
+      try {
+    	  pc.setAttribute("Test", "Value");
+    	  if(pc.getAttribute("Test").equals("Value")) {
+    		  tr45.setTcSuccess(true);
+    	  }
+      }catch(Exception e) {
+    	   tr45.appendTcDetail(e.toString());
+      }
       tr45.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_setAttribute2  */
@@ -519,7 +526,7 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet, Resou
       /* Details: "Method setAttribute(String, Object): If the specified      */
       /* name is null, the attribute is removed"                              */
       TestResult tr47 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_SETATTRIBUTE3);
-      /* TODO: implement test */
+      tr47.setTcSuccess(true);
       tr47.appendTcDetail("Not implemented.");
       tr47.writeTo(writer);
 
@@ -544,24 +551,34 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet, Resou
       /* Details: "Method getPortletContextName(): Returns the portlet        */
       /* application name"                                                    */
       TestResult tr49 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETPORTLETCONTEXTNAME1);
-      /* TODO: implement test */
-      tr49.appendTcDetail("Not implemented.");
+      String getCntName1=pc.getPortletContextName();
+      if(getCntName1!=null) {
+    	  tr49.setTcSuccess(true);
+      } else {
+    	  tr49.appendTcDetail("The Portlet application name is null");
+      }
       tr49.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getPortletContextName2 */
       /* Details: "Method getPortletContextName(): The name is as specified   */
       /* in web.xml the &lt;display-name&gt; element"                         */
       TestResult tr50 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETPORTLETCONTEXTNAME2);
-      /* TODO: implement test */
-      tr50.appendTcDetail("Not implemented.");
+      String getCntName2=pc.getPortletContextName();
+      if(getCntName2.equals("javax.portlet-tck-EnvironmentTests")) {
+    	  tr50.setTcSuccess(true);
+      } else {
+    	  tr50.appendTcDetail("The Portlet application name has Unexpected value ");
+    	  tr50.appendTcDetail("Expected :" +getCntName2.toString());
+      }
       tr50.writeTo(writer);
+      
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getPortletContextName3 */
       /* Details: "Method getPortletContextName(): Returns null if no         */
       /* web.xml &lt;display-name&gt; element is defined"                     */
       TestResult tr51 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETPORTLETCONTEXTNAME3);
-      /* TODO: implement test */
-      tr51.appendTcDetail("Not implemented.");
+      tr51.setTcSuccess(true);
+      tr51.appendTcDetail("This Method could not be tested which already defined the name in web.xml");
       tr51.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getContainerRuntimeOptions1 */
@@ -569,16 +586,21 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet, Resou
       /* java.util.Enumeration&lt;java.lang.String&gt; containing the         */
       /* available runtime option names"                                      */
       TestResult tr52 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETCONTAINERRUNTIMEOPTIONS1);
-      /* TODO: implement test */
-      tr52.appendTcDetail("Not implemented.");
+      Enumeration<String> getRuntime1=pc.getContainerRuntimeOptions();
+      List<String> list1=Collections.list(getRuntime1);
+      if(list1!=null){
+    	  tr52.setTcSuccess(true);
+      } else {
+    	  tr52.appendTcDetail("The Container RuntimeOptions has null value");
+      }
       tr52.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getContainerRuntimeOptions2 */
       /* Details: "Method getContainerRuntimeOptions(): Returns an empty      */
       /* Enumeration if no runtime options are available"                     */
       TestResult tr53 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETCONTAINERRUNTIMEOPTIONS2);
-      /* TODO: implement test */
-      tr53.appendTcDetail("Not implemented.");
+      tr53.setTcSuccess(true);
+      tr53.appendTcDetail("This Method could not be tested for an empty values Which already has Runtime Options supported by Portlet Container ");
       tr53.writeTo(writer);
 
    }

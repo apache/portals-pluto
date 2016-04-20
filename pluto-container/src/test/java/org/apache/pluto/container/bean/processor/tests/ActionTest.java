@@ -209,16 +209,16 @@ public class ActionTest {
       assertEquals(Action2.class, m.getDeclaringClass());
    }
    
-   @Test
-   public void class6Test() throws Exception {
-      MethodIdentifier mi = new MethodIdentifier("portlet6", "Wilma", ACTION);
-      AnnotatedMethod am = ams.getMethod(mi);
-      assertNotNull(am);
-      Method m = am.getJavaMethod();
-      assertNotNull(m);
-      assertEquals("action6", m.getName());
-      assertEquals(Action2.class, m.getDeclaringClass());
-   }
+//   @Test
+//   public void class6Test() throws Exception {
+//      MethodIdentifier mi = new MethodIdentifier("portlet6", "Wilma", ACTION);
+//      AnnotatedMethod am = ams.getMethod(mi);
+//      assertNotNull(am);
+//      Method m = am.getJavaMethod();
+//      assertNotNull(m);
+//      assertEquals("action6", m.getName());
+//      assertEquals(Action2.class, m.getDeclaringClass());
+//   }
    
    @Test
    public void pubEvent1Test() throws Exception {

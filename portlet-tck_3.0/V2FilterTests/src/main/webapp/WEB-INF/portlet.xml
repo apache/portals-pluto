@@ -296,6 +296,8 @@
       <filter-class>javax.portlet.tck.filters.FilterTests_PortletFilter_ApiActionFilter_filter</filter-class>
       <lifecycle>ACTION_PHASE</lifecycle>
    </filter>
+   
+   
    <filter>
       <filter-name>FilterTests_PortletFilter_ApiEventFilter_filter</filter-name>
       <filter-class>javax.portlet.tck.filters.FilterTests_PortletFilter_ApiEventFilter_filter</filter-class>
@@ -310,12 +312,27 @@
       <filter-name>FilterTests_FilterConfig_ApiRenderFilter_filter</filter-name>
       <filter-class>javax.portlet.tck.filters.FilterTests_FilterConfig_ApiRenderFilter_filter</filter-class>
       <lifecycle>RENDER_PHASE</lifecycle>
+      <init-param>
+           <name>TestParm1</name>
+           <value>TestValue1</value>
+      </init-param>
+      <init-param>
+           <name>TestParm2</name>
+           <value>TestValue2</value>
+      </init-param>
    </filter>
    <filter>
       <filter-name>FilterTests_ActionFilter_ApiActionFilter_filter</filter-name>
       <filter-class>javax.portlet.tck.filters.FilterTests_ActionFilter_ApiActionFilter_filter</filter-class>
       <lifecycle>ACTION_PHASE</lifecycle>
    </filter>
+   
+   <filter>
+      <filter-name>FilterTests_ActionFilter_ApiActionFilter1_filter</filter-name>
+      <filter-class>javax.portlet.tck.filters.FilterTests_ActionFilter_ApiActionFilter1_filter</filter-class>
+      <lifecycle>ACTION_PHASE</lifecycle>
+   </filter>
+   
    <filter>
       <filter-name>FilterTests_RenderFilter_ApiRenderFilter_filter</filter-name>
       <filter-class>javax.portlet.tck.filters.FilterTests_RenderFilter_ApiRenderFilter_filter</filter-class>
@@ -367,10 +384,18 @@
       <filter-name>FilterTests_FilterConfig_ApiRenderFilter_filter</filter-name>
       <portlet-name>FilterTests_FilterConfig_ApiRenderFilter</portlet-name>
    </filter-mapping>
+   
    <filter-mapping>
       <filter-name>FilterTests_ActionFilter_ApiActionFilter_filter</filter-name>
       <portlet-name>FilterTests_ActionFilter_ApiActionFilter</portlet-name>
    </filter-mapping>
+   
+   <filter-mapping>
+      <filter-name>FilterTests_ActionFilter_ApiActionFilter_filter</filter-name>
+      <portlet-name>FilterTests_ActionFilter_ApiActionFilter</portlet-name>
+   </filter-mapping>
+   
+   
    <filter-mapping>
       <filter-name>FilterTests_RenderFilter_ApiRenderFilter_filter</filter-name>
       <portlet-name>FilterTests_RenderFilter_ApiRenderFilter</portlet-name>

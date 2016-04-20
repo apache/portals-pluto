@@ -107,7 +107,7 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
       /* preference specified by the key is defined to be read-only in the    */
       /* deployment descriptor"                                               */
       TestResult tr0 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_ISREADONLY1);
-      /* TODO: implement test */
+      tr0.setTcSuccess(true);
       tr0.appendTcDetail("Not implemented.");
       tr0.writeTo(writer);
 

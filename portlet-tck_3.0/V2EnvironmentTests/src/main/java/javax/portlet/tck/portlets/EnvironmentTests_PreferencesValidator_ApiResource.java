@@ -94,8 +94,12 @@ public class EnvironmentTests_PreferencesValidator_ApiResource implements Portle
       /* Details: "A PreferencesValidator can be configured in the            */
       /* deployment descriptor"                                               */
       TestResult tr0 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PREFERENCESVALIDATOR_APIRESOURCE_CANBECONFIGURED);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      PortletPreferences prefs=portletReq.getPreferences();
+      Enumeration<String> name=prefs.getNames();
+      List<String> ls=Collections.list(name);
+      
+      
+      tr0.appendTcDetail("Not implemented." +ls.toString());
       tr0.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PreferencesValidator_ApiResource_validate1 */

@@ -101,12 +101,16 @@ public class ExceptionTests_PortletModeException_ApiRender implements Portlet, R
       // Create result objects for the tests
 
       ClassChecker cc = new ClassChecker(javax.portlet.PortletModeException.class);
+      
 
       /* TestCase: V2ExceptionTests_PortletModeException_ApiRender_hasGetMode2 */
       /* Details: "Returns the PortletMode object causing this exception"     */
       TestResult tr0 = tcd.getTestResultFailed(V2EXCEPTIONTESTS_PORTLETMODEEXCEPTION_APIRENDER_HASGETMODE2);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      PortletMode pm=new PortletMode("testmode");
+      PortletModeException pme=new PortletModeException("Unsupported Mode Causing Exception" ,pm);
+      if(pme.getMode().toString().equals("testmode")) {
+    	  tr0.setTcSuccess(true);
+      }
       tr0.writeTo(writer);
 
    }

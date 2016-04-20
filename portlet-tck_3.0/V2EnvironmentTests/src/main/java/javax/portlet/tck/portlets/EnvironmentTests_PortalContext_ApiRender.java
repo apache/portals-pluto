@@ -272,58 +272,15 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet, Resour
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getPortalInfo1  */
       /* Details: "Method getPortalInfo(): Returns a String containing        */
-      /* information about the portal"                                        */
+      /* the server name and version in the form name/version "               */   
       TestResult tr14 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPORTALINFO1);
       String portal=pcn.getPortalInfo();
-      if(portal.equals("pluto-portal-driver/2.1.0-SNAPSHOT")) {
+      if(portal!=null && portal.matches("([^ ]+)/([^ ]+) *(.*)")) {
     	  tr14.setTcSuccess(true);
       } else {
-    	  tr14.appendTcDetail("The Portal has value :" +portal);
+    	  tr14.appendTcDetail("The Portal has Invalid form :" +portal);
       }
       tr14.writeTo(writer);
-
-      /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getPortalInfo2  */
-      /* Details: "Method getPortalInfo(): The returned string is of the      */
-      /* form \"([^ ]+)/([^ ]+) *(.*)\", where $1 is the portal name, $2 is   */
-      /* the version, and $3 is optional additional information"              */
-      TestResult tr15 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPORTALINFO2);
-      if(portal.contains("pluto-portal-driver") && portal.contains("2.1.0")) {
-    	  tr15.setTcSuccess(true);
-      } 
-      tr15.writeTo(writer);
-
-      /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getPortalInfo3  */
-      /* Details: "Method getPortalInfo(): The returned string contains the   */
-      /* portal name"                                                         */
-      TestResult tr16 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPORTALINFO3);
-      if(portal.contains("pluto-portal-driver")) {
-    	  tr16.setTcSuccess(true);
-      } else {
-    	  tr16.appendTcDetail("The string Doesnot contain portal name");
-      }
-      tr16.writeTo(writer);
-
-      /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getPortalInfo4  */
-      /* Details: "Method getPortalInfo(): The returned string contains the   */
-      /* portal version"                                                      */
-      TestResult tr17 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPORTALINFO4);
-      if(portal.contains("2.1.0")) {
-    	  tr17.setTcSuccess(true);
-      } else {
-    	  tr17.appendTcDetail("The string Doesnot contain version number");
-      }
-      tr17.writeTo(writer);
-
-      /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getPortalInfo5  */
-      /* Details: "Method getPortalInfo(): The returned string may not be     */
-      /* null"                                                                */
-      TestResult tr18 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPORTALINFO5);
-      if(portal!=null) {
-    	  tr18.setTcSuccess(true);
-      } else {
-    	  tr18.appendTcDetail("The Portal has  null value");
-      }
-      tr18.writeTo(writer);
 
    }
 

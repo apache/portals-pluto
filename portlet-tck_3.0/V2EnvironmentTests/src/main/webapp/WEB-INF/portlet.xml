@@ -22,6 +22,7 @@
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
    version="2.0" id="V2EnvironmentTests">
+   
    <portlet>
       <portlet-name>EnvironmentTests_CacheControl_ApiRender</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_CacheControl_ApiRender</portlet-class>
@@ -87,6 +88,7 @@
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
+      
       <portlet-info>
          <title>EnvironmentTests_PortletPreferences_ApiRender</title>
       </portlet-info>
@@ -104,6 +106,7 @@
       <portlet-info>
          <title>EnvironmentTests_PortletPreferences_ApiAction</title>
       </portlet-info>
+      
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
@@ -190,15 +193,19 @@
    <portlet>
       <portlet-name>EnvironmentTests_PortletPreferences_ApiResource</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PortletPreferences_ApiResource</portlet-class>
+      
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
+      
       <portlet-info>
          <title>EnvironmentTests_PortletPreferences_ApiResource</title>
       </portlet-info>
+      
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+    
    </portlet>
 
    <portlet>
@@ -257,7 +264,7 @@
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
-
+   
 
    <event-definition>
       <qname>tck:EnvironmentTests_PortletPreferences_ApiEvent</qname>

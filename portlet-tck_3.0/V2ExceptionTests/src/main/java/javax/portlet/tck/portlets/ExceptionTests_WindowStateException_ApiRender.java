@@ -106,7 +106,11 @@ public class ExceptionTests_WindowStateException_ApiRender implements Portlet, R
       /* Details: "Method getState(): Returns the WindowState object          */
       /* causing this exception"                                              */
       TestResult tr0 = tcd.getTestResultFailed(V2EXCEPTIONTESTS_WINDOWSTATEEXCEPTION_APIRENDER_GETSTATE);
-      
+      WindowState ws=new WindowState("teststate");
+      WindowStateException wse=new WindowStateException("Unsupported State Causing Exception" ,ws);
+      if(wse.getState().toString().equals("teststate")) {
+    	  tr0.setTcSuccess(true);
+      }
       tr0.writeTo(writer);
 
    }

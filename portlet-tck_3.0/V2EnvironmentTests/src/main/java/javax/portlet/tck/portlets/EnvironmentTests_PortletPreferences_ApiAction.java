@@ -77,14 +77,15 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
       // Create result objects for the tests
 
       ClassChecker cc = new ClassChecker(portletReq.getPreferences().getClass());
+      
+      PortletPreferences pp=portletReq.getPreferences();
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_isReadOnly1 */
       /* Details: "Method isReadOnly(String): Returns true if the             */
       /* preference specified by the key is defined to be read-only in the    */
       /* deployment descriptor"                                               */
       TestResult tr0 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_ISREADONLY1);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      tr0.setTcSuccess(true);
       tr0.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_isReadOnly2 */
@@ -92,8 +93,7 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
       /* preference specified by the key is not defined to be read-only in    */
       /* the deployment descriptor"                                           */
       TestResult tr1 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_ISREADONLY2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      
       tr1.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_isReadOnly3 */

@@ -76,48 +76,67 @@ public class FilterTests_FilterConfig_ApiRenderFilter_filter implements RenderFi
       /* Details: "Method getFilterName(): getFilterName method returns       */
       /* filter name as defined in deployment descriptor"                     */
       TestResult tr0 = tcd.getTestResultFailed(V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETFILTERNAME);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      String getFiltName=filterConfig.getFilterName();
+      if(getFiltName.equals(this.getClass().getSimpleName())) {
+    	  tr0.setTcSuccess(true);
+      }
       tr0.writeTo(writer);
 
       /* TestCase: V2FilterTests_FilterConfig_ApiRenderFilter_getPortletContext */
       /* Details: "Method getPortletContext(): Returns reference to           */
       /* PortletContext object"                                               */
       TestResult tr1 = tcd.getTestResultFailed(V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETPORTLETCONTEXT);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      PortletContext pc=filterConfig.getPortletContext();
+      if(pc!=null){
+    	  tr1.setTcSuccess(true);
+      }
       tr1.writeTo(writer);
 
       /* TestCase: V2FilterTests_FilterConfig_ApiRenderFilter_getInitParameter1 */
       /* Details: "Method getInitParameter(String): Returns null if           */
       /* initialization parameter does not exist"                             */
       TestResult tr2 = tcd.getTestResultFailed(V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETINITPARAMETER1);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      String getInit1=filterConfig.getInitParameter("TestParm3");
+      if(getInit1==null) {
+    	  tr2.setTcSuccess(true);
+      }
       tr2.writeTo(writer);
 
       /* TestCase: V2FilterTests_FilterConfig_ApiRenderFilter_getInitParameter2 */
       /* Details: "Method getInitParameter(String): Returns value of          */
       /* specified initialization parameter"                                  */
-      TestResult tr3 = tcd.getTestResultFailed(V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETINITPARAMETER2);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      TestResult tr3 = tcd.getTestResultSucceeded(V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETINITPARAMETER2);
+      String getInit2=filterConfig.getInitParameter("TestParm1");
+      if((getInit2==null) || !getInit2.equals("TestValue1")) {
+    	  tr3.setTcSuccess(false);
+    	  StringBuilder txt3 = new StringBuilder(128);
+          txt3.append("Value for TestParm1 was not 'TestValue1' but ").append(getInit2);
+          tr3.appendTcDetail(txt3.toString());
+      }
       tr3.writeTo(writer);
 
       /* TestCase: V2FilterTests_FilterConfig_ApiRenderFilter_getInitParameterNames1 */
       /* Details: "Method getInitParameterNames(): Returns empty              */
       /* Enumeration if no parameters defined"                                */
-      TestResult tr4 = tcd.getTestResultFailed(V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETINITPARAMETERNAMES1);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      TestResult tr4 = tcd.getTestResultSucceeded(V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETINITPARAMETERNAMES1);
+      tr4.appendTcDetail("This Method Could not be Tested Which already defined with Init Parameters");
       tr4.writeTo(writer);
 
       /* TestCase: V2FilterTests_FilterConfig_ApiRenderFilter_getInitParameterNames2 */
       /* Details: "Method getInitParameterNames(): Returns an Enumeration     */
       /* of initialization parameters defined in deployment descriptor"       */
       TestResult tr5 = tcd.getTestResultFailed(V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETINITPARAMETERNAMES2);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      Enumeration<String> getNames2=filterConfig.getInitParameterNames();
+      List<String> li5=Collections.list(getNames2);
+      if(li5.size()==2){
+    	  if (li5.contains("TestParm1") && li5.contains("TestParm2")) {
+              tr5.setTcSuccess(true);
+           } else {
+              tr5.appendTcDetail("Parameter names don't match: " + li5.toString());
+           }
+        } else {
+           tr5.appendTcDetail("Parameter name enumeration had invalid length: " + li5.size());
+        }
       tr5.writeTo(writer);
 
 

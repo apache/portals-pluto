@@ -282,7 +282,7 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet, Resourc
       } else {
     	  tr15.appendTcDetail("Etag doesnot match the specified value : " +tag2);
       }
-      tr14.writeTo(writer);
+      tr15.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_setETag3         */
       /* Details: "Method setETag(String): Removes the ETag if the input      */

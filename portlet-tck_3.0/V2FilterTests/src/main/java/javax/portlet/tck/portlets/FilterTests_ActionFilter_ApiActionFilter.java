@@ -51,6 +51,7 @@ public class FilterTests_ActionFilter_ApiActionFilter implements Portlet, Resour
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
+  
 
    @Override
    public void init(PortletConfig config) throws PortletException {
@@ -71,6 +72,8 @@ public class FilterTests_ActionFilter_ApiActionFilter implements Portlet, Resour
       portletReq.setAttribute(THREADID_ATTR, tid);
 
       StringWriter writer = new StringWriter();
+      
+      portletReq.setAttribute("ProcessTest1", "true");
 
    }
 
