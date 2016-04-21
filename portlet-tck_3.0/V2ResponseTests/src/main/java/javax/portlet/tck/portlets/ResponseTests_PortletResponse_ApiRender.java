@@ -29,6 +29,8 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
 import javax.portlet.tck.constants.*;
+import javax.security.auth.login.Configuration;
+
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
 import static javax.portlet.tck.constants.Constants.*;
 import static javax.portlet.PortletSession.*;
@@ -106,8 +108,13 @@ public class ResponseTests_PortletResponse_ApiRender implements Portlet, Resourc
       /* Details: "Method addProperty(javax.servlet.http.Cookie): Adds the    */
       /* specified cookie property to the response"                           */
       TestResult tr0 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYA1);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      Cookie c=new Cookie("newcookie","testcookie");
+      c.setPath(portletReq.getContextPath());
+      portletResp.addProperty(c);
+      
+    	 
+    	  
+      
       tr0.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_addPropertyA2    */
@@ -130,8 +137,11 @@ public class ResponseTests_PortletResponse_ApiRender implements Portlet, Resourc
       /* Details: "Method addProperty(String, org.w3c.dom.Element): Adds an   */
       /* XML DOM Element to the response for the specified key"               */
       TestResult tr2 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYB1);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      org.w3c.dom.Element el1 = portletResp.createElement("test");
+      portletResp.addProperty("Testkey", el1);
+      String elname=el1.getTagName();
+      String prop=portletReq.getProperty("test");
+      tr2.appendTcDetail("Property value " +prop);
       tr2.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_addPropertyB3    */
@@ -139,8 +149,13 @@ public class ResponseTests_PortletResponse_ApiRender implements Portlet, Resourc
       /* specified DOM Element value is null, the key is removed from the     */
       /* response"                                                            */
       TestResult tr3 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYB3);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      portletResp.setProperty("x", "z");
+      portletResp.addProperty("x", "val");
+      String ty=portletReq.getProperty("x");
+      String ty1=portletReq.getProperty("z");
+      
+      tr3.appendTcDetail("Not implemented." +ty);
+      tr3.appendTcDetail("Not implemented." +ty1);
       tr3.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_addPropertyB4    */
@@ -164,7 +179,7 @@ public class ResponseTests_PortletResponse_ApiRender implements Portlet, Resourc
       /* Details: "Method addProperty(String, String): A property can be      */
       /* added"                                                               */
       TestResult tr5 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYC1);
-      /* TODO: implement test */
+      
       tr5.appendTcDetail("Not implemented.");
       tr5.writeTo(writer);
 
@@ -212,7 +227,7 @@ public class ResponseTests_PortletResponse_ApiRender implements Portlet, Resourc
       /* Details: "Method encodeURL(String): Returns a String representing    */
       /* the encoded URL"                                                     */
       TestResult tr9 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ENCODEURL1);
-      /* TODO: implement test */
+      
       tr9.appendTcDetail("Not implemented.");
       tr9.writeTo(writer);
 

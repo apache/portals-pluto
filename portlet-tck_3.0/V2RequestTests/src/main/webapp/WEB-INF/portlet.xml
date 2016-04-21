@@ -34,6 +34,10 @@
          <title>RequestTests_PortletRequest_ApiRender</title>
       </portlet-info>
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   
+   <supported-public-render-parameter>TestParameter</supported-public-render-parameter>
+   
+       
    </portlet>
 
    <portlet>
@@ -215,5 +219,10 @@
    <public-render-parameter>
       <identifier>tckPRP1</identifier>
       <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
+   
+   <public-render-parameter>
+      <identifier>TestParameter</identifier>
+      <qname>tck:Test2</qname>
    </public-render-parameter>
 </portlet-app>

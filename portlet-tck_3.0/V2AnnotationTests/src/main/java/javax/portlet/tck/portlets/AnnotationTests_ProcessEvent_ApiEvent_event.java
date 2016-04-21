@@ -37,18 +37,18 @@ import static javax.portlet.PortletSession.*;
  * This is the event processing portlet for the test cases. This portlet processes events, 
  * but does not publish them. Events are published in the main portlet for the test cases. 
  */
-public class AnnotationTests_ProcessEvent_ApiEvent_event implements Portlet, EventPortlet, ResourceServingPortlet {
+public class AnnotationTests_ProcessEvent_ApiEvent_event extends GenericPortlet {
    private static final String LOG_CLASS = 
          AnnotationTests_ProcessEvent_ApiEvent_event.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
-   private PortletConfig portletConfig = null;
-
+  
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
+      
+     
    }
-
+   
    @Override
    public void destroy() {
    }
@@ -64,47 +64,61 @@ public class AnnotationTests_ProcessEvent_ApiEvent_event implements Portlet, Eve
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "event companion serveResource - ERROR!!");
    }
+   
+  
+   
+  @ProcessEvent(qname="{" + TCKNAMESPACE + "}AnnotationTests_ProcessEvent_ApiEvent")
+   public void handleEvnt(EventRequest req,EventResponse resp)
+            throws PortletException,IOException {
+	      LOGGER.entering(LOG_CLASS, "handleEvnt was called.");
 
-   @Override
-   public void processEvent(EventRequest portletReq, EventResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion processEvent");
+	   StringWriter writer = new StringWriter();
 
+	   JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+       
+	   /* TestCase: V2AnnotationTests_ProcessEvent_ApiEvent_qname              */
+	      /* Details: "Method qname(): On an event request, the method is         */
+	      /* executed if the Event qname matches the qname field"                 */
+	      TestResult tr0 = tcd.getTestResultFailed(V2ANNOTATIONTESTS_PROCESSEVENT_APIEVENT_QNAME);
+	      
+	      tr0.setTcSuccess(true);
+	      
+	      tr0.writeTo(writer);
+	      
+	      
+	      req.getPortletSession().setAttribute(
+	                   Constants.RESULT_ATTR_PREFIX + "AnnotationTests_ProcessEvent_ApiEvent",
+	                   writer.toString(), APPLICATION_SCOPE);
 
-      portletResp.setRenderParameters(portletReq);
-
-      long tid = Thread.currentThread().getId();
-      portletReq.setAttribute(THREADID_ATTR, tid);
-
-      StringWriter writer = new StringWriter();
-
-      JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
-
-      // Create result objects for the tests
-
-      ClassChecker cc = new ClassChecker(javax.portlet.ProcessEvent.class);
-
-      /* TestCase: V2AnnotationTests_ProcessEvent_ApiEvent_qname              */
-      /* Details: "Method qname(): On an event request, the method is         */
-      /* executed if the Event qname matches the qname field"                 */
-      TestResult tr0 = tcd.getTestResultFailed(V2ANNOTATIONTESTS_PROCESSEVENT_APIEVENT_QNAME);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
-
-      /* TestCase: V2AnnotationTests_ProcessEvent_ApiEvent_name               */
-      /* Details: "Method name(): On an event request, the method is          */
-      /* executed if the Event name matches the name field"                   */
-      TestResult tr1 = tcd.getTestResultFailed(V2ANNOTATIONTESTS_PROCESSEVENT_APIEVENT_NAME);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
-      tr1.writeTo(writer);
-
-      portletReq.getPortletSession().setAttribute(
-                   Constants.RESULT_ATTR_PREFIX + "AnnotationTests_ProcessEvent_ApiEvent",
-                   writer.toString(), APPLICATION_SCOPE);
-
+	      LOGGER.exiting(LOG_CLASS, "Resulting String: " + writer.toString());
+	   
+	   
    }
+   
+ // @ProcessEvent(name="AnnotationTests_ProcessEvent_ApiEvent")
+   public void nameEvnt(EventRequest req,EventResponse resp)
+              throws PortletException,IOException {
+	   StringWriter writer = new StringWriter();
+
+	   JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+	   /* TestCase: V2AnnotationTests_ProcessEvent_ApiEvent_name               */
+	      /* Details: "Method name(): On an event request, the method is          */
+	      /* executed if the Event name matches the name field"                   */
+	      TestResult tr1 = tcd.getTestResultFailed(V2ANNOTATIONTESTS_PROCESSEVENT_APIEVENT_NAME);
+	      
+	      tr1.setTcSuccess(true);
+	     
+	      tr1.appendTcDetail("Error");
+	    
+	      tr1.writeTo(writer);
+	      
+	     
+	      req.getPortletSession().setAttribute(
+	                   Constants.RESULT_ATTR_PREFIX + "AnnotationTests_ProcessEvent_ApiEvent",
+	                   writer.toString(), APPLICATION_SCOPE);
+       
+   }
+   
 
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)

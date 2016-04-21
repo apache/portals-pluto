@@ -45,18 +45,18 @@ import static javax.portlet.ResourceURL.*;
  * portlet AnnotationTests_RenderMode_ApiRender_event
  *
  */
-public class AnnotationTests_RenderMode_ApiRender implements Portlet, ResourceServingPortlet {
+public class AnnotationTests_RenderMode_ApiRender extends GenericPortlet {
    private static final String LOG_CLASS = 
          AnnotationTests_RenderMode_ApiRender.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
-   private PortletConfig portletConfig = null;
+   
 
    @Override
-   public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
+   public void init() {
+	  
    }
-
+   
    @Override
    public void destroy() {
    }
@@ -85,6 +85,23 @@ public class AnnotationTests_RenderMode_ApiRender implements Portlet, ResourceSe
       PrintWriter writer = portletResp.getWriter();
 
    }
+   
+   @RenderMode(name="VIEW")
+   public void newRender(RenderRequest req,RenderResponse resp)
+           throws PortletException,IOException {
+	   PrintWriter writer = resp.getWriter();
+	   JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+	   
+	   
+	  /* TestCase: V2AnnotationTests_RenderMode_ApiRender_name                */
+	  /* Details: "Method name(): On a render request, the method is          */
+	  /* executed if the portlet mode matches the name field"                 */
+	   
+	  TestResult tr0 = tcd.getTestResultFailed(V2ANNOTATIONTESTS_RENDERMODE_APIRENDER_NAME);
+	   tr0.setTcSuccess(true);
+	   tr0.writeTo(writer);
+
+   }
 
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
@@ -102,13 +119,9 @@ public class AnnotationTests_RenderMode_ApiRender implements Portlet, ResourceSe
 
       ClassChecker cc = new ClassChecker(javax.portlet.RenderMode.class);
 
-      /* TestCase: V2AnnotationTests_RenderMode_ApiRender_name                */
-      /* Details: "Method name(): On a render request, the method is          */
-      /* executed if the portlet mode matches the name field"                 */
-      TestResult tr0 = tcd.getTestResultFailed(V2ANNOTATIONTESTS_RENDERMODE_APIRENDER_NAME);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
+      
+      super.render(portletReq, portletResp);
+      
 
    }
 

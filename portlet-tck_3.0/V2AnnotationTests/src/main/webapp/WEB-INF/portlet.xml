@@ -65,7 +65,7 @@
          <title>AnnotationTests_ProcessEvent_ApiEvent_event</title>
       </portlet-info>
       <supported-processing-event>
-         <qname>tck:AnnotationTests_ProcessEvent_ApiEvent</qname>
+         <qname>tck:AnnotationTests_ProcessEvent_ApiEvent</qname> 
       </supported-processing-event>
    </portlet>
 
