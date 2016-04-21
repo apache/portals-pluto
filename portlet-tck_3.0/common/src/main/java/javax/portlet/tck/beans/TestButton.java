@@ -96,7 +96,7 @@ public class TestButton {
     */
    @Override
    public String toString() {
-      final String actId = tcName + Constants.CLICK_ID;
+      final String actId = tcName + Constants.CLICK_ID ;
       
       if (urlstr == null) urlstr = purl.toString();
       StringBuilder sb = new StringBuilder();
@@ -109,7 +109,10 @@ public class TestButton {
       sb.append("</h4>");
       sb.append("<form  class='portletTCKButton'" +
                 " action='" + urlstr + "' method='post'>");
-      sb.append("<input type='submit' value='" + tcName + "'  id='" + actId + "'/>");
+      sb.append("<input type='submit' value='").append(tcName);
+      sb.append("'  name='").append(Constants.BUTTON_PARAM_NAME);
+      sb.append("'  id='").append(actId);
+      sb.append("'/>");
       sb.append("</form>");
       sb.append("</div>");
 
