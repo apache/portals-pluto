@@ -1014,7 +1014,7 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
             QName qname = edr.getQualifiedName();
             if (pad.getEventDefinition(qname) == null) {
                txt.setLength(0);
-               txt.append("Bad publishing event definition reference. No event definition found for qname: ");
+               txt.append("Bad processing event definition reference. No event definition found for qname: ");
                txt.append(qname);
                txt.append(". Valid QNames: ");
                String sep = "";

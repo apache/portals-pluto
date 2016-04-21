@@ -18,21 +18,25 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
 import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ANNOTATIONTESTS_PROCESSEVENT_APIEVENT_QNAME;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ANNOTATIONTESTS_PROCESSEVENT_APIEVENT_NAME;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Logger;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.GenericPortlet;
+import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.tck.beans.TestButton;
+import javax.xml.namespace.QName;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -45,21 +49,10 @@ import static javax.portlet.ResourceURL.*;
  * portlet AnnotationTests_ProcessEvent_ApiEvent_event
  *
  */
-public class AnnotationTests_ProcessEvent_ApiEvent implements Portlet, ResourceServingPortlet {
+public class AnnotationTests_ProcessEvent_ApiEvent extends GenericPortlet {
    private static final String LOG_CLASS = 
          AnnotationTests_ProcessEvent_ApiEvent.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-   
-   private PortletConfig portletConfig = null;
-
-   @Override
-   public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
-   }
-
-   @Override
-   public void destroy() {
-   }
 
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
@@ -70,11 +63,14 @@ public class AnnotationTests_ProcessEvent_ApiEvent implements Portlet, ResourceS
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      StringWriter writer = new StringWriter();
-
-      QName eventQName = new QName(TCKNAMESPACE,
-             "AnnotationTests_ProcessEvent_ApiEvent");
-      portletResp.setEvent(eventQName, "Hi!");
+      if (portletReq.getParameter(BUTTON_PARAM_NAME).startsWith(V2ANNOTATIONTESTS_PROCESSEVENT_APIEVENT_QNAME)) {
+         QName eventQName = new QName(TCKNAMESPACE, "AnnotationTests_ProcessEvent_ApiEvent");
+         portletResp.setEvent(eventQName, "Hi!");
+         LOGGER.finest("Firing event: " + eventQName.toString());
+      } else if (portletReq.getParameter(BUTTON_PARAM_NAME).startsWith(V2ANNOTATIONTESTS_PROCESSEVENT_APIEVENT_NAME)) {
+         portletResp.setEvent("AnnotationTests_ProcessEvent_ApiEvent2", "Hi!");
+         LOGGER.finest("Firing event: AnnotationTests_ProcessEvent_ApiEvent2");
+      }
    }
 
    @Override
@@ -84,8 +80,6 @@ public class AnnotationTests_ProcessEvent_ApiEvent implements Portlet, ResourceS
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
-
-      PrintWriter writer = portletResp.getWriter();
 
    }
 
@@ -105,7 +99,7 @@ public class AnnotationTests_ProcessEvent_ApiEvent implements Portlet, ResourceS
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2AnnotationTests_ProcessEvent_ApiEvent_qname", aurl);
+         TestButton tb = new TestButton(V2ANNOTATIONTESTS_PROCESSEVENT_APIEVENT_QNAME, aurl);
          tb.writeTo(writer);
       }
 
@@ -115,7 +109,7 @@ public class AnnotationTests_ProcessEvent_ApiEvent implements Portlet, ResourceS
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2AnnotationTests_ProcessEvent_ApiEvent_name", aurl);
+         TestButton tb = new TestButton(V2ANNOTATIONTESTS_PROCESSEVENT_APIEVENT_NAME, aurl);
          tb.writeTo(writer);
       }
 
