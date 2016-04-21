@@ -111,24 +111,6 @@ public class TestModule3_Portlet2 implements Portlet {
             tm.writeTo(writer);
          }
 
-         // Test: TestModule3_PublicRenderParameterTestAlias
-         // Details: A PRP with differing QNames & identifier, but with matching alias, 
-         // is visible in companion portlet of different portlet application.
-         // (expected to succeed)
-         if (test.equals(TEST3)) {
-            String val = request.getParameter(TM3PRP3a);
-            if (val == null) {
-               tr = tcd.getTestResultSucceeded(TEST3);
-            } else {
-               tr = tcd.getTestResultFailed(TEST3);
-               tr.appendTcDetail("Expected value of parameter " + TM3PRP3a + ": " + TM3PRP3 + ", Actual value: " + val);
-            }
-            tr.writeTo(writer);
-         } else {
-            TestMessage tm = new TestMessage(TEST3, "Waiting for test to be executed.");
-            tm.writeTo(writer);
-         }
-
       } else {
          // test not executed yet, or was not correctly executed
          TestMessage tm = new TestMessage(TEST0, "Waiting for " + TM3PRP0 + " to be set.");
@@ -136,8 +118,6 @@ public class TestModule3_Portlet2 implements Portlet {
          tm = new TestMessage(TEST1, "Waiting for " + TM3PRP0 + " to be set.");
          tm.writeTo(writer);
          tm = new TestMessage(TEST2, "Waiting for " + TM3PRP0 + " to be set.");
-         tm.writeTo(writer);
-         tm = new TestMessage(TEST3, "Waiting for " + TM3PRP0 + " to be set.");
          tm.writeTo(writer);
       }
 

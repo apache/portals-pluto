@@ -89,14 +89,6 @@ public class TestModule3_Portlet1 implements Portlet {
       tl = new TestLink(TEST2, purl);
       tl.writeTo(writer);
 
-      // Test: TestModule3_PublicRenderParameterTestAlias
-      // This portlet generates the link. The companion portlet displays the results.
-      purl = response.createRenderURL();
-      purl.setParameter(TM3PRP0, TEST3);
-      purl.setParameter(TM3PRP3, TM3PRP3);
-      tl = new TestLink(TEST3, purl);
-      tl.writeTo(writer);
-
    }
 
    @Override
