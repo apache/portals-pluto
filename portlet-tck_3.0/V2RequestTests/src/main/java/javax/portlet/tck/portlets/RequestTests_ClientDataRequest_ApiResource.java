@@ -264,7 +264,7 @@ public class RequestTests_ClientDataRequest_ApiResource implements Portlet, Reso
       String getread2 = portletReq.getParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIRESOURCE_GETREADER2);
       if (getread2 == null) {
          PortletURL rurl = portletResp.createActionURL();
-         rurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER2,
+         rurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIRESOURCE_GETREADER2,
                V2REQUESTTESTS_CLIENTDATAREQUEST_APIRESOURCE_GETREADER2);
          TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIRESOURCE_GETREADER2, rurl);
          tb.writeTo(writer);
@@ -275,6 +275,8 @@ public class RequestTests_ClientDataRequest_ApiResource implements Portlet, Reso
             tr8.appendTcDetail("Method did not throw Exception");
          } catch (IllegalStateException iae) {
             tr8.setTcSuccess(true);
+         } catch (Throwable t) {
+            tr8.appendTcDetail("Method threw exception: " + t.toString());
          }
       }
       tr8.writeTo(writer);
