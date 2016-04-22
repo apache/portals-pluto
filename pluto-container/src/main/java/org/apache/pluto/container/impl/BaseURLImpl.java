@@ -76,6 +76,7 @@ public abstract class BaseURLImpl implements BaseURL {
       if (isDebug) {
          StringBuilder txt = new StringBuilder();
          txt.append("URL provider type=").append(urlProvider.getType());
+         txt.append(", WindowId=").append(windowId);
          txt.append(", isRender=").append(renderURL);
          LOGGER.debug(txt.toString());
       }

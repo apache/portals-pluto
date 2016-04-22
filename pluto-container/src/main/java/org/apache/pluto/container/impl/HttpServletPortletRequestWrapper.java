@@ -434,7 +434,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     
     boolean isForwardingPossible()
     {
-        return !renderPhase;
+        return lifecyclePhase.equals(PortletRequest.RESOURCE_PHASE);
     }
     
     /**
