@@ -213,8 +213,14 @@ public class ResponseTests_PortletResponse_ApiRender implements Portlet, Resourc
       /* Details: "Method encodeURL(String): Returns a String representing    */
       /* the encoded URL"                                                     */
       TestResult tr9 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ENCODEURL1);
-      
-      tr9.appendTcDetail("Not implemented.");
+      try {
+    	  String ecode=portletResp.encodeURL("/sample.img");
+    	  if(ecode.equals("/sample.img")) {
+    		  tr9.setTcSuccess(true);
+    	  }
+      } catch(IllegalArgumentException iae) {
+    	  tr9.appendTcDetail(iae.toString());
+      }
       tr9.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_encodeURL2       */
@@ -222,56 +228,96 @@ public class ResponseTests_PortletResponse_ApiRender implements Portlet, Resourc
       /* IllegalArgumentException if the input string is not an absolute      */
       /* URL and does not start with at \"/\" character"                      */
       TestResult tr10 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ENCODEURL2);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
+      try {
+    	  String ecode=portletResp.encodeURL("sample.img");
+    	  tr10.appendTcDetail("Method Did not Throw Exception");
+      } catch(IllegalArgumentException iae) {
+    	  tr10.setTcSuccess(true);
+      }
       tr10.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_getNamespace1    */
       /* Details: "Method getNamespace(): Returns a String containing the     */
       /* namespace value"                                                     */
       TestResult tr11 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_GETNAMESPACE1);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
+      String getName=portletResp.getNamespace();
+      if(getName!=null){
+    	  tr11.setTcSuccess(true);
+      }
       tr11.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_createElement1   */
       /* Details: "Method createElement(String): Returns an                   */
       /* org.w3c.dom.Element object for the specified tag name"               */
       TestResult tr12 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT1);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
+      try {
+    	  org.w3c.dom.Element el = portletResp.createElement("Test1");
+    	  if(el.getTagName().toString().equals("Test1")) {
+    		  tr12.setTcSuccess(true);
+    	  }
+    	  
+      } catch(org.w3c.dom.DOMException de) {
+    	  tr12.appendTcDetail(de.toString());
+      }
       tr12.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_createElement2   */
       /* Details: "Method createElement(String): The returned Element has     */
       /* nodeName set to the the specified tag name "                         */
       TestResult tr13 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT2);
-      /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
+      try {
+    	  org.w3c.dom.Element el = portletResp.createElement("Test2");
+    	  if(el.getNodeName().equals("Test2")) {
+    	  tr13.setTcSuccess(true);
+    	  }
+      } catch(org.w3c.dom.DOMException de) {
+    	  tr13.appendTcDetail(de.toString());
+      }
       tr13.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_createElement3   */
       /* Details: "Method createElement(String): The returned Element has     */
       /* localName set to null"                                               */
       TestResult tr14 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT3);
-      /* TODO: implement test */
-      tr14.appendTcDetail("Not implemented.");
+      try {
+    	  org.w3c.dom.Element el = portletResp.createElement("Test3");
+    	  String loc=el.getLocalName();
+    	  if(loc==null) {
+    		  tr14.setTcSuccess(true);
+    	  }
+      } catch(org.w3c.dom.DOMException de) {
+    	  tr14.appendTcDetail(de.toString());
+      }
       tr14.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_createElement4   */
       /* Details: "Method createElement(String): The returned Element has     */
       /* prefix set to null"                                                  */
       TestResult tr15 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT4);
-      /* TODO: implement test */
-      tr15.appendTcDetail("Not implemented.");
+      try {
+    	  org.w3c.dom.Element el = portletResp.createElement("Test4");
+    	  String prefix=el.getPrefix();
+    	  if(prefix==null) {
+    		  tr15.setTcSuccess(true);
+    	  }
+      } catch(org.w3c.dom.DOMException de) {
+    	  tr15.appendTcDetail(de.toString());
+      }
       tr15.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_createElement5   */
       /* Details: "Method createElement(String): The returned Element has     */
       /* namespaceURI set to null"                                            */
       TestResult tr16 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT5);
-      /* TODO: implement test */
-      tr16.appendTcDetail("Not implemented.");
+      try {
+    	  org.w3c.dom.Element el = portletResp.createElement("Test5");
+    	  String nameSpace=el.getNamespaceURI();
+    	  if(nameSpace==null) {
+    		  tr16.setTcSuccess(true);
+    	  }
+      } catch(org.w3c.dom.DOMException de) {
+    	  tr16.appendTcDetail(de.toString());
+      }
       tr16.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_createElement6   */
@@ -279,8 +325,12 @@ public class ResponseTests_PortletResponse_ApiRender implements Portlet, Resourc
       /* org.w3c.dom.DOMException - INVALID_CHARACTER_ERR if the specified    */
       /* name contains an illegal character. "                                */
       TestResult tr17 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT6);
-      /* TODO: implement test */
-      tr17.appendTcDetail("Not implemented.");
+      try {
+    	  org.w3c.dom.Element el = portletResp.createElement("$Test6");
+    	  tr17.appendTcDetail("Method did not Throw Exception");
+      } catch(org.w3c.dom.DOMException de) {
+    	  tr17.setTcSuccess(true);
+      }
       tr17.writeTo(writer);
 
    }

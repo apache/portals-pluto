@@ -391,7 +391,7 @@
    </filter-mapping>
    
    <filter-mapping>
-      <filter-name>FilterTests_ActionFilter_ApiActionFilter_filter</filter-name>
+      <filter-name>FilterTests_ActionFilter_ApiActionFilter1_filter</filter-name>
       <portlet-name>FilterTests_ActionFilter_ApiActionFilter</portlet-name>
    </filter-mapping>
    

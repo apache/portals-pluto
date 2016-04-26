@@ -142,6 +142,7 @@
          <title>ResponseTests_StateAwareResponse_ApiAction</title>
       </portlet-info>
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+    <supported-public-render-parameter>Test1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -268,4 +269,10 @@
       <identifier>tckPRP1</identifier>
       <qname>tck:tckPRP1</qname>
    </public-render-parameter>
+   
+   <public-render-parameter>
+      <identifier>Test1</identifier>
+      <qname>tck:Test1</qname>
+   </public-render-parameter>
+   
 </portlet-app>
