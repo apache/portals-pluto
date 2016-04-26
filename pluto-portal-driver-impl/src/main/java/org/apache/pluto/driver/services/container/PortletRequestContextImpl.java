@@ -26,6 +26,7 @@ import java.util.Map;
 import javax.portlet.ActionParameters;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderParameters;
+import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
@@ -46,12 +47,17 @@ import org.apache.pluto.container.impl.ResourceParametersImpl;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortletParameterFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @version $Id$
  *
  */
 public class PortletRequestContextImpl implements PortletRequestContext {
+   private static final Logger LOG = LoggerFactory.getLogger(PortletRequestContextImpl.class);
+   private static final boolean isTrace = LOG.isTraceEnabled();
+   
 
    private PortletContainer    container;
    private HttpServletRequest  containerRequest;
@@ -62,7 +68,8 @@ public class PortletRequestContextImpl implements PortletRequestContext {
    private PortletConfig       portletConfig;
    private ServletContext      servletContext;
    private Cookie              cookies[];
-   private String              renderHeaders = null;      
+   private String              renderHeaders = null; 
+   private boolean             executingRequestBody = false;
    
    // make sure these classes are loaded first by the container classloader
    // so that the logs from these classes land in the Pluto log file.
@@ -244,4 +251,39 @@ public class PortletRequestContextImpl implements PortletRequestContext {
    public ActionParameters getActionParameters() {
       return new ActionParametersImpl(urlProvider, windowId);
    }
+
+   /**
+    * Make it look like request type while the portlet request body is executing.
+    */
+   @Override
+   public DispatcherType getDispatcherType() {
+      DispatcherType type = getServletRequest().getDispatcherType();
+      if (isTrace) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Dispatcher type: ").append(type);
+         txt.append(", executing request body: ").append(executingRequestBody);
+         LOG.trace(txt.toString());
+      }
+      if (executingRequestBody && (type != DispatcherType.ASYNC)) {
+         type = DispatcherType.REQUEST;
+      }
+      return type;
+   }
+
+   /**
+    * @return the executingRequestBody
+    */
+   @Override
+   public boolean isExecutingRequestBody() {
+      return executingRequestBody;
+   }
+
+   /**
+    * @param executingRequestBody the executingRequestBody to set
+    */
+   @Override
+   public void setExecutingRequestBody(boolean executingRequestBody) {
+      this.executingRequestBody = executingRequestBody;
+   }
+
 }

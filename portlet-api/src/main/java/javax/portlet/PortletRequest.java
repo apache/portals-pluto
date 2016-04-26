@@ -305,7 +305,6 @@ public interface PortletRequest extends RenderState
   public static final String ACTION_SCOPE_ID = "javax.portlet.as";
   
   
-  
  /**
   * Returns true, if the given window state is valid
   * to be set for this portlet in the context
@@ -477,6 +476,23 @@ public interface PortletRequest extends RenderState
    */
 
   public PortalContext getPortalContext();
+
+
+  /**
+   * <div class="changed_added_3_0">
+   * Returns the <code>PortletContext</code> of the portlet application 
+   * the portlet is in.
+   * </div>
+   *
+   * @return   a <code>PortletContext</code> object, used by the 
+   *           caller to interact with its portlet container
+   *
+   * @see PortletContext
+   * @since 3.0
+   * 
+   */
+
+  public PortletContext getPortletContext ();
 
 
   /**
@@ -984,5 +1000,16 @@ public interface PortletRequest extends RenderState
 
   @Deprecated
   public java.util.Map<String, String[]> getPublicParameterMap();
+
+
+  /**
+   * <div class="changed_added_3_0">
+   * Returns the user agent for the request.
+   * </div>
+   * 
+   * @return   The user agent string.
+   * @since 3.0
+   */
+  public String getUserAgent();
 
 }

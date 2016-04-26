@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.portlet.ActionParameters;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderParameters;
+import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
@@ -80,4 +81,9 @@ public interface PortletRequestContext
     // for render headers support
     void setRenderHeaders(String renderHeaders);
     String getRenderHeaders();
+    
+    // for async support
+    DispatcherType getDispatcherType();
+    boolean isExecutingRequestBody();
+    void setExecutingRequestBody(boolean executingRequestBody);
 }

@@ -65,7 +65,8 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class PortletRequestImpl implements PortletRequest
 {
-    public static final String ACCEPT_LANGUAGE = "Accept-Language";
+   public static final String ACCEPT_LANGUAGE = "Accept-Language";
+   public static final String USER_AGENT = "User-Agent";
 
     private static final Logger LOG = LoggerFactory.getLogger(PortletRequestImpl.class);
     private static boolean isDebug = LOG.isDebugEnabled();
@@ -181,11 +182,6 @@ public abstract class PortletRequestImpl implements PortletRequest
         return requestContext;
     }
 
-    protected PortletContext getPortletContext()
-    {
-        return requestContext.getPortletConfig().getPortletContext();
-    }
-
     protected PortletWindow getPortletWindow()
     {
         return requestContext.getPortletWindow();
@@ -261,6 +257,18 @@ public abstract class PortletRequestImpl implements PortletRequest
                 ccppProfile = getPortletContainer().getContainerServices().getCCPPProfileService().getCCPPProfile(getServletRequest());
             }
             return ccppProfile;
+        }
+        else if (name.equals("javax.portlet.debug.ServletRequest"))
+        {
+            return requestContext.getServletRequest();
+        }
+        else if (name.equals("javax.portlet.debug.ServletResponse"))
+        {
+            return requestContext.getServletResponse();
+        }
+        else if (name.equals("javax.portlet.debug.ServletContext"))
+        {
+            return requestContext.getServletContext();
         }
         return requestContext.getAttribute(name);
     }
@@ -350,6 +358,12 @@ public abstract class PortletRequestImpl implements PortletRequest
     public PortalContext getPortalContext()
     {
         return portalContext;
+    }
+
+    @Override
+    public PortletContext getPortletContext()
+    {
+        return requestContext.getPortletConfig().getPortletContext();
     }
 
     public PortletMode getPortletMode()
@@ -709,5 +723,9 @@ public abstract class PortletRequestImpl implements PortletRequest
 
     public RenderParameters getRenderParameters() {
        return requestContext.getRenderParameters();
+    }
+    
+    public String getUserAgent() {
+       return getProperty(USER_AGENT);
     }
 }

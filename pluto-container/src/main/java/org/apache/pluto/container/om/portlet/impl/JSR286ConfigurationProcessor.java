@@ -922,14 +922,16 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
             LOG.warn(txt.toString());
             pad.removeFilterMapping(fm);
          }
-         for (String pn : fm.getPortletNames()) {
-            if (pad.getMatchingPortlets(pn).isEmpty()) {
-               txt.setLength(0);
-               txt.append("Bad filter mapping definition. Filter name: ").append(fm.getFilterName());
-               txt.append(", Portlet names: ").append(fm.getPortletNames().toString());
-               txt.append(", Portlet definition not found: ").append(pn);
-               LOG.warn(txt.toString());
-               pad.removeFilterMapping(fm);
+         if (pad.getVersion().equals("2.0")) {
+            for (String pn : fm.getPortletNames()) {
+               if (pad.getMatchingPortlets(pn).isEmpty()) {
+                  txt.setLength(0);
+                  txt.append("Bad filter mapping definition. Filter name: ").append(fm.getFilterName());
+                  txt.append(", Portlet names: ").append(fm.getPortletNames().toString());
+                  txt.append(", Portlet definition not found: ").append(pn);
+                  LOG.warn(txt.toString());
+                  pad.removeFilterMapping(fm);
+               }
             }
          }
       }
@@ -1012,7 +1014,7 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
             QName qname = edr.getQualifiedName();
             if (pad.getEventDefinition(qname) == null) {
                txt.setLength(0);
-               txt.append("Bad publishing event definition reference. No event definition found for qname: ");
+               txt.append("Bad processing event definition reference. No event definition found for qname: ");
                txt.append(qname);
                txt.append(". Valid QNames: ");
                String sep = "";

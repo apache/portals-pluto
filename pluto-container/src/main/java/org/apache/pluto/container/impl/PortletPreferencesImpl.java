@@ -93,8 +93,8 @@ public class PortletPreferencesImpl implements PortletPreferences {
         // Get the portlet preferences service from container.
         preferencesService = container.getContainerServices()
         		.getPortletPreferencesService();
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Using PortletPreferencesService: "
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Using PortletPreferencesService: "
             		+ preferencesService.getClass().getName());
         }
         
@@ -106,8 +106,8 @@ public class PortletPreferencesImpl implements PortletPreferences {
                     preferences.put(p.getName(), p.clone());
                 }
             }
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Loaded default preferences: " + toString());
+            if (LOG.isTraceEnabled()) {
+                LOG.trace("Loaded default preferences: " + toString());
             }
             
             // Merge stored portlet preferences into preferences map.
@@ -120,8 +120,8 @@ public class PortletPreferencesImpl implements PortletPreferences {
             LOG.error("Error retrieving preferences.", ex);
             //TODO: Rethrow up the stack????
         }
-        if (LOG.isDebugEnabled()) {
-        	LOG.debug("Merged stored preferences: " + toString());
+        if (LOG.isTraceEnabled()) {
+        	LOG.trace("Merged stored preferences: " + toString());
         }
     }
     
@@ -221,15 +221,15 @@ public class PortletPreferencesImpl implements PortletPreferences {
         // Try to reset preference to the default values.
         PortletPreference p = defaultPreferences.get(key);
         if (p != null) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Resetting preference for key: " + key);
+            if (LOG.isTraceEnabled()) {
+                LOG.trace("Resetting preference for key: " + key);
             }
             preferences.put(key,p.clone());
         }       
         // Remove preference if default values are not defined (PLT.14.1).
         else {
-        	if (LOG.isDebugEnabled()) {
-        		LOG.debug("Resetting preference to null for key: " + key);
+        	if (LOG.isTraceEnabled()) {
+        		LOG.trace("Resetting preference to null for key: " + key);
         	}
         	preferences.remove(key);
         }

@@ -19,11 +19,7 @@
 
 package org.apache.pluto.container.om.portlet.impl.jsr362;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -810,6 +806,20 @@ public class PortletDefinition362AnnotationTest {
       assertNotNull(deps);
       assertEquals(2, deps.size());
       assertTrue(deps.contains(dep));
+   }
+   
+   @Test
+   public void testAsyncSupported() throws Exception {
+      assertTrue(cut.isAsyncSupported());
+   }
+   
+   @Test
+   public void testMultipartSupported() throws Exception {
+      assertTrue(cut.isMultipartSupported());
+      assertEquals("here", cut.getLocation());
+      assertEquals(new Integer(1), cut.getFileSizeThreshold());
+      assertEquals(new Long(2), cut.getMaxFileSize());
+      assertEquals(new Long(3), cut.getMaxRequestSize());
    }
 
 }

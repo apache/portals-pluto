@@ -43,7 +43,7 @@ public class CSSIncludingHeaderMethod {
       String contextRoot = req.getContextPath();
       StringBuilder txt = new StringBuilder(128);
       txt.append("<link href='").append(contextRoot);
-      txt.append("/resources/css/styles.css' rel='stylesheet' type='text/css'>");
+      txt.append("/resources/css/infobox.css' rel='stylesheet' type='text/css'>");
       
       resp.getWriter().write(txt.toString());
    }

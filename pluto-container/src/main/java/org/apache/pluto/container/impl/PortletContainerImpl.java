@@ -265,18 +265,23 @@ public class PortletContainerImpl implements PortletContainer
         responseContext.setPropsAllowed(true);
         ResourceRequest portletRequest = envService.createResourceRequest(requestContext, responseContext);
         ResourceResponse portletResponse = envService.createResourceResponse(responseContext, requestContext.getCacheability());
+        requestContext.setResponse(portletResponse);     // for async support
 
         FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.RESOURCE_PHASE);
-
+        
         try
         {
-            invoker.serveResource(requestContext, portletRequest, portletResponse, filterManager);
-            // Mark portlet interaction is completed: backend implementation can flush response state now
-            responseContext.close();
+           invoker.serveResource(requestContext, portletRequest, portletResponse, filterManager);
         }
         finally
         {
-            responseContext.release();
+            if (!request.isAsyncSupported() || !request.isAsyncStarted()) {
+                // Mark portlet interaction is completed: backend implementation can flush response state now
+                responseContext.close();
+                responseContext.release();
+            } else {
+               LOG.debug("Async started for resource request. responseContext not released.");
+            }
         }
 
         debugWithName("Portlet resource done for: " + portletWindow.getPortletDefinition().getPortletName());

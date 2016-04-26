@@ -22,8 +22,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
 
 import javax.portlet.ClientDataRequest;
+import javax.portlet.PortletException;
+import javax.servlet.http.Part;
 
 /**
  * <div class="changed_added_3_0"> The <code>ClientDataRequestWrapper</code>
@@ -117,6 +120,11 @@ public class ClientDataRequestWrapper extends PortletRequestWrapper implements C
       return ((ClientDataRequest)wrapped).getContentLength();
    }
 
+   @Override
+   public long getContentLengthLong() {
+      return ((ClientDataRequest)wrapped).getContentLengthLong();
+   }
+
    /*
     * (non-Javadoc)
     * 
@@ -124,6 +132,26 @@ public class ClientDataRequestWrapper extends PortletRequestWrapper implements C
     */
    public String getMethod() {
       return ((ClientDataRequest)wrapped).getMethod();
+   }
+
+   /*
+    * (non-Javadoc)
+    * 
+    * @see javax.portlet.ClientDataRequest#getPart(String)
+    */
+   @Override
+   public Part getPart(String name) throws IOException, PortletException {
+      return ((ClientDataRequest)wrapped).getPart(name);
+   }
+
+   /*
+    * (non-Javadoc)
+    * 
+    * @see javax.portlet.ClientDataRequest#getParts()
+    */
+   @Override
+   public Collection<Part> getParts() throws IOException, PortletException {
+      return ((ClientDataRequest)wrapped).getParts();
    }
 
 }

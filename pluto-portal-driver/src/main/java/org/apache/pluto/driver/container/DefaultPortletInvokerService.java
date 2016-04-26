@@ -36,8 +36,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.FilterManager;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletInvokerService;
@@ -46,6 +44,8 @@ import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.driver.PortletContextService;
 import org.apache.pluto.container.driver.PortletServlet3;
 import org.apache.pluto.container.util.StringManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Used internally to invoke/dispatch requests from the container to
@@ -239,7 +239,9 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
 
                 if (methodID.equals(PortletInvokerService.METHOD_RESOURCE))
                 {
+                    LOG.trace("Request dispatcher forward resource request to portlet servlet.");
                     dispatcher.forward(containerRequest, containerResponse);
+                    LOG.trace("Dispatch complete.");
                 }
                 else
                 {
@@ -275,10 +277,16 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
                 }
 
             } finally {
-                containerRequest.removeAttribute(PortletInvokerService.METHOD_ID);
-                containerRequest.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
-                containerRequest.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
-                containerRequest.removeAttribute(PortletInvokerService.FILTER_MANAGER);
+                // If async is running, resources will be released by the PortletAsyncListener
+                if (!containerRequest.isAsyncSupported() || !containerRequest.isAsyncStarted()) {
+                   LOG.trace("After invocation, removing attributes.");
+                   containerRequest.removeAttribute(PortletInvokerService.METHOD_ID);
+                   containerRequest.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
+                   containerRequest.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
+                   containerRequest.removeAttribute(PortletInvokerService.FILTER_MANAGER);
+                } else {
+                   LOG.debug("After invocation, async started for resource request. attributes not removed.");
+                }
             }
         } else {
             String msg = EXCEPTIONS.getString(

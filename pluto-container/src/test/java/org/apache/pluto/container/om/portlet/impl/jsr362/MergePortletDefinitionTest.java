@@ -19,10 +19,7 @@
 
 package org.apache.pluto.container.om.portlet.impl.jsr362;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -877,6 +874,21 @@ public class MergePortletDefinitionTest {
       assertNotNull(deps);
       assertEquals(3, deps.size());
       assertTrue(deps.contains(dep));
+   }
+
+   @Test
+   public void testAsyncSupported() throws Exception {
+      assertFalse(cut.isAsyncSupported());
+   }
+   
+   @Test
+   public void testMultipartSupported() throws Exception {
+      assertTrue(cut.isMultipartSupported());
+      
+      assertEquals("/tmp", cut.getLocation());
+      assertEquals(new Integer(103), cut.getFileSizeThreshold());
+      assertEquals(new Long(101), cut.getMaxFileSize());
+      assertEquals(new Long(102), cut.getMaxRequestSize());
    }
 
 }

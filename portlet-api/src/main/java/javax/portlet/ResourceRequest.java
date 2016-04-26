@@ -24,6 +24,8 @@
 
 package javax.portlet;
 
+import javax.servlet.DispatcherType;
+
 /**
  * <span class="changed_modified_3_0">The</span>
  * <code>ResourceRequest</code> interface represents the request
@@ -233,5 +235,206 @@ public interface ResourceRequest extends ClientDataRequest {
     */
 
    public WindowState getWindowState ();
+
+
+   /**
+    * <div class="changed_added_3_0">
+    * Puts this request into asynchronous mode and initializes the <code>AsyncContext</code>
+    * object.
+    * <p>
+    * Calling this method will cause committal of the associated response to be delayed until 
+    * <code>AsyncContext#complete</code> is called on the returned <code>AsyncContext</code>,
+    * or the asynchronous operation has timed out.
+    * <p>
+    * This method clears the list of <code>AsyncListener</code> instances (if any) that were
+    * registered with the <code>AsyncContext</code> returned by the previous call to one of the
+    * <code>startAsync</code> methods, after calling each <code>AsyncListener</code> at 
+    * its <code>onStartAsync</code> method.
+    * <p>
+    * Subsequent invocations of this method, or its overloaded variant, will return
+    * the same <code>AsyncContext</code> instance, reinitialized as appropriate.
+    * <p> 
+    * The <code>AsyncContext</code> object can be used as described by the servlet
+    * specification. The <code>ServletRequest</code> and <code>ServletResponse</code> 
+    * objects obtained from the <code>AsyncContext</code> will provide functionality 
+    * appropriate for the portlet environment.
+    * <p>
+    * The original <code>ResourceRequest</code> and <code>ResourceResponse</code> objects
+    * will be made available as request attributes on the code>ServletRequest</code> object 
+    * obtained from the <code>AsyncContext</code> under the names 
+    * <code>javax.portlet.request</code>
+    * and <code>javax.portlet.response</code>, respectively.
+    * The <code>PortletConfig</code> object will be made available on the 
+    * <code>ServletRequest</code> under the name 
+    * <code>javax.portlet.config</code>.
+    * <p>
+    * The <code>AsyncContext#dispatch()</code> method will cause the portlet resource
+    * method to be invoked with the <code>ResourceRequest</code> and <code>ResourceResponse</code>
+    * objects available as attributes on the <code>ServletRequest</code> object obtained from
+    * the <code>AsyncContext</code>.
+    * In this case, the <code>ResourceRequest#isAsyncStarted()</code> method will return 
+    * <code>false</code> and the <code>ResourceRequest#getDispatcherType()</code> method
+    * will return <code>DispatcherType#ASYNC</code>.
+    * <p>
+    * A portlet <code>ResourceFilter</code> that allocates resources and attaches them to the 
+    * <code>ResourceRequest</code> or that wraps the <code>ResourceRequest</code> or
+    * <code>ResourceResponse</code> should not release resources in the outbound direction
+    * if asynchronous mode has been started.
+    * A portlet <code>ResourceFilter</code> can use the values provided by the 
+    * <code>ResourceRequest#isAsyncStarted()</code> and the
+    * <code>ResourceRequest#getDispatcherType()</code> methods to determine when to
+    * allocate and release resources.
+    * </div>
+    * 
+    * @return  the (re)initialized AsyncContext 
+    * @since   3.0
+    * @see     javax.servlet.ServletRequest#startAsync()
+    * @see     javax.servlet.AsyncContext
+    * @see     #isAsyncStarted() 
+    * @see     #getDispatcherType()
+    * @see     javax.portlet.filter.ResourceFilter
+    */
+
+   public PortletAsyncContext startAsync() throws IllegalStateException;
+
+
+   /**
+    * <div class="changed_added_3_0">
+    * Puts this request into asynchronous mode and initializes the <code>AsyncContext</code>
+    * object.
+    * <p>
+    * Calling this method will cause committal of the associated response to be delayed until 
+    * <code>AsyncContext#complete</code> is called on the returned <code>AsyncContext</code>,
+    * or the asynchronous operation has timed out.
+    * <p>
+    * This method clears the list of <code>AsyncListener</code> instances (if any) that were
+    * registered with the <code>AsyncContext</code> returned by the previous call to one of the
+    * <code>startAsync</code> methods, after calling each <code>AsyncListener</code> at 
+    * its <code>onStartAsync</code> method.
+    * <p> 
+    * The <code>AsyncContext</code> object can be used as described by the servlet
+    * specification. The <code>ServletRequest</code> and <code>ServletResponse</code> 
+    * objects obtained from the <code>AsyncContext</code> will provide functionality 
+    * appropriate for the portlet environment.
+    * <p>
+    * The <code>ResourceRequest</code> and <code>ResourceResponse</code> objects
+    * passed as arguments to this method
+    * will be made available as request attributes on the code>ServletRequest</code> object 
+    * obtained from the <code>AsyncContext</code> under the names 
+    * <code>javax.portlet.request</code>
+    * and <code>javax.portlet.response</code>, respectively.
+    * The <code>PortletConfig</code> object will be made available on the 
+    * <code>ServletRequest</code> under the name 
+    * <code>javax.portlet.config</code>.
+    * <p>
+    * Subsequent invocations of this method, or its zero-argument variant, will return
+    * the same <code>AsyncContext</code> instance, reinitialized as appropriate.
+    * If a call to this method is followed by a call to its zero-argument variant, 
+    * the specified (and possibly wrapped) <code>ResourceRequest</code> and 
+    * <code>ResourceResponse</code> objects will remain available  
+    * as request attributes on the <code>ServletRequest</code> object 
+    * obtained from the <code>AsyncContext</code>.
+    * <p>
+    * The <code>AsyncContext#dispatch()</code> method will cause the portlet resource
+    * method to be invoked with the <code>ResourceRequest</code> and <code>ResourceResponse</code>
+    * objects available as attributes on the <code>ServletRequest</code> object obtained from
+    * the <code>AsyncContext</code>.
+    * In this case, the <code>ResourceRequest#isAsyncStarted()</code> method will return 
+    * <code>false</code> and the <code>ResourceRequest#getDispatcherType()</code> method
+    * will return <code>DispatcherType#ASYNC</code>.
+    * <p>
+    * A portlet <code>ResourceFilter</code> that allocates resources and attaches them to the 
+    * <code>ResourceRequest</code> or that wraps the <code>ResourceRequest</code> or
+    * <code>ResourceResponse</code> should not release resources in the outbound direction
+    * if asynchronous mode has been started.
+    * A portlet <code>ResourceFilter</code> can use the values provided by the 
+    * <code>ResourceRequest#isAsyncStarted()</code> and the
+    * <code>ResourceRequest#getDispatcherType()</code> methods to determine when to
+    * allocate and release resources.
+    * </div>
+    * 
+    * @return  the (re)initialized AsyncContext 
+    * @since   3.0
+    * @see     javax.servlet.ServletRequest#startAsync()
+    * @see     javax.servlet.AsyncContext 
+    * @see     #isAsyncStarted() 
+    * @see     #getDispatcherType()
+    * @see     javax.portlet.filter.ResourceFilter
+    */
+
+   public PortletAsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException;
+
+
+   /**
+    * <div class="changed_added_3_0">
+    * Checks if this request has been put into asynchronous mode. 
+    * <p>
+    * A <code>ResourceRequest</code> is put into asynchronous mode by calling 
+    * <code>startAsync()</code> or <code>startAsync(ResourceRequest,ResourceResponse)</code>
+    * on it. 
+    * <p>
+    * This method returns <code>false</code> if this request was put into asynchronous mode, 
+    * but has since been dispatched using one of the <code>AsyncContext#dispatch</code> 
+    * methods or released from asynchronous mode via a call to <code>AsyncContext#complete</code>. 
+    * </div>
+    * 
+    * @return   <code>true</code> if asynchronous mode has been started
+    * @since    3.0
+    * @see      #startAsync()
+    * @see      #startAsync(ResourceRequest, ResourceResponse)
+    */
+
+   public boolean isAsyncStarted();
+   
+
+   /**
+    * <div class="changed_added_3_0">
+    * Checks if this request supports asynchronous operation. 
+    * <p>
+    * Asynchronous operation is disabled for this request if this request is within 
+    * the scope of a filter or servlet that has not been annotated or flagged in 
+    * the portlet configuration as being able to support asynchronous handling. 
+    * </div>
+    * 
+    * @return   <code>true</code> if this request supports asynchronous operation
+    * @since    3.0
+    */
+
+   public boolean isAsyncSupported();
+
+
+   /**
+    * <div class="changed_added_3_0">
+    * Gets the <code>AsyncContext</code> that was created or reinitialized by the most 
+    * recent invocation of <code>startAsync()</code> or 
+    * <code>startAsync(ResourceRequest,ResourceResponse)</code> on this request. 
+    * </div>
+    * 
+    * @return   the <code>AsyncContext</code> (re)initialized by the most recent <code>startAsync</code> method invocation 
+    * @since    3.0
+    * @see      javax.servlet.ServletRequest#startAsync()
+    * @see      javax.servlet.AsyncContext 
+    */
+   
+   public PortletAsyncContext getAsyncContext();
+
+
+   /**
+    * <div class="changed_added_3_0">
+    * Gets the dispatcher type of this request. 
+    * <p>
+    * The initial dispatcher type of a request is defined as <code>DispatcherType.REQUEST</code>.
+    * The dispatcher type of a request dispatched via a <code>RequestDispatcher</code>
+    * is given as <code>DispatcherType.FORWARD</code> or <code>DispatcherType.INCLUDE</code>, 
+    * while the dispatcher type of an asynchronous request dispatched via one of the
+    * <code>AsyncContext#dispatch</code> methods is given as <code>DispatcherType.ASYNC</code>.
+    * </div>
+    * 
+    * @return   the dispatcher type of this request
+    * @since    3.0
+    * @see      javax.servlet.DispatcherType
+    */
+
+   public DispatcherType getDispatcherType();
 
 }

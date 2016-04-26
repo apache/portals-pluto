@@ -21,6 +21,61 @@
     <div class="indexContainer-not">
     <ul>
     <li>
+    20160418:
+    Added new method to implement 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-63">PORTLETSPEC3-63 Make user agent available to Portlets</a>:
+    {@link javax.portlet.PortletRequest#getUserAgent() PortletRequest#getUserAgent()}. 
+    and altered the corresponding wrapper class accordingly.
+    Removed the PortletRequest#USER_AGENT constant, as an alternative implementation was agreed upon.
+    <p>
+    Added multipart support to fulfill
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-67">PORTLETSPEC3-67</a>. 
+    See 
+    {@link javax.portlet.annotations.PortletConfiguration#multipart() PortletConfiguration#multipart()}, 
+    {@link javax.portlet.annotations.Multipart Multipart},
+    {@link javax.portlet.ClientDataRequest#getPart(String)}, and 
+    {@link javax.portlet.ClientDataRequest#getParts()}.
+    </li>
+    <li>
+    20160406:
+    Added new classes to implement 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-68">PORTLETSPEC3-68 Add Async Support</a>:
+    {@link javax.portlet.PortletAsyncContext PortletAsyncContext}, 
+    {@link javax.portlet.PortletAsyncListener PortletAsyncListener}, and
+    {@link javax.portlet.PortletAsyncEvent PortletAsyncEvent}.
+    Modified 
+    {@link javax.portlet.ResourceRequest#startAsync() ResourceRequest#startAsync()}, 
+    {@link javax.portlet.ResourceRequest#startAsync(ResourceRequest, ResourceResponse) ResourceRequest#startAsync(ResourceRequest, ResourceResponse)}, and 
+    {@link javax.portlet.ResourceRequest#getAsyncContext() ResourceRequest#getAsyncContext()}
+    along with the corresponding wrapper class accordingly.
+    </li>
+    <li>
+    20160316:
+    Added new methods, configuration elements, and documentation to implement 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-68">PORTLETSPEC3-68 Add Async Support</a>:
+    {@link javax.portlet.annotations.PortletConfiguration#asyncSupported() PortletConfiguration#asyncSupported()}, 
+    {@link javax.portlet.annotations.ServeResourceMethod#asyncSupported() ServeResourceMethod#asyncSupported()}, 
+    {@link javax.portlet.ResourceRequest#startAsync() ResourceRequest#startAsync()}, 
+    {@link javax.portlet.ResourceRequest#startAsync(ResourceRequest, ResourceResponse) ResourceRequest#startAsync(ResourceRequest, ResourceResponse)}, 
+    {@link javax.portlet.ResourceRequest#isAsyncStarted() ResourceRequest#isAsyncStarted()}, 
+    {@link javax.portlet.ResourceRequest#isAsyncSupported() ResourceRequest#isAsyncSupported()}, 
+    {@link javax.portlet.ResourceRequest#getAsyncContext() ResourceRequest#getAsyncContext()}, and 
+    {@link javax.portlet.ResourceRequest#getDispatcherType() ResourceRequest#getDispatcherType()}.
+    Added appropriate documentation to 
+    {@link javax.portlet.filter.ResourceFilter ResourceFilter}.
+    Updated affected wrapper classes accordingly.
+    </li>
+    <li>
+    20160315:
+    Added new methods to implement 
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-63">PORTLETSPEC3-63</a>
+    and
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-64">PORTLETSPEC3-64</a>:
+    {@link javax.portlet.PortletRequest#getPortletContext() PortletRequest#getPortletContext()} and 
+    {@link javax.portlet.ClientDataRequest#getContentLengthLong() ClientDataRequest#getContentLengthLong()}.
+    Updated affected wrapper classes accordingly.
+    </li>
+    <li>
     20160226:
     Renamed PortletState to RenderState and MutablePortletState to MutableRenderState.
     Updated references in affected files.

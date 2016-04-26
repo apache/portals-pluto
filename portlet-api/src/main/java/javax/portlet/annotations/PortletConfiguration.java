@@ -223,4 +223,25 @@ public @interface PortletConfiguration {
     * @return  The security role references
     */
    SecurityRoleRef[]   roleRefs() default {};
+   
+   /**
+    * Declares whether the portlet supports asynchronous operation mode.
+    * <p>
+    * If this flag is set, any resource method used by this portlet will
+    * be marked as supporting asynchronous operation.
+    * Asynchronous support applies to resource methods only.
+    *  
+    * @return  <code>true</code> if the method supports asynchronous mode.
+    */
+   boolean asyncSupported() default false;
+   
+   /**
+    * Provides multipart configuration data for the portlet. 
+    * <p>
+    * The <code>{@literal @}Multipart</code> annotation <code>supported</code>
+    * element must be set to <code>true</code> to activate multipart form support.
+    * 
+    * @return  The multipart configuration data.
+    */
+   Multipart multipart() default @Multipart(supported=false);
 }

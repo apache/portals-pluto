@@ -31,7 +31,8 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.PortletException;
 
 /**
- * The <code>ResourceFilter</code> is an object that performs filtering 
+ * <span class="changed_modified_3_0">The</span>
+ * <code>ResourceFilter</code> is an object that performs filtering 
  * tasks on either the resource request to a portlet, or on the resource response from 
  * a portlet, or both.
  * <p>
@@ -42,6 +43,34 @@ import javax.portlet.PortletException;
  * <p>
  * Filters are configured in the portlet deployment descriptor of a 
  * portlet application. 
+ * <p>
+ * <div class="changed_added_3_0">
+ * <strong>Asynchronous Processing Considerations</strong>
+ * <p>
+ * If the <code>ResourceFilter</code> is to support asynchronous mode, care must be taken
+ * regarding resource allocation and release.
+ * Any resources attached to the <code>ResourceRequest</code> during the inbound portion
+ * of the <code>doFilter</code> invocation
+ * and needed during asynchronous processing should not be released during outbound processing
+ * if asynchronous mode has been started.
+ * <p>
+ * If resources must be allocated in this way during inbound processing, the portlet should
+ * use a {@link javax.portlet.PortletAsyncListener} to release the resources upon request 
+ * completion even when error conditions or timeouts occur. 
+ * <p>
+ * Alternatively, the portlet may
+ * use the <code>AsyncContext#dispatch()</code> method at the end of asynchronous processing
+ * in order to cause the portlet resource method to be invoked again with the same
+ * <code>ResourceRequest</code> and <code>ResourceResponse</code> objects.
+ * The resources can be released during asynchronous dispatch outbound processing if
+ * asynchronous mode is not active.
+ * <p>
+ * The <code>ResourceRequest#isAsyncStarted()</code> method will return <code>true</code>
+ * if the portlet is currently in asynchronous mode.
+ * The <code>ResourceRequest#igetDispatcherType()</code> method will return 
+ * <code>DispatcherType#REQUEST</code> during initial request processing and
+ * <code>DipatcherType#ASYNC</code> during processing resulting from an asynchronous dispatch.
+ * </div>
  * 
  * @since 2.0
  */

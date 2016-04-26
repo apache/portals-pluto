@@ -22,6 +22,7 @@ package org.apache.pluto.container.om.portlet.impl.fixtures;
 import javax.portlet.GenericPortlet;
 import javax.portlet.annotations.InitParameter;
 import javax.portlet.annotations.LocaleString;
+import javax.portlet.annotations.Multipart;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletConfigurations;
@@ -66,8 +67,29 @@ import javax.portlet.annotations.PortletConfigurations;
          @LocaleString(locale="DE", value="Ein Portlet")
       }, keywords={
          @LocaleString(locale="DE", value="Eins, Zwei, Drei")
-      }
-   )
+      },
+      asyncSupported=true,
+      multipart = @Multipart(supported=false)
+   ),
+   @PortletConfiguration(portletName="Portlet3", 
+   initParams = {
+         @InitParameter(name="color", value="#def"),
+      },
+      description={
+         @LocaleString(locale="de", value="Dieses Portlet zeigt die Zeit in verschiedenen Zeitzonen an")
+      }, displayName={
+         @LocaleString(locale="de", value="ZeitzonenPortlet")
+      }, title={
+         @LocaleString(locale="DE", value="Annotiertes Portlet")
+      }, shortTitle={
+         @LocaleString(locale="DE", value="Ein Portlet")
+      }, keywords={
+         @LocaleString(locale="DE", value="Eins, Zwei, Drei")
+      },
+      asyncSupported=false,
+      multipart = @Multipart(supported=true, location="/home", 
+            fileSizeThreshold=11, maxFileSize=22, maxRequestSize=33)
+   ),
 })
 public class TestMultiAnnotatedPortlet extends GenericPortlet {
    // add portlet methods

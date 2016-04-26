@@ -8,7 +8,7 @@ body {
     background-color:#ffffff;
     color:#353833;
     font-family:Arial, Helvetica, sans-serif;
-    font-size:76%;
+    font-size:100%;
     margin:0;
 }
 a:link, a:visited {
@@ -514,6 +514,7 @@ h1.hidden {
 .indexContainer a[href*="PortletContext.html"],
 .indexContainer a[href*="PortletPreferences.html"],
 .indexContainer a[href*="GenericPortlet.html"],
+.indexContainer a[href*="ClientDataRequest.html"],
 .indexContainer a[href*="ActionRequest.html"],
 .indexContainer a[href*="ActionResponse.html"],
 .indexContainer a[href*="PortletResponse.html"],
@@ -528,6 +529,7 @@ h1.hidden {
 .indexContainer a[href*="StateAwareResponse.html"],
 .indexContainer a[href*="EventResponse.html"],
 .indexContainer a[href*="MimeResponse.html"],
+.indexContainer a[href*="ResourceFilter.html"],
 .indexContainer a[href*="ResourceURL.html"],
 .indexContainer a[href*="ResourceResponse.html"],
 .indexContainer a[href*="ActionRequestWrapper.html"],
@@ -577,6 +579,7 @@ h1.hidden {
 .indexContainer a[href*="LocaleString.html"],
 .indexContainer a[href*="package-info.html"],
 .indexContainer a[href*="MethodToken.html"],
+.indexContainer a[href*="Multipart.html"],
 .indexContainer a[href*="MimeResponseWrapper.html"],
 .indexContainer a[href*="Namespace.html"],
 .indexContainer a[href*="PortletApplication.html"],
@@ -628,6 +631,10 @@ h1.hidden {
 .indexContainer a[href*="RenderURLWrapper.html"],
 .indexContainer a[href*="ResourceParametersWrapper.html"],
 .indexContainer a[href*="ResourceURLWrapper.html"],
+
+.indexContainer a[href*="PortletAsyncContext.html"],
+.indexContainer a[href*="PortletAsyncListener.html"],
+.indexContainer a[href*="PortletAsyncEvent.html"],
 
 .indexContainer a[href*="ActionURL.html"],
 .indexContainer a[href*="RenderURL.html"],

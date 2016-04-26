@@ -34,9 +34,15 @@ import java.util.NoSuchElementException;
 
 import javax.portlet.ClientDataRequest;
 import javax.portlet.PortletRequest;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.servlet.AsyncContext;
+import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -428,7 +434,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     
     boolean isForwardingPossible()
     {
-        return !renderPhase;
+        return lifecyclePhase.equals(PortletRequest.RESOURCE_PHASE);
     }
     
     /**
@@ -1459,4 +1465,47 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     {
         return portletRequest.isSecure();
     }
+
+    /**
+     * The async methods can't be used
+     */
+
+    @Override
+    public AsyncContext startAsync() throws IllegalStateException {
+       StringBuilder txt = new StringBuilder(128);
+       txt.append("The async context cannot be initialized after a ");
+       txt.append("include or forward from a portlet reqource request method. ");
+       txt.append("The first async context initialization must be performed within the portlet resource method.");
+       throw new IllegalStateException(txt.toString());
+    }
+
+    @Override
+    public AsyncContext startAsync(ServletRequest request, ServletResponse response) throws IllegalStateException {
+       StringBuilder txt = new StringBuilder(128);
+       txt.append("The async context cannot be initialized after a ");
+       txt.append("include or forward from a portlet reqource request method. ");
+       txt.append("The first async context initialization must be performed within the portlet resource method.");
+       throw new IllegalStateException(txt.toString());
+    }
+
+    @Override
+    public boolean isAsyncStarted() {
+       return false;
+    }
+
+    @Override
+    public boolean isAsyncSupported() {
+       return false;
+    }
+
+    @Override
+    public AsyncContext getAsyncContext() {
+       return super.getAsyncContext();
+    }
+
+    @Override
+    public DispatcherType getDispatcherType() {
+       return super.getDispatcherType();
+    }
+
 }

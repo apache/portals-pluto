@@ -30,6 +30,7 @@ import javax.portlet.annotations.PortletPreferencesValidator;
 import javax.portlet.annotations.PortletRequestFilter;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -160,6 +161,12 @@ public class PortletContainerInitializer implements ServletContainerInitializer 
                ServletRegistration.Dynamic sr = ctx.addServlet(servletName, PortletServlet3.class);
                sr.addMapping(mapping);
                sr.setInitParameter(PortletServlet3.PORTLET_NAME, pn);
+               sr.setAsyncSupported(pd.isAsyncSupported());
+               if (pd.isMultipartSupported()) {
+                  MultipartConfigElement mce = new MultipartConfigElement(pd.getLocation(), 
+                        pd.getMaxFileSize(), pd.getMaxRequestSize(), pd.getFileSizeThreshold());
+                  sr.setMultipartConfig(mce);
+               }
                sr.setLoadOnStartup(100);
 
             }

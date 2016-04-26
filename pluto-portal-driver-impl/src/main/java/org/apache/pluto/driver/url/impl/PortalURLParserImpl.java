@@ -191,7 +191,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       // Extract the version info for the portlets on the page and store in URL
       
       StringBuilder vstr = new StringBuilder();
-      if (isDebug) {
+      if (isTrace) {
          vstr.append("Portlet Versions: ");
       }
       for (String pid : pids) {
@@ -199,14 +199,14 @@ public class PortalURLParserImpl implements PortalURLParser {
          try {
             String pv = dc.getPortletRegistryService().getPortletApplication(appName).getVersion();
             portalURL.setVersion(pid, pv);
-            if (isDebug) {
+            if (isTrace) {
                vstr.append(pid).append(" = ").append(pv).append(", ");
             }
          } catch (Exception e) {
             LOG.error("Portlet application definition could not be retrieved for " + appName);
          }
       }
-      if (isDebug) {
+      if (isTrace) {
          LOG.debug(vstr.toString());
       }
 
@@ -408,7 +408,7 @@ public class PortalURLParserImpl implements PortalURLParser {
          portalURL.handleServletRequestParams();
       }
       
-      if (isDebug) {
+      if (isTrace) {
          LOG.debug("Found " + portletIds.size() + " IDs: " + Arrays.toString(portletIds.toArray()));
       }
 
@@ -436,7 +436,8 @@ public class PortalURLParserImpl implements PortalURLParser {
 
       // Start the pathInfo with the path to the render URL (page).
       if (portalURL.getRenderPath() != null) {
-         buffer.append(portalURL.getRenderPath());
+         String p = portalURL.getRenderPath().replaceAll(" ", "%20");
+         buffer.append(p);
       }
 
       // Add the portletIds with references

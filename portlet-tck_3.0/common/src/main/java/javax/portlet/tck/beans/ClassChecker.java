@@ -217,28 +217,32 @@ public class ClassChecker {
          HashSet<Class<?>> mexs = new HashSet<Class<?>>();
          mexs.addAll(Arrays.asList(m.getExceptionTypes()));
          
-         if (LOGGER.isLoggable(Level.FINE)) {
+         if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.logp(Level.FINE, LOG_CLASS, "hasMethod", "added exception types");
          }
 
          if (exParm.isEmpty() && mexs.isEmpty() ) {
-            if (LOGGER.isLoggable(Level.FINE)) {
+            if (LOGGER.isLoggable(Level.FINEST)) {
                LOGGER.logp(Level.FINE, LOG_CLASS, "hasMethod", "no exceptions to check");
             }
             result = true;
          } else {
-            result = mexs.equals(exParm);
-            if (LOGGER.isLoggable(Level.FINE)) {
+            result = mexs.containsAll(exParm);
+            if (result == false) {
                StringBuilder sb = new StringBuilder(512);
-               sb.append("Method name: " + name + "\n");
-               sb.append("results of exception check: " + result + "\n");
-               sb.append("method exceptions: " + mexs + "\n");
-               sb.append("expected exceptions: " + exParm + "\n");
-               LOGGER.logp(Level.FINE, LOG_CLASS, "hasMethod", sb.toString());
+               sb.append("Method name: ").append(name).append("\n");
+               sb.append("results of exception check: ").append(result).append("\n");
+               sb.append("method exceptions: ").append(mexs).append("\n");
+               sb.append("expected exceptions: ").append(exParm).append("\n");
+               LOGGER.logp(Level.WARNING, LOG_CLASS, "hasMethod", sb.toString());
             }
          }
          
-      } catch (Exception e) { LOGGER.log(Level.FINE, "problem determining method.", e);}
+      } catch (Exception e) { 
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Could not get method: ").append(name);
+         LOGGER.log(Level.WARNING, txt.toString(), e);
+      }
       
       return result;
    }

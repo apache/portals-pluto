@@ -35,12 +35,12 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class PortletSessionBeanHolder implements Serializable {
-   private static final Logger                                LOG              = LoggerFactory
-                                                                                     .getLogger(PortletSessionBeanHolder.class);
-   private static final boolean                               isDebug          = LOG.isDebugEnabled();
+   private static final Logger  LOG              = LoggerFactory
+                                                       .getLogger(PortletSessionBeanHolder.class);
+   private static final boolean isTrace          = LOG.isTraceEnabled();
 
-   private static final long                                  serialVersionUID = 4713451590109713169L;
-   private static final String                                ATTRIBNAME       = "portletSessionBeanHolder";
+   private static final long    serialVersionUID = 4713451590109713169L;
+   private static final String  ATTRIBNAME       = "portletSessionBeanHolder";
 
    // The ThreadLocal manages the holders so that there is one holder per thread.
    private static final ThreadLocal<PortletSessionBeanHolder> holders          = new ThreadLocal<PortletSessionBeanHolder>();
@@ -87,7 +87,7 @@ public class PortletSessionBeanHolder implements Serializable {
       PortletSessionBeanHolder holder = new PortletSessionBeanHolder(map, windowId, config);
       holders.set(holder);
 
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder(80);
          txt.append("Set portlet session bean holder.");
          txt.append(" ThreadId: ").append(Thread.currentThread().getId());
@@ -104,7 +104,7 @@ public class PortletSessionBeanHolder implements Serializable {
    public static void removeBeanHolder() {
       holders.remove();
 
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder(80);
          txt.append("Removed portlet session bean holder.");
          txt.append(" ThreadId=").append(Thread.currentThread().getId());
@@ -119,6 +119,27 @@ public class PortletSessionBeanHolder implements Serializable {
     */
    public static PortletSessionBeanHolder getBeanHolder() {
       return holders.get();
+   }
+   
+   /**
+    * Removes the bean holder for the current thread and
+    * returns the removed instance to the caller.
+    * 
+    * @return  the removed bean holder
+    */
+   public static PortletSessionBeanHolder deregister() {
+      PortletSessionBeanHolder holder = holders.get();
+      holders.remove();
+      return holder;
+   }
+   
+   /**
+    * Registers the provided bean holder for the current thread.
+    * 
+    * @param holder the bean holder to register
+    */
+   public static void register(PortletSessionBeanHolder holder) {
+      holders.set(holder);
    }
 
    /**

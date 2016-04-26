@@ -17,6 +17,7 @@
 package org.apache.pluto.driver;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.servlet.AsyncContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -35,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.pluto.container.HeaderData;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.driver.config.DriverConfiguration;
@@ -189,7 +192,7 @@ public class PortalDriverServlet extends HttpServlet {
             throw new ServletException(ex);
          }
          if (LOG.isDebugEnabled()) {
-            LOG.debug(reqType + " request processed.\n\n");
+            LOG.debug(reqType + " request processed.\n");
          }
 
       }
@@ -230,7 +233,7 @@ public class PortalDriverServlet extends HttpServlet {
          dispatcher.forward(request, response);
 
          if (LOG.isDebugEnabled()) {
-            LOG.debug("Render request processed.\n\n");
+            LOG.debug("Render request processed.\n");
          }
       }
    }

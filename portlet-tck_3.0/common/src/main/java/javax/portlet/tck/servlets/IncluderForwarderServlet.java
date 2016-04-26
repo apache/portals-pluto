@@ -19,18 +19,22 @@
 
 package javax.portlet.tck.servlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
+import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_ACTION;
+import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_CONTEXT_PATH;
+import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_PATH_INFO;
+import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_QUERY_STRING;
+import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_REQUEST_URI;
+import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_SERVLET_PATH;
+import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_TARGET;
+
+import java.io.IOException;
+import java.util.logging.Logger;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet for JSR 362 request dispatcher testing.
@@ -78,6 +82,9 @@ public class IncluderForwarderServlet extends HttpServlet {
          LOGGER.severe(msg);
          throw new ServletException(msg);
       }
+      
+      // do logging if enabled
+      ServletRequestUtils.logDebugInfo(request, this.getClass().getSimpleName());
       
       String uri = request.getRequestURI();
       String cp = request.getContextPath();

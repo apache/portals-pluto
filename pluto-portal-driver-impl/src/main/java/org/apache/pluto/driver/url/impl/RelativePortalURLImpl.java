@@ -16,12 +16,13 @@
  */
 package org.apache.pluto.driver.url.impl;
 
+import static org.apache.pluto.driver.url.PortalURLParameter.PARAM_TYPE_PUBLIC;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletMode;
@@ -29,20 +30,17 @@ import javax.portlet.WindowState;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
-import org.apache.pluto.driver.url.PortalURLPublicParameter;
-
-import static org.apache.pluto.driver.url.PortalURLParameter.PARAM_TYPE_PUBLIC;
-
 import org.apache.pluto.driver.url.PortalURLParser;
+import org.apache.pluto.driver.url.PortalURLPublicParameter;
 import org.apache.pluto.driver.url.PortletParameterFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The portal URL.
@@ -145,7 +143,7 @@ public class RelativePortalURLImpl implements PortalURL {
             && type != URLType.Portal) {
          reqParamsProcessed = true;
          
-         if (isDebug) {
+         if (isTrace) {
             LOG.debug("Processing servlet request parameters.");
          }
 
@@ -312,7 +310,7 @@ public class RelativePortalURLImpl implements PortalURL {
       if (absolute) {
          return urlBase + result;
       }
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder();
          txt.append("Clone ID: ").append(cloneId)
             .append(", absolute: ").append(absolute)

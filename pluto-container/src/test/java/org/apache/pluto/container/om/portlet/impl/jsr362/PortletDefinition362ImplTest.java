@@ -19,10 +19,7 @@
 
 package org.apache.pluto.container.om.portlet.impl.jsr362;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -873,6 +870,48 @@ public class PortletDefinition362ImplTest {
       assertNotNull(deps);
       assertEquals(2, deps.size());
       assertTrue(deps.contains(dep));
+   }
+   
+   @Test
+   public void testAsyncSupported() throws Exception {
+      assertTrue(cut.isAsyncSupported());
+   }
+   
+   @Test
+   public void testSetAsyncSupportedTrue() throws Exception {
+      cut.setAsyncSupported(true);
+      assertTrue(cut.isAsyncSupported());
+   }
+   
+   @Test
+   public void testSetAsyncSupportedFalse() throws Exception {
+      cut.setAsyncSupported(false);
+      assertFalse(cut.isAsyncSupported());
+   }
+   
+   @Test
+   public void testSetMultipartSupportedTrue() throws Exception {
+      cut.setMultipartSupported(true);
+      assertTrue(cut.isMultipartSupported());
+   }
+   
+   @Test
+   public void testSetMultipartSupportedFalse() throws Exception {
+      cut.setMultipartSupported(false);
+      assertFalse(cut.isMultipartSupported());
+   }
+   
+   @Test
+   public void testGetSetMultipartValues() throws Exception {
+      cut.setLocation("there");
+      cut.setFileSizeThreshold(10);
+      cut.setMaxFileSize(20L);
+      cut.setMaxRequestSize(30L);
+      
+      assertEquals("there", cut.getLocation());
+      assertEquals(new Integer(10), cut.getFileSizeThreshold());
+      assertEquals(new Long(20), cut.getMaxFileSize());
+      assertEquals(new Long(30), cut.getMaxRequestSize());
    }
 
 }

@@ -19,9 +19,7 @@
 
 package org.apache.pluto.container.om.portlet.impl.jsr362;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -60,6 +58,7 @@ public class MultiAnnotatedPortletTest {
    // Class under test
    private PortletDefinition portlet1;
    private PortletDefinition portlet2;
+   private PortletDefinition portlet3;
 
    @BeforeClass
    public static void setUpBeforeClass() throws Exception {
@@ -79,12 +78,14 @@ public class MultiAnnotatedPortletTest {
 
    @Before
    public void setUpBefore() throws Exception {
-      assertEquals(2, pad.getPortlets().size());
+      assertEquals(3, pad.getPortlets().size());
       assertNotNull(pad.getPortlet("Portlet1"));
       assertNotNull(pad.getPortlet("Portlet2"));
+      assertNotNull(pad.getPortlet("Portlet3"));
       app = new PortletApplicationDefinitionImpl(pad);
       portlet1 = new PortletDefinitionImpl(pad.getPortlet("Portlet1"));
       portlet2 = new PortletDefinitionImpl(pad.getPortlet("Portlet2"));
+      portlet3 = new PortletDefinitionImpl(pad.getPortlet("Portlet3"));
    }
 
    // Begin portlet app tests ==================================
@@ -341,6 +342,41 @@ public class MultiAnnotatedPortletTest {
       assertEquals(2, list.size());
       assertEquals(text, info.getKeywords(Locale.FRENCH).getText());
       assertEquals(txt2, info.getKeywords(Locale.GERMAN).getText());
+   }
+   
+   @Test
+   public void testAsyncSupportedDefault() throws Exception {
+      assertFalse(portlet1.isAsyncSupported());
+   }
+   
+   @Test
+   public void testAsyncSupportedTrue() throws Exception {
+      assertTrue(portlet2.isAsyncSupported());
+   }
+   
+   @Test
+   public void testAsyncSupportedFalse() throws Exception {
+      assertFalse(portlet3.isAsyncSupported());
+   }
+   
+   @Test
+   public void testMultipartSupportedDefault() throws Exception {
+      assertFalse(portlet1.isMultipartSupported());
+   }
+   
+   @Test
+   public void testMultipartSupportedTrue() throws Exception {
+      assertFalse(portlet2.isMultipartSupported());
+   }
+   
+   @Test
+   public void testMultipartSupportedFalse() throws Exception {
+      assertTrue(portlet3.isMultipartSupported());
+
+      assertEquals("/home", portlet3.getLocation());
+      assertEquals(new Integer(11), portlet3.getFileSizeThreshold());
+      assertEquals(new Long(22), portlet3.getMaxFileSize());
+      assertEquals(new Long(33), portlet3.getMaxRequestSize());
    }
 
 }

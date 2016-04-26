@@ -20,7 +20,7 @@
 package org.apache.portals.samples;
 
 import javax.inject.Inject;
-
+import javax.portlet.RenderRequest;
 import javax.portlet.annotations.RenderMethod;
 
 /**
@@ -50,6 +50,9 @@ public class HelloWorldRender {
    
    @Inject
    private ApplicationRandomNumberBean apprn;
+   
+   @Inject
+   private RenderRequest req;
 
    /**
     * Bean portlet render method for "BeanHelloWorld" portlet.
@@ -84,6 +87,8 @@ public class HelloWorldRender {
       txt.append("</td></tr><tr><td>\n");
       txt.append("Request number:</td><td>").append(reqrn.getRandomNumber());
       txt.append("</td></tr></table></p>\n");
+      
+      txt.append("<p>User agent: ").append(req.getUserAgent()).append("</p>");
       
       return txt.toString();
    }

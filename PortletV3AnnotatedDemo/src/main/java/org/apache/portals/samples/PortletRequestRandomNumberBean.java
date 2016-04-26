@@ -19,6 +19,7 @@
 
 package org.apache.portals.samples;
 
+import javax.inject.Named;
 import javax.portlet.annotations.PortletRequestScoped;
 
 /**
@@ -26,7 +27,7 @@ import javax.portlet.annotations.PortletRequestScoped;
  * @author Scott Nicklous
  *
  */
-@PortletRequestScoped
+@PortletRequestScoped @Named("reqnum")
 public class PortletRequestRandomNumberBean {
    
    private int randomNumber;

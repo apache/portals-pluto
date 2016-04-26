@@ -97,7 +97,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
       this.window = portletWindow.getId().getStringId();
       this.paramFactory = this.url.getPortletParameterFactory();
 
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("Constructing PortalURLProviderImpl. ");
          txt.append("type=").append(type);
          txt.append(", URL type=").append(url.getType());
@@ -167,7 +167,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
       this.window = portletWindow.getId().getStringId();
       this.paramFactory = this.url.getPortletParameterFactory();
 
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("Created 'read-only' URL provider.");
          txt.append(" type=").append(this.type);
          txt.append(", URL type=").append(url.getType());
@@ -179,7 +179,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
 
    public PortalURL apply() {
 
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder("apply URL values: ");
          txt.append("type=").append(type);
          txt.append(", URL type=").append(url.getType());
@@ -252,7 +252,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
    }
 
    public void setResourceID(String resourceID) {
-      url.setCacheability(resourceID);
+      url.setResourceID(resourceID);
    }
 
    public String toURL() {

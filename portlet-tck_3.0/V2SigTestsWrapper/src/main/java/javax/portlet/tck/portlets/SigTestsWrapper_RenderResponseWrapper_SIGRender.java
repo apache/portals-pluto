@@ -112,14 +112,6 @@ public class SigTestsWrapper_RenderResponseWrapper_SIGRender implements Portlet,
       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
-      /* TestCase: V2SigTestsWrapper_RenderResponseWrapper_SIGRender_extendsPortletResponseWrapper */
-      /* Details: "RenderResponseWrapper extends PortletResponseWrapper "     */
-      TestResult tr1 = tcd.getTestResultFailed(V2SIGTESTSWRAPPER_RENDERRESPONSEWRAPPER_SIGRENDER_EXTENDSPORTLETRESPONSEWRAPPER);
-      try {
-         tr1.setTcSuccess(cc.hasSuperclass(PortletResponseWrapper.class));
-      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
-      tr1.writeTo(writer);
-
       /* TestCase: V2SigTestsWrapper_RenderResponseWrapper_SIGRender_hasCreateActionURL */
       /* Details: "RenderResponseWrapper has a createActionURL() throws       */
       /* IllegalStateException method "                                       */

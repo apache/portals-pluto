@@ -18,20 +18,32 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.PortletSession.*;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ANNOTATIONTESTS_PROCESSEVENT_APIEVENT_NAME;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ANNOTATIONTESTS_PROCESSEVENT_APIEVENT_QNAME;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.GenericPortlet;
+import javax.portlet.PortletException;
+import javax.portlet.ProcessEvent;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.constants.Constants;
 
 /**
  * This is the event processing portlet for the test cases. This portlet processes events, 
@@ -41,17 +53,6 @@ public class AnnotationTests_ProcessEvent_ApiEvent_event extends GenericPortlet 
    private static final String LOG_CLASS = 
          AnnotationTests_ProcessEvent_ApiEvent_event.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-   
-  
-   @Override
-   public void init(PortletConfig config) throws PortletException {
-      
-     
-   }
-   
-   @Override
-   public void destroy() {
-   }
 
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
@@ -65,6 +66,20 @@ public class AnnotationTests_ProcessEvent_ApiEvent_event extends GenericPortlet 
       LOGGER.entering(LOG_CLASS, "event companion serveResource - ERROR!!");
    }
    
+   
+   @Override
+   public void processEvent(EventRequest request, EventResponse response) throws PortletException, IOException {
+      
+      if (LOGGER.isLoggable(Level.FINEST)) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Event arrived.");
+         txt.append(" Name: ").append(request.getEvent().getName());
+         txt.append(", QName: ").append(request.getEvent().getQName());
+         LOGGER.fine(txt.toString());
+      }
+      
+      super.processEvent(request, response);
+   }
   
    
   @ProcessEvent(qname="{" + TCKNAMESPACE + "}AnnotationTests_ProcessEvent_ApiEvent")
@@ -95,7 +110,7 @@ public class AnnotationTests_ProcessEvent_ApiEvent_event extends GenericPortlet 
 	   
    }
    
- // @ProcessEvent(name="AnnotationTests_ProcessEvent_ApiEvent")
+   @ProcessEvent(name="AnnotationTests_ProcessEvent_ApiEvent2")
    public void nameEvnt(EventRequest req,EventResponse resp)
               throws PortletException,IOException {
 	   StringWriter writer = new StringWriter();
@@ -107,8 +122,6 @@ public class AnnotationTests_ProcessEvent_ApiEvent_event extends GenericPortlet 
 	      TestResult tr1 = tcd.getTestResultFailed(V2ANNOTATIONTESTS_PROCESSEVENT_APIEVENT_NAME);
 	      
 	      tr1.setTcSuccess(true);
-	     
-	      tr1.appendTcDetail("Error");
 	    
 	      tr1.writeTo(writer);
 	      

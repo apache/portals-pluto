@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -27,6 +28,7 @@ import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -34,15 +36,22 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.StateAwareResponse;
 import javax.portlet.UnavailableException;
+import javax.servlet.DispatcherType;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletRequestWrapper;
+import javax.servlet.ServletResponse;
+import javax.servlet.ServletResponseWrapper;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.FilterManager;
+import org.apache.pluto.container.PortletAsyncManager;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
@@ -50,7 +59,12 @@ import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
+import org.apache.pluto.container.bean.processor.PortletArtifactProducer;
 import org.apache.pluto.container.bean.processor.PortletInvoker;
+import org.apache.pluto.container.bean.processor.PortletRequestScopedBeanHolder;
+import org.apache.pluto.container.bean.processor.PortletSessionBeanHolder;
+import org.apache.pluto.container.bean.processor.PortletStateScopedBeanHolder;
+import org.apache.pluto.container.impl.PortletAsyncRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,8 +88,8 @@ public class PortletServlet3 extends HttpServlet {
 
    // Private Member Variables ------------------------------------------------
    
-   @Inject
-   private AnnotatedConfigBean acb;
+   @Inject private AnnotatedConfigBean acb;
+   @Inject private BeanManager beanmgr;
 
    /**
     * The portlet name as defined in the portlet app descriptor.
@@ -243,6 +257,13 @@ public class PortletServlet3 extends HttpServlet {
     * @throws IOException
     */
    private void dispatch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      if (LOG.isDebugEnabled()) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Processing request.");
+         txt.append(" Dispatcher type: ").append(request.getDispatcherType());
+         txt.append(", request URI: ").append(request.getRequestURI());
+         LOG.debug(txt.toString());
+      }
       if (invoker == null) {
          throw new javax.servlet.UnavailableException("Portlet " + portletName + " unavailable");
       }
@@ -261,27 +282,87 @@ public class PortletServlet3 extends HttpServlet {
       final PortletResponseContext responseContext = (PortletResponseContext) portletRequest
             .getAttribute(PortletInvokerService.RESPONSE_CONTEXT);
 
-      final FilterManager filterManager = (FilterManager) request.getAttribute(PortletInvokerService.FILTER_MANAGER);
+      final FilterManager filterManager = 
+            (FilterManager) request.getAttribute(PortletInvokerService.FILTER_MANAGER);
+      filterManager.setBeanManager(beanmgr);
 
-      request.removeAttribute(PortletInvokerService.METHOD_ID);
-      request.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
-      request.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
-      request.removeAttribute(PortletInvokerService.FILTER_MANAGER);
+      if (LOG.isTraceEnabled()) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("\nRequest wrapper stack: ");
+         ServletRequest wreq = request;
+         ServletRequest tstreq = requestContext.getServletRequest();
+         int n = 1;
+         while (wreq instanceof ServletRequestWrapper) {
+            txt.append("\nLevel ").append(n++).append(": ").append(wreq.getClass().getCanonicalName());
+            txt.append(", dispatch type: ").append(wreq.getDispatcherType());
+            txt.append(", equal to req context req: ").append(wreq == tstreq);
+            wreq = ((ServletRequestWrapper) wreq).getRequest();
+         }
+         txt.append("\nLevel ").append(n++).append(": ").append(wreq.getClass().getCanonicalName());
+         txt.append(", dispatch type: ").append(wreq.getDispatcherType());
+         txt.append(", equal to req context req: ").append(wreq == tstreq);
 
-      requestContext.init(portletConfig, getServletContext(), request, response);
-      responseContext.init(request, response);
+         txt.append("\n\nResponse wrapper stack: ");
+         ServletResponse wresp = response;
+         ServletResponse tstresp = requestContext.getServletResponse();
+         n = 1;
+         while (wresp instanceof ServletResponseWrapper) {
+            txt.append("\nLevel ").append(n++).append(": ").append(wresp.getClass().getCanonicalName());
+            txt.append(", equal to req context resp: ").append(wresp == tstresp);
+            wresp = ((ServletResponseWrapper) wresp).getResponse();
+         }
+         txt.append("\nLevel ").append(n++).append(": ").append(wresp.getClass().getCanonicalName());
+         txt.append(", equal to req context resp: ").append(wresp == tstresp);
+         LOG.debug(txt.toString());
+      }
+      
+      if (request.getDispatcherType() == DispatcherType.ASYNC) {
+         
+         // have to reinitialize the request context with the request under our wrapper.
+         
+         ServletRequest wreq = request;
+         while ((wreq instanceof ServletRequestWrapper) &&
+               !(wreq instanceof PortletAsyncRequestWrapper) ) {
+            wreq = ((ServletRequestWrapper) wreq).getRequest();
+         }
+         
+         if (wreq instanceof PortletAsyncRequestWrapper) {
+            
+            HttpServletRequest hreq = (HttpServletRequest) ((PortletAsyncRequestWrapper) wreq).getRequest();
+            HttpServletResponse hresp = requestContext.getServletResponse();
+            
+            LOG.debug("Extracted wrapped request. Dispatch type: " + hreq.getDispatcherType());
+
+            requestContext.init(portletConfig, getServletContext(), hreq, hresp);
+            responseContext.init(hreq, hresp);
+            
+         } else {
+            LOG.debug("Couldn't find the portlet async wrapper.");
+         }
+
+         // enable contextual support for async
+         ((PortletResourceRequestContext)requestContext).getPortletAsyncContext().registerContext(false);
+         
+      } else {
+         
+         // Not an async dispatch
+         
+         requestContext.init(portletConfig, getServletContext(), request, response);
+         requestContext.setExecutingRequestBody(true);
+         responseContext.init(request, response);
+
+         // enable contextual support
+         beforeInvoke(portletRequest, portletResponse, portletConfig);
+      
+      }
 
       PortletWindow window = requestContext.getPortletWindow();
 
       PortletInvocationEvent event = new PortletInvocationEvent(portletRequest, window, methodId.intValue());
-
       notify(event, true, null);
-
-      // FilterManager filtermanager = (FilterManager) request.getAttribute(
-      // "filter-manager");
-
+      
       try {
-
+         
          // The requested method is RENDER: call Portlet.render(..)
          if (methodId == PortletInvokerService.METHOD_RENDER) {
             RenderRequest renderRequest = (RenderRequest) portletRequest;
@@ -313,6 +394,8 @@ public class PortletServlet3 extends HttpServlet {
             if (ps != null) {
                resourceRequest.setAttribute(ResourceRequest.PAGE_STATE, ps);
             }
+            
+            rc.setBeanManager(beanmgr);
 
             ResourceResponse resourceResponse = (ResourceResponse) portletResponse;
             filterManager.processFilter(resourceRequest, resourceResponse, invoker, portletContext);
@@ -371,6 +454,41 @@ public class PortletServlet3 extends HttpServlet {
          notify(event, false, ex);
          throw new ServletException(ex);
 
+      } finally {
+         
+         requestContext.setExecutingRequestBody(false);
+         
+         // If an async request is running or has been dispatched, resources
+         // will be released by the PortletAsyncListener. Otherwise release here.
+         
+         if (!request.isAsyncStarted() && (request.getDispatcherType() != DispatcherType.ASYNC)) {
+
+            LOG.debug("Async not being processed, releasing resources. executing req body: " + requestContext.isExecutingRequestBody());
+
+            request.removeAttribute(PortletInvokerService.METHOD_ID);
+            request.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
+            request.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
+            request.removeAttribute(PortletInvokerService.FILTER_MANAGER);
+
+            afterInvoke(portletResponse);
+
+         } else {
+            LOG.debug("Async started, not releasing resources. executing req body: " + requestContext.isExecutingRequestBody());
+
+            if (requestContext instanceof PortletResourceRequestContext) {
+               PortletResourceRequestContext resctx = (PortletResourceRequestContext)requestContext;
+               PortletAsyncManager pac = resctx.getPortletAsyncContext();
+               if (pac != null) {
+                  pac.deregisterContext(false);
+                  pac.launchRunner();
+               } else {
+                  LOG.warn("Couldn't get portlet async context.");
+               }
+            } else {
+               LOG.warn("Wrong kind of request context: " + requestContext.getClass().getCanonicalName());
+            }
+
+         }
       }
    }
 
@@ -386,5 +504,54 @@ public class PortletServlet3 extends HttpServlet {
             listener.onError(event, e);
          }
       }
+   }
+
+
+   /**
+    * To be called before bean method invocation begins
+    */
+   private void beforeInvoke(PortletRequest req, PortletResponse resp, PortletConfig config) {
+
+      // Set the portlet session bean holder for the thread & session
+      PortletRequestScopedBeanHolder.setBeanHolder();
+
+      // Set the portlet session bean holder for the thread & session
+      PortletSessionBeanHolder.setBeanHolder(req, acb.getSessionScopedConfig());
+
+      // Set the render state scoped bean holder
+      PortletStateScopedBeanHolder.setBeanHolder(req, acb.getStateScopedConfig());
+
+      // Set up the artifact producer with request, response, and portlet config
+      PortletArtifactProducer.setPrecursors(req, resp, config);
+      
+      LOG.debug("CDI context is now set up.");
+   }
+
+   /**
+    * must be called after all method invocations have taken place, even if an
+    * exception occurs.
+    */
+   private void afterInvoke(PortletResponse resp) {
+
+      // Remove the portlet session bean holder for the thread
+      PortletRequestScopedBeanHolder.removeBeanHolder();
+
+      // Remove the portlet session bean holder for the thread
+      PortletSessionBeanHolder.removeBeanHolder();
+
+      // Remove the render state bean holder. pass response if we're
+      // dealing with a StateAwareResponse. The response is used for state
+      // storage.
+
+      StateAwareResponse sar = null;
+      if (resp instanceof StateAwareResponse) {
+         sar = (StateAwareResponse) resp;
+      }
+      PortletStateScopedBeanHolder.removeBeanHolder(sar);
+
+      // remove the portlet artifact producer
+      PortletArtifactProducer.remove();
+
+      LOG.debug("CDI context is now deactivated.");
    }
 }

@@ -73,8 +73,15 @@ public class PortletDefinitionImpl implements PortletDefinition {
    private final List<InitParam> iparms = new ArrayList<InitParam>(); 
    private final List<SecurityRoleRef> secRefs = new ArrayList<SecurityRoleRef>(); 
    private final List<Supports> supps = new ArrayList<Supports>();
-   
    private final List<Dependency> dependencies = new ArrayList<Dependency>(); 
+   private boolean asyncSupported = false;
+   
+   private boolean multipartSupported = false;
+   private String location = "";
+   private Long maxFileSize = -1L;
+   private Long maxRequestSize = -1L;
+   private Integer fileSizeThreshold = 0;
+
 
    /**
     * Copy constructor
@@ -126,6 +133,12 @@ public class PortletDefinitionImpl implements PortletDefinition {
       for (Dependency dep : pd.getDependencies()) {
          this.dependencies.add(dep);
       }
+      this.asyncSupported = pd.isAsyncSupported();
+      this.multipartSupported = pd.isMultipartSupported();
+      this.location = pd.getLocation();
+      this.maxFileSize = pd.getMaxFileSize();
+      this.maxRequestSize = pd.getMaxRequestSize();
+      this.fileSizeThreshold = pd.getFileSizeThreshold();
    }
    
    /**
@@ -594,6 +607,102 @@ public class PortletDefinitionImpl implements PortletDefinition {
          LOG.debug(txt.toString());
       }
       crtOptions.add(new ContainerRuntimeOptionImpl(cro));
+   }
+
+   /**
+    * @return the asyncSupported
+    */
+   @Override
+   public boolean isAsyncSupported() {
+      return asyncSupported;
+   }
+
+   /**
+    * @param asyncSupported the asyncSupported to set
+    */
+   @Override
+   public void setAsyncSupported(boolean asyncSupported) {
+      this.asyncSupported = asyncSupported;
+   }
+
+   /**
+    * @return the multipartSupported
+    */
+   @Override
+   public boolean isMultipartSupported() {
+      return multipartSupported;
+   }
+
+   /**
+    * @param multipartSupported the multipartSupported to set
+    */
+   @Override
+   public void setMultipartSupported(boolean multipartSupported) {
+      this.multipartSupported = multipartSupported;
+   }
+
+   /**
+    * @return the location
+    */
+   @Override
+   public String getLocation() {
+      return location;
+   }
+
+   /**
+    * @param location the location to set
+    */
+   @Override
+   public void setLocation(String location) {
+      this.location = location;
+   }
+
+   /**
+    * @return the maxFileSize
+    */
+   @Override
+   public Long getMaxFileSize() {
+      return maxFileSize;
+   }
+
+   /**
+    * @param maxFileSize the maxFileSize to set
+    */
+   @Override
+   public void setMaxFileSize(Long maxFileSize) {
+      this.maxFileSize = maxFileSize;
+   }
+
+   /**
+    * @return the maxRequestSize
+    */
+   @Override
+   public Long getMaxRequestSize() {
+      return maxRequestSize;
+   }
+
+   /**
+    * @param maxRequestSize the maxRequestSize to set
+    */
+   @Override
+   public void setMaxRequestSize(Long maxRequestSize) {
+      this.maxRequestSize = maxRequestSize;
+   }
+
+   /**
+    * @return the fileSizeThreshold
+    */
+   @Override
+   public Integer getFileSizeThreshold() {
+      return fileSizeThreshold;
+   }
+
+   /**
+    * @param fileSizeThreshold the fileSizeThreshold to set
+    */
+   @Override
+   public void setFileSizeThreshold(Integer fileSizeThreshold) {
+      this.fileSizeThreshold = fileSizeThreshold;
    }
 
    /* (non-Javadoc)
