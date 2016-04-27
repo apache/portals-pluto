@@ -71,7 +71,7 @@ public class ResponseTests_EventResponse_ApiEvent_event implements Portlet, Even
       LOGGER.entering(LOG_CLASS, "event companion processEvent");
 
 
-      portletResp.setRenderParameters(portletReq);
+      
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -88,8 +88,16 @@ public class ResponseTests_EventResponse_ApiEvent_event implements Portlet, Even
       /* Details: "Method setRenderParameters(EventRequest): Copies all       */
       /* render parameters set on the EventRequest to the EventResponse"      */
       TestResult tr0 = tcd.getTestResultFailed(V2RESPONSETESTS_EVENTRESPONSE_APIEVENT_SETRENDERPARAMETERS1);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+          try {
+             portletResp.setRenderParameters(portletReq);
+             tr0.setTcSuccess(true);
+          } catch (IllegalArgumentException iae) {
+             tr0.appendTcDetail(iae.toString());
+          } catch (Exception e) {
+             tr0.appendTcDetail(e.toString());
+          }
+       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       /* TestCase: V2ResponseTests_EventResponse_ApiEvent_setRenderParameters2 */

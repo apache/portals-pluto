@@ -67,6 +67,8 @@ public class ResponseTests_EventResponse_ApiEvent implements Portlet, ResourceSe
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
+      
+      
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
