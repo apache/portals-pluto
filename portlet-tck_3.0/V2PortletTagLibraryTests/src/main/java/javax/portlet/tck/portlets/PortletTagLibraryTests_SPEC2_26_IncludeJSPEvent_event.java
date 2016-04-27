@@ -35,7 +35,8 @@ import static javax.portlet.PortletSession.*;
 
 /**
  * This is the event processing portlet for the test cases. This portlet processes events, 
- * but does not publish them. Events are published in the main portlet for the test cases. 
+ * but does not publish them. Events are published in the main portlet for the test cases.
+ * @author ahmed 
  */
 public class PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent_event implements Portlet, EventPortlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 

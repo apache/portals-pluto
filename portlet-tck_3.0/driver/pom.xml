@@ -44,7 +44,19 @@
          <artifactId>selenium-java</artifactId>
          <scope>compile</scope>
       </dependency>
-
+      
+      <!-- PhantomJs Headless browser - Use if the default headless browser of Selenium is not working.
+           In order to use - 
+              1. Download PhantomJs - http://phantomjs.org/download.html
+              2. Configure driver to use PhantomJs in TCKSimpleTestDriver->setUpBeforeClass() method --> 
+      <!-- 
+      <dependency>
+            <groupId>com.github.detro.ghostdriver</groupId>
+            <artifactId>phantomjsdriver</artifactId>
+            <version>1.0.4</version>
+      </dependency>
+	  -->
+       
       <!-- Dependency on common module for element ID suffixes -->
       <dependency>
          <groupId>javax.portlet</groupId>

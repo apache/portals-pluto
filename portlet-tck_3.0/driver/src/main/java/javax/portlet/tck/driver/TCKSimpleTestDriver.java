@@ -202,7 +202,19 @@ public class TCKSimpleTestDriver {
          System.setProperty("webdriver.chrome.driver", wd);
          driver = new ChromeDriver();
       } else if (browser.equalsIgnoreCase("htmlUnit")) {
-         driver = new HtmlUnitDriver(true);
+        /*
+         * PhantomJs Headless browser - Use if the default headless browser of Selenium is not working.
+         * In order to use - 
+         *   1. Download PhantomJs - http://phantomjs.org/download.html
+         *   2. Uncomment the dependency in pom.xml
+         *   3. Insert this code - 
+         *        DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
+                  capabilities.setJavascriptEnabled(true);
+                  capabilities.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,"your custom path to downloaded bin\\phantomjs.exe");
+                  driver = new PhantomJSDriver(capabilities);
+         *   4. Comment-out driver = new HtmlUnitDriver(true);
+         */
+        driver = new HtmlUnitDriver(true);
       } else if (browser.equalsIgnoreCase("safari")) {
          driver = new SafariDriver();
       } else {
