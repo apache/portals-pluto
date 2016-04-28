@@ -56,7 +56,7 @@ public class PortletAsyncRequestWrapper extends HttpServletPortletRequestWrapper
    private final PortletWindowID winId;
 
    public PortletAsyncRequestWrapper(HttpServletRequest hreq, ResourceRequest preq, PortletResourceRequestContext reqctx) {
-      super(hreq, reqctx.getServletContext(), reqctx.getSession(), preq, true, false);
+      super(hreq, reqctx.getSession(), preq);
       this.preq = preq;
       this.reqctx = reqctx;
       this.mapper = reqctx.getContainer().getContainerServices().getNamespaceMapper();

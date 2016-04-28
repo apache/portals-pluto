@@ -49,6 +49,7 @@ public class PathDisplay {
    private String method_context_path;
    private String method_servlet_path;
    private String method_path_info;
+   private String method_path_xlated;
    private String method_query_string;
    
    private String type;
@@ -80,6 +81,7 @@ public class PathDisplay {
       method_context_path = req.getContextPath();
       method_servlet_path = req.getServletPath();
       method_path_info = req.getPathInfo();
+      method_path_xlated = req.getPathTranslated();
       method_query_string = req.getQueryString();
       
       type = req.getDispatcherType().name();
@@ -111,6 +113,7 @@ public class PathDisplay {
       method_context_path = req.getContextPath();
       method_servlet_path = "undefined";
       method_path_info = "undefined";
+      method_path_xlated = "undefined";
       method_query_string = "undefined";
       
       type = "undefined";
@@ -176,15 +179,17 @@ public class PathDisplay {
       }
       txt.append("</tr><tr><td style='padding-top:8px;'/></tr><tr>");
 
-      txt.append("<td>method_request_uri:</td><td>").append(method_request_uri).append("</td>\n");
+      txt.append("<td>getRequestURI:</td><td>").append(method_request_uri).append("</td>\n");
       txt.append("</tr><tr>");
-      txt.append("<td>method_context_path:</td><td>").append(method_context_path).append("</td>\n");
+      txt.append("<td>getContextPath:</td><td>").append(method_context_path).append("</td>\n");
       txt.append("</tr><tr>");
-      txt.append("<td>method_servlet_path:</td><td>").append(method_servlet_path).append("</td>\n");
+      txt.append("<td>getServletPath:</td><td>").append(method_servlet_path).append("</td>\n");
       txt.append("</tr><tr>");
-      txt.append("<td>method_path_info:</td><td>").append(method_path_info).append("</td>\n");
+      txt.append("<td>getPathInfo:</td><td>").append(method_path_info).append("</td>\n");
       txt.append("</tr><tr>");
-      txt.append("<td>method_query_string:</td><td>").append(method_query_string).append("</td>\n");
+      txt.append("<td>getPathTranslated:</td><td>").append(method_path_xlated).append("</td>\n");
+      txt.append("</tr><tr>");
+      txt.append("<td>getQueryString:</td><td>").append(method_query_string).append("</td>\n");
 
       txt.append("</tr></table>");
       return txt.toString();

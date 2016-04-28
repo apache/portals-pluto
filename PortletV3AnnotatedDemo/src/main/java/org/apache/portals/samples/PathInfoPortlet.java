@@ -19,11 +19,14 @@
 package org.apache.portals.samples;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
@@ -31,12 +34,17 @@ import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
 import javax.portlet.annotations.URLFactory;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * Resource portlet for viewing path information.
  */
 public class PathInfoPortlet {
+   
+   private class DispatchServlet extends HttpServlet {
+      
+   }
 
    public static final String RESPARAM_DISPLAY = "display";
 
@@ -46,52 +54,64 @@ public class PathInfoPortlet {
    private String             pid;
    @Inject
    private URLFactory         uf;
-
+   
    @RenderMethod(portletNames = { "PathInfoPortlet" }, ordinal = 100)
-   public String getImageInclude() {
+   public void getImageInclude(RenderRequest req, RenderResponse resp) throws IOException {
 
-      StringBuilder txt = new StringBuilder(128);
-      txt.append("<h3>Path Info Portlet</h3>");
-      txt.append("<h5>Include:</h5>");
+      resp.setContentType("text/html");
+      PrintWriter writer = resp.getWriter();
+
+      writer.append("<h3>Path Info Portlet</h3>");
+      writer.append("<h5>Include:</h5>");
 
       ResourceURL resurl = uf.createResourceURL();
 
-      txt.append("<div class='infobox' id='").append(pid).append("-putResourceHere'></div>\n");
-      txt.append("<script>\n");
-      txt.append("(function () {\n");
-      txt.append("   var xhr = new XMLHttpRequest();\n");
-      txt.append("   xhr.onreadystatechange=function() {\n");
-      txt.append("      if (xhr.readyState==4 && xhr.status==200) {\n");
-      txt.append("         document.getElementById('").append(pid)
+      writer.append("<div class='infobox' id='").append(pid).append("-putResourceHere'></div>\n");
+      writer.append("<script>\n");
+      writer.append("(function () {\n");
+      writer.append("   var xhr = new XMLHttpRequest();\n");
+      writer.append("   xhr.onreadystatechange=function() {\n");
+      writer.append("      if (xhr.readyState==4 && xhr.status==200) {\n");
+      writer.append("         document.getElementById('").append(pid)
             .append("-putResourceHere').innerHTML=xhr.responseText;\n");
-      txt.append("      }\n");
-      txt.append("   };\n");
-      txt.append("   xhr.open(\"GET\",\"").append(resurl.toString()).append("\",true);\n");
-      txt.append("   xhr.send();\n");
-      txt.append("})();\n");
-      txt.append("</script>\n");
+      writer.append("      }\n");
+      writer.append("   };\n");
+      writer.append("   xhr.open(\"GET\",\"").append(resurl.toString()).append("\",true);\n");
+      writer.append("   xhr.send();\n");
+      writer.append("})();\n");
+      writer.append("</script>\n");
 
-      txt.append("<h5>Forward:</h5>");
+      writer.append("<h5>Forward:</h5>");
 
       resurl = uf.createResourceURL();
       resurl.setResourceID("fwd");
 
-      txt.append("<div class='infobox' id='").append(pid).append("-puReHe'></div>\n");
-      txt.append("<script>\n");
-      txt.append("(function () {\n");
-      txt.append("   var xhr = new XMLHttpRequest();\n");
-      txt.append("   xhr.onreadystatechange=function() {\n");
-      txt.append("      if (xhr.readyState==4 && xhr.status==200) {\n");
-      txt.append("         document.getElementById('").append(pid)
+      writer.append("<div class='infobox' id='").append(pid).append("-puReHe'></div>\n");
+      writer.append("<script>\n");
+      writer.append("(function () {\n");
+      writer.append("   var xhr = new XMLHttpRequest();\n");
+      writer.append("   xhr.onreadystatechange=function() {\n");
+      writer.append("      if (xhr.readyState==4 && xhr.status==200) {\n");
+      writer.append("         document.getElementById('").append(pid)
             .append("-puReHe').innerHTML=xhr.responseText;\n");
-      txt.append("      }\n");
-      txt.append("   };\n");
-      txt.append("   xhr.open(\"GET\",\"").append(resurl.toString()).append("\",true);\n");
-      txt.append("   xhr.send();\n");
-      txt.append("})();\n");
-      txt.append("</script>\n");
+      writer.append("      }\n");
+      writer.append("   };\n");
+      writer.append("   xhr.open(\"GET\",\"").append(resurl.toString()).append("\",true);\n");
+      writer.append("   xhr.send();\n");
+      writer.append("})();\n");
+      writer.append("</script>\n");
+      
+      // display info for named servlet
+      
+      PortletRequestDispatcher rd = req.getPortletContext().getNamedDispatcher("Bob");
+      try {
+         rd.include(req, resp);
+      } catch (Exception e) {
+         writer.append("<p>");
+         writer.append("Exception getting named dispatcher: ").append(e.toString());
+         writer.append("</p>");
+      }
 
-      return txt.toString();
    }
 
    /**
