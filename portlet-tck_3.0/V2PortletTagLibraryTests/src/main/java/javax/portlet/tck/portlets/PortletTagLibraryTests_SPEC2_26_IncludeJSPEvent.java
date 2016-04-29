@@ -43,7 +43,7 @@ import static javax.portlet.ResourceURL.*;
  * This is the main portlet for the test cases. If the test cases call for events, this portlet
  * will initiate the events, but not process them. The processing is done in the companion 
  * portlet PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent_event
- *
+ * @author ahmed
  */
 public class PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent implements Portlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
@@ -73,7 +73,7 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent implements Portlet,
       StringWriter writer = new StringWriter();
 
       QName eventQName = new QName(TCKNAMESPACE,
-             "PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent");
+            "PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent");
       portletResp.setEvent(eventQName, "Hi!");
    }
 
