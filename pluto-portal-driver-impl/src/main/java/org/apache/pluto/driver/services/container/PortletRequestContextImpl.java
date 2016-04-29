@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -62,6 +63,7 @@ public class PortletRequestContextImpl implements PortletRequestContext {
    private PortletContainer    container;
    private HttpServletRequest  containerRequest;
    private HttpServletResponse containerResponse;
+   private HttpServletRequest  wrappedServletRequest;
    private HttpServletRequest  servletRequest;
    private HttpServletResponse servletResponse;
    private PortalURL           url;
@@ -145,19 +147,46 @@ public class PortletRequestContextImpl implements PortletRequestContext {
       this.servletRequest = servletRequest;
       this.servletResponse = servletResponse;
    }
+   
+   /**
+    * Called when a request dispatcher or async dispatch begins 
+    */
+   @Override
+   public void startDispatch(HttpServletRequest wrappedServletRequest, 
+         Map<String, List<String>> queryParams, String phase) {
+      this.wrappedServletRequest = wrappedServletRequest;
+      paramFactory.startDispatch(queryParams, phase);
+   }
+   
+   /**
+    * Called when a request dispatcher or async dispatch ends 
+    */
+   @Override
+   public void endDispatch() {
+      this.wrappedServletRequest = null;
+      paramFactory.endDispatch();
+   }
+   
+   /*
+    * Use the wrapped request during dispatch
+    */
+   private HttpServletRequest getHttpReq() {
+      return (wrappedServletRequest != null) ? wrappedServletRequest : servletRequest;
+   }
 
+   @Override
    public Object getAttribute(String name) {
-      Object value = servletRequest.getAttribute(encodeAttributeName(name));
-      return value != null ? value : servletRequest.getAttribute(name);
+      Object value = getHttpReq().getAttribute(encodeAttributeName(name));
+      return value != null ? value : getHttpReq().getAttribute(name);
    }
 
    public Object getAttribute(String name, ServletRequest servletRequest) {
-      return servletRequest.getAttribute(name);
+      return getHttpReq().getAttribute(name);
    }
 
    public Enumeration<String> getAttributeNames() {
       ArrayList<String> names = new ArrayList<String>();
-      for (Enumeration<String> e = servletRequest.getAttributeNames(); e
+      for (Enumeration<String> e = getHttpReq().getAttributeNames(); e
             .hasMoreElements();) {
          names.add(decodeAttributeName(e.nextElement()));
       }
@@ -166,9 +195,9 @@ public class PortletRequestContextImpl implements PortletRequestContext {
 
    public void setAttribute(String name, Object value) {
       if (value == null) {
-         servletRequest.removeAttribute(encodeAttributeName(name));
+         getHttpReq().removeAttribute(encodeAttributeName(name));
       } else {
-         servletRequest.setAttribute(encodeAttributeName(name), value);
+         getHttpReq().setAttribute(encodeAttributeName(name), value);
       }
    }
 
@@ -202,10 +231,6 @@ public class PortletRequestContextImpl implements PortletRequestContext {
       return servletRequest.getLocale();
    }
 
-   public Map<String, String[]> getPrivateParameterMap() {
-      return paramFactory.getPrivateParameterMap(window.getId().getStringId());
-   }
-
    public Map<String, String[]> getProperties() {
       HashMap<String, String[]> properties = new HashMap<String, String[]>();
       for (Enumeration<String> names = servletRequest.getHeaderNames(); names
@@ -222,6 +247,16 @@ public class PortletRequestContextImpl implements PortletRequestContext {
          }
       }
       return properties;
+   }
+
+   @Override
+   public Map<String, String[]> getParameterMap() {
+      return paramFactory.getParameterMap(window.getId().getStringId());
+   }
+
+   @Override
+   public Map<String, String[]> getPrivateParameterMap() {
+      return paramFactory.getPrivateParameterMap(window.getId().getStringId());
    }
 
    public Map<String, String[]> getPublicParameterMap() {

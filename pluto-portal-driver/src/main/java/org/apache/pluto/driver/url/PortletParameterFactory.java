@@ -29,6 +29,7 @@ import java.util.Set;
 import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL.URLType;
 import static org.apache.pluto.driver.url.PortalURLParameter.*;
+import static javax.portlet.PortletRequest.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,9 +44,13 @@ import org.slf4j.LoggerFactory;
  */
 public class PortletParameterFactory {
    private static final Logger LOGGER = LoggerFactory.getLogger(PortletParameterFactory.class);
-   private final static boolean isTrace = LOGGER.isTraceEnabled();
+   //private final static boolean isTrace = LOGGER.isTraceEnabled();
+   private final static boolean isTrace = LOGGER.isDebugEnabled();
+   private final static boolean isDebug = LOGGER.isDebugEnabled();
    
    PortalURL url;
+   Map<String, List<String>> queryParams = null;
+   String phase = null;
    
    static final HashSet<PortalURL.URLType> actionTypes = new HashSet<PortalURL.URLType>();
    static {
@@ -65,6 +70,124 @@ public class PortletParameterFactory {
    public PortletParameterFactory(PortalURL url) {
       this.url = url;
    }
+   
+   // Used for setting extra parameters from the query string during a 
+   // request dispatcher forward or include
+   
+   public void startDispatch(Map<String, List<String>> queryParams, String phase) {
+      this.queryParams = queryParams;
+      this.phase = phase;
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Added query parameters.");
+         txt.append(" Phase: ").append(phase);
+         txt.append(", names: ").append(queryParams.keySet());
+         LOGGER.debug(txt.toString());
+      }
+   }
+   
+   public void endDispatch() {
+      this.queryParams = null;
+      this.phase = null;
+      if (isDebug) {
+         LOGGER.debug("deleted query parameters.");
+      }
+   }
+
+   /**
+    * This V2.0 method returns the combined private and public parameters for the 
+    * given window ID.
+    * 
+    * In the case of a render URL, it returns only the render parameters.
+    * 
+    * In the case of an action or resource URL, it returns the action or resource 
+    * parameters combined with the render parameters, with the action or resource
+    * parameters taking precedence.
+    * 
+    * Note that the  latter circumstance will only occur with V3.0 portlets.
+    *  
+    * @param windowId
+    * @return
+    */
+   public Map<String, String[]> getParameterMap(String windowId) {
+      HashMap<String, String[]> parameters = new HashMap<String, String[]>();
+      
+      boolean isV3 = url.isVersion3(windowId);
+      
+      // add the query parameters, if any
+      
+      if (queryParams != null) {
+         for (String name : queryParams.keySet()) {
+            parameters.put(name, queryParams.get(name).toArray(new String[0]));
+         }
+      }
+
+      // get the action or resource parameters
+      
+      for (PortalURLParameter pup : url.getParameters()) {
+         if (pup.getWindowId().equals(windowId)) { 
+            if (pup.getType().equals(PARAM_TYPE_ACTION) || pup.getType().equals(PARAM_TYPE_RESOURCE)) {
+               if (parameters.containsKey(pup.getName())) {
+                  ArrayList<String> vals = 
+                        new ArrayList<String>(Arrays.asList(parameters.get(pup.getName())));
+                  vals.addAll(Arrays.asList(pup.getValues()));
+                  parameters.put(pup.getName(), vals.toArray(new String[0]));
+               } else {
+                  parameters.put(pup.getName(), pup.getValues().clone());
+               }
+            }
+         }
+      }
+      
+      // Now merge in the render parameters if we're not dealing with a V2 action
+
+      if (isV3 || !actionTypes.contains(url.getType())) {
+         for (PortalURLParameter pup : url.getParameters()) {
+            if (pup.getWindowId().equals(windowId)) {
+               if (pup.getType().equals(PARAM_TYPE_RENDER)) {
+                  if (parameters.containsKey(pup.getName())) {
+                     ArrayList<String> vals = 
+                           new ArrayList<String>(Arrays.asList(parameters.get(pup.getName())));
+                     vals.addAll(Arrays.asList(pup.getValues()));
+                     parameters.put(pup.getName(), vals.toArray(new String[0]));
+                  } else {
+                     parameters.put(pup.getName(), pup.getValues().clone());
+                  }
+               }
+            }
+         }
+      }
+      
+      // merge in the public render parameters
+      
+      PublicRenderParameterMapper mapper = url.getPublicRenderParameterMapper();
+      List<PortalURLPublicParameter> prps = mapper.getPRPsForWindow(windowId, true);
+      for (PortalURLPublicParameter prp : prps) {
+         if (parameters.containsKey(prp.getName())) {
+            ArrayList<String> vals = 
+                  new ArrayList<String>(Arrays.asList(parameters.get(prp.getName())));
+            vals.addAll(Arrays.asList(prp.getValues()));
+            parameters.put(prp.getName(), vals.toArray(new String[0]));
+         } else {
+            parameters.put(prp.getName(), prp.getValues().clone());
+         }
+      }
+
+      if (isTrace) {
+         StringBuffer sb = new StringBuffer();
+         sb.append("Dump Parameter Map:");
+         for (String k : parameters.keySet()) {
+            sb.append("\nName: " + k + ", Values: ");
+            String sep = "";
+            for (String v : parameters.get(k)) {
+               sb.append(sep + v);
+               sep = ", ";
+            }
+         }
+         LOGGER.trace(sb.toString());
+      }
+      return parameters;
+   }
 
    /**
     * This V2.0 method returns the private parameters for the given window ID.
@@ -83,13 +206,28 @@ public class PortletParameterFactory {
       HashMap<String, String[]> parameters = new HashMap<String, String[]>();
       
       boolean isV3 = url.isVersion3(windowId);
+      
+      // add the query parameters, if any
+      
+      if (queryParams != null) {
+         for (String name : queryParams.keySet()) {
+            parameters.put(name, queryParams.get(name).toArray(new String[0]));
+         }
+      }
 
       // get the action or resource parameters
       
       for (PortalURLParameter pup : url.getParameters()) {
          if (pup.getWindowId().equals(windowId)) { 
             if (pup.getType().equals(PARAM_TYPE_ACTION) || pup.getType().equals(PARAM_TYPE_RESOURCE)) {
-               parameters.put(pup.getName(), pup.getValues().clone());
+               if (parameters.containsKey(pup.getName())) {
+                  ArrayList<String> vals = 
+                        new ArrayList<String>(Arrays.asList(parameters.get(pup.getName())));
+                  vals.addAll(Arrays.asList(pup.getValues()));
+                  parameters.put(pup.getName(), vals.toArray(new String[0]));
+               } else {
+                  parameters.put(pup.getName(), pup.getValues().clone());
+               }
             }
          }
       }
@@ -231,6 +369,14 @@ public class PortletParameterFactory {
       HashSet<String> names = new HashSet<String>();
       String type = urlTypeMap.get(url.getType());
       
+      // Get the query parameter names, if any
+      
+      if (queryParams != null) {
+         names.addAll(queryParams.keySet());
+      }
+      
+      // add the portlet parameter names
+      
       for (PortalURLParameter p : url.getParameters()) {
          if (p.getWindowId().equals(windowId) && p.getType().equals(type)) {
             names.add(p.getName());
@@ -250,7 +396,7 @@ public class PortletParameterFactory {
 
    // This method is for V2 compatibility. It always returns the private 
    // parameter values for the active URL type - Render parameters for a render URL,
-   // Action parameters for an action URL, and resouce parameters for a Resource URL.
+   // Action parameters for an action URL, and resource parameters for a Resource URL.
    public String[] getParameterValues(String windowId, String name) {
       PublicRenderParameterMapper prpMapper = url.getPublicRenderParameterMapper();
       String type = urlTypeMap.get(url.getType());
@@ -277,6 +423,18 @@ public class PortletParameterFactory {
                && p.getName().equals(name) && p.getType().equals(type)) {
                vals = p.getValues().clone();
             }
+         }
+      }
+      
+      // handle query string values
+      
+      if (queryParams != null) {
+         if (queryParams.containsKey(name)) {
+            List<String> qpvals = new ArrayList<String>(queryParams.get(name));
+            if (vals != null) {
+               qpvals.addAll(Arrays.asList(vals));
+            }
+            vals = qpvals.toArray(new String[0]);
          }
       }
       
@@ -345,10 +503,45 @@ public class PortletParameterFactory {
    public Map<String, String[]> getParameterMap(String windowId, String type) {
       HashMap<String, String[]> params = new HashMap<String, String[]>();
       
+      
+      // add the query parameters, if any
+      
+      if (queryParams != null) {
+         HashMap<String, String[]> qp = new HashMap<String, String[]>();
+         for (String name : queryParams.keySet()) {
+            qp.put(name, queryParams.get(name).toArray(new String[0]));
+         }
+         switch (phase) {
+            case ACTION_PHASE:
+               if (type.equals(PARAM_TYPE_ACTION)) {
+                  params.putAll(qp);
+               }
+               break;
+            case RESOURCE_PHASE:
+               if (type.equals(PARAM_TYPE_RESOURCE)) {
+                  params.putAll(qp);
+               }
+               break;
+            case RENDER_PHASE:
+            case EVENT_PHASE:
+            case HEADER_PHASE:
+               params.putAll(qp);
+               break;
+         }
+      }
+
+      
       for (PortalURLParameter pup : url.getParameters()) {
          if (pup.getWindowId().equals(windowId)) {
             if (pup.getType().equals(type)) {
-               params.put(pup.getName(), pup.getValues().clone());
+               if (params.containsKey(pup.getName())) {
+                  ArrayList<String> vals = 
+                        new ArrayList<String>(Arrays.asList(params.get(pup.getName())));
+                  vals.addAll(Arrays.asList(pup.getValues()));
+                  params.put(pup.getName(), vals.toArray(new String[0]));
+               } else {
+                  params.put(pup.getName(), pup.getValues().clone());
+               }
             }
          }
       }
@@ -357,9 +550,16 @@ public class PortletParameterFactory {
          
          PublicRenderParameterMapper mapper = url.getPublicRenderParameterMapper();
 
-         // Get onl the active (= set) PRPs for the window
+         // Get only the active (= set) PRPs for the window
          for (PortalURLPublicParameter prp : mapper.getPRPsForWindow(windowId, true)) {
-            params.put(prp.getName(), prp.getValues().clone());
+            if (params.containsKey(prp.getName())) {
+               ArrayList<String> vals = 
+                     new ArrayList<String>(Arrays.asList(params.get(prp.getName())));
+               vals.addAll(Arrays.asList(prp.getValues()));
+               params.put(prp.getName(), vals.toArray(new String[0]));
+            } else {
+               params.put(prp.getName(), prp.getValues().clone());
+            }
          }
       }
       

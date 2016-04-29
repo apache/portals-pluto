@@ -119,6 +119,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
    private final PortletRequestContext reqctx;
    private final NamespaceMapper mapper;
    private final PortletWindowID winId;
+   private final String phase;
 
    public HttpServletPortletRequestWrapper(HttpServletRequest hreq, HttpSession session, PortletRequest preq) {
       super(hreq);
@@ -127,6 +128,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       reqctx = (PortletRequestContext) preq.getAttribute(PortletInvokerService.REQUEST_CONTEXT);
       this.mapper = reqctx.getContainer().getContainerServices().getNamespaceMapper();
       this.winId = reqctx.getPortletWindow().getId();
+      this.phase = (String) preq.getAttribute(PortletRequest.LIFECYCLE_PHASE);
    }
 
    private HttpServletRequest getHreq() {
@@ -164,21 +166,21 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
                pathinfo = (pathinfo.length() == 0) ? null : pathinfo;
                origin.put(FORWARD_SERVLET_PATH, sp);
                origin.put(FORWARD_PATH_INFO, pathinfo);
+
+               if (isDebug) {
+                  StringBuilder txt = new StringBuilder(128);
+                  txt.append(": servlet path (httpreq): ").append(sp);
+                  txt.append(", servlet path (origin): ").append(origin.get(FORWARD_SERVLET_PATH));
+                  txt.append(", path info: ").append(origin.get(FORWARD_PATH_INFO));
+                  txt.append(", req URI: ").append(origin.get(FORWARD_REQUEST_URI));
+                  txt.append(", context path: ").append(origin.get(FORWARD_CONTEXT_PATH));
+                  txt.append(", query string: ").append(origin.get(FORWARD_QUERY_STRING));
+                  LOG.debug(txt.toString());
+               }
+
             }
          }
       }
-
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder(128);
-         txt.append(": servlet path (httpreq): ").append(sp);
-         txt.append(", servlet path (origin): ").append(origin.get(FORWARD_SERVLET_PATH));
-         txt.append(", path info: ").append(origin.get(FORWARD_PATH_INFO));
-         txt.append(", req URI: ").append(origin.get(FORWARD_REQUEST_URI));
-         txt.append(", context path: ").append(origin.get(FORWARD_CONTEXT_PATH));
-         txt.append(", query string: ").append(origin.get(FORWARD_QUERY_STRING));
-         LOG.debug(txt.toString());
-      }
-
    }
 
    /**
@@ -358,18 +360,6 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
             }
          }
 
-         if (preq instanceof ActionRequest) {
-            ActionRequest areq = (ActionRequest) preq;
-            for (String name : areq.getActionParameters().getNames()) {
-               List<String> vals = params.get(name);
-               if (vals == null) {
-                  vals = new ArrayList<String>();
-                  params.put(name, vals);
-               }
-               vals.addAll(Arrays.asList(areq.getActionParameters().getValues(name)));
-            }
-         }
-
          if (preq instanceof ResourceRequest) {
             ResourceRequest rreq = (ResourceRequest) preq;
             for (String name : rreq.getResourceParameters().getNames()) {
@@ -414,6 +404,9 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
             isMethSpecialHandling = false;
          }
       }
+      
+      reqctx.startDispatch(this, de.qparms, phase);
+      
       logSetupValues();
    }
 
@@ -426,6 +419,9 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       rebuildParameterMap();
       isMethSpecialHandling = !isForwardingPossible();
       isAttrSpecialHandling = true;
+      
+      reqctx.startDispatch(this, de.qparms, phase);
+      
       logSetupValues();
    }
 
@@ -458,6 +454,17 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
          dispatches.remove(dispatches.size() - 1);
       }
       rebuildParameterMap();
+      
+      // make sure request context is set up properly during nested dispatches
+      
+      reqctx.endDispatch();
+      if (dispatches.size() > 0) {
+         DispatchElement de = dispatches.get(dispatches.size() - 1);
+         if ((de.type == Type.INC) || (de.type == Type.FWD)) {
+            reqctx.startDispatch(this, de.qparms, phase);
+         }
+      }
+      
       logSetupValues();
    }
 
