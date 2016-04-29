@@ -88,11 +88,31 @@
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
-      
       <portlet-info>
          <title>EnvironmentTests_PortletPreferences_ApiRender</title>
       </portlet-info>
+      <portlet-preferences>
+			<preference>
+				<name>TestPreference1</name>
+				<value>Value1</value>
+				<read-only>true</read-only>
+				
+			</preference>
+			<preference>
+				<name>TestPreference2</name>
+				<value>Value2</value>
+				<value>Value3</value>
+				<read-only>false</read-only>
+			</preference>
+			
+			<preference>
+				<name>TestPreference3</name>
+			</preference>
+		</portlet-preferences>
+      
+      
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   
    </portlet>
 
    <portlet>
@@ -106,7 +126,23 @@
       <portlet-info>
          <title>EnvironmentTests_PortletPreferences_ApiAction</title>
       </portlet-info>
-      
+      <portlet-preferences>
+			<preference>
+				<name>TestPreference1</name>
+				<value>Value1</value>
+				<read-only>true</read-only>
+				
+			</preference>
+			<preference>
+				<name>TestPreference2</name>
+				<value>Value2</value>
+				<value>Value3</value>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>TestPreference3</name>
+			</preference>
+		</portlet-preferences>
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
@@ -152,6 +188,23 @@
       <portlet-info>
          <title>EnvironmentTests_PortletPreferences_ApiEvent_event</title>
       </portlet-info>
+      <portlet-preferences>
+			<preference>
+				<name>TestPreference1</name>
+				<value>Value1</value>
+				<read-only>true</read-only>
+				
+			</preference>
+			<preference>
+				<name>TestPreference2</name>
+				<value>Value2</value>
+				<value>Value3</value>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>TestPreference3</name>
+			</preference>
+		</portlet-preferences>
       <supported-processing-event>
          <qname>tck:EnvironmentTests_PortletPreferences_ApiEvent</qname>
       </supported-processing-event>
@@ -203,6 +256,23 @@
       <portlet-info>
          <title>EnvironmentTests_PortletPreferences_ApiResource</title>
       </portlet-info>
+      <portlet-preferences>
+			<preference>
+				<name>TestPreference1</name>
+				<value>Value1</value>
+				<read-only>true</read-only>
+				
+			</preference>
+			<preference>
+				<name>TestPreference2</name>
+				<value>Value2</value>
+				<value>Value3</value>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>TestPreference3</name>
+			</preference>
+		</portlet-preferences>
       
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
     

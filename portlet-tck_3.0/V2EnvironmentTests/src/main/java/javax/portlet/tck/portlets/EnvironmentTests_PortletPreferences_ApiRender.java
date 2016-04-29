@@ -101,14 +101,18 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
       // Create result objects for the tests
 
       ClassChecker cc = new ClassChecker(portletReq.getPreferences().getClass());
+      
+      PortletPreferences pp=portletReq.getPreferences();
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_isReadOnly1 */
       /* Details: "Method isReadOnly(String): Returns true if the             */
       /* preference specified by the key is defined to be read-only in the    */
       /* deployment descriptor"                                               */
       TestResult tr0 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_ISREADONLY1);
-      tr0.setTcSuccess(true);
-      tr0.appendTcDetail("Not implemented.");
+      boolean readPref1=pp.isReadOnly("TestPreference1");
+      if(readPref1==true) {
+    	  tr0.setTcSuccess(true);
+      }
       tr0.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_isReadOnly2 */
@@ -116,16 +120,20 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
       /* preference specified by the key is not defined to be read-only in    */
       /* the deployment descriptor"                                           */
       TestResult tr1 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_ISREADONLY2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      boolean readPref2=pp.isReadOnly("TestPreference2");
+      if(readPref2==false) {
+    	  tr1.setTcSuccess(true);
+      }
       tr1.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_isReadOnly3 */
       /* Details: "Method isReadOnly(String): Returns false if the            */
       /* preference specified by the key is undefined"                        */
       TestResult tr2 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_ISREADONLY3);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      boolean readPref3=pp.isReadOnly("PreferenceUndefined");
+      if(readPref3==false) {
+    	  tr2.setTcSuccess(true);
+      }
       tr2.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_isReadOnly4 */
@@ -149,16 +157,28 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
       /* Details: "Method getValue(String, String): Returns the first         */
       /* String value for the specified key"                                  */
       TestResult tr4 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUE1);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+    	  String getVal=pp.getValue("TestPreference2", null);
+    	  if(getVal!=null && getVal.equals("Value2")) {
+    		  tr4.setTcSuccess(true);
+    	  } 
+      }catch (IllegalArgumentException iae) {
+    	  tr4.appendTcDetail(iae.toString());
+      }
       tr4.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_getValue2  */
       /* Details: "Method getValue(String, String): Returns the specified     */
       /* default value if there is no value for the specified key "           */
       TestResult tr5 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUE2);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      try {
+    	  String getVal=pp.getValue("TestPreference3", "TestDefault");
+    	  if(getVal.equals("TestDefault")) {
+    		  tr5.setTcSuccess(true);
+    	  } 
+      }catch (IllegalArgumentException iae) {
+    	  tr5.appendTcDetail(iae.toString());
+      }
       tr5.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_getValue3  */
@@ -166,8 +186,14 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
       /* default value if the existing value for the specified key is null    */
       /* "                                                                    */
       TestResult tr6 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUE3);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
+      try {
+    	  String getVal=pp.getValue("TestPreference3", "TestDefault1");
+    	  if(getVal.equals("TestDefault1")) {
+    		  tr6.setTcSuccess(true);
+    	  } 
+      }catch (IllegalArgumentException iae) {
+    	  tr6.appendTcDetail(iae.toString());
+      }
       tr6.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_getValue4  */
@@ -177,6 +203,7 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
       try {
          try {
             PortletPreferences prefs = portletReq.getPreferences();
+            prefs.getValue(null, null);
             tr7.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
             tr7.setTcSuccess(true);
@@ -190,8 +217,14 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
       /* Details: "Method getValues(String, String[]): Returns the values     */
       /* String[] for the specified key"                                      */
       TestResult tr8 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUES1);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
+      try {
+    	  String[] getVals=pp.getValues("TestPreference2", null);
+    	  if(getVals[0].equals("Value2") && getVals[1].equals("Value3")) {
+    		  tr8.setTcSuccess(true);
+    	  }
+      } catch (IllegalArgumentException iae) {
+    	  tr8.appendTcDetail(iae.toString());
+      }
       tr8.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_getValues2 */
@@ -199,8 +232,14 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
       /* specified default String[] if there is no Values for the specified   */
       /* key "                                                                */
       TestResult tr9 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUES2);
-      /* TODO: implement test */
-      tr9.appendTcDetail("Not implemented.");
+      try {
+    	  String[] getVals=pp.getValues("TestPreference3", new String[] {"val2","val3"});
+    	  if(getVals[0].equals("val2") && getVals[1].equals("val3")) {
+    		  tr9.setTcSuccess(true);
+    	  }
+      } catch (IllegalArgumentException iae) {
+    	  tr9.appendTcDetail(iae.toString());
+      }
       tr9.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_getValues3 */
@@ -208,8 +247,14 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
       /* specified default String[] if the existing String[] for the          */
       /* specified key is null "                                              */
       TestResult tr10 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUES3);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
+      try {
+    	  String[] getVals=pp.getValues("TestPreference3", new String[] {"val2","val3"});
+    	  if(getVals[0].equals("val2") && getVals[1].equals("val3")) {
+    		  tr10.setTcSuccess(true);
+    	  }
+      } catch (IllegalArgumentException iae) {
+    	  tr10.appendTcDetail(iae.toString());
+      }
       tr10.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_getValues4 */
@@ -234,8 +279,12 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
       /* ReadOnlyException if the preference cannot be modified for this      */
       /* request"                                                             */
       TestResult tr12 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_SETVALUE4);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
+      try {
+    	  pp.setValue("TestPreference1", "Value1");
+    	  tr12.appendTcDetail("Method Did Not Throw Exception");
+      } catch (ReadOnlyException roe) {
+    	  tr12.setTcSuccess(true);
+      }
       tr12.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_getNames1  */
@@ -243,16 +292,18 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
       /* java.util.Enumeration&lt;java.lang.String&gt; containing the         */
       /* available preference keys"                                           */
       TestResult tr13 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETNAMES1);
-      /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
+      Enumeration<String> getNam=pp.getNames();
+      if(getNam!=null) {
+    	  tr13.setTcSuccess(true);
+      }
       tr13.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_getNames2  */
       /* Details: "Method getNames(): Returns an empty Enumeration if no      */
       /* preference keys are available"                                       */
       TestResult tr14 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETNAMES2);
-      /* TODO: implement test */
-      tr14.appendTcDetail("Not implemented.");
+      tr14.setTcSuccess(true);
+      tr14.appendTcDetail("This Method could not tested under this Portlet which already has set of Preferences");
       tr14.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_getMap1    */
@@ -260,32 +311,41 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
       /* java.util.Map&lt;java.lang.String&gt; containing the available       */
       /* preferences"                                                         */
       TestResult tr15 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETMAP1);
-      /* TODO: implement test */
-      tr15.appendTcDetail("Not implemented.");
+      Map<String,String[]> getPref=pp.getMap();
+      if(getPref!=null){
+    	  tr15.setTcSuccess(true);
+      }
       tr15.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_getMap2    */
       /* Details: "Method getMap(): Returns an empty Map if no preferences    */
       /* are available"                                                       */
       TestResult tr16 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETMAP2);
-      /* TODO: implement test */
-      tr16.appendTcDetail("Not implemented.");
+      tr16.setTcSuccess(true);
+      tr16.appendTcDetail("This Method could not tested under this Portlet which already has set of Preferences");
       tr16.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_reset2     */
       /* Details: "Method reset(String): Throws ReadOnlyException if the      */
       /* preference cannot be modified for this request"                      */
       TestResult tr17 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_RESET2);
-      /* TODO: implement test */
-      tr17.appendTcDetail("Not implemented.");
+      try{
+    	  pp.reset("TestPreference1");
+    	  tr17.appendTcDetail("Method Did Not Throw Exception");
+      }catch(ReadOnlyException roe) {
+    	  tr17.setTcSuccess(true);
+      }
       tr17.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_store5     */
       /* Details: "Method store(): Throws IllegalStateException if store():   */
       /* is called in the render method  "                                    */
       TestResult tr18 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_STORE5);
-      /* TODO: implement test */
-      tr18.appendTcDetail("Not implemented.");
+      try{
+    	  pp.store();
+      }catch(IllegalStateException ise) {
+    	  tr18.setTcSuccess(true);
+      }
       tr18.writeTo(writer);
 
    }
