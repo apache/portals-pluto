@@ -84,12 +84,11 @@ public class ClasspathScanner {
      * @return list of classes
      * @throws java.io.IOException if an error occurs during classpath scanning.
      */
-    @SuppressWarnings("unchecked")
-    public static List findConfiguredImplementations(Class implemented)
+    public static List<Class<?>> findConfiguredImplementations(Class<?> implemented)
     throws IOException {
-        List classes = new ArrayList();
-        List resources = scan("/META-INF/pluto.properties");
-        Iterator i = resources.iterator();
+        List<Class<?>> classes = new ArrayList<Class<?>>();
+        List<URL> resources = scan("/META-INF/pluto.properties");
+        Iterator<URL> i = resources.iterator();
 
         Properties p = new Properties();
         while (i.hasNext()) {

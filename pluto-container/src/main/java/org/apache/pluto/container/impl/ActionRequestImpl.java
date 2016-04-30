@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.container.impl;
 
+import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 
@@ -31,4 +32,8 @@ public class ActionRequestImpl extends ClientDataRequestImpl implements ActionRe
     {
         super(requestContext, responseContext, PortletRequest.ACTION_PHASE);
     }
+
+   public ActionParameters getActionParameters() {
+      return requestContext.getActionParameters();
+   }
 }

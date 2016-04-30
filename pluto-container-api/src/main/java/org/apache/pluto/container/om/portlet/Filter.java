@@ -21,23 +21,30 @@ import java.util.Locale;
 
 public interface Filter {
 
-    String getFilterName();
+   String getFilterName();
 
-    Description getDescription(Locale locale);
-    List<? extends Description> getDescriptions();
-    Description addDescription(String lang);
+   Description getDescription(Locale locale);
+   List<Description> getDescriptions();
+   void addDescription(Description desc);
 
-	DisplayName getDisplayName(Locale locale);
-	List<? extends DisplayName> getDisplayNames();
-	DisplayName addDisplayName(String lang);
+   DisplayName getDisplayName(Locale locale);
+   List<DisplayName> getDisplayNames();
+   void addDisplayName(DisplayName dn);
 
-	String getFilterClass();
-	void setFilterClass(String filterClass);
+   String getFilterClass();
+   void setFilterClass(String filterClass);
 
-	InitParam getInitParam(String paramName);
-	List<? extends InitParam> getInitParams();
-	InitParam addInitParam(String paramName);
+   InitParam getInitParam(String paramName);
+   List<InitParam> getInitParams();
+   void addInitParam(InitParam ip);
 
-	List<String> getLifecycles();
-	void addLifecycle(String lifecycle);
+   List<String> getLifecycles();
+   void addLifecycle(String lifecycle);
+
+   // establishes ordering for annotated filters
+   int getOrdinal();
+   void setOrdinal(int ordinal);
+
+   // marks if the ordinal was set (annotated filter only)
+   boolean isOrdinalSet();
 }

@@ -84,7 +84,7 @@
       <test.url.strategy>followLinks</test.url.strategy>
       
       <!-- Configuration of URL to login page -->
-      <test.server.login.url>http://localhost:8080/pluto/portal/About%20Apache%20Pluto</test.server.login.url>
+      <test.server.login.url>http://localhost:8080/pluto/portal/About Apache Pluto</test.server.login.url>
 
       <!-- Configuration of portlet container under test for generated URLs-->
       <!-- (only needed if test.url.strategy=generateURLs)                 -->

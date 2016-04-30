@@ -21,10 +21,13 @@ import java.util.Set;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
+import javax.portlet.WindowState;
 
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletPreferencesService;
+import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.PublicRenderParameterService;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.url.PortalURLParser;
 
@@ -90,6 +93,12 @@ public interface DriverConfiguration {
 
     boolean isWindowStateSupported(String portletId, String windowState);
 
+    public Set<WindowState> getSupportedWindowStates(String portletId, String contentType) throws PortletContainerException; 
+    
+    public PublicRenderParameterService getPublicRenderParameterService();
+    
+    public PortletRegistryService getPortletRegistryService();
+
 //
 // Utility methods for the container
 //
@@ -103,6 +112,6 @@ public interface DriverConfiguration {
     
     public PortletConfig getPortletConfig(String portletId)  throws PortletContainerException;
 
-	public boolean isPortletManagedMode(String portletId, String mode);
+	 public boolean isPortletManagedMode(String portletId, String mode);
     
 }

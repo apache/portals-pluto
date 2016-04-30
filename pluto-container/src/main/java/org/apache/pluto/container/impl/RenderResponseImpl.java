@@ -30,14 +30,13 @@ import org.apache.pluto.container.util.ArgumentUtility;
  * Implementation of the <code>javax.portlet.RenderResponse</code> interface.
  * 
  */
+@SuppressWarnings("unchecked")
 public class RenderResponseImpl extends MimeResponseImpl implements RenderResponse
 {	
-    private PortletRenderResponseContext responseContext;
     
     public RenderResponseImpl(PortletRenderResponseContext responseContext)
     {
         super(responseContext);
-        this.responseContext = responseContext;
     }
     
     /**
@@ -97,7 +96,7 @@ public class RenderResponseImpl extends MimeResponseImpl implements RenderRespon
         super.setContentType(contentType);
     }
     
-    public void setNextPossiblePortletModes(Collection<PortletMode> portletModes)
+    public void setNextPossiblePortletModes(Collection<? extends PortletMode> portletModes)
     {
         ArgumentUtility.validateNotNull("portletModes", portletModes);
         if (portletModes.isEmpty())
@@ -116,11 +115,11 @@ public class RenderResponseImpl extends MimeResponseImpl implements RenderRespon
         {
             modes.add(getPortletWindow().getPortletMode());
         }
-        responseContext.setNextPossiblePortletModes(modes);
+        ((PortletRenderResponseContext) responseContext).setNextPossiblePortletModes(modes);
     }
     
     public void setTitle(String title)
     {
-        responseContext.setTitle(title);
+       ((PortletRenderResponseContext) responseContext).setTitle(title);
     }
 }

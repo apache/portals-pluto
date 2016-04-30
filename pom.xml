@@ -41,7 +41,7 @@
  in testsuite module (src/main/webapp/WEB-INF/classes)
  5. pluto.version in Ant build file dist-build.xml.
   -->
-  <version>2.1.0-SNAPSHOT</version>
+  <version>3.0-SNAPSHOT</version>
   <!-- Due to a bug in maven 2.0, the description must not contain any line breaks or tabs. -->
   <description>Apache Pluto is the Reference Implementation of the Java Portlet Specification.</description>
   <url>http://portals.apache.org/pluto</url>
@@ -254,13 +254,14 @@ generate mailto links. -->
   -->
   <properties>
     <pluto.container.name>Pluto</pluto.container.name>
-    <javax.portlet.version.major>2</javax.portlet.version.major>
+    <javax.portlet.version.major>3</javax.portlet.version.major>
     <javax.portlet.version.minor>0</javax.portlet.version.minor>
-    <portals.portlet2-api-spec.version>1.0</portals.portlet2-api-spec.version>
-    <servlet-api.version>2.4</servlet-api.version>
-    <jsp-api.version>2.0</jsp-api.version>
-    <jstl.version>1.1.2</jstl.version>
-    <taglibs.standard.version>1.1.2</taglibs.standard.version>
+    <portals.portlet-api.version>${project.version}</portals.portlet-api.version>
+    <servlet-api.version>8.0.28</servlet-api.version>
+    <jsp-api.version>8.0.28</jsp-api.version>
+    <jstl.version>8.0.28</jstl.version>
+    <el-api.version>8.0.28</el-api.version>
+    <taglibs.standard.version>1.2.1</taglibs.standard.version>
     <jaxb.version>2.1</jaxb.version>
     <jaxb-impl.version>2.1.9</jaxb-impl.version>
     <stax.impl.version>1.2.0</stax.impl.version>
@@ -268,13 +269,15 @@ generate mailto links. -->
     <commons-cli.version>1.0</commons-cli.version>
     <slf4j.version>1.7.5</slf4j.version>
     <springframework.version>2.0.2</springframework.version>
+<!--     <springframework.version>4.2.3.RELEASE</springframework.version> -->
     <maven.version>2.0.5</maven.version>
     <ant.version>1.6.5</ant.version>
-    <commons-io.version>1.3.1</commons-io.version>
+    <commons-io.version>2.4</commons-io.version>
     <ccpp-api.version>1.0</ccpp-api.version>
-    <junit.version>4.0</junit.version>
+    <junit.version>4.12</junit.version>
     <jmock.version>1.2.0</jmock.version>
     <xmlunit.version>1.1</xmlunit.version>
+    <cdi.version>2.3.1.Final</cdi.version>
 
     <!-- The following properties are not directly used as maven
 dependencies, they're used by the maven pluto plugin for
@@ -319,12 +322,12 @@ TODO: Check if we need all of them. -->
       <!-- Specification Libraries =========================================== -->
       <dependency>
         <groupId>org.apache.portals</groupId>
-        <artifactId>portlet-api_2.0_spec</artifactId>
-        <version>${portals.portlet2-api-spec.version}</version>
+        <artifactId>portlet-api</artifactId>
+        <version>${portals.portlet-api.version}</version>
       </dependency>
       <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>servlet-api</artifactId>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-servlet-api</artifactId>
         <version>${servlet-api.version}</version>
       </dependency>
 
@@ -350,6 +353,18 @@ TODO: Check if we need all of them. -->
           </exclusion>
         </exclusions>
       </dependency>
+      
+      <!-- CDI Library -->
+      <dependency>
+         <groupId>javax.enterprise</groupId>
+         <artifactId>cdi-api</artifactId>
+         <version>1.2</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jboss.weld.servlet</groupId>
+          <artifactId>weld-servlet</artifactId>
+          <version>${cdi.version}</version>
+      </dependency>      
 
       <!--  CCPP Libraries -->
       <dependency>
@@ -415,18 +430,28 @@ TODO: Check if we need all of them. -->
         <version>${maven.version}</version>
       </dependency>
       <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>jsp-api</artifactId>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-jsp-api</artifactId>
         <version>${jsp-api.version}</version>
       </dependency>
       <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>jstl</artifactId>
-        <version>${jstl.version}</version>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-el-api</artifactId>
+        <version>${el-api.version}</version>
       </dependency>
       <dependency>
-        <groupId>taglibs</groupId>
-        <artifactId>standard</artifactId>
+        <groupId>org.apache.taglibs</groupId>
+        <artifactId>taglibs-standard-spec</artifactId>
+        <version>${taglibs.standard.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.taglibs</groupId>
+        <artifactId>taglibs-standard-impl</artifactId>
+        <version>${taglibs.standard.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.taglibs</groupId>
+        <artifactId>taglibs-standard-jstlel</artifactId>
         <version>${taglibs.standard.version}</version>
       </dependency>
       <dependency>
@@ -523,9 +548,10 @@ TODO: Check if we need all of them. -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.1</version>
           <configuration>
-            <source>1.5</source>
-            <target>1.5</target>
+            <source>1.7</source>
+            <target>1.7</target>
           </configuration>
         </plugin>
         <plugin>
@@ -556,6 +582,24 @@ TODO: Check if we need all of them. -->
             <autoVersionSubmodules>true</autoVersionSubmodules>
           </configuration>
         </plugin>
+
+			<!-- Javascript compressor plugin -->
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>yuicompressor-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>compress-js</id>
+						<goals>
+							<goal>compress</goal>
+						</goals>
+						<configuration>
+							<jswarn>false</jswarn>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
       </plugins>
     </pluginManagement>
 
@@ -580,6 +624,9 @@ TODO: Check if we need all of them. -->
       
       <!-- Pluto Modules ======================================================= -->
       <modules>
+        <!-- Portlet API module (spec -->
+        <module>portlet-api</module>
+
         <!-- Pluto Container API -->
         <module>pluto-container-api</module>
 
@@ -593,6 +640,11 @@ TODO: Check if we need all of them. -->
         <module>pluto-portal-driver-impl</module>
         <module>pluto-portal</module>
         <module>pluto-testsuite</module>
+        
+        <!-- PortletHub demo portlets -->
+        <module>PortletHubDemo</module>
+        <module>PortletV3Demo</module>
+        <module>PortletV3AnnotatedDemo</module>
 
         <!-- Pluto Utilities, Maven Plugins and Ant Tasks -->
         <module>pluto-util</module>

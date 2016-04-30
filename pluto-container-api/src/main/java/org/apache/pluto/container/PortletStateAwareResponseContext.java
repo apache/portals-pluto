@@ -17,9 +17,10 @@
 package org.apache.pluto.container;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.Event;
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
@@ -33,8 +34,73 @@ public interface PortletStateAwareResponseContext extends PortletResponseContext
     void setPortletMode(PortletMode portletMode);
     WindowState getWindowState();
     void setWindowState(WindowState windowState);
-    Map<String, String[]> getRenderParameters();
-    Map<String, String[]> getPublicRenderParameters();
     EventProvider getEventProvider();
     List<Event> getEvents();
+    
+    /**
+     * Add a public render parameter for given window ID and parameter name
+     *  
+     * @param qn           QName
+     * @param identifier   Identifier for PRP
+     * @param values       values array
+     */
+    void addPublicRenderParameter(String windowId, String name, String[] values);
+    
+    /**
+     * Remove the PRP for the given window ID and parameter name
+     * 
+     * @param windowId
+     * @param name
+     */
+    void removePublicRenderParameter(String windowId, String name);
+    
+    /**
+     * Returns <code>true</code> if the given name representa a public render
+     * parameter for the given window.
+     * 
+     * @param windowId
+     * @param name
+     * @return
+     */
+    boolean isPublicRenderParameter(String windowId, String name);
+    
+    /**
+     * Retrieves the available private parameter names for the given window ID
+     * @param windowId
+     * @return
+     */
+    Set<String> getPrivateParameterNames(String windowId);
+    
+    /**
+     * Gets the values array for the given window ID and private parameter name
+     * @param windowId
+     * @param name
+     * @return
+     */
+    String[] getParameterValues(String windowId, String name);
+
+    /**
+     * Adds the specified private parameter if not already present, or updates the
+     * values for the parameter if it is already present.
+     * @param windowId
+     * @param name
+     * @param values
+     */
+    void setParameter(String windowId, String name, String[] values);
+    
+    /** 
+     * Removes the private parameter for the given window and name. Does nothing if the
+     * given parameter is not present.
+     * @param windowId
+     * @param name
+     */
+    void removeParameter(String windowId, String name);
+    
+    /**
+     * Returns a mutable render parameters object.
+     * 
+     * @return
+     */
+    MutableRenderParameters getRenderParameters(String windowId);
+
 }

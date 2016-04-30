@@ -104,7 +104,7 @@ public class SigTestsResource_ResourceResponse_SIGResource implements Portlet, R
       TestResult tr1 = tcd.getTestResultFailed(V2SIGTESTSRESOURCE_RESOURCERESPONSE_SIGRESOURCE_HASCREATEACTIONURL);
       try {
          String name = "createActionURL";
-         Class<?>[] exceptions = {IllegalStateException.class};
+         Class<?>[] exceptions = null;
          Class<?>[] parms = null;
          tr1.setTcSuccess(cc.hasMethod(name, parms, exceptions));
       } catch(Exception e) {tr1.appendTcDetail(e.toString());}
@@ -128,7 +128,7 @@ public class SigTestsResource_ResourceResponse_SIGResource implements Portlet, R
       TestResult tr3 = tcd.getTestResultFailed(V2SIGTESTSRESOURCE_RESOURCERESPONSE_SIGRESOURCE_HASCREATERENDERURL);
       try {
          String name = "createRenderURL";
-         Class<?>[] exceptions = {IllegalStateException.class};
+         Class<?>[] exceptions = null;
          Class<?>[] parms = null;
          tr3.setTcSuccess(cc.hasMethod(name, parms, exceptions));
       } catch(Exception e) {tr3.appendTcDetail(e.toString());}
@@ -152,7 +152,7 @@ public class SigTestsResource_ResourceResponse_SIGResource implements Portlet, R
       TestResult tr5 = tcd.getTestResultFailed(V2SIGTESTSRESOURCE_RESOURCERESPONSE_SIGRESOURCE_HASCREATERESOURCEURL);
       try {
          String name = "createResourceURL";
-         Class<?>[] exceptions = {IllegalStateException.class};
+         Class<?>[] exceptions = null;
          Class<?>[] parms = null;
          tr5.setTcSuccess(cc.hasMethod(name, parms, exceptions));
       } catch(Exception e) {tr5.appendTcDetail(e.toString());}

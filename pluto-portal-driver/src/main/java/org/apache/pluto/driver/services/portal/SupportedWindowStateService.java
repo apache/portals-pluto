@@ -16,6 +16,13 @@
  */
 package org.apache.pluto.driver.services.portal;
 
+import java.util.Set;
+
+import javax.portlet.PortletMode;
+import javax.portlet.WindowState;
+
+import org.apache.pluto.container.PortletContainerException;
+
 /**
  * Allows clients to see if a particular WindowState is supported by
  * the portal, a particular portlet, or both.
@@ -49,5 +56,16 @@ public interface SupportedWindowStateService {
      * @return true if the portlet support the supplied state
      */
     boolean isWindowStateSupportedByPortlet( String portletId, String state );
+
+    /**
+     * Gets all window states supported by a portlet according to the deployment descriptor. 
+     * in portlet.xml.
+     * 
+     * @param portletId Id of the portlet of interest
+     * @param The content type, in general will be "text/html"
+     * @return all window states supported by a portlet.
+     * @throws PortletContainerException
+      */
+     Set<WindowState> getSupportedWindowStates(String portletId, String contentType) throws PortletContainerException;
 
 }

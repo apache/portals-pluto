@@ -20,10 +20,13 @@ import java.util.List;
 
 public interface Preferences {
 
-    Preference getPortletPreference(String name);
-	List<? extends Preference> getPortletPreferences();
-	Preference addPreference(String name);
+   Preference getPortletPreference(String name);
+   List<Preference> getPortletPreferences();
+   void addPreference(Preference pref);
 
-	String getPreferencesValidator();
-	void setPreferencesValidator(String preferencesValidator);
+   String getPreferencesValidator();
+   void setPreferencesValidator(String preferencesValidator);
+
+   boolean isNullValidator();
+   void setNullValidator(boolean isNullValidator);
 }

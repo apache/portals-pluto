@@ -35,6 +35,7 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -64,9 +65,11 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class PortletRequestImpl implements PortletRequest
 {
-    public static final String ACCEPT_LANGUAGE = "Accept-Language";
+   public static final String ACCEPT_LANGUAGE = "Accept-Language";
+   public static final String USER_AGENT = "User-Agent";
 
     private static final Logger LOG = LoggerFactory.getLogger(PortletRequestImpl.class);
+    private static boolean isDebug = LOG.isDebugEnabled();
 
     private static final StringManager EXCEPTIONS =
         StringManager.getManager(PortletRequestImpl.class.getPackage().getName());
@@ -75,11 +78,11 @@ public abstract class PortletRequestImpl implements PortletRequest
 
     // Private Member Variables ------------------------------------------------
 
-    /** The PortalContext within which this request is occuring. */
-    private final PortalContext portalContext;
+    /** The PortalContext within which this request is occurring. */
+    protected final PortalContext portalContext;
 
-    private final PortletRequestContext requestContext;
-    private final PortletResponseContext responseContext;
+    protected final PortletRequestContext requestContext;
+    protected final PortletResponseContext responseContext;
 
     /** The portlet session. */
     private PortletSession portletSession;
@@ -88,8 +91,6 @@ public abstract class PortletRequestImpl implements PortletRequest
     private ArrayList<String> contentTypes;
 
     private PortletPreferences portletPreferences;
-
-    private Map<String, String[]> parameters;
 
     private Map<String, String[]> requestProperties;
     private List<String> requestPropertyNames;
@@ -124,66 +125,18 @@ public abstract class PortletRequestImpl implements PortletRequest
         }
     }
 
-    private void checkInitParameterMap()
-    {
-        if (parameters == null)
-        {
-            parameters = initParameterMap();
-        }
-    }
-
     protected static Map<String, String[]> cloneParameterMap(Map<String, String[]> map)
     {
-        if (!map.isEmpty())
-        {
-            Map<String, String[]> result = new HashMap<String, String[]>(map.size());
-            for (Map.Entry<String,String[]> entry : map.entrySet())
-            {
-                if (entry.getValue() != null)
-                {
-                    result.put(entry.getKey(), entry.getValue().clone());
-                }
-            }
-            return Collections.unmodifiableMap(result);
-        }
-        return Collections.emptyMap();
-    }
-
-    protected Map<String, String[]> initParameterMap()
-    {
-        String[] values  = null;
-        Map<String, String[]> parameters = requestContext.getPrivateParameterMap();
-        Map<String, String[]> publicParameters = requestContext.getPublicParameterMap();
-        if (!publicParameters.isEmpty())
-        {
-            parameters = new HashMap<String, String[]>(parameters);
-            for (Map.Entry<String,String[]> entry : publicParameters.entrySet())
-            {
-                values = parameters.get(entry.getKey());
-                if (values == null)
-                {
-                    parameters.put(entry.getKey(), entry.getValue().clone());
-                }
-                else
-                {
-                    String[] copy = new String[values.length+entry.getValue().length];
-                    System.arraycopy(values, 0, copy, 0, values.length);
-                    System.arraycopy(entry.getValue(), 0, copy, values.length, entry.getValue().length);
-                    parameters.put(entry.getKey(), copy);
-                }
-            }
-        }
-        return parameters;
+       Map<String, String[]> newMap = new HashMap<String, String[]>();
+       for (String pn : map.keySet()) {
+          newMap.put(pn, map.get(pn).clone());
+       }
+       return newMap;
     }
 
     protected PortletRequestContext getRequestContext()
     {
         return requestContext;
-    }
-
-    protected PortletContext getPortletContext()
-    {
-        return requestContext.getPortletConfig().getPortletContext();
     }
 
     protected PortletWindow getPortletWindow()
@@ -262,6 +215,18 @@ public abstract class PortletRequestImpl implements PortletRequest
             }
             return ccppProfile;
         }
+        else if (name.equals("javax.portlet.debug.ServletRequest"))
+        {
+            return requestContext.getServletRequest();
+        }
+        else if (name.equals("javax.portlet.debug.ServletResponse"))
+        {
+            return requestContext.getServletResponse();
+        }
+        else if (name.equals("javax.portlet.debug.ServletContext"))
+        {
+            return requestContext.getServletContext();
+        }
         return requestContext.getAttribute(name);
     }
 
@@ -303,13 +268,12 @@ public abstract class PortletRequestImpl implements PortletRequest
         return requestContext.getPreferredLocale();
     }
 
-    @SuppressWarnings("unchecked")
     public Enumeration<Locale> getLocales()
     {
         Locale preferredLocale = getLocale();
         ArrayList<Locale> locales = new ArrayList<Locale>();
         locales.add(preferredLocale);
-        for (Enumeration e = getServletRequest().getLocales(); e.hasMoreElements(); )
+        for (Enumeration<Locale> e = getServletRequest().getLocales(); e.hasMoreElements(); )
         {
             Locale locale = (Locale)e.nextElement();
             if (!locale.equals(preferredLocale))
@@ -323,34 +287,36 @@ public abstract class PortletRequestImpl implements PortletRequest
     public String getParameter(String name)
     {
         ArgumentUtility.validateNotNull("parameterName", name);
-        checkInitParameterMap();
-        String[] values = parameters.get(name);
+        String[] values = requestContext.getParameterMap().get(name);
         return values != null && values.length > 0 ? values[0] : null;
     }
 
     public Map<String, String[]> getParameterMap()
     {
-        checkInitParameterMap();
-        return cloneParameterMap(parameters);
+        return cloneParameterMap(requestContext.getParameterMap());
     }
 
     public Enumeration<String> getParameterNames()
     {
-        checkInitParameterMap();
-        return Collections.enumeration(parameters.keySet());
+        return Collections.enumeration(requestContext.getParameterMap().keySet());
     }
 
     public String[] getParameterValues(String name)
     {
         ArgumentUtility.validateNotNull("parameterName", name);
-        checkInitParameterMap();
-        String[] values =  parameters.get(name);
+        String[] values =  requestContext.getParameterMap().get(name);
         return values != null ? values.clone() : null;
     }
 
     public PortalContext getPortalContext()
     {
         return portalContext;
+    }
+
+    @Override
+    public PortletContext getPortletContext()
+    {
+        return requestContext.getPortletConfig().getPortletContext();
     }
 
     public PortletMode getPortletMode()
@@ -373,9 +339,9 @@ public abstract class PortletRequestImpl implements PortletRequest
      */
     public PortletSession getPortletSession(boolean create)
     {
-        if (LOG.isDebugEnabled())
+        if (isDebug)
         {
-            LOG.debug("Retreiving portlet session (create=" + create + ")");
+            LOG.debug("Retrieving portlet session (create=" + create + ")");
         }
         //
         // It is critical that we don't retrieve the portlet session until the
@@ -410,7 +376,7 @@ public abstract class PortletRequestImpl implements PortletRequest
                 long currentInactiveTime = System.currentTimeMillis() - lastAccesstime;
                 if (currentInactiveTime > maxInactiveTime)
                 {
-                    if (LOG.isDebugEnabled())
+                    if (isDebug)
                     {
                         LOG.debug("The underlying HttpSession is expired and "
                                 + "should be invalidated.");
@@ -426,7 +392,7 @@ public abstract class PortletRequestImpl implements PortletRequest
         }
         if (httpSession == null)
         {
-            if (LOG.isDebugEnabled())
+            if (isDebug)
             {
                 LOG.debug("The underlying HttpSession is not available: "
                         + "no session will be returned.");
@@ -440,7 +406,7 @@ public abstract class PortletRequestImpl implements PortletRequest
         //
         if (portletSession == null)
         {
-            if (LOG.isDebugEnabled())
+            if (isDebug)
             {
                 LOG.debug("Creating new portlet session...");
             }
@@ -468,7 +434,6 @@ public abstract class PortletRequestImpl implements PortletRequest
         return cloneParameterMap(requestContext.getPrivateParameterMap());
     }
 
-    @SuppressWarnings("unchecked")
     public Enumeration<String> getProperties(String name)
     {
         ArgumentUtility.validateNotNull("propertyName", name);
@@ -478,7 +443,7 @@ public abstract class PortletRequestImpl implements PortletRequest
             Locale preferredLocale = getLocale();
             ArrayList<String> locales = new ArrayList<String>();
             locales.add(preferredLocale.toString());
-            for (Enumeration e = getServletRequest().getLocales(); e.hasMoreElements(); )
+            for (Enumeration<Locale> e = getServletRequest().getLocales(); e.hasMoreElements(); )
             {
                 Locale locale = (Locale)e.nextElement();
                 if (!locale.equals(preferredLocale))
@@ -707,5 +672,13 @@ public abstract class PortletRequestImpl implements PortletRequest
     {
         ArgumentUtility.validateNotEmpty("name", name);
         requestContext.setAttribute(name, null);
+    }
+
+    public RenderParameters getRenderParameters() {
+       return requestContext.getRenderParameters();
+    }
+    
+    public String getUserAgent() {
+       return getProperty(USER_AGENT);
     }
 }

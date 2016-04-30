@@ -24,7 +24,9 @@ import junit.framework.Assert;
 
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.PortletInfo;
-import org.apache.pluto.container.om.portlet.impl.PortletType;
+import org.apache.pluto.container.om.portlet.impl.PortletDefinitionImpl;
+import org.apache.pluto.container.om.portlet.impl.PortletInfoImpl;
+import org.apache.pluto.container.om.portlet20.impl.PortletType;
 import org.apache.pluto.driver.container.ResourceBundleFactory;
 
 /**
@@ -38,12 +40,12 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
     public void setUp() throws Exception {
         super.setUp();
 
-        validDD = new PortletType();
-
-        PortletInfo info = validDD.getPortletInfo();
-        info.setTitle("Info Title");
-        info.setShortTitle("Info Short Title");
-        info.setKeywords("Info Keywords");
+        String ti = "Info Title";
+        String sti = "Info Short Title";
+        String kw = "Info Keywords";
+        PortletInfo info = new PortletInfoImpl(ti, kw, sti);
+        validDD = new PortletDefinitionImpl("RBTestPortlet", null);
+        validDD.setPortletInfo(info);
         validDD.setResourceBundle(TestResourceBundle.class.getName());
     }
 

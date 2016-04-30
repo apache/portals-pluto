@@ -16,6 +16,11 @@
  */
 package org.apache.pluto.driver.url;
 
+import java.util.HashSet;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * The portal URL parameter.
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
@@ -24,43 +29,135 @@ package org.apache.pluto.driver.url;
  * @since Sep 30, 2004
  */
 public class PortalURLParameter {
+   private final Logger LOGGER = LoggerFactory.getLogger(PortalURLParameter.class);
 
+   public final static String PARAM_TYPE_RENDER = "rp";
+   public final static String PARAM_TYPE_ACTION = "ap";
+   public final static String PARAM_TYPE_RESOURCE = "re";
+   public final static String PARAM_TYPE_PUBLIC = "sp";
+   
+   private final static HashSet<String> allowedTypes = new HashSet<String>();
+   {
+      allowedTypes.add(PARAM_TYPE_RENDER);
+      allowedTypes.add(PARAM_TYPE_ACTION);
+      allowedTypes.add(PARAM_TYPE_RESOURCE);
+   }
 
-    private String window;
-    private String name;
-    private String[] values;
+   protected final String window;
+   protected final String name;
+   protected String[] values;
+   protected String type;
 
-    public PortalURLParameter(String window, String name, String value) {
-        this.window = window;
-        this.name = name;
-        this.values = new String[]{value};
-    }
+   // Constructors for use by extending classes
+   protected PortalURLParameter(String window, String name) {
+      this.window = window;
+      this.name = name;
+      this.values = null;
+   }
 
-    public PortalURLParameter(String window, String name, String[] values) {
-        this.window = window;
-        this.name = name;
-        this.values = values;
-    }
+   // Create a new parameter of specified type
+   public PortalURLParameter(String window, String name, String[] values) {
+      this.window = window;
+      this.name = name;
+      this.values = values;
+      this.type = PARAM_TYPE_RENDER;
+   }
 
-    public String getName() {
-        return name;
-    }
+   public PortalURLParameter(String window, String name, String[] values, String type) {
+      this.window = window;
+      this.name = name;
+      this.values = values;
+      this.type = type;
+      if (!allowedTypes.contains(type)) {
+         LOGGER.warn("Parameter type: " + type + " is not in allowed set: " + allowedTypes.toString());
+      }
+   }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+   public String getType() {
+      return type;
+   }
 
-    public String[] getValues() {
-        return values;
-    }
+   public void setType(String type) {
+      if (!allowedTypes.contains(type)) {
+         LOGGER.warn("Parameter type: " + type + " is not in allowed set: " + allowedTypes.toString());
+      }
+      this.type = type;
+   }
+   
+   public String getName() {
+      return name;
+   }
 
-    public void setValues(String[] values) {
-        this.values = values;
-    }
+   public String[] getValues() {
+      return values;
+   }
 
-    public String getWindowId() {
-        return window;
-    }
+   public void setValues(String[] values) {
+      this.values = values;
+   }
+
+   public String getWindowId() {
+      return window;
+   }
+
+   @Override
+   public PortalURLParameter clone() {
+      // shallow clone works because strings are immutable
+      return new PortalURLParameter(window, name, (values == null ? values : values.clone()), type);
+   }
+
+   /**
+    * For this class, "equals" means "refers to the same parameter". The parameter type, name & window
+    * are compared, the values are NOT compared. The combination of window ID and parameter name 
+    * must always be unique when the objects are used in collections. 
+    */
+   @Override
+   public boolean equals(Object o) {
+      boolean eq = false;
+      if (o instanceof PortalURLParameter) {
+         if (o == this) {
+            eq = true; 
+         } else {
+            PortalURLParameter pup = (PortalURLParameter) o;
+            if (equals(window, pup.window)) {
+               if (equals(name, pup.name)) {
+                  if (equals(type, pup.type)) {
+                     eq = true;
+                  }
+               }
+            }
+         }
+      }
+      return eq;
+   }
+
+   @Override
+   public int hashCode() {
+      int hc = 17;
+      if (window != null) {
+         hc += 37*hc + window.hashCode();
+      }
+      if (name != null) {
+         hc += 37*hc + name.hashCode();
+      }
+      if (type != null) {
+         hc += 37*hc + type.hashCode();
+      }
+      return hc;
+   }
+
+   /**
+    * helper function for comparison. 
+    */
+   protected boolean equals(Object o1, Object o2) {
+      boolean eq = false;
+      if (o1 == o2) {
+         eq = true;
+      } else if (o1 != null && o2 != null) {
+         eq = o1.equals(o2);
+      }
+      return eq;
+   }
 
 }
 

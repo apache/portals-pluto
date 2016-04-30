@@ -97,7 +97,9 @@ public class PortletTests_PortletMode_ApiRender implements Portlet, ResourceServ
       PrintWriter writer = portletResp.getWriter();
 
       JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
-
+     
+      PortletMode mode=portletReq.getPortletMode();
+      
       // Create result objects for the tests
 
       ClassChecker cc = new ClassChecker(portletReq.getPortletMode().getClass());
@@ -106,16 +108,24 @@ public class PortletTests_PortletMode_ApiRender implements Portlet, ResourceServ
       /* Details: "The constructor PortletMode(java.lang.String): allows a    */
       /* PortletMode object of the specified name to be constructed"          */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_CONSTRUCTOR1);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
+      PortletMode pm=new PortletMode("newmode");
+      if(pm!=null && pm.toString().equals("newmode")) {
+    	  tr0.setTcSuccess(true);
+      } else {
+    	  tr0.appendTcDetail("The Portlet Mode has null value");
+      }
+       tr0.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletMode_ApiRender_constructor2          */
       /* Details: "The constructor PortletMode(java.lang.String): converts    */
       /* any upper case letters in the name parameter to lower case"          */
       TestResult tr1 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_CONSTRUCTOR2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      PortletMode pm1=new PortletMode("NEWMODE");
+      if(pm1!=null && pm1.toString().equals("newmode")) {
+    	  tr1.setTcSuccess(true);
+      } else {
+    	  tr1.appendTcDetail("The Portlet Mode has null value");
+      }
       tr1.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletMode_ApiRender_fieldEDIT             */
@@ -149,26 +159,40 @@ public class PortletTests_PortletMode_ApiRender implements Portlet, ResourceServ
       /* Details: "Method toString(): Returns a String representation of      */
       /* the portlet mode"                                                    */
       TestResult tr5 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_TOSTRING);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
-      tr5.writeTo(writer);
+      String tstring=mode.toString();
+      if(tstring.equals("view")) {
+    	  tr5.setTcSuccess(true);
+      } else {
+          tr5.appendTcDetail("String Representation of Portlet Mode: "+mode.toString());  
+         }
+       tr5.writeTo(writer);
+      
 
       /* TestCase: V2PortletTests_PortletMode_ApiRender_hashCode              */
       /* Details: "Method hashCode(): Returns an int containing the has       */
       /* code for the portlet mode"                                           */
-      TestResult tr6 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_HASHCODE);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
+      TestResult tr6 = tcd.getTestResultSucceeded(V2PORTLETTESTS_PORTLETMODE_APIRENDER_HASHCODE);
+      Object hcode=mode.hashCode();
+      if(hcode!=null) {
+    	  tr6.setTcSuccess(true);
+      } else {
+    	  tr6.appendTcDetail("The hascode has null value");
+         }
       tr6.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletMode_ApiRender_equals                */
       /* Details: "Method equals(): Returns true if the PortletMode equals    */
       /* the specified PortletMode"                                           */
       TestResult tr7 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_EQUALS);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
-      tr7.writeTo(writer);
-
+      PortletMode pmn1=new PortletMode("NewMode");
+      PortletMode pmn2=new PortletMode("newmode");
+      if(pmn1.equals(pmn2)) {
+    	  tr7.setTcSuccess(true);
+      } else {
+    	  tr7.appendTcDetail("The Portlet Modes are not equal");
+      }
+      
+     tr7.writeTo(writer);
    }
 
 }

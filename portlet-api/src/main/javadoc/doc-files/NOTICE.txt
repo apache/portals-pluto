@@ -1,0 +1,11 @@
+
+Java Portlet Specification V3.0
+Copyright 2004-2013 Apache Software Foundation
+
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
+
+
+Original code
+© Copyright IBM Corp. 2006, 2007
+All rights reserved.

@@ -40,7 +40,8 @@ public class EventResponseImpl extends StateAwareResponseImpl implements EventRe
         // nothing to check or do for EventResponse
     }
 
-	public void setRenderParameters(EventRequest request)
+	@SuppressWarnings("deprecation")
+   public void setRenderParameters(EventRequest request)
 	{
         ArgumentUtility.validateNotNull("request", request);
         setRenderParameters(request.getParameterMap());

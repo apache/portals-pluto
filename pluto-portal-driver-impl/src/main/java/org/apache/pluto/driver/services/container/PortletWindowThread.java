@@ -116,7 +116,7 @@ public class PortletWindowThread extends Thread {
 
 //			        		unmarshaller.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
 
-			        		JAXBElement result = unmarshaller.unmarshal(xml,clazz);
+			        		JAXBElement<?> result = unmarshaller.unmarshal(xml,clazz);
 
 			        		event =  new EventImpl(event.getQName(),(Serializable) result.getValue());
 			        	} catch (JAXBException e) {
@@ -148,15 +148,9 @@ public class PortletWindowThread extends Thread {
 	private EventDefinition getEventDefintion(QName name) {
 		PortletApplicationDefinition appDD = portletWindow.getPortletDefinition().getApplication();
 		for (EventDefinition def : appDD.getEventDefinitions()){
-			if (def.getQName() != null){
-				if (def.getQName().equals(name))
-					return def;
-			}
-			else{
-				QName tmp = new QName(appDD.getDefaultNamespace(),def.getName());
-				if (tmp.equals(name))
-					return def;
-			}
+		   if (def.getQName().equals(name)) {
+		      return def;
+		   }
 		}
 		throw new IllegalStateException();
 	}

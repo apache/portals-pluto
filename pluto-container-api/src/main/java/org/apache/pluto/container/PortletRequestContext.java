@@ -17,10 +17,14 @@
 package org.apache.pluto.container;
 
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.ActionParameters;
 import javax.portlet.PortletConfig;
+import javax.portlet.RenderParameters;
+import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
@@ -60,6 +64,34 @@ public interface PortletRequestContext
     Cookie[] getCookies();
     Map<String, String[]> getProperties();
     
+    // V2 compatibility parameter methods
+    
+    Map<String, String[]> getParameterMap();
     Map<String, String[]> getPrivateParameterMap();
     Map<String, String[]> getPublicParameterMap();
+    
+    /**
+     * Returns the render parameters for the portlet. V3 method.
+     * @return
+     */
+    RenderParameters getRenderParameters();
+
+    /**
+     * Returns the action parameters for the portlet. V3 method.
+     * @return
+     */
+    ActionParameters getActionParameters();
+    
+    // for render headers support
+    void setRenderHeaders(String renderHeaders);
+    String getRenderHeaders();
+    
+    // for async support
+    DispatcherType getDispatcherType();
+    boolean isExecutingRequestBody();
+    void setExecutingRequestBody(boolean executingRequestBody);
+    
+    // To provide special handling during portlet request dispatcher and async dispatches
+    void endDispatch();
+    void startDispatch(HttpServletRequest wrappedServletRequest, Map<String, List<String>> queryParams, String phase);
 }

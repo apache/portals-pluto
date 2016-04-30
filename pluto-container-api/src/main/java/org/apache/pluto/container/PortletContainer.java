@@ -63,7 +63,7 @@ public interface PortletContainer {
     void destroy() throws PortletContainerException;
 
     /**
-     * Calls the render method of the given portlet window.
+     * Calls the render headers method of the given portlet window.
      * @param portletWindow the portlet Window
      * @param request               the servlet request
      * @param response              the servlet response
@@ -72,10 +72,30 @@ public interface PortletContainer {
      * @throws IOException               if the streaming causes an I/O problem
      * @throws PortletContainerException if the portlet container implementation
      *                                   has trouble fulfilling the request
+     * @return The header data 
      */
-    void doRender(PortletWindow portletWindow,
+    HeaderData doHeader(PortletWindow portletWindow,
             HttpServletRequest request,
             HttpServletResponse response)
+    throws PortletException, IOException, PortletContainerException;
+
+    /**
+     * Calls the render method of the given portlet window.
+     * @param portletWindow the portlet Window
+     * @param request               the servlet request
+     * @param response              the servlet response
+     * @param renderHeaders         marks if doHeaders or render
+     * @throws PortletException          if one portlet has trouble fulfilling
+     *                                   the request
+     * @throws IOException               if the streaming causes an I/O problem
+     * @throws PortletContainerException if the portlet container implementation
+     *                                   has trouble fulfilling the request
+     * @return The header data if it's a RENDER_HEADERS call, otherwise <code>null</code>                                   
+     */
+    HeaderData doRender(PortletWindow portletWindow,
+            HttpServletRequest request,
+            HttpServletResponse response,
+            String renderHeaders)
     throws PortletException, IOException, PortletContainerException;
 
     /**
@@ -84,6 +104,7 @@ public interface PortletContainer {
      * @param portletWindow the portlet Window
      * @param request               the servlet request
      * @param response              the servlet response
+     * @param pageState             the page state (used for Partial Action processing)
      * @throws PortletException          if one portlet has trouble fulfilling
      *                                   the request
      * @throws PortletContainerException if the portlet container implementation
@@ -91,7 +112,7 @@ public interface PortletContainer {
      */
     void doServeResource(PortletWindow portletWindow,
             HttpServletRequest request,
-            HttpServletResponse response)
+            HttpServletResponse response, String pageState)
     throws PortletException, IOException, PortletContainerException;
 
     /**
@@ -100,6 +121,9 @@ public interface PortletContainer {
      * @param portletWindow the portlet Window
      * @param request               the servlet request
      * @param response              the servlet response
+     * @param isRedirect   Flag indicating whether redirect is to be performed. 
+     *                     should be true for Action request and false for Ajax Action or 
+     *                     Partial Action requests.
      * @throws PortletException          if one portlet has trouble fulfilling
      *                                   the request
      * @throws PortletContainerException if the portlet container implementation
@@ -107,7 +131,8 @@ public interface PortletContainer {
      */
     void doAction(PortletWindow portletWindow,
             HttpServletRequest request,
-            HttpServletResponse response)
+            HttpServletResponse response,
+            boolean isRedirect)
     throws PortletException, IOException, PortletContainerException;
 
     /**

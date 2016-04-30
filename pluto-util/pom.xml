@@ -22,7 +22,7 @@
   <parent>
     <artifactId>pluto</artifactId>
     <groupId>org.apache.portals.pluto</groupId>
-    <version>2.1.0-SNAPSHOT</version>
+    <version>3.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>pluto-util</artifactId>
@@ -45,6 +45,12 @@
       <artifactId>pluto-container</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.portals.pluto</groupId>
+      <artifactId>portlet-api</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>

@@ -21,13 +21,13 @@ import java.util.Locale;
 
 public interface UserDataConstraint {
 
-	String NONE = "NONE";
-	String INTEGRAL = "INTEGRAL";
-	String CONFIDENTIAL = "CONFIDENTIAL";
+   String NONE = "NONE";
+   String INTEGRAL = "INTEGRAL";
+   String CONFIDENTIAL = "CONFIDENTIAL";
 
-    String getTransportGuarantee();
+   String getTransportGuarantee();
     
-	Description getDescription(Locale locale);
-    List<? extends Description> getDescriptions();
-    Description addDescription(String lang);
+   Description getDescription(Locale locale);
+   List<Description> getDescriptions();
+   void addDescription(Description desc);
 }

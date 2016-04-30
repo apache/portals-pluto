@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.pluto.container.PortletActionResponseContext;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletEventResponseContext;
+import org.apache.pluto.container.PortletHeaderResponseContext;
 import org.apache.pluto.container.PortletRenderResponseContext;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletRequestContextService;
@@ -76,12 +77,27 @@ public class PortletRequestContextServiceImpl implements PortletRequestContextSe
         return new PortletRenderResponseContextImpl(container, containerRequest, containerResponse, window);
     }
 
+    public PortletRequestContext getPortletHeaderRequestContext(PortletContainer container, HttpServletRequest containerRequest,
+                                                                HttpServletResponse containerResponse, PortletWindow window)
+    {
+        return new PortletRequestContextImpl(container, containerRequest, containerResponse, window, false);
+    }
+
+    public PortletHeaderResponseContext getPortletHeaderResponseContext(PortletContainer container,
+                                                                        HttpServletRequest containerRequest,
+                                                                        HttpServletResponse containerResponse,
+                                                                        PortletWindow window)
+    {
+        return new PortletHeaderResponseContextImpl(container, containerRequest, containerResponse, window);
+    }
+
     public PortletResourceRequestContext getPortletResourceRequestContext(PortletContainer container,
                                                                           HttpServletRequest containerRequest,
                                                                           HttpServletResponse containerResponse,
-                                                                          PortletWindow window)
+                                                                          PortletWindow window,
+                                                                          String pageState)
     {
-        return new PortletResourceRequestContextImpl(container, containerRequest, containerResponse, window);
+        return new PortletResourceRequestContextImpl(container, containerRequest, containerResponse, window, pageState);
     }
 
     public PortletResourceResponseContext getPortletResourceResponseContext(PortletContainer container,

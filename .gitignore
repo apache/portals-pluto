@@ -15,3 +15,5 @@ tags
 *.dir
 maven-eclipse.xml
 .externalToolBuilders
+velocity.log
+*~

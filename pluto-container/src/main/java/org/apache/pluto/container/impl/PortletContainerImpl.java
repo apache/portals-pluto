@@ -24,6 +24,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
@@ -35,11 +37,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.FilterManager;
+import org.apache.pluto.container.HeaderData;
 import org.apache.pluto.container.PortletActionResponseContext;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletEventResponseContext;
+import org.apache.pluto.container.PortletHeaderResponseContext;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRenderResponseContext;
 import org.apache.pluto.container.PortletRequestContext;
@@ -120,6 +124,58 @@ public class PortletContainerImpl implements PortletContainer
 
 
     /**
+     * Performs Header request for the portlet associated with the specified portlet window.
+     * @param portletWindow  the portlet window.
+     * @param request  the servlet request.
+     * @param response  the servlet response.
+     * @throws IllegalStateException  if the container is not initialized.
+     * @throws PortletException
+     * @throws IOException
+     * @throws PortletContainerException
+     * 
+     * @see javax.portlet.Portlet#header(HeaderRequest, HeaderResponse)
+     */
+    @Override
+    public HeaderData doHeader(PortletWindow portletWindow,
+            HttpServletRequest request,
+            HttpServletResponse response)
+    throws PortletException, IOException, PortletContainerException
+    {
+        ensureInitialized();
+
+        debugWithName("Header request received for portlet: "
+                + portletWindow.getPortletDefinition().getPortletName());
+
+        PortletRequestContextService rcService = getContainerServices().getPortletRequestContextService();
+        PortletEnvironmentService envService = getContainerServices().getPortletEnvironmentService();
+        PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
+
+        PortletRequestContext requestContext = rcService.getPortletHeaderRequestContext(this, request, response, portletWindow);
+        PortletHeaderResponseContext responseContext = rcService.getPortletHeaderResponseContext(this, request, response, portletWindow);
+        responseContext.setPropsAllowed(true);
+        HeaderRequest portletRequest = envService.createHeaderRequest(requestContext, responseContext);
+        HeaderResponse portletResponse = envService.createHeaderResponse(responseContext);
+        HeaderData headerData = new HeaderData();
+
+        FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.HEADER_PHASE);
+
+        try
+        {
+            invoker.header(requestContext, portletRequest, portletResponse, filterManager);
+            headerData = responseContext.getHeaderData();
+            responseContext.close();
+        }
+        finally
+        {
+            responseContext.release();
+        }
+
+        debugWithName("Portlet header done for: " + portletWindow.getPortletDefinition().getPortletName());
+        return headerData;
+    }
+
+
+    /**
      * Renders the portlet associated with the specified portlet window.
      * @param portletWindow  the portlet window.
      * @param request  the servlet request.
@@ -131,9 +187,11 @@ public class PortletContainerImpl implements PortletContainer
      * 
      * @see javax.portlet.Portlet#render(RenderRequest, RenderResponse)
      */
-    public void doRender(PortletWindow portletWindow,
+    @Override
+    public HeaderData doRender(PortletWindow portletWindow,
             HttpServletRequest request,
-            HttpServletResponse response)
+            HttpServletResponse response,
+            String renderHeaders)
     throws PortletException, IOException, PortletContainerException
     {
         ensureInitialized();
@@ -147,6 +205,15 @@ public class PortletContainerImpl implements PortletContainer
 
         PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
         PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
+
+        if (renderHeaders != null && renderHeaders.equals(PortletRequest.RENDER_HEADERS)) {
+           responseContext.setPropsAllowed(true);
+        } else {
+           responseContext.setPropsAllowed(false);
+        }
+        requestContext.setRenderHeaders(renderHeaders);
+        HeaderData headerData = new HeaderData();
+
         RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext);
         RenderResponse portletResponse = envService.createRenderResponse(responseContext);
 
@@ -155,7 +222,7 @@ public class PortletContainerImpl implements PortletContainer
         try
         {
             invoker.render(requestContext, portletRequest, portletResponse, filterManager);
-            // Mark portlet interaction is completed: backend implementation can flush response state now
+            headerData = responseContext.getHeaderData();
             responseContext.close();
         }
         finally
@@ -164,6 +231,7 @@ public class PortletContainerImpl implements PortletContainer
         }
 
         debugWithName("Portlet render done for: " + portletWindow.getPortletDefinition().getPortletName());
+        return headerData;
     }
 
     /**
@@ -179,7 +247,8 @@ public class PortletContainerImpl implements PortletContainer
      */
     public void doServeResource(PortletWindow portletWindow,
             HttpServletRequest request,
-            HttpServletResponse response)
+            HttpServletResponse response,
+            String pageState)
     throws PortletException, IOException, PortletContainerException
     {
         ensureInitialized();
@@ -191,22 +260,28 @@ public class PortletContainerImpl implements PortletContainer
         PortletEnvironmentService envService = getContainerServices().getPortletEnvironmentService();
         PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
 
-        PortletResourceRequestContext requestContext = rcService.getPortletResourceRequestContext(this, request, response, portletWindow);
+        PortletResourceRequestContext requestContext = rcService.getPortletResourceRequestContext(this, request, response, portletWindow, pageState);
         PortletResourceResponseContext responseContext = rcService.getPortletResourceResponseContext(this, request, response, portletWindow);
+        responseContext.setPropsAllowed(true);
         ResourceRequest portletRequest = envService.createResourceRequest(requestContext, responseContext);
         ResourceResponse portletResponse = envService.createResourceResponse(responseContext, requestContext.getCacheability());
+        requestContext.setResponse(portletResponse);     // for async support
 
         FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.RESOURCE_PHASE);
-
+        
         try
         {
-            invoker.serveResource(requestContext, portletRequest, portletResponse, filterManager);
-            // Mark portlet interaction is completed: backend implementation can flush response state now
-            responseContext.close();
+           invoker.serveResource(requestContext, portletRequest, portletResponse, filterManager);
         }
         finally
         {
-            responseContext.release();
+            if (!request.isAsyncSupported() || !request.isAsyncStarted()) {
+                // Mark portlet interaction is completed: backend implementation can flush response state now
+                responseContext.close();
+                responseContext.release();
+            } else {
+               LOG.debug("Async started for resource request. responseContext not released.");
+            }
         }
 
         debugWithName("Portlet resource done for: " + portletWindow.getPortletDefinition().getPortletName());
@@ -215,8 +290,11 @@ public class PortletContainerImpl implements PortletContainer
     /**
      * Process action for the portlet associated with the given portlet window.
      * @param portletWindow  the portlet window.
-     * @param request  the servlet request.
-     * @param response  the servlet response.
+     * @param request      the servlet request.
+     * @param response     the servlet response.
+     * @param isRedirect   Flag indicating whether redirect is to be performed. 
+     *                     should be true for Action request and false for Ajax Action or 
+     *                     Partial Action requests.
      * @throws PortletException
      * @throws IOException
      * @throws PortletContainerException
@@ -225,7 +303,8 @@ public class PortletContainerImpl implements PortletContainer
      */
     public void doAction(PortletWindow portletWindow,
             HttpServletRequest request,
-            HttpServletResponse response)
+            HttpServletResponse response,
+            boolean isRedirect)
     throws PortletException, IOException, PortletContainerException
     {
         ensureInitialized();
@@ -239,18 +318,23 @@ public class PortletContainerImpl implements PortletContainer
 
         PortletRequestContext requestContext = rcService.getPortletActionRequestContext(this, request, response, portletWindow);
         PortletActionResponseContext responseContext = rcService.getPortletActionResponseContext(this, request, response, portletWindow);
+        responseContext.setPropsAllowed(true);
         ActionRequest portletRequest = envService.createActionRequest(requestContext, responseContext);
         ActionResponse portletResponse = envService.createActionResponse(responseContext);
 
         FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.ACTION_PHASE);
 
         String location = null;
+        String logtxt = "Portlet action";
+        if (!isRedirect) {
+           logtxt = "Portlet Ajax or Partial action";
+        }
 
         try
         {
             invoker.action(requestContext, portletRequest, portletResponse, filterManager);
 
-            debugWithName("Portlet action processed for: "
+            debugWithName(logtxt + " processed for: "
                     + portletWindow.getPortletDefinition().getPortletName());
 
             // Mark portlet interaction is completed: backend implementation can flush response state now
@@ -273,9 +357,11 @@ public class PortletContainerImpl implements PortletContainer
         {
             responseContext.release();
         }
-        redirect(request, response, location);
+        if (isRedirect) {
+           redirect(request, response, location);
+        }
 
-        debugWithName("Portlet action done for: " + portletWindow.getPortletDefinition().getPortletName());
+        debugWithName(logtxt + " done for: " + portletWindow.getPortletDefinition().getPortletName());
     }
 
     protected void redirect(HttpServletRequest request, HttpServletResponse response, String location) throws IOException

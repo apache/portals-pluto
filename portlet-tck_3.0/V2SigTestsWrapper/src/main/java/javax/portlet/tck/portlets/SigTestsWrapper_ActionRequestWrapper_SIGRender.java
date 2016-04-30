@@ -112,14 +112,6 @@ public class SigTestsWrapper_ActionRequestWrapper_SIGRender implements Portlet, 
       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
-      /* TestCase: V2SigTestsWrapper_ActionRequestWrapper_SIGRender_extendsPortletRequestWrapper */
-      /* Details: "ActionRequestWrapper extends PortletRequestWrapper "       */
-      TestResult tr1 = tcd.getTestResultFailed(V2SIGTESTSWRAPPER_ACTIONREQUESTWRAPPER_SIGRENDER_EXTENDSPORTLETREQUESTWRAPPER);
-      try {
-         tr1.setTcSuccess(cc.hasSuperclass(PortletRequestWrapper.class));
-      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
-      tr1.writeTo(writer);
-
       /* TestCase: V2SigTestsWrapper_ActionRequestWrapper_SIGRender_hasGetCharacterEncoding */
       /* Details: "ActionRequestWrapper has a getCharacterEncoding()          */
       /* method "                                                             */

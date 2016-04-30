@@ -18,21 +18,24 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ANNOTATIONTESTS_RENDERMODE_APIRENDER_NAME;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Logger;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.GenericPortlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderMode;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -45,18 +48,18 @@ import static javax.portlet.ResourceURL.*;
  * portlet AnnotationTests_RenderMode_ApiRender_event
  *
  */
-public class AnnotationTests_RenderMode_ApiRender implements Portlet, ResourceServingPortlet {
+public class AnnotationTests_RenderMode_ApiRender extends GenericPortlet {
    private static final String LOG_CLASS = 
          AnnotationTests_RenderMode_ApiRender.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
-   private PortletConfig portletConfig = null;
+   
 
    @Override
-   public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
+   public void init() {
+	  
    }
-
+   
    @Override
    public void destroy() {
    }
@@ -70,8 +73,6 @@ public class AnnotationTests_RenderMode_ApiRender implements Portlet, ResourceSe
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      StringWriter writer = new StringWriter();
-
    }
 
    @Override
@@ -82,7 +83,22 @@ public class AnnotationTests_RenderMode_ApiRender implements Portlet, ResourceSe
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
+   }
+   
+   @RenderMode(name="VIEW")
+   public void newRender(RenderRequest req,RenderResponse resp)
+           throws PortletException,IOException {
+	   PrintWriter writer = resp.getWriter();
+	   JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+	   
+	   
+	  /* TestCase: V2AnnotationTests_RenderMode_ApiRender_name                */
+	  /* Details: "Method name(): On a render request, the method is          */
+	  /* executed if the portlet mode matches the name field"                 */
+	   
+	  TestResult tr0 = tcd.getTestResultFailed(V2ANNOTATIONTESTS_RENDERMODE_APIRENDER_NAME);
+	   tr0.setTcSuccess(true);
+	   tr0.writeTo(writer);
 
    }
 
@@ -93,22 +109,9 @@ public class AnnotationTests_RenderMode_ApiRender implements Portlet, ResourceSe
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
-
-      PrintWriter writer = portletResp.getWriter();
-
-      JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
-
-      // Create result objects for the tests
-
-      ClassChecker cc = new ClassChecker(javax.portlet.RenderMode.class);
-
-      /* TestCase: V2AnnotationTests_RenderMode_ApiRender_name                */
-      /* Details: "Method name(): On a render request, the method is          */
-      /* executed if the portlet mode matches the name field"                 */
-      TestResult tr0 = tcd.getTestResultFailed(V2ANNOTATIONTESTS_RENDERMODE_APIRENDER_NAME);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
+      
+      super.render(portletReq, portletResp);
+      
 
    }
 

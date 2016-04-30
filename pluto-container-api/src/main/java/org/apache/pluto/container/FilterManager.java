@@ -18,11 +18,15 @@ package org.apache.pluto.container;
 
 import java.io.IOException;
 
+import javax.enterprise.inject.spi.BeanManager;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventPortlet;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.HeaderPortlet;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
@@ -41,7 +45,13 @@ import javax.portlet.ResourceServingPortlet;
 public interface FilterManager {
 
     void processFilter(ActionRequest req, ActionResponse res, Portlet portlet, PortletContext portletContext) throws PortletException, IOException;
+    void processFilter(HeaderRequest req, HeaderResponse res, HeaderPortlet portlet, PortletContext portletContext) throws PortletException, IOException;
     void processFilter(RenderRequest req, RenderResponse res, Portlet portlet, PortletContext portletContext) throws PortletException, IOException;
     void processFilter(ResourceRequest req, ResourceResponse res, ResourceServingPortlet resourceServingPortlet, PortletContext portletContext)throws PortletException, IOException;
     void processFilter(EventRequest req, EventResponse res, EventPortlet eventPortlet, PortletContext portletContext)throws PortletException, IOException;
+
+    /**
+    * To enable contextual support in filters
+    */
+   void setBeanManager(BeanManager bm);
 }

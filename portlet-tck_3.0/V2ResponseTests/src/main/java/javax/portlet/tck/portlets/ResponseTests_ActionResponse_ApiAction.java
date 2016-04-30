@@ -82,8 +82,10 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       /* Details: "Method sendRedirect(String): Allows a redirect response    */
       /* to be sent to the client"                                            */
       TestResult tr0 = tcd.getTestResultFailed(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTA1);
-      /* TODO: implement test */
+      
       tr0.appendTcDetail("Not implemented.");
+     
+     
       tr0.writeTo(writer);
 
       /* TestCase: V2ResponseTests_ActionResponse_ApiAction_sendRedirectA2    */

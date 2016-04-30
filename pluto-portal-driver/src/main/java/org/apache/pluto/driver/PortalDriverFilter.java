@@ -24,6 +24,7 @@ import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURL.URLType;
 
 import javax.portlet.PortletException;
 import javax.servlet.Filter;
@@ -35,6 +36,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 /**
@@ -151,12 +153,11 @@ public class PortalDriverFilter implements Filter {
             new PortalRequestContext(getServletContext(), request, response);
 
         PortalURL portalURL = portalRequestContext.getRequestedPortalURL();
-        String actionWindowId = portalURL.getActionWindow();
 
-        PortletWindowConfig actionWindowConfig =
-            actionWindowId == null
-                ? null
-                : PortletWindowConfig.fromId(actionWindowId);
+        PortletWindowConfig actionWindowConfig = null;
+        if (portalURL.getType() == URLType.Action) {
+           actionWindowConfig = PortletWindowConfig.fromId(portalURL.getTargetWindow());
+        }
 
         // Action window config will only exist if there is an action request.
         if (actionWindowConfig != null) {
@@ -167,7 +168,7 @@ public class PortalDriverFilter implements Filter {
                     + portletWindow.getId().getStringId());
             }
             try {
-                container.doAction(portletWindow, request, response);
+                container.doAction(portletWindow, request, response, true);
             } catch (PortletContainerException ex) {
                 throw new ServletException(ex);
             } catch (PortletException ex) {

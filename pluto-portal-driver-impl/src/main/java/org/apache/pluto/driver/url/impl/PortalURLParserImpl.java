@@ -16,22 +16,30 @@
  */
 package org.apache.pluto.driver.url.impl;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import javax.portlet.PortletMode;
+import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.pluto.driver.AttributeKeys;
+import org.apache.pluto.driver.config.DriverConfiguration;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURL.URLType;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLParser;
+import org.apache.pluto.driver.url.PortalURLPublicParameter;
 
 /**
  * @version 1.0
@@ -39,517 +47,688 @@ import org.apache.pluto.driver.url.PortalURLParser;
  */
 public class PortalURLParserImpl implements PortalURLParser {
 
-	/** Logger. */
-    private static final Logger LOG = LoggerFactory.getLogger(PortalURLParserImpl.class);
+   /** Logger. */
+   private static final Logger LOG = LoggerFactory.getLogger(PortalURLParserImpl.class);
+   private static final boolean isDebug = LOG.isDebugEnabled();
+   private static final boolean isTrace = LOG.isTraceEnabled();
 
-    /** The singleton parser instance. */
-    private static final PortalURLParser PARSER = new PortalURLParserImpl();
-
-
-    // Constants used for Encoding/Decoding ------------------------------------
-
-    private static final String PREFIX = "__";
-    private static final String DELIM = "_";
-    private static final String PORTLET_ID = "pd";
-    private static final String ACTION = "ac";
-    private static final String RESOURCE = "rs";
-    private static final String RESOURCE_ID = "ri";
-    private static final String CACHE_LEVEL = "cl";
-    private static final String RENDER_PARAM = "rp";
-    private static final String PRIVATE_RENDER_PARAM = "pr";
-    private static final String PUBLIC_RENDER_PARAM = "sp";
-    private static final String WINDOW_STATE = "ws";
-    private static final String PORTLET_MODE = "pm";
-    private static final String VALUE_DELIM = "0x0";
-
-    //This is a list of characters that need to be encoded  to be protected
-    //The ? is necessary to protect URI's with a query portion that is being passed as a parameter
-    private static final String[][] ENCODINGS = new String[][] {
-    		new String[] { "_",  "0x1" },
-            new String[] { ".",  "0x2" },
-            new String[] { "/",  "0x3" },
-            new String[] { "\r", "0x4" },
-            new String[] { "\n", "0x5" },
-            new String[] { "<",  "0x6" },
-            new String[] { ">",  "0x7" },
-            new String[] { " ",  "0x8" },
-            new String[] { "#",  "0x9" },
-            new String[] { "?",  "0xa" },
-            new String[] { "\\", "0xb" },
-            new String[] { "%",  "0xc" },
-    };
-
-    // Constructor -------------------------------------------------------------
-
-    /**
-     * Private constructor that prevents external instantiation.
-     */
-    private PortalURLParserImpl() {
-    	// Do nothing.
-    }
-
-    /**
-     * Returns the singleton parser instance.
-     * @return the singleton parser instance.
-     */
-    public static PortalURLParser getParser() {
-    	return PARSER;
-    }
+   /** The singleton parser instance. */
+   private static final PortalURLParser PARSER = new PortalURLParserImpl();
 
 
-    // Public Methods ----------------------------------------------------------
+   // Constants used for Encoding/Decoding ------------------------------------
 
-    /**
-     * Parse a servlet request to a portal URL.
-     * @param request  the servlet request to parse.
-     * @return the portal URL.
-     */
-    public PortalURL parse(HttpServletRequest request) {
+   private static final String PREFIX = "__";
+   private static final String PORTLET_ID = "pd";
+   private static final String RESOURCE_ID = "ri";
+   private static final String CACHE_LEVEL = "cl";
+   private static final String RENDER_PARAM = "rp";
+   private static final String PUBLIC_RENDER_PARAM = "sp";
+   private static final String WINDOW_STATE = "ws";
+   private static final String PORTLET_MODE = "pm";
+   
+   // The delimiter & special chars for the value encoding are chosen
+   // from the URL reserved delimiter characters that ARE ENCODED by the URLEncoder
+   // so that they will not appear encoded parameter names or values.
+   // See RFC 3986 & URLEncoder documentation.
+   private static final String VALUE_DELIM = ":";
+   private static final String VALUE_NULL = ",";
+   private static final String VALUE_ARRAY_EMPTY = "@";
+   private static final String DELIM = ";";
+   private static final String TOKEN_DELIM = "/";
 
-    	if (LOG.isDebugEnabled()) {
-            LOG.debug("Parsing URL: " + request.getRequestURI());
-        }
+   private static final String ACTION = "ac";
+   private static final String RESOURCE = "rs";
+   private static final String AJAX_ACTION = "aa";       // new for portlet spec 3
+   private static final String PARTIAL_ACTION = "pa";    // new for portlet spec 3
+   private static final String RENDER = "re";            // new for portlet spec 3
+   
+   private static final String AUTHENTICATE = "au";      // new for portlet spec 3
+   
+   private static final String ACTION_PARAM = "av";      // new for portlet spec 3
+   private static final String RESOURCE_PARAM = "rv";    // new for portlet spec 3
 
-        String contextPath = request.getContextPath();
-        String servletName = request.getServletPath();
 
-        String urlBase = request.getScheme()+"://" + request.getServerName() + ":" + request.getServerPort();
-        // Construct portal URL using info retrieved from servlet request.
-        PortalURL portalURL =  new RelativePortalURLImpl(urlBase, contextPath, servletName, this);
+   // Constructor -------------------------------------------------------------
 
-        // Support added for filter.  Should we seperate into a different impl?
-        String pathInfo = request.getPathInfo();
-        if (pathInfo == null) {
-            if(servletName.contains(".jsp") && !servletName.endsWith(".jsp")) {
-                int idx = servletName.indexOf(".jsp")+".jsp".length();
-                pathInfo = servletName.substring(idx);
-                servletName = servletName.substring(0, idx);
-                portalURL = new RelativePortalURLImpl(urlBase, contextPath, servletName, this);
+   /**
+    * Private constructor that prevents external instantiation.
+    */
+   private PortalURLParserImpl() {
+      // Do nothing.
+   }
+
+   /**
+    * Returns the singleton parser instance.
+    * @return the singleton parser instance.
+    */
+   public static PortalURLParser getParser() {
+      return PARSER;
+   }
+
+
+   // Public Methods ----------------------------------------------------------
+
+   /**
+    * Parse a servlet request to a portal URL.
+    * @param request  the servlet request to parse.
+    * @return the portal URL.
+    */
+   public PortalURL parse(HttpServletRequest request) {
+
+      String reqURI = request.getRequestURI();
+      String contextPath = request.getContextPath();
+      String servletName = request.getServletPath();
+
+      if (isDebug) {
+         LOG.debug("Parsing. Context Path: " + contextPath + ", Servlet Name: " + servletName + ", Request URI: " + reqURI);
+      }
+
+
+      String urlBase = request.getScheme()+"://" + request.getServerName() + ":" + request.getServerPort();
+      // Construct portal URL using info retrieved from servlet request.
+      RelativePortalURLImpl portalURL =  new RelativePortalURLImpl(urlBase, contextPath, servletName, this, request);
+
+      // Support added for filter.  Should we separate into a different impl?
+      String pathInfo = request.getPathInfo();
+      if (pathInfo == null) {
+         if(servletName.contains(".jsp") && !servletName.endsWith(".jsp")) {
+            int idx = servletName.indexOf(".jsp")+".jsp".length();
+            pathInfo = servletName.substring(idx);
+            servletName = servletName.substring(0, idx);
+            portalURL = new RelativePortalURLImpl(urlBase, contextPath, servletName, this, request);
+            if (isDebug) {
+               LOG.debug("Constructed new URL due to JSP processing. pathInfo: " + pathInfo);
+            }
+         }
+      }
+      
+      // we want to work with the untranslated path info, so extract it from the URI.
+      // chop off query string.
+      String prefix = contextPath + servletName;
+      int qi = reqURI.indexOf("?");
+      qi = (qi < 0) ? reqURI.length() : qi;
+      pathInfo = reqURI.substring(prefix.length(), qi);
+
+      if (isTrace) {
+         LOG.debug("Parsing request pathInfo: " + pathInfo);
+      }
+
+      // Need to set the render path (= page) and PRP mapper before the rest of the URL is parsed
+      StringBuilder renderPath = new StringBuilder();
+      if (pathInfo.length() > 0 && pathInfo.charAt(0) != '/') {
+         renderPath.append('/');
+      }
+
+      int ind = pathInfo.indexOf(TOKEN_DELIM + PREFIX);
+      if (ind < 0) {
+         // there are no parameters to process
+         renderPath.append(urlDecode(pathInfo));
+         pathInfo = "";
+      } else {
+         // parameters, etc. remain to be processed
+         renderPath.append(urlDecode(pathInfo.substring(0, ind)));
+         pathInfo = pathInfo.substring(ind);
+      }
+
+      portalURL.setRenderPath(renderPath.toString());
+      if (isTrace) {
+         LOG.debug("Parse: renderPath: " + renderPath.toString() + ",  pathInfo: " + pathInfo);
+      }
+
+      // Set up public render parameter mapper & portlet ID list
+      
+      ServletContext sc = request.getServletContext();
+      DriverConfiguration dc = (DriverConfiguration) sc.getAttribute(AttributeKeys.DRIVER_CONFIG);
+      // special handling for default page
+      String rp = (renderPath.length() > 0) ? renderPath.toString() : null;
+      PublicRenderParameterMapper prpm = dc.getPublicRenderParameterService()
+            .getPRPMapper(rp);
+      portalURL.setPublicRenderParameterMapper(prpm);
+      Collection<String> pids = dc.getPageConfig(rp).getPortletIds();
+      portalURL.setPortletIds(pids);
+
+      // Extract the version info for the portlets on the page and store in URL
+      
+      StringBuilder vstr = new StringBuilder();
+      if (isTrace) {
+         vstr.append("Portlet Versions: ");
+      }
+      for (String pid : pids) {
+         String appName = PortletWindowConfig.fromId(pid).getContextPath();
+         try {
+            String pv = dc.getPortletRegistryService().getPortletApplication(appName).getVersion();
+            portalURL.setVersion(pid, pv);
+            if (isTrace) {
+               vstr.append(pid).append(" = ").append(pv).append(", ");
+            }
+         } catch (Exception e) {
+            LOG.error("Portlet application definition could not be retrieved for " + appName);
+         }
+      }
+      if (isTrace) {
+         LOG.debug(vstr.toString());
+      }
+
+      // Tokenize the rest and process the tokens
+      ArrayList<String> portletIds = new ArrayList<String>();
+      if (pathInfo.length() > 2) {
+         String[] tokens = pathInfo.split(TOKEN_DELIM + PREFIX);
+         for (String t : tokens) {
+
+            // vals contains the component values of the token after the type
+            String type, val;
+            String[] vals;
+            if (t.length() < 3) {
+               // LOG.warn("Token >>" + t + "<< is too short!! ");
+               continue;
             } else {
-                return portalURL;
+               type = t.substring(0, 2);
+               val = t.substring(2);
+               vals = val.split(DELIM);
             }
-        }
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Parsing request pathInfo: " + pathInfo);
-        }
+            // If the first value is numeric, attempt to dereference the index to obtain the portlet ID.
+            // The code assumes that the portlet ID table in the URL appears directly after the render path. 
+            int index = -1;
+            String pid = null;
+            if ((vals[0].length() > 0) && vals[0].matches("\\d+")) {
+               try {
+                  index = Integer.parseInt(vals[0]);
+                  if ((index >= 0) && (index < portletIds.size())) {
+                     pid = portletIds.get(index);
+                  }
+               } catch (Exception e) {
+                  LOG.error("error parsing URL pid reference token. Token: " + vals[0] + ", exception: " + e.toString());
+               }
+            }
 
-        StringBuffer renderPath = new StringBuffer();
-        StringTokenizer st = new StringTokenizer(pathInfo, "/", false);
-        while (st.hasMoreTokens()) {
+            // Get the portlet IDs & reference numbers. The portlet IDs are URL encoded.
+            if (type.equals(PORTLET_ID)) {
+               portletIds.add(Integer.parseInt(vals[1]), urlDecode(vals[0]));
+               continue;
+            } 
 
-        	String token = st.nextToken();
-
-        	// Part of the render path: append to renderPath.
-        	if (!token.startsWith(PREFIX)) {
-//        		renderPath.append(token);
-        		//Fix for PLUTO-243
-        		renderPath.append('/').append(token);
-        	}
-//        	 Resource window definition: portalURL.setResourceWindow().
-           else if (token.startsWith(PREFIX + RESOURCE)) {
-               portalURL.setResourceWindow(decodeControlParameter(token)[0]);
-           }
-        	// Action window definition: portalURL.setActionWindow().
-        	else if (token.startsWith(PREFIX + ACTION)) {
-        		portalURL.setActionWindow(decodeControlParameter(token)[0]);
-        	}
             // Cacheability definition: portalURL.setCacheability().
-            else if (token.startsWith(PREFIX + CACHE_LEVEL)) {
-                portalURL.setCacheability(decodeControlParameter(token)[0]);
+            if (type.equals(CACHE_LEVEL)) {
+               portalURL.setCacheability(urlDecode(vals[0]));
+               continue;
             }
+
             // ResourceID definition: portalURL.setResourceID().
-            else if (token.startsWith(PREFIX + RESOURCE_ID)) {
-                portalURL.setResourceID(decodeControlParameter(token)[0]);
-            }
-        	// Window state definition: portalURL.setWindowState().
-        	else if (token.startsWith(PREFIX + WINDOW_STATE)) {
-        		String[] decoded = decodeControlParameter(token);
-        		portalURL.setWindowState(decoded[0], new WindowState(decoded[1]));
-        	}
-        	// Portlet mode definition: portalURL.setPortletMode().
-        	else if (token.startsWith(PREFIX + PORTLET_MODE)) {
-        		String[] decoded = decodeControlParameter(token);
-        		portalURL.setPortletMode(decoded[0], new PortletMode(decoded[1]));
-        	}
-        	// Portal URL parameter: portalURL.addParameter().
-        	else if(token.startsWith(PREFIX + RENDER_PARAM)) {
-        		String value = null;
-        		if (st.hasMoreTokens()) {
-        			value = st.nextToken();
-        		}
-        		//set the
-        		PortalURLParameter param = decodeParameter(token, value);
-        		portalURL.addParameter(param);
-
-
-        	}
-            else if (token.startsWith(PREFIX + PRIVATE_RENDER_PARAM)){
-                String value = null;
-                if (st.hasMoreTokens()) {
-                    value = st.nextToken();
-                }
-                PortalURLParameter param = decodePublicParameter(token, value);
-                if( param != null )
-                {
-                    //set private (Resource) parameter in portalURL
-                    portalURL.getPrivateRenderParameters().put(param.getName(), param.getValues());
-                }
-            }
-        	else if (token.startsWith(PREFIX + PUBLIC_RENDER_PARAM)){
-        		String value = null;
-        		if (st.hasMoreTokens()) {
-        			value = st.nextToken();
-        		}
-        		PortalURLParameter param = decodePublicParameter(token, value);
-        		if( param != null )
-        		{
-        			//set public parameter in portalURL
-    	    		portalURL.addPublicParameterCurrent(param.getName(), param.getValues());
-        		}
-        	}
-        }
-        if (renderPath.length() > 0) {
-            portalURL.setRenderPath(renderPath.toString());
-        }
-
-        // Return the portal URL.
-        return portalURL;
-    }
-
-
-    /**
-     * Converts a portal URL to a URL string.
-     * @param portalURL  the portal URL to convert.
-     * @return a URL string representing the portal URL.
-     */
-    public String toString(PortalURL portalURL) {
-
-    	StringBuffer buffer = new StringBuffer();
-
-        // Append the server URI and the servlet path.
-    	buffer.append(portalURL.getServletPath().startsWith("/")?"":"/")
-            .append(portalURL.getServletPath());
-
-        // Start the pathInfo with the path to the render URL (page).
-        if (portalURL.getRenderPath() != null) {
-        	buffer.append(portalURL.getRenderPath());
-        }
-        //Append the resource window definition, if it exists.
-        if (portalURL.getResourceWindow() != null){
-               buffer.append("/");
-               buffer.append(PREFIX).append(RESOURCE)
-                               .append(encodeCharacters(portalURL.getResourceWindow()));
-        }
-        // Append the action window definition, if it exists.
-        if (portalURL.getActionWindow() != null) {
-        	buffer.append("/");
-        	buffer.append(PREFIX).append(ACTION)
-        			.append(encodeCharacters(portalURL.getActionWindow()));
-        }
-        
-        if (portalURL.getResourceWindow() != null)
-        {
-            if (portalURL.getCacheability() != null)
-            {
-                buffer.append("/");
-                buffer.append(PREFIX).append(CACHE_LEVEL).append(encodeCharacters(portalURL.getCacheability()));
-            }
-            if (portalURL.getResourceID() != null)
-            {
-                buffer.append("/");
-                buffer.append(PREFIX).append(RESOURCE_ID).append(encodeCharacters(portalURL.getResourceID()));
-            }
-        }
-
-        // Append portlet mode definitions.
-        for (Iterator it = portalURL.getPortletModes().entrySet().iterator();
-        		it.hasNext(); ) {
-            Map.Entry entry = (Map.Entry) it.next();
-            buffer.append("/").append(
-            		encodeControlParameter(PORTLET_MODE, entry.getKey().toString(),
-                       entry.getValue().toString()));
-        }
-
-        // Append window state definitions.
-        for (Iterator it = portalURL.getWindowStates().entrySet().iterator();
-        		it.hasNext(); ) {
-            Map.Entry entry = (Map.Entry) it.next();
-            buffer.append("/").append(
-            		encodeControlParameter(WINDOW_STATE, entry.getKey().toString(),
-                       entry.getValue().toString()));
-        }
-
-        // Append action and render parameters.
-        StringBuffer query = new StringBuffer("?");
-        boolean firstParam = true;
-        for (Iterator it = portalURL.getParameters().iterator();
-        		it.hasNext(); ) {
-
-        	PortalURLParameter param = (PortalURLParameter) it.next();
-
-            // Encode action params in the query appended at the end of the URL.
-            if (portalURL.getActionWindow() != null
-            		&& portalURL.getActionWindow().equals(param.getWindowId())
-            		|| (portalURL.getResourceWindow() != null
-            				&& portalURL.getResourceWindow().equals(param.getWindowId()))) {
-            	for (int i = 0; i < param.getValues().length; i++) {
-                    // FIX for PLUTO-247
-                    if ( firstParam ) {
-                        firstParam = false;
-                    } else {
-                        query.append("&");
-                    }
-                    query.append(encodeQueryParam(param.getName())).append("=")
-                    		.append(encodeQueryParam(param.getValues()[i]));
-                }
+            if (type.equals(RESOURCE_ID)) {
+               portalURL.setResourceID(urlDecode(vals[0]));
+               continue;
             }
 
-            // Encode render params as a part of the URL.
-            else if (param.getValues() != null
-            		&& param.getValues().length > 0) {
-                String valueString = encodeMultiValues(param.getValues());
-                if (valueString.length() > 0) {
-                	buffer.append("/").append(
-                			encodeControlParameter(RENDER_PARAM, param.getWindowId(),
-                               param.getName()));
-                	buffer.append("/").append(valueString);
-                }
+            // Authenticate definition: portalURL.setAuthenticated().
+            if (type.equals(AUTHENTICATE)) {
+               portalURL.setAuthenticated(Boolean.valueOf(urlDecode(vals[0])));
+               continue;
             }
-        }
 
-        encode(buffer);
-
-        if (portalURL.getResourceWindow() != null)
-        {
-            Map<String, String[]> privateParamList = portalURL.getPrivateRenderParameters();
-            if (privateParamList!=null){
-                for (Iterator iter = privateParamList.keySet().iterator();iter.hasNext();){
-                    String paramname = (String)iter.next();
-                    String[] tmp = privateParamList.get(paramname);
-                    String valueString = encodeMultiValues(tmp);
-                    if (valueString.length()>0){
-                        buffer.append("/").append(encodePublicParamname(PRIVATE_RENDER_PARAM, paramname));
-                        buffer.append("/").append(valueString);
-                    }
-                }
+            // Resource window definition: portalURL.setResourceWindow().
+            if (type.equals(RESOURCE)) {
+               portalURL.setTargetWindow(pid);
+               portalURL.setType(URLType.Resource);
+               continue;
             }
-        }
-        
-        Map<String, String[]> publicParamList = portalURL.getPublicParameters();
-        if (publicParamList!=null){
-	        for (Iterator iter = publicParamList.keySet().iterator();iter.hasNext();){
-	        	String paramname = (String)iter.next();
-	        	String[] tmp = publicParamList.get(paramname);
-	        	String valueString = encodeMultiValues(tmp);
-	        	if (valueString.length()>0){
-	        		buffer.append("/").append(encodePublicParamname(PUBLIC_RENDER_PARAM, paramname));
-	        		buffer.append("/").append(valueString);
-	        	}
-	        }
-        }
 
-        // Construct the string representing the portal URL.
-        // Fix for PLUTO-247 - check if query string contains parameters
-        if ( query.length() > 1 ) {
-            return buffer.append(query).toString();
-        }
+            // Render window definition: portalURL.setResourceWindow().
+            if (type.equals(RENDER)) {
+               portalURL.setTargetWindow(pid);
+               portalURL.setType(URLType.Render);
+               continue;
+            }
 
-        // Construct the string representing the portal URL.
-        return buffer.toString();
-    }
+            // Action window definition: portalURL.setActionWindow().
+            if (type.equals(ACTION)) {
+               portalURL.setTargetWindow(pid);
+               portalURL.setType(URLType.Action);
+               continue;
+            }
 
-    public static void encode(StringBuffer url){
-        replaceChar(url,"|","%7C");
-        replaceChar(url,"\"","%22");
-    }
-    private static void replaceChar(StringBuffer url, String character, String change){
-        boolean contains = url.toString().contains(character);
-        while (contains){
-            int index = url.indexOf(character);
-            url.deleteCharAt(index);
-            url.insert(index, change, 0, 3);
-            contains = url.toString().contains(character);
-        }
-    }
+            // Ajax Action window definition: portalURL.setActionWindow().
+            if (type.equals(AJAX_ACTION)) {
+               portalURL.setTargetWindow(pid);
+               portalURL.setType(URLType.AjaxAction);
+               continue;
+            }
 
-    private String encodeQueryParam(String param) {
-        try {
-            return URLEncoder.encode(param, "UTF-8");
-        }
-        catch (UnsupportedEncodingException e) {
-            // If this happens, we've got bigger problems.
-            throw new RuntimeException(e);
-        }
-    }
+            // Partial Action window definition: portalURL.setActionWindow().
+            if (type.equals(PARTIAL_ACTION)) {
+               portalURL.setTargetWindow(pid);
+               portalURL.setType(URLType.PartialAction);
+               continue;
+            }
 
-    // Private Encoding/Decoding Methods ---------------------------------------
+            // Window state definition: portalURL.setWindowState().
+            if (type.equals(WINDOW_STATE)) {
+               portalURL.setWindowState(pid, new WindowState(urlDecode(vals[1])));
+               continue;
+            }
 
-    /**
-     * Encode a control parameter.
-     * @param type  the type of the control parameter, which may be:
-     *              portlet mode, window state, or render parameter.
-     * @param windowId  the portlet window ID.
-     * @param name  the name to encode.
-     */
-    private String encodeControlParameter(String type,
-                                          String windowId,
-                                          String name) {
-    	StringBuffer buffer = new StringBuffer();
-    	buffer.append(PREFIX).append(type)
-    			.append(encodeCharacters(windowId))
-    			.append(DELIM).append(name);
-    	return buffer.toString();
-    }
+            // Portlet mode definition: portalURL.setPortletMode().
+            if (type.equals(PORTLET_MODE)) {
+               portalURL.setPortletMode(pid, new PortletMode(urlDecode(vals[1])));
+               continue;
+            }
 
-    private String encodePublicParamname(String type, String name){
-    	StringBuffer buffer = new StringBuffer();
-    	buffer.append(PREFIX).append(type)
-    	.append(DELIM).append(name);
-    	return buffer.toString();
-    }
+            // The remaining types deal with parameters, so extract the
+            // parameter name and values.
+            StringBuilder dbgstr = new StringBuilder();
+            if (isTrace) {
+               dbgstr.append("Decoding parameter: window ID=").append(pid)
+                     .append(", name/value=").append(vals[1]);
+            }
 
-    /**
-     * Encode a string array containing multiple values into a single string.
-     * This method is used to encode multiple render parameter values.
-     * @param values  the string array to encode.
-     * @return a single string containing all the values.
-     */
-    private String encodeMultiValues(String[] values) {
-    	StringBuffer buffer = new StringBuffer();
-        for (int i = 0; i < values.length; i++) {
-        	// Do not operate on the array reference
-        	String currentValue = values[i];
-        	try {
-        		if (currentValue != null)
-        			currentValue = URLEncoder.encode(values[i], "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				LOG.warn(e.getMessage(),e);
-			}
-        	buffer.append(currentValue != null ? currentValue : "");
+            String values = vals[1];
+            if (type.equals(PUBLIC_RENDER_PARAM)) {
+               if (vals.length != 3) {
+                  LOG.warn("Bad PRP Token: " + val);  
+               } else {
+                  values = vals[2];
+               }
+            }
+
+            String[] pVals = values.split(VALUE_DELIM, -1);
+            String[] paramValues = new String[0];
+            String paramName = "";
+            boolean isEmptyArray = false;
+            if (pVals.length > 1) {
+               if (pVals.length == 2 && pVals[1].equals(VALUE_ARRAY_EMPTY)) {
+                  isEmptyArray = true;
+               }
+               for (int i = 0; i < pVals.length; i++){
+                  if (pVals[i].equals(VALUE_NULL)) {
+                     pVals[i] = null;
+                  } else {
+                     pVals[i] = urlDecode(pVals[i]);
+                  }
+               }
+            }
+            
+            if (pVals.length == 0 || pVals[0] == null) {
+               LOG.warn("Bad parameter token: " + values);
+            } else {
+               paramName = pVals[0];
+               if (isEmptyArray) {
+                  paramValues = new String[0];
+               } else {
+                  paramValues = Arrays.copyOfRange(pVals, 1, pVals.length);
+               }
+            }
+            
+            if (isTrace) {
+               dbgstr.append(", paramName=").append(paramName);
+               dbgstr.append(", Values length=").append(paramValues.length);
+               dbgstr.append(", paramValues=").append(Arrays.toString(paramValues));
+               LOG.debug(dbgstr.toString());
+            }
+
+            // Portal URL parameter: portalURL.addParameter().
+            if(type.equals(RENDER_PARAM)) {
+               portalURL.addParameter(new PortalURLParameter(pid, paramName, paramValues));
+               continue;
+            }
+
+            // Portal URL parameter: portalURL.addParameter().
+            if(type.equals(ACTION_PARAM)) {
+               portalURL.addParameter(new PortalURLParameter(pid, paramName, paramValues, 
+                     PortalURLParameter.PARAM_TYPE_ACTION));
+               continue;
+            }
+
+            // Portal URL parameter: portalURL.addParameter().
+            if(type.equals(RESOURCE_PARAM)) {
+               portalURL.addParameter(new PortalURLParameter(pid, paramName, paramValues,
+                     PortalURLParameter.PARAM_TYPE_RESOURCE));
+               continue;
+            }
+
+            //set public parameter in portalURL
+            if (type.equals(PUBLIC_RENDER_PARAM)){
+               PublicRenderParameterMapper mapper = portalURL.getPublicRenderParameterMapper();
+               int prpGroup = mapper.getIndex(pid, paramName);
+               if (prpGroup >= 0) {
+                  mapper.setValues(prpGroup, paramValues);
+               } else {
+                  StringBuilder sb = new StringBuilder("Could not find public render parameter group for portlet ID=");
+                  sb.append(pid).append(", parameter name=").append(paramName);
+                  LOG.warn(sb.toString());
+               }
+               continue;
+            }
+         }
+      }
+
+      // If we're dealing with a render request (with or without target portlet),
+      // we can parse the servlet request parameters directly.
+      if (portalURL.getType() == URLType.Render || portalURL.getType() == URLType.Portal) {
+         portalURL.handleServletRequestParams();
+      }
+      
+      if (isTrace) {
+         LOG.debug("Found " + portletIds.size() + " IDs: " + Arrays.toString(portletIds.toArray()));
+      }
+
+      // Return the portal URL.
+      return portalURL;
+   }
+
+
+   /**
+    * Converts a portal URL to a URL string.
+    * @param portalURL  the portal URL to convert.
+    * @return a URL string representing the portal URL.
+    */
+   public String toString(RelativePortalURLImpl portalURL) {
+
+      StringBuilder buffer = new StringBuilder();
+      String targetWindow = portalURL.getTargetWindow();
+      
+      // Make sure the servlet parameters have been processed
+      portalURL.handleServletRequestParams();
+
+      // Append the server URI and the servlet path.
+      buffer.append(portalURL.getServletPath().startsWith(TOKEN_DELIM)?"":TOKEN_DELIM)
+      .append(portalURL.getServletPath());
+
+      // Start the pathInfo with the path to the render URL (page).
+      if (portalURL.getRenderPath() != null) {
+         String p = portalURL.getRenderPath().replaceAll(" ", "%20");
+         buffer.append(p);
+      }
+
+      // Add the portletIds with references
+      ArrayList<String> pids = new ArrayList<String>();
+      for (String pid : portalURL.getPortletIds()) {
+         pids.add(pid);
+         buffer.append(TOKEN_DELIM).append(PREFIX).append(PORTLET_ID);
+         try {
+            buffer.append(URLEncoder.encode(pid, "UTF-8"));
+         } catch(Exception e) {
+            LOG.warn("Could not encode pid=" + pid);
+         }
+         buffer.append(DELIM).append(String.valueOf(pids.indexOf(pid)));
+      }
+
+      //Append the resource window definition, if it exists.
+      if (portalURL.getType() == URLType.Resource) {
+         int index = pids.indexOf(targetWindow);
+         if (index < 0) {
+            StringBuilder txt = new StringBuilder();
+            txt.append("Resource Window not found in portlet ID list. PID = ")
+               .append(targetWindow)
+               .append(", Portlet IDs in map: ")
+               .append(Arrays.toString(pids.toArray()));
+            LOG.warn(txt.toString());
+         } else {
+            buffer.append(TOKEN_DELIM);
+            buffer.append(PREFIX).append(RESOURCE).append(String.valueOf(index));
+         }
+      }
+
+      //Append the render window definition, if it exists.
+      if (portalURL.getType() == URLType.Render) {
+         int index = pids.indexOf(targetWindow);
+         if (index < 0) {
+            StringBuilder txt = new StringBuilder();
+            txt.append("Render Window not found in portlet ID list. PID = ")
+               .append(targetWindow)
+               .append(", Portlet IDs in map: ")
+               .append(Arrays.toString(pids.toArray()));
+            LOG.warn(txt.toString());
+         } else {
+            buffer.append(TOKEN_DELIM);
+            buffer.append(PREFIX).append(RENDER).append(String.valueOf(index));
+         }
+      }
+      
+      // Append the action window definition, if it exists.
+      if (portalURL.getType() == URLType.Action) {
+         int index = pids.indexOf(targetWindow);
+         if (index < 0) {
+            StringBuilder txt = new StringBuilder();
+            txt.append("Action Window not found in portlet ID list. PID = ")
+               .append(targetWindow)
+               .append(", Portlet IDs in map: ")
+               .append(Arrays.toString(pids.toArray()));
+            LOG.warn(txt.toString());
+         } else {
+            buffer.append(TOKEN_DELIM);
+            buffer.append(PREFIX).append(ACTION).append(String.valueOf(index));
+         }
+      }
+      
+      // Add authenticate token if the URL requires authentication
+      
+      if (portalURL.getAuthenticated()) {
+         buffer.append(TOKEN_DELIM);
+         buffer.append(PREFIX).append(AUTHENTICATE)
+               .append(urlEncode(String.valueOf(portalURL.getAuthenticated())));
+      }
+
+      String reswin = null;
+      boolean isCacheabilityFull = false;
+      if (portalURL.getType() == URLType.Resource) {
+         if (portalURL.getCacheability() != null) {
+            buffer.append(TOKEN_DELIM);
+            buffer.append(PREFIX).append(CACHE_LEVEL)
+                  .append(urlEncode(portalURL.getCacheability()));
+         }
+         if (portalURL.getResourceID() != null) {
+            buffer.append(TOKEN_DELIM);
+            buffer.append(PREFIX).append(RESOURCE_ID)
+                  .append(urlEncode(portalURL.getResourceID()));
+         }
+         
+         // Set up cacheability processing. For PORTLET, set
+         // the resource window so that the only the state for the
+         // target portlet is set.
+         
+         if (portalURL.getCacheability().equals(ResourceURL.FULL)) {
+            isCacheabilityFull = true;
+            reswin = portalURL.getTargetWindow();
+         } else if (portalURL.getCacheability().equals(ResourceURL.PORTLET)) {
+            reswin = portalURL.getTargetWindow();
+         }
+      }
+
+      // Append portlet mode definitions.
+      for (String pid : portalURL.getPortletModes().keySet()) {
+         
+         // special handling for Cacheability = PORTLET or FULL
+         if (isCacheabilityFull || (reswin != null && !reswin.equals(pid))) {
+            continue;
+         }
+         
+         int index = pids.indexOf(pid);
+         PortletMode pm = portalURL.getPortletMode(pid);
+         if (index < 0) {
+            StringBuilder txt = new StringBuilder("Window not found in portlet ID list. PID = ");
+            txt.append(pid).append(", PM = ").append(pm.toString())
+               .append(", Portlet IDs in map: ").append(Arrays.toString(pids.toArray()));
+            LOG.warn(txt.toString());
+         } else {
+            buffer.append(TOKEN_DELIM).append(PREFIX).append(PORTLET_MODE)
+            .append(String.valueOf(index)).append(DELIM).append(urlEncode(pm.toString()));
+         }
+      }
+
+      // Append window state definitions.
+      for (String pid : portalURL.getWindowStates().keySet()) {
+
+         // special handling for Cacheability = PORTLET or FULL
+         if (isCacheabilityFull || (reswin != null && !reswin.equals(pid))) {
+            continue;
+         }
+         
+         int index = pids.indexOf(pid);
+         WindowState ws = portalURL.getWindowState(pid);
+         if (index < 0) {
+            StringBuilder txt = new StringBuilder("Window not found in portlet ID list. PID = ");
+            txt.append(pid).append(", WS = ").append(ws.toString())
+               .append(", Portlet IDs in map: ").append(Arrays.toString(pids.toArray()));
+            LOG.warn(txt.toString());
+         } else {
+            buffer.append(TOKEN_DELIM).append(PREFIX).append(WINDOW_STATE)
+            .append(String.valueOf(index)).append(DELIM).append(urlEncode(ws.toString()));
+         }
+      }
+
+      // Append action and render parameters.
+      for (PortalURLParameter param : portalURL.getParameters()) {
+
+         // special handling for Cacheability = PORTLET or FULL
+         if (reswin != null && !reswin.equals(param.getWindowId())) {
+            continue;
+         }
+
+         int index = pids.indexOf(param.getWindowId());
+         if (index < 0) {
+            LOG.warn("Window not found in portlet ID list. PID = " + param.getWindowId() + ", Param name = " + param.getName());
+            continue;
+         }
+
+         // Encode render params as a part of the URL.
+         if (param.getName() != null && param.getValues() != null) {
+            String valueString = encodeMultiValues(param.getValues());
+            String ptype = RENDER_PARAM;
+            if (param.getType().equals(PortalURLParameter.PARAM_TYPE_ACTION)) {
+               ptype = ACTION_PARAM;
+            } else if (param.getType().equals(PortalURLParameter.PARAM_TYPE_RESOURCE)) {
+               ptype = RESOURCE_PARAM;
+            }
+            if (!isCacheabilityFull || ptype.equals(RESOURCE_PARAM)) {
+               buffer.append(TOKEN_DELIM).append(PREFIX).append(ptype)
+                     .append(String.valueOf(index))
+                     .append(DELIM).append(urlEncode(param.getName()))
+                     .append(VALUE_DELIM).append(valueString);
+            }
+         }
+      }
+
+      // Add the public render parameters, retaining the grouping information and 
+      // the parameter names for each portlet. 
+      if (!isCacheabilityFull) {
+         PublicRenderParameterMapper mapper = portalURL.getPublicRenderParameterMapper();
+         List<Integer> activeIndexes = mapper.getActiveIndexes();
+
+         // special handling for Cacheability = PORTLET
+         if (reswin != null) {
+            List<PortalURLPublicParameter> pups = mapper.getPRPsForWindow(reswin, true);
+            activeIndexes = new ArrayList<Integer>();
+            for (PortalURLPublicParameter pup : pups) {
+               activeIndexes.add(mapper.getIndex(pup));
+            }
+         }
+
+         for (int i : activeIndexes) {
+            String[] values = mapper.getValues(i);
+            String valstr = encodeMultiValues(values);
+
+            // the values for the PRP group need only appear in the URL once
+            List<PortalURLPublicParameter> prplist = mapper.getPublicParameterGroup(i);
+            if (prplist.size() > 0) {
+               PortalURLPublicParameter prp = prplist.get(0);
+               int index = pids.indexOf(prp.getWindowId());
+               if (index >= 0) {
+                  buffer.append(TOKEN_DELIM).append(PREFIX).append(PUBLIC_RENDER_PARAM)
+                  .append(String.valueOf(index)).append(DELIM)
+                  .append(String.valueOf(i)).append(DELIM)
+                  .append(urlEncode(prp.getName())).append(VALUE_DELIM)
+                  .append(valstr);
+               } else {
+                  LOG.warn("window ID not on page for public render parameter: " + prp.toString());
+               }
+            }
+         }
+      }
+      
+      // Add fragment identifier if present on render URL
+      if (portalURL.getType() == URLType.Render) {
+         String frag = portalURL.getFragmentIdentifier();
+         if (frag != null) {
+            if (isTrace) {
+               LOG.debug("Adding fragment identifier: " + frag);
+            }
+            buffer.append('#').append(frag);
+         }
+      }
+
+      // Construct the string representing the portal URL.
+      return buffer.toString();
+   }
+
+   // Private Encoding/Decoding Methods ---------------------------------------
+
+   /**
+    * Wrapper for URLEncoder
+    * @param str
+    * @return
+    */
+   private String urlEncode(String str) {
+      String out = str;
+      if (str != null) {
+         try {
+            out = URLEncoder.encode(str, "UTF-8");
+         } catch(Exception e) {
+            LOG.warn("Error URL encoding string: " + str);
+         }
+      }
+      return out;
+   }
+
+   /**
+    * Wrapper for URLDecoder
+    * @param str
+    * @return
+    */
+   private String urlDecode(String str) {
+      String out = str;
+      if (str != null) {
+         try {
+            out = URLDecoder.decode(str, "UTF-8");
+         } catch(Exception e) {
+            LOG.warn("Error URL decoding string: " + str);
+         }
+      }
+      return out;
+   }
+
+   /**
+    * Encode a string array containing multiple values into a single string.
+    * This method is used to encode multiple render parameter values.
+    * @param values  the string array to encode.
+    * @return a single string containing all the values.
+    */
+   private String encodeMultiValues(String[] values) {
+      StringBuilder buffer = new StringBuilder();
+      if (values.length == 0) {
+         buffer.append(VALUE_ARRAY_EMPTY);
+      } else {
+         for (int i = 0; i < values.length; i++) {
+            if (values[i] == null) {
+               buffer.append(VALUE_NULL);
+            } else {
+               buffer.append(urlEncode(values[i]));
+            }
             if (i + 1 < values.length) {
-            	buffer.append(VALUE_DELIM);
+               buffer.append(VALUE_DELIM);
             }
-        }
-        return encodeCharacters(buffer.toString());
-    }
+         }
+      }
+      return buffer.toString();
+   }
 
-    /**
-     * Encode special characters contained in the string value.
-     * @param string  the string value to encode.
-     * @return the encoded string.
-     */
-    private String encodeCharacters(String string) {
-        for (int i = 0; i < ENCODINGS.length; i++) {
-            string = string.replace(ENCODINGS[i][0], ENCODINGS[i][1]);
-        }
-        return string;
-    }
-
-
-    /**
-     * Decode a control parameter.
-     * @param control  the control parameter to decode.
-     * @return values  a pair of decoded values.
-     */
-    private String[] decodeControlParameter(String control) {
-        String[] valuePair = new String[2];
-        control = control.substring((PREFIX + PORTLET_ID).length());
-        int index = control.indexOf(DELIM);
-        if (index >= 0) {
-        	valuePair[0] = control.substring(0, index);
-        	valuePair[0] = decodeCharacters(valuePair[0]);
-        	if (index + 1 <= control.length()) {
-        		valuePair[1] = control.substring(index + 1);
-        		valuePair[1] = decodeCharacters(valuePair[1]);
-        	} else {
-        		valuePair[1] = "";
-        	}
-        } else {
-        	valuePair[0] = decodeCharacters(control);
-        }
-        return valuePair;
-    }
-
-    /**
-     * Decode a name-value pair into a portal URL parameter.
-     * @param name  the parameter name.
-     * @param value  the parameter value.
-     * @return the decoded portal URL parameter.
-     */
-    private PortalURLParameter decodeParameter(String name, String value) {
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Decoding parameter: name=" + name
-            		+ ", value=" + value);
-        }
-
-    	// Decode the name into window ID and parameter name.
-        String noPrefix = name.substring((PREFIX + PORTLET_ID).length());
-        String windowId = noPrefix.substring(0, noPrefix.indexOf(DELIM));
-        String paramName = noPrefix.substring(noPrefix.indexOf(DELIM) + 1);
-
-        // Decode special characters in window ID and parameter value.
-        windowId = decodeCharacters(windowId);
-        if (value != null) {
-        	value = decodeCharacters(value);
-        }
-
-        // Split multiple values into a value array.
-        String[] paramValues = value.split(VALUE_DELIM);
-        for (int i = 0; i < paramValues.length;i++){
-        	try {
-        		paramValues[i] = URLDecoder.decode(paramValues[i], "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				LOG.warn(e.getMessage(),e);
-			}
-        }
-        // Construct portal URL parameter and return.
-        return new PortalURLParameter(windowId, paramName, paramValues);
-    }
-
-    private PortalURLParameter decodePublicParameter(String name, String value) {
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Decoding parameter: name=" + name
-            		+ ", value=" + value);
-        }
-
-//    	// Decode the name into window ID and parameter name.
-        String noPrefix = name.substring((PREFIX + PORTLET_ID).length());
-        String paramName = noPrefix.substring(noPrefix.indexOf(DELIM) + 1);
-
-        // Decode special characters in parameter value.
-
-        if (value != null) {
-        	value = decodeCharacters(value);
-        }
-
-        // Split multiple values into a value array.
-        String[] paramValues = value.split(VALUE_DELIM);
-        for (int i = 0; i < paramValues.length;i++){
-        	try {
-        		paramValues[i] = URLDecoder.decode(paramValues[i], "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				LOG.warn(e.getMessage(),e);
-			}
-        }
-
-        // Construct portal URL parameter and return.
-        return new PortalURLParameter(null, paramName, paramValues);
-    }
-
-    /**
-     * Decode special characters contained in the string value.
-     * @param string  the string value to decode.
-     * @return the decoded string.
-     */
-    private String decodeCharacters(String string) {
-        for (int i = 0; i < ENCODINGS.length; i++) {
-        	string = string.replace(ENCODINGS[i][1], ENCODINGS[i][0]);
-        }
-		return string;
-    }
+   /**
+    * This parser is completely married to the URL impl anyway, so let it
+    * blow up if someone tries to use a different URL impl.
+    */
+   public String toString(PortalURL portalURL) {
+      return toString((RelativePortalURLImpl) portalURL);
+   }
 
 }
 

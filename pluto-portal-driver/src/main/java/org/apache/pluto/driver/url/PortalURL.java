@@ -24,6 +24,7 @@ import javax.portlet.WindowState;
 import javax.servlet.ServletContext;
 
 import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 
 /**
  * Created by IntelliJ IDEA.
@@ -33,69 +34,147 @@ import org.apache.pluto.driver.services.portal.PageConfig;
  * To change this template use File | Settings | File Templates.
  */
 public interface PortalURL extends Cloneable {
-    void setRenderPath(String renderPath);
 
-    String getRenderPath();
+   enum URLType {
+      Render,
+      Action,
+      Resource,
+      AjaxAction,
+      PartialAction,
+      Portal;
+   }
+   
+   public PortletParameterFactory getPortletParameterFactory();
+   
+   /**
+    * Sets the URL type
+    * @param type
+    */
+   public void setType(URLType type);
+   
+   /**
+    * Returns the URL Type
+    * @return
+    */
+   public URLType getType();
+   
+   /**
+    * Sets the target window ID for this URL
+    * @param windowId
+    */
+   public void setTargetWindow(String windowId);
+   
+   /**
+    * returns the target window. May be null.
+    * @return
+    */
+   public String getTargetWindow();
 
-    void addParameter(PortalURLParameter param);
-    
-    void addPublicRenderParametersNew(Map<String, String[]> parameters);
+   void setRenderPath(String renderPath);
 
-    Collection<PortalURLParameter> getParameters();
+   String getRenderPath();
 
-    public void addPublicParameterCurrent(String name, String[] values);
+   void setParameter(PortalURLParameter param);
+   
+   /**
+    * Removes the given parameter
+    * @param param
+    */
+   public void removeParameter(PortalURLParameter param);
 
-    public Map<String, String[]> getPublicParameters();
-    
-    Map<String, String[]> getNewPublicParameters();
-    
-    Map<String, String[]> getPrivateRenderParameters();
-    
-    void setActionWindow(String actionWindow);
+   /**
+    * Add the PRP mapper for the page being processed
+    * @param prpm
+    */
+   public void setPublicRenderParameterMapper(PublicRenderParameterMapper prpm);
 
-    String getActionWindow();
+   /**
+    * get the PRP mapper for the page being processed
+    * @return
+    */
+   public PublicRenderParameterMapper getPublicRenderParameterMapper();
 
-    Map<String, PortletMode> getPortletModes();
+   /**
+    * Stores the portlet window IDs for the portlets on the page
+    * 
+    * @param portletIds
+    */
+   public void setPortletIds(Collection<String> portletIds);
 
-    PortletMode getPortletMode(String windowId);
+   /**
+    * Returns the portlet Ids for the portlets on the page
+    * 
+    * @return
+    */
+   public Collection<String> getPortletIds();
 
-    void setPortletMode(String windowId, PortletMode portletMode);
+   /**
+    * Sets the version for the given portlet ID
+    * @param portletId
+    * @param version
+    */
+   public void setVersion(String portletId, String version);
 
-    Map<String, WindowState> getWindowStates();
+   /**
+    * gets the version for the given portlet ID
+    * @param portletId
+    * @return
+    */
+   public String getVersion(String portletId);
 
-    WindowState getWindowState(String windowId);
+   /**
+    * Returns <code>true</code> if the given portlet ID refers to a version 3 portlet
+    * @param portletId
+    * @return
+    */
+   public boolean isVersion3(String portletId);
 
-    void setWindowState(String windowId, WindowState windowState);
+   Collection<PortalURLParameter> getParameters();
 
-    void clearParameters(String windowId);
+   Map<String, PortletMode> getPortletModes();
 
-    /**
-     * 
-     * @deprecated use toURL(boolean) instead
-     */
-    String toString();
-    
-    String toURL(boolean absolute);
+   PortletMode getPortletMode(String windowId);
 
-    String getServerURI();
+   void setPortletMode(String windowId, PortletMode portletMode);
 
-    String getServletPath();
+   Map<String, WindowState> getWindowStates();
 
-    PortalURL clone();
+   WindowState getWindowState(String windowId);
 
-    String getResourceWindow();
+   void setWindowState(String windowId, WindowState windowState);
 
-	void setResourceWindow(String window);
+   /**
+    * 
+    * @deprecated use toURL(boolean) instead
+    */
+   String toString();
 
-	PageConfig getPageConfig(ServletContext servletContext);
+   String toURL(boolean absolute);
 
-	void addPublicParameterActionResourceParameter(String parameterName, String value);
-	
-	void setCacheability(String cacheLevel);
-	String getCacheability();
-	
-	void setResourceID(String resourceID);
-	String getResourceID();
-	
-	void merge(PortalURL url, String windowId);	
+   String getServerURI();
+
+   String getServletPath();
+
+   PortalURL clone();
+
+   PageConfig getPageConfig(ServletContext servletContext);
+
+   void setCacheability(String cacheLevel);
+   String getCacheability();
+
+   void setResourceID(String resourceID);
+   String getResourceID();
+
+   /**
+    * @param window
+    */
+   public void clearParameters(String window, String paramType);
+
+   public String getFragmentIdentifier();
+
+   public void setFragmentIdentifier(String fragment);
+
+   public boolean getAuthenticated();
+
+   public void setAuthenticated(boolean authenticated);	
 }

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE web-app PUBLIC
-        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-        "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
 <!-- 
 Licensed to the Apache Software Foundation (ASF) under one or more
 contributor license agreements.  See the NOTICE file distributed with
@@ -22,7 +23,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<web-app>
 
   <display-name>Apache Pluto Portal Driver</display-name>
 
@@ -34,6 +34,7 @@ limitations under the License.
   <filter>
     <filter-name>plutoPortalDriver</filter-name>
     <filter-class>org.apache.pluto.driver.PortalDriverFilter</filter-class>
+    <async-supported>true</async-supported>
   </filter>
 
   <filter-mapping>
@@ -51,30 +52,35 @@ limitations under the License.
   </listener>
 
   <servlet>
-    <servlet-name>plutoPortalDriver</servlet-name>
-    <display-name>Pluto Portal Driver</display-name>
     <description>Pluto Portal Driver Controller</description>
-    <servlet-class>org.apache.pluto.driver.PortalDriverServlet</servlet-class>
-  </servlet>
-
-  <servlet>
-    <servlet-name>plutoPortalDriverLogout</servlet-name>
     <display-name>Pluto Portal Driver</display-name>
-    <description>Pluto Portal Driver Logout</description>
-    <servlet-class>org.apache.pluto.driver.PortalDriverLogoutServlet</servlet-class>
+    <servlet-name>plutoPortalDriver</servlet-name>
+    <servlet-class>org.apache.pluto.driver.PortalDriverServlet</servlet-class>
+    <async-supported>true</async-supported>
+    <multipart-config>
+      <file-size-threshold>1048576</file-size-threshold>
+    </multipart-config>
   </servlet>
 
   <servlet>
-    <servlet-name>portletApplicationPublisher</servlet-name>
-    <display-name>Portlet Application Publisher</display-name>
+    <description>Pluto Portal Driver Logout</description>
+    <display-name>Pluto Portal Driver</display-name>
+    <servlet-name>plutoPortalDriverLogout</servlet-name>
+    <servlet-class>org.apache.pluto.driver.PortalDriverLogoutServlet</servlet-class>
+    <async-supported>true</async-supported>
+  </servlet>
+
+  <servlet>
     <description>Portlet Application Publisher Service</description>
+    <display-name>Portlet Application Publisher</display-name>
+    <servlet-name>portletApplicationPublisher</servlet-name>
     <servlet-class>org.apache.pluto.driver.PublishServlet</servlet-class>
   </servlet>
 
   <servlet>
-    <servlet-name>tckDriver</servlet-name>
-    <display-name>Pluto TCK Driver</display-name>
     <description>Pluto TCK Driver Controller</description>
+    <display-name>Pluto TCK Driver</display-name>
+    <servlet-name>tckDriver</servlet-name>
     <servlet-class>org.apache.pluto.driver.TCKDriverServlet</servlet-class>
   </servlet>
 
@@ -143,10 +149,12 @@ limitations under the License.
     <url-pattern>/PlutoInvoker/PlutoPageAdmin</url-pattern>
   </servlet-mapping>
 
-  <taglib>
-    <taglib-uri>http://portals.apache.org/pluto</taglib-uri>
-    <taglib-location>/WEB-INF/tld/pluto.tld</taglib-location>
-  </taglib>
+  <jsp-config>
+    <taglib>
+      <taglib-uri>http://portals.apache.org/pluto</taglib-uri>
+      <taglib-location>/WEB-INF/tld/pluto.tld</taglib-location>
+    </taglib>
+  </jsp-config>
 
   <security-constraint>
     <web-resource-collection>

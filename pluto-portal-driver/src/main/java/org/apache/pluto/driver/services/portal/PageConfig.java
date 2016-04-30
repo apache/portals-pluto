@@ -19,63 +19,78 @@ package org.apache.pluto.driver.services.portal;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  */
 public class PageConfig {
 
-    private String name;
-    private String uri;
-    private Collection<String> portletIds;
-    private int orderNumber;
+   private static final Logger LOG = LoggerFactory.getLogger(PageConfig.class);
 
-    public PageConfig() {
-        this.portletIds = new ArrayList<String>();
-    }
+   private String name;
+   private String uri;
+   private Collection<String> portletIds;
+   private int orderNumber;
 
-    public String getName() {
-        return name;
-    }
+   public PageConfig() {
+      this.portletIds = new ArrayList<String>();
+      if (LOG.isDebugEnabled()) {
+         LOG.debug("Constructor.");
+     }
+   }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+   public String getName() {
+      return name;
+   }
 
-    public String getUri() {
-        return uri;
-    }
+   public void setName(String name) {
+      this.name = name;
+      if (LOG.isDebugEnabled()) {
+         LOG.debug("Page Name = " + name);
+     }
+   }
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
+   public String getUri() {
+      return uri;
+   }
 
-    public Collection<String> getPortletIds() {
-        return portletIds;
-    }
+   public void setUri(String uri) {
+      this.uri = uri;
+   }
 
-    public void setPortletIds(Collection<String> ids) {
-        this.portletIds = ids;
-    }
+   public Collection<String> getPortletIds() {
+      return portletIds;
+   }
 
-    public void addPortlet(String contextPath, String portletName) {
-        synchronized(portletIds) {
-            portletIds.add(PortletWindowConfig.createPortletId(contextPath, portletName, createPlacementId()));
-        }
-    }
+   public void setPortletIds(Collection<String> ids) {
+      this.portletIds = ids;
+   }
 
-    public void removePortlet(String portletId) {
-        portletIds.remove(portletId);
-    }
+   public void addPortlet(String contextPath, String portletName) {
+      String pid = PortletWindowConfig.createPortletId(contextPath, portletName, createPlacementId());
+      if (LOG.isDebugEnabled()) {
+         LOG.debug("Add Portlet ID = " + pid);
+      }
+      synchronized(portletIds) {
+         portletIds.add(pid);
+      }
+   }
 
-    void setOrderNumber(int number) {
-        this.orderNumber = number;
-    }
+   public void removePortlet(String portletId) {
+      portletIds.remove(portletId);
+   }
 
-    int getOrderNumber() {
-        return orderNumber;
-    }
+   void setOrderNumber(int number) {
+      this.orderNumber = number;
+   }
 
-    private String createPlacementId() {
-        return getName().hashCode() + "|"+portletIds.size();
-    }
+   int getOrderNumber() {
+      return orderNumber;
+   }
+
+   private String createPlacementId() {
+      return getName().hashCode() + "|"+portletIds.size();
+   }
 
 }

@@ -1,4 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%--
 Licensed to the Apache Software Foundation (ASF) under one or more

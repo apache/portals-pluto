@@ -32,6 +32,7 @@ public class Constants {
    public static final String RESOURCE_DIV_ID = "-resdiv";
    public static final String SUCCESS = "Succeeded";
    public static final String FAILURE = "Failed";
+   public static final String BUTTON_PARAM_NAME="inputval";
    
    // for session attributes passing info between phases
    public static final String RESULT_ATTR_PREFIX = "attr.result.";

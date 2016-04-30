@@ -16,157 +16,285 @@
  */
 package org.apache.pluto.driver.services.container;
 
+import static javax.portlet.PortletRequest.HEADER_PHASE;
+import static javax.portlet.PortletRequest.RENDER_PHASE;
+import static javax.portlet.PortletRequest.RESOURCE_PHASE;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.portlet.MimeResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.pluto.container.HeaderData;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletResponseContext;
+import org.apache.pluto.container.PortletURLProvider;
+import org.apache.pluto.container.PortletURLProvider.TYPE;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.ResourceURLProvider;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
  * @version $Id$
- *
+ * 
  */
-public abstract class PortletResponseContextImpl implements PortletResponseContext
-{
-    private PortletContainer container;
-    private HttpServletRequest containerRequest;
-    private HttpServletResponse containerResponse;
-    private HttpServletRequest servletRequest;
-    private HttpServletResponse servletResponse;
-    private PortletWindow window;
-    private PortalURL portalURL;
-    private boolean closed;
-    private boolean released;
-    
-    public PortletResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
-                                      HttpServletResponse containerResponse, PortletWindow window)
-    {
-        this.container = container;
-        this.containerRequest = containerRequest;
-        this.containerResponse = containerResponse;
-        this.window = window;
-        this.portalURL = PortalRequestContext.getContext(containerRequest).createPortalURL();
-    }
-    
-    protected PortalURL getPortalURL()
-    {
-        return portalURL;
-    }
+public abstract class PortletResponseContextImpl implements PortletResponseContext {
 
-    protected boolean isClosed()
-    {
-        return closed;
-    }
-    
-    protected boolean isReleased()
-    {
-        return released;
-    }
+   /** Logger. */
+   private static final Logger      LOG               = LoggerFactory.getLogger(PortletResponseContextImpl.class);
 
-    public void init(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
-    {
-        this.servletRequest = servletRequest;
-        this.servletResponse = servletResponse;
-    }
-    
-    public void addProperty(Cookie cookie)
-    {
-        if (!isClosed())
-        {
-            servletResponse.addCookie(cookie);
-        }
-    }
+   private PortletContainer         container;
+   private HttpServletRequest       containerRequest;
+   private HttpServletResponse      containerResponse;
+   private HttpServletRequest       servletRequest;
+   private HttpServletResponse      servletResponse;
+   private PortletWindow            window;
+   private PortalURL                portalURL;
+   private boolean                  closed;
+   private boolean                  released;
 
-    public void addProperty(String key, Element element)
-    {
-        // not supported 
-    }
+   // needed for processing of properties based on request type
+   private String                   lifecycle;
+   private boolean                  isSetPropsAllowed = false;
 
-    public void addProperty(String key, String value)
-    {
-        // not supported
-    }
-    
-    public Element createElement(String tagName) throws DOMException
-    {
-        DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder;
-        
-        try
-        {
-            docBuilder = dbfac.newDocumentBuilder();
-            Document doc = docBuilder.newDocument();
-            return doc.createElement(tagName);
-        }
-        catch (ParserConfigurationException e)
-        {
-            throw new DOMException((short) 0, "Initialization failure");
-        }
-    }
+   private static final Set<String> disallowedHeaders = new HashSet<String>(Arrays.asList(new String[] {
+         "ACCEPT-PATCH", "ACCEPT-RANGES", "AGE", "ALLOW", "CACHE-CONTROL", "CONNECTION", "CONTENT-DISPOSITION",
+         "CONTENT-ENCODING", "CONTENT-LANGUAGE", "CONTENT-LENGTH", "CONTENT-LOCATION", "CONTENT-MD5", "CONTENT-RANGE",
+         "CONTENT-TYPE", "DATE", "ETAG", "EXPIRES", "LAST-MODIFIED", "LINK", "LOCATION", "P3P", "PRAGMA",
+         "PROXY-AUTHENTICATE", "PUBLIC-KEY-PINS", "REFRESH", "RETRY-AFTER", "SERVER", "SET-COOKIE", "STATUS",
+         "STRICT-TRANSPORT-SECURITY", "TRAILER", "TRANSFER-ENCODING", "UPGRADE", "VARY", "VIA", "WWW-AUTHENTICATE",
+         "X-FRAME-OPTIONS"                           }));
 
-    public void close()
-    {
-        closed = true;
-    }
+   private final static String VALID_HEADER_CHARS = "^[a-zA-Z0-9!#$%&'*+-.^_`|~]+$";
+   
+   // holder for the header data
+   protected HeaderData             headerData        = new HeaderData();
 
-    public PortletContainer getContainer()
-    {
-        return container;
-    }
+   public PortletResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
+         HttpServletResponse containerResponse, PortletWindow window) {
+      this.container = container;
+      this.containerRequest = containerRequest;
+      this.containerResponse = containerResponse;
+      this.window = window;
+      this.portalURL = PortalRequestContext.getContext(containerRequest).createPortalURL();
+   }
 
-    public PortletWindow getPortletWindow()
-    {
-        return window;
-    }
+   public String getLifecycle() {
+      return lifecycle;
+   }
 
-    public HttpServletRequest getContainerRequest()
-    {
-        return containerRequest;
-    }
+   public void setLifecycle(String lifecycle) {
+      this.lifecycle = lifecycle;
+   }
 
-    public HttpServletResponse getContainerResponse()
-    {
-        return containerResponse;
-    }
+   public boolean isSetPropsAllowed() {
+      return isSetPropsAllowed;
+   }
 
-    public HttpServletRequest getServletRequest()
-    {
-        return servletRequest;
-    }
+   public void setPropsAllowed(boolean isSetPropsAllowed) {
+      this.isSetPropsAllowed = isSetPropsAllowed;
+   }
+   
+   /**
+    * Returns <code>true</code> if markup written to the portlet output stream should 
+    * land in the document head section.
+    *  
+    * @return  <code>true</code> if the header buffer is active
+    */
+   public boolean isHeaderBufferActive() {
+      return isSetPropsAllowed && !lifecycle.equals(RESOURCE_PHASE);
+   }
 
-    public HttpServletResponse getServletResponse()
-    {
-        return servletResponse;
-    }
 
-    public void release()
-    {
-        closed = true;
-        released = true;
-        container = null;
-        servletRequest = null;
-        servletResponse = null;
-        window = null;
-    }
+   /**
+    * returns the header data provided by the portlet during header phase execution.
+    */
+   @Override
+   public HeaderData getHeaderData() {
+      return headerData;
+   }
 
-    public void setProperty(String key, String value)
-    {
-        // not supported
-    }
+   protected PortalURL getPortalURL() {
+      return portalURL;
+   }
 
-    public ResourceURLProvider getResourceURLProvider()
-    {
-        return isReleased() ? null : new ResourceURLProviderImpl(servletRequest,window);
-    }
+   protected boolean isClosed() {
+      return closed;
+   }
+
+   protected boolean isReleased() {
+      return released;
+   }
+
+   public void init(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
+      this.servletRequest = servletRequest;
+      this.servletResponse = servletResponse;
+   }
+
+   public void addProperty(Cookie cookie) {
+      if (!isClosed() && isSetPropsAllowed) {
+         headerData.addCookie(cookie);
+      }
+   }
+
+   /**
+    * saves elements for adding to the head section markup if header request or render request
+    */
+   public void addProperty(String key, Element element) {
+      if (!key.equals(MimeResponse.MARKUP_HEAD_ELEMENT)) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Ignoring attempt to add document head element with key: ").append(key);
+         txt.append(" rather than the required: ").append(MimeResponse.MARKUP_HEAD_ELEMENT);
+         LOG.warn(txt.toString());
+      } else {
+         if (!isClosed() && isSetPropsAllowed && element != null) {
+            if (lifecycle.equals(RENDER_PHASE) || lifecycle.equals(HEADER_PHASE)) {
+               headerData.addHeaderTag(element);
+            }
+         }
+      }
+   }
+
+   public void addProperty(String key, String value) {
+      if (value == null) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Ignoring attempt to add property with null value. Key: ").append(key);
+         LOG.warn(txt.toString());
+      } else if (!key.matches(VALID_HEADER_CHARS)) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Ignoring attempt to add key containing disallowed characters. Key: ").append(key);
+         txt.append(", value: ").append(value);
+        LOG.warn(txt.toString());
+      } else {
+         // header names are case insensitive. allow setting all headers 
+         // during the resource phase.
+         if (!lifecycle.matches(RESOURCE_PHASE) && disallowedHeaders.contains(key.toUpperCase())) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("Ignoring disallowed HTTP header: ").append(key);
+            txt.append(" with value: ").append(value);
+            LOG.warn(txt.toString());
+         } else {
+            if (!isClosed() && isSetPropsAllowed) {
+               headerData.addHttpHeader(key, value);
+            }
+         }
+      }
+   }
+
+   public Element createElement(String tagName) throws DOMException {
+      return headerData.createElement(tagName);
+   }
+
+   @Override
+   public String getProperty(String key) {
+      String val = null;
+      if (!isClosed() && isSetPropsAllowed) {
+         List<String> vals = headerData.getHttpHeaders().get(key);
+         if (!vals.isEmpty()) {
+            val = vals.get(0);
+         }
+      }
+      return val;
+   }
+
+   @Override
+   public Collection<String> getPropertyValues(String key) {
+      List<String> vals = new ArrayList<String>();
+      if (!isClosed() && isSetPropsAllowed) {
+         vals.addAll(headerData.getHttpHeaders().get(key));
+      }
+      return vals;
+   }
+
+   @Override
+   public Collection<String> getPropertyNames() {
+      List<String> names = new ArrayList<String>();
+      if (!isClosed() && isSetPropsAllowed) {
+         names.addAll(headerData.getHttpHeaders().keySet());
+      }
+      return names;
+   }
+
+   public void close() {
+      closed = true;
+   }
+
+   public PortletContainer getContainer() {
+      return container;
+   }
+
+   public PortletWindow getPortletWindow() {
+      return window;
+   }
+
+   public HttpServletRequest getContainerRequest() {
+      return containerRequest;
+   }
+
+   public HttpServletResponse getContainerResponse() {
+      return containerResponse;
+   }
+
+   public HttpServletRequest getServletRequest() {
+      return servletRequest;
+   }
+
+   public HttpServletResponse getServletResponse() {
+      return servletResponse;
+   }
+
+   public void release() {
+      closed = true;
+      released = true;
+      container = null;
+      servletRequest = null;
+      servletResponse = null;
+      window = null;
+   }
+
+   public void setProperty(String key, String value) {
+      if (value == null) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Ignoring attempt to add property with null value. Key: ").append(key);
+         LOG.warn(txt.toString());
+      } else if (!key.matches(VALID_HEADER_CHARS)) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Ignoring attempt to add key containing disallowed characters. Key: ").append(key);
+         txt.append(", value: ").append(value);
+         LOG.warn(txt.toString());
+      } else {
+         // header names are case insensitive. allow setting all headers 
+         // during the resource phase.
+         if (!lifecycle.matches(RESOURCE_PHASE) && disallowedHeaders.contains(key.toUpperCase())) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("Ignoring disallowed HTTP header: ").append(key);
+            txt.append(" with value: ").append(value);
+            LOG.warn(txt.toString());
+         } else {
+            if (!isClosed() && isSetPropsAllowed) {
+               headerData.setHttpHeader(key, value);
+            }
+         }
+      }
+   }
+
+   public ResourceURLProvider getResourceURLProvider() {
+      return isReleased() ? null : new ResourceURLProviderImpl(servletRequest, window);
+   }
+
+   public PortletURLProvider getPortletURLProvider(TYPE type) {
+      return isClosed() ? null : new PortletURLProviderImpl(getPortalURL(), type, getPortletWindow());
+   }
 }

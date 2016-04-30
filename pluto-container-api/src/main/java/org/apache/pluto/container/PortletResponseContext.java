@@ -16,11 +16,15 @@
  */
 package org.apache.pluto.container;
 
+import java.util.Collection;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.pluto.container.PortletURLProvider.TYPE;
 import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
@@ -37,12 +41,23 @@ public interface PortletResponseContext
     HttpServletResponse getServletResponse();
     PortletWindow getPortletWindow();
     
+    // needed for header processing
+    void setLifecycle(String lifecycle);
+    String getLifecycle();
+    void setPropsAllowed(boolean isSetPropsAllowed);
+    boolean isSetPropsAllowed();
+    HeaderData getHeaderData();
+    
     ResourceURLProvider getResourceURLProvider();
+    PortletURLProvider getPortletURLProvider(TYPE type);
     void addProperty(Cookie cookie);
     void addProperty(String key, Element element);
     void addProperty(String key, String value);
     void setProperty(String key, String value);
     Element createElement(String tagName) throws DOMException;
+    String getProperty(String key);
+    Collection<String> getPropertyValues(String name);
+    Collection<String> getPropertyNames();
 
     /**
      * Closing the response context means processing has been completed and

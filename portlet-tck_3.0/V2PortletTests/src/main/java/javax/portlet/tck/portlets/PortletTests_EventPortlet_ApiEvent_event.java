@@ -83,15 +83,16 @@ public class PortletTests_EventPortlet_ApiEvent_event implements Portlet, EventP
       // Create result objects for the tests
 
       ClassChecker cc = new ClassChecker(GenericPortlet.class);
-
+      
       /* TestCase: V2PortletTests_EventPortlet_ApiEvent_processEvent          */
       /* Details: "Method processEvent(EventRequest, EventResponse): is       */
       /* called when an event is targeted to the portlet"                     */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_EVENTPORTLET_APIEVENT_PROCESSEVENT);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+    	  tr0.setTcSuccess(true);
+      }catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
-
+      
       portletReq.getPortletSession().setAttribute(
                    Constants.RESULT_ATTR_PREFIX + "PortletTests_EventPortlet_ApiEvent",
                    writer.toString(), APPLICATION_SCOPE);

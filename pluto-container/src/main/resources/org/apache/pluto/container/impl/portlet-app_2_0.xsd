@@ -811,7 +811,7 @@
 			type may be used.
 			</documentation>
 		</annotation>
-		<restriction base="string">
+		<restriction base="xs:token">
 			<whiteSpace value="collapse"/>
 		</restriction>
 	</simpleType>

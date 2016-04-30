@@ -16,8 +16,9 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/portlet" prefix="portlet" %>
 
 <div class="portlet-section-header">Page Adminstrator Portlet Help</div>

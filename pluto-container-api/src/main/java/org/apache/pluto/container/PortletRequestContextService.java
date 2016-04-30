@@ -34,7 +34,12 @@ public interface PortletRequestContextService
 
     PortletResourceRequestContext getPortletResourceRequestContext(PortletContainer container,
                                                                    HttpServletRequest containerRequest,
-                                                                   HttpServletResponse containerResponse, PortletWindow window);
+                                                                   HttpServletResponse containerResponse, 
+                                                                   PortletWindow window,
+                                                                   String pageState);
+
+    PortletRequestContext getPortletHeaderRequestContext(PortletContainer container, HttpServletRequest containerRequest,
+                                                         HttpServletResponse containerResponse, PortletWindow window);
 
     PortletRequestContext getPortletRenderRequestContext(PortletContainer container, HttpServletRequest containerRequest,
                                                          HttpServletResponse containerResponse, PortletWindow window);
@@ -51,6 +56,10 @@ public interface PortletRequestContextService
                                                                      HttpServletResponse containerResponse, PortletWindow window);
 
     PortletRenderResponseContext getPortletRenderResponseContext(PortletContainer container,
+                                                                 HttpServletRequest containerRequest,
+                                                                 HttpServletResponse containerResponse, PortletWindow window);
+
+    PortletHeaderResponseContext getPortletHeaderResponseContext(PortletContainer container,
                                                                  HttpServletRequest containerRequest,
                                                                  HttpServletResponse containerResponse, PortletWindow window);
 }

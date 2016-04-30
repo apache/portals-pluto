@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.container.impl;
 
+import java.util.Collection;
 import java.util.Enumeration;
 
 import javax.portlet.PortalContext;
@@ -24,6 +25,7 @@ import javax.portlet.PortletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletWindow;
@@ -128,8 +130,9 @@ public abstract class PortletResponseImpl implements PortletResponse
 
     public void addProperty(String key, Element element)
     {
-        ArgumentUtility.validateNotEmpty("key", key);
-        responseContext.addProperty(key, element);
+       ArgumentUtility.validateNotEmpty("key", key);
+       ArgumentUtility.validateNotNull("element", element);
+       responseContext.addProperty(key, element);
     }
 
 
@@ -188,5 +191,20 @@ public abstract class PortletResponseImpl implements PortletResponse
     {
         ArgumentUtility.validateNotEmpty("key", key);
         responseContext.setProperty(key, value);
+    }
+
+    @Override
+    public String getProperty(String key) {
+       return responseContext.getProperty(key);
+    }
+
+    @Override
+    public Collection<String> getPropertyValues(String name) {
+       return responseContext.getPropertyValues(name);
+    }
+
+    @Override
+    public Collection<String> getPropertyNames() {
+       return responseContext.getPropertyNames();
     }
 }

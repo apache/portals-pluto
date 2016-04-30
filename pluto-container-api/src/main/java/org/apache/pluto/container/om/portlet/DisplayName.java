@@ -16,14 +16,6 @@
  */
 package org.apache.pluto.container.om.portlet;
 
-import java.util.Locale;
 
-public interface DisplayName {
-
-    String getLang();
-
-	String getDisplayName();
-	void setDisplayName(String displayName);
-	
-	Locale getLocale();
+public interface DisplayName extends LocaleText {
 }

@@ -127,6 +127,12 @@ limitations under the License.
     <constructor-arg>
       <ref bean="SupportedWindowStatesService"/>
     </constructor-arg>
+    <constructor-arg>
+      <ref bean="PublicRenderParameterService"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="PortletContextService"/>
+    </constructor-arg>
 
     <!--
     <property name="portletPreferencesService"><ref bean="PortletPreferencesService"/></property>
@@ -168,6 +174,17 @@ limitations under the License.
         singleton="true">
     <constructor-arg>
       <ref bean="ResourceConfigFactory"/>
+    </constructor-arg>
+  </bean>
+
+  <bean id="PublicRenderParameterService"
+        class="org.apache.pluto.driver.services.impl.resource.PublicRenderParameterServiceImpl"
+        singleton="true">
+    <constructor-arg>
+      <ref bean="RenderConfigService"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="PortletContextService"/>
     </constructor-arg>
   </bean>
 

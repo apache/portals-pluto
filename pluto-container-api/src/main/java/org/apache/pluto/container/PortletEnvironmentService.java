@@ -21,6 +21,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
@@ -42,6 +44,9 @@ public interface PortletEnvironmentService
 
     EventRequest createEventRequest(PortletRequestContext requestContext, PortletEventResponseContext responseContext, Event event);
     EventResponse createEventResponse(PortletEventResponseContext responseContext);
+    
+    HeaderRequest createHeaderRequest(PortletRequestContext requestContext, PortletHeaderResponseContext responseContext);
+    HeaderResponse createHeaderResponse(PortletHeaderResponseContext responseContext);
     
     RenderRequest createRenderRequest(PortletRequestContext requestContext, PortletRenderResponseContext responseContext);
     RenderResponse createRenderResponse(PortletRenderResponseContext responseContext);

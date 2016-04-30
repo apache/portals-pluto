@@ -319,6 +319,7 @@ limitations under the License.
 
   <public-render-parameter>
   	<identifier>public-render-param1</identifier>
+  	<qname xmlns:pluto="http://portals.apache.org/pluto/altns">public-render-param1</qname>
   </public-render-parameter>
 
 </portlet-app>

@@ -16,6 +16,7 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
+<%@ page isELIgnored="false" %>
 <%@ page session="false" %>
 <%@ taglib uri='http://java.sun.com/portlet_2_0' prefix='portlet'%>
 <%@ page import="javax.portlet.*"%>

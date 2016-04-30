@@ -24,6 +24,6 @@ public interface UserAttribute {
     String getName();
 
     Description getDescription(Locale locale);
-    List<? extends Description> getDescriptions();
-    Description addDescription(String lang);
+    List<Description> getDescriptions();
+    void addDescription(Description desc);
 }

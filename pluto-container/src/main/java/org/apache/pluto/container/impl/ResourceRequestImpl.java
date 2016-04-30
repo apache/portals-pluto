@@ -20,22 +20,39 @@ import java.util.Enumeration;
 import java.util.Map;
 
 import javax.portlet.CacheControl;
+import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletRequest;
+import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.servlet.DispatcherType;
 
 import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletResourceResponseContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ResourceRequestImpl extends ClientDataRequestImpl implements ResourceRequest
 {
-    private PortletResourceRequestContext requestContext;
+
+   /** Internal logger. */
+   private static final Logger LOG = LoggerFactory.getLogger(ResourceRequestImpl.class);
+
     private CacheControl cacheControl;
     
     public ResourceRequestImpl(PortletResourceRequestContext requestContext, PortletResourceResponseContext responseContext)
     {
         super(requestContext, responseContext, PortletRequest.RESOURCE_PHASE);
-        this.requestContext = requestContext;
         this.cacheControl = responseContext.getCacheControl();
+    }
+    
+    @Override
+    protected PortletResourceRequestContext getRequestContext() {
+       return (PortletResourceRequestContext) requestContext;
+    }
+    
+    protected PortletResourceResponseContext getResponseContext() {
+       return (PortletResourceResponseContext) responseContext;
     }
     
     @Override
@@ -47,7 +64,7 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
 
     public String getCacheability()
     {
-        return requestContext.getCacheability();
+        return getRequestContext().getCacheability();
     }
 
     public String getETag()
@@ -57,12 +74,12 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
 
     public Map<String, String[]> getPrivateRenderParameterMap()
     {
-        return cloneParameterMap(requestContext.getPrivateRenderParameterMap());
+        return cloneParameterMap(getRequestContext().getPrivateRenderParameterMap());
     }
 
     public String getResourceID()
 	{
-		return requestContext.getResourceID();
+		return getRequestContext().getResourceID();
 	}
 
     public String getResponseContentType()
@@ -70,9 +87,64 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
         return getServletRequest().getHeader("accept");
     }
 
-    @SuppressWarnings("unchecked")
     public Enumeration<String> getResponseContentTypes()
     {
         return getServletRequest().getHeaders("accept");
     }
+   
+   // Debug code - intercept getParameter call & dump all parameters to trace
+   @Override
+   public String getParameter(String name) {
+      String val = super.getParameter(name);
+      if (LOG.isTraceEnabled()) {
+         Map<String, String[]> pmap = super.getParameterMap();
+         StringBuffer txt = new StringBuffer(1024);
+         txt.append("Resource Request parameter map dump:");
+         for (String n : pmap.keySet()) {
+            txt.append("\nName: " + n + ", Values: ");
+            String[] vals = pmap.get(n);
+            String sep = "";
+            for (String v : vals) {
+               txt.append(sep + v);
+               sep = ", ";
+            }
+         }
+         LOG.debug(txt.toString());
+      }
+      return val;
+   }
+
+   public ResourceParameters getResourceParameters() {
+      return getRequestContext().getResourceParameters();
+   }
+
+   @Override
+   public PortletAsyncContext startAsync() throws IllegalStateException {
+      return (PortletAsyncContext) getRequestContext().startAsync(this);
+   }
+
+   @Override
+   public PortletAsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
+      return (PortletAsyncContext) getRequestContext().startAsync(request, response);
+   }
+
+   @Override
+   public boolean isAsyncStarted() {
+      return getRequestContext().isAsyncStarted();
+   }
+
+   @Override
+   public boolean isAsyncSupported() {
+      return getRequestContext().isAsyncSupported();
+   }
+
+   @Override
+   public PortletAsyncContext getAsyncContext() {
+      return (PortletAsyncContext) getRequestContext().getAsyncContext();
+   }
+
+   @Override
+   public DispatcherType getDispatcherType() {
+      return getRequestContext().getDispatcherType();
+   }
 }

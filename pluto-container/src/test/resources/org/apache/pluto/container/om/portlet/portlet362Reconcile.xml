@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app version="3.0"
+   xmlns="http://xmlns.jcp.org/xml/ns/portlet" 
+   xmlns:portlet="http://xmlns.jcp.org/xml/ns/portlet" 
+   xmlns:xml="http://www.w3.org/XML/1998/namespace"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/portlet portlet-app_3_0.xsd ">
+
+   <!-- JSR 362 portlet DD test file -->
+
+   <portlet>
+      <portlet-name>Portlet3</portlet-name>
+      <portlet-class>org.apache.pluto.container.reconcile.fixtures.TestPortlet3</portlet-class>
+      <supported-processing-event>
+         <name>event3</name>
+      </supported-processing-event>
+      <supported-publishing-event>
+         <qname xmlns:x="http://www.apache.org/">x:event1</qname>
+      </supported-publishing-event>
+   </portlet>
+   <event-definition>
+      <description xml:lang="de">description</description>
+      <name>event3</name>
+      <value-type>org.apache.pluto.container.om.portlet.impl.fixtures.TestEventType</value-type>
+   </event-definition>
+   <event-definition>
+      <description xml:lang="de">description</description>
+      <qname xmlns:x="http://www.apache.org/">x:event2</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+</portlet-app>

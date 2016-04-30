@@ -27,6 +27,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.ResourceResponse;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -53,7 +54,13 @@ public class HttpServletPortletResponseWrapper extends HttpServletResponseWrappe
         super(response);
         this.portletResponse = portletResponse;
         this.lifecyclePhase = (String)portletRequest.getAttribute(PortletRequest.LIFECYCLE_PHASE);
-        this.mimeResponse = PortletRequest.RENDER_PHASE.equals(lifecyclePhase) || PortletRequest.RESOURCE_PHASE.equals(lifecyclePhase) ? (MimeResponse)portletResponse : null;
+        MimeResponse mr = null;
+        if (PortletRequest.RENDER_PHASE.equals(lifecyclePhase) || 
+            PortletRequest.RESOURCE_PHASE.equals(lifecyclePhase) ||
+            PortletRequest.HEADER_PHASE.equals(lifecyclePhase)) {
+           mr = (MimeResponse)portletResponse;
+        }
+        this.mimeResponse = mr;
         this.forwarded = !included;
         this.included = included;
     }
@@ -250,6 +257,17 @@ public class HttpServletPortletResponseWrapper extends HttpServletResponseWrappe
 					{
 						outputStream.write(b);
 					}
+
+               @Override
+               public boolean isReady() {
+                  // Servlet 3.1 API. Not implemented.
+                  return true;
+               }
+
+               @Override
+               public void setWriteListener(WriteListener arg0) {
+                  // Servlet 3.1 API. Not implemented.
+               }
         		};
         	}
     	}

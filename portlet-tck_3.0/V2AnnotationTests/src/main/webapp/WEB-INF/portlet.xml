@@ -50,6 +50,9 @@
       <supported-publishing-event>
          <qname>tck:AnnotationTests_ProcessEvent_ApiEvent</qname>
       </supported-publishing-event>
+      <supported-publishing-event>
+         <name>AnnotationTests_ProcessEvent_ApiEvent2</name>
+      </supported-publishing-event>
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
@@ -65,7 +68,10 @@
          <title>AnnotationTests_ProcessEvent_ApiEvent_event</title>
       </portlet-info>
       <supported-processing-event>
-         <qname>tck:AnnotationTests_ProcessEvent_ApiEvent</qname>
+         <qname>tck:AnnotationTests_ProcessEvent_ApiEvent</qname> 
+      </supported-processing-event>
+      <supported-processing-event>
+         <name>AnnotationTests_ProcessEvent_ApiEvent2</name> 
       </supported-processing-event>
    </portlet>
 
@@ -83,10 +89,13 @@
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
-
-
    <event-definition>
       <qname>tck:AnnotationTests_ProcessEvent_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <name>AnnotationTests_ProcessEvent_ApiEvent2</name>
       <value-type>java.lang.String</value-type>
    </event-definition>
 

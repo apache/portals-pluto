@@ -145,7 +145,7 @@ public class PortletWindowStateAnchorTag extends BodyTagSupport {
     private void evaluatePortletId() throws JspException {
         Object obj = ExpressionEvaluatorManager.evaluate(
                 "portletId", portletId, String.class, this, pageContext);
-        if (LOG.isDebugEnabled()) {
+        if (LOG.isTraceEnabled()) {
             LOG.debug("Evaluated portletId to: " + obj);
         }
         evaluatedPortletId = (String) obj;
@@ -175,7 +175,7 @@ public class PortletWindowStateAnchorTag extends BodyTagSupport {
 	}
     
     private boolean isWindowStateAllowed(DriverConfiguration config, String state) {
-        LOG.debug("Testing if PortletWindowConfig [" + getEvaluatedPortletId() + "] supports window state [" + state + "]");
+        LOG.trace("Testing if PortletWindowConfig [" + getEvaluatedPortletId() + "] supports window state [" + state + "]");
         return config.isWindowStateSupported(getEvaluatedPortletId(), state);
     }
 

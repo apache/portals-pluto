@@ -16,15 +16,8 @@
  */
 package org.apache.pluto.container;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletResponse;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
-import javax.servlet.http.HttpSession;
 
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 
@@ -41,12 +34,4 @@ public interface RequestDispatcherService
 
     PortletRequestDispatcher getNamedDispatcher(ServletContext servletContext, PortletApplicationDefinition app,
                                                 String name);
-
-    HttpServletRequestWrapper getRequestWrapper(ServletContext servletContext, HttpServletRequest servletRequest,
-                                                PortletRequest portletRequest, HttpSession session, boolean included,
-                                                boolean named);
-
-    HttpServletResponseWrapper getResponseWraper(ServletContext servletContext, HttpServletResponse servletResponse,
-                                                 PortletRequest portletRequest, PortletResponse portletResponse,
-                                                 boolean included);
 }

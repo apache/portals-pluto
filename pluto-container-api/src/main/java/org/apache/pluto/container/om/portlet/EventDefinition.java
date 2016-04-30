@@ -24,17 +24,19 @@ import javax.xml.namespace.QName;
 public interface EventDefinition
 {
     QName getQName();
-    String getName();
+   void setQName(QName qn);
     
 	List<QName> getAliases();
 	void addAlias(QName qName);
 
 	Description getDescription(Locale locale);
-    List<? extends Description> getDescriptions();
-    Description addDescription(String lang);
+   List<Description> getDescriptions();
+   void addDescription(Description desc);
+   DisplayName getDisplayName(Locale locale);
+   List<DisplayName> getDisplayNames();
+   void addDisplayName(DisplayName desc);
 	
 	String getValueType();
 	void setValueType(String valueType);
 
-	QName getQualifiedName(String defaultNamespace);
 }

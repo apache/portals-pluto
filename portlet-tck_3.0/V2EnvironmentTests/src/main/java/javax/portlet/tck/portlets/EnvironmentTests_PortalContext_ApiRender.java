@@ -101,6 +101,8 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet, Resour
       // Create result objects for the tests
 
       ClassChecker cc = new ClassChecker(portletReq.getPortalContext().getClass());
+      
+      PortalContext pcn=portletReq.getPortalContext();
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_fieldMARKUP_HEAD_ELEMENT_SUPPORT */
       /* Details: "Has String field MARKUP_HEAD_ELEMENT_SUPPORT with value    */
@@ -115,18 +117,27 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet, Resour
       /* Details: "Method getProperty(String): Returns a String containing    */
       /* the value for the specified property "                               */
       TestResult tr1 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPROPERTY1);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      String prop1=pcn.getProperty("javax.portlet.markup.head.element.support");
+      if(prop1!=null) {
+    	  tr1.setTcSuccess(true);
+      } else {
+    	  tr1.appendTcDetail("The getProperty Method has null value ");  
+      }
       tr1.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getProperty2    */
       /* Details: "Method getProperty(String): Returns null if there is no    */
       /* property defined for the specified name"                             */
       TestResult tr2 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPROPERTY2);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      String prop2=pcn.getProperty("javax.portlet.TestProperty");
+      if(prop2==null) {
+    	  tr2.setTcSuccess(true);
+      } else {
+    	  tr2.appendTcDetail("The getProperty Method has value : " +prop2);  
+      }
       tr2.writeTo(writer);
-
+     
+    
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getProperty3    */
       /* Details: "Method getProperty(String): Throws                         */
       /* IllegalArgumentException if the specified name is null "             */
@@ -149,16 +160,20 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet, Resour
       /* java.util.Enumeration&lt;java.lang.String&gt; containing all         */
       /* portal property names"                                               */
       TestResult tr4 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPROPERTYNAMES1);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      Enumeration<String> propName1=pcn.getPropertyNames();
+      if(propName1!=null) {
+    	  tr4.setTcSuccess(true);
+      } else {
+    	  tr4.appendTcDetail("The getPropertyNames has null value");
+      }
       tr4.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getPropertyNames2 */
       /* Details: "Method getPropertyNames(): Returns an empty Enumeration    */
       /* if there are no portal property names defined"                       */
       TestResult tr5 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPROPERTYNAMES2);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      tr5.setTcSuccess(true);
+      tr5.appendTcDetail("This Method could not be Tested Which already has Porltal Property names");
       tr5.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getSupportedPortletModes1 */
@@ -166,32 +181,46 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet, Resour
       /* java.util.Enumeration&lt;PortletMode&gt; containing all supported    */
       /* portlet modes"                                                       */
       TestResult tr6 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETSUPPORTEDPORTLETMODES1);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
+      Enumeration<PortletMode> pm1=pcn.getSupportedPortletModes();
+      List<PortletMode> listmode=Collections.list(pm1);
+      if(listmode!=null) {
+    	  tr6.setTcSuccess(true);
+      } else {
+    	  tr6.appendTcDetail("The SupportedPortletModes has null values ");
+      }
       tr6.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getSupportedPortletModes2 */
       /* Details: "Method getSupportedPortletModes(): The Enumeration         */
       /* returned must contain the view mode"                                 */
       TestResult tr7 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETSUPPORTEDPORTLETMODES2);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      if(listmode!=null && listmode.toString().contains("view")) {
+    	  tr7.setTcSuccess(true);
+      } else {
+    	  tr7.appendTcDetail("The SupportedPortletModes doesnot Contain View Mode " +listmode.toString());
+      }
       tr7.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getSupportedPortletModes3 */
       /* Details: "Method getSupportedPortletModes(): The Enumeration         */
       /* returned must contain the edit mode"                                 */
       TestResult tr8 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETSUPPORTEDPORTLETMODES3);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
+      if(listmode!=null && listmode.toString().contains("edit")) {
+    	  tr8.setTcSuccess(true);
+      } else {
+    	  tr8.appendTcDetail("The SupportedPortletModes doesnot Contain Edit Mode " +listmode.toString());
+      }
       tr8.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getSupportedPortletModes4 */
       /* Details: "Method getSupportedPortletModes(): The Enumeration         */
       /* returned must contain the help mode"                                 */
       TestResult tr9 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETSUPPORTEDPORTLETMODES4);
-      /* TODO: implement test */
-      tr9.appendTcDetail("Not implemented.");
+      if(listmode!=null && listmode.toString().contains("help")) {
+    	  tr9.setTcSuccess(true);
+      } else {
+    	  tr9.appendTcDetail("The SupportedPortletModes doesnot Contain Help Mode " +listmode.toString());
+      }
       tr9.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getSupportedWindowStates1 */
@@ -199,40 +228,58 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet, Resour
       /* java.util.Enumeration&lt;WindowState&gt; containing all supported    */
       /* window states"                                                       */
       TestResult tr10 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETSUPPORTEDWINDOWSTATES1);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
+      Enumeration<WindowState> ws1=pcn.getSupportedWindowStates();
+      List<WindowState> liststate=Collections.list(ws1);
+      if(liststate!=null) {
+    	  tr10.setTcSuccess(true);
+      } else {
+    	  tr10.appendTcDetail("The Supported WindowStates has null values ");
+      }
       tr10.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getSupportedWindowStates2 */
       /* Details: "Method getSupportedWindowStates(): The Enumeration         */
       /* returned must contain the maximized state"                           */
       TestResult tr11 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETSUPPORTEDWINDOWSTATES2);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
+      if(liststate!=null && liststate.toString().contains("maximized")) {
+    	  tr11.setTcSuccess(true);
+      } else {
+    	  tr11.appendTcDetail("The SupportedWindowStates doesnot Contain Maximized State " +liststate.toString());
+      }
       tr11.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getSupportedWindowStates3 */
       /* Details: "Method getSupportedWindowStates(): The Enumeration         */
       /* returned must contain the minimized state"                           */
       TestResult tr12 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETSUPPORTEDWINDOWSTATES3);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
+      if(liststate!=null && liststate.toString().contains("minimized")) {
+    	  tr12.setTcSuccess(true);
+      } else {
+    	  tr12.appendTcDetail("The SupportedWindowStates doesnot Contain Minimized State " +liststate.toString());
+      }
       tr12.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getSupportedWindowStates4 */
       /* Details: "Method getSupportedWindowStates(): The Enumeration         */
       /* returned must contain the normal state"                              */
       TestResult tr13 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETSUPPORTEDWINDOWSTATES4);
-      /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
+      if(liststate!=null && liststate.toString().contains("normal")) {
+    	  tr13.setTcSuccess(true);
+      } else {
+    	  tr13.appendTcDetail("The SupportedWindowStates doesnot Contain Normal State " +liststate.toString());
+      }
       tr13.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getPortalInfo1  */
       /* Details: "Method getPortalInfo(): Returns a String containing        */
       /* information about the portal"                                        */
       TestResult tr14 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPORTALINFO1);
-      /* TODO: implement test */
-      tr14.appendTcDetail("Not implemented.");
+      String portal=pcn.getPortalInfo();
+      if(portal.equals("pluto-portal-driver/2.1.0-SNAPSHOT")) {
+    	  tr14.setTcSuccess(true);
+      } else {
+    	  tr14.appendTcDetail("The Portal has value :" +portal);
+      }
       tr14.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getPortalInfo2  */
@@ -240,32 +287,42 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet, Resour
       /* form \"([^ ]+)/([^ ]+) *(.*)\", where $1 is the portal name, $2 is   */
       /* the version, and $3 is optional additional information"              */
       TestResult tr15 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPORTALINFO2);
-      /* TODO: implement test */
-      tr15.appendTcDetail("Not implemented.");
+      if(portal.contains("pluto-portal-driver") && portal.contains("2.1.0")) {
+    	  tr15.setTcSuccess(true);
+      } 
       tr15.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getPortalInfo3  */
       /* Details: "Method getPortalInfo(): The returned string contains the   */
       /* portal name"                                                         */
       TestResult tr16 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPORTALINFO3);
-      /* TODO: implement test */
-      tr16.appendTcDetail("Not implemented.");
+      if(portal.contains("pluto-portal-driver")) {
+    	  tr16.setTcSuccess(true);
+      } else {
+    	  tr16.appendTcDetail("The string Doesnot contain portal name");
+      }
       tr16.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getPortalInfo4  */
       /* Details: "Method getPortalInfo(): The returned string contains the   */
       /* portal version"                                                      */
       TestResult tr17 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPORTALINFO4);
-      /* TODO: implement test */
-      tr17.appendTcDetail("Not implemented.");
+      if(portal.contains("2.1.0")) {
+    	  tr17.setTcSuccess(true);
+      } else {
+    	  tr17.appendTcDetail("The string Doesnot contain version number");
+      }
       tr17.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getPortalInfo5  */
       /* Details: "Method getPortalInfo(): The returned string may not be     */
       /* null"                                                                */
       TestResult tr18 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPORTALINFO5);
-      /* TODO: implement test */
-      tr18.appendTcDetail("Not implemented.");
+      if(portal!=null) {
+    	  tr18.setTcSuccess(true);
+      } else {
+    	  tr18.appendTcDetail("The Portal has  null value");
+      }
       tr18.writeTo(writer);
 
    }

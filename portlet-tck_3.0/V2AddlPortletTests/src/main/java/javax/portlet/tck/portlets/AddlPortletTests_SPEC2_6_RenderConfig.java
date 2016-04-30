@@ -215,7 +215,21 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet, ResourceS
       /* TODO: implement test */
       tr11.appendTcDetail("Not implemented.");
       tr11.writeTo(writer);
+      
+      /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig_getDefaultNamespace2 */
+      /* Details: "Method getDefaultNamespace(): Returns                      */
+      /* XMLConstants.NULL_NS_URI if no default namespace is defined in the   */
+      /* deployment descriptor "                                              */
+      TestResult tr12 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETDEFAULTNAMESPACE2);
+      tr12.appendTcDetail("Not implemented");
+      tr12.writeTo(writer);
 
+      /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig_getContainerRuntimeOptions4 */
+      /* Details: "Method getContainerRuntimeOptions(): Returns an empty      */
+      /* map if no container runtime options have been defined "              */
+      TestResult tr13= tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETCONTAINERRUNTIMEOPTIONS9);
+      tr13.appendTcDetail("Not implemented.");
+      tr13.writeTo(writer);
    }
 
 }

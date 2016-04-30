@@ -94,10 +94,10 @@ public class PortletTests_ResourceServingPortlet_ApiResource implements Portlet,
       /* Details: "Method serveResource(ResourceRequest, ResourceResponse):   */
       /* is called to allow the portlet to generate resource content "        */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_RESOURCESERVINGPORTLET_APIRESOURCE_SERVERESOURCE);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
-
+      
+        tr0.setTcSuccess(true);
+     
+        tr0.writeTo(writer);
    }
 
    @Override

@@ -641,7 +641,7 @@ public class RequestTests_PortletRequest_ApiEvent implements Portlet, ResourceSe
       /* parameter specified by the name"                                     */
       {
          PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
+         aurl.setParameter(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETPARAMETER1,"TestValue");
          TestButton tb = new TestButton("V2RequestTests_PortletRequest_ApiEvent_getParameter1", aurl);
          tb.writeTo(writer);
       }
@@ -651,7 +651,7 @@ public class RequestTests_PortletRequest_ApiEvent implements Portlet, ResourceSe
       /* public render parameter specified by the name"                       */
       {
          PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
+         aurl.setParameter("tckPRP1","TestValue2");
          TestButton tb = new TestButton("V2RequestTests_PortletRequest_ApiEvent_getParameter2", aurl);
          tb.writeTo(writer);
       }
@@ -671,7 +671,7 @@ public class RequestTests_PortletRequest_ApiEvent implements Portlet, ResourceSe
       /* from values array if use with a multivalued parameter"               */
       {
          PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
+         aurl.setParameter(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETPARAMETER4,new String[] {"TestValue1","TestValue2"});
          TestButton tb = new TestButton("V2RequestTests_PortletRequest_ApiEvent_getParameter4", aurl);
          tb.writeTo(writer);
       }
@@ -712,7 +712,7 @@ public class RequestTests_PortletRequest_ApiEvent implements Portlet, ResourceSe
       /* value of parameter specified by the name"                            */
       {
          PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
+         aurl.setParameter(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETPARAMETERVALUES1,new String[] {"Value1","Value2","Value3"});
          TestButton tb = new TestButton("V2RequestTests_PortletRequest_ApiEvent_getParameterValues1", aurl);
          tb.writeTo(writer);
       }
@@ -722,7 +722,7 @@ public class RequestTests_PortletRequest_ApiEvent implements Portlet, ResourceSe
       /* value of a public render parameter specified by the name"            */
       {
          PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
+         aurl.setParameter("tckPRP1",new String[] {"Value1","Value2","Value3"});
          TestButton tb = new TestButton("V2RequestTests_PortletRequest_ApiEvent_getParameterValues2", aurl);
          tb.writeTo(writer);
       }
@@ -732,7 +732,7 @@ public class RequestTests_PortletRequest_ApiEvent implements Portlet, ResourceSe
       /* parameter exists for the specified name"                             */
       {
          PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
+         aurl.setParameter(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETPARAMETERVALUES3,new String[] {});
          TestButton tb = new TestButton("V2RequestTests_PortletRequest_ApiEvent_getParameterValues3", aurl);
          tb.writeTo(writer);
       }

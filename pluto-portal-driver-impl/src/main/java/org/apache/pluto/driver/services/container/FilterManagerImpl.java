@@ -19,11 +19,15 @@ package org.apache.pluto.driver.services.container;
 import java.io.IOException;
 import java.util.List;
 
+import javax.enterprise.inject.spi.BeanManager;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventPortlet;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.HeaderPortlet;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
@@ -39,15 +43,20 @@ import org.apache.pluto.container.om.portlet.Filter;
 import org.apache.pluto.container.om.portlet.FilterMapping;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
  * Manage the initialization and doFilter {@link FilterChainImpl} for the filter which are
- * declareted in the deployment descriptor.
+ * declared in the deployment descriptor.
  * @since 05/29/2007
  * @version 2.0
  */
 public class FilterManagerImpl implements FilterManager{
+   @SuppressWarnings("unused")
+   private static final Logger LOG = LoggerFactory.getLogger(FilterManagerImpl.class);
+   
     private FilterChainImpl filterchain;
     private PortletApplicationDefinition portletApp;
     private String portletName;
@@ -60,6 +69,14 @@ public class FilterManagerImpl implements FilterManager{
         this.lifeCycle = lifeCycle;
         filterchain = new FilterChainImpl(lifeCycle);
         initFilterChain();
+    }
+    
+    /**
+     * passing thru bean manager to enable contextual support in filters.
+     */
+    @Override
+    public void setBeanManager(BeanManager bm) {
+       filterchain.setBeanManager(bm);
     }
 
     private void initFilterChain(){
@@ -87,6 +104,7 @@ public class FilterManagerImpl implements FilterManager{
     /**
      * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.EventRequest, javax.portlet.EventResponse, javax.portlet.EventPortlet, javax.portlet.PortletContext)
      */
+    @Override
     public void processFilter(EventRequest req, EventResponse res, EventPortlet eventPortlet,PortletContext portletContext)throws PortletException, IOException{
         filterchain.processFilter(req, res, eventPortlet, portletContext);
     }
@@ -94,20 +112,32 @@ public class FilterManagerImpl implements FilterManager{
     /**
      * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.ResourceRequest, javax.portlet.ResourceResponse, javax.portlet.ResourceServingPortlet, javax.portlet.PortletContext)
      */
+    @Override
     public void processFilter(ResourceRequest req, ResourceResponse res, ResourceServingPortlet resourceServingPortlet,PortletContext portletContext)throws PortletException, IOException{
+        filterchain.reset();     // for async processing
         filterchain.processFilter(req, res, resourceServingPortlet, portletContext);
     }
 
     /**
      * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.RenderRequest, javax.portlet.RenderResponse, javax.portlet.Portlet, javax.portlet.PortletContext)
      */
+    @Override
     public void processFilter(RenderRequest req, RenderResponse res, Portlet portlet,PortletContext portletContext) throws PortletException, IOException{
+        filterchain.processFilter(req, res, portlet, portletContext);
+    }
+
+    /**
+     * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.RenderRequest, javax.portlet.HeaderResponse, javax.portlet.HeaderPortlet, javax.portlet.PortletContext)
+     */
+    @Override
+    public void processFilter(HeaderRequest req, HeaderResponse res, HeaderPortlet portlet,PortletContext portletContext) throws PortletException, IOException{
         filterchain.processFilter(req, res, portlet, portletContext);
     }
 
     /**
      * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.ActionRequest, javax.portlet.ActionResponse, javax.portlet.Portlet, javax.portlet.PortletContext)
      */
+    @Override
     public void processFilter(ActionRequest req, ActionResponse res, Portlet portlet,PortletContext portletContext) throws PortletException, IOException{
         filterchain.processFilter(req, res, portlet, portletContext);
     }

@@ -1,0 +1,335 @@
+<portlet-app xmlns="http://xmlns.jcp.org/xml/ns/portlet" 
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+           xmlns:rp="http://www.apache.org/portals/pluto/pub-render-params/ResourcePortlet"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/portlet http://xmlns.jcp.org/xml/ns/portlet/portlet-app_3_0.xsd" 
+             version="3.0"
+    		id="v3.demo.portlet">
+   <portlet>
+      <portlet-name>V3ImageViewer</portlet-name>
+      <display-name>V3 Image Viewer Portlet</display-name>
+      
+      <portlet-class>basic.portlet.ResourcePortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>V3 Image Viewer Portlet</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>photo</supported-public-render-parameter>
+      <supported-public-render-parameter>color</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>MessageBoxPortlet</portlet-name>
+      <display-name>Message Box Portlet</display-name>
+      
+      <portlet-class>basic.portlet.MessageBoxPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>PH Message Box Portlet</title>
+      </portlet-info>
+
+      <supported-processing-event>
+         <qname>rp:Message</qname>
+      </supported-processing-event>
+
+      <supported-public-render-parameter>color</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>V3ImageSelector</portlet-name>
+      <display-name>Image Selection Portlet - alt PRP name</display-name>
+      
+      <portlet-class>basic.portlet.ImageSelPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>Image Selection Portlet - alt PRP name</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>photo</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>V3ColorSelector</portlet-name>
+      <display-name>Color Selection Portlet - alt QName</display-name>
+      
+      <portlet-class>basic.portlet.ColorSelPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+         <portlet-mode>HELP</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>Color Selection Portlet - alt QName</title>
+      </portlet-info>
+
+      <supported-publishing-event>
+         <qname>rp:Message</qname>
+      </supported-publishing-event>
+      <supported-public-render-parameter>color</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>V3RedirectPortlet</portlet-name>
+      <portlet-info>
+         <title>Redirect Test Portlet</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletConfigPortlet1</portlet-name>
+      <display-name>Portlet Config Portlet #1</display-name>
+      
+      <portlet-class>basic.portlet.PortletConfigPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+         <portlet-mode>HELP</portlet-mode>
+         <portlet-mode>EDIT</portlet-mode>
+         <portlet-mode>MyMode_nonPortalManaged_1</portlet-mode>
+         <portlet-mode>MyMode_nonPortalManaged_2</portlet-mode>
+         <portlet-mode>MyMode_PortalManaged_3</portlet-mode>
+         <window-state>TestWindowState_1</window-state>
+         <window-state>TestWindowState_2</window-state>
+      </supports>
+      
+      <supports>
+         <mime-type>text/vnd.wap.wml</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+         <portlet-mode>MyMode_nonPortalManaged_1</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>Portlet Config Portlet #1</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>color</supported-public-render-parameter>
+      <supported-public-render-parameter>photo</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletConfigPortlet2</portlet-name>
+      <display-name>Portlet Config Portlet #2</display-name>
+      
+      <portlet-class>basic.portlet.PortletConfigPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>HELP</portlet-mode>
+         <portlet-mode>MyMode_nonPortalManaged_1</portlet-mode>
+         <window-state>TestWindowState_1</window-state>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>Portlet Config Portlet #2</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>color</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>ParamTestPortlet</portlet-name>
+      <display-name>V3 Parameter Test Portlet</display-name>
+      
+      <portlet-class>basic.portlet.ParamTestPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>V3 Parameter Test Portlet</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>Bild</supported-public-render-parameter>
+      <supported-public-render-parameter>Farbe</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>UrlTestPortlet</portlet-name>
+      <display-name>V3 URL Test Portlet</display-name>
+      
+      <portlet-class>basic.portlet.UrlTestPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>V3 Url Test Portlet</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>Bild</supported-public-render-parameter>
+      <supported-public-render-parameter>Farbe</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>UrlRPTestPortlet</portlet-name>
+      <display-name>V3 URL Render Parameter Test Portlet</display-name>
+      
+      <portlet-class>basic.portlet.UrlRPTestPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>V3 Url Render Parameter Test Portlet</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>Bild</supported-public-render-parameter>
+      <supported-public-render-parameter>Farbe</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>UrlAPTestPortlet</portlet-name>
+      <display-name>V3 Action URL Parameter Test Portlet</display-name>
+      
+      <portlet-class>basic.portlet.UrlAPTestPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>V3 Action Url Parameter Test Portlet</title>
+      </portlet-info>
+
+      <supported-public-render-parameter>Bild</supported-public-render-parameter>
+      <supported-public-render-parameter>Farbe</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>LongPortlet</portlet-name>
+      <display-name>V3 Fragment Identifier Test Portlet</display-name>
+      
+      <portlet-class>basic.portlet.LongPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>V3 Fragment Identifier Test Portlet</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AuthSCPortlet</portlet-name>
+      <display-name>V3 Authentication and Status Code Test Portlet</display-name>
+      
+      <portlet-class>basic.portlet.AuthSCPortlet</portlet-class>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>VIEW</portlet-mode>
+      </supports>
+
+      <supported-locale>en</supported-locale>        
+
+      <portlet-info>
+         <title>V3 Authentication and Status Code Test Portlet</title>
+      </portlet-info>
+   </portlet>
+
+	<custom-portlet-mode>
+		<description>Test mode #1</description>
+		<portlet-mode>MyMode_nonPortalManaged_1</portlet-mode>
+		<portal-managed>false</portal-managed>
+	</custom-portlet-mode>
+
+	<custom-portlet-mode>
+		<description>Test mode #2</description>
+		<portlet-mode>MyMode_nonPortalManaged_2</portlet-mode>
+		<portal-managed>false</portal-managed>
+	</custom-portlet-mode>
+
+	<custom-portlet-mode>
+		<description>Test mode #3</description>
+		<portlet-mode>MyMode_PortalManaged_3</portlet-mode>
+		<portal-managed>true</portal-managed>
+	</custom-portlet-mode>
+
+	<custom-window-state>
+		<description>Test window State #1</description>
+		<window-state>TestWindowState_1</window-state>
+	</custom-window-state>
+
+	<custom-window-state>
+		<description>Test window State #2</description>
+		<window-state>TestWindowState_2</window-state>
+	</custom-window-state>
+   
+   <event-definition>
+      <qname>rp:Message</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+   
+   <public-render-parameter>
+      <identifier>photo</identifier>
+      <qname>rp:ph-imgName</qname>
+   </public-render-parameter>
+   <public-render-parameter>
+      <identifier>color</identifier>
+      <qname>rp:alt-color</qname>
+   </public-render-parameter>
+   
+   <public-render-parameter>
+      <identifier>Bild</identifier>
+      <qname>rp:imgName</qname>
+   </public-render-parameter>
+   <public-render-parameter>
+      <identifier>Farbe</identifier>
+      <qname>rp:color</qname>
+   </public-render-parameter>
+
+   <listener>
+      <description>Test Listener</description>
+      <listener-class>basic.portlet.URLFilter</listener-class>
+   </listener>
+
+ </portlet-app>

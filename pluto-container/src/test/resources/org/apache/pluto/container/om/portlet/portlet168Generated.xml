@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app id="id1"
+   xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+   version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:portlet="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd
+http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+>
+
+   <portlet id="id2">
+      <description xml:lang="de">multi
+         line 
+         description</description>
+      <portlet-name>portlet168</portlet-name>
+      <display-name xml:lang="de">display-name</display-name>
+      <portlet-class>org.apache.pluto.container.om.portlet.impl.fixtures.TestPortlet</portlet-class>
+      <init-param id="init1">
+         <description xml:lang="de">description</description>
+         <name>name</name>
+         <value>value</value>
+      </init-param>
+      <expiration-cache>50</expiration-cache>
+      <supports id="sup1">
+         <mime-type>mime-type</mime-type>
+         <portlet-mode>portlet-mode</portlet-mode>
+      </supports>
+      <supports id="sup2">
+         <mime-type>mime-type2</mime-type>
+         <portlet-mode>portlet-mode2</portlet-mode>
+      </supports>
+      <supports id="sup3">
+         <mime-type>mime-type3</mime-type>
+         <portlet-mode>portlet-mode3</portlet-mode>
+      </supports>
+      <supported-locale>supported-locale</supported-locale>
+      <resource-bundle>resource-bundle</resource-bundle>
+      <portlet-info id="info1">
+         <title>title</title>
+         <short-title>short-title</short-title>
+         <keywords>keywords</keywords>
+      </portlet-info>
+      <portlet-preferences id="prefs">
+         <preference id="pref1">
+            <name>name</name>
+            <value>value</value>
+            <read-only>true</read-only>
+         </preference>
+         <preferences-validator>
+            org.apache.pluto.container.om.portlet.impl.fixtures.TestPreferencesValidator
+         </preferences-validator>
+      </portlet-preferences>
+      <security-role-ref id="sec1">
+         <description xml:lang="de">description</description>
+         <role-name>NMTOKEN</role-name>
+         <role-link>role-link</role-link>
+      </security-role-ref>
+   </portlet>
+   <custom-portlet-mode id="mode1">
+      <description xml:lang="de">description</description>
+      <portlet-mode>portlet-mode</portlet-mode>
+   </custom-portlet-mode>
+   <custom-window-state id="state1">
+      <description xml:lang="de">description</description>
+      <window-state>window-state</window-state>
+   </custom-window-state>
+   <user-attribute id="att1">
+      <description xml:lang="de">description</description>
+      <name>name</name>
+   </user-attribute>
+   <security-constraint id="cons1">
+      <display-name xml:lang="de">display-name</display-name>
+      <portlet-collection>
+         <portlet-name>portlet.name</portlet-name>
+      </portlet-collection>
+      <user-data-constraint id="data1">
+         <description xml:lang="de">description</description>
+         <transport-guarantee>NONE</transport-guarantee>
+      </user-data-constraint>
+   </security-constraint>
+</portlet-app>

@@ -20,6 +20,7 @@ import javax.portlet.CacheControl;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 
+import org.apache.pluto.container.PortletMimeResponseContext;
 import org.apache.pluto.container.PortletRenderResponseContext;
 import org.apache.pluto.container.PortletRequestContext;
 
@@ -34,6 +35,18 @@ public class RenderRequestImpl extends PortletRequestImpl implements RenderReque
     public RenderRequestImpl(PortletRequestContext requestContext, PortletRenderResponseContext responseContext) 
     {
         super(requestContext, responseContext, PortletRequest.RENDER_PHASE);
+        this.cacheControl = responseContext.getCacheControl();
+    }
+    
+    /**
+     * For use in HeaderRequestImpl constructor.
+     * @param requestContext
+     * @param responseContext
+     * @param lifecyclePhase
+     */
+    public RenderRequestImpl(PortletRequestContext requestContext, PortletMimeResponseContext responseContext, String lifecyclePhase) 
+    {
+        super(requestContext, responseContext, lifecyclePhase);
         this.cacheControl = responseContext.getCacheControl();
     }
 

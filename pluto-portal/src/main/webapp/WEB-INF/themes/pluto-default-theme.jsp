@@ -16,9 +16,15 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
+<%@ page isELIgnored="false" %>
+<%@page import="org.apache.pluto.driver.core.PortalRequestContext"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://portals.apache.org/pluto" prefix="pluto" %>
+<%@ page import="java.util.*,javax.portlet.*,org.apache.pluto.driver.url.*" %>
+<%@ page import="org.apache.pluto.driver.config.*,org.apache.pluto.driver.*" %>
+<%@ page import="org.apache.pluto.driver.util.*" %>
+<%@ page import="org.apache.pluto.container.*,javax.servlet.jsp.*" %>
 <% pageContext.setAttribute("now", new java.util.Date()); %>
 
 <!--
@@ -37,9 +43,28 @@ group (the left column) displays portlets with odd IDs, while the second group
         @import "<c:out value="${pageContext.request.contextPath}"/>/portlet-spec-1.0.css";
         @import "<c:out value="${pageContext.request.contextPath}"/>/portlet-spec-2.0.css";
     </style>
-    <script type="text/javascript"
-            src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js">
+    <script type="text/javascript">
+       /**
+        * Initialization code for portlet hub
+        */
+       <%
+          PageState ps = new PageState(request);
+       %>
+       var portlet = portlet || {};
+       portlet.impl = portlet.impl || {};
+       portlet.impl.getInitData = function () {
+          return <%=ps.toJSONString()%>;
+       }
+       portlet.impl.getUrlBase = function () {
+          return '<%=response.encodeURL(ps.getUrlBase())%>';
+       }
     </script>
+    <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js"></script>
+    <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/portletHubImpl.js"></script>
+    <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/portlet.js"></script>
+    
+    <!-- Now include the head section markup provided by the portlet header processing methods -->
+    ${headMarkup}
 </head>
 
 <body>

@@ -21,13 +21,20 @@ import java.util.Locale;
 
 public interface Listener {
     
-    String getListenerClass();
+   String getListenerClass();
+   void setListenerClass(String cls);
 
-    Description getDescription(Locale locale);
-    List<? extends Description> getDescriptions();
-    Description addDescription(String lang);
-	
-	DisplayName getDisplayName(Locale locale);
-    List<? extends DisplayName> getDisplayNames();
-    DisplayName addDisplayName(String lang);
+   Description getDescription(Locale locale);
+   List<Description> getDescriptions();
+   void addDescription(Description desc);
+   
+   DisplayName getDisplayName(Locale locale);
+   List<DisplayName> getDisplayNames();
+   void addDisplayName(DisplayName dispName);
+   
+   String getListenerName();
+   void setListenerName(String listenerName);
+   
+   int getOrdinal();
+   void setOrdinal(int ordinal);
 }

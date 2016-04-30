@@ -17,11 +17,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --%>
 
+<%@ page isELIgnored="false" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="javax.servlet.jsp.jstl.core.LoopTagStatus" %>
 <%@ page import="org.apache.pluto.testsuite.TestConfig" %>
 
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 
 <portlet:defineObjects/>

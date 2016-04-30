@@ -16,19 +16,22 @@
  */
 package org.apache.pluto.container.impl;
 
+import static javax.portlet.MimeResponse.Copy.PUBLIC;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
 
-import javax.portlet.PortletURL;
+import javax.portlet.ActionURL;
+import javax.portlet.RenderURL;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
 import org.apache.pluto.container.PortletResourceResponseContext;
-import org.apache.pluto.container.PortletURLProvider;
 
 public class ResourceResponseImpl extends MimeResponseImpl implements ResourceResponse
 {
+    
     private static final String DEFAULT_CONTAINER_CHARSET = "UTF-8";
     
     private boolean canSetLocaleEncoding = true;
@@ -44,21 +47,41 @@ public class ResourceResponseImpl extends MimeResponseImpl implements ResourceRe
     }
 	
     @Override
-    public PortletURL createActionURL()
+    public ActionURL createActionURL(Copy option) {
+       if (ResourceURL.PAGE.equals(requestCacheLevel)) {
+          return new ActionURLImpl(responseContext, option);
+       } else {
+          throw new IllegalStateException("Not allowed to create an ActionURL with current request cacheability level "+requestCacheLevel);
+       }
+    }
+
+    @Override
+    public RenderURL createRenderURL(Copy option) {
+       if (ResourceURL.PAGE.equals(requestCacheLevel)) {
+          return new RenderURLImpl(responseContext, option);
+       } else {
+          throw new IllegalStateException("Not allowed to create a RenderURL with current request cacheability level "+requestCacheLevel);
+       }
+    }
+   
+    @SuppressWarnings("unchecked")
+   @Override
+    public ActionURL createActionURL()
     {
         if (ResourceURL.PAGE.equals(requestCacheLevel))
         {
-            return new PortletURLImpl(responseContext, PortletURLProvider.TYPE.ACTION);
+            return new ActionURLImpl(responseContext, PUBLIC);
         }
         throw new IllegalStateException("Not allowed to create an ActionURL with current request cacheability level "+requestCacheLevel);
     }
     
-    @Override
-    public PortletURL createRenderURL()
+    @SuppressWarnings("unchecked")
+   @Override
+    public RenderURL createRenderURL()
     {
         if (ResourceURL.PAGE.equals(requestCacheLevel))
         {
-            return new PortletURLImpl(responseContext, PortletURLProvider.TYPE.RENDER);
+            return new RenderURLImpl(responseContext, PUBLIC);
         }
         throw new IllegalStateException("Not allowed to create a RenderURL with current request cacheability level "+requestCacheLevel);
     }
@@ -66,7 +89,7 @@ public class ResourceResponseImpl extends MimeResponseImpl implements ResourceRe
     @Override
     public ResourceURL createResourceURL()
     {
-        return new PortletURLImpl(responseContext, requestCacheLevel);
+        return new ResourceURLImpl(responseContext, requestCacheLevel);
     }
     
     @Override
@@ -144,5 +167,20 @@ public class ResourceResponseImpl extends MimeResponseImpl implements ResourceRe
 	            }
 	        }
 	    }
+	}
+
+	@Override
+   public void setStatus(int sc) {
+      responseContext.setStatus(sc);
+   }
+	
+	@Override
+	public int getStatus() {
+	   return responseContext.getStatus();
+	}
+	
+	@Override
+	public void setContentLengthLong(long len) {
+      responseContext.setContentLengthLong(len);
 	}
 }

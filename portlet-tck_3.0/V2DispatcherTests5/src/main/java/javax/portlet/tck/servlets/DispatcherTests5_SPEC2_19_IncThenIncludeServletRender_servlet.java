@@ -19,18 +19,63 @@
 
 package javax.portlet.tck.servlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES1;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES1A;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES1B;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES1C;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES2;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES2A;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES2B;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES2C;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES3;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES3A;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES3B;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES3C;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES4;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES4A;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES4B;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES4C;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES5;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES5A;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES5B;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES5C;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES6;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES7;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES8;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_DISPATCH1;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_DISPATCH2;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_DISPATCH3;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_INVOKE2;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_INVOKE4;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_INVOKE7;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_INVOKE9;
+import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_CONTEXT_PATH;
+import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_PATH_INFO;
+import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_QUERY_STRING;
+import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_REQUEST_URI;
+import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_SERVLET_PATH;
+import static javax.portlet.tck.constants.Constants.SERVLET_PREFIX;
+import static javax.portlet.tck.constants.Constants.SERVLET_SUFFIX;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Logger;
+
+import javax.portlet.MimeResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.tck.beans.ClassChecker;
+import javax.portlet.tck.beans.CompareUtils;
+import javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet for JSR 362 request dispatcher testing.
@@ -40,6 +85,7 @@ import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
  *
  */
 public class DispatcherTests5_SPEC2_19_IncThenIncludeServletRender_servlet extends HttpServlet {
+   private static final long serialVersionUID = -8289710119313569554L;
    private static final String LOG_CLASS = 
          DispatcherTests5_SPEC2_19_IncThenIncludeServletRender_servlet.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
@@ -60,6 +106,10 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletRender_servlet exten
    protected void processTCKReq(HttpServletRequest request, HttpServletResponse response)
          throws ServletException, IOException {
       LOGGER.entering(LOG_CLASS, "servlet entry");
+      
+      // do request info logging if enabled
+      ServletRequestUtils.logDebugInfo(request, this.getClass().getSimpleName());
+
 
       // values from first servlet in forward/include chain
       String fsfcRequest_uri  = (String) request.getAttribute(ATTR_DISPATCH_REQUEST_URI );
@@ -87,8 +137,8 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletRender_servlet exten
       /* to the target servlet during an include"                             */
       TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_DISPATCH1);
       try {
-         String qparm1 = portletReq.getParameter("qparm1");
-         String qparm2 = portletReq.getParameter("qparm2");
+         String qparm1 = request.getParameter("qparm1");
+         String qparm2 = request.getParameter("qparm2");
          boolean ok = ((qparm1 != null) && (qparm2 != null));
          if (ok) ok = (qparm1.equals("qvalue1") && qparm2.equals("qvalue2"));
          if (!ok) tr0.appendTcDetail("qparm1=" + qparm1 + ", qparm2=" + qparm2);

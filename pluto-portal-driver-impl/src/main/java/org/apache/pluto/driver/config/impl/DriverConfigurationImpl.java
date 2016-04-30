@@ -21,12 +21,15 @@ import java.util.Set;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
+import javax.portlet.WindowState;
 
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletPreferencesService;
+import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
+import org.apache.pluto.driver.services.portal.PublicRenderParameterService;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.services.portal.SupportedModesService;
 import org.apache.pluto.driver.services.portal.SupportedWindowStateService;
@@ -46,6 +49,8 @@ public class DriverConfigurationImpl
     private final RenderConfigService renderService;
     private final SupportedModesService supportedModesService;
     private final SupportedWindowStateService supportedWindowStateService;
+    private final PublicRenderParameterService publicRenderParameterService;
+    private final PortletRegistryService portletRegistryService;
 
     // Container Services
     private PortletPreferencesService portletPreferencesService;
@@ -54,13 +59,17 @@ public class DriverConfigurationImpl
                                    PropertyConfigService propertyService,
                                    RenderConfigService renderService,
                                    SupportedModesService supportedModesService,
-                                   SupportedWindowStateService supportedWindowStateService) {
+                                   SupportedWindowStateService supportedWindowStateService,
+                                   PublicRenderParameterService publicRenderParameterService,
+                                   PortletRegistryService portletRegistryService) {
 
         this.portalUrlParser = portalUrlParser;
         this.propertyService = propertyService;
         this.renderService = renderService;
         this.supportedModesService = supportedModesService;
         this.supportedWindowStateService = supportedWindowStateService;
+        this.publicRenderParameterService = publicRenderParameterService;
+        this.portletRegistryService = portletRegistryService;
     }
 
     /**
@@ -160,9 +169,21 @@ public class DriverConfigurationImpl
     {
         return supportedWindowStateService.isWindowStateSupportedByPortlet(portletId, windowState);
     }
+
+    public Set<WindowState> getSupportedWindowStates(String portletId, String contentType) throws PortletContainerException {
+      return supportedWindowStateService.getSupportedWindowStates(portletId, contentType);
+    }
     
     public RenderConfigService getRenderConfigService(){
     	return renderService;
+    }
+    
+    public PublicRenderParameterService getPublicRenderParameterService() {
+       return publicRenderParameterService;
+    }
+    
+    public PortletRegistryService getPortletRegistryService() {
+       return portletRegistryService;
     }
 
     public Set<PortletMode> getSupportedPortletModes(String portletId) throws PortletContainerException {
