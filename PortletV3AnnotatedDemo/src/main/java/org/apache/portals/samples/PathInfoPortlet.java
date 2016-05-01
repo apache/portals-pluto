@@ -23,93 +23,183 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+import javax.portlet.MutableRenderParameters;
+import javax.portlet.MutableResourceParameters;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
+import javax.portlet.annotations.BeanPortlet;
 import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
 import javax.portlet.annotations.URLFactory;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Resource portlet for viewing path information.
  */
 public class PathInfoPortlet {
-   
-   private class DispatchServlet extends HttpServlet {
-      
-   }
 
    public static final String RESPARAM_DISPLAY = "display";
+
+   private static final String JSP = "/WEB-INF/jsp/pathinfo.jsp?mix1&qp1=qval2&mix2=qval3";
+   private static final String SERVLET = "/Named/Bob/Some/Path/Info?mix1&qp1=qval2&mix2=qval3";
+   private static final String NAME = "Bob";
 
    // Injecting the namespace & URLFactory
    @Inject
    @Namespace
    private String             pid;
+   @Inject @BeanPortlet
+   private PortletConfig      pcfg;
    @Inject
    private URLFactory         uf;
    
    @RenderMethod(portletNames = { "PathInfoPortlet" }, ordinal = 100)
-   public void getImageInclude(RenderRequest req, RenderResponse resp) throws IOException {
+   public void getImageInclude(RenderRequest req, RenderResponse resp) throws IOException, PortletException {
 
-      resp.setContentType("text/html");
+      String op = req.getRenderParameters().getValue("op");
       PrintWriter writer = resp.getWriter();
-
-      writer.append("<h3>Path Info Portlet</h3>");
-      writer.append("<h5>Include:</h5>");
-
-      ResourceURL resurl = uf.createResourceURL();
-
-      writer.append("<div class='infobox' id='").append(pid).append("-putResourceHere'></div>\n");
-      writer.append("<script>\n");
-      writer.append("(function () {\n");
-      writer.append("   var xhr = new XMLHttpRequest();\n");
-      writer.append("   xhr.onreadystatechange=function() {\n");
-      writer.append("      if (xhr.readyState==4 && xhr.status==200) {\n");
-      writer.append("         document.getElementById('").append(pid)
-            .append("-putResourceHere').innerHTML=xhr.responseText;\n");
-      writer.append("      }\n");
-      writer.append("   };\n");
-      writer.append("   xhr.open(\"GET\",\"").append(resurl.toString()).append("\",true);\n");
-      writer.append("   xhr.send();\n");
-      writer.append("})();\n");
-      writer.append("</script>\n");
-
-      writer.append("<h5>Forward:</h5>");
-
-      resurl = uf.createResourceURL();
-      resurl.setResourceID("fwd");
-
-      writer.append("<div class='infobox' id='").append(pid).append("-puReHe'></div>\n");
-      writer.append("<script>\n");
-      writer.append("(function () {\n");
-      writer.append("   var xhr = new XMLHttpRequest();\n");
-      writer.append("   xhr.onreadystatechange=function() {\n");
-      writer.append("      if (xhr.readyState==4 && xhr.status==200) {\n");
-      writer.append("         document.getElementById('").append(pid)
-            .append("-puReHe').innerHTML=xhr.responseText;\n");
-      writer.append("      }\n");
-      writer.append("   };\n");
-      writer.append("   xhr.open(\"GET\",\"").append(resurl.toString()).append("\",true);\n");
-      writer.append("   xhr.send();\n");
-      writer.append("})();\n");
-      writer.append("</script>\n");
       
-      // display info for named servlet
+      if (op == null || !op.equals("fwd")) {
+
+         resp.setContentType("text/html");
+
+         writer.append("<h3>Path Info Portlet</h3>");
+         writer.append("<div class='parmbox'>");
+
+         PortletURL rurl = resp.createRenderURL();
+         MutableRenderParameters rp = rurl.getRenderParameters().clone();
+         rp.setValue("renp1", "renval1");
+         rp.setValue("mix2", "renval2");
+         rp.setValue("mix1", "renval3");
+         rp.setValue("op", "inc");
+         rurl.getRenderParameters().set(rp);
+         RenderLink tl = new RenderLink("Resource include", rurl);
+         writer.append(tl.toString());
+
+         rurl = resp.createRenderURL();
+         rp.setValue("op", "fwd");
+         rurl.getRenderParameters().set(rp);
+         tl = new RenderLink("Forward to Servlet from Render", rurl);
+         writer.append(tl.toString());
+
+         rurl = resp.createRenderURL();
+         rp.setValue("op", "fwdjsp");
+         rurl.getRenderParameters().set(rp);
+         tl = new RenderLink("Forward to JSP from Render", rurl);
+         writer.append(tl.toString());
+         
+         rurl = resp.createRenderURL();
+         rp.setValue("op", "incjsp");
+         rurl.getRenderParameters().set(rp);
+         tl = new RenderLink("Include JSP from Render", rurl);
+         writer.append(tl.toString());
+         
+         rurl = resp.createRenderURL();
+         rp.setValue("op", "nested");
+         rurl.getRenderParameters().set(rp);
+         tl = new RenderLink("Nested Include Portlet -> Servlet -> JSP", rurl);
+         writer.append(tl.toString());
+         
+         rurl = resp.createRenderURL();
+         rp.setValue("op", "named");
+         rurl.getRenderParameters().set(rp);
+         tl = new RenderLink("Include Named Servlet", rurl);
+         writer.append(tl.toString());
+         writer.append("</div>");
+
+      }
       
-      PortletRequestDispatcher rd = req.getPortletContext().getNamedDispatcher("Bob");
-      try {
-         rd.include(req, resp);
-      } catch (Exception e) {
-         writer.append("<p>");
-         writer.append("Exception getting named dispatcher: ").append(e.toString());
-         writer.append("</p>");
+      if (op != null) {
+
+         PortletURL cntlurl = resp.createRenderURL();
+         MutableRenderParameters rp = cntlurl.getRenderParameters();
+         rp.setValue("renp1", "renval1");
+         rp.setValue("mix2", "renval2");
+         rp.setValue("mix1", "renval3");
+         rp.setValue("op", "inc");
+
+         if (op.equals("fwd")) {
+            RenderLink renlink = new RenderLink("back", cntlurl);
+            req.setAttribute("renderLink", renlink);
+            PortletRequestDispatcher rd = pcfg.getPortletContext().getRequestDispatcher(SERVLET);
+            rd.forward(req, resp);
+            return;
+         } 
+
+         writer.append("<div class='infobox'>");
+
+         if (op.equals("nested")) {
+            PathDisplay pd = new PathDisplay(req, "Render Method (Before)");
+            writer.write(pd.toMarkup());
+            PortletRequestDispatcher rd = pcfg.getPortletContext().getRequestDispatcher(SERVLET);
+            rd.include(req, resp);
+            pd = new PathDisplay(req, "Render Method (After)");
+            writer.write(pd.toMarkup());
+         } else if (op.equals("fwdjsp")) {
+            req.setAttribute("jsptitle", "Forwarded by render method.");
+            PortletRequestDispatcher rd = pcfg.getPortletContext().getRequestDispatcher(JSP);
+            rd.forward(req, resp);
+         } else if (op.equals("incjsp")) {
+            req.setAttribute("jsptitle", "Included by render method.");
+            PortletRequestDispatcher rd = pcfg.getPortletContext().getRequestDispatcher(JSP);
+            rd.include(req, resp);
+         } else if (op.equals("inc")) {
+
+            ResourceURL resurl = uf.createResourceURL();
+            MutableResourceParameters resparms = resurl.getResourceParameters();
+            resparms.setValue("resp1", "resval1");
+            resparms.setValue("mix1", "resval2");
+
+            writer.append("<div id='").append(pid).append("-putResourceHere'></div>\n");
+            writer.append("<script>\n");
+            writer.append("(function () {\n");
+            writer.append("   var xhr = new XMLHttpRequest();\n");
+            writer.append("   xhr.onreadystatechange=function() {\n");
+            writer.append("      if (xhr.readyState==4 && xhr.status==200) {\n");
+            writer.append("         document.getElementById('").append(pid)
+                  .append("-putResourceHere').innerHTML=xhr.responseText;\n");
+            writer.append("      }\n");
+            writer.append("   };\n");
+            writer.append("   xhr.open(\"GET\",\"").append(resurl.toString()).append("\",true);\n");
+            writer.append("   xhr.send();\n");
+            writer.append("})();\n");
+            writer.append("</script>\n");
+
+            writer.append("<h5>Forward:</h5>");
+
+            resurl = uf.createResourceURL();
+            resurl.setResourceID("fwd");
+            resurl.getResourceParameters().set(resparms);
+
+            writer.append("<div id='").append(pid).append("-puReHe'></div>\n");
+            writer.append("<script>\n");
+            writer.append("(function () {\n");
+            writer.append("   var xhr = new XMLHttpRequest();\n");
+            writer.append("   xhr.onreadystatechange=function() {\n");
+            writer.append("      if (xhr.readyState==4 && xhr.status==200) {\n");
+            writer.append("         document.getElementById('").append(pid)
+                  .append("-puReHe').innerHTML=xhr.responseText;\n");
+            writer.append("      }\n");
+            writer.append("   };\n");
+            writer.append("   xhr.open(\"GET\",\"").append(resurl.toString()).append("\",true);\n");
+            writer.append("   xhr.send();\n");
+            writer.append("})();\n");
+            writer.append("</script>\n");
+         } else if (op.equals("named")) {
+            writer.write("Including named servlet:");
+            PortletRequestDispatcher rd = req.getPortletContext().getNamedDispatcher(NAME);
+            rd.include(req, resp);
+         } else {
+            writer.write("unknown operation: " + op);
+         }
+         writer.append("</div>");
       }
 
    }
@@ -121,7 +211,7 @@ public class PathInfoPortlet {
     * @return The string for inclusion in the output.
     * @throws IOException
     */
-   @ServeResourceMethod(portletNames = { "PathInfoPortlet" }, include="/WEB-INF/jsp/pathinfo.jsp")
+   @ServeResourceMethod(portletNames = { "PathInfoPortlet" }, include=JSP)
    public void getPathInfo(ResourceRequest req, ResourceResponse resp) throws IOException {
 
       @SuppressWarnings("unchecked")
@@ -129,24 +219,19 @@ public class PathInfoPortlet {
       if (pathInfo == null) {
          pathInfo = new ArrayList<String>();
       }
-
-      HttpServletRequest hreq = (HttpServletRequest) req.getAttribute("javax.portlet.debug.ServletRequest");
-      PathDisplay pd;
-      if (hreq != null) {
-         pd = new PathDisplay(hreq, "Resource Method (Servlet)");
-         pathInfo.add(pd.toMarkup());
-      }
-      pd = new PathDisplay(req, "Resource Method (ResourceRequest)");
+      PathDisplay pd = new PathDisplay(req, "Resource Method (ResourceRequest)");
       pathInfo.add(pd.toMarkup());
 
       req.setAttribute("pathInfo", pathInfo);
+      req.setAttribute("jsptitle", "Included by resource method.");
 
    }
 
    @ServeResourceMethod(portletNames = { "PathInfoPortlet" }, resourceID="fwd")
    public void getPathInfo2(ResourceRequest req, ResourceResponse resp) throws IOException, PortletException {
 
-      PortletRequestDispatcher prd = req.getPortletContext().getRequestDispatcher("/WEB-INF/jsp/pathinfo.jsp");
+      req.setAttribute("jsptitle", "Forwarded by resource method.");
+      PortletRequestDispatcher prd = req.getPortletContext().getRequestDispatcher(JSP);
       prd.forward(req, resp);
 
    }

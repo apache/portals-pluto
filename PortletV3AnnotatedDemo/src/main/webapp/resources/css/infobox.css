@@ -8,6 +8,16 @@
    background:#E0E0FF;
 }
 
+.bluebox {
+   border-style:solid; 
+   border-width:2px; 
+   padding:4px; 
+   margin-bottom:4px;
+   overflow:auto;
+   border-color:#000088; 
+   background:#caf0fb;
+}
+
 .msgbox {
    border-style:solid; 
    border-width:2px; 

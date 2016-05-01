@@ -503,7 +503,6 @@ public class PortletParameterFactory {
    public Map<String, String[]> getParameterMap(String windowId, String type) {
       HashMap<String, String[]> params = new HashMap<String, String[]>();
       
-      
       // add the query parameters, if any
       
       if (queryParams != null) {
@@ -511,6 +510,17 @@ public class PortletParameterFactory {
          for (String name : queryParams.keySet()) {
             qp.put(name, queryParams.get(name).toArray(new String[0]));
          }
+         
+         if (isTrace) {
+            StringBuilder txt = new StringBuilder("Query params available.");
+            txt.append(", phase: ").append(phase);
+            for (String name : qp.keySet()) {
+               txt.append("\nName: ").append(name);
+               txt.append(", Values: ").append(Arrays.toString(qp.get(name)));
+            }
+            LOGGER.debug(txt.toString());
+         }
+
          switch (phase) {
             case ACTION_PHASE:
                if (type.equals(PARAM_TYPE_ACTION)) {

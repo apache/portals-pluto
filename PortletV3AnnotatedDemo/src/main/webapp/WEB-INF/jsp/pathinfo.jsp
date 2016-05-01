@@ -1,12 +1,13 @@
 <%@ page session="false" %>
-<%@ taglib uri="http://java.sun.com/portlet_2_0"  prefix="portlet" %>
+<%@ taglib uri="http://xmlns.jcp.org/portlet_3_0"  prefix="portlet" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="org.apache.portals.samples.*" %>
 <%@ page import="java.util.*" %>
 
-<!--   portlet:defineObjects /  -->
+<portlet:defineObjects />
 
-<p>Message from included JSP.</p>
+<div class='bluebox'>
+<p>${jsptitle}</p>
 <%
 ArrayList<String> pathInfo = (ArrayList<String>) request.getAttribute("pathInfo");
 if (pathInfo != null) {
@@ -15,7 +16,23 @@ if (pathInfo != null) {
    }
 }
 
-PathDisplay pd = new PathDisplay(request, "JSP");
+RenderLink rl = (RenderLink) request.getAttribute("renderLink");
+if (rl != null) {
+   out.append(rl.toString());
+}
+
+PathDisplay pd = new PathDisplay(request, "JSP (ServletRequest)");
 out.append(pd.toMarkup());
+
+pd = null;
+if (resourceRequest != null) {
+   pd = new PathDisplay(resourceRequest, "JSP (ResourceRequest)");
+} else if (renderRequest != null) {
+   pd = new PathDisplay(renderRequest, "JSP (RenderRequest)");
+}
+if (pd != null){
+   out.append(pd.toMarkup());
+}
  %>
 <hr>
+</div>

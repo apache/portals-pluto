@@ -18,7 +18,13 @@
 
 package org.apache.portals.samples;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.portlet.PortletRequest;
+import javax.portlet.ResourceRequest;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -56,6 +62,10 @@ public class PathDisplay {
    private String caller;
    private boolean isAsyncSupported = false;
 
+   private final Map<String, List<String>> params = new HashMap<String, List<String>>();
+   private final Map<String, List<String>> renParams = new HashMap<String, List<String>>();
+   private final Map<String, List<String>> resParams = new HashMap<String, List<String>>();
+
    public PathDisplay(HttpServletRequest req, String caller) {
       this.caller = caller;
       
@@ -86,6 +96,11 @@ public class PathDisplay {
       
       type = req.getDispatcherType().name();
       isAsyncSupported = req.isAsyncSupported();
+      
+      Map<String, String[]> pmap = req.getParameterMap();
+      for (String key : pmap.keySet()) {
+         params.put(key, Arrays.asList(pmap.get(key)));
+      }
 }
 
    public PathDisplay(PortletRequest req, String caller) {
@@ -117,6 +132,24 @@ public class PathDisplay {
       method_query_string = "undefined";
       
       type = "undefined";
+      
+      @SuppressWarnings("deprecation")
+      Map<String, String[]> pmap = req.getParameterMap();
+      for (String key : pmap.keySet()) {
+         params.put(key, Arrays.asList(pmap.get(key)));
+      }
+      
+      for (String key : req.getRenderParameters().getNames()) {
+         renParams.put(key, Arrays.asList(req.getRenderParameters().getValues(key)));
+      }
+      
+      if (req instanceof ResourceRequest) {
+         ResourceRequest rreq = (ResourceRequest) req;
+         for (String key : rreq.getResourceParameters().getNames()) {
+            resParams.put(key, Arrays.asList(rreq.getResourceParameters().getValues(key)));
+         }
+      }
+
 }
 
    public String toMarkup() {
@@ -190,6 +223,38 @@ public class PathDisplay {
       txt.append("<td>getPathTranslated:</td><td>").append(method_path_xlated).append("</td>\n");
       txt.append("</tr><tr>");
       txt.append("<td>getQueryString:</td><td>").append(method_query_string).append("</td>\n");
+      txt.append("</tr><tr><td style='padding-top:8px;'/></tr><tr>");
+
+      txt.append("<td>Combined Params:</td><td>");
+      for (String key : params.keySet()) {
+         txt.append("</tr><tr>");
+         txt.append("<td style='padding-left:8px;'>").append(key).append("</td><td>");
+         txt.append(params.get(key).toString()).append("</td>\n");
+      }
+      txt.append("</tr><tr><td style='padding-top:8px;'/></tr><tr>");
+
+      txt.append("<td>Render Params:</td><td>");
+      if (renParams.isEmpty()) {
+         txt.append("<td style='padding-left:8px;'>(none)</td><td>");
+      } else {
+         for (String key : renParams.keySet()) {
+            txt.append("</tr><tr>");
+            txt.append("<td style='padding-left:8px;'>").append(key).append("</td><td>");
+            txt.append(renParams.get(key).toString()).append("</td>\n");
+         }
+      }
+      txt.append("</tr><tr><td style='padding-top:8px;'/></tr><tr>");
+
+      txt.append("<td>Resource Params:</td><td>");
+      if (resParams.isEmpty()) {
+         txt.append("<td style='padding-left:8px;'>(none)</td><td>");
+      } else {
+         for (String key : resParams.keySet()) {
+            txt.append("</tr><tr>");
+            txt.append("<td style='padding-left:8px;'>").append(key).append("</td><td>");
+            txt.append(resParams.get(key).toString()).append("</td>\n");
+         }
+      }
 
       txt.append("</tr></table>");
       return txt.toString();
