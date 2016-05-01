@@ -39,7 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 public class PathDisplayServlet extends HttpServlet {
    private static final long serialVersionUID = -7767947528599563527L;
 
-   private static final String JSP = "/WEB-INF/jsp/pathinfo.jsp?mix1=svltval1&qp10=svltval2&mix2=svltval3";
+   private static final String JSP = "/WEB-INF/jsp/pathinfo.jsp?mix1=svtqval1&svtqp3=svtqval3&mix2=svtqval2";
 
    @Override
    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

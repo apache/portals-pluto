@@ -47,8 +47,8 @@ public class PathInfoPortlet {
 
    public static final String RESPARAM_DISPLAY = "display";
 
-   private static final String JSP = "/WEB-INF/jsp/pathinfo.jsp?mix1&qp1=qval2&mix2=qval3";
-   private static final String SERVLET = "/Named/Bob/Some/Path/Info?mix1&qp1=qval2&mix2=qval3";
+   private static final String JSP = "/WEB-INF/jsp/pathinfo.jsp?mix1&qp1=qval1&mix2=qmix2";
+   private static final String SERVLET = "/Named/Bob/Some/Path/Info?mix1&qp1=qval1&mix2=qmix2";
    private static final String NAME = "Bob";
 
    // Injecting the namespace & URLFactory
@@ -76,8 +76,8 @@ public class PathInfoPortlet {
          PortletURL rurl = resp.createRenderURL();
          MutableRenderParameters rp = rurl.getRenderParameters().clone();
          rp.setValue("renp1", "renval1");
-         rp.setValue("mix2", "renval2");
-         rp.setValue("mix1", "renval3");
+         rp.setValue("mix2", "renmix2");
+         rp.setValue("mix1", "renmix1");
          rp.setValue("op", "inc");
          rurl.getRenderParameters().set(rp);
          RenderLink tl = new RenderLink("Resource include", rurl);
@@ -121,8 +121,8 @@ public class PathInfoPortlet {
          PortletURL cntlurl = resp.createRenderURL();
          MutableRenderParameters rp = cntlurl.getRenderParameters();
          rp.setValue("renp1", "renval1");
-         rp.setValue("mix2", "renval2");
-         rp.setValue("mix1", "renval3");
+         rp.setValue("mix2", "renmix2");
+         rp.setValue("mix1", "renmix1");
          rp.setValue("op", "inc");
 
          if (op.equals("fwd")) {
@@ -143,6 +143,8 @@ public class PathInfoPortlet {
             pd = new PathDisplay(req, "Render Method (After)");
             writer.write(pd.toMarkup());
          } else if (op.equals("fwdjsp")) {
+            RenderLink renlink = new RenderLink("back", cntlurl);
+            req.setAttribute("renderLink", renlink);
             req.setAttribute("jsptitle", "Forwarded by render method.");
             PortletRequestDispatcher rd = pcfg.getPortletContext().getRequestDispatcher(JSP);
             rd.forward(req, resp);

@@ -26,10 +26,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL.URLType;
+
 import static org.apache.pluto.driver.url.PortalURLParameter.*;
 import static javax.portlet.PortletRequest.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,13 +47,11 @@ import org.slf4j.LoggerFactory;
  */
 public class PortletParameterFactory {
    private static final Logger LOGGER = LoggerFactory.getLogger(PortletParameterFactory.class);
-   //private final static boolean isTrace = LOGGER.isTraceEnabled();
-   private final static boolean isTrace = LOGGER.isDebugEnabled();
+   private final static boolean isTrace = LOGGER.isTraceEnabled();
+   @SuppressWarnings("unused")
    private final static boolean isDebug = LOGGER.isDebugEnabled();
    
-   PortalURL url;
-   Map<String, List<String>> queryParams = null;
-   String phase = null;
+   private PortalURL url;
    
    static final HashSet<PortalURL.URLType> actionTypes = new HashSet<PortalURL.URLType>();
    static {
@@ -67,31 +68,11 @@ public class PortletParameterFactory {
       urlTypeMap.put(URLType.Resource, PortalURLParameter.PARAM_TYPE_RESOURCE);
    }
    
-   public PortletParameterFactory(PortalURL url) {
+   private final PortletRequestContext reqctx;
+   
+   public PortletParameterFactory(PortalURL url, PortletRequestContext reqctx) {
       this.url = url;
-   }
-   
-   // Used for setting extra parameters from the query string during a 
-   // request dispatcher forward or include
-   
-   public void startDispatch(Map<String, List<String>> queryParams, String phase) {
-      this.queryParams = queryParams;
-      this.phase = phase;
-      if (isDebug) {
-         StringBuilder txt = new StringBuilder();
-         txt.append("Added query parameters.");
-         txt.append(" Phase: ").append(phase);
-         txt.append(", names: ").append(queryParams.keySet());
-         LOGGER.debug(txt.toString());
-      }
-   }
-   
-   public void endDispatch() {
-      this.queryParams = null;
-      this.phase = null;
-      if (isDebug) {
-         LOGGER.debug("deleted query parameters.");
-      }
+      this.reqctx = reqctx;
    }
 
    /**
@@ -116,6 +97,7 @@ public class PortletParameterFactory {
       
       // add the query parameters, if any
       
+      Map<String, List<String>> queryParams = reqctx.getQueryParams();
       if (queryParams != null) {
          for (String name : queryParams.keySet()) {
             parameters.put(name, queryParams.get(name).toArray(new String[0]));
@@ -209,6 +191,7 @@ public class PortletParameterFactory {
       
       // add the query parameters, if any
       
+      Map<String, List<String>> queryParams = reqctx.getQueryParams();
       if (queryParams != null) {
          for (String name : queryParams.keySet()) {
             parameters.put(name, queryParams.get(name).toArray(new String[0]));
@@ -371,6 +354,7 @@ public class PortletParameterFactory {
       
       // Get the query parameter names, if any
       
+      Map<String, List<String>> queryParams = reqctx.getQueryParams();
       if (queryParams != null) {
          names.addAll(queryParams.keySet());
       }
@@ -428,6 +412,7 @@ public class PortletParameterFactory {
       
       // handle query string values
       
+      Map<String, List<String>> queryParams = reqctx.getQueryParams();
       if (queryParams != null) {
          if (queryParams.containsKey(name)) {
             List<String> qpvals = new ArrayList<String>(queryParams.get(name));
@@ -505,6 +490,8 @@ public class PortletParameterFactory {
       
       // add the query parameters, if any
       
+      Map<String, List<String>> queryParams = reqctx.getQueryParams();
+      String phase = reqctx.getPhase();
       if (queryParams != null) {
          HashMap<String, String[]> qp = new HashMap<String, String[]>();
          for (String name : queryParams.keySet()) {

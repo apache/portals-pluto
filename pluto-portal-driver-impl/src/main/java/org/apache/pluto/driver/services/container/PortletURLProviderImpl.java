@@ -32,6 +32,7 @@ import javax.portlet.PortletSecurityException;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
@@ -91,11 +92,11 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     * @param portletWindow
     */
    public PortletURLProviderImpl(PortalURL url, TYPE type,
-         PortletWindow portletWindow) {
+         PortletWindow portletWindow, PortletRequestContext reqctx) {
       this.url = url.clone();
       this.type = type;
       this.window = portletWindow.getId().getStringId();
-      this.paramFactory = this.url.getPortletParameterFactory();
+      this.paramFactory = this.url.getPortletParameterFactory(reqctx);
 
       if (isTrace) {
          StringBuilder txt = new StringBuilder("Constructing PortalURLProviderImpl. ");
@@ -161,11 +162,11 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     * @param url
     * @param windowId
     */
-   public PortletURLProviderImpl(PortalURL url, PortletWindow portletWindow) {
+   public PortletURLProviderImpl(PortalURL url, PortletWindow portletWindow, PortletRequestContext reqctx) {
       this.url = url;
       this.type = urlTypeMap.get(url.getType());
       this.window = portletWindow.getId().getStringId();
-      this.paramFactory = this.url.getPortletParameterFactory();
+      this.paramFactory = this.url.getPortletParameterFactory(reqctx);
 
       if (isTrace) {
          StringBuilder txt = new StringBuilder("Created 'read-only' URL provider.");

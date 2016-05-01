@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletResourceResponseContext;
 import org.apache.pluto.container.PortletWindow;
 import org.slf4j.Logger;
@@ -39,9 +40,9 @@ public class PortletResourceResponseContextImpl extends PortletMimeResponseConte
    private static final boolean   isTrace = LOGGER.isTraceEnabled();
     
     public PortletResourceResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
-                                              HttpServletResponse containerResponse, PortletWindow window)
+          HttpServletResponse containerResponse, PortletWindow window, PortletRequestContext requestContext)
     {        
-        super(container, containerRequest, containerResponse, window);
+        super(container, containerRequest, containerResponse, window, requestContext);
         setLifecycle(PortletRequest.RESOURCE_PHASE);
     }
 

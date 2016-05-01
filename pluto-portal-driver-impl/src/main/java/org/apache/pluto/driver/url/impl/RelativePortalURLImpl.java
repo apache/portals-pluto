@@ -30,6 +30,7 @@ import javax.portlet.WindowState;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
@@ -561,9 +562,9 @@ public class RelativePortalURLImpl implements PortalURL {
       parameters.add(param);
    }
 
-   public PortletParameterFactory getPortletParameterFactory() {
+   public PortletParameterFactory getPortletParameterFactory(PortletRequestContext reqctx) {
       handleServletRequestParams();
-      return new PortletParameterFactory(this);
+      return new PortletParameterFactory(this, reqctx);
    }
 
    public void setPublicRenderParameterMapper(PublicRenderParameterMapper prpm) {

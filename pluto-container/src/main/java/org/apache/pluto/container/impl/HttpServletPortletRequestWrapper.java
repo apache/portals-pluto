@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -29,7 +28,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.ClientDataRequest;
 import javax.portlet.HeaderRequest;
 import javax.portlet.PortletRequest;
@@ -109,8 +107,6 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
    }
 
    private final ArrayList<DispatchElement> dispatches            = new ArrayList<DispatchElement>();
-
-   private final Map<String, List<String>>  params                = new HashMap<String, List<String>>();
 
    private final PortletRequest             preq;
    private boolean                          isMethSpecialHandling = false;
@@ -254,7 +250,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
    }
 
    private void logSetupValues() {
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Wrapper initialized.");
          txt.append(" dispatches.size(): ").append(dispatches.size());
@@ -287,7 +283,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    private boolean isLogged = false;
    private void logPathValues() {
-      if (isDebug && !isLogged) {
+      if (isTrace && !isLogged) {
          isLogged = true;
          StringBuilder txt = new StringBuilder(128);
          txt.append("Path values:");
@@ -337,53 +333,6 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       }
    }
 
-   // Rebuild the current servlet parameter map. First come the query parameters,
-   // then the action or resource parameters, and finally the render parameters
-   private void rebuildParameterMap() {
-      if (dispatches.size() > 0) {
-         Map<String, List<String>> qp = dispatches.get(dispatches.size() - 1).qparms;
-
-         params.clear();
-         for (String name : qp.keySet()) {
-            params.put(name, new ArrayList<String>(qp.get(name)));
-         }
-
-         if (preq instanceof ActionRequest) {
-            ActionRequest areq = (ActionRequest) preq;
-            for (String name : areq.getActionParameters().getNames()) {
-               List<String> vals = params.get(name);
-               if (vals == null) {
-                  vals = new ArrayList<String>();
-                  params.put(name, vals);
-               }
-               vals.addAll(Arrays.asList(areq.getActionParameters().getValues(name)));
-            }
-         }
-
-         if (preq instanceof ResourceRequest) {
-            ResourceRequest rreq = (ResourceRequest) preq;
-            for (String name : rreq.getResourceParameters().getNames()) {
-               List<String> vals = params.get(name);
-               if (vals == null) {
-                  vals = new ArrayList<String>();
-                  params.put(name, vals);
-               }
-               vals.addAll(Arrays.asList(rreq.getResourceParameters().getValues(name)));
-            }
-         }
-
-         for (String name : preq.getRenderParameters().getNames()) {
-            List<String> vals = params.get(name);
-            if (vals == null) {
-               vals = new ArrayList<String>();
-               params.put(name, vals);
-            }
-            vals.addAll(Arrays.asList(preq.getRenderParameters().getValues(name)));
-         }
-
-      }
-   }
-
    /* ================ Used by dispatcher code in same package ======================= */
 
    void startInclude(String path) {
@@ -392,7 +341,6 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       de.type = Type.INC;
       de.qparms = processPath(path);
       dispatches.add(de);
-      rebuildParameterMap();
 
       // always need attribute special handling. Need method special handing only if
       // there was no preceding forward, async, or named dispatch
@@ -416,7 +364,6 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       de.type = Type.FWD;
       de.qparms = processPath(path);
       dispatches.add(de);
-      rebuildParameterMap();
       isMethSpecialHandling = !isForwardingPossible();
       isAttrSpecialHandling = true;
       
@@ -431,7 +378,6 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       de.type = Type.ASYNC;
       de.qparms = processPath(path);
       dispatches.add(de);
-      rebuildParameterMap();
       isMethSpecialHandling = false;
       isAttrSpecialHandling = false;
       logSetupValues();
@@ -443,7 +389,6 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       de.type = Type.NAMED;
       de.qparms = processPath(path);
       dispatches.add(de);
-      rebuildParameterMap();
       isMethSpecialHandling = false;
       isAttrSpecialHandling = false;
       logSetupValues();
@@ -453,7 +398,6 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       if (dispatches.size() > 0) {
          dispatches.remove(dispatches.size() - 1);
       }
-      rebuildParameterMap();
       
       // make sure request context is set up properly during nested dispatches
       
@@ -477,28 +421,27 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public Map<String, String[]> getParameterMap() {
-      Map<String, String[]> pm = new HashMap<String, String[]>();
-      for (String name : params.keySet()) {
-         pm.put(name, params.get(name).toArray(new String[0]));
-      }
+      Map<String, String[]> pm = reqctx.getParameterMap();
       return pm;
    }
 
    @Override
    public String getParameter(String name) {
-      List<String> vals = (List<String>) params.get(name);
-      return ((vals == null) || (vals.isEmpty())) ? null : vals.get(0);
+      Map<String, String[]> pm = reqctx.getParameterMap();
+      String[] vals = pm.get(name);
+      return (vals == null) ? null : vals[0];
    }
 
    @Override
    public Enumeration<String> getParameterNames() {
-      return Collections.enumeration(params.keySet());
+      Map<String, String[]> pm = reqctx.getParameterMap();
+      return Collections.enumeration(pm.keySet());
    }
 
    @Override
    public String[] getParameterValues(String name) {
-      List<String> vals = (List<String>) params.get(name);
-      return ((vals == null) ? null : vals.toArray(new String[0]));
+      Map<String, String[]> pm = reqctx.getParameterMap();
+      return pm.get(name);
    }
 
    @Override

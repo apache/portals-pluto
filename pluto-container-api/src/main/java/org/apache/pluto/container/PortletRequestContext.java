@@ -94,4 +94,6 @@ public interface PortletRequestContext
     // To provide special handling during portlet request dispatcher and async dispatches
     void endDispatch();
     void startDispatch(HttpServletRequest wrappedServletRequest, Map<String, List<String>> queryParams, String phase);
+    Map<String, List<String>> getQueryParams();
+    String getPhase();
 }

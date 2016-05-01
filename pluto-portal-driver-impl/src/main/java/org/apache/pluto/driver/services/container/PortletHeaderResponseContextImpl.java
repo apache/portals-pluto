@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletHeaderResponseContext;
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.driver.AttributeKeys;
 
@@ -36,9 +37,9 @@ public class PortletHeaderResponseContextImpl extends PortletMimeResponseContext
                 PortletHeaderResponseContext
 {
     public PortletHeaderResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
-                                            HttpServletResponse containerResponse, PortletWindow window)
+          HttpServletResponse containerResponse, PortletWindow window, PortletRequestContext requestContext)
     {
-        super(container, containerRequest, containerResponse, window);
+        super(container, containerRequest, containerResponse, window, requestContext);
         setLifecycle(PortletRequest.HEADER_PHASE);
     }
 

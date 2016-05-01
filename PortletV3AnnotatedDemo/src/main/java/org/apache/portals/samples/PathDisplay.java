@@ -225,7 +225,7 @@ public class PathDisplay {
       txt.append("<td>getQueryString:</td><td>").append(method_query_string).append("</td>\n");
       txt.append("</tr><tr><td style='padding-top:8px;'/></tr><tr>");
 
-      txt.append("<td>Combined Params:</td><td>");
+      txt.append("<td>Combined Params:</td>");
       for (String key : params.keySet()) {
          txt.append("</tr><tr>");
          txt.append("<td style='padding-left:8px;'>").append(key).append("</td><td>");
@@ -233,9 +233,9 @@ public class PathDisplay {
       }
       txt.append("</tr><tr><td style='padding-top:8px;'/></tr><tr>");
 
-      txt.append("<td>Render Params:</td><td>");
+      txt.append("<td>Render Params:</td>");
       if (renParams.isEmpty()) {
-         txt.append("<td style='padding-left:8px;'>(none)</td><td>");
+         txt.append("<td style='padding-left:8px;'>(none)</td>");
       } else {
          for (String key : renParams.keySet()) {
             txt.append("</tr><tr>");
@@ -245,9 +245,9 @@ public class PathDisplay {
       }
       txt.append("</tr><tr><td style='padding-top:8px;'/></tr><tr>");
 
-      txt.append("<td>Resource Params:</td><td>");
+      txt.append("<td>Resource Params:</td>");
       if (resParams.isEmpty()) {
-         txt.append("<td style='padding-left:8px;'>(none)</td><td>");
+         txt.append("<td style='padding-left:8px;'>(none)</td>");
       } else {
          for (String key : resParams.keySet()) {
             txt.append("</tr><tr>");

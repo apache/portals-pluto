@@ -53,7 +53,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class BaseURLImpl implements BaseURL {
    private static final Logger    LOGGER  = LoggerFactory.getLogger(BaseURLImpl.class);
-   private static final boolean   isDebug = LOGGER.isDebugEnabled();
+   private static final boolean   isTrace = LOGGER.isTraceEnabled();
 
    protected PortletResponseContext responseContext;
    protected PortalContext          portalContext;
@@ -73,7 +73,7 @@ public abstract class BaseURLImpl implements BaseURL {
       this.windowId = responseContext.getPortletWindow().getId().getStringId();
       this.urlProvider = urlProvider;
       renderURL = PortletURLProvider.TYPE.RENDER == urlProvider.getType();
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder();
          txt.append("URL provider type=").append(urlProvider.getType());
          txt.append(", WindowId=").append(windowId);

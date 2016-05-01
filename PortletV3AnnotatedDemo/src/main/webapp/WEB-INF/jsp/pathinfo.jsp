@@ -9,16 +9,17 @@
 <div class='bluebox'>
 <p>${jsptitle}</p>
 <%
+
+RenderLink rl = (RenderLink) request.getAttribute("renderLink");
+if (rl != null) {
+   out.append(rl.toString());
+}
+
 ArrayList<String> pathInfo = (ArrayList<String>) request.getAttribute("pathInfo");
 if (pathInfo != null) {
    for (String item : pathInfo) {
       out.append(item);
    }
-}
-
-RenderLink rl = (RenderLink) request.getAttribute("renderLink");
-if (rl != null) {
-   out.append(rl.toString());
 }
 
 PathDisplay pd = new PathDisplay(request, "JSP (ServletRequest)");

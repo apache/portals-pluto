@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
 public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, RequestDispatcher {
    /** Logger. */
    private static final Logger  LOG     = LoggerFactory.getLogger(PortletRequestDispatcherImpl.class);
-   private final static boolean isDebug = LOG.isDebugEnabled();
+   private final static boolean isTrace = LOG.isTraceEnabled();
 
    // Private Member Variables ------------------------------------------------
 
@@ -76,7 +76,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
       this.namedDispatch = namedDispatch;
       this.path = path;
 
-      if (LOG.isDebugEnabled()) {
+      if (isTrace) {
          LOG.debug("Request dispatcher created.");
       }
    }
@@ -208,21 +208,21 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
    // PortletRequestDispatcher Impl -------------------------------------------
 
    public void forward(PortletRequest request, PortletResponse response) throws PortletException, IOException {
-      if (isDebug) {
+      if (isTrace) {
          LOG.debug("Doing request dispatcher forward for portlet request.");
       }
       doDispatch(request, response, false);
    }
 
    public void include(PortletRequest request, PortletResponse response) throws PortletException, IOException {
-      if (isDebug) {
+      if (isTrace) {
          LOG.debug("Doing request dispatcher include for portlet request.");
       }
       doDispatch(request, response, true);
    }
 
    public void include(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-      if (isDebug) {
+      if (isTrace) {
          LOG.debug("Doing request dispatcher include for render request.");
       }
       doDispatch(request, response, true);
@@ -234,7 +234,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
       HttpServletPortletRequestWrapper req = getWrappedRequest(request);
       HttpServletPortletResponseWrapper res = getWrappedResponse(response);
 
-      if (isDebug) {
+      if (isTrace) {
          StringBuilder txt = new StringBuilder();
          txt.append("Forwarding ... ");
          txt.append(" hreq: ").append((req == null) ? "null" : "not null");

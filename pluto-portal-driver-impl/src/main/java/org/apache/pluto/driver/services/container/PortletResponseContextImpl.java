@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.HeaderData;
 import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletURLProvider.TYPE;
@@ -81,14 +82,24 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
    
    // holder for the header data
    protected HeaderData             headerData        = new HeaderData();
+   
+   private final PortletRequestContext requestContext;
 
    public PortletResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
-         HttpServletResponse containerResponse, PortletWindow window) {
+         HttpServletResponse containerResponse, PortletWindow window, PortletRequestContext requestContext) {
       this.container = container;
       this.containerRequest = containerRequest;
       this.containerResponse = containerResponse;
       this.window = window;
       this.portalURL = PortalRequestContext.getContext(containerRequest).createPortalURL();
+      this.requestContext = requestContext;
+   }
+
+   /**
+    * @return the requestContext
+    */
+   public PortletRequestContext getRequestContext() {
+      return requestContext;
    }
 
    public String getLifecycle() {
@@ -295,6 +306,7 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
    }
 
    public PortletURLProvider getPortletURLProvider(TYPE type) {
-      return isClosed() ? null : new PortletURLProviderImpl(getPortalURL(), type, getPortletWindow());
+      return isClosed() ? null : 
+         new PortletURLProviderImpl(getPortalURL(), type, getPortletWindow(), getRequestContext());
    }
 }

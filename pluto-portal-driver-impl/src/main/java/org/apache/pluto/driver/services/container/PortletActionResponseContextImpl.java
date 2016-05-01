@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.PortletActionResponseContext;
 import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
@@ -41,9 +42,9 @@ public class PortletActionResponseContextImpl extends PortletStateAwareResponseC
     private String renderURLParamName;
     
     public PortletActionResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
-                                            HttpServletResponse containerResponse, PortletWindow window)
+          HttpServletResponse containerResponse, PortletWindow window, PortletRequestContext requestContext)
     {
-        super(container, containerRequest, containerResponse, window);
+        super(container, containerRequest, containerResponse, window, requestContext);
         setLifecycle(PortletRequest.ACTION_PHASE);
     }
 

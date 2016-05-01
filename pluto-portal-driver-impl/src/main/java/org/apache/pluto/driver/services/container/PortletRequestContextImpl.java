@@ -72,6 +72,9 @@ public class PortletRequestContextImpl implements PortletRequestContext {
    private Cookie              cookies[];
    private String              renderHeaders = null; 
    private boolean             executingRequestBody = false;
+   private Map<String, List<String>> queryParams = null;
+   private String              phase = null;
+
    
    // make sure these classes are loaded first by the container classloader
    // so that the logs from these classes land in the Pluto log file.
@@ -101,8 +104,8 @@ public class PortletRequestContextImpl implements PortletRequestContext {
       this.window = window;
       this.windowId = window.getId().getStringId();
       this.url = PortalRequestContext.getContext(containerRequest).createPortalURL();
-      this.urlProvider = new PortletURLProviderImpl(url, window);
-      this.paramFactory = url.getPortletParameterFactory();
+      this.urlProvider = new PortletURLProviderImpl(url, window, this);
+      this.paramFactory = url.getPortletParameterFactory(this);
    }
 
    @Override
@@ -155,7 +158,15 @@ public class PortletRequestContextImpl implements PortletRequestContext {
    public void startDispatch(HttpServletRequest wrappedServletRequest, 
          Map<String, List<String>> queryParams, String phase) {
       this.wrappedServletRequest = wrappedServletRequest;
-      paramFactory.startDispatch(queryParams, phase);
+      this.queryParams = queryParams;
+      this.phase = phase;
+      if (LOG.isTraceEnabled()) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Added query parameters.");
+         txt.append(" Phase: ").append(phase);
+         txt.append(", names: ").append(queryParams.keySet());
+         LOG.debug(txt.toString());
+      }
    }
    
    /**
@@ -164,7 +175,27 @@ public class PortletRequestContextImpl implements PortletRequestContext {
    @Override
    public void endDispatch() {
       this.wrappedServletRequest = null;
-      paramFactory.endDispatch();
+      this.phase = null;
+      this.queryParams = null;
+      if (LOG.isTraceEnabled()) {
+         LOG.debug("deleted query parameters.");
+      }
+   }
+   
+   /*
+    * Gets the query string parameters set for request dispatch processing
+    */
+   @Override
+   public Map<String, List<String>> getQueryParams(){
+      return queryParams;
+   }
+   
+   /*
+    * Gets the processing phase set for request dispatch processing
+    */
+   @Override
+   public String getPhase() {
+      return phase;
    }
    
    /*

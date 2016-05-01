@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.EventProvider;
 import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletStateAwareResponseContext;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
@@ -54,10 +55,11 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
     private PortletURLProviderImpl portletURLProvider;
     
     public PortletStateAwareResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
-                                                HttpServletResponse containerResponse, PortletWindow window)
+                                                HttpServletResponse containerResponse, PortletWindow window, PortletRequestContext requestContext)
     {
-        super(container, containerRequest, containerResponse, window);
-        this.portletURLProvider = new PortletURLProviderImpl(getPortalURL(), PortletURLProvider.TYPE.RENDER, window);
+        super(container, containerRequest, containerResponse, window, requestContext);
+        this.portletURLProvider = new PortletURLProviderImpl(getPortalURL(), 
+              PortletURLProvider.TYPE.RENDER, window, getRequestContext());
         
         if (isDebug) {
            LOGGER.debug("Initialized.");
