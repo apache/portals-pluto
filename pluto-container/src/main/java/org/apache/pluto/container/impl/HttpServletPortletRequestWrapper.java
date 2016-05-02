@@ -47,6 +47,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.pluto.container.NamespaceMapper;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
+import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletWindowID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,7 +98,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
    }
 
    private enum Type {
-      INC, FWD, ASYNC, NAMED
+      INC, FWD, ASYNC_DISPATCH, ASYNC_PROCESSING, NAMED
    }
 
    private class DispatchElement {
@@ -108,10 +109,11 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    private final ArrayList<DispatchElement> dispatches            = new ArrayList<DispatchElement>();
 
-   private final PortletRequest             preq;
-   private boolean                          isMethSpecialHandling = false;
-   private boolean                          isAttrSpecialHandling = false;
-   private final HttpSession                session;
+   private final PortletRequest preq;
+   private boolean              isMethSpecialHandling = false;
+   private boolean              isAttrSpecialHandling = false;
+   private boolean              isClosed = true;      // needed for async support
+   private final HttpSession    session;
    private final PortletRequestContext reqctx;
    private final NamespaceMapper mapper;
    private final PortletWindowID winId;
@@ -261,6 +263,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
             txt.append(", meth special: ").append(isMethSpecialHandling);
             txt.append(", attrib special: ").append(isAttrSpecialHandling);
             txt.append(", fwd possible: ").append(isForwardingPossible());
+            txt.append(", isClosed: ").append(isClosed);
             txt.append("\nQuery String names: ");
             String sep = "";
             for (String name : de.qparms.keySet()) {
@@ -335,7 +338,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    /* ================ Used by dispatcher code in same package ======================= */
 
-   void startInclude(String path) {
+   public void startInclude(String path) {
       DispatchElement de = new DispatchElement();
       de.path = path;
       de.type = Type.INC;
@@ -355,10 +358,11 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       
       reqctx.startDispatch(this, de.qparms, phase);
       
+      isClosed = false;
       logSetupValues();
    }
 
-   void startForward(String path) {
+   public void startForward(String path) {
       DispatchElement de = new DispatchElement();
       de.path = path;
       de.type = Type.FWD;
@@ -369,21 +373,57 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       
       reqctx.startDispatch(this, de.qparms, phase);
       
+      isClosed = false;
       logSetupValues();
    }
 
-   void startAsyncDispatch(String path) {
+   public void startAsyncDispatch(String path) {
       DispatchElement de = new DispatchElement();
       de.path = path;
-      de.type = Type.ASYNC;
+      de.type = Type.ASYNC_DISPATCH;
       de.qparms = processPath(path);
       dispatches.add(de);
       isMethSpecialHandling = false;
       isAttrSpecialHandling = false;
+      
+      reqctx.startDispatch(this, de.qparms, phase);
+      
+      isClosed = false;
       logSetupValues();
    }
 
-   void startNamed(String path) {
+   public void startAsyncProcessing() {
+      DispatchElement de = new DispatchElement();
+      de.path = null;
+      de.type = Type.ASYNC_PROCESSING;
+      de.qparms = Collections.emptyMap();
+      dispatches.add(de);
+      isMethSpecialHandling = false;
+      isAttrSpecialHandling = false;
+      isClosed = false;
+      reqctx.setAsyncServletRequest(this);
+      logSetupValues();
+   }
+   
+   public void endAsyncProcessing() {
+      
+      if (isTrace) {
+         ArrayList<String> types = new ArrayList<String>();
+         for (int ii = dispatches.size()-1; ii >= 0; ii--) {
+            types.add(dispatches.get(ii).type.toString());
+         }
+         StringBuilder txt = new StringBuilder();
+         txt.append("Ending async processing.");
+         txt.append(" remaining dispatch stack: ").append(types.toString());
+         LOG.debug(txt.toString());
+      }
+
+      dispatches.clear();
+      isClosed = true;
+      reqctx.setAsyncServletRequest(null);
+   }
+
+   public void startNamed(String path) {
       DispatchElement de = new DispatchElement();
       de.path = path;
       de.type = Type.NAMED;
@@ -391,12 +431,14 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       dispatches.add(de);
       isMethSpecialHandling = false;
       isAttrSpecialHandling = false;
+      isClosed = false;
       logSetupValues();
    }
 
-   void endDispatch() {
+   public void endDispatch() {
+      DispatchElement oldde = null;
       if (dispatches.size() > 0) {
-         dispatches.remove(dispatches.size() - 1);
+         oldde = dispatches.remove(dispatches.size() - 1);
       }
       
       // make sure request context is set up properly during nested dispatches
@@ -407,9 +449,22 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
          if ((de.type == Type.INC) || (de.type == Type.FWD)) {
             reqctx.startDispatch(this, de.qparms, phase);
          }
+      } else {
+         // mark that processing completed 
+         isClosed = true;
       }
       
-      logSetupValues();
+      if (isTrace) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Ending dispatch.");
+         txt.append(" dispatched type: ").append(oldde.type);
+         txt.append(",  # remaining nesting levels: ").append(dispatches.size());
+         if (!dispatches.isEmpty()) {
+            txt.append(",  active dispatch type: ");
+            txt.append(dispatches.get(dispatches.size()-1).type);
+         }
+         LOG.debug(txt.toString());
+      }
    }
 
    // real forwarding is only possible for resource requests.
@@ -421,12 +476,14 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public Map<String, String[]> getParameterMap() {
+      if (isClosed) return Collections.emptyMap();
       Map<String, String[]> pm = reqctx.getParameterMap();
       return pm;
    }
 
    @Override
    public String getParameter(String name) {
+      if (isClosed) return null;
       Map<String, String[]> pm = reqctx.getParameterMap();
       String[] vals = pm.get(name);
       return (vals == null) ? null : vals[0];
@@ -434,18 +491,21 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public Enumeration<String> getParameterNames() {
+      if (isClosed) return Collections.emptyEnumeration();
       Map<String, String[]> pm = reqctx.getParameterMap();
       return Collections.enumeration(pm.keySet());
    }
 
    @Override
    public String[] getParameterValues(String name) {
+      if (isClosed) return null;
       Map<String, String[]> pm = reqctx.getParameterMap();
       return pm.get(name);
    }
 
    @Override
    public String getContextPath() {
+      if (isClosed) return null;
       String val;
       handleServletPathInfo();
 
@@ -460,6 +520,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public String getPathInfo() {
+      if (isClosed) return null;
       String val;
       handleServletPathInfo();
 
@@ -474,6 +535,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public String getPathTranslated() {
+      if (isClosed) return null;
       handleServletPathInfo();
 
       // base the return value on the derived path method value
@@ -486,6 +548,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public String getQueryString() {
+      if (isClosed) return null;
       String val;
       handleServletPathInfo();
 
@@ -500,6 +563,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public String getRequestURI() {
+      if (isClosed) return null;
       String val;
       handleServletPathInfo();
 
@@ -514,6 +578,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public String getServletPath() {
+      if (isClosed) return null;
       String val;
       handleServletPathInfo();
 
@@ -528,6 +593,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public Object getAttribute(String name) {
+      if (isClosed) return null;
       handleServletPathInfo();
       
       Object val;
@@ -561,6 +627,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public void setAttribute(String name, Object o) {
+      if (isClosed) return;
       if (origin.containsKey(name)) {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Attempt to set protected attribute ").append(name);
@@ -593,6 +660,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public void removeAttribute(String name) {
+      if (isClosed) return;
       handleServletPathInfo();
       if (origin.containsKey(name)) {
          StringBuilder txt = new StringBuilder(128);
@@ -624,6 +692,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public Enumeration<String> getAttributeNames() {
+      if (isClosed) return Collections.emptyEnumeration();
       handleServletPathInfo();
       ArrayList<String> names = new ArrayList<String>();
       if (isAttrSpecialHandling) {
@@ -648,6 +717,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public RequestDispatcher getRequestDispatcher(String path) {
+      if (isClosed) return null;
       if (path != null) {
          RequestDispatcher dispatcher = super.getRequestDispatcher(path);
          if (dispatcher != null) {
@@ -659,6 +729,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public long getDateHeader(String name) {
+      if (isClosed) return -1L;
       String value = preq.getProperty(name);
       if (value == null) {
          return (-1L);
@@ -669,31 +740,37 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public String getAuthType() {
+      if (isClosed) return null;
       return preq.getAuthType();
    }
 
    @Override
    public Cookie[] getCookies() {
+      if (isClosed) return null;
       return preq.getCookies();
    }
 
    @Override
    public String getHeader(String name) {
+      if (isClosed) return null;
       return preq.getProperty(name);
    }
 
    @Override
    public Enumeration<String> getHeaderNames() {
+      if (isClosed) return Collections.emptyEnumeration();
       return preq.getPropertyNames();
    }
 
    @Override
    public Enumeration<String> getHeaders(String name) {
+      if (isClosed) return Collections.emptyEnumeration();
       return preq.getProperties(name);
    }
 
    @Override
    public int getIntHeader(String name) {
+      if (isClosed) return -1;
       String property = preq.getProperty(name);
       if (property == null) {
          return -1;
@@ -703,6 +780,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public String getMethod() {
+      if (isClosed) return "GET";
       String meth;
       if ((preq instanceof HeaderRequest) || (preq instanceof RenderRequest)) {
          meth = "GET";
@@ -714,21 +792,25 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public HttpSession getSession() {
+      if (isClosed) return null;
       return session != null ? session : super.getSession();
    }
 
    @Override
    public HttpSession getSession(boolean create) {
+      if (isClosed) return null;
       return session != null ? session : super.getSession(create);
    }
 
    @Override
    public String getRemoteUser() {
+      if (isClosed) return null;
       return preq.getRemoteUser();
    }
 
    @Override
    public String getRequestedSessionId() {
+      if (isClosed) return null;
       return preq.getRequestedSessionId();
    }
 
@@ -739,21 +821,25 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public Principal getUserPrincipal() {
+      if (isClosed) return null;
       return preq.getUserPrincipal();
    }
 
    @Override
    public boolean isRequestedSessionIdValid() {
+      if (isClosed) return false;
       return preq.isRequestedSessionIdValid();
    }
 
    @Override
    public boolean isUserInRole(String role) {
+      if (isClosed) return false;
       return preq.isUserInRole(role);
    }
 
    @Override
    public String getCharacterEncoding() {
+      if (isClosed) return null;
       if (preq instanceof ClientDataRequest) {
          return ((ClientDataRequest) preq).getCharacterEncoding();
       }
@@ -762,6 +848,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public void setCharacterEncoding(String enc) throws UnsupportedEncodingException {
+      if (isClosed) return;
       if (preq instanceof ClientDataRequest) {
          ((ClientDataRequest) preq).setCharacterEncoding(enc);
       }
@@ -769,6 +856,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public int getContentLength() {
+      if (isClosed) return 0;
       if (preq instanceof ClientDataRequest) {
          return ((ClientDataRequest) preq).getContentLength();
       }
@@ -777,6 +865,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public String getContentType() {
+      if (isClosed) return null;
       if (preq instanceof ClientDataRequest) {
          return ((ClientDataRequest) preq).getContentType();
       }
@@ -785,6 +874,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public ServletInputStream getInputStream() throws IOException {
+      if (isClosed) return null;
       if (preq instanceof ClientDataRequest) {
          return (ServletInputStream) ((ClientDataRequest) preq).getPortletInputStream();
       }
@@ -798,11 +888,13 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public Locale getLocale() {
+      if (isClosed) return null;
       return preq.getLocale();
    }
 
    @Override
    public Enumeration<Locale> getLocales() {
+      if (isClosed) return null;
       return preq.getLocales();
    }
 
@@ -851,59 +943,80 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
 
    @Override
    public String getScheme() {
+      if (isClosed) return null;
       return preq.getScheme();
    }
 
    @Override
    public String getServerName() {
+      if (isClosed) return null;
       return preq.getServerName();
    }
 
    @Override
    public int getServerPort() {
+      if (isClosed) return 0;
       return preq.getServerPort();
    }
 
    @Override
    public boolean isSecure() {
+      if (isClosed) return false;
       return preq.isSecure();
    }
 
    /**
-    * The async methods can't be used
+    * The async methods can only be used if async proecssing has been started
     */
-
+   
    @Override
    public AsyncContext startAsync() throws IllegalStateException {
-      StringBuilder txt = new StringBuilder(128);
-      txt.append("The async context cannot be initialized after a ");
-      txt.append("include or forward from a portlet reqource request method. ");
-      txt.append("The first async context initialization must be performed within the portlet resource method.");
-      throw new IllegalStateException(txt.toString());
+      if (!dispatches.isEmpty() && dispatches.get(0).type == Type.ASYNC_PROCESSING) {
+         return ((PortletResourceRequestContext) reqctx).startAsync();
+      } else {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("The async context cannot be initialized after a ");
+         txt.append("include or forward from a portlet reqource request method. ");
+         txt.append("The first async context initialization must be performed within the portlet resource method.");
+         throw new IllegalStateException(txt.toString());
+      }
    }
 
    @Override
    public AsyncContext startAsync(ServletRequest request, ServletResponse response) throws IllegalStateException {
-      StringBuilder txt = new StringBuilder(128);
-      txt.append("The async context cannot be initialized after a ");
-      txt.append("include or forward from a portlet reqource request method. ");
-      txt.append("The first async context initialization must be performed within the portlet resource method.");
-      throw new IllegalStateException(txt.toString());
+      if (!dispatches.isEmpty() && dispatches.get(0).type == Type.ASYNC_PROCESSING) {
+         return ((PortletResourceRequestContext) reqctx).startAsync(request, response);
+      } else {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("The async context cannot be initialized after a ");
+         txt.append("include or forward from a portlet reqource request method. ");
+         txt.append("The first async context initialization must be performed within the portlet resource method.");
+         throw new IllegalStateException(txt.toString());
+      }
    }
 
    @Override
    public boolean isAsyncStarted() {
-      return false;
+      if (!dispatches.isEmpty() && dispatches.get(0).type == Type.ASYNC_PROCESSING) {
+         return ((PortletResourceRequestContext) reqctx).isAsyncStarted();
+      }
+     return false;
    }
 
    @Override
    public boolean isAsyncSupported() {
+      if (!dispatches.isEmpty() && dispatches.get(0).type == Type.ASYNC_PROCESSING) {
+         return ((PortletResourceRequestContext) reqctx).isAsyncSupported();
+      }
       return false;
    }
-
+   
    @Override
    public AsyncContext getAsyncContext() {
-      return super.getAsyncContext();
+      if (!dispatches.isEmpty() && dispatches.get(0).type == Type.ASYNC_PROCESSING) {
+         return ((PortletResourceRequestContext) reqctx).getAsyncContext();
+      }
+      return null;
    }
 
    @Override

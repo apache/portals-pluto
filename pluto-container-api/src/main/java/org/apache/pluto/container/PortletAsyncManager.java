@@ -1,6 +1,7 @@
 package org.apache.pluto.container;
 
 import javax.servlet.AsyncContext;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 public interface PortletAsyncManager {
 
@@ -11,5 +12,6 @@ public interface PortletAsyncManager {
    void launchRunner();
    boolean isComplete();
    void setComplete(boolean complete);
+   HttpServletRequestWrapper getAsyncRequestWrapper();
 
 }

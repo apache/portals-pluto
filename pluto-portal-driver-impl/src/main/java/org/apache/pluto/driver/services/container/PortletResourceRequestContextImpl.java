@@ -37,8 +37,8 @@ import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.impl.HttpServletPortletRequestWrapper;
 import org.apache.pluto.container.impl.HttpServletPortletResponseWrapper;
-import org.apache.pluto.container.impl.PortletAsyncRequestWrapper;
 import org.apache.pluto.container.impl.ResourceParametersImpl;
 import org.apache.pluto.container.impl.ServletPortletSessionProxy;
 import org.slf4j.Logger;
@@ -145,7 +145,7 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
    }
 
    @Override
-   public AsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
+   public AsyncContext startAsync(ResourceRequest resreq, ResourceResponse resresp) throws IllegalStateException {
       if (actx != null && actx.isComplete()) {
          return null;
       }
@@ -196,21 +196,27 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
 
       // Set portlet-scoped attributes directly on resource request
 
-      request.setAttribute(PortletInvokerService.PORTLET_CONFIG, cfg);
-      request.setAttribute(PortletInvokerService.PORTLET_REQUEST, request);
-      request.setAttribute(PortletInvokerService.PORTLET_RESPONSE, response);
+      resreq.setAttribute(PortletInvokerService.PORTLET_CONFIG, cfg);
+      resreq.setAttribute(PortletInvokerService.PORTLET_REQUEST, resreq);
+      resreq.setAttribute(PortletInvokerService.PORTLET_RESPONSE, resresp);
 
-      // Wrap http req & response.
+      // Wrap http request & response if not already wrapped.
 
-      HttpServletRequest wreq = new PortletAsyncRequestWrapper(hreq, request, this);
-      HttpServletResponse wresp = new HttpServletPortletResponseWrapper(hresp, request, response, false);
+      HttpServletRequest wreq = getAsyncServletRequest();
+      if (wreq == null) {
+         wreq = new HttpServletPortletRequestWrapper(hreq, getSession(), resreq);
+         ((HttpServletPortletRequestWrapper) wreq).startAsyncProcessing();
+      } 
+      
+      
+      HttpServletResponse wresp = new HttpServletPortletResponseWrapper(hresp, resreq, resresp, false);
 
       // Start async, create portlet async context first time only.
 
       if (actx != null) {
          actx.setWrapped(hreq.startAsync(wreq, wresp));
       } else {
-         actx = new PortletAsyncContextImpl(hreq.startAsync(wreq, wresp), this, request);
+         actx = new PortletAsyncContextImpl(hreq.startAsync(wreq, wresp), this, resreq);
       }
 
       if (isTrace) {

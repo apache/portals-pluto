@@ -31,8 +31,10 @@ import javax.servlet.AsyncListener;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
+import javax.servlet.ServletRequestWrapper;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.PortletAsyncManager;
@@ -41,6 +43,7 @@ import org.apache.pluto.container.bean.processor.PortletArtifactProducer;
 import org.apache.pluto.container.bean.processor.PortletRequestScopedBeanHolder;
 import org.apache.pluto.container.bean.processor.PortletSessionBeanHolder;
 import org.apache.pluto.container.bean.processor.PortletStateScopedBeanHolder;
+import org.apache.pluto.container.impl.HttpServletPortletRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -178,6 +181,29 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
    }
 
    /**
+    * Finds and returns the portlet servlet request wrapper that provides async functionality
+    * @return
+    */
+   @Override
+   public HttpServletRequestWrapper getAsyncRequestWrapper() {
+      HttpServletPortletRequestWrapper wrapper = null;
+      
+      // find our wrapper in case it was wrapped again
+      
+      ServletRequest wreq = prctx.getAsyncServletRequest();
+      while ((wreq instanceof ServletRequestWrapper) &&
+            !(wreq instanceof HttpServletPortletRequestWrapper) ) {
+         wreq = ((ServletRequestWrapper) wreq).getRequest();
+      }
+      
+      if (wreq instanceof HttpServletPortletRequestWrapper) {
+         wrapper = (HttpServletPortletRequestWrapper) wreq;
+      } 
+      
+      return wrapper;
+   }
+   
+   /**
     * Called when exiting portlet handling for this thread. The bean holders are deregistered from the thread and any
     * beans contained are destroyed.
     */
@@ -259,6 +285,12 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
     */
    @Override
    public void dispatch(String path) {
+
+      // enable proper query string parameter handling during async dispatch
+      HttpServletPortletRequestWrapper wrapper = 
+            (HttpServletPortletRequestWrapper) getAsyncRequestWrapper();
+      wrapper.startAsyncDispatch(path);
+
       // workaround for Tomcat bug 59213
       actx.dispatch(hreq.getServletContext(), path);
    }

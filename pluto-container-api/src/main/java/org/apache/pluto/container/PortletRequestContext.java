@@ -90,6 +90,8 @@ public interface PortletRequestContext
     DispatcherType getDispatcherType();
     boolean isExecutingRequestBody();
     void setExecutingRequestBody(boolean executingRequestBody);
+    HttpServletRequest getAsyncServletRequest();
+    void setAsyncServletRequest(HttpServletRequest asyncServletRequest);
     
     // To provide special handling during portlet request dispatcher and async dispatches
     void endDispatch();

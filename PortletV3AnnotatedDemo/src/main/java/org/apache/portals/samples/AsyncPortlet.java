@@ -47,7 +47,7 @@ public class AsyncPortlet {
    private static final Logger LOGGER = Logger.getLogger(AsyncPortlet.class.getName());
    private static final boolean isTrace = LOGGER.isLoggable(Level.FINEST);
    
-   private final static String JSP         = "/WEB-INF/jsp/asyncOutput.jsp";
+   private final static String JSP         = "/WEB-INF/jsp/asyncOutput.jsp?qp1=qval1";
    private final static String ATTRIB_REPS = "reps";
    private final static String ATTRIB_AUTO = "auto";
    public  final static String ATTRIB_TITLE = "title";

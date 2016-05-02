@@ -22,4 +22,5 @@
    <span style='margin-left: 2em;'>Request #: ${reqnum.getRandomNumber()}</span>
 </c:catch>
 </p>
+<p>Query string parameter qp1: <%=resourceRequest.getResourceParameters().getValue("qp1") %>
 <hr>

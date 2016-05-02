@@ -61,11 +61,23 @@ public class PortletRequestContextImpl implements PortletRequestContext {
    
 
    private PortletContainer    container;
+   
+   // The original request and response arriving at the portal
    private HttpServletRequest  containerRequest;
    private HttpServletResponse containerResponse;
-   private HttpServletRequest  wrappedServletRequest;
+   
+   // Wrapped servlet request set for the duration of a request dispatcher or async dispatch
+   private HttpServletRequest  dispatchedServletRequest;
+   
+   // original wrapped servlet request arriving at the portlet servlet during an
+   // async dispatch
+   private HttpServletRequest  asyncServletRequest;
+   
+   // Request and response objects arriving at the portlet servlet
+   // (for the first time, in the case of an async dispatch)
    private HttpServletRequest  servletRequest;
    private HttpServletResponse servletResponse;
+   
    private PortalURL           url;
    private PortletConfig       portletConfig;
    private ServletContext      servletContext;
@@ -157,7 +169,7 @@ public class PortletRequestContextImpl implements PortletRequestContext {
    @Override
    public void startDispatch(HttpServletRequest wrappedServletRequest, 
          Map<String, List<String>> queryParams, String phase) {
-      this.wrappedServletRequest = wrappedServletRequest;
+      this.dispatchedServletRequest = wrappedServletRequest;
       this.queryParams = queryParams;
       this.phase = phase;
       if (LOG.isTraceEnabled()) {
@@ -174,7 +186,7 @@ public class PortletRequestContextImpl implements PortletRequestContext {
     */
    @Override
    public void endDispatch() {
-      this.wrappedServletRequest = null;
+      this.dispatchedServletRequest = null;
       this.phase = null;
       this.queryParams = null;
       if (LOG.isTraceEnabled()) {
@@ -182,6 +194,22 @@ public class PortletRequestContextImpl implements PortletRequestContext {
       }
    }
    
+   /**
+    * @return the asyncServletRequest
+    */
+   @Override
+   public HttpServletRequest getAsyncServletRequest() {
+      return asyncServletRequest;
+   }
+
+   /**
+    * @param asyncServletRequest the asyncServletRequest to set
+    */
+   @Override
+   public void setAsyncServletRequest(HttpServletRequest asyncServletRequest) {
+      this.asyncServletRequest = asyncServletRequest;
+   }
+
    /*
     * Gets the query string parameters set for request dispatch processing
     */
@@ -202,7 +230,7 @@ public class PortletRequestContextImpl implements PortletRequestContext {
     * Use the wrapped request during dispatch
     */
    private HttpServletRequest getHttpReq() {
-      return (wrappedServletRequest != null) ? wrappedServletRequest : servletRequest;
+      return (dispatchedServletRequest != null) ? dispatchedServletRequest : servletRequest;
    }
 
    @Override
