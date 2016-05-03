@@ -64,7 +64,7 @@ import org.apache.pluto.container.bean.processor.PortletInvoker;
 import org.apache.pluto.container.bean.processor.PortletRequestScopedBeanHolder;
 import org.apache.pluto.container.bean.processor.PortletSessionBeanHolder;
 import org.apache.pluto.container.bean.processor.PortletStateScopedBeanHolder;
-import org.apache.pluto.container.impl.PortletAsyncRequestWrapper;
+import org.apache.pluto.container.impl.HttpServletPortletRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -322,18 +322,19 @@ public class PortletServlet3 extends HttpServlet {
          
          ServletRequest wreq = request;
          while ((wreq instanceof ServletRequestWrapper) &&
-               !(wreq instanceof PortletAsyncRequestWrapper) ) {
+               !(wreq instanceof HttpServletPortletRequestWrapper) ) {
             wreq = ((ServletRequestWrapper) wreq).getRequest();
          }
          
-         if (wreq instanceof PortletAsyncRequestWrapper) {
+         if (wreq instanceof HttpServletPortletRequestWrapper) {
             
-            HttpServletRequest hreq = (HttpServletRequest) ((PortletAsyncRequestWrapper) wreq).getRequest();
+            HttpServletRequest hreq = (HttpServletRequest) ((HttpServletPortletRequestWrapper) wreq).getRequest();
             HttpServletResponse hresp = requestContext.getServletResponse();
             
             LOG.debug("Extracted wrapped request. Dispatch type: " + hreq.getDispatcherType());
 
             requestContext.init(portletConfig, getServletContext(), hreq, hresp);
+            requestContext.setAsyncServletRequest(request);       // store original request
             responseContext.init(hreq, hresp);
             
          } else {

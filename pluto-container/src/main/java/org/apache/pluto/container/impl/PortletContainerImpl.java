@@ -151,7 +151,7 @@ public class PortletContainerImpl implements PortletContainer
         PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
 
         PortletRequestContext requestContext = rcService.getPortletHeaderRequestContext(this, request, response, portletWindow);
-        PortletHeaderResponseContext responseContext = rcService.getPortletHeaderResponseContext(this, request, response, portletWindow);
+        PortletHeaderResponseContext responseContext = rcService.getPortletHeaderResponseContext(this, request, response, portletWindow, requestContext);
         responseContext.setPropsAllowed(true);
         HeaderRequest portletRequest = envService.createHeaderRequest(requestContext, responseContext);
         HeaderResponse portletResponse = envService.createHeaderResponse(responseContext);
@@ -204,7 +204,7 @@ public class PortletContainerImpl implements PortletContainer
         PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
 
         PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
-        PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
+        PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow, requestContext);
 
         if (renderHeaders != null && renderHeaders.equals(PortletRequest.RENDER_HEADERS)) {
            responseContext.setPropsAllowed(true);
@@ -261,7 +261,7 @@ public class PortletContainerImpl implements PortletContainer
         PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
 
         PortletResourceRequestContext requestContext = rcService.getPortletResourceRequestContext(this, request, response, portletWindow, pageState);
-        PortletResourceResponseContext responseContext = rcService.getPortletResourceResponseContext(this, request, response, portletWindow);
+        PortletResourceResponseContext responseContext = rcService.getPortletResourceResponseContext(this, request, response, portletWindow, requestContext);
         responseContext.setPropsAllowed(true);
         ResourceRequest portletRequest = envService.createResourceRequest(requestContext, responseContext);
         ResourceResponse portletResponse = envService.createResourceResponse(responseContext, requestContext.getCacheability());
@@ -317,7 +317,7 @@ public class PortletContainerImpl implements PortletContainer
         PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
 
         PortletRequestContext requestContext = rcService.getPortletActionRequestContext(this, request, response, portletWindow);
-        PortletActionResponseContext responseContext = rcService.getPortletActionResponseContext(this, request, response, portletWindow);
+        PortletActionResponseContext responseContext = rcService.getPortletActionResponseContext(this, request, response, portletWindow, requestContext);
         responseContext.setPropsAllowed(true);
         ActionRequest portletRequest = envService.createActionRequest(requestContext, responseContext);
         ActionResponse portletResponse = envService.createActionResponse(responseContext);
@@ -396,7 +396,7 @@ public class PortletContainerImpl implements PortletContainer
         PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
 
         PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
-        PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
+        PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow, requestContext);
         RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext);
         RenderResponse portletResponse = envService.createRenderResponse(responseContext);
 
@@ -430,7 +430,7 @@ public class PortletContainerImpl implements PortletContainer
         PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
 
         PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
-        PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
+        PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow, requestContext);
         RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext);
         RenderResponse portletResponse = envService.createRenderResponse(responseContext);
 
@@ -491,7 +491,7 @@ public class PortletContainerImpl implements PortletContainer
         PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
 
         PortletRequestContext requestContext = rcService.getPortletEventRequestContext(this, request, response, portletWindow);
-        PortletEventResponseContext responseContext = rcService.getPortletEventResponseContext(this, request, response, portletWindow);
+        PortletEventResponseContext responseContext = rcService.getPortletEventResponseContext(this, request, response, portletWindow, requestContext);
         EventRequest portletRequest = envService.createEventRequest(requestContext, responseContext, event);
         EventResponse portletResponse = envService.createEventResponse(responseContext);
 

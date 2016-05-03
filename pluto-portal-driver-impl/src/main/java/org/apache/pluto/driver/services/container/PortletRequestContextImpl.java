@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -60,16 +61,32 @@ public class PortletRequestContextImpl implements PortletRequestContext {
    
 
    private PortletContainer    container;
+   
+   // The original request and response arriving at the portal
    private HttpServletRequest  containerRequest;
    private HttpServletResponse containerResponse;
+   
+   // Wrapped servlet request set for the duration of a request dispatcher or async dispatch
+   private HttpServletRequest  dispatchedServletRequest;
+   
+   // original wrapped servlet request arriving at the portlet servlet during an
+   // async dispatch
+   private HttpServletRequest  asyncServletRequest;
+   
+   // Request and response objects arriving at the portlet servlet
+   // (for the first time, in the case of an async dispatch)
    private HttpServletRequest  servletRequest;
    private HttpServletResponse servletResponse;
+   
    private PortalURL           url;
    private PortletConfig       portletConfig;
    private ServletContext      servletContext;
    private Cookie              cookies[];
    private String              renderHeaders = null; 
    private boolean             executingRequestBody = false;
+   private Map<String, List<String>> queryParams = null;
+   private String              phase = null;
+
    
    // make sure these classes are loaded first by the container classloader
    // so that the logs from these classes land in the Pluto log file.
@@ -99,8 +116,8 @@ public class PortletRequestContextImpl implements PortletRequestContext {
       this.window = window;
       this.windowId = window.getId().getStringId();
       this.url = PortalRequestContext.getContext(containerRequest).createPortalURL();
-      this.urlProvider = new PortletURLProviderImpl(url, window);
-      this.paramFactory = url.getPortletParameterFactory();
+      this.urlProvider = new PortletURLProviderImpl(url, window, this);
+      this.paramFactory = url.getPortletParameterFactory(this);
    }
 
    @Override
@@ -145,19 +162,90 @@ public class PortletRequestContextImpl implements PortletRequestContext {
       this.servletRequest = servletRequest;
       this.servletResponse = servletResponse;
    }
+   
+   /**
+    * Called when a request dispatcher or async dispatch begins 
+    */
+   @Override
+   public void startDispatch(HttpServletRequest wrappedServletRequest, 
+         Map<String, List<String>> queryParams, String phase) {
+      this.dispatchedServletRequest = wrappedServletRequest;
+      this.queryParams = queryParams;
+      this.phase = phase;
+      if (LOG.isTraceEnabled()) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Added query parameters.");
+         txt.append(" Phase: ").append(phase);
+         txt.append(", names: ").append(queryParams.keySet());
+         LOG.debug(txt.toString());
+      }
+   }
+   
+   /**
+    * Called when a request dispatcher or async dispatch ends 
+    */
+   @Override
+   public void endDispatch() {
+      this.dispatchedServletRequest = null;
+      this.phase = null;
+      this.queryParams = null;
+      if (LOG.isTraceEnabled()) {
+         LOG.debug("deleted query parameters.");
+      }
+   }
+   
+   /**
+    * @return the asyncServletRequest
+    */
+   @Override
+   public HttpServletRequest getAsyncServletRequest() {
+      return asyncServletRequest;
+   }
 
+   /**
+    * @param asyncServletRequest the asyncServletRequest to set
+    */
+   @Override
+   public void setAsyncServletRequest(HttpServletRequest asyncServletRequest) {
+      this.asyncServletRequest = asyncServletRequest;
+   }
+
+   /*
+    * Gets the query string parameters set for request dispatch processing
+    */
+   @Override
+   public Map<String, List<String>> getQueryParams(){
+      return queryParams;
+   }
+   
+   /*
+    * Gets the processing phase set for request dispatch processing
+    */
+   @Override
+   public String getPhase() {
+      return phase;
+   }
+   
+   /*
+    * Use the wrapped request during dispatch
+    */
+   private HttpServletRequest getHttpReq() {
+      return (dispatchedServletRequest != null) ? dispatchedServletRequest : servletRequest;
+   }
+
+   @Override
    public Object getAttribute(String name) {
-      Object value = servletRequest.getAttribute(encodeAttributeName(name));
-      return value != null ? value : servletRequest.getAttribute(name);
+      Object value = getHttpReq().getAttribute(encodeAttributeName(name));
+      return value != null ? value : getHttpReq().getAttribute(name);
    }
 
    public Object getAttribute(String name, ServletRequest servletRequest) {
-      return servletRequest.getAttribute(name);
+      return getHttpReq().getAttribute(name);
    }
 
    public Enumeration<String> getAttributeNames() {
       ArrayList<String> names = new ArrayList<String>();
-      for (Enumeration<String> e = servletRequest.getAttributeNames(); e
+      for (Enumeration<String> e = getHttpReq().getAttributeNames(); e
             .hasMoreElements();) {
          names.add(decodeAttributeName(e.nextElement()));
       }
@@ -166,9 +254,9 @@ public class PortletRequestContextImpl implements PortletRequestContext {
 
    public void setAttribute(String name, Object value) {
       if (value == null) {
-         servletRequest.removeAttribute(encodeAttributeName(name));
+         getHttpReq().removeAttribute(encodeAttributeName(name));
       } else {
-         servletRequest.setAttribute(encodeAttributeName(name), value);
+         getHttpReq().setAttribute(encodeAttributeName(name), value);
       }
    }
 
@@ -202,10 +290,6 @@ public class PortletRequestContextImpl implements PortletRequestContext {
       return servletRequest.getLocale();
    }
 
-   public Map<String, String[]> getPrivateParameterMap() {
-      return paramFactory.getPrivateParameterMap(window.getId().getStringId());
-   }
-
    public Map<String, String[]> getProperties() {
       HashMap<String, String[]> properties = new HashMap<String, String[]>();
       for (Enumeration<String> names = servletRequest.getHeaderNames(); names
@@ -222,6 +306,16 @@ public class PortletRequestContextImpl implements PortletRequestContext {
          }
       }
       return properties;
+   }
+
+   @Override
+   public Map<String, String[]> getParameterMap() {
+      return paramFactory.getParameterMap(window.getId().getStringId());
+   }
+
+   @Override
+   public Map<String, String[]> getPrivateParameterMap() {
+      return paramFactory.getPrivateParameterMap(window.getId().getStringId());
    }
 
    public Map<String, String[]> getPublicParameterMap() {

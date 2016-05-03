@@ -305,6 +305,7 @@ extends AbstractReflectivePortletTest {
         }
 
         /**
+         * Note: with portlet spec 3, all the parameters are actually valid. 
          * Check that invalid parameter A is ignored, parameter B is attached
          * to the dispatching request with the correct value, and parameter C
          * is attached to the dispatching request with an empty string.
@@ -317,10 +318,10 @@ extends AbstractReflectivePortletTest {
         	String valueA = request.getParameter(KEY_A);
         	String valueB = request.getParameter(KEY_B);
         	String valueC = request.getParameter(KEY_C);
-        	if (valueA == null && VALUE_B.equals(valueB) && "".equals(valueC)) {
+        	if ("".equals(valueA) && VALUE_B.equals(valueB) && "".equals(valueC)) {
         		result.setReturnCode(TestResult.PASSED);
-        	} else if (valueA != null) {
-        		TestUtils.failOnAssertion("parameter", valueA, null, result);
+        	} else if (!VALUE_A.equals(valueA)) {
+        		TestUtils.failOnAssertion("parameter", valueA, "", result);
         	} else if (!VALUE_B.equals(valueB)) {
         		TestUtils.failOnAssertion("parameter", valueB, VALUE_B, result);
         	} else {

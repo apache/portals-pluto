@@ -78,7 +78,7 @@ public abstract class PortletRequestImpl implements PortletRequest
 
     // Private Member Variables ------------------------------------------------
 
-    /** The PortalContext within which this request is occuring. */
+    /** The PortalContext within which this request is occurring. */
     protected final PortalContext portalContext;
 
     protected final PortletRequestContext requestContext;
@@ -91,8 +91,6 @@ public abstract class PortletRequestImpl implements PortletRequest
     private ArrayList<String> contentTypes;
 
     private PortletPreferences portletPreferences;
-
-    private Map<String, String[]> parameters;
 
     private Map<String, String[]> requestProperties;
     private List<String> requestPropertyNames;
@@ -127,14 +125,6 @@ public abstract class PortletRequestImpl implements PortletRequest
         }
     }
 
-    private void checkInitParameterMap()
-    {
-        if (parameters == null)
-        {
-            parameters = initParameterMap();
-        }
-    }
-
     protected static Map<String, String[]> cloneParameterMap(Map<String, String[]> map)
     {
        Map<String, String[]> newMap = new HashMap<String, String[]>();
@@ -142,39 +132,6 @@ public abstract class PortletRequestImpl implements PortletRequest
           newMap.put(pn, map.get(pn).clone());
        }
        return newMap;
-    }
-
-    protected Map<String, String[]> initParameterMap()
-    {
-        String[] values  = null;
-        Map<String, String[]> parameters = requestContext.getPrivateParameterMap();
-        Map<String, String[]> publicParameters = requestContext.getPublicParameterMap();
-        if (!publicParameters.isEmpty())
-        {
-            parameters = new HashMap<String, String[]>(parameters);
-            for (Map.Entry<String,String[]> entry : publicParameters.entrySet())
-            {
-                values = parameters.get(entry.getKey());
-                if (values == null)
-                {
-                    parameters.put(entry.getKey(), entry.getValue().clone());
-                }
-                else
-                {
-                    String[] copy = new String[values.length+entry.getValue().length];
-                    System.arraycopy(values, 0, copy, 0, values.length);
-                    System.arraycopy(entry.getValue(), 0, copy, values.length, entry.getValue().length);
-                    parameters.put(entry.getKey(), copy);
-                }
-            }
-        }
-        if (isDebug) {
-           StringBuilder txt = new StringBuilder("initParameterMap Returning ");
-           txt.append(publicParameters.size()).append(" public and ")
-              .append(parameters.size()).append(" total parameters.");
-           LOG.debug(txt.toString());
-        }
-        return parameters;
     }
 
     protected PortletRequestContext getRequestContext()
@@ -330,28 +287,24 @@ public abstract class PortletRequestImpl implements PortletRequest
     public String getParameter(String name)
     {
         ArgumentUtility.validateNotNull("parameterName", name);
-        checkInitParameterMap();
-        String[] values = parameters.get(name);
+        String[] values = requestContext.getParameterMap().get(name);
         return values != null && values.length > 0 ? values[0] : null;
     }
 
     public Map<String, String[]> getParameterMap()
     {
-        checkInitParameterMap();
-        return cloneParameterMap(parameters);
+        return cloneParameterMap(requestContext.getParameterMap());
     }
 
     public Enumeration<String> getParameterNames()
     {
-        checkInitParameterMap();
-        return Collections.enumeration(parameters.keySet());
+        return Collections.enumeration(requestContext.getParameterMap().keySet());
     }
 
     public String[] getParameterValues(String name)
     {
         ArgumentUtility.validateNotNull("parameterName", name);
-        checkInitParameterMap();
-        String[] values =  parameters.get(name);
+        String[] values =  requestContext.getParameterMap().get(name);
         return values != null ? values.clone() : null;
     }
 
@@ -386,7 +339,7 @@ public abstract class PortletRequestImpl implements PortletRequest
      */
     public PortletSession getPortletSession(boolean create)
     {
-        if (LOG.isDebugEnabled())
+        if (isDebug)
         {
             LOG.debug("Retrieving portlet session (create=" + create + ")");
         }
@@ -423,7 +376,7 @@ public abstract class PortletRequestImpl implements PortletRequest
                 long currentInactiveTime = System.currentTimeMillis() - lastAccesstime;
                 if (currentInactiveTime > maxInactiveTime)
                 {
-                    if (LOG.isDebugEnabled())
+                    if (isDebug)
                     {
                         LOG.debug("The underlying HttpSession is expired and "
                                 + "should be invalidated.");
@@ -439,7 +392,7 @@ public abstract class PortletRequestImpl implements PortletRequest
         }
         if (httpSession == null)
         {
-            if (LOG.isDebugEnabled())
+            if (isDebug)
             {
                 LOG.debug("The underlying HttpSession is not available: "
                         + "no session will be returned.");
@@ -453,7 +406,7 @@ public abstract class PortletRequestImpl implements PortletRequest
         //
         if (portletSession == null)
         {
-            if (LOG.isDebugEnabled())
+            if (isDebug)
             {
                 LOG.debug("Creating new portlet session...");
             }

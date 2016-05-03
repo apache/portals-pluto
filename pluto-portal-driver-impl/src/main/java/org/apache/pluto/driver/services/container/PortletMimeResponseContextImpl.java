@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletMimeResponseContext;
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.util.PrintWriterServletOutputStream;
 
@@ -82,8 +83,8 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
    private OutputStream outputStream;
 
    public PortletMimeResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
-         HttpServletResponse containerResponse, PortletWindow window) {
-      super(container, containerRequest, containerResponse, window);
+         HttpServletResponse containerResponse, PortletWindow window, PortletRequestContext requestContext) {
+      super(container, containerRequest, containerResponse, window, requestContext);
    }
 
    public void close() {

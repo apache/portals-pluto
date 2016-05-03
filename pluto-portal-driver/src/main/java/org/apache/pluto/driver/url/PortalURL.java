@@ -23,6 +23,7 @@ import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.servlet.ServletContext;
 
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 
@@ -44,7 +45,7 @@ public interface PortalURL extends Cloneable {
       Portal;
    }
    
-   public PortletParameterFactory getPortletParameterFactory();
+   public PortletParameterFactory getPortletParameterFactory(PortletRequestContext reqctx);
    
    /**
     * Sets the URL type

@@ -19,47 +19,44 @@ package org.apache.pluto.container;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
  * @version $Id$
  */
-public interface PortletRequestContextService
-{
-    PortletRequestContext getPortletActionRequestContext(PortletContainer container, HttpServletRequest containerRequest,
-                                                         HttpServletResponse containerResponse, PortletWindow window);
+public interface PortletRequestContextService {
+   PortletRequestContext getPortletActionRequestContext(PortletContainer container,
+         HttpServletRequest containerRequest, HttpServletResponse containerResponse, PortletWindow window);
 
-    PortletRequestContext getPortletEventRequestContext(PortletContainer container, HttpServletRequest containerRequest,
-                                                        HttpServletResponse containerResponse, PortletWindow window);
+   PortletRequestContext getPortletEventRequestContext(PortletContainer container, HttpServletRequest containerRequest,
+         HttpServletResponse containerResponse, PortletWindow window);
 
-    PortletResourceRequestContext getPortletResourceRequestContext(PortletContainer container,
-                                                                   HttpServletRequest containerRequest,
-                                                                   HttpServletResponse containerResponse, 
-                                                                   PortletWindow window,
-                                                                   String pageState);
+   PortletResourceRequestContext getPortletResourceRequestContext(PortletContainer container,
+         HttpServletRequest containerRequest, HttpServletResponse containerResponse, PortletWindow window,
+         String pageState);
 
-    PortletRequestContext getPortletHeaderRequestContext(PortletContainer container, HttpServletRequest containerRequest,
-                                                         HttpServletResponse containerResponse, PortletWindow window);
+   PortletRequestContext getPortletHeaderRequestContext(PortletContainer container,
+         HttpServletRequest containerRequest, HttpServletResponse containerResponse, PortletWindow window);
 
-    PortletRequestContext getPortletRenderRequestContext(PortletContainer container, HttpServletRequest containerRequest,
-                                                         HttpServletResponse containerResponse, PortletWindow window);
+   PortletRequestContext getPortletRenderRequestContext(PortletContainer container,
+         HttpServletRequest containerRequest, HttpServletResponse containerResponse, PortletWindow window);
 
-    PortletActionResponseContext getPortletActionResponseContext(PortletContainer container,
-                                                                 HttpServletRequest containerRequest,
-                                                                 HttpServletResponse containerResponse, PortletWindow window);
+   PortletActionResponseContext getPortletActionResponseContext(PortletContainer container,
+         HttpServletRequest containerRequest, HttpServletResponse containerResponse, 
+         PortletWindow window, PortletRequestContext requestContext);
 
-    PortletEventResponseContext getPortletEventResponseContext(PortletContainer container, HttpServletRequest containerRequest,
-                                                               HttpServletResponse containerResponse, PortletWindow window);
+   PortletEventResponseContext getPortletEventResponseContext(PortletContainer container,
+         HttpServletRequest containerRequest, HttpServletResponse containerResponse, 
+         PortletWindow window, PortletRequestContext requestContext);
 
-    PortletResourceResponseContext getPortletResourceResponseContext(PortletContainer container,
-                                                                     HttpServletRequest containerRequest,
-                                                                     HttpServletResponse containerResponse, PortletWindow window);
+   PortletResourceResponseContext getPortletResourceResponseContext(PortletContainer container,
+         HttpServletRequest containerRequest, HttpServletResponse containerResponse, 
+         PortletWindow window, PortletRequestContext requestContext);
 
-    PortletRenderResponseContext getPortletRenderResponseContext(PortletContainer container,
-                                                                 HttpServletRequest containerRequest,
-                                                                 HttpServletResponse containerResponse, PortletWindow window);
+   PortletRenderResponseContext getPortletRenderResponseContext(PortletContainer container,
+         HttpServletRequest containerRequest, HttpServletResponse containerResponse, 
+         PortletWindow window, PortletRequestContext requestContext);
 
-    PortletHeaderResponseContext getPortletHeaderResponseContext(PortletContainer container,
-                                                                 HttpServletRequest containerRequest,
-                                                                 HttpServletResponse containerResponse, PortletWindow window);
+   PortletHeaderResponseContext getPortletHeaderResponseContext(PortletContainer container,
+         HttpServletRequest containerRequest, HttpServletResponse containerResponse, 
+         PortletWindow window, PortletRequestContext requestContext);
 }

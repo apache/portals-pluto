@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletResourceResponseContext;
+import org.apache.pluto.container.impl.HttpServletPortletRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -184,6 +185,15 @@ public class PortletAsyncContextListener implements AsyncListener {
       
       txt.append(" Removing contextual info.");
       pactx.removeContext();
+      
+      HttpServletPortletRequestWrapper wrapper = 
+            (HttpServletPortletRequestWrapper) pactx.getAsyncRequestWrapper();
+      if (wrapper != null) {
+         txt.append(" Closing the request wrapper.");
+         wrapper.endAsyncProcessing();
+      } else {
+         txt.append(" Couldn't get the request wrapper.");
+      }
 
       if (isDebug) {
          LOG.debug(txt.toString());

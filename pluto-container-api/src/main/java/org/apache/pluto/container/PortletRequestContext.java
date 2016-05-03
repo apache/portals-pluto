@@ -17,6 +17,7 @@
 package org.apache.pluto.container;
 
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -63,6 +64,9 @@ public interface PortletRequestContext
     Cookie[] getCookies();
     Map<String, String[]> getProperties();
     
+    // V2 compatibility parameter methods
+    
+    Map<String, String[]> getParameterMap();
     Map<String, String[]> getPrivateParameterMap();
     Map<String, String[]> getPublicParameterMap();
     
@@ -86,4 +90,12 @@ public interface PortletRequestContext
     DispatcherType getDispatcherType();
     boolean isExecutingRequestBody();
     void setExecutingRequestBody(boolean executingRequestBody);
+    HttpServletRequest getAsyncServletRequest();
+    void setAsyncServletRequest(HttpServletRequest asyncServletRequest);
+    
+    // To provide special handling during portlet request dispatcher and async dispatches
+    void endDispatch();
+    void startDispatch(HttpServletRequest wrappedServletRequest, Map<String, List<String>> queryParams, String phase);
+    Map<String, List<String>> getQueryParams();
+    String getPhase();
 }

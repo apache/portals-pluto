@@ -45,9 +45,9 @@ public class PortletRequestContextServiceImpl implements PortletRequestContextSe
     public PortletActionResponseContext getPortletActionResponseContext(PortletContainer container,
                                                                         HttpServletRequest containerRequest,
                                                                         HttpServletResponse containerResponse,
-                                                                        PortletWindow window)
+                                                                        PortletWindow window, PortletRequestContext requestContext)
     {
-        return new PortletActionResponseContextImpl(container, containerRequest, containerResponse, window);
+        return new PortletActionResponseContextImpl(container, containerRequest, containerResponse, window, requestContext);
     }
 
     public PortletRequestContext getPortletEventRequestContext(PortletContainer container, HttpServletRequest containerRequest,
@@ -58,9 +58,9 @@ public class PortletRequestContextServiceImpl implements PortletRequestContextSe
 
     public PortletEventResponseContext getPortletEventResponseContext(PortletContainer container,
                                                                       HttpServletRequest containerRequest,
-                                                                      HttpServletResponse containerResponse, PortletWindow window)
+                                                                      HttpServletResponse containerResponse, PortletWindow window, PortletRequestContext requestContext)
     {
-        return new PortletEventResponseContextImpl(container, containerRequest, containerResponse, window);
+        return new PortletEventResponseContextImpl(container, containerRequest, containerResponse, window, requestContext);
     }
 
     public PortletRequestContext getPortletRenderRequestContext(PortletContainer container, HttpServletRequest containerRequest,
@@ -72,9 +72,9 @@ public class PortletRequestContextServiceImpl implements PortletRequestContextSe
     public PortletRenderResponseContext getPortletRenderResponseContext(PortletContainer container,
                                                                         HttpServletRequest containerRequest,
                                                                         HttpServletResponse containerResponse,
-                                                                        PortletWindow window)
+                                                                        PortletWindow window, PortletRequestContext requestContext)
     {
-        return new PortletRenderResponseContextImpl(container, containerRequest, containerResponse, window);
+        return new PortletRenderResponseContextImpl(container, containerRequest, containerResponse, window, requestContext);
     }
 
     public PortletRequestContext getPortletHeaderRequestContext(PortletContainer container, HttpServletRequest containerRequest,
@@ -86,9 +86,9 @@ public class PortletRequestContextServiceImpl implements PortletRequestContextSe
     public PortletHeaderResponseContext getPortletHeaderResponseContext(PortletContainer container,
                                                                         HttpServletRequest containerRequest,
                                                                         HttpServletResponse containerResponse,
-                                                                        PortletWindow window)
+                                                                        PortletWindow window, PortletRequestContext requestContext)
     {
-        return new PortletHeaderResponseContextImpl(container, containerRequest, containerResponse, window);
+        return new PortletHeaderResponseContextImpl(container, containerRequest, containerResponse, window, requestContext);
     }
 
     public PortletResourceRequestContext getPortletResourceRequestContext(PortletContainer container,
@@ -103,8 +103,8 @@ public class PortletRequestContextServiceImpl implements PortletRequestContextSe
     public PortletResourceResponseContext getPortletResourceResponseContext(PortletContainer container,
                                                                             HttpServletRequest containerRequest,
                                                                             HttpServletResponse containerResponse,
-                                                                            PortletWindow window)
+                                                                            PortletWindow window, PortletRequestContext requestContext)
     {
-        return new PortletResourceResponseContextImpl(container, containerRequest, containerResponse, window);
+        return new PortletResourceResponseContextImpl(container, containerRequest, containerResponse, window, requestContext);
     }
 }
