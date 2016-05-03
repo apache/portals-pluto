@@ -59,6 +59,71 @@ limitations under the License.
       <portlet context="/pluto" name="PlutoPageAdmin"/>
       <portlet context="/pluto" name="AboutPortlet"/>
     </page>
+    ${includeDemosBegin}
+    <page name="V2.0 Parameter Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/ResourcePortlet-PRP" name="ParamTestPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
+    </page>
+    <page name="V2.0 Public Render Parameter tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/tck-TestModule3-Portlet1" name="TestModule3_Portlet1"/>
+      <portlet context="/tck-TestModule3-Portlet2" name="TestModule3_Portlet2"/>
+    </page>
+    <page name="V2.0 Parameter Demo" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/ResourcePortlet-PRP" name="ImageSelPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
+      <portlet context="/ResourcePortlet-PRP" name="ColorSelPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="MessageBoxPortlet"/>
+    </page>
+    <page name="V3.0 Portlet Hub Demo" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletHubDemo" name="ImageSelPortlet"/>
+      <portlet context="/PortletHubDemo" name="PH-ResourcePortlet-PRP"/>
+      <portlet context="/PortletHubDemo" name="PH-ColorSelPortlet"/>
+      <portlet context="/PortletHubDemo" name="MessageBoxPortlet"/>
+      <portlet context="/PortletHubDemo" name="PartialActionPortlet"/>
+    </page>
+    <page name="V3.0 PM and WS" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="PortletConfigPortlet1"/>
+      <portlet context="/PortletV3Demo" name="PortletConfigPortlet2"/>
+    </page>
+    <page name="V3.0 Parameter Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="ParamTestPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
+    </page>
+    <page name="V3.0 URL Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="UrlTestPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
+    </page>
+    <page name="V3.0 Render URL Parameter Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="UrlRPTestPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
+    </page>
+    <page name="V3.0 Action URL Parameter Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="UrlAPTestPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
+    </page>
+    <page name="V3.0 Misc Tests - HTTP SC, fragment id" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="LongPortlet"/>
+      <portlet context="/PortletV3Demo" name="AuthSCPortlet"/>
+    </page>
+    <page name="V3.0 Misc Tests - redirect" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="V3RedirectPortlet"/>
+    </page>
+    <page name="V2 and V3 Header Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="V3HeaderPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
+    </page>
+    <page name="Bean Portlet Demo" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3AnnotatedDemo" name="BeanPortlet"/>
+      <portlet context="/PortletV3AnnotatedDemo" name="BeanPortlet"/>
+    </page>
+    <page name="Async Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3AnnotatedDemo" name="PathInfoPortlet"/>
+      <portlet context="/PortletV3AnnotatedDemo" name="AsyncPortlet"/>
+    </page>
+    <page name="File Upload" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3AnnotatedDemo" name="MultipartPortlet"/>
+    </page>
+    ${includeDemosEnd}
   </render-config>
   
 </pluto-portal-driver>
