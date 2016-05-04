@@ -197,7 +197,7 @@ public class AsyncPortlet {
       txt.append(", auto-dispatch: ").append(auto);
       LOGGER.fine(txt.toString());
       
-      PortletAsyncContext ctx = req.startAsync();
+      PortletAsyncContext ctx = req.startPortletAsync();
       ctx.setTimeout(4000);
       try {
          ctx.addListener(ctx.createPortletAsyncListener(APListener.class));

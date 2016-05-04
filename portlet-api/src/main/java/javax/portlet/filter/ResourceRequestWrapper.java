@@ -119,13 +119,13 @@ public class ResourceRequestWrapper extends ClientDataRequestWrapper implements 
    }
 
    @Override
-   public PortletAsyncContext startAsync() throws IllegalStateException {
-      return ((ResourceRequest)wrapped).startAsync();
+   public PortletAsyncContext startPortletAsync() throws IllegalStateException {
+      return ((ResourceRequest)wrapped).startPortletAsync();
    }
 
    @Override
-   public PortletAsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
-      return ((ResourceRequest)wrapped).startAsync(request, response);
+   public PortletAsyncContext startPortletAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
+      return ((ResourceRequest)wrapped).startPortletAsync(request, response);
    }
 
    @Override
@@ -139,8 +139,8 @@ public class ResourceRequestWrapper extends ClientDataRequestWrapper implements 
    }
 
    @Override
-   public PortletAsyncContext getAsyncContext() {
-      return ((ResourceRequest)wrapped).getAsyncContext();
+   public PortletAsyncContext getPortletAsyncContext() {
+      return ((ResourceRequest)wrapped).getPortletAsyncContext();
    }
 
    @Override

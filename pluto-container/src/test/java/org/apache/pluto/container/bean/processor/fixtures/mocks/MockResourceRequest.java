@@ -90,12 +90,12 @@ public class MockResourceRequest extends MockClientDataRequest implements Resour
    }
 
    @Override
-   public PortletAsyncContext startAsync() throws IllegalStateException {
+   public PortletAsyncContext startPortletAsync() throws IllegalStateException {
       return null;
    }
 
    @Override
-   public PortletAsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
+   public PortletAsyncContext startPortletAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
       return null;
    }
 
@@ -110,7 +110,7 @@ public class MockResourceRequest extends MockClientDataRequest implements Resour
    }
 
    @Override
-   public PortletAsyncContext getAsyncContext() {
+   public PortletAsyncContext getPortletAsyncContext() {
       return null;
    }
 
