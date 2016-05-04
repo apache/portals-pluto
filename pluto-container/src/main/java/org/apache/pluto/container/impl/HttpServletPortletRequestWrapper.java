@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -30,19 +31,24 @@ import java.util.Map;
 
 import javax.portlet.ClientDataRequest;
 import javax.portlet.HeaderRequest;
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.ResourceRequest;
 import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpUpgradeHandler;
+import javax.servlet.http.Part;
 
 import org.apache.pluto.container.NamespaceMapper;
 import org.apache.pluto.container.PortletInvokerService;
@@ -864,6 +870,15 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
    }
 
    @Override
+   public long getContentLengthLong() {
+      if (isClosed) return 0L;
+      if (preq instanceof ClientDataRequest) {
+         return ((ClientDataRequest) preq).getContentLengthLong();
+      }
+      return 0L;
+   }
+
+   @Override
    public String getContentType() {
       if (isClosed) return null;
       if (preq instanceof ClientDataRequest) {
@@ -976,7 +991,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       } else {
          StringBuilder txt = new StringBuilder(128);
          txt.append("The async context cannot be initialized after a ");
-         txt.append("include or forward from a portlet reqource request method. ");
+         txt.append("include or forward from a portlet resource request method. ");
          txt.append("The first async context initialization must be performed within the portlet resource method.");
          throw new IllegalStateException(txt.toString());
       }
@@ -989,7 +1004,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       } else {
          StringBuilder txt = new StringBuilder(128);
          txt.append("The async context cannot be initialized after a ");
-         txt.append("include or forward from a portlet reqource request method. ");
+         txt.append("include or forward from a portlet resource request method. ");
          txt.append("The first async context initialization must be performed within the portlet resource method.");
          throw new IllegalStateException(txt.toString());
       }
@@ -1023,5 +1038,52 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
    public DispatcherType getDispatcherType() {
       return super.getDispatcherType();
    }
+   
+   @Override
+   public String changeSessionId() {
+      return null;
+   }
+   
+   @Override
+   public boolean authenticate(HttpServletResponse response) throws IOException, ServletException {
+      return false;
+   }
+   
+   @Override
+   public void login(String username, String password) throws ServletException {
+   }
+   
+   @Override
+   public void logout() throws ServletException {
+   }
 
+   @Override
+   public Part getPart(String name) throws IOException, ServletException {
+      if (preq instanceof ClientDataRequest) {
+         try {
+            return ((ClientDataRequest) preq).getPart(name);
+         } catch (PortletException e) {
+            throw new ServletException(e.getCause());
+         }
+      }
+      return null;
+   }
+   
+   @Override
+   public Collection<Part> getParts() throws IOException, ServletException {
+      if (preq instanceof ClientDataRequest) {
+         try {
+            return ((ClientDataRequest) preq).getParts();
+         } catch (PortletException e) {
+            throw new ServletException(e.getCause());
+         }
+      }
+      return null;
+   }
+   
+   @Override
+   public <T extends HttpUpgradeHandler> T upgrade(Class<T> httpUpgradeHandlerClass) throws IOException,
+         ServletException {
+      throw new ServletException("Not Supported");
+   }
 }

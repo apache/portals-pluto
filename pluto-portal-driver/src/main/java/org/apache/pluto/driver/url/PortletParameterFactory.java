@@ -18,6 +18,10 @@
 
 package org.apache.pluto.driver.url;
 
+import static org.apache.pluto.driver.url.PortalURLParameter.PARAM_TYPE_ACTION;
+import static org.apache.pluto.driver.url.PortalURLParameter.PARAM_TYPE_RENDER;
+import static org.apache.pluto.driver.url.PortalURLParameter.PARAM_TYPE_RESOURCE;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,10 +33,6 @@ import java.util.Set;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL.URLType;
-
-import static org.apache.pluto.driver.url.PortalURLParameter.*;
-import static javax.portlet.PortletRequest.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -508,22 +508,8 @@ public class PortletParameterFactory {
             LOGGER.debug(txt.toString());
          }
 
-         switch (phase) {
-            case ACTION_PHASE:
-               if (type.equals(PARAM_TYPE_ACTION)) {
-                  params.putAll(qp);
-               }
-               break;
-            case RESOURCE_PHASE:
-               if (type.equals(PARAM_TYPE_RESOURCE)) {
-                  params.putAll(qp);
-               }
-               break;
-            case RENDER_PHASE:
-            case EVENT_PHASE:
-            case HEADER_PHASE:
-               params.putAll(qp);
-               break;
+         if (type.equals(PARAM_TYPE_RENDER)) {
+            params.putAll(qp);
          }
       }
 
