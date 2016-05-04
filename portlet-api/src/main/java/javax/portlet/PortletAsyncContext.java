@@ -286,39 +286,6 @@ public interface PortletAsyncContext {
 
    /**
     * <div class="changed_added_3_0">
-    * Dispatches the request and response objects of this <code>PortletAsyncContext</code> to
-    * the given path scoped to the given context.
-    * <p>
-    * The path parameter is interpreted in the same way as in
-    * <code>PortletContext#getRequestDispatcher(String)</code>, except that it is scoped to
-    * the given context.
-    * <p>
-    * There can be at most one asynchronous dispatch operation per asynchronous
-    * cycle, which is started by a call to one of the <code>ResourceRequest#startAsync</code>
-    * methods. Any attempt to perform an additional asynchronous dispatch
-    * operation within the same asynchronous cycle will result in an
-    * <code>IllegalStateException</code>. When the container performs the dispatch operation,
-    * <code>startAsync()</code> may be invoked on the dispatched request to initiate a new
-    * asynchronous processing cycle, after which any of the dispatch methods or the
-    * <code>complete()</code> method may be called.
-    * <p>
-    * See {@link #dispatch()} for additional details, including error handling.
-    * </div>
-    * 
-    * @since   3.0
-    * 
-    * @param context    the ServletContext of the dispatch target
-    * @param path       the path of the dispatch target, scoped to the given 
-    * <code>ServletContext</code>
-    * @throws IllegalStateException
-    * if called before an asynchronous processing cycle has been started, 
-    * if one of the dispatch methods has been called but the <code>startAsync</code> method has not
-    * been called during the resulting dispatch, or if <code>complete()</code> was called
-    */
-   public void dispatch(ServletContext context, String path) throws IllegalStateException;
-
-   /**
-    * <div class="changed_added_3_0">
     * Gets the request that was used to initialize this <code>PortletAsyncContext</code> by calling
     * <code>ResourceRequest.startAsync()</code> or <code>ResourceRequest.startAsync(ServletRequest, ServletResponse)</code>.
     * </div>
