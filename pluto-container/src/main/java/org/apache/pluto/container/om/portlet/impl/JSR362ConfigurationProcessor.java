@@ -856,17 +856,17 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          
          // dependencies
          for (DependencyType dt : portlet.getDependency()) {
-            if (dt.getName() == null || dt.getName().getValue() == null || dt.getName().getValue().length() == 0) {
+            if (dt.getName() == null || dt.getName().length() == 0) {
                String warn = "Dependency name is empty, ignoring Dependency block.";
                LOG.warn(warn);
                continue;
             }
-            if (dt.getMinVersion() == null || dt.getMinVersion().getValue() == null || dt.getMinVersion().getValue().length() == 0) {
+            if (dt.getMinVersion() == null || dt.getMinVersion().length() == 0) {
                String warn = "Dependency minimum version is empty, ignoring Dependency block.";
                LOG.warn(warn);
                continue;
             }
-            Dependency dep = new DependencyImpl(dt.getName().getValue(), dt.getMinVersion().getValue());
+            Dependency dep = new DependencyImpl(dt.getName(), dt.getLibrary(), dt.getMinVersion());
             pd.addDependency(dep);
          }
          
@@ -1404,7 +1404,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          // dependencies
 
          for (javax.portlet.annotations.Dependency da : pc.dependencies()) {
-            Dependency dep = new DependencyImpl(da.name(), da.minVersion());
+            Dependency dep = new DependencyImpl(da.name(), da.library(), da.minVersion());
             pd.addDependency(dep);
          }
 

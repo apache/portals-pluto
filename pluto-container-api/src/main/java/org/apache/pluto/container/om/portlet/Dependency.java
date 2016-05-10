@@ -22,4 +22,14 @@ public interface Dependency {
     */
    void setVersion(String version);
 
+   /**
+    * @return the library name
+    */
+   String getLibrary();
+   
+   /**
+    * @param library - the library name
+    */
+   void setLibrary(String library);
+
 }

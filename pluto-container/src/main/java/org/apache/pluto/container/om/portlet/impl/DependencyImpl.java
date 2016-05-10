@@ -30,19 +30,22 @@ import org.apache.pluto.container.om.portlet.Dependency;
  */
 public class DependencyImpl implements Dependency {
 
-   String   name = null;
-   String version = null;
+   private String name    = null;
+   private String library = null;
+   private String version = null;
    
    public DependencyImpl() {
    }
    
-   public DependencyImpl(String name, String version) {
+   public DependencyImpl(String name, String library, String version) {
       this.name = name;
+      this.library = library;
       this.version = version;
    }
    
    public DependencyImpl(Dependency di) {
       this.name = di.getName();
+      this.library = di.getLibrary();
       this.version = di.getVersion();
    }
 
@@ -60,6 +63,22 @@ public class DependencyImpl implements Dependency {
    @Override
    public void setName(String name) {
       this.name = name;
+   }
+
+   /**
+    * @return the library
+    */
+   @Override
+   public String getLibrary() {
+      return library;
+   }
+
+   /**
+    * @param library the library to set
+    */
+   @Override
+   public void setLibrary(String library) {
+      this.library = library;
    }
 
    /* (non-Javadoc)
