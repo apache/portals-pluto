@@ -193,6 +193,11 @@
       <plugin>
          <groupId>net.alchim31.maven</groupId>
          <artifactId>yuicompressor-maven-plugin</artifactId>
+         <configuration>
+            <excludes>
+               <exclude>**/*.css</exclude>   
+            </excludes>
+         </configuration>
       </plugin>
     </plugins>
   </build>

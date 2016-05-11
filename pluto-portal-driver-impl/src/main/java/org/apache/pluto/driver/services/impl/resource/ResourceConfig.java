@@ -17,18 +17,17 @@
 package org.apache.pluto.driver.services.impl.resource;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
+import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.PageResourceId;
+import org.apache.pluto.driver.services.portal.PageResources;
+import org.apache.pluto.driver.services.portal.PropertyConfigService;
+import org.apache.pluto.driver.services.portal.RenderConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.pluto.driver.services.portal.PageResourceId;
-import org.apache.pluto.driver.services.portal.PageResourceSource;
-import org.apache.pluto.driver.services.portal.RenderConfig;
-import org.apache.pluto.driver.services.portal.PropertyConfigService;
 
 /**
  * Encapsulation of the Pluto Driver ResourceConfig Info.
@@ -62,7 +61,7 @@ public class ResourceConfig implements PropertyConfigService
 //    private final Map portletApplications;
     
     /** The page level resources */
-    private final Map<PageResourceId, PageResourceSource> resources = new HashMap<PageResourceId, PageResourceSource>();
+    private final PageResources pageResources = new PageResources();
 
     /** The default page resources */
     private List<PageResourceId> defaultPageResources = new ArrayList<PageResourceId>();
@@ -168,48 +167,21 @@ public class ResourceConfig implements PropertyConfigService
         this.supportedWindowStates.add(state);
     }
     
-    public Map<PageResourceId, PageResourceSource> getResources() {
-       return resources;
+    public PageResources getResources() {
+       return pageResources;
     }
     
     public void addResource(String name, String scope, String version, String type, String source) {
-       if (name != null && version != null && type != null && source != null) {
-          PageResourceId resid = new PageResourceId(name, scope, version);
-          PageResourceSource src = new PageResourceSource(type, source);
-          resources.put(resid, src);
-       } else {
-          StringBuilder txt = new StringBuilder(128);
-          txt.append("Required value null when adding page Resource");
-          txt.append(", name: ").append(name);
-          txt.append(", scope: ").append(scope);
-          txt.append(", version: ").append(version);
-          txt.append(", type: ").append(type);
-          txt.append(", source: ").append(source);
-          LOG.warn(txt.toString());
-       }
-
-       if (LOG.isDebugEnabled()) {
-          StringBuilder txt = new StringBuilder(128);
-          txt.append("Adding page Resource");
-          txt.append(", name: ").append(name);
-          txt.append(", version: ").append(version);
-          txt.append(", type: ").append(type);
-          txt.append(", source: ").append(source);
-          for (PageResourceId id : resources.keySet()) {
-             txt.append("\n   ").append(id.toString());
-             txt.append(" : ").append(resources.get(id).toString());
-          }
-          LOG.debug(txt.toString());
-       }
-
+       PageResourceId resid = new PageResourceId(name, scope, version);
+       pageResources.addResource(resid, type, source);
     }
     
     
-    public List<PageResourceId> getDefaultPageResources() {
+    public List<PageResourceId> getDefaultPageDependencies() {
        return defaultPageResources;
     }
     
-    public void addDefaultPageResource(String name, String scope, String version) {
+    public void addDefaultPageDependency(String name, String scope, String version) {
        if (name != null) {
           PageResourceId resid = new PageResourceId(name, scope, version);
           defaultPageResources.add(resid);
@@ -223,9 +195,6 @@ public class ResourceConfig implements PropertyConfigService
           txt.append(", name: ").append(name);
           txt.append(", scope: ").append(scope);
           txt.append(", version: ").append(version);
-          for (PageResourceId id : defaultPageResources) {
-             txt.append("\n   ").append(id.toString());
-          }
           LOG.debug(txt.toString());
        }
     }
@@ -245,6 +214,31 @@ public class ResourceConfig implements PropertyConfigService
      */
     public void setRenderConfig(RenderConfig renderConfig) {
         this.renderConfig = renderConfig;
+    }
+    
+    /**
+     * Writes config info to log depending on trace settings.
+     */
+    public void traceConfig() {
+       if (LOG.isDebugEnabled()) {
+          StringBuilder txt = new StringBuilder(128);
+          txt.append("Logging config info.\n");
+          txt.append(pageResources.toString());
+          txt.append("\n\nDefault page dependencies:");
+          for (PageResourceId id : defaultPageResources) {
+             txt.append("\n   ").append(id.toString());
+          }
+          txt.append("\n\nDeclared page dependencies:");
+          for (PageConfig pc : renderConfig.getPages()) {
+             if (!pc.getPageResources().isEmpty()) {
+                txt.append("\n   Page: ").append(pc.getName());
+                for (PageResourceId id : pc.getPageResources()) {
+                   txt.append("\n      ").append(id.toString());
+                }
+             }
+          }
+          LOG.debug(txt.toString());
+       }
     }
 
 }

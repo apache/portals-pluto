@@ -49,7 +49,11 @@ public interface RenderConfigService {
     PageConfig getPage(String id);
 
     //added for page admin portlet
-    public void addPage(PageConfig pageConfig);
-    public void removePage(PageConfig pageConfig);
+    void addPage(PageConfig pageConfig);
+    void removePage(PageConfig pageConfig);
+
+    // For handling the available page resources and default dependencies
+    PageResources getPageResources();
+    List<PageResourceId> getDefaultPageDependencies();
         
 }

@@ -63,7 +63,7 @@ a.tooltip:hover span.tooltip {
 /** 'header' block **/
 
 #header {
-  background: #8DB7DF url('images/banner.png') no-repeat top left;;
+  background: #8DB7DF url('../images/banner.png') no-repeat top left;;
   border-bottom: 1px solid #2E6794;
   width: auto;
   height: 50px;
@@ -154,27 +154,27 @@ a.tooltip:hover span.tooltip {
 /** 'portlet' block: portlet mode and window state controls **/
 
 .portlet .header span.minimized {
-  background: url(images/controls/min.png) no-repeat;
+  background: url(../images/controls/min.png) no-repeat;
 }
 
 .portlet .header span.maximized {
-  background: url(images/controls/max.png) no-repeat;
+  background: url(../images/controls/max.png) no-repeat;
 }
 
 .portlet .header span.normal {
-  background: url(images/controls/norm.png) no-repeat;
+  background: url(../images/controls/norm.png) no-repeat;
 }
 
 .portlet .header span.view {
-  background: url(images/controls/view.png) no-repeat;
+  background: url(../images/controls/view.png) no-repeat;
 }
 
 .portlet .header span.edit {
-  background: url(images/controls/edit.png) no-repeat;
+  background: url(../images/controls/edit.png) no-repeat;
 }
 
 .portlet .header span.help {
-  background: url(images/controls/help.png) no-repeat;
+  background: url(../images/controls/help.png) no-repeat;
 }
 
 .portlet .body {

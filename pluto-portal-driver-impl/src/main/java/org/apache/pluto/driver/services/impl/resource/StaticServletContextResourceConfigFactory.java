@@ -41,6 +41,7 @@ public class StaticServletContextResourceConfigFactory
         {
             InputStream in = servletContext.getResourceAsStream(ResourceConfigReader.CONFIG_FILE);
             resourceConfig = ResourceConfigReader.getFactory().parse(in);
+            resourceConfig.traceConfig();    // write log info
         }
         catch (Exception e)
         {

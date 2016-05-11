@@ -24,10 +24,10 @@ limitations under the License.
 <head>
     <title>Pluto Portal</title>
     <style type="text/css" title="currentStyle" media="screen">
-        @import "<c:out value="${pageContext.request.contextPath}"/>/pluto.css";
-        @import "<c:out value="${pageContext.request.contextPath}"/>/portlet-spec-1.0.css";
+        @import "<c:out value="${pageContext.request.contextPath}"/>/css/pluto.css";
+        @import "<c:out value="${pageContext.request.contextPath}"/>/css/portlet-spec-1.0.css";
     </style>
-    <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js">
+    <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/javascript/pluto.js">
     </script>
 </head>
 

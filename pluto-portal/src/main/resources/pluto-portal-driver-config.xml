@@ -47,11 +47,35 @@ limitations under the License.
     <!-- These are the page resources made available by Pluto --> 
     <page-resource>
       <identifier>
+        <name>portlet-spec-1.0.css</name>
+        <scope>org.apache.portals</scope>
+        <version>1.0</version>
+      </identifier>
+      <source type="css">/css/portlet-spec-1.0.css</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
+        <name>portlet-spec-2.0.css</name>
+        <scope>org.apache.portals</scope>
+        <version>2.0</version>
+      </identifier>
+      <source type="css">/css/portlet-spec-2.0.css</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
         <name>pluto.css</name>
         <scope>org.apache.portals</scope>
         <version>3.0</version>
       </identifier>
       <source type="css">/css/pluto.css</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
+        <name>pluto.css</name>
+        <scope>org.apache.portals</scope>
+        <version>3.0.1</version>
+      </identifier>
+      <source type="css">/css/plutoGreen.css</source>
     </page-resource>
     <page-resource>
       <identifier>
@@ -93,6 +117,16 @@ limitations under the License.
       <name>pluto.css</name>
       <scope>org.apache.portals</scope>
       <version>3.0</version>
+    </default-resource>
+    <default-resource>
+        <name>portlet-spec-1.0.css</name>
+        <scope>org.apache.portals</scope>
+        <version>1.0</version>
+    </default-resource>
+    <default-resource>
+        <name>portlet-spec-2.0.css</name>
+        <scope>org.apache.portals</scope>
+        <version>2.0</version>
     </default-resource>
     <default-resource>
       <name>pluto.js</name>
@@ -146,6 +180,11 @@ limitations under the License.
       <portlet context="/ResourcePortlet-PRP" name="MessageBoxPortlet"/>
     </page>
     <page name="V3.0 Portlet Hub Demo" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <dependency>
+         <name>pluto.css</name>
+         <scope>org.apache.portals</scope>
+         <version>3.0.1</version>
+      </dependency>
       <portlet context="/PortletHubDemo" name="ImageSelPortlet"/>
       <portlet context="/PortletHubDemo" name="PH-ResourcePortlet-PRP"/>
       <portlet context="/PortletHubDemo" name="PH-ColorSelPortlet"/>

@@ -23,7 +23,6 @@ import org.apache.commons.digester.Digester;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.pluto.driver.services.portal.PageConfig;
-import org.apache.pluto.driver.services.portal.PageResourceId;
 import org.apache.pluto.driver.services.portal.RenderConfig;
 import org.xml.sax.SAXException;
 
@@ -115,7 +114,7 @@ public class ResourceConfigReader {
         // Default resources for each page
         digester.addCallMethod(
               "pluto-portal-driver/page-resources/default-resource",
-              "addDefaultPageResource", 3);
+              "addDefaultPageDependency", 3);
         digester.addCallParam(
              "pluto-portal-driver/page-resources/default-resource/name", 0);
         digester.addCallParam(
@@ -155,7 +154,7 @@ public class ResourceConfigReader {
         // Process any page-level dependencies
         digester.addCallMethod(
               "pluto-portal-driver/render-config/page/dependency",
-              "addPageResource", 3);
+              "addPageDependency", 3);
         digester.addCallParam(
              "pluto-portal-driver/render-config/page/dependency/name", 0);
         digester.addCallParam(

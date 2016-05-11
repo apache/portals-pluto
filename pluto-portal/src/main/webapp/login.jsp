@@ -24,10 +24,10 @@
   <head>
     <title>Pluto Portal</title>
     <style type="text/css" title="currentStyle" media="screen">
-      @import "<c:out value="${pageContext.request.contextPath}"/>/pluto.css";
+      @import "<c:out value="${pageContext.request.contextPath}"/>/css/pluto.css";
     </style>
     <script type="text/javascript"
-            src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js">
+            src="<c:out value="${pageContext.request.contextPath}"/>/javascript/pluto.js">
     </script>
   </head>
 

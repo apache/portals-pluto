@@ -46,7 +46,7 @@ public class PageConfig {
       return pageResources;
    }
    
-   public void addPageResource(String name, String scope, String version) {
+   public void addPageDependency(String name, String scope, String version) {
       if (name != null) {
          PageResourceId resid = new PageResourceId(name, scope, version);
          pageResources.add(resid);
@@ -60,9 +60,6 @@ public class PageConfig {
          txt.append(", name: ").append(name);
          txt.append(", scope: ").append(scope);
          txt.append(", version: ").append(version);
-         for (PageResourceId id : pageResources) {
-            txt.append("\n   ").append(id.toString());
-         }
          LOG.debug(txt.toString());
       }
    }

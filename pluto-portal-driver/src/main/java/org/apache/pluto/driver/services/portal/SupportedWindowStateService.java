@@ -18,7 +18,6 @@ package org.apache.pluto.driver.services.portal;
 
 import java.util.Set;
 
-import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
 import org.apache.pluto.container.PortletContainerException;

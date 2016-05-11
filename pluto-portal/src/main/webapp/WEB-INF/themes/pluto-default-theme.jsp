@@ -38,11 +38,6 @@ group (the left column) displays portlets with odd IDs, while the second group
 
 <head>
     <title>Pluto Portal</title>
-    <style type="text/css" title="currentStyle" media="screen">
-        @import "<c:out value="${pageContext.request.contextPath}"/>/pluto.css";
-        @import "<c:out value="${pageContext.request.contextPath}"/>/portlet-spec-1.0.css";
-        @import "<c:out value="${pageContext.request.contextPath}"/>/portlet-spec-2.0.css";
-    </style>
     <script type="text/javascript">
        /**
         * Initialization code for portlet hub
@@ -59,10 +54,23 @@ group (the left column) displays portlets with odd IDs, while the second group
           return '<%=response.encodeURL(ps.getUrlBase())%>';
        }
     </script>
-    <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js"></script>
-    <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/portletHubImpl.js"></script>
-    <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/portlet.js"></script>
-    
+
+    <c:if test="${empty dynamicResources}">
+      <!-- dynamic resources not available, adding static references -->
+      <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/javascript/pluto.js"></script>
+      <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/javascript/portletHubImpl.js"></script>
+      <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/javascript/portlet.js"></script>
+      <style type="text/css" title="currentStyle" media="screen">
+          @import "<c:out value="${pageContext.request.contextPath}"/>/css/pluto.css";
+          @import "<c:out value="${pageContext.request.contextPath}"/>/css/portlet-spec-1.0.css";
+          @import "<c:out value="${pageContext.request.contextPath}"/>/css/portlet-spec-2.0.css";
+      </style>
+    </c:if>
+    <c:if test="${not empty dynamicResources}">
+      <!-- Adding dynamic resources -->
+      ${dynamicResources}
+    </c:if>
+  
     <!-- Now include the head section markup provided by the portlet header processing methods -->
     ${headMarkup}
 </head>

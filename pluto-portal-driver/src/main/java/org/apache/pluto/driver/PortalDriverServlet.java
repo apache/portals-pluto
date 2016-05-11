@@ -44,6 +44,8 @@ import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.PageResourceId;
+import org.apache.pluto.driver.services.portal.PageResources;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURL.URLType;
@@ -221,8 +223,7 @@ public class PortalDriverServlet extends HttpServlet {
             LOG.debug("Executing header requests for target portlets.");
          }
 
-         String markup = doHeaders(request, response, portalURL);
-         request.setAttribute(AttributeKeys.HEAD_SECTION_MARKUP, markup);
+         doHeaders(request, response, portalURL);
 
          if (LOG.isDebugEnabled()) {
             LOG.debug("Dispatching to: " + uri);
@@ -254,7 +255,7 @@ public class PortalDriverServlet extends HttpServlet {
       doGet(request, response);
    }
 
-   private String doHeaders(HttpServletRequest req, HttpServletResponse resp, PortalURL purl) throws ServletException,
+   private void doHeaders(HttpServletRequest req, HttpServletResponse resp, PortalURL purl) throws ServletException,
          IOException {
 
       ServletContext sc = req.getServletContext();
@@ -314,7 +315,18 @@ public class PortalDriverServlet extends HttpServlet {
             throw new ServletException(ex);
          }
       }
+
+      // Set the header section markup provided by the portlets as an attribute
+      req.setAttribute(AttributeKeys.HEAD_SECTION_MARKUP, markup.toString());
       
-      return markup.toString();
+      // Now generate the markup for the configured page resources
+      markup.setLength(0);
+      PageResources pr = dc.getRenderConfigService().getPageResources();
+      List<PageResourceId> deps = dc.getRenderConfigService().getDefaultPageDependencies();
+      markup.append(pr.getMarkup(deps, req.getContextPath()));
+      req.setAttribute(AttributeKeys.DYNAMIC_PAGE_RESOURCES, markup.toString());
+      
+
+      return;
    }
 }
