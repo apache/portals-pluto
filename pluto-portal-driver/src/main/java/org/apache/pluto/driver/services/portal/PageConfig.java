@@ -18,6 +18,7 @@ package org.apache.pluto.driver.services.portal;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,12 +33,38 @@ public class PageConfig {
    private String uri;
    private Collection<String> portletIds;
    private int orderNumber;
+   private List<PageResourceId> pageResources = new ArrayList<PageResourceId>();
 
    public PageConfig() {
       this.portletIds = new ArrayList<String>();
-      if (LOG.isDebugEnabled()) {
+      if (LOG.isTraceEnabled()) {
          LOG.debug("Constructor.");
      }
+   }
+   
+   public List<PageResourceId> getPageResources() {
+      return pageResources;
+   }
+   
+   public void addPageResource(String name, String scope, String version) {
+      if (name != null) {
+         PageResourceId resid = new PageResourceId(name, scope, version);
+         pageResources.add(resid);
+      } else {
+         LOG.warn("Resource name cannot be null.");
+      }
+
+      if (LOG.isDebugEnabled()) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Adding resource dependency. # deps: ").append(pageResources.size());
+         txt.append(", name: ").append(name);
+         txt.append(", scope: ").append(scope);
+         txt.append(", version: ").append(version);
+         for (PageResourceId id : pageResources) {
+            txt.append("\n   ").append(id.toString());
+         }
+         LOG.debug(txt.toString());
+      }
    }
 
    public String getName() {
@@ -46,7 +73,7 @@ public class PageConfig {
 
    public void setName(String name) {
       this.name = name;
-      if (LOG.isDebugEnabled()) {
+      if (LOG.isTraceEnabled()) {
          LOG.debug("Page Name = " + name);
      }
    }

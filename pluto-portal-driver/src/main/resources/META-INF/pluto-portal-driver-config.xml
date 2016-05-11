@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page:pluto-portal-driver xmlns:page="http://portals.apache.org/pluto/xsd/pluto-portal-driver-config.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://portals.apache.org/pluto/xsd/pluto-portal-driver-config.xsd ../pluto-portal-driver-config.xsd ">
+  <page:portal-name>pluto-portal-driver</page:portal-name>
+  <page:portal-version>token</page:portal-version>
+  <page:container-name>token</page:container-name>
+  <page:supports>
+    <page:portlet-mode>token</page:portlet-mode>
+    <page:window-state>token</page:window-state>
+  </page:supports>
+  <page:portlet-app>
+    <page:context-path>page:context-path</page:context-path>
+    <page:portlets>
+      <page:portlet name="token"/>
+    </page:portlets>
+  </page:portlet-app>
+  <page:page-resources>
+    <page:page-resource>
+      <page:identifier>
+        <page:name>token</page:name>
+        <page:scope>token</page:scope>
+        <page:version>token</page:version>
+      </page:identifier>
+      <page:source type="script">page:source</page:source>
+    </page:page-resource>
+    <page:default-resource>
+      <page:name>token</page:name>
+      <page:scope>token</page:scope>
+      <page:version>token</page:version>
+    </page:default-resource>
+  </page:page-resources>
+  <page:render-config default="token">
+    <page:page name="token" uri="token">
+      <page:dependency>
+        <page:name>token</page:name>
+        <page:scope>token</page:scope>
+        <page:version>token</page:version>
+      </page:dependency>
+      <page:portlet context="token" name="token"/>
+    </page:page>
+  </page:render-config>
+</page:pluto-portal-driver>

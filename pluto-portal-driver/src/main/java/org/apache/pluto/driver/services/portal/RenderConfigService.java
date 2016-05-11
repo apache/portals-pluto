@@ -30,7 +30,7 @@ public interface RenderConfigService {
      * Retrieve an ordered list of all PageConfig instances.
      * @return list of all PageConfig instances.
      */
-    List getPages();
+    List<PageConfig> getPages();
 
     /**
      * Retrieve the PageConfig for the default

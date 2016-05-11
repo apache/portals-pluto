@@ -16,12 +16,17 @@
  */
 package org.apache.pluto.driver.services.impl.resource;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.pluto.driver.services.portal.PageResourceId;
+import org.apache.pluto.driver.services.portal.PageResourceSource;
 import org.apache.pluto.driver.services.portal.RenderConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 
@@ -55,6 +60,12 @@ public class ResourceConfig implements PropertyConfigService
 
     /** The portlet applications registered with us. */
 //    private final Map portletApplications;
+    
+    /** The page level resources */
+    private final Map<PageResourceId, PageResourceSource> resources = new HashMap<PageResourceId, PageResourceSource>();
+
+    /** The default page resources */
+    private List<PageResourceId> defaultPageResources = new ArrayList<PageResourceId>();
 
     /** Encapsulation of render configuration data. */
     private RenderConfig renderConfig;
@@ -156,6 +167,69 @@ public class ResourceConfig implements PropertyConfigService
     public void addSupportedWindowState(String state) {
         this.supportedWindowStates.add(state);
     }
+    
+    public Map<PageResourceId, PageResourceSource> getResources() {
+       return resources;
+    }
+    
+    public void addResource(String name, String scope, String version, String type, String source) {
+       if (name != null && version != null && type != null && source != null) {
+          PageResourceId resid = new PageResourceId(name, scope, version);
+          PageResourceSource src = new PageResourceSource(type, source);
+          resources.put(resid, src);
+       } else {
+          StringBuilder txt = new StringBuilder(128);
+          txt.append("Required value null when adding page Resource");
+          txt.append(", name: ").append(name);
+          txt.append(", scope: ").append(scope);
+          txt.append(", version: ").append(version);
+          txt.append(", type: ").append(type);
+          txt.append(", source: ").append(source);
+          LOG.warn(txt.toString());
+       }
+
+       if (LOG.isDebugEnabled()) {
+          StringBuilder txt = new StringBuilder(128);
+          txt.append("Adding page Resource");
+          txt.append(", name: ").append(name);
+          txt.append(", version: ").append(version);
+          txt.append(", type: ").append(type);
+          txt.append(", source: ").append(source);
+          for (PageResourceId id : resources.keySet()) {
+             txt.append("\n   ").append(id.toString());
+             txt.append(" : ").append(resources.get(id).toString());
+          }
+          LOG.debug(txt.toString());
+       }
+
+    }
+    
+    
+    public List<PageResourceId> getDefaultPageResources() {
+       return defaultPageResources;
+    }
+    
+    public void addDefaultPageResource(String name, String scope, String version) {
+       if (name != null) {
+          PageResourceId resid = new PageResourceId(name, scope, version);
+          defaultPageResources.add(resid);
+       } else {
+          LOG.warn("Resource name cannot be null.");
+       }
+
+       if (LOG.isDebugEnabled()) {
+          StringBuilder txt = new StringBuilder(128);
+          txt.append("Adding resource dependency. # deps: ").append(defaultPageResources.size());
+          txt.append(", name: ").append(name);
+          txt.append(", scope: ").append(scope);
+          txt.append(", version: ").append(version);
+          for (PageResourceId id : defaultPageResources) {
+             txt.append("\n   ").append(id.toString());
+          }
+          LOG.debug(txt.toString());
+       }
+    }
+
 
     /**
      * Standard Getter.

@@ -41,6 +41,77 @@ limitations under the License.
   </supports>
 
 
+
+  <page-resources>
+  
+    <!-- These are the page resources made available by Pluto --> 
+    <page-resource>
+      <identifier>
+        <name>pluto.css</name>
+        <scope>org.apache.portals</scope>
+        <version>3.0</version>
+      </identifier>
+      <source type="css">/css/pluto.css</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
+        <name>pluto.js</name>
+        <scope>org.apache.portals</scope>
+        <version>3.0</version>
+      </identifier>
+      <source type="script">/javascript/pluto.js</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
+        <name>portlet.js</name>
+        <scope>org.apache.portals</scope>
+        <version>3.0</version>
+      </identifier>
+      <source type="script">/javascript/portlet.js</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
+        <name>portletHubImpl.js</name>
+        <scope>org.apache.portals</scope>
+        <version>3.0</version>
+      </identifier>
+      <source type="script">/javascript/portletHubImpl.js</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
+        <name>jquery.js</name>
+        <scope>org.apache.portals</scope>
+        <version>2.2.2</version>
+      </identifier>
+      <source type="markup">
+      <![CDATA[<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>]]>
+      </source>
+    </page-resource>
+    
+    <!-- These are the default resources placed on each page -->
+    <default-resource>
+      <name>pluto.css</name>
+      <scope>org.apache.portals</scope>
+      <version>3.0</version>
+    </default-resource>
+    <default-resource>
+      <name>pluto.js</name>
+      <scope>org.apache.portals</scope>
+      <version>3.0</version>
+    </default-resource>
+    <default-resource>
+      <name>portlet.js</name>
+      <scope>org.apache.portals</scope>
+      <version>3.0</version>
+    </default-resource>
+    <default-resource>
+      <name>portletHubImpl.js</name>
+      <scope>org.apache.portals</scope>
+      <version>3.0</version>
+    </default-resource>
+  </page-resources>
+
+
   <!-- Render configuration which defines the portal pages. -->
   <render-config default="About Apache Pluto">
     <page name="About Apache Pluto" uri="/WEB-INF/themes/pluto-default-theme.jsp">
