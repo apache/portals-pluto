@@ -49,7 +49,7 @@ limitations under the License.
       <identifier>
         <name>portlet-spec-1.0.css</name>
         <scope>org.apache.portals</scope>
-        <version>1.0</version>
+        <version>1.0.0</version>
       </identifier>
       <source type="css">/css/portlet-spec-1.0.css</source>
     </page-resource>
@@ -57,7 +57,7 @@ limitations under the License.
       <identifier>
         <name>portlet-spec-2.0.css</name>
         <scope>org.apache.portals</scope>
-        <version>2.0</version>
+        <version>2.0.0</version>
       </identifier>
       <source type="css">/css/portlet-spec-2.0.css</source>
     </page-resource>
@@ -65,7 +65,7 @@ limitations under the License.
       <identifier>
         <name>pluto.css</name>
         <scope>org.apache.portals</scope>
-        <version>3.0</version>
+        <version>3.0.0</version>
       </identifier>
       <source type="css">/css/pluto.css</source>
     </page-resource>
@@ -81,7 +81,7 @@ limitations under the License.
       <identifier>
         <name>pluto.js</name>
         <scope>org.apache.portals</scope>
-        <version>3.0</version>
+        <version>3.0.0</version>
       </identifier>
       <source type="script">/javascript/pluto.js</source>
     </page-resource>
@@ -89,7 +89,7 @@ limitations under the License.
       <identifier>
         <name>portlet.js</name>
         <scope>org.apache.portals</scope>
-        <version>3.0</version>
+        <version>3.0.0</version>
       </identifier>
       <source type="script">/javascript/portlet.js</source>
     </page-resource>
@@ -97,7 +97,7 @@ limitations under the License.
       <identifier>
         <name>portletHubImpl.js</name>
         <scope>org.apache.portals</scope>
-        <version>3.0</version>
+        <version>3.0.0</version>
       </identifier>
       <source type="script">/javascript/portletHubImpl.js</source>
     </page-resource>
@@ -116,32 +116,32 @@ limitations under the License.
     <default-resource>
       <name>pluto.css</name>
       <scope>org.apache.portals</scope>
-      <version>3.0</version>
+      <version>3.0.0</version>
     </default-resource>
     <default-resource>
         <name>portlet-spec-1.0.css</name>
         <scope>org.apache.portals</scope>
-        <version>1.0</version>
+        <version>1.0.0</version>
     </default-resource>
     <default-resource>
         <name>portlet-spec-2.0.css</name>
         <scope>org.apache.portals</scope>
-        <version>2.0</version>
+        <version>2.0.0</version>
     </default-resource>
     <default-resource>
       <name>pluto.js</name>
       <scope>org.apache.portals</scope>
-      <version>3.0</version>
+      <version>3.0.0</version>
     </default-resource>
     <default-resource>
       <name>portlet.js</name>
       <scope>org.apache.portals</scope>
-      <version>3.0</version>
+      <version>3.0.0</version>
     </default-resource>
     <default-resource>
       <name>portletHubImpl.js</name>
       <scope>org.apache.portals</scope>
-      <version>3.0</version>
+      <version>3.0.0</version>
     </default-resource>
   </page-resources>
 

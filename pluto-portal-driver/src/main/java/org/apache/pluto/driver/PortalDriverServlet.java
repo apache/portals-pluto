@@ -17,7 +17,6 @@
 package org.apache.pluto.driver;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,6 @@ import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
-import javax.servlet.AsyncContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -37,7 +35,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.pluto.container.HeaderData;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
-import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.driver.config.DriverConfiguration;
@@ -317,15 +314,25 @@ public class PortalDriverServlet extends HttpServlet {
       }
 
       // Set the header section markup provided by the portlets as an attribute
+      // The main rendering JSP uses this when rendering the head section.
       req.setAttribute(AttributeKeys.HEAD_SECTION_MARKUP, markup.toString());
       
       // Now generate the markup for the configured page resources
       markup.setLength(0);
       PageResources pr = dc.getRenderConfigService().getPageResources();
-      List<PageResourceId> deps = dc.getRenderConfigService().getDefaultPageDependencies();
+      
+      // start with the default page resources
+      List<PageResourceId> deps = new ArrayList<PageResourceId>(
+            dc.getRenderConfigService().getDefaultPageDependencies());
+      
+      // add in the page-specific resources
+      List<PageResourceId> pagedeps = purl.getPageConfig(req.getServletContext()).getPageResources();
+      deps.addAll(pagedeps);
+      
+      // Set the markup resulting from the specified page resources as an attribute
+      // The main rendering JSP uses this when rendering the head section.
       markup.append(pr.getMarkup(deps, req.getContextPath()));
       req.setAttribute(AttributeKeys.DYNAMIC_PAGE_RESOURCES, markup.toString());
-      
 
       return;
    }
