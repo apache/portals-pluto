@@ -754,39 +754,45 @@ public class PortletDefinition362AnnotationTest {
    @Test
    public void testGetDependency() {
       String depName = "Dojo";
+      String depScope = "org.dojotoolkit";
       String depVers = "3.1.4";
       Dependency dep = cut.getDependency(depName);
       assertNotNull(dep);
       assertEquals(depName, dep.getName());
+      assertEquals(depScope, dep.getScope());
       assertEquals(depVers, dep.getVersion());
    }
 
    @Test
    public void testGetDependency2() {
       String depName = "AngularJS";
+      String depScope = "org.angularjs";
       String depVers = "1.4.8";
       Dependency dep = cut.getDependency(depName);
       assertNotNull(dep);
       assertEquals(depName, dep.getName());
+      assertEquals(depScope, dep.getScope());
       assertEquals(depVers, dep.getVersion());
    }
 
    @Test
    public void testGetDependencies() {
       String depName = "Dojo";
+      String depScope = "org.dojotoolkit";
       String depVers = "3.1.4";
       List<Dependency> deps = cut.getDependencies();
       assertNotNull(deps);
       assertEquals(2, deps.size());
-      Dependency dep = new DependencyImpl(depName, depVers);
+      Dependency dep = new DependencyImpl(depName, depScope, depVers);
       assertTrue(deps.contains(dep));
    }
 
    @Test
    public void testAddDependency() {
       String depName = "Bozo";
+      String depScope = "org.clowns";
       String depVers = "1.4";
-      Dependency dep = new DependencyImpl(depName, depVers);
+      Dependency dep = new DependencyImpl(depName, depScope, depVers);
       cut.addDependency(dep);
 
       List<Dependency> deps = cut.getDependencies();
@@ -798,8 +804,9 @@ public class PortletDefinition362AnnotationTest {
    @Test
    public void testAddDupDependency() {
       String depName = "Dojo";
+      String depScope = "org.dojotoolkit";
       String depVers = "2.2.2";
-      Dependency dep = new DependencyImpl(depName, depVers);
+      Dependency dep = new DependencyImpl(depName, depScope, depVers);
       cut.addDependency(dep);
 
       List<Dependency> deps = cut.getDependencies();

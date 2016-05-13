@@ -259,28 +259,6 @@
 			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
-   <complexType name="resourceNameType">
-      <annotation>
-         <documentation>
-         The resource name element. 
-         Used in the dependency element.
-         </documentation>
-      </annotation>
-      <simpleContent>
-         <extension base="portlet:string"/>
-      </simpleContent>
-   </complexType>
-   <complexType name="resourceVersionType">
-      <annotation>
-         <documentation>
-         The resource version element. 
-         Used in the dependency element.
-         </documentation>
-      </annotation>
-      <simpleContent>
-         <extension base="portlet:string"/>
-      </simpleContent>
-   </complexType>
 	<complexType name="portletType">
 		<annotation>
 			<documentation>
@@ -672,8 +650,9 @@
          </documentation>
       </annotation>
       <sequence>
-         <element name="name" type="portlet:resourceNameType"/>
-         <element name="min-version" type="portlet:resourceVersionType"/>
+         <element name="name" type="portlet:string"/>
+         <element name="scope" type="portlet:string" minOccurs="0" maxOccurs="1"/>
+         <element name="version" type="portlet:string" minOccurs="0" maxOccurs="1"/>
       </sequence>
    </complexType>
    <complexType name="multipartType">

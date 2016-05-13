@@ -22,4 +22,14 @@ public interface Dependency {
     */
    void setVersion(String version);
 
+   /**
+    * @return the scope name
+    */
+   String getScope();
+   
+   /**
+    * @param scope - the scope name
+    */
+   void setScope(String scope);
+
 }
