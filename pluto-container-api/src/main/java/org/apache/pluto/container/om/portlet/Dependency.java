@@ -23,13 +23,13 @@ public interface Dependency {
    void setVersion(String version);
 
    /**
-    * @return the library name
+    * @return the scope name
     */
-   String getLibrary();
+   String getScope();
    
    /**
-    * @param library - the library name
+    * @param scope - the scope name
     */
-   void setLibrary(String library);
+   void setScope(String scope);
 
 }

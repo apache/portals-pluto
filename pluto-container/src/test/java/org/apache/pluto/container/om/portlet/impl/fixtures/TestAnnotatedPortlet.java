@@ -73,8 +73,8 @@ import javax.portlet.annotations.Supports;
       @RuntimeOption(name="aRTO", values= {"true", "false"}),
       @RuntimeOption(name="Runtime-Option2", values= {"value2"})
    }, dependencies = {
-      @Dependency(name="Dojo", minVersion="3.1.4"),
-      @Dependency(name="AngularJS", minVersion="1.4.8")
+      @Dependency(name="Dojo", scope="org.dojotoolkit", version="3.1.4"),
+      @Dependency(name="AngularJS",  scope="org.angularjs",version="1.4.8")
    },
    asyncSupported = true,
    multipart = @Multipart(supported=true, location="here", 

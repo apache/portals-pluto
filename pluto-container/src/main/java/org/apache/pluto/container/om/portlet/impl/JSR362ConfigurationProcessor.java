@@ -111,13 +111,13 @@ import org.slf4j.LoggerFactory;
 public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
 
    /** Logger. */
-   private static final Logger  LOG     = LoggerFactory.getLogger(JSR362ConfigurationProcessor.class);
-   private static final boolean isTrace = LOG.isTraceEnabled();
-   
+   private static final Logger                      LOG            = LoggerFactory
+                                                                         .getLogger(JSR362ConfigurationProcessor.class);
+   private static final boolean                     isTrace        = LOG.isTraceEnabled();
+
    // For holding the preference validators while the portlet configuration
    // annotations are being processed.
-   private Map<PortletPreferencesValidator, String> prefValidators =
-         new HashMap<PortletPreferencesValidator, String>();
+   private Map<PortletPreferencesValidator, String> prefValidators = new HashMap<PortletPreferencesValidator, String>();
 
    public JSR362ConfigurationProcessor(PortletApplicationDefinition pad) {
       super(pad);
@@ -272,7 +272,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             LOG.warn(txt.toString());
             throw new IllegalArgumentException(txt.toString());
          }
-         
+
          // Filter class may only be empty if an annotated filter of that name
          // is already present
          String fc = item.getFilterClass();
@@ -352,21 +352,21 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
                throw new IllegalArgumentException(warning);
             }
          }
-         
+
          if (name == null || name.length() == 0) {
             name = genUniqueName();
          }
 
          // set up the listener
          Listener newitem = new ListenerImpl(item.getListenerClass());
-         
+
          for (Description desc : handleDescriptions(item.getDescription())) {
             newitem.addDescription(desc);
          }
          for (DisplayName dispName : handleDisplayNames(item.getDisplayName())) {
             newitem.addDisplayName(dispName);
          }
-         
+
          newitem.setOrdinal((item.getOrdinal() == null) ? 0 : item.getOrdinal());
 
          newitem.setListenerName(name);
@@ -720,7 +720,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
          }
-         
+
          String pn = portlet.getPortletName().getValue();
          String clsName = portlet.getPortletClass();
 
@@ -812,18 +812,18 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             clsName = prefs.getPreferencesValidator();
             if (clsName != null && clsName.length() > 0) {
                if (clsName.equals("null")) {
-                  // marks that an annotated preferences validator should not be 
+                  // marks that an annotated preferences validator should not be
                   // applied to this portlet
                   newprefs.setNullValidator(true);
                } else {
                   newprefs.setPreferencesValidator(clsName);
                }
             }
-            
+
             for (Preference p : handlePreferences(prefs.getPreference())) {
                newprefs.addPreference(p);
             }
-            
+
             pd.setPortletPreferences(newprefs);
          }
 
@@ -853,7 +853,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          for (EventDefinitionReference edr : handleEventDefRefs(portlet.getSupportedPublishingEvent())) {
             pd.addSupportedPublishingEvent(edr);
          }
-         
+
          // dependencies
          for (DependencyType dt : portlet.getDependency()) {
             if (dt.getName() == null || dt.getName().length() == 0) {
@@ -861,22 +861,21 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
                LOG.warn(warn);
                continue;
             }
-            if (dt.getMinVersion() == null || dt.getMinVersion().length() == 0) {
-               String warn = "Dependency minimum version is empty, ignoring Dependency block.";
-               LOG.warn(warn);
-               continue;
+            if (dt.getVersion() == null || dt.getVersion().length() == 0) {
+               String warn = "Dependency version is empty.";
+               LOG.info(warn);
             }
-            Dependency dep = new DependencyImpl(dt.getName(), dt.getLibrary(), dt.getMinVersion());
+            Dependency dep = new DependencyImpl(dt.getName(), dt.getScope(), dt.getVersion());
             pd.addDependency(dep);
          }
-         
+
          // Async supported
          if (portlet.isAsyncSupported() != null) {
             pd.setAsyncSupported(portlet.isAsyncSupported());
          }
-         
+
          // multipart config
-         MultipartType muty = portlet.getMultipartConfig(); 
+         MultipartType muty = portlet.getMultipartConfig();
          if (muty != null) {
             pd.setMultipartSupported(true);
             pd.setLocation(muty.getLocation());
@@ -894,7 +893,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
     * validate the v3.0 configuration
     */
    public void validate() {
-      
+
       // If the filter mapping portlet names element contains a single '*', expand
       // the portlet names into a list of all portlet names in the application.
       for (FilterMapping fm : pad.getFilterMappings()) {
@@ -908,21 +907,21 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             }
          }
       }
-      
+
       // Apply the stored annotated preference validators to the
       // portlet definitions
-      
+
       for (PortletPreferencesValidator vali : prefValidators.keySet()) {
          String[] pns = vali.portletNames();
          String clsName = prefValidators.get(vali);
 
          if ((pns.length > 0) && pns[0].equals("*")) {
-            
+
             for (PortletDefinition pd : pad.getPortlets()) {
-               
+
                // If a preferences validator is already configured, it had to have
                // come from the portlet DD, so don't overwrite.
-               
+
                Preferences prefs = pd.getPortletPreferences();
                String oldVali = prefs.getPreferencesValidator();
                if (oldVali == null || oldVali.length() == 0) {
@@ -934,13 +933,13 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
                      pad.addPortlet(pd);
                   }
                }
-               
+
             }
-            
+
          } else {
             for (String pn : pns) {
                PortletDefinition pd = pad.getPortlet(pn);
-               
+
                if (pd == null) {
                   StringBuilder txt = new StringBuilder(128);
                   txt.append("Portlet name defined in preferences validator annotation could not be found in configuration.");
@@ -949,10 +948,10 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
                   LOG.warn(txt.toString());
                   continue;
                }
-               
+
                // If a preferences validator is already configured, it had to have
                // come from the portlet DD, so don't overwrite.
-               
+
                Preferences prefs = pd.getPortletPreferences();
                String oldVali = prefs.getPreferencesValidator();
                if (oldVali == null || oldVali.length() == 0) {
@@ -964,11 +963,11 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
                      pad.addPortlet(pd);
                   }
                }
-               
+
             }
          }
       }
-      
+
       super.validate(); // reuse the 2.0 validation code
    }
 
@@ -1121,7 +1120,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
 
          // prepare the filter definition
          String clsName = cls.getCanonicalName();
-           String fn = prf.filterName();
+         String fn = prf.filterName();
          if (fn.length() == 0) {
             fn = genUniqueName();
          }
@@ -1175,10 +1174,10 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
 
       }
    }
-   
+
    @Override
    public void processListenerAnnotation(Class<?> cls) {
-      
+
       PortletListener listener = cls.getAnnotation(PortletListener.class);
       if (listener != null) {
 
@@ -1189,7 +1188,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             LOG.warn(txt.toString());
             throw new IllegalArgumentException(txt.toString());
          }
- 
+
          String clsName = cls.getCanonicalName();
          String name = listener.listenerName();
          if (name.length() == 0) {
@@ -1204,7 +1203,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             LOG.warn(txt.toString());
             throw new IllegalArgumentException(txt.toString());
          }
-         
+
          Listener newItem = new ListenerImpl(clsName);
          newItem.setListenerName(name);
          newItem.setOrdinal(listener.ordinal());
@@ -1217,22 +1216,22 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             DisplayName d = new DisplayNameImpl(Locale.forLanguageTag(ls.locale()), ls.value());
             newItem.addDisplayName(d);
          }
-         
+
          pad.addListener(newItem);
 
       }
    }
-   
+
    /**
-    * Processes PortletPreferencesValidator annotated classes. The preferences 
-    * validators are temorarily stored while the portlet configuration annotations
-    * are being processed. 
+    * Processes PortletPreferencesValidator annotated classes. The preferences validators are temorarily stored while
+    * the portlet configuration annotations are being processed.
     * 
-    * @param cls  The annotated class
+    * @param cls
+    *           The annotated class
     */
-   @Override 
+   @Override
    public void processValidatorAnnotation(Class<?> cls) {
-      
+
       PortletPreferencesValidator vali = cls.getAnnotation(PortletPreferencesValidator.class);
       if (vali != null) {
 
@@ -1243,7 +1242,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             LOG.warn(txt.toString());
             throw new IllegalArgumentException(txt.toString());
          }
- 
+
          String clsName = cls.getCanonicalName();
          prefValidators.put(vali, clsName);
       }
@@ -1256,8 +1255,10 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
     * This method is designed to be called before the portlet deployment descriptor is read so that data from the
     * portlet DD can override that provided through annotations.
     * 
-    * @param pc   The portlet configuration annotation
-    * @param cls  The annotated class
+    * @param pc
+    *           The portlet configuration annotation
+    * @param cls
+    *           The annotated class
     */
    @Override
    public void processPortletConfigAnnotation(PortletConfiguration pc, Class<?> cls) {
@@ -1309,9 +1310,9 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          pd.setExpirationCache(pc.cacheExpirationTime());
          pd.setResourceBundle(pc.resourceBundle());
          pd.setAsyncSupported(pc.asyncSupported());
-         
+
          // multipart config
-         
+
          if (pc.multipart().supported() == true) {
             Multipart mp = pc.multipart();
             pd.setMultipartSupported(true);
@@ -1347,26 +1348,26 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          if (infoAdded) {
             pd.setPortletInfo(info);
          }
-         
+
          // public parameters, supported locales
-         
+
          for (String prp : pc.publicParams()) {
             pd.addSupportedPublicRenderParameter(prp);
          }
-         
+
          for (String loc : pc.supportedLocales()) {
             pd.addSupportedLocale(loc);
          }
-         
+
          // Container runtime options
-         
+
          for (RuntimeOption ro : pc.runtimeOptions()) {
             ContainerRuntimeOption cro = new ContainerRuntimeOptionImpl(ro.name(), Arrays.asList(ro.values()));
             pd.addContainerRuntimeOption(cro);
          }
-         
+
          // Portlet preferences
-         
+
          Preferences prefs = new PreferencesImpl();
          for (javax.portlet.annotations.Preference pa : pc.prefs()) {
             Preference pref = new PreferenceImpl(pa.name(), pa.isReadOnly(), Arrays.asList(pa.values()));
@@ -1375,9 +1376,9 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
          if (prefs.getPortletPreferences().size() > 0) {
             pd.setPortletPreferences(prefs);
          }
-         
+
          // Supports
-         
+
          for (javax.portlet.annotations.Supports sa : pc.supports()) {
             Supports supps = new SupportsImpl(sa.mimeType());
             for (String pm : sa.portletModes()) {
@@ -1388,9 +1389,9 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             }
             pd.addSupports(supps);
          }
-         
+
          // Security role refs
-         
+
          for (javax.portlet.annotations.SecurityRoleRef srra : pc.roleRefs()) {
             SecurityRoleRef ref = new SecurityRoleRefImpl(srra.roleName());
             ref.setRoleLink(srra.roleLink());
@@ -1400,11 +1401,11 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
             }
             pd.addSecurityRoleRef(ref);
          }
-         
+
          // dependencies
 
          for (javax.portlet.annotations.Dependency da : pc.dependencies()) {
-            Dependency dep = new DependencyImpl(da.name(), da.library(), da.minVersion());
+            Dependency dep = new DependencyImpl(da.name(), da.scope(), da.version());
             pd.addDependency(dep);
          }
 

@@ -53,16 +53,16 @@ public @interface Dependency {
    String   name();
    
    /**
-    * The library name.
+    * The scope name.
     * 
-    * @return     The name of the library containing the resource
+    * @return     The name of the scope containing the resource
     */
-   String   library() default "";
+   String   scope() default "";
   
    /**
     * The minimum acceptable module version.
     * 
     * @return     The minimum acceptable module version
     */
-   String   minVersion() default "";
+   String   version() default "";
 }

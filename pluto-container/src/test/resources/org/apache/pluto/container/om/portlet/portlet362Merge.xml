@@ -89,11 +89,13 @@
       </container-runtime-option>
       <dependency>
          <name>JQuery</name>
-         <min-version>2.1.4</min-version>
+         <scope>org.jquery</scope>
+         <version>2.1.4</version>
       </dependency>
       <dependency>
          <name>AngularJS</name>
-         <min-version>1.4.8</min-version>
+         <scope>org.angularjs</scope>
+         <version>1.4.8</version>
       </dependency>
       <async-supported>false</async-supported>
       <multipart-config>

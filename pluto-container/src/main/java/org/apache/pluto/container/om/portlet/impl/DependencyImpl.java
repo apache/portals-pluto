@@ -31,21 +31,21 @@ import org.apache.pluto.container.om.portlet.Dependency;
 public class DependencyImpl implements Dependency {
 
    private String name    = null;
-   private String library = null;
+   private String scope = null;
    private String version = null;
    
    public DependencyImpl() {
    }
    
-   public DependencyImpl(String name, String library, String version) {
+   public DependencyImpl(String name, String scope, String version) {
       this.name = name;
-      this.library = library;
+      this.scope = scope;
       this.version = version;
    }
    
    public DependencyImpl(Dependency di) {
       this.name = di.getName();
-      this.library = di.getLibrary();
+      this.scope = di.getScope();
       this.version = di.getVersion();
    }
 
@@ -66,19 +66,19 @@ public class DependencyImpl implements Dependency {
    }
 
    /**
-    * @return the library
+    * @return the scope
     */
    @Override
-   public String getLibrary() {
-      return library;
+   public String getScope() {
+      return scope;
    }
 
    /**
-    * @param library the library to set
+    * @param scope the scope to set
     */
    @Override
-   public void setLibrary(String library) {
-      this.library = library;
+   public void setScope(String scope) {
+      this.scope = scope;
    }
 
    /* (non-Javadoc)
