@@ -38,6 +38,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.annotations.Dependency;
 import javax.portlet.annotations.LocaleString;
 import javax.portlet.annotations.PortletConfiguration;
 
@@ -46,7 +47,8 @@ import javax.portlet.annotations.PortletConfiguration;
  * A demo portlet for selecting images
  */
 @PortletConfiguration(portletName = "ImageSelPortlet", publicParams = "imgName", 
-                      title = @LocaleString("PH Image Selection Portlet"))
+                      title = @LocaleString("PH Image Selection Portlet"),
+                      dependencies = @Dependency(name="PortletHub", scope="javax.portlet", version="3.0.0"))
 public class ImageSelPortlet extends GenericPortlet {
 
    // Set up logging

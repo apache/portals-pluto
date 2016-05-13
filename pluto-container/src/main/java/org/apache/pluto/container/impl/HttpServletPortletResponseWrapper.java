@@ -19,6 +19,7 @@ package org.apache.pluto.container.impl;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.Locale;
 
 import javax.portlet.ActionResponse;
@@ -39,224 +40,172 @@ import org.apache.pluto.container.util.DummyServletOutputStream;
  * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
  * @version $Id$
  */
-public class HttpServletPortletResponseWrapper extends HttpServletResponseWrapper
-{
-    private final boolean forwarded;
-    private final PortletResponse portletResponse;
-    private final MimeResponse mimeResponse;
-    private final String lifecyclePhase;
-    private boolean included;
-    private OutputStream outputStream;
-    private ServletOutputStream servletOutputStream;
-    
-    public HttpServletPortletResponseWrapper(HttpServletResponse response, PortletRequest portletRequest, PortletResponse portletResponse, boolean included)
-    {
-        super(response);
-        this.portletResponse = portletResponse;
-        this.lifecyclePhase = (String)portletRequest.getAttribute(PortletRequest.LIFECYCLE_PHASE);
-        MimeResponse mr = null;
-        if (PortletRequest.RENDER_PHASE.equals(lifecyclePhase) || 
-            PortletRequest.RESOURCE_PHASE.equals(lifecyclePhase) ||
-            PortletRequest.HEADER_PHASE.equals(lifecyclePhase)) {
-           mr = (MimeResponse)portletResponse;
-        }
-        this.mimeResponse = mr;
-        this.forwarded = !included;
-        this.included = included;
-    }
-    
-    public void setIncluded(boolean included)
-    {
-        this.included = included;
-    }
-    
-    @Override
-    public void addCookie(Cookie cookie)
-    {
-        if (forwarded && !included)
-        {
-            portletResponse.addProperty(cookie);
-        }
-    }
+public class HttpServletPortletResponseWrapper extends HttpServletResponseWrapper {
+   private final PortletResponse portletResponse;
+   private boolean               included;
+   private OutputStream          outputStream;
+   private ServletOutputStream   servletOutputStream;
 
-    @Override
-    public void addDateHeader(String name, long date)
-    {
-        if (forwarded && !included && mimeResponse != null)
-        {
-            mimeResponse.addProperty(name, Long.toString(date));
-        }
-    }
+   public HttpServletPortletResponseWrapper(HttpServletResponse response, PortletRequest portletRequest,
+         PortletResponse portletResponse, boolean included) {
+      super(response);
+      this.portletResponse = portletResponse;
+      this.included = included;
+   }
 
-    @Override
-    public void addHeader(String name, String value)
-    {
-        if (forwarded && !included && mimeResponse != null)
-        {
-            mimeResponse.addProperty(name, value);
-        }
-    }
+   @Override
+   public void addCookie(Cookie cookie) {
+      if (!included) {
+         portletResponse.addProperty(cookie);
+      }
+   }
 
-    @Override
-    public void addIntHeader(String name, int value)
-    {
-        if (forwarded && !included && mimeResponse != null)
-        {
-            mimeResponse.addProperty(name, Integer.toString(value));
-        }
-    }
+   @Override
+   public void addDateHeader(String name, long date) {
+      if (!included && (portletResponse instanceof MimeResponse)) {
+         ((MimeResponse) portletResponse).addProperty(name, Long.toString(date));
+      }
+   }
 
-    @Override
-    public boolean containsHeader(String name)
-    {
-        return false;
-    }
+   @Override
+   public void addHeader(String name, String value) {
+      if (!included && (portletResponse instanceof MimeResponse)) {
+         ((MimeResponse) portletResponse).addProperty(name, value);
+      }
+   }
 
-    @Override
-    public String encodeRedirectUrl(String url)
-    {
-        return null;
-    }
+   @Override
+   public void addIntHeader(String name, int value) {
+      if (!included && (portletResponse instanceof MimeResponse)) {
+         ((MimeResponse) portletResponse).addProperty(name, Integer.toString(value));
+      }
+   }
 
-    @Override
-    public String encodeRedirectURL(String url)
-    {
-        return null;
-    }
+   @Override
+   public boolean containsHeader(String name) {
+      return false;
+   }
 
-    @Override
-    public String encodeUrl(String url)
-    {
-        return encodeURL(url);
-    }
+   @Override
+   public String encodeRedirectUrl(String url) {
+      return null;
+   }
 
-    @Override
-    public String encodeURL(String url)
-    {
-        if (url != null && url.indexOf("://") == -1 && !url.startsWith("/"))
-        {
-            // The Portlet Spec only allows URL encoding for absolute or full path URIs
-            // Letting this pass through thus would lead to an IllegalArgumentException been thrown.
+   @Override
+   public String encodeRedirectURL(String url) {
+      return null;
+   }
 
-            // TODO: figure out how (if not impossible) this can be (pre)fixed properly
-            return url;
-        }
-        return portletResponse.encodeURL(url);
-    }
+   @Override
+   public String encodeUrl(String url) {
+      return encodeURL(url);
+   }
 
-    @Override
-    public void sendError(int sc, String msg) throws IOException
-    {
-    }
+   @Override
+   public String encodeURL(String url) {
+      return portletResponse.encodeURL(url);
+   }
 
-    @Override
-    public void sendError(int sc) throws IOException
-    {
-    }
+   @Override
+   public void sendError(int sc, String msg) throws IOException {
+   }
 
-    @Override
-    public void sendRedirect(String location) throws IOException
-    {
-        if (forwarded && !included && PortletRequest.ACTION_PHASE.equals(lifecyclePhase))
-        {
-            ((ActionResponse)portletResponse).sendRedirect(location);
-        }
-    }
+   @Override
+   public void sendError(int sc) throws IOException {
+   }
 
-    @Override
-    public void setDateHeader(String name, long date)
-    {
-        if (forwarded && !included && mimeResponse != null)
-        {
-            mimeResponse.setProperty(name, Long.toString(date));
-        }
-    }
+   @Override
+   public void sendRedirect(String location) throws IOException {
+      if (!included && (portletResponse instanceof ActionResponse)) {
+         ((ActionResponse) portletResponse).sendRedirect(location);
+      }
+   }
 
-    @Override
-    public void setHeader(String name, String value)
-    {
-        if (forwarded && !included && mimeResponse != null)
-        {
-            mimeResponse.setProperty(name, value);
-        }
-    }
+   @Override
+   public void setDateHeader(String name, long date) {
+      if (!included && (portletResponse instanceof MimeResponse)) {
+         ((MimeResponse) portletResponse).setProperty(name, Long.toString(date));
+      }
+   }
 
-    @Override
-    public void setIntHeader(String name, int value)
-    {
-        if (forwarded && !included && mimeResponse != null)
-        {
-            mimeResponse.setProperty(name, Integer.toString(value));
-        }
-    }
+   @Override
+   public void setHeader(String name, String value) {
+      if (!included && (portletResponse instanceof MimeResponse)) {
+         ((MimeResponse) portletResponse).setProperty(name, value);
+      }
+   }
 
-    @Override
-    public void setStatus(int sc, String sm)
-    {
-        setStatus(sc);
-    }
+   @Override
+   public void setIntHeader(String name, int value) {
+      if (!included && (portletResponse instanceof MimeResponse)) {
+         ((MimeResponse) portletResponse).setProperty(name, Integer.toString(value));
+      }
+   }
 
-    @Override
-    public void setStatus(int sc)
-    {
-        if (forwarded && !included && PortletRequest.RESOURCE_PHASE.equals(lifecyclePhase))
-        {
-            mimeResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, Integer.toString(sc));
-        }
-    }
+   @Override
+   public void setStatus(int sc, String sm) {
+      setStatus(sc);
+   }
 
-    @Override
-    public void flushBuffer() throws IOException
-    {
-        if (mimeResponse != null)
-        {
-            mimeResponse.flushBuffer();
-        }            
-    }
+   @Override
+   public void setStatus(int sc) {
+      if (!included && (portletResponse instanceof ResourceResponse)) {
+         ((ResourceResponse) portletResponse).setProperty(ResourceResponse.HTTP_STATUS_CODE, Integer.toString(sc));
+      }
+   }
 
-    @Override
-    public int getBufferSize()
-    {
-        return mimeResponse != null ? mimeResponse.getBufferSize() : 0;
-    }
+   @Override
+   public void flushBuffer() throws IOException {
+      if ((portletResponse instanceof MimeResponse)) {
+         ((MimeResponse) portletResponse).flushBuffer();
+      }
+   }
 
-    @Override
-    public String getCharacterEncoding()
-    {
-        return mimeResponse != null ? mimeResponse.getCharacterEncoding() : null;
-    }
+   @Override
+   public int getBufferSize() {
+      if (portletResponse instanceof MimeResponse) {
+         return ((MimeResponse) portletResponse).getBufferSize();
+      }
+      return 0;
+   }
 
-    @Override
-    public String getContentType()
-    {
-        return mimeResponse != null ? mimeResponse.getContentType() : null;
-    }
+   @Override
+   public String getCharacterEncoding() {
+      if (portletResponse instanceof MimeResponse) {
+         ((MimeResponse) portletResponse).getCharacterEncoding(); 
+      }
+      return null;
+   }
 
-    @Override
-    public Locale getLocale()
-    {
-        return mimeResponse != null ? mimeResponse.getLocale() : null;
-    }
+   @Override
+   public String getContentType() {
+      if (portletResponse instanceof MimeResponse) {
+         ((MimeResponse) portletResponse).getContentType(); 
+      }
+      return null;
+   }
 
-    @Override
-    public ServletOutputStream getOutputStream() throws IOException
-    {
-    	if (servletOutputStream == null)
-    	{
-        	outputStream = mimeResponse != null ? mimeResponse.getPortletOutputStream() : DummyServletOutputStream.getInstance();
-        	if (outputStream instanceof ServletOutputStream)
-        	{
-        		servletOutputStream = (ServletOutputStream)outputStream;
-        	}
-        	else
-        	{
-        		servletOutputStream = new ServletOutputStream()
-        		{
-					@Override
-					public void write(int b) throws IOException 
-					{
-						outputStream.write(b);
-					}
+   @Override
+   public Locale getLocale() {
+      if (portletResponse instanceof MimeResponse) {
+         return ((MimeResponse) portletResponse).getLocale(); 
+      }
+      return null;
+   }
+
+   @Override
+   public ServletOutputStream getOutputStream() throws IOException {
+      if (servletOutputStream == null) {
+         outputStream = (portletResponse instanceof MimeResponse) ? ((MimeResponse) portletResponse)
+               .getPortletOutputStream() : DummyServletOutputStream.getInstance();
+         if (outputStream instanceof ServletOutputStream) {
+            servletOutputStream = (ServletOutputStream) outputStream;
+         } else {
+            servletOutputStream = new ServletOutputStream() {
+               @Override
+               public void write(int b) throws IOException {
+                  outputStream.write(b);
+               }
 
                @Override
                public boolean isReady() {
@@ -268,84 +217,107 @@ public class HttpServletPortletResponseWrapper extends HttpServletResponseWrappe
                public void setWriteListener(WriteListener arg0) {
                   // Servlet 3.1 API. Not implemented.
                }
-        		};
-        	}
-    	}
-    	return servletOutputStream;
-    }
+            };
+         }
+      }
+      return servletOutputStream;
+   }
 
-    @Override
-    public PrintWriter getWriter() throws IOException
-    {
-        return mimeResponse != null ? mimeResponse.getWriter() : DummyPrintWriter.getInstance();
-    }
+   @Override
+   public PrintWriter getWriter() throws IOException {
+      PrintWriter writer = null;
+      if (portletResponse instanceof MimeResponse) {
+         writer =  ((MimeResponse) portletResponse).getWriter();
+      } else {
+         writer = DummyPrintWriter.getInstance();
+      }
+      return writer;
+   }
 
-    @Override
-    public boolean isCommitted()
-    {
-        return mimeResponse != null ? mimeResponse.isCommitted() : forwarded ? false : true;
-    }
+   @Override
+   public boolean isCommitted() {
+      if (portletResponse instanceof MimeResponse) {
+         return ((MimeResponse) portletResponse).isCommitted();
+      }
+      return included;
+   }
 
-    @Override
-    public void reset()
-    {
-        if (mimeResponse != null)
-        {
-            mimeResponse.reset();
-        }
-    }
+   @Override
+   public void reset() {
+      if ((portletResponse instanceof MimeResponse)) {
+         ((MimeResponse) portletResponse).reset();
+      }
+   }
 
-    @Override
-    public void resetBuffer()
-    {
-        if (mimeResponse != null)
-        {
-            mimeResponse.resetBuffer();
-        }
-    }
+   @Override
+   public void resetBuffer() {
+      if ((portletResponse instanceof MimeResponse)) {
+         ((MimeResponse) portletResponse).resetBuffer();
+      }
+   }
 
-    @Override
-    public void setBufferSize(int size)
-    {
-        if (mimeResponse != null)
-        {
-            mimeResponse.setBufferSize(size);
-        }
-    }
+   @Override
+   public void setBufferSize(int size) {
+      if ((portletResponse instanceof MimeResponse)) {
+         ((MimeResponse) portletResponse).setBufferSize(size);
+      }
+   }
 
-    @Override
-    public void setCharacterEncoding(String charset)
-    {
-        if (forwarded && !included && PortletRequest.RESOURCE_PHASE.equals(lifecyclePhase))
-        {
-            ((ResourceResponse)portletResponse).setCharacterEncoding(charset);
-        }
-    }
+   @Override
+   public void setCharacterEncoding(String charset) {
+      if (!included && (portletResponse instanceof ResourceResponse)) {
+         ((ResourceResponse) portletResponse).setCharacterEncoding(charset);
+      }
+   }
 
-    @Override
-    public void setContentLength(int len)
-    {
-        if (forwarded && !included && PortletRequest.RESOURCE_PHASE.equals(lifecyclePhase))
-        {
-            ((ResourceResponse)portletResponse).setContentLength(len);
-        }
-    }
+   @Override
+   public void setContentLength(int len) {
+      if (!included && (portletResponse instanceof ResourceResponse)) {
+         ((ResourceResponse) portletResponse).setContentLength(len);
+      }
+   }
 
-    @Override
-    public void setContentType(String type)
-    {
-        if (forwarded && !included && mimeResponse != null)
-        {
-            mimeResponse.setContentType(type);
-        }
-    }
+   @Override
+   public void setContentType(String type) {
+      if (!included && (portletResponse instanceof MimeResponse)) {
+         ((MimeResponse) portletResponse).setContentType(type);
+      }
+   }
 
-    @Override
-    public void setLocale(Locale loc)
-    {
-        if (forwarded && !included && PortletRequest.RESOURCE_PHASE.equals(lifecyclePhase))
-        {
-            ((ResourceResponse)portletResponse).setLocale(loc);
-        }
-    }    
+   @Override
+   public void setLocale(Locale loc) {
+      if (!included && (portletResponse instanceof ResourceResponse)) {
+         ((ResourceResponse) portletResponse).setLocale(loc);
+      }
+   }
+   
+   @Override
+   public void setContentLengthLong(long length) {
+      if (portletResponse instanceof ResourceResponse) {
+         ((ResourceResponse) portletResponse).setContentLengthLong(length);
+      }
+   }
+   
+   @Override
+   public int getStatus() {
+      if (portletResponse instanceof ResourceResponse) {
+         return ((ResourceResponse) portletResponse).getStatus();
+      }
+      return SC_OK;
+   }
+   
+   @Override
+   public String getHeader(String name) {
+      return portletResponse.getProperty(name);
+   }
+   
+   @Override
+   public Collection<String> getHeaderNames() {
+      return portletResponse.getPropertyNames();
+   }
+   
+   @Override
+   public Collection<String> getHeaders(String name) {
+      return portletResponse.getPropertyValues(name);
+   }
 }

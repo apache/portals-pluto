@@ -40,6 +40,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.annotations.Dependency;
 import javax.portlet.annotations.EventMethod;
 import javax.portlet.annotations.LocaleString;
 import javax.portlet.annotations.PortletConfiguration;
@@ -49,7 +50,8 @@ import javax.portlet.annotations.PortletQName;
  * A demo portlet that displays messages sent via event
  */
 @PortletConfiguration(portletName = "MessageBoxPortlet", publicParams = "color", 
-                      title = @LocaleString("PH Message Box Portlet"))
+                      title = @LocaleString("PH Message Box Portlet"),
+                      dependencies = @Dependency(name="PortletHub", scope="javax.portlet", version="3.0.0"))
 public class MessageBoxPortlet extends GenericPortlet {
 
    // Set up logging

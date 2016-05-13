@@ -119,12 +119,12 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
    }
 
    @Override
-   public PortletAsyncContext startAsync() throws IllegalStateException {
+   public PortletAsyncContext startPortletAsync() throws IllegalStateException {
       return (PortletAsyncContext) getRequestContext().startAsync(this);
    }
 
    @Override
-   public PortletAsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
+   public PortletAsyncContext startPortletAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
       return (PortletAsyncContext) getRequestContext().startAsync(request, response);
    }
 
@@ -139,7 +139,7 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
    }
 
    @Override
-   public PortletAsyncContext getAsyncContext() {
+   public PortletAsyncContext getPortletAsyncContext() {
       return (PortletAsyncContext) getRequestContext().getAsyncContext();
    }
 

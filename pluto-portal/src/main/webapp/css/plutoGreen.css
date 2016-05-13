@@ -63,7 +63,7 @@ a.tooltip:hover span.tooltip {
 /** 'header' block **/
 
 #header {
-  background: #8DB7DF url('images/banner.png') no-repeat top left;;
+  background: #8DDFA5 url('../images/bannerGreen.png') no-repeat top left;
   border-bottom: 1px solid #2E6794;
   width: auto;
   height: 50px;
@@ -123,7 +123,7 @@ a.tooltip:hover span.tooltip {
 
 .portlet .header {
   white-space: nowrap;
-  background-color: #8DB7DF;
+  background-color: #8DDFA5;
   color: #FFFFFF;
   font-weight: bold;
   border-width: 0px 0px 1px 0px;
@@ -154,27 +154,27 @@ a.tooltip:hover span.tooltip {
 /** 'portlet' block: portlet mode and window state controls **/
 
 .portlet .header span.minimized {
-  background: url(images/controls/min.png) no-repeat;
+  background: url(../images/controls/min.png) no-repeat;
 }
 
 .portlet .header span.maximized {
-  background: url(images/controls/max.png) no-repeat;
+  background: url(../images/controls/max.png) no-repeat;
 }
 
 .portlet .header span.normal {
-  background: url(images/controls/norm.png) no-repeat;
+  background: url(../images/controls/norm.png) no-repeat;
 }
 
 .portlet .header span.view {
-  background: url(images/controls/view.png) no-repeat;
+  background: url(../images/controls/view.png) no-repeat;
 }
 
 .portlet .header span.edit {
-  background: url(images/controls/edit.png) no-repeat;
+  background: url(../images/controls/edit.png) no-repeat;
 }
 
 .portlet .header span.help {
-  background: url(images/controls/help.png) no-repeat;
+  background: url(../images/controls/help.png) no-repeat;
 }
 
 .portlet .body {
@@ -223,7 +223,7 @@ label {
 
 input {
   color: #2E6794;
-  background-color: #8DB7DF;
+  background-color: #8DDFA5;
   margin: 0px 0px 10px 5px;
   border-width: 1px;
   border-style: solid;
@@ -266,7 +266,7 @@ input {
     color: #444;
     text-decoration: none;
     font-weight: bold;
-    background: #8DB7DF;
+    background: #8DDFA5;
     margin: 0;
     padding: 0.25em 1em;
     border-left: 1px solid #fff;

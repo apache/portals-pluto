@@ -39,6 +39,7 @@ import javax.portlet.ResourceRequest;
 import static javax.portlet.ResourceRequest.*;
 
 import javax.portlet.ResourceResponse;
+import javax.portlet.annotations.Dependency;
 import javax.portlet.annotations.LocaleString;
 import javax.portlet.annotations.PortletConfiguration;
 
@@ -46,7 +47,8 @@ import javax.portlet.annotations.PortletConfiguration;
  * A demo portlet exercising the partial action processing sequence
  */
 @PortletConfiguration(portletName = "PartialActionPortlet", publicParams = "color",
-                        title = @LocaleString("PH Partial Action Portlet"))
+                        title = @LocaleString("PH Partial Action Portlet"),
+                        dependencies = @Dependency(name="PortletHub", scope="javax.portlet", version="3.0.0"))
 public class PartialActionPortlet extends GenericPortlet {
 
    // Set up logging

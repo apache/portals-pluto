@@ -46,20 +46,23 @@ import static java.lang.annotation.RetentionPolicy.*;
 public @interface Dependency {
    
    /**
-    * <div class='container-change'>
     * The resource name.
-    * </div>
     * 
     * @return     The resource name
     */
    String   name();
    
    /**
-    * <div class='container-change'>
+    * The scope name.
+    * 
+    * @return     The name of the scope containing the resource
+    */
+   String   scope() default "";
+  
+   /**
     * The minimum acceptable module version.
-    * </div>
     * 
     * @return     The minimum acceptable module version
     */
-   String   minVersion();
+   String   version() default "";
 }

@@ -57,6 +57,11 @@ public class AttributeKeys {
      * to the aggregation JSP.
      */
     public static final String HEAD_SECTION_MARKUP = "headMarkup";
+    
+    /**
+     * For including resources that were generated dynamically
+     */
+    public static final String DYNAMIC_PAGE_RESOURCES = "dynamicResources";
 
     // Constructor -------------------------------------------------------------
 

@@ -16,14 +16,18 @@
  */
 package org.apache.pluto.driver.services.impl.resource;
 
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
+import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.PageResourceId;
+import org.apache.pluto.driver.services.portal.PageResources;
+import org.apache.pluto.driver.services.portal.PropertyConfigService;
+import org.apache.pluto.driver.services.portal.RenderConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.pluto.driver.services.portal.RenderConfig;
-import org.apache.pluto.driver.services.portal.PropertyConfigService;
 
 /**
  * Encapsulation of the Pluto Driver ResourceConfig Info.
@@ -55,6 +59,12 @@ public class ResourceConfig implements PropertyConfigService
 
     /** The portlet applications registered with us. */
 //    private final Map portletApplications;
+    
+    /** The page level resources */
+    private final PageResources pageResources = new PageResources();
+
+    /** The default page resources */
+    private List<PageResourceId> defaultPageResources = new ArrayList<PageResourceId>();
 
     /** Encapsulation of render configuration data. */
     private RenderConfig renderConfig;
@@ -156,6 +166,39 @@ public class ResourceConfig implements PropertyConfigService
     public void addSupportedWindowState(String state) {
         this.supportedWindowStates.add(state);
     }
+    
+    public PageResources getResources() {
+       return pageResources;
+    }
+    
+    public void addResource(String name, String scope, String version, String type, String source) {
+       PageResourceId resid = new PageResourceId(name, scope, version);
+       pageResources.addResource(resid, type, source);
+    }
+    
+    
+    public List<PageResourceId> getDefaultPageDependencies() {
+       return defaultPageResources;
+    }
+    
+    public void addDefaultPageDependency(String name, String scope, String version) {
+       if (name != null) {
+          PageResourceId resid = new PageResourceId(name, scope, version);
+          defaultPageResources.add(resid);
+       } else {
+          LOG.warn("Resource name cannot be null.");
+       }
+
+       if (LOG.isDebugEnabled()) {
+          StringBuilder txt = new StringBuilder(128);
+          txt.append("Adding resource dependency. # deps: ").append(defaultPageResources.size());
+          txt.append(", name: ").append(name);
+          txt.append(", scope: ").append(scope);
+          txt.append(", version: ").append(version);
+          LOG.debug(txt.toString());
+       }
+    }
+
 
     /**
      * Standard Getter.
@@ -171,6 +214,31 @@ public class ResourceConfig implements PropertyConfigService
      */
     public void setRenderConfig(RenderConfig renderConfig) {
         this.renderConfig = renderConfig;
+    }
+    
+    /**
+     * Writes config info to log depending on trace settings.
+     */
+    public void traceConfig() {
+       if (LOG.isDebugEnabled()) {
+          StringBuilder txt = new StringBuilder(128);
+          txt.append("Logging config info.\n");
+          txt.append(pageResources.toString());
+          txt.append("\n\nDefault page dependencies:");
+          for (PageResourceId id : defaultPageResources) {
+             txt.append("\n   ").append(id.toString());
+          }
+          txt.append("\n\nDeclared page dependencies:");
+          for (PageConfig pc : renderConfig.getPages()) {
+             if (!pc.getPageResources().isEmpty()) {
+                txt.append("\n   Page: ").append(pc.getName());
+                for (PageResourceId id : pc.getPageResources()) {
+                   txt.append("\n      ").append(id.toString());
+                }
+             }
+          }
+          LOG.debug(txt.toString());
+       }
     }
 
 }

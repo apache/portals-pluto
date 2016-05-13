@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.PageResourceId;
+import org.apache.pluto.driver.services.portal.PageResources;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.services.portal.admin.RenderConfigAdminService;
 
@@ -52,31 +54,46 @@ public class RenderConfigServiceImpl
         return config.getContainerName();
     }
 
-    public Set getSupportedPortletModes() {
+    public Set<String> getSupportedPortletModes() {
         return config.getSupportedPortletModes();
     }
 
-    public Set getSupportedWindowStates() {
+    public Set<String> getSupportedWindowStates() {
         return config.getSupportedWindowStates();
     }
 
-    public List getPages() {
+    @Override
+    public List<PageConfig> getPages() {
         return config.getRenderConfig().getPages();
     }
 
+    @Override
     public PageConfig getDefaultPage() {
         return config.getRenderConfig().getPageConfig(null);
     }
 
+    @Override
     public PageConfig getPage(String id) {
         return config.getRenderConfig().getPageConfig(id);
     }
 
+    @Override
     public void addPage(PageConfig pageConfig) {
         config.getRenderConfig().addPage(pageConfig);
     }
     
+    @Override
     public void removePage(PageConfig pageConfig){
         config.getRenderConfig().removePage(pageConfig);
+    }
+    
+    @Override
+    public PageResources getPageResources() {
+       return config.getResources();
+    }
+    
+    @Override
+    public List<PageResourceId> getDefaultPageDependencies() {
+       return config.getDefaultPageDependencies();
     }
 }

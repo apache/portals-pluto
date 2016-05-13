@@ -41,6 +41,109 @@ limitations under the License.
   </supports>
 
 
+
+  <page-resources>
+  
+    <!-- These are the page resources made available by Pluto --> 
+    <page-resource>
+      <identifier>
+        <name>portlet-spec-1.0.css</name>
+        <scope>org.apache.portals</scope>
+        <version>1.0.0</version>
+      </identifier>
+      <source type="css">/css/portlet-spec-1.0.css</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
+        <name>portlet-spec-2.0.css</name>
+        <scope>org.apache.portals</scope>
+        <version>2.0.0</version>
+      </identifier>
+      <source type="css">/css/portlet-spec-2.0.css</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
+        <name>pluto.css</name>
+        <scope>org.apache.portals</scope>
+        <version>3.0.0</version>
+      </identifier>
+      <source type="css">/css/pluto.css</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
+        <name>pluto.css</name>
+        <scope>org.apache.portals</scope>
+        <version>3.0.1</version>
+      </identifier>
+      <source type="css">/css/plutoGreen.css</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
+        <name>pluto.js</name>
+        <scope>org.apache.portals</scope>
+        <version>3.0.0</version>
+      </identifier>
+      <source type="script">/javascript/pluto.js</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
+        <name>portlet.js</name>
+        <scope>org.apache.portals</scope>
+        <version>3.0.0</version>
+      </identifier>
+      <source type="script">/javascript/portlet.js</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
+        <name>portletHubImpl.js</name>
+        <scope>org.apache.portals</scope>
+        <version>3.0.0</version>
+      </identifier>
+      <source type="script">/javascript/portletHubImpl.js</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
+        <name>PortletHub</name>
+        <scope>javax.portlet</scope>
+        <version>3.0.0</version>
+      </identifier>
+      <source type="script">/javascript/portletHub.js</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
+        <name>jquery.js</name>
+        <scope>org.apache.portals</scope>
+        <version>2.2.2</version>
+      </identifier>
+      <source type="markup">
+      <![CDATA[<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>]]>
+      </source>
+    </page-resource>
+    
+    <!-- These are the default resources placed on each page -->
+    <default-resource>
+      <name>pluto.css</name>
+      <scope>org.apache.portals</scope>
+      <version>3.0.0</version>
+    </default-resource>
+    <default-resource>
+        <name>portlet-spec-1.0.css</name>
+        <scope>org.apache.portals</scope>
+        <version>1.0.0</version>
+    </default-resource>
+    <default-resource>
+        <name>portlet-spec-2.0.css</name>
+        <scope>org.apache.portals</scope>
+        <version>2.0.0</version>
+    </default-resource>
+    <default-resource>
+      <name>pluto.js</name>
+      <scope>org.apache.portals</scope>
+      <version>3.0.0</version>
+    </default-resource>
+  </page-resources>
+
+
   <!-- Render configuration which defines the portal pages. -->
   <render-config default="About Apache Pluto">
     <page name="About Apache Pluto" uri="/WEB-INF/themes/pluto-default-theme.jsp">
@@ -59,6 +162,76 @@ limitations under the License.
       <portlet context="/pluto" name="PlutoPageAdmin"/>
       <portlet context="/pluto" name="AboutPortlet"/>
     </page>
+    ${includeDemosBegin}
+    <page name="V2.0 Parameter Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/ResourcePortlet-PRP" name="ParamTestPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
+    </page>
+    <page name="V2.0 Public Render Parameter tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/tck-TestModule3-Portlet1" name="TestModule3_Portlet1"/>
+      <portlet context="/tck-TestModule3-Portlet2" name="TestModule3_Portlet2"/>
+    </page>
+    <page name="V2.0 Parameter Demo" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/ResourcePortlet-PRP" name="ImageSelPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
+      <portlet context="/ResourcePortlet-PRP" name="ColorSelPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="MessageBoxPortlet"/>
+    </page>
+    <page name="V3.0 Portlet Hub Demo" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <dependency>
+         <name>pluto.css</name>
+         <scope>org.apache.portals</scope>
+         <version>3.0.1</version>
+      </dependency>
+      <portlet context="/PortletHubDemo" name="ImageSelPortlet"/>
+      <portlet context="/PortletHubDemo" name="PH-ResourcePortlet-PRP"/>
+      <portlet context="/PortletHubDemo" name="PH-ColorSelPortlet"/>
+      <portlet context="/PortletHubDemo" name="MessageBoxPortlet"/>
+      <portlet context="/PortletHubDemo" name="PartialActionPortlet"/>
+    </page>
+    <page name="V3.0 PM and WS" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="PortletConfigPortlet1"/>
+      <portlet context="/PortletV3Demo" name="PortletConfigPortlet2"/>
+    </page>
+    <page name="V3.0 Parameter Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="ParamTestPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
+    </page>
+    <page name="V3.0 URL Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="UrlTestPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
+    </page>
+    <page name="V3.0 Render URL Parameter Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="UrlRPTestPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
+    </page>
+    <page name="V3.0 Action URL Parameter Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="UrlAPTestPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
+    </page>
+    <page name="V3.0 Misc Tests - HTTP SC, fragment id" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="LongPortlet"/>
+      <portlet context="/PortletV3Demo" name="AuthSCPortlet"/>
+    </page>
+    <page name="V3.0 Misc Tests - redirect" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="V3RedirectPortlet"/>
+    </page>
+    <page name="V2 and V3 Header Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="V3HeaderPortlet"/>
+      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
+    </page>
+    <page name="Bean Portlet Demo" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3AnnotatedDemo" name="BeanPortlet"/>
+      <portlet context="/PortletV3AnnotatedDemo" name="BeanPortlet"/>
+    </page>
+    <page name="Async Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3AnnotatedDemo" name="PathInfoPortlet"/>
+      <portlet context="/PortletV3AnnotatedDemo" name="AsyncPortlet"/>
+    </page>
+    <page name="File Upload" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3AnnotatedDemo" name="MultipartPortlet"/>
+    </page>
+    ${includeDemosEnd}
   </render-config>
   
 </pluto-portal-driver>

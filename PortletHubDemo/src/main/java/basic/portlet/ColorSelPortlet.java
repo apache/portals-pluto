@@ -43,6 +43,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.annotations.ActionMethod;
+import javax.portlet.annotations.Dependency;
 import javax.portlet.annotations.LocaleString;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletQName;
@@ -53,7 +54,8 @@ import javax.xml.namespace.QName;
  * An example color selection portlet that uses the portlet hub.
  */
 @PortletConfiguration(portletName = "PH-ColorSelPortlet", publicParams = "color", 
-                      title = @LocaleString("PH Color Selection Portlet"))
+                      title = @LocaleString("PH Color Selection Portlet"),
+                      dependencies = @Dependency(name="PortletHub", scope="javax.portlet", version="3.0.0"))
 public class ColorSelPortlet extends GenericPortlet {
 
    // Set up logging

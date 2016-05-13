@@ -23,6 +23,10 @@ limitations under the License.
 <portlet:defineObjects />
 
 <!-- This jsp generates markup for the document head section -->
+
+<%
+headerResponse.addProperty("JspHeader", "Set in included JSP.");
+ %>
    
 <meta name="description" content="Portlet Hub Demo Portlet">
 <style>

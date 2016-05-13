@@ -26,10 +26,10 @@ import java.util.Map;
 public class PortletApplicationConfig {
 
     private String contextPath;
-    private Map portlets;
+    private Map<String, PortletWindowConfig> portlets;
 
     public PortletApplicationConfig() {
-        portlets = new java.util.HashMap();
+        portlets = new java.util.HashMap<String, PortletWindowConfig>();
     }
 
     public String getContextPath() {
@@ -40,12 +40,12 @@ public class PortletApplicationConfig {
         this.contextPath = contextPath;
     }
 
-    public Collection getPortlets() {
+    public Collection<PortletWindowConfig> getPortlets() {
         return portlets.values();
     }
 
     public PortletWindowConfig getPortlet(String portletName) {
-        return (PortletWindowConfig) portlets.get(portletName);
+        return portlets.get(portletName);
     }
 
     public void addPortlet(PortletWindowConfig portlet) {

@@ -94,7 +94,36 @@ public class ResourceConfigReader {
             "pluto-portal-driver/supports/window-state",
             "addSupportedWindowState", 0
         );
+        
+        // Page resources
+        digester.addCallMethod(
+              "pluto-portal-driver/page-resources/page-resource",
+              "addResource", 5);
+        digester.addCallParam(
+             "pluto-portal-driver/page-resources/page-resource/identifier/name", 0);
+        digester.addCallParam(
+              "pluto-portal-driver/page-resources/page-resource/identifier/scope", 1);
+        digester.addCallParam(
+              "pluto-portal-driver/page-resources/page-resource/identifier/version", 2);
+        digester.addCallParam(
+              "pluto-portal-driver/page-resources/page-resource/source", 3, "type");
+        digester.addCallParam(
+              "pluto-portal-driver/page-resources/page-resource/source", 4);
 
+        
+        // Default resources for each page
+        digester.addCallMethod(
+              "pluto-portal-driver/page-resources/default-resource",
+              "addDefaultPageDependency", 3);
+        digester.addCallParam(
+             "pluto-portal-driver/page-resources/default-resource/name", 0);
+        digester.addCallParam(
+              "pluto-portal-driver/page-resources/default-resource/scope", 1);
+        digester.addCallParam(
+              "pluto-portal-driver/page-resources/default-resource/version", 2);
+
+        
+        // render configuration 
         digester.addObjectCreate(
             "pluto-portal-driver/render-config",
             RenderConfig.class
@@ -103,6 +132,8 @@ public class ResourceConfigReader {
             "pluto-portal-driver/render-config",
             "default", "defaultPageId"
         );
+        
+        // handle individual pages with portlets
         digester.addObjectCreate(
             "pluto-portal-driver/render-config/page",
             PageConfig.class
@@ -119,6 +150,18 @@ public class ResourceConfigReader {
             "pluto-portal-driver/render-config/page/portlet",
             1, "name"
         );
+        
+        // Process any page-level dependencies
+        digester.addCallMethod(
+              "pluto-portal-driver/render-config/page/dependency",
+              "addPageDependency", 3);
+        digester.addCallParam(
+             "pluto-portal-driver/render-config/page/dependency/name", 0);
+        digester.addCallParam(
+              "pluto-portal-driver/render-config/page/dependency/scope", 1);
+        digester.addCallParam(
+              "pluto-portal-driver/render-config/page/dependency/version", 2);
+        
         digester.addSetNext(
             "pluto-portal-driver/render-config/page",
             "addPage"
