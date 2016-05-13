@@ -19,14 +19,8 @@
 package javax.portlet.tck.portlets;
 
 import java.io.*;
-import java.util.*;
 import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
 import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
 import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.constants.Constants.*;
@@ -42,11 +36,11 @@ public class PortletTests_EventPortlet_ApiEvent_event implements Portlet, EventP
          PortletTests_EventPortlet_ApiEvent_event.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
-   private PortletConfig portletConfig = null;
+ 
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
+     
    }
 
    @Override
@@ -82,8 +76,7 @@ public class PortletTests_EventPortlet_ApiEvent_event implements Portlet, EventP
 
       // Create result objects for the tests
 
-      ClassChecker cc = new ClassChecker(GenericPortlet.class);
-      
+           
       /* TestCase: V2PortletTests_EventPortlet_ApiEvent_processEvent          */
       /* Details: "Method processEvent(EventRequest, EventResponse): is       */
       /* called when an event is targeted to the portlet"                     */

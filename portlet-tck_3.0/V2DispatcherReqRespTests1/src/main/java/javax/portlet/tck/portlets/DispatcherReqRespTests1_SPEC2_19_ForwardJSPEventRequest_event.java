@@ -89,7 +89,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_event imple
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);
       rd.forward(portletReq, portletResp);
-
+      
    }
 
    @Override
