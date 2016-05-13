@@ -18,21 +18,47 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETETAG1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETETAG2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETEXPIRATIONTIME1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETEXPIRATIONTIME2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETEXPIRATIONTIME3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE5;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETETAG1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETETAG2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETETAG3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETEXPIRATIONTIME1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETEXPIRATIONTIME2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETEXPIRATIONTIME3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETPUBLICSCOPE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETPUBLICSCOPE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETUSECACHEDCONTENT1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETUSECACHEDCONTENT2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_USECACHEDCONTENT1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_USECACHEDCONTENT2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_USECACHEDCONTENT3;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Logger;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.CacheControl;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -50,11 +76,8 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet, Resourc
          EnvironmentTests_CacheControl_ApiRender.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
-   private PortletConfig portletConfig = null;
-
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
    }
 
    @Override
@@ -70,7 +93,6 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet, Resourc
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      StringWriter writer = new StringWriter();
 
    }
 
@@ -82,7 +104,7 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet, Resourc
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
+
 
    }
 
@@ -100,7 +122,7 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet, Resourc
 
       // Create result objects for the tests
 
-      ClassChecker cc = new ClassChecker(portletResp.getCacheControl().getClass());
+     
       
       CacheControl chc=
     		  portletResp.getCacheControl();

@@ -21,18 +21,10 @@ package javax.portlet.tck.portlets;
 import java.io.*;
 import java.util.*;
 import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
 import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
 import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -51,7 +43,8 @@ public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private boolean initCalled = false;
-   private boolean pcInitCalled = false;
+   @SuppressWarnings("unused")
+private boolean pcInitCalled = false;
    
    @Override
    public void init() {
@@ -145,7 +138,7 @@ public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
+      
 
    }
    
@@ -161,8 +154,8 @@ public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
    public void processEvent(EventRequest portletReq, EventResponse portletResp)
 	         throws PortletException, IOException {
 	   
-	   JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
-	   Event evt=portletReq.getEvent();
+	   
+	   
 	   portletResp.setRenderParameters(portletReq);
 	   
    }
@@ -183,7 +176,7 @@ public class PortletTests_GenericPortlet_ApiRender extends GenericPortlet {
 
       // Create result objects for the tests
 
-      ClassChecker cc = new ClassChecker(GenericPortlet.class);
+     
         
       super.render(portletReq, portletResp);
      
