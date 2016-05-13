@@ -39,6 +39,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.annotations.Dependency;
 import javax.portlet.annotations.EventDefinition;
 import javax.portlet.annotations.LocaleString;
 import javax.portlet.annotations.PortletApplication;
@@ -73,6 +74,7 @@ import javax.portlet.annotations.Supports;
       )
 @PortletConfiguration(portletName = "PH-ResourcePortlet-PRP",
       title={@LocaleString("PH Resource Portlet")},
+      dependencies = @Dependency(name="PortletHub", scope="javax.portlet", version="3.0.0"),
       supportedLocales = {"en"},
       supports = @Supports(mimeType = "text/html", portletModes = "VIEW"),
       publicParams = {"color", "imgName"}

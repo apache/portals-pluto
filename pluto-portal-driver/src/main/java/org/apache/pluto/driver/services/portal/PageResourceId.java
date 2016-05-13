@@ -171,7 +171,12 @@ public class PageResourceId implements Comparable<PageResourceId> {
       return true;
    }
 
-   // for ordering IDs according to version
+   /**
+    * Allows page resource IDs to be compared and ordered. 
+    * <p>
+    * Note that it doesn't really make much since to order page resource IDs unless they 
+    * they refer to the same type of resource (meaning that they differ only in version).
+    */
    @Override
    public int compareTo(PageResourceId id) {
       if (!equals(id)) {

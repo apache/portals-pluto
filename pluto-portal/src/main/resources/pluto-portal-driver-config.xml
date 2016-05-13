@@ -103,6 +103,14 @@ limitations under the License.
     </page-resource>
     <page-resource>
       <identifier>
+        <name>PortletHub</name>
+        <scope>javax.portlet</scope>
+        <version>3.0.0</version>
+      </identifier>
+      <source type="script">/javascript/portletHub.js</source>
+    </page-resource>
+    <page-resource>
+      <identifier>
         <name>jquery.js</name>
         <scope>org.apache.portals</scope>
         <version>2.2.2</version>
@@ -130,16 +138,6 @@ limitations under the License.
     </default-resource>
     <default-resource>
       <name>pluto.js</name>
-      <scope>org.apache.portals</scope>
-      <version>3.0.0</version>
-    </default-resource>
-    <default-resource>
-      <name>portlet.js</name>
-      <scope>org.apache.portals</scope>
-      <version>3.0.0</version>
-    </default-resource>
-    <default-resource>
-      <name>portletHubImpl.js</name>
       <scope>org.apache.portals</scope>
       <version>3.0.0</version>
     </default-resource>

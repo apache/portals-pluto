@@ -36,6 +36,7 @@ import org.apache.pluto.container.HeaderData;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
+import org.apache.pluto.container.om.portlet.Dependency;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
@@ -258,7 +259,7 @@ public class PortalDriverServlet extends HttpServlet {
       ServletContext sc = req.getServletContext();
       DriverConfiguration dc = (DriverConfiguration) sc.getAttribute(AttributeKeys.DRIVER_CONFIG);
       StringBuilder markup = new StringBuilder(128);
-      
+      List<PageResourceId> portletdeps = new ArrayList<PageResourceId>();
 
       for (String pid : purl.getPortletIds()) {
 
@@ -267,34 +268,41 @@ public class PortalDriverServlet extends HttpServlet {
          HeaderData hd = null;
 
          try {
+
+            String appName = wcfg.getContextPath();
+            String portletName = PortletWindowConfig.parsePortletName(pid);
+            PortletDefinition pd = dc.getPortletRegistryService().getPortletApplication(appName)
+                  .getPortlet(portletName);
+
             if (purl.isVersion3(pid)) {
                hd = container.doHeader(pwin, req, resp);
-            } else if (purl.getVersion(pid).equalsIgnoreCase("2.0")) {
 
-               String appName = wcfg.getContextPath();
-               String portletName = PortletWindowConfig.parsePortletName(pid);
-               PortletDefinition pd = dc.getPortletRegistryService().getPortletApplication(appName)
-                     .getPortlet(portletName);
+               // collect the page dependencies
+               for (Dependency dep : pd.getDependencies()) {
+                  portletdeps.add(new PageResourceId(dep.getName(), dep.getScope(), dep.getVersion()));
+               }
+               
+            } else if (purl.getVersion(pid).equalsIgnoreCase("2.0")) {
                ContainerRuntimeOption crt = pd.getContainerRuntimeOption("javax.portlet.renderHeaders");
                if (crt != null) {
                   List<String> headers = crt.getValues();
                   if (headers.size() == 1 && headers.get(0).equalsIgnoreCase("true")) {
-                    hd = container.doRender(pwin, req, resp, PortletRequest.RENDER_HEADERS);
+                     hd = container.doRender(pwin, req, resp, PortletRequest.RENDER_HEADERS);
                   }
                }
             }
-            
+
             if (hd != null) {
-               
+
                // handle markup for document head section
                markup.append(hd.getHeadSectionMarkup()).append("\n");
-               
+
                // add the cookies to the response
                List<Cookie> cookies = hd.getCookies();
                for (Cookie c : cookies) {
                   resp.addCookie(c);
                }
-               
+
                // Add the HTTP headers to the response
                Map<String, List<String>> headers = hd.getHttpHeaders();
                for (String name : headers.keySet()) {
@@ -303,7 +311,7 @@ public class PortalDriverServlet extends HttpServlet {
                   }
                }
             }
-            
+
          } catch (PortletContainerException ex) {
             LOG.error(ex.getMessage(), ex);
             throw new ServletException(ex);
@@ -316,19 +324,34 @@ public class PortalDriverServlet extends HttpServlet {
       // Set the header section markup provided by the portlets as an attribute
       // The main rendering JSP uses this when rendering the head section.
       req.setAttribute(AttributeKeys.HEAD_SECTION_MARKUP, markup.toString());
-      
+
       // Now generate the markup for the configured page resources
       markup.setLength(0);
       PageResources pr = dc.getRenderConfigService().getPageResources();
-      
+
       // start with the default page resources
-      List<PageResourceId> deps = new ArrayList<PageResourceId>(
-            dc.getRenderConfigService().getDefaultPageDependencies());
-      
+      List<PageResourceId> deps = new ArrayList<PageResourceId>(dc.getRenderConfigService()
+            .getDefaultPageDependencies());
+
       // add in the page-specific resources
       List<PageResourceId> pagedeps = purl.getPageConfig(req.getServletContext()).getPageResources();
       deps.addAll(pagedeps);
-      
+
+      // and finally the portlet dependencies
+      deps.addAll(portletdeps);
+
+      if (LOG.isDebugEnabled()) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Page dependency list.");
+         txt.append(" total deps: ").append(deps.size());
+         txt.append(", page deps: ").append(pagedeps.size());
+         txt.append(", portlet deps: ").append(portletdeps.size());
+         for (PageResourceId id : deps) {
+            txt.append("\n   ").append(id.toString());
+         }
+         LOG.debug(txt.toString());
+      }
+
       // Set the markup resulting from the specified page resources as an attribute
       // The main rendering JSP uses this when rendering the head section.
       markup.append(pr.getMarkup(deps, req.getContextPath()));

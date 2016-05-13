@@ -23,6 +23,12 @@
 
       <supported-public-render-parameter>photo</supported-public-render-parameter>
       <supported-public-render-parameter>color</supported-public-render-parameter>
+      
+      <dependency>
+         <name>PortletHub</name>
+         <scope>javax.portlet</scope>
+         <version>3.0.0</version>
+      </dependency>
    </portlet>
 
    <portlet>
@@ -67,6 +73,12 @@
       </portlet-info>
 
       <supported-public-render-parameter>photo</supported-public-render-parameter>
+      
+      <dependency>
+         <name>PortletHub</name>
+         <scope>javax.portlet</scope>
+         <version>3.0.0</version>
+      </dependency>
    </portlet>
 
    <portlet>
@@ -91,6 +103,12 @@
          <qname>rp:Message</qname>
       </supported-publishing-event>
       <supported-public-render-parameter>color</supported-public-render-parameter>
+      
+      <dependency>
+         <name>PortletHub</name>
+         <scope>javax.portlet</scope>
+         <version>3.0.0</version>
+      </dependency>
    </portlet>
 
    <portlet>
@@ -256,6 +274,12 @@
       <portlet-info>
          <title>V3 Fragment Identifier Test Portlet</title>
       </portlet-info>
+      
+      <dependency>
+         <name>PortletHub</name>
+         <scope>javax.portlet</scope>
+         <version>3.0.0</version>
+      </dependency>
    </portlet>
 
    <portlet>

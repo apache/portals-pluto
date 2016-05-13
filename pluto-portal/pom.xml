@@ -193,11 +193,37 @@
       <plugin>
          <groupId>net.alchim31.maven</groupId>
          <artifactId>yuicompressor-maven-plugin</artifactId>
-         <configuration>
-            <excludes>
-               <exclude>**/*.css</exclude>   
-            </excludes>
-         </configuration>
+         <executions>
+            <execution>
+                 <id>aggregate</id>
+                 <goals>
+                   <goal>compress</goal>
+                 </goals>                      
+                 <configuration>
+                    <excludes>
+                       <exclude>**/*.css</exclude>
+                    </excludes>
+                    <aggregations>
+                       <aggregation>
+                          <insertNewLine>true</insertNewLine>
+                          <output>${project.build.directory}/${project.build.finalName}/javascript/portletHub.js</output>
+                          <includes>
+                             <include>${basedir}/src/main/webapp/javascript/portletHubImpl.js</include>
+                             <include>${basedir}/src/main/webapp/javascript/portlet.js</include>
+                          </includes>
+                       </aggregation>
+                       <aggregation>
+                          <insertNewLine>true</insertNewLine>
+                          <output>${project.build.directory}/${project.build.finalName}/javascript/portletHub-min.js</output>
+                          <includes>
+                             <include>${project.build.directory}/${project.build.finalName}/javascript/portletHubImpl-min.js</include>
+                             <include>${project.build.directory}/${project.build.finalName}/javascript/portlet-min.js</include>
+                          </includes>
+                       </aggregation>
+                    </aggregations>
+                 </configuration>
+            </execution>
+         </executions>
       </plugin>
     </plugins>
   </build>
