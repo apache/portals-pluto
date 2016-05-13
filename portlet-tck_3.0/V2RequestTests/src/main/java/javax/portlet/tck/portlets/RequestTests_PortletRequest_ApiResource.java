@@ -18,21 +18,138 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import static javax.portlet.ResourceURL.PAGE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_EXISTS;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDACTION_PHASE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDACTION_SCOPE_ID;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDBASIC_AUTH;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDCCPP_PROFILE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDCLIENT_CERT_AUTH;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDDIGEST_AUTH;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDEVENT_PHASE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDFORM_AUTH;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDLIFECYCLE_PHASE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDRENDER_HEADERS;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDRENDER_MARKUP;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDRENDER_PART;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDRENDER_PHASE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDRESOURCE_PHASE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDUSER_INFO;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETATTRIBUTE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETATTRIBUTE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETATTRIBUTE3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETATTRIBUTENAMES1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETATTRIBUTENAMES2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETAUTHTYPE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETAUTHTYPE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETCONTEXTPATH1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETCONTEXTPATH2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETCONTEXTPATH3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETCOOKIES1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETCOOKIES2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETLOCALE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETLOCALES;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETER1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETER2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETER3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETER4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETER5;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERMAP1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERMAP2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERMAP3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERNAMES1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERNAMES2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTALCONTEXT;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETMODE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETSESSIONA1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETSESSIONA2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETSESSIONB1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETSESSIONB2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETSESSIONB3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETSESSIONB4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPREFERENCES;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPRIVATEPARAMETERMAP1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPRIVATEPARAMETERMAP2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPRIVATEPARAMETERMAP3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTIES1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTIES2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTIES3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTY1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTY2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTY3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTYNAMES1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTYNAMES2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPUBLICPARAMETERMAP1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPUBLICPARAMETERMAP2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPUBLICPARAMETERMAP3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETREMOTEUSER1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETREMOTEUSER2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETREQUESTEDSESSIONID1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETREQUESTEDSESSIONID2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETRESPONSECONTENTTYPE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETRESPONSECONTENTTYPE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETRESPONSECONTENTTYPES1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETRESPONSECONTENTTYPES2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETSCHEME;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETSERVERNAME;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETSERVERPORT;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETUSERPRINCIPAL1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETUSERPRINCIPAL2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETWINDOWID;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETWINDOWSTATE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISPORTLETMODEALLOWED1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISPORTLETMODEALLOWED2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISREQUESTEDSESSIONIDVALID1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISREQUESTEDSESSIONIDVALID2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISSECURE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISSECURE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISUSERINROLE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISUSERINROLE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISUSERINROLE3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISWINDOWSTATEALLOWED1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISWINDOWSTATEALLOWED2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_REMOVEATTRIBUTE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_REMOVEATTRIBUTE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_SETATTRIBUTE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_SETATTRIBUTE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_SETATTRIBUTE3;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.logging.Logger;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.ResourceURL;
+import javax.portlet.WindowState;
+import javax.portlet.tck.beans.ClassChecker;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestLink;
+import javax.portlet.tck.beans.TestResult;
+import javax.servlet.http.Cookie;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -50,11 +167,11 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
          RequestTests_PortletRequest_ApiResource.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
-   private PortletConfig portletConfig = null;
+  
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
+   
    }
 
    @Override
@@ -70,7 +187,7 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      StringWriter writer = new StringWriter();
+     
 
    }
 
@@ -320,7 +437,6 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Details: "Method getPortletSession(): Returns new PortletSession     */
       /* if one does not already exist"                                       */
       TestResult tr23 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETSESSIONA2);
-      PortletSession ps2=portletReq.getPortletSession();
       PortletSession newps2=portletReq.getPortletSession();
       if(newps2!=null) {
     	  tr23.setTcSuccess(true);
@@ -399,7 +515,7 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       TestResult tr30 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTY3);
       try {
          try {
-            String val = portletReq.getProperty(null);
+            portletReq.getProperty(null);
             tr30.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
             tr30.setTcSuccess(true);
@@ -436,7 +552,7 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       TestResult tr33 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTIES3);
       try {
          try {
-            Enumeration<String> es = portletReq.getProperties(null);
+            portletReq.getProperties(null);
             tr33.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
             tr33.setTcSuccess(true);
@@ -636,7 +752,7 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       TestResult tr51 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETATTRIBUTE3);
       try {
          try {
-            Object val = portletReq.getAttribute(null);
+            portletReq.getAttribute(null);
             tr51.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
             tr51.setTcSuccess(true);
@@ -716,7 +832,7 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       TestResult tr58 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETER5);
       try {
          try {
-            String val = portletReq.getParameter(null);
+            portletReq.getParameter(null);
             tr58.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
             tr58.setTcSuccess(true);
@@ -792,7 +908,7 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       TestResult tr64 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES4);
       try {
          try {
-            String[] vals = portletReq.getParameterValues(null);
+            portletReq.getParameterValues(null);
             tr64.appendTcDetail("Method did not throw an exception.");
          } catch (IllegalArgumentException iae) {
             tr64.setTcSuccess(true);

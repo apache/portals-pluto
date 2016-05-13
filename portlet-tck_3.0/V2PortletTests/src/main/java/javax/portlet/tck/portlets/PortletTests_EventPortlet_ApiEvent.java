@@ -19,20 +19,11 @@
 package javax.portlet.tck.portlets;
 
 import java.io.*;
-import java.util.*;
 import java.util.logging.*;
-import static java.util.logging.Logger.*;
 import javax.xml.namespace.QName;
 import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
 import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -50,11 +41,8 @@ public class PortletTests_EventPortlet_ApiEvent implements Portlet, ResourceServ
          PortletTests_EventPortlet_ApiEvent.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
-   private PortletConfig portletConfig = null;
-
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
    }
 
    @Override
@@ -70,7 +58,6 @@ public class PortletTests_EventPortlet_ApiEvent implements Portlet, ResourceServ
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      StringWriter writer = new StringWriter();
 
       QName eventQName = new QName(TCKNAMESPACE,
              "PortletTests_EventPortlet_ApiEvent");
@@ -85,7 +72,7 @@ public class PortletTests_EventPortlet_ApiEvent implements Portlet, ResourceServ
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
+     
 
    }
 

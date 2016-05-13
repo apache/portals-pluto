@@ -18,21 +18,47 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETDEFAULTNAMESPACE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETINITPARAMETER1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETINITPARAMETER3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETINITPARAMETERNAMES1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPORTLETCONTEXT;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPORTLETNAME;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPROCESSINGEVENTQNAMES1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPUBLICRENDERPARAMETERNAMES1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETPUBLISHINGEVENTQNAMES1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETRESOURCEBUNDLE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETSUPPORTEDLOCALES1;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.logging.Logger;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
 import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
 
 
 /**
@@ -73,7 +99,7 @@ private static final Locale Locale = null;
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      StringWriter writer = new StringWriter();
+    
 
    }
 
@@ -85,11 +111,12 @@ private static final Locale Locale = null;
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
+      
 
    }
 
-   @Override
+   @SuppressWarnings("static-access")
+@Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet render entry");
@@ -102,8 +129,6 @@ private static final Locale Locale = null;
       JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
       // Create result objects for the tests
-
-      ClassChecker cc = new ClassChecker(portletConfig.getClass());
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getPortletName      */
       /* Details: "Method getPortletName(): Returns a String containing the   */
