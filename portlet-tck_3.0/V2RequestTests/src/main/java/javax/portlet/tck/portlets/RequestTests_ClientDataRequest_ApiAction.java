@@ -18,21 +18,51 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCHARACTERENCODING1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCHARACTERENCODING2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTLENGTH1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTLENGTH2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTTYPE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTTYPE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETMETHOD;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER5;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING4;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Logger;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestButton;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.constants.Constants;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -50,11 +80,11 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
          RequestTests_ClientDataRequest_ApiAction.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
-   private PortletConfig portletConfig = null;
+   
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
+      
    }
 
    @Override
@@ -78,7 +108,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
 
       // Create result objects for the tests
 
-      ClassChecker cc = new ClassChecker(portletReq.getClass());
+     
 
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getPortletInputStream1 */
       /* Details: "Method getPortletInputStream(): Returns an InputStream     */
@@ -393,8 +423,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
-
+     
    }
 
    @Override

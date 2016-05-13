@@ -18,20 +18,36 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_EVENTREQUEST_APIEVENT_GETEVENT;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_EVENTREQUEST_APIEVENT_GETMETHOD;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.logging.Logger;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Event;
+import javax.portlet.EventPortlet;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.constants.Constants;
 import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.PortletSession.*;
 
 /**
  * This is the event processing portlet for the test cases. This portlet processes events, 
@@ -42,11 +58,11 @@ public class RequestTests_EventRequest_ApiEvent_event implements Portlet, EventP
          RequestTests_EventRequest_ApiEvent_event.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
-   private PortletConfig portletConfig = null;
+ 
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
+      
    }
 
    @Override
@@ -85,7 +101,7 @@ public class RequestTests_EventRequest_ApiEvent_event implements Portlet, EventP
 
       // Create result objects for the tests
 
-      ClassChecker cc = new ClassChecker(portletReq.getClass());
+     
 
       /* TestCase: V2RequestTests_EventRequest_ApiEvent_getEvent              */
       /* Details: "Method getEvent(): Returns the Event object that           */
