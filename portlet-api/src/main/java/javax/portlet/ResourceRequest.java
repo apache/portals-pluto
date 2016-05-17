@@ -380,8 +380,8 @@ public interface ResourceRequest extends ClientDataRequest {
     * 
     * @return   <code>true</code> if asynchronous mode has been started
     * @since    3.0
-    * @see      #startAsync()
-    * @see      #startAsync(ResourceRequest, ResourceResponse)
+    * @see      #startPortletAsync()
+    * @see      #startPortletAsync(ResourceRequest, ResourceResponse)
     */
 
    public boolean isAsyncStarted();

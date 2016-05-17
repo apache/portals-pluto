@@ -21,18 +21,24 @@ package org.apache.pluto.container.bean.processor.fixtures.mocks;
 
 import javax.portlet.HeaderResponse;
 
+import org.w3c.dom.Element;
+
 /**
  * @author Scott Nicklous
  *
  */
 public class MockHeaderResponse extends MockMimeResponse implements HeaderResponse {
 
-   /* (non-Javadoc)
-    * @see javax.portlet.HeaderResponse#setTitle(java.lang.String)
-    */
    @Override
    public void setTitle(String arg0) {
+   }
 
+   @Override
+   public void addDependency(String name, String scope, String version) {
+   }
+
+   @Override
+   public void addDependency(String name, String scope, String version, Element markup) {
    }
 
 }

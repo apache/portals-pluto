@@ -21,6 +21,23 @@
     <div class="indexContainer-not">
     <ul>
     <li>
+    20160517:
+    Renamed methods to
+    {@link javax.portlet.ResourceRequest#startPortletAsync() ResourceRequest#startPortletAsync()}, 
+    {@link javax.portlet.ResourceRequest#startPortletAsync(ResourceRequest, ResourceResponse) ResourceRequest#startPortletAsync(ResourceRequest, ResourceResponse)}, and 
+    {@link javax.portlet.ResourceRequest#getPortletAsyncContext() ResourceRequest#getPortletAsyncContext()}
+    from <code>startAsync()</code>, <code>startAsync(ResourceRequest, ResourceResponse)</code>
+    and <code>getAsyncContext()</code>, respectively.
+    Added new methods 
+    {@link javax.portlet.HeaderResponse#addDependency(String, String, String)} and 
+    {@link javax.portlet.HeaderResponse#addDependency(String, String, String, Element)}
+    to dynamically add page resource dependencies in fulfillment of issue
+    <a href="https://java.net/jira/browse/PORTLETSPEC3-40">PORTLETSPEC3-40 Add new javax.portlet.ResourceComparator annotation in order to identify duplicate resources</a>.
+    Added
+    {@link javax.portlet.annotations.Dependency#scope() Dependency#scope()} method
+    to support three-part resource identifier with name, scope, and version fields.
+    </li>
+    <li>
     20160418:
     Added new method to implement 
     <a href="https://java.net/jira/browse/PORTLETSPEC3-63">PORTLETSPEC3-63 Make user agent available to Portlets</a>:
@@ -44,9 +61,9 @@
     {@link javax.portlet.PortletAsyncListener PortletAsyncListener}, and
     {@link javax.portlet.PortletAsyncEvent PortletAsyncEvent}.
     Modified 
-    {@link javax.portlet.ResourceRequest#startAsync() ResourceRequest#startAsync()}, 
-    {@link javax.portlet.ResourceRequest#startAsync(ResourceRequest, ResourceResponse) ResourceRequest#startAsync(ResourceRequest, ResourceResponse)}, and 
-    {@link javax.portlet.ResourceRequest#getAsyncContext() ResourceRequest#getAsyncContext()}
+    {@link javax.portlet.ResourceRequest#startPortletAsync() ResourceRequest#startPortletAsync()}, 
+    {@link javax.portlet.ResourceRequest#startPortletAsync(ResourceRequest, ResourceResponse) ResourceRequest#startPortletAsync(ResourceRequest, ResourceResponse)}, and 
+    {@link javax.portlet.ResourceRequest#getPortletAsyncContext() ResourceRequest#getPortletAsyncContext()}
     along with the corresponding wrapper class accordingly.
     </li>
     <li>
@@ -55,11 +72,11 @@
     <a href="https://java.net/jira/browse/PORTLETSPEC3-68">PORTLETSPEC3-68 Add Async Support</a>:
     {@link javax.portlet.annotations.PortletConfiguration#asyncSupported() PortletConfiguration#asyncSupported()}, 
     {@link javax.portlet.annotations.ServeResourceMethod#asyncSupported() ServeResourceMethod#asyncSupported()}, 
-    {@link javax.portlet.ResourceRequest#startAsync() ResourceRequest#startAsync()}, 
-    {@link javax.portlet.ResourceRequest#startAsync(ResourceRequest, ResourceResponse) ResourceRequest#startAsync(ResourceRequest, ResourceResponse)}, 
+    {@link javax.portlet.ResourceRequest#startPortletAsync() ResourceRequest#startPortletAsync()}, 
+    {@link javax.portlet.ResourceRequest#startPortletAsync(ResourceRequest, ResourceResponse) ResourceRequest#startPortletAsync(ResourceRequest, ResourceResponse)}, 
     {@link javax.portlet.ResourceRequest#isAsyncStarted() ResourceRequest#isAsyncStarted()}, 
     {@link javax.portlet.ResourceRequest#isAsyncSupported() ResourceRequest#isAsyncSupported()}, 
-    {@link javax.portlet.ResourceRequest#getAsyncContext() ResourceRequest#getAsyncContext()}, and 
+    {@link javax.portlet.ResourceRequest#getPortletAsyncContext() ResourceRequest#getPortletAsyncContext()}, and 
     {@link javax.portlet.ResourceRequest#getDispatcherType() ResourceRequest#getDispatcherType()}.
     Added appropriate documentation to 
     {@link javax.portlet.filter.ResourceFilter ResourceFilter}.
@@ -120,7 +137,7 @@
     Added wrappers according to 
     <a href="https://java.net/jira/browse/PORTLETSPEC3-62">PORTLETSPEC3-62</a>,
     (see {@link javax.portlet.filter filter package}).
-    Update following annotations for consistency with spec & RI:
+    Update following annotations for consistency with spec {@literal &} RI:
     {@link javax.portlet.annotations.DestroyMethod DestroyMethod},
     {@link javax.portlet.annotations.EventMethod EventMethod},
     {@link javax.portlet.annotations.HeaderMethod HeaderMethod},

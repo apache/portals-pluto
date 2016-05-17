@@ -21,9 +21,21 @@ package javax.portlet;
 
 /**
  * <div class="changed_added_3_0">
- * Tag interface designating a header request object
+ * Tag interface designating a header request object.
+ * <p>
+ * The portlet programming interface provides a mechanism to assist portlets when 
+ * the aggregated portal markup is an HTML or similar document that requires markup
+ * for the document <code>HEAD</code> section to be written and HTTP headers to be 
+ * set before the render markup for each individual portlet is aggregated.
+ * This mechanism is represented in the portlet API by the {@link HeaderPortlet}, 
+ * {@link HeaderRequest}, and {@link HeaderResponse} interfaces.
+ * <p>  
+ * The <CODE>HeaderRequest</CODE> provides the portlet with information about
+ * the request.
  * </div>
  *
+ *@see HeaderResponse
+ *@see HeaderPortlet
  */
 public interface HeaderRequest extends RenderRequest {
 

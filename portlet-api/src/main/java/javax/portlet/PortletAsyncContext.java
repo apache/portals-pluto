@@ -19,8 +19,6 @@
 
 package javax.portlet;
 
-import javax.servlet.ServletContext;
-
 
 /**
  * <div class="changed_added_3_0">
