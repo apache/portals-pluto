@@ -868,7 +868,7 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
       StringBuilder txt = new StringBuilder(128);
       
       // validate the resource bundle
-      if (pad.getResourceBundle() != null) {
+      if (pad.getResourceBundle() != null && pad.getResourceBundle().length() > 0) {
          try {
             checkValidBundle(pad.getResourceBundle());
          } catch (Exception e) {
@@ -950,7 +950,7 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
          }
          
          // check the resource bundle
-         if (portlet.getResourceBundle() != null) {
+         if (portlet.getResourceBundle() != null && portlet.getResourceBundle().length() > 0) {
             try {
                checkValidBundle(portlet.getResourceBundle());
             } catch (Exception e) {

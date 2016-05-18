@@ -20,8 +20,6 @@ package javax.portlet.filter;
 
 import javax.portlet.HeaderResponse;
 
-import org.w3c.dom.Element;
-
 /**
  * <div class="changed_added_3_0"> The <code>HeaderResponseWrapper</code>
  * provides a convenient implementation of the <code>HeaderResponse</code>
@@ -70,7 +68,7 @@ public class HeaderResponseWrapper extends MimeResponseWrapper implements Header
    }
 
    @Override
-   public void addDependency(String name, String scope, String version, Element markup) {
+   public void addDependency(String name, String scope, String version, String markup) {
       ((HeaderResponse)response).addDependency(name, scope, version, markup);
    }
 

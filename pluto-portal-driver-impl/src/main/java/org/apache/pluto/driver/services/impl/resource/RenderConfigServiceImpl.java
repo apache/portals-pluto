@@ -19,8 +19,8 @@ package org.apache.pluto.driver.services.impl.resource;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.pluto.container.PageResourceId;
 import org.apache.pluto.driver.services.portal.PageConfig;
-import org.apache.pluto.driver.services.portal.PageResourceId;
 import org.apache.pluto.driver.services.portal.PageResources;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.services.portal.admin.RenderConfigAdminService;

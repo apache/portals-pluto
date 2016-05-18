@@ -27,4 +27,6 @@ public interface PortletHeaderResponseContext extends PortletMimeResponseContext
 {
     void setTitle(String title);
     void setNextPossiblePortletModes(Collection<PortletMode> portletModes);
+    void addDependency(String name, String scope, String version);
+    void addDependency(String name, String scope, String version, String markup);
 }

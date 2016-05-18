@@ -18,6 +18,8 @@ package org.apache.pluto.driver.services.portal;
 
 import java.util.List;
 
+import org.apache.pluto.container.PageResourceId;
+
 /**
  * Service interface defining methods necessary for
  * a provider wishing to manage page administration.

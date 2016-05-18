@@ -84,7 +84,209 @@ public class HeaderData {
    private ByteArrayOutputStream     baoStream          = null;
    private StringWriter              sWriter            = null;
    private PrintWriter               pWriter            = null;
+   
+   private Map<PageResourceId, String> resources = new HashMap<PageResourceId, String>();
+   
+   /**
+    * default constructor
+    */
+   public HeaderData() {
+   }
+   
+   /**
+    * Lazy setup of document and buffers
+    * @throws ParserConfigurationException
+    */
+   private void setupDoc() throws ParserConfigurationException {
+      DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
+      dbfac.setExpandEntityReferences(true);
+      docBuilder = dbfac.newDocumentBuilder();
+      doc = docBuilder.newDocument();
+      root = doc.createElement(ROOT_ELEMENT);
+      doc.appendChild(root);
+   }
 
+   /**
+    * returns a string containing any tags that should go into the document head section.
+    * 
+    * @return String containing the tags, or the empty string if no tags are available.
+    */
+   private String getTags(Document doc) {
+      String tags = "";
+      if (doc != null) {
+         DOMSource src = new DOMSource(doc);
+         StringWriter sw = new StringWriter();
+         StreamResult res = new StreamResult(sw);
+         try {
+
+            Transformer trans = TransformerFactory.newInstance().newTransformer();
+            trans.setOutputProperty(OutputKeys.INDENT, "yes");
+            trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            trans.setOutputProperty(OutputKeys.METHOD, "html");
+
+            trans.transform(src, res);
+
+            tags = sw.toString().replaceAll(ROOT_ELEMENT_REGEX, "");
+
+         } catch (Exception e) {
+            StringBuilder txt = new StringBuilder();
+            txt.append("Error converting tags to string. Exception: ");
+            txt.append(e.toString());
+            LOG.warn(txt.toString());
+         }
+      }
+
+      if (isTrace) {
+         StringBuilder sb = new StringBuilder();
+         sb.append("returning tags: ");
+         sb.append((tags.length() > 0) ? "\n" + tags : "");
+         LOG.trace(sb.toString());
+      }
+
+      return tags;
+   }
+   
+   /**
+    * Parses input text to extract tags that are valid for the document head section.
+    * 
+    * @param src     the text to parse
+    * @param chkArgs if true, illegal argument exception is thrown when source 
+    *                contains invalid tags. Otherwise, invalid tags are silently deleted.
+    * @return        the extracted tags in string form
+    */
+   private String getTagsFromText(String src, boolean chkArgs) {
+      StringBuilder txt = new StringBuilder(128);
+      
+      if (src != null) {
+         StringBuffer sb = new StringBuffer(128);
+         sb.append(ROOT_ELEMENT_START);
+         
+         // need to do some preprocessing on the input text to avoid placing a burden on the 
+         // portlet developer. Goals:
+         //    * allow meta and link tags with or without a closing slash
+         //    * allow use of unescaped angle brackets within script tag
+
+         // make the parser eat link & meta tags with or without closing slash.
+         src = src.replaceAll("(<(?:meta|link).*?[^/])>", "$1/>");
+         
+         // convert < brackets within script tags to corresponding entities
+         
+         Pattern pat = Pattern.compile("(?s)" +                      // multiline mode 
+                                       "(?<=<(script|style))" +      // 0-width lookbehind; start tag
+                                       "(.*?)" +                     // non-greedy content of tag
+                                       "(?=</(script|style))");      // 0-width lookahead; end tag
+         Matcher mat = pat.matcher(src);
+         while (mat.find()) {
+            mat.appendReplacement(sb, mat.group().replaceAll("&", "&amp;").replaceAll("<", "&lt;"));
+         }
+         mat.appendTail(sb);
+
+         sb.append(ROOT_ELEMENT_END);
+
+         StringReader sr = new StringReader(sb.toString());
+         InputSource is = new InputSource(sr);
+         Document adoc;
+
+         try {
+            if (docBuilder == null) {
+               setupDoc();
+            }
+            adoc = docBuilder.parse(is);
+
+            // verify that all tags are allowed
+            Element aroot = adoc.getDocumentElement();
+            NodeList nodes = aroot.getChildNodes();
+            for (int ii = 0; ii < nodes.getLength(); ii++) {
+               Node node = nodes.item(ii);
+
+               // check for valid node type
+               int type = node.getNodeType();
+               if (type != Node.COMMENT_NODE && type != Node.TEXT_NODE && type != Node.ELEMENT_NODE) {
+
+                  StringBuilder err = new StringBuilder(128);
+                  err.append("Invalid node type: ");
+                  err.append(type);
+                  err.append(", node name: ").append(node.getNodeName());
+                  LOG.warn(err.toString());
+                  
+                  if (chkArgs) {
+                     throw new IllegalArgumentException(err.toString());
+                  }
+                  
+                  aroot.removeChild(node);
+                  continue;
+               }
+
+               // a text node may only contain white space
+               if (type == Node.TEXT_NODE) {
+                  String text = ((Text) node).getWholeText();
+
+                  if (!text.matches("^\\s*$")) {
+                     StringBuilder err = new StringBuilder(128);
+                     err.append("Invalid text node: ");
+                     err.append(node.getNodeValue());
+                     err.append(", node name: ").append(node.getNodeName());
+                     txt.append(", allowed tags: ").append(allowedTags.toString());
+                     LOG.warn(err.toString());
+                     
+                     if (chkArgs) {
+                        throw new IllegalArgumentException(err.toString());
+                     }
+                     
+                     aroot.removeChild(node);
+                     continue;
+                  }
+
+               }
+
+               // an element node must be one of the allowed tags
+               if (type == Node.ELEMENT_NODE) {
+                  String name = ((Element) node).getTagName();
+
+                  if (!allowedTags.contains(name.toUpperCase())) {
+                     StringBuilder err = new StringBuilder(128);
+                     err.append("Invalid tag: ");
+                     err.append(name);
+                     err.append(", node name: ").append(node.getNodeName());
+                     LOG.warn(err.toString());
+                     
+                     if (chkArgs) {
+                        throw new IllegalArgumentException(err.toString());
+                     }
+                     
+                     aroot.removeChild(node);
+                     continue;
+                  }
+
+               }
+            }
+
+            txt.append("\n<!-- markup from portlet output stream -->");
+            txt.append(getTags(adoc));
+         } catch (IllegalArgumentException e) {
+            throw e;
+         } catch (Exception e) {
+            
+            // likely resource or config issue, not recoverable and not application's fault
+            
+            StringBuilder err = new StringBuilder();
+            err.append("Problem parsing tag data: ");
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            pw.flush();
+            err.append(sw.toString());
+            LOG.warn(err.toString());
+         }
+
+      }
+      
+      return txt.toString();
+   }
+
+   /**
+    * resets output stream and writer
+    */
    public void resetBuffer() {
       if (isDebug) {
          LOG.debug("Resetting buffer.");
@@ -98,6 +300,9 @@ public class HeaderData {
       }
    }
 
+   /**
+    * resets all header data
+    */
    public void reset() {
       resetBuffer();
       httpHeaders.clear();
@@ -153,105 +358,8 @@ public class HeaderData {
       } else if (baoStream != null) {
          src = baoStream.toString();
       }
-
-      if (src != null) {
-         StringBuffer sb = new StringBuffer(128);
-         sb.append(ROOT_ELEMENT_START);
-         
-         // need to do some preprocessing on the input text to avoid placing a burden on the 
-         // portlet developer. Goals:
-         //    * allow meta and link tags with or without a closing slash
-         //    * allow use of unescaped angle brackets within script tag
-
-         // make the parser eat link & meta tags with or without closing slash.
-         src = src.replaceAll("(<(?:meta|link).*?[^/])>", "$1/>");
-         
-         // convert < brackets within script tags to corresponding entities
-         
-         Pattern pat = Pattern.compile("(?s)" +                      // multiline mode 
-                                       "(?<=<(script|style))" +      // 0-width lookbehind; start tag
-                                       "(.*?)" +                     // non-greedy content of tag
-                                       "(?=</(script|style))");      // 0-width lookahead; end tag
-         Matcher mat = pat.matcher(src);
-         while (mat.find()) {
-            mat.appendReplacement(sb, mat.group().replaceAll("&", "&amp;").replaceAll("<", "&lt;"));
-         }
-         mat.appendTail(sb);
-
-         sb.append(ROOT_ELEMENT_END);
-
-         StringReader sr = new StringReader(sb.toString());
-         InputSource is = new InputSource(sr);
-         Document adoc;
-
-         try {
-            if (docBuilder == null) {
-               setupDoc();
-            }
-            adoc = docBuilder.parse(is);
-
-            // verify that all tags are allowed
-            Element aroot = adoc.getDocumentElement();
-            NodeList nodes = aroot.getChildNodes();
-            for (int ii = 0; ii < nodes.getLength(); ii++) {
-               Node node = nodes.item(ii);
-
-               // check for valid node type
-               int type = node.getNodeType();
-               if (type != Node.COMMENT_NODE && type != Node.TEXT_NODE && type != Node.ELEMENT_NODE) {
-
-                  StringBuilder err = new StringBuilder(128);
-                  err.append("Ignoring invalid node type from output stream: ");
-                  err.append(type);
-                  err.append(", node name: ").append(node.getNodeName());
-                  LOG.warn(err.toString());
-                  aroot.removeChild(node);
-                  continue;
-               }
-
-               // a text node may only contain white space
-               if (type == Node.TEXT_NODE) {
-                  String text = ((Text) node).getWholeText();
-
-                  if (!text.matches("^\\s*$")) {
-                     StringBuilder err = new StringBuilder(128);
-                     err.append("Ignoring invalid text node from output stream: ");
-                     err.append(node.getNodeValue());
-                     err.append(", node name: ").append(node.getNodeName());
-                     LOG.warn(err.toString());
-                     aroot.removeChild(node);
-                     continue;
-                  }
-
-               }
-
-               // an element node must be one of the allowed tags
-               if (type == Node.ELEMENT_NODE) {
-                  String name = ((Element) node).getTagName();
-
-                  if (!allowedTags.contains(name.toUpperCase())) {
-                     StringBuilder err = new StringBuilder(128);
-                     err.append("Ignoring invalid tag from output stream: ");
-                     err.append(name);
-                     err.append(", node name: ").append(node.getNodeName());
-                     LOG.warn(err.toString());
-                     aroot.removeChild(node);
-                     continue;
-                  }
-
-               }
-            }
-
-            txt.append("\n<!-- markup from portlet output stream -->");
-            txt.append(getTags(adoc));
-         } catch (Exception e) {
-            StringBuilder err = new StringBuilder();
-            err.append("Problem parsing portlet output data: ");
-            err.append(e.toString());
-            LOG.warn(err.toString());
-         }
-
-      }
+      
+      txt.append(getTagsFromText(src, false));
 
       return txt.toString();
    }
@@ -295,15 +403,6 @@ public class HeaderData {
          LOG.warn(txt.toString());
       }
    }
-   
-   public void setupDoc() throws ParserConfigurationException {
-      DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
-      dbfac.setExpandEntityReferences(true);
-      docBuilder = dbfac.newDocumentBuilder();
-      doc = docBuilder.newDocument();
-      root = doc.createElement(ROOT_ELEMENT);
-      doc.appendChild(root);
-   }
 
    public Element createElement(String tagName) {
       try {
@@ -316,44 +415,41 @@ public class HeaderData {
       }
    }
 
+   public void addDependency(String name, String scope, String version) {
+      
+      if (name == null || name.length() == 0) {
+         throw new IllegalArgumentException("Dependency name field may not be null or empty.");
+      }
+      
+      PageResourceId pres = new PageResourceId(name, scope, version);
+      resources.put(pres, null);
+      
+   }
+
+   public void addDependency(String name, String scope, String version, String markup) {
+      
+      if (name == null || name.length() == 0) {
+         throw new IllegalArgumentException("Dependency name field may not be null or empty.");
+      }
+      
+      if (markup == null || markup.length() == 0) {
+         throw new IllegalArgumentException("Markup may not be null or empty when adding dependency.");
+      }
+      
+      PageResourceId pres = new PageResourceId(name, scope, version);
+      String resource = getTagsFromText(markup, true);
+      resources.put(pres, resource);
+
+   }
+   
    /**
-    * returns a string containing any tags that should go into the document head section.
+    * gets the dependencies that were dynamically added during render headers processing.
     * 
-    * @return String containing the tags, or the empty string if no tags are available.
+    * @return  A map of resource IDs to resources. If no resource was provided, 
+    *          the value will be <code>null</code>.
     */
-   private String getTags(Document doc) {
-      String tags = "";
-      if (doc != null) {
-         DOMSource src = new DOMSource(doc);
-         StringWriter sw = new StringWriter();
-         StreamResult res = new StreamResult(sw);
-         try {
-
-            Transformer trans = TransformerFactory.newInstance().newTransformer();
-            trans.setOutputProperty(OutputKeys.INDENT, "yes");
-            trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-            trans.setOutputProperty(OutputKeys.METHOD, "html");
-
-            trans.transform(src, res);
-
-            tags = sw.toString().replaceAll(ROOT_ELEMENT_REGEX, "");
-
-         } catch (Exception e) {
-            StringBuilder txt = new StringBuilder();
-            txt.append("Error converting tags to string. Exception: ");
-            txt.append(e.toString());
-            LOG.warn(txt.toString());
-         }
-      }
-
-      if (isTrace) {
-         StringBuilder sb = new StringBuilder();
-         sb.append("returning tags: ");
-         sb.append((tags.length() > 0) ? "\n" + tags : "");
-         LOG.trace(sb.toString());
-      }
-
-      return tags;
+   public Map<PageResourceId, String> getDynamicResources() {
+      return resources;
    }
 
 }

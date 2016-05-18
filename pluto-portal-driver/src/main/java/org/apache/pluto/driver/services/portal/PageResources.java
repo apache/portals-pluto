@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.pluto.container.PageResourceId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,15 +43,22 @@ public class PageResources {
    @SuppressWarnings("unused")
    private static final boolean isTrace = LOG.isTraceEnabled();
    
+   public enum Type {CSS, SCRIPT, MARKUP};
+   
    /**
     * Holds data needed to generate markup for a page resource 
     */
    private static class Source {
-      String type;
+      Type type;
       String source;
-      public Source(String type, String source) {
+      public Source(Type type, String source) {
          this.type = type;
          this.source = source;
+      }
+
+      public Source(Source other) {
+         this.type = other.type;
+         this.source = other.source;
       }
       
       @Override
@@ -67,14 +75,26 @@ public class PageResources {
    public PageResources() {
    }
    
-   public void addResource(PageResourceId id, String type, String source) {
-      if (id.getName() != null && id.getScope() != null  && id.getVersion() != null && type != null && source != null) {
-         resources.put(id, new Source(type.toUpperCase(), source));
+   /**
+    * copy constructor
+    * 
+    * @param other      the other page resources
+    */
+   public PageResources(PageResources other) {
+      for (PageResourceId id : other.resources.keySet()) {
+         this.resources.put(new PageResourceId(id), new Source(other.resources.get(id)));
+      }
+   }
+   
+   public void addResource(PageResourceId id, Type type, String source) {
+      if (id.getName() != null && id.getScope() != null  && type != null && 
+            id.getVersion() != null && source != null) {
+         resources.put(id, new Source(type, source));
       } else {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Required value null when adding page Resource");
          txt.append(", id: ").append(id.toString());
-         txt.append(", type: ").append(type.toUpperCase());
+         txt.append(", type: ").append((type == null) ? "null" : type.toString());
          txt.append(", source: ").append(source);
          LOG.warn(txt.toString());
       }
@@ -83,7 +103,7 @@ public class PageResources {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Adding page Resource");
          txt.append(", id: ").append(id.toString());
-         txt.append(", type: ").append(type.toUpperCase());
+         txt.append(", type: ").append((type == null) ? "null" : type.toString());
          txt.append(", source: ").append(source);
          LOG.debug(txt.toString());
       }
@@ -161,21 +181,21 @@ public class PageResources {
       if (src != null) {
          StringBuilder txt = new StringBuilder(128);
          switch (src.type) {
-         case "CSS":
+         case CSS:
             txt.append("<link rel='stylesheet' type='text/css' href='");
             txt.append(contextPath).append(src.source);
             txt.append("'></link>");
             break;
-         case "SCRIPT":
+         case SCRIPT:
             txt.append("<script type='text/javascript' src='");
             txt.append(contextPath).append(src.source);
             txt.append("'></script>");
             break;
-         case "MARKUP":
+         case MARKUP:
             txt.append(src.source);
             break;
          default:
-            LOG.warn("Unknown page resource type: " + src.type);
+            LOG.warn("Unknown page resource type: " + src.type.toString());
          }
          markup = txt.toString();
       } else {

@@ -21,8 +21,6 @@ package org.apache.pluto.container.bean.processor.fixtures.mocks;
 
 import javax.portlet.HeaderResponse;
 
-import org.w3c.dom.Element;
-
 /**
  * @author Scott Nicklous
  *
@@ -38,7 +36,7 @@ public class MockHeaderResponse extends MockMimeResponse implements HeaderRespon
    }
 
    @Override
-   public void addDependency(String name, String scope, String version, Element markup) {
+   public void addDependency(String name, String scope, String version, String markup) {
    }
 
 }

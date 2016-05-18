@@ -24,7 +24,6 @@ import javax.portlet.PortletMode;
 
 import org.apache.pluto.container.PortletHeaderResponseContext;
 import org.apache.pluto.container.util.ArgumentUtility;
-import org.w3c.dom.Element;
 
 
 /**
@@ -126,9 +125,11 @@ public class HeaderResponseImpl extends MimeResponseImpl implements HeaderRespon
 
    @Override
    public void addDependency(String name, String scope, String version) {
+      ((PortletHeaderResponseContext) responseContext).addDependency(name, scope, version);
    }
 
    @Override
-   public void addDependency(String name, String scope, String version, Element markup) {
+   public void addDependency(String name, String scope, String version, String markup) {
+      ((PortletHeaderResponseContext) responseContext).addDependency(name, scope, version, markup);
    }
 }

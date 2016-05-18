@@ -24,7 +24,6 @@
 
 package javax.portlet;
 
-import org.w3c.dom.Element;
 
 /**
  * <div class="changed_added_3_0">
@@ -147,6 +146,9 @@ public interface HeaderResponse extends MimeResponse {
      * @see PortletResponse#addProperty(String, org.w3c.dom.Element)
      * @see #getWriter()
      * @see #getPortletOutputStream()
+     * 
+     * @throws          java.lang.IllegalArgumentException 
+     *                    if name is <code>null</code> or empty
      */
     public void addDependency(String name, String scope, String version);
     
@@ -175,8 +177,13 @@ public interface HeaderResponse extends MimeResponse {
      * @param scope     the resource scope
      * @param version   the resource version
      * @param markup    the markup for adding the resource to the page
+     * 
+     * @throws          java.lang.IllegalArgumentException 
+     *                    if name is <code>null</code> or empty
+     *                    or if markup does not contain valid tags for the document <code>HEAD</code> section
+     * 
      */
-    public void addDependency(String name, String scope, String version, Element markup);
+    public void addDependency(String name, String scope, String version, String markup);
 
     
 }

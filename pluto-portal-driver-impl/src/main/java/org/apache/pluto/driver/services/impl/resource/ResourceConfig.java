@@ -21,8 +21,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.pluto.container.PageResourceId;
 import org.apache.pluto.driver.services.portal.PageConfig;
-import org.apache.pluto.driver.services.portal.PageResourceId;
 import org.apache.pluto.driver.services.portal.PageResources;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.RenderConfig;
@@ -171,8 +171,12 @@ public class ResourceConfig implements PropertyConfigService
        return pageResources;
     }
     
-    public void addResource(String name, String scope, String version, String type, String source) {
+    public void addResource(String name, String scope, String version, String sType, String source) {
        PageResourceId resid = new PageResourceId(name, scope, version);
+       PageResources.Type type = null;
+       try{
+          type = PageResources.Type.valueOf(sType.toUpperCase());
+       } catch(Exception e) {}
        pageResources.addResource(resid, type, source);
     }
     

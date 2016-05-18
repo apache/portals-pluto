@@ -19,6 +19,7 @@ package org.apache.pluto.driver;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.HeaderData;
+import org.apache.pluto.container.PageResourceId;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
@@ -42,7 +44,6 @@ import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
-import org.apache.pluto.driver.services.portal.PageResourceId;
 import org.apache.pluto.driver.services.portal.PageResources;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
@@ -260,6 +261,8 @@ public class PortalDriverServlet extends HttpServlet {
       DriverConfiguration dc = (DriverConfiguration) sc.getAttribute(AttributeKeys.DRIVER_CONFIG);
       StringBuilder markup = new StringBuilder(128);
       List<PageResourceId> portletdeps = new ArrayList<PageResourceId>();
+      List<PageResourceId> dynamicdeps = new ArrayList<PageResourceId>();
+      Map<PageResourceId, String> dynamicResources = new HashMap<PageResourceId, String>();
 
       for (String pid : purl.getPortletIds()) {
 
@@ -281,6 +284,16 @@ public class PortalDriverServlet extends HttpServlet {
                for (Dependency dep : pd.getDependencies()) {
                   portletdeps.add(new PageResourceId(dep.getName(), dep.getScope(), dep.getVersion()));
                }
+               
+               // Process any dependencies that were dynamically added during the header request
+               Map<PageResourceId, String> resources = hd.getDynamicResources();
+               for (PageResourceId id : resources.keySet()) {
+                  dynamicdeps.add(id);
+                  if (resources.get(id) != null) {
+                     dynamicResources.put(id, resources.get(id));
+                  }
+               }
+               
                
             } else if (purl.getVersion(pid).equalsIgnoreCase("2.0")) {
                ContainerRuntimeOption crt = pd.getContainerRuntimeOption("javax.portlet.renderHeaders");
@@ -327,7 +340,17 @@ public class PortalDriverServlet extends HttpServlet {
 
       // Now generate the markup for the configured page resources
       markup.setLength(0);
-      PageResources pr = dc.getRenderConfigService().getPageResources();
+      PageResources pageres = dc.getRenderConfigService().getPageResources();
+      if (!dynamicResources.isEmpty()) {
+         
+         // the dynamically added resources are only valid for this rendering, so
+         // avoid modifying the original configured resources.
+         
+         pageres = new PageResources(pageres);
+         for (PageResourceId id : dynamicResources.keySet()) {
+            pageres.addResource(id, PageResources.Type.MARKUP, dynamicResources.get(id));
+         }
+      }
 
       // start with the default page resources
       List<PageResourceId> deps = new ArrayList<PageResourceId>(dc.getRenderConfigService()
@@ -354,7 +377,7 @@ public class PortalDriverServlet extends HttpServlet {
 
       // Set the markup resulting from the specified page resources as an attribute
       // The main rendering JSP uses this when rendering the head section.
-      markup.append(pr.getMarkup(deps, req.getContextPath()));
+      markup.append(pageres.getMarkup(deps, req.getContextPath()));
       req.setAttribute(AttributeKeys.DYNAMIC_PAGE_RESOURCES, markup.toString());
 
       return;

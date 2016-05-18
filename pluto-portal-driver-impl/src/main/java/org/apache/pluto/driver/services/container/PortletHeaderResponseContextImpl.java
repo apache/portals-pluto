@@ -43,16 +43,28 @@ public class PortletHeaderResponseContextImpl extends PortletMimeResponseContext
         setLifecycle(PortletRequest.HEADER_PHASE);
     }
 
+    @Override
     public void setNextPossiblePortletModes(Collection<PortletMode> portletModes)
     {
         // not supported
     }
 
+    @Override
     public void setTitle(String title)
     {
         if (!isClosed())
         {
             getServletRequest().setAttribute(AttributeKeys.PORTLET_TITLE, title);
         }
+    }
+
+    @Override
+    public void addDependency(String name, String scope, String version) {
+       headerData.addDependency(name, scope, version);
+    }
+
+    @Override
+    public void addDependency(String name, String scope, String version, String markup) {
+       headerData.addDependency(name, scope, version, markup);
     }
 }

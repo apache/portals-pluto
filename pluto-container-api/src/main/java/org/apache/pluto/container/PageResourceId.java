@@ -16,7 +16,7 @@
  *  under the License.
  */
 
-package org.apache.pluto.driver.services.portal;
+package org.apache.pluto.container;
 
 /**
  * Contains identification data for a page resource.
@@ -26,14 +26,20 @@ package org.apache.pluto.driver.services.portal;
  */
 public class PageResourceId implements Comparable<PageResourceId> {
 
-   private String name;
-   private String scope;
-   private String version;
+   private final String name;
+   private final String scope;
+   private final String version;
 
    public PageResourceId(String name, String scope, String version) {
-      this.name = name;
-      this.scope = scope;
+      this.name    = name;
+      this.scope   = scope;
       this.version = version;
+   }
+   
+   public PageResourceId(PageResourceId other) {
+      this.name    = other.name;
+      this.scope   = other.scope;
+      this.version = other.version;
    }
 
    /**
@@ -44,14 +50,6 @@ public class PageResourceId implements Comparable<PageResourceId> {
    }
 
    /**
-    * @param name
-    *           the name to set
-    */
-   public void setName(String name) {
-      this.name = name;
-   }
-
-   /**
     * @return the scope
     */
    public String getScope() {
@@ -59,26 +57,10 @@ public class PageResourceId implements Comparable<PageResourceId> {
    }
 
    /**
-    * @param scope
-    *           the scope to set
-    */
-   public void setScope(String library) {
-      this.scope = library;
-   }
-
-   /**
     * @return the version
     */
    public String getVersion() {
       return version;
-   }
-
-   /**
-    * @param version
-    *           the version to set
-    */
-   public void setVersion(String version) {
-      this.version = version;
    }
 
    public boolean resourceMatches(PageResourceId other) {
