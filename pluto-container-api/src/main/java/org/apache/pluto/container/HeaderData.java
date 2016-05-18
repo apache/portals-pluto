@@ -168,13 +168,17 @@ public class HeaderData {
 
          // make the parser eat link & meta tags with or without closing slash.
          src = src.replaceAll("(<(?:meta|link).*?[^/])>", "$1/>");
+
+         // disappear any link or meta closing tags, since we're generating html
+         src = src.replaceAll("</(?:meta|link)>", "");
          
          // convert < brackets within script tags to corresponding entities
          
-         Pattern pat = Pattern.compile("(?s)" +                      // multiline mode 
-                                       "(?<=<(script|style))" +      // 0-width lookbehind; start tag
-                                       "(.*?)" +                     // non-greedy content of tag
-                                       "(?=</(script|style))");      // 0-width lookahead; end tag
+         Pattern pat = Pattern.compile(
+               "(?s)" +                            // multiline mode 
+               "(?<=<(script|style|link|meta))" +  // 0-width lookbehind; start tag
+               "(.*?)" +                           // non-greedy content of tag
+               "(?=</(script|style|link|meta))");  // 0-width lookahead; end tag
          Matcher mat = pat.matcher(src);
          while (mat.find()) {
             mat.appendReplacement(sb, mat.group().replaceAll("&", "&amp;").replaceAll("<", "&lt;"));
@@ -261,7 +265,6 @@ public class HeaderData {
                }
             }
 
-            txt.append("\n<!-- markup from portlet output stream -->");
             txt.append(getTags(adoc));
          } catch (IllegalArgumentException e) {
             throw e;
@@ -271,6 +274,9 @@ public class HeaderData {
             
             StringBuilder err = new StringBuilder();
             err.append("Problem parsing tag data: ");
+            err.append("\n   Original data: ").append(src);
+            err.append("\n   Modified buffer: ").append(sb.toString());
+            err.append("\nStack trace:\n");
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
@@ -359,6 +365,7 @@ public class HeaderData {
          src = baoStream.toString();
       }
       
+      txt.append("\n<!-- markup from portlet output stream -->");
       txt.append(getTagsFromText(src, false));
 
       return txt.toString();

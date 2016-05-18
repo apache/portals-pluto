@@ -284,7 +284,7 @@ public class PortalDriverServlet extends HttpServlet {
                for (Dependency dep : pd.getDependencies()) {
                   portletdeps.add(new PageResourceId(dep.getName(), dep.getScope(), dep.getVersion()));
                }
-               
+
                // Process any dependencies that were dynamically added during the header request
                Map<PageResourceId, String> resources = hd.getDynamicResources();
                for (PageResourceId id : resources.keySet()) {
@@ -293,8 +293,7 @@ public class PortalDriverServlet extends HttpServlet {
                      dynamicResources.put(id, resources.get(id));
                   }
                }
-               
-               
+
             } else if (purl.getVersion(pid).equalsIgnoreCase("2.0")) {
                ContainerRuntimeOption crt = pd.getContainerRuntimeOption("javax.portlet.renderHeaders");
                if (crt != null) {
@@ -342,10 +341,10 @@ public class PortalDriverServlet extends HttpServlet {
       markup.setLength(0);
       PageResources pageres = dc.getRenderConfigService().getPageResources();
       if (!dynamicResources.isEmpty()) {
-         
+
          // the dynamically added resources are only valid for this rendering, so
          // avoid modifying the original configured resources.
-         
+
          pageres = new PageResources(pageres);
          for (PageResourceId id : dynamicResources.keySet()) {
             pageres.addResource(id, PageResources.Type.MARKUP, dynamicResources.get(id));
@@ -355,20 +354,26 @@ public class PortalDriverServlet extends HttpServlet {
       // start with the default page resources
       List<PageResourceId> deps = new ArrayList<PageResourceId>(dc.getRenderConfigService()
             .getDefaultPageDependencies());
+      int defDespSize = deps.size();
 
       // add in the page-specific resources
       List<PageResourceId> pagedeps = purl.getPageConfig(req.getServletContext()).getPageResources();
       deps.addAll(pagedeps);
 
-      // and finally the portlet dependencies
+      // and the portlet dependencies
       deps.addAll(portletdeps);
+
+      // and finally the dynamic portlet dependencies
+      deps.addAll(dynamicdeps);
 
       if (LOG.isDebugEnabled()) {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Page dependency list.");
          txt.append(" total deps: ").append(deps.size());
+         txt.append(", default deps: ").append(defDespSize);
          txt.append(", page deps: ").append(pagedeps.size());
          txt.append(", portlet deps: ").append(portletdeps.size());
+         txt.append(", dynamic deps: ").append(dynamicdeps.size());
          for (PageResourceId id : deps) {
             txt.append("\n   ").append(id.toString());
          }
