@@ -50,7 +50,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
  * This class is a holder for the HTTP header data, cookies, and header section markup provided by the portlet during
@@ -101,6 +104,22 @@ public class HeaderData {
       DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
       dbfac.setExpandEntityReferences(true);
       docBuilder = dbfac.newDocumentBuilder();
+      
+      // the following avoids cluttering the console log with unwanted messages
+      docBuilder.setErrorHandler(new ErrorHandler() {
+         @Override
+         public void warning(SAXParseException arg0) throws SAXException {
+         }
+         
+         @Override
+         public void fatalError(SAXParseException arg0) throws SAXException {
+         }
+         
+         @Override
+         public void error(SAXParseException arg0) throws SAXException {
+         }
+      });
+      
       doc = docBuilder.newDocument();
       root = doc.createElement(ROOT_ELEMENT);
       doc.appendChild(root);
@@ -175,10 +194,10 @@ public class HeaderData {
          // convert < brackets within script tags to corresponding entities
          
          Pattern pat = Pattern.compile(
-               "(?s)" +                            // multiline mode 
-               "(?<=<(script|style|link|meta))" +  // 0-width lookbehind; start tag
-               "(.*?)" +                           // non-greedy content of tag
-               "(?=</(script|style|link|meta))");  // 0-width lookahead; end tag
+               "(?s)" +                     // multiline mode 
+               "(?<=<(script|style))" +     // 0-width lookbehind; start tag
+               "(.*?)" +                    // non-greedy content of tag
+               "(?=</(script|style))");     // 0-width lookahead; end tag
          Matcher mat = pat.matcher(src);
          while (mat.find()) {
             mat.appendReplacement(sb, mat.group().replaceAll("&", "&amp;").replaceAll("<", "&lt;"));
@@ -268,6 +287,10 @@ public class HeaderData {
             txt.append(getTags(adoc));
          } catch (IllegalArgumentException e) {
             throw e;
+         } catch (SAXParseException e) {
+            StringBuilder err = new StringBuilder();
+            err.append("Problem parsing tag data: ").append(src.replaceAll("&", "&amp;").replaceAll("<", "&lt;"));
+            throw new IllegalArgumentException(err.toString(), e);
          } catch (Exception e) {
             
             // likely resource or config issue, not recoverable and not application's fault

@@ -111,12 +111,12 @@ limitations under the License.
     </page-resource>
     <page-resource>
       <identifier>
-        <name>jquery.js</name>
-        <scope>org.apache.portals</scope>
-        <version>2.2.2</version>
+        <name>jQuery</name>
+        <scope>com.jquery</scope>
+        <version>1.23.3</version>
       </identifier>
       <source type="markup">
-      <![CDATA[<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>]]>
+      <![CDATA[<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>]]>
       </source>
     </page-resource>
     
@@ -230,6 +230,10 @@ limitations under the License.
     </page>
     <page name="File Upload" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/PortletV3AnnotatedDemo" name="MultipartPortlet"/>
+    </page>
+    <page name="Dependencies" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="DependencyPortlet"/>
+      <portlet context="/PortletV3AnnotatedDemo" name="AsyncPortlet"/>
     </page>
     ${includeDemosEnd}
   </render-config>

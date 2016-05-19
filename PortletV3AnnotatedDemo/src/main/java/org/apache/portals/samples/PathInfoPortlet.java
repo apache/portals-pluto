@@ -131,7 +131,14 @@ public class PathInfoPortlet {
             PortletRequestDispatcher rd = pcfg.getPortletContext().getRequestDispatcher(SERVLET);
             rd.forward(req, resp);
             return;
-         } 
+         } else if (op.equals("fwdjsp")) {
+            RenderLink renlink = new RenderLink("back", cntlurl);
+            req.setAttribute("renderLink", renlink);
+            req.setAttribute("jsptitle", "Forwarded by render method.");
+            PortletRequestDispatcher rd = pcfg.getPortletContext().getRequestDispatcher(JSP);
+            rd.forward(req, resp);
+            return;
+         }
 
          writer.append("<div class='infobox'>");
 
@@ -142,13 +149,7 @@ public class PathInfoPortlet {
             rd.include(req, resp);
             pd = new PathDisplay(req, "Render Method (After)");
             writer.write(pd.toMarkup());
-         } else if (op.equals("fwdjsp")) {
-            RenderLink renlink = new RenderLink("back", cntlurl);
-            req.setAttribute("renderLink", renlink);
-            req.setAttribute("jsptitle", "Forwarded by render method.");
-            PortletRequestDispatcher rd = pcfg.getPortletContext().getRequestDispatcher(JSP);
-            rd.forward(req, resp);
-         } else if (op.equals("incjsp")) {
+         }  else if (op.equals("incjsp")) {
             req.setAttribute("jsptitle", "Included by render method.");
             PortletRequestDispatcher rd = pcfg.getPortletContext().getRequestDispatcher(JSP);
             rd.include(req, resp);
