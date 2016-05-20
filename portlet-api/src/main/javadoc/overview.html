@@ -21,6 +21,11 @@
     <div class="indexContainer-not">
     <ul>
     <li>
+    20160519:
+    Changed method signature for addDependency method that provides a resource to
+    {@link javax.portlet.HeaderResponse#addDependency(String, String, String, String)}.
+    </li>
+    <li>
     20160517:
     Renamed methods to
     {@link javax.portlet.ResourceRequest#startPortletAsync() ResourceRequest#startPortletAsync()}, 
@@ -30,7 +35,7 @@
     and <code>getAsyncContext()</code>, respectively.
     Added new methods 
     {@link javax.portlet.HeaderResponse#addDependency(String, String, String)} and 
-    {@link javax.portlet.HeaderResponse#addDependency(String, String, String, Element)}
+    {@link javax.portlet.HeaderResponse#addDependency(String, String, String, String)}
     to dynamically add page resource dependencies in fulfillment of issue
     <a href="https://java.net/jira/browse/PORTLETSPEC3-40">PORTLETSPEC3-40 Add new javax.portlet.ResourceComparator annotation in order to identify duplicate resources</a>.
     Added
