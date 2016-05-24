@@ -85,7 +85,7 @@ public class ActionResponseImpl extends StateAwareResponseImpl implements Action
    }
 
    @Override
-   public RenderURL getRedirectURL(Copy option) throws IllegalStateException {
+   public RenderURL createRedirectURL(Copy option) throws IllegalStateException {
       if (stateChanged) {
          throw new IllegalStateException("sendRedirect no longer allowed after navigational state changes");
       }

@@ -92,7 +92,7 @@ public class RedirectPortlet extends GenericPortlet {
       
       String url = ap.getValue(PARAM_URL_INPUT);
       if (url == null || url.length() <= 0) {
-         RenderURL rurl = resp.getRedirectURL(ALL);
+         RenderURL rurl = resp.createRedirectURL(ALL);
          rurl.getRenderParameters().setValue(PARAM_COLOR, color);
          url = rurl.toString();
          if (isDebug) {

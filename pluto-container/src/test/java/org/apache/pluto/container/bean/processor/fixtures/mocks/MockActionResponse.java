@@ -35,7 +35,7 @@ public class MockActionResponse extends MockStateAwareResponse implements Action
     * @see javax.portlet.ActionResponse#getRedirectURL(javax.portlet.MimeResponse.Copy)
     */
    @Override
-   public RenderURL getRedirectURL(Copy arg0) throws IllegalStateException {
+   public RenderURL createRedirectURL(Copy arg0) throws IllegalStateException {
       return null;
    }
 

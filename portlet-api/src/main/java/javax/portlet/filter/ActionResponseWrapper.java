@@ -92,8 +92,8 @@ public class ActionResponseWrapper extends StateAwareResponseWrapper implements 
    /**
     * call wrapped object.
     */
-   public RenderURL getRedirectURL(Copy option) throws IllegalStateException {
-      return ((ActionResponse)response).getRedirectURL(option);
+   public RenderURL createRedirectURL(Copy option) throws IllegalStateException {
+      return ((ActionResponse)response).createRedirectURL(option);
    }
 
 }

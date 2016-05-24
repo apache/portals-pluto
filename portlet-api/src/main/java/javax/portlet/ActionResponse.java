@@ -178,7 +178,7 @@ public interface ActionResponse extends StateAwareResponse
     *     
     * @since 3.0
     */
-   public RenderURL getRedirectURL(Copy option)  throws IllegalStateException;
+   public RenderURL createRedirectURL(Copy option)  throws IllegalStateException;
 }
 
 
