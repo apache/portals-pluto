@@ -36,7 +36,7 @@ import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletListener;
 import javax.portlet.annotations.PortletPreferencesValidator;
-import javax.portlet.annotations.PortletRequestFilter;
+import javax.portlet.annotations.PortletLifecycleFilter;
 import javax.portlet.annotations.PublicRenderParameterDefinition;
 import javax.portlet.annotations.RuntimeOption;
 import javax.portlet.annotations.UserAttribute;
@@ -1089,7 +1089,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
    @Override
    public void processPortletFilterAnnotation(Class<?> cls) {
 
-      PortletRequestFilter prf = cls.getAnnotation(PortletRequestFilter.class);
+      PortletLifecycleFilter prf = cls.getAnnotation(PortletLifecycleFilter.class);
       if (prf != null) {
 
          // determine the lifecycles based on the implemented filter interfaces
@@ -1112,7 +1112,7 @@ public class JSR362ConfigurationProcessor extends JSR286ConfigurationProcessor {
 
          if (lc.size() == 0) {
             StringBuilder txt = new StringBuilder(128);
-            txt.append("@PortletRequestFilter annotated class must implement ActionFilter, RenderFilter, EventFilter, ResourceFilter, or HeaderFilter. ");
+            txt.append("@PortletLifecycleFilter annotated class must implement ActionFilter, RenderFilter, EventFilter, ResourceFilter, or HeaderFilter. ");
             txt.append(", class: ").append(cls.getCanonicalName());
             LOG.warn(txt.toString());
             throw new IllegalArgumentException(txt.toString());

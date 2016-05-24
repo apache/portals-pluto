@@ -28,7 +28,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.portlet.annotations.PortletRequestFilter;
+import javax.portlet.annotations.PortletLifecycleFilter;
 import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.HeaderFilter;
@@ -41,7 +41,7 @@ import javax.portlet.filter.ResourceFilter;
  * to all portlets in the portlet app. 
  *
  */
-@PortletRequestFilter(ordinal = -100,
+@PortletLifecycleFilter(ordinal = -100,
                       filterName = "bFilter")
 public class MultipleAnnotatedFilters2 implements RenderFilter,
       ResourceFilter, HeaderFilter {

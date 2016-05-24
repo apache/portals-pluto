@@ -27,7 +27,7 @@ import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletConfigurations;
 import javax.portlet.annotations.PortletListener;
 import javax.portlet.annotations.PortletPreferencesValidator;
-import javax.portlet.annotations.PortletRequestFilter;
+import javax.portlet.annotations.PortletLifecycleFilter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -197,7 +197,7 @@ public class ConfigurationHolder {
     * <p>
     * This method is designed to be used within a ServletContainerInitializer onStartup() method. The SCI should be
     * annotated as follows: <code>@HandlesTypes({PortletApplication.class, PortletConfiguration.class, #
-    * PortletConfigurations.class, PortletRequestFilter.class})</code>
+    * PortletConfigurations.class, PortletLifecycleFilter.class})</code>
     * 
     * @param classes
     *           List of classes annotated with portlet config annotations
@@ -224,7 +224,7 @@ public class ConfigurationHolder {
                }
             }
             
-            if (cls.getAnnotation(PortletRequestFilter.class) != null) {
+            if (cls.getAnnotation(PortletLifecycleFilter.class) != null) {
                jcp.processPortletFilterAnnotation(cls);
             }
             

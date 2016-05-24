@@ -27,7 +27,7 @@ import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletConfigurations;
 import javax.portlet.annotations.PortletListener;
 import javax.portlet.annotations.PortletPreferencesValidator;
-import javax.portlet.annotations.PortletRequestFilter;
+import javax.portlet.annotations.PortletLifecycleFilter;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import javax.servlet.MultipartConfigElement;
@@ -53,7 +53,7 @@ import org.slf4j.LoggerFactory;
  * 
  */
 @HandlesTypes({PortletApplication.class, PortletConfiguration.class,
-               PortletRequestFilter.class, PortletConfigurations.class,
+               PortletLifecycleFilter.class, PortletConfigurations.class,
                PortletListener.class, PortletPreferencesValidator.class})
 public class PortletContainerInitializer implements ServletContainerInitializer {
 

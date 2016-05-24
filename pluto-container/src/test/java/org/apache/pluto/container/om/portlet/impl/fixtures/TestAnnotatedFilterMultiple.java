@@ -32,7 +32,7 @@ import javax.portlet.annotations.InitParameter;
 import javax.portlet.annotations.LocaleString;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletConfigurations;
-import javax.portlet.annotations.PortletRequestFilter;
+import javax.portlet.annotations.PortletLifecycleFilter;
 import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.HeaderFilter;
@@ -50,7 +50,7 @@ import javax.portlet.filter.ResourceFilter;
    @PortletConfiguration(portletName = "portlet2"),
    @PortletConfiguration(portletName = "portlet3")
 })
-@PortletRequestFilter(portletNames = {"*"}, 
+@PortletLifecycleFilter(portletNames = {"*"}, 
                       ordinal = 100,
                       filterName = "aFilter",
                       initParams = {

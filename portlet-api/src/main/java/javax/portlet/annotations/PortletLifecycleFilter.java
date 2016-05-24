@@ -66,7 +66,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  */
 
 @Retention(RUNTIME) @Target({TYPE})
-public @interface PortletRequestFilter {
+public @interface PortletLifecycleFilter {
    
    /**
     * The filter name. 

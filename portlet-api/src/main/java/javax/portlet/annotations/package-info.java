@@ -78,7 +78,7 @@
  * and preference validators to be implemented as CDI beans.
  * <p>
  * Please see the following annotation descriptions:
- * {@link javax.portlet.annotations.PortletRequestFilter},
+ * {@link javax.portlet.annotations.PortletLifecycleFilter},
  * {@link javax.portlet.annotations.PortletListener}, and
  * {@link javax.portlet.annotations.PortletPreferencesValidator}.
  * </ul>

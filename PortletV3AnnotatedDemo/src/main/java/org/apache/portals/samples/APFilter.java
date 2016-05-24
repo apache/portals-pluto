@@ -25,7 +25,7 @@ import javax.inject.Inject;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.portlet.annotations.PortletRequestFilter;
+import javax.portlet.annotations.PortletLifecycleFilter;
 import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.ResourceFilter;
@@ -38,7 +38,7 @@ import javax.servlet.DispatcherType;
  * @author Scott Nicklous
  *
  */
-@PortletRequestFilter(portletNames="AsyncPortlet")
+@PortletLifecycleFilter(portletNames="AsyncPortlet")
 public class APFilter implements ResourceFilter {
    private static final Logger LOGGER = Logger.getLogger(APFilter.class.getName());
    

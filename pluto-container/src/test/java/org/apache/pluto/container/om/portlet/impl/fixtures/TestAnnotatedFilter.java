@@ -31,7 +31,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.annotations.InitParameter;
 import javax.portlet.annotations.LocaleString;
-import javax.portlet.annotations.PortletRequestFilter;
+import javax.portlet.annotations.PortletLifecycleFilter;
 import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.HeaderFilter;
@@ -44,7 +44,7 @@ import javax.portlet.filter.ResourceFilter;
  *
  */
 @ApplicationScoped
-@PortletRequestFilter(portletNames = {"portlet362"}, 
+@PortletLifecycleFilter(portletNames = {"portlet362"}, 
                       ordinal = 100,
                       filterName = "aFilter",
                       initParams = {
