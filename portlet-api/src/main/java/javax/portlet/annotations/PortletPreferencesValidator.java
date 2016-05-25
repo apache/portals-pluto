@@ -39,7 +39,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * The validator method is invoked during execution of the 
  * store method of the PortletPreferences. 
  * <p>
- * The annotated class must implement the <code>PortletPreferencesValidator</code> interface.
+ * The annotated class must implement the <code>PreferencesValidator</code> interface.
  * </div>
  *    
  * @see javax.portlet.PreferencesValidator
