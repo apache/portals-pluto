@@ -21,7 +21,6 @@ package org.apache.pluto.container.reconcile.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import javax.inject.Inject;
 import javax.portlet.PortletMode;
@@ -29,7 +28,6 @@ import javax.portlet.PortletMode;
 import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
 import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
 import org.apache.pluto.container.bean.processor.PortletCDIExtension;
-import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
 import org.apache.pluto.container.reconcile.fixtures.TestPortlet4;
@@ -49,9 +47,6 @@ import org.junit.runner.RunWith;
 @RunWith(CdiRunner.class)
 @AdditionalClasses({PortletCDIExtension.class, InvokeHelper.class, TestPortlet4.class})
 public class StandAloneBeanPortletInvokeTest {
-   
-   @Inject
-   private InvocationResults meths;
    
    @Inject
    private InvokeHelper helper;

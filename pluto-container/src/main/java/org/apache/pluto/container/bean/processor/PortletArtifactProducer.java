@@ -28,28 +28,40 @@ import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.Typed;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Named;
+import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.ClientDataRequest;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
+import javax.portlet.MimeResponse;
+import javax.portlet.MutableRenderParameters;
+import javax.portlet.MutableRenderState;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderParameters;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.RenderState;
+import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.StateAwareResponse;
 import javax.portlet.WindowState;
 import javax.portlet.annotations.ActionParam;
 import javax.portlet.annotations.ContextPath;
 import javax.portlet.annotations.Namespace;
+import javax.portlet.annotations.PortletName;
 import javax.portlet.annotations.PortletRequestScoped;
 import javax.portlet.annotations.RenderParam;
 import javax.portlet.annotations.ResourceParam;
-import javax.portlet.annotations.URLFactory;
 import javax.portlet.annotations.WindowId;
 import javax.servlet.http.Cookie;
 
@@ -143,7 +155,6 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the portlet config. 
-    * @return
     */
    @Produces @PortletRequestScoped @Named("portletConfig")
    public static PortletConfig producePortletConfig() {
@@ -162,8 +173,42 @@ public class PortletArtifactProducer {
    }
 
    /**
+    * Producer method for the portlet context. 
+    */
+   @Produces @PortletRequestScoped @Named("portletContext")
+   public static PortletContext producePortletContext() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      return pap.config.getPortletContext();
+   }
+   
+   /**
     * Producer method for the portlet request. 
+    */
+   @Produces @PortletRequestScoped @Named("RenderState")
+   public static RenderState produceRenderState() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      return pap.req;
+   }
+
+   /**
+    * Producer method for the portlet response. 
     * @return
+    */
+   @Produces @PortletRequestScoped @Named("mutableRenderState")
+   public static MutableRenderState produceMutableRenderState() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      MutableRenderState mrs = null;
+      if (pap.resp instanceof MutableRenderState) {
+         mrs = (MutableRenderState) pap.resp;
+      }
+      return mrs;
+   }
+
+   /**
+    * Producer method for the portlet request. 
     */
    @Produces @PortletRequestScoped @Named("portletRequest")
    public static PortletRequest producePortletRequest() {
@@ -184,9 +229,49 @@ public class PortletArtifactProducer {
    }
 
    /**
+    * Producer method for the ClientDataRequest.
+    */
+   @Produces @PortletRequestScoped @Named("clientDataRequest") @Typed(ClientDataRequest.class)
+   public static ClientDataRequest produceClientDataRequest() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      ClientDataRequest req = null;
+      if (pap.req instanceof ClientDataRequest) {
+         req = (ClientDataRequest) pap.req;
+      }
+      return req;
+   }
+
+   /**
+    * Producer method for the MimeResponse. 
+    */
+   @Produces @PortletRequestScoped @Named("mimeResponse") @Typed(MimeResponse.class)
+   public static MimeResponse produceMimeResponse() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      MimeResponse resp = null;
+      if (pap.resp instanceof MimeResponse) {
+         resp = (MimeResponse) pap.resp;
+      }
+      return resp;
+   }
+
+   /**
+    * Producer method for the StateAwareResponse. 
+    */
+   @Produces @PortletRequestScoped @Named("stateAwareResponse") @Typed(StateAwareResponse.class)
+   public static StateAwareResponse produceStateAwareResponse() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      StateAwareResponse resp = null;
+      if (pap.resp instanceof StateAwareResponse) {
+         resp = (StateAwareResponse) pap.resp;
+      }
+      return resp;
+   }
+
+   /**
     * Producer method for the ActionRequest.
-    * Dependent scoped because it sometimes returns <code>null</code>. 
-    * @return
     */
    @Produces @PortletRequestScoped @Named("actionRequest") @Typed(ActionRequest.class)
    public static ActionRequest produceActionRequest() {
@@ -201,8 +286,6 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the ActionResponse. 
-    * Dependent scoped because it sometimes returns <code>null</code>. 
-    * @return
     */
    @Produces @PortletRequestScoped @Named("actionResponse") @Typed(ActionResponse.class)
    public static ActionResponse produceActionResponse() {
@@ -216,9 +299,35 @@ public class PortletArtifactProducer {
    }
 
    /**
+    * Producer method for the HeaderRequest.
+    */
+   @Produces @PortletRequestScoped @Named("headerRequest") @Typed(HeaderRequest.class)
+   public static HeaderRequest produceHeaderRequest() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      HeaderRequest req = null;
+      if (pap.req instanceof HeaderRequest) {
+         req = (HeaderRequest) pap.req;
+      }
+      return req;
+   }
+
+   /**
+    * Producer method for the HeaderResponse. 
+    */
+   @Produces @PortletRequestScoped @Named("headerResponse") @Typed(HeaderResponse.class)
+   public static HeaderResponse produceHeaderResponse() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      HeaderResponse resp = null;
+      if (pap.resp instanceof HeaderResponse) {
+         resp = (HeaderResponse) pap.resp;
+      }
+      return resp;
+   }
+
+   /**
     * Producer method for the RenderRequest.
-    * Dependent scoped because it sometimes returns <code>null</code>. 
-    * @return
     */
    @Produces @PortletRequestScoped @Named("renderRequest") @Typed(RenderRequest.class)
    public static RenderRequest produceRenderRequest() {
@@ -233,8 +342,6 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the RenderResponse. 
-    * Dependent scoped because it sometimes returns <code>null</code>. 
-    * @return
     */
    @Produces @PortletRequestScoped @Named("renderResponse") @Typed(RenderResponse.class)
    public static RenderResponse produceRenderResponse() {
@@ -249,8 +356,6 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the EventRequest.
-    * Dependent scoped because it sometimes returns <code>null</code>. 
-    * @return
     */
    @Produces @PortletRequestScoped @Named("eventRequest") @Typed(EventRequest.class)
    public static EventRequest produceEventRequest() {
@@ -298,7 +403,6 @@ public class PortletArtifactProducer {
    /**
     * Producer method for the ResourceResponse. 
     * Dependent scoped because it sometimes returns <code>null</code>. 
-    * @return
     */
    @Produces @PortletRequestScoped @Named("resourceResponse") @Typed(ResourceResponse.class)
    public static ResourceResponse produceResourceResponse() {
@@ -313,7 +417,6 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the portlet mode. 
-    * @return
     */
    @Produces @Named("portletMode")
    public static PortletMode producePortletMode() {
@@ -324,7 +427,6 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the window state. 
-    * @return
     */
    @Produces @Named("windowState")
    public static WindowState produceWindowState() {
@@ -335,7 +437,6 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the portlet preferences. 
-    * @return
     */
    @Produces @PortletRequestScoped @Named("portletPreferences")
    public static PortletPreferences producePortletPreferences() {
@@ -346,9 +447,8 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the cookies. 
-    * @return
     */
-   @Produces @Named("cookies")
+   @Produces @PortletRequestScoped @Named("cookies")
    public static Cookie[] produceCookies() {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
@@ -357,7 +457,6 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the portlet session. 
-    * @return
     */
    @Produces @PortletRequestScoped @Named("portletSession")
    public static PortletSession producePortletSession() {
@@ -368,7 +467,6 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the window ID. 
-    * @return
     */
    @Produces @WindowId @Named("windowId")
    public static String produceWindowID() {
@@ -379,9 +477,8 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the Locale. 
-    * @return
     */
-   @Produces @Named("locale")
+   @Produces @PortletRequestScoped @Named("locale")
    public static Locale produceLocale() {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
@@ -390,7 +487,6 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the window ID. 
-    * @return
     */
    @Produces @PortletRequestScoped @Named("locales") 
    public static Enumeration<Locale> produceLocales() {
@@ -401,7 +497,6 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the window ID. 
-    * @return
     */
    @Produces @Namespace @Named("namespace")
    public static String produceNamespace() {
@@ -411,8 +506,17 @@ public class PortletArtifactProducer {
    }
 
    /**
+    * Producer method for the portlet name. 
+    */
+   @Produces @PortletName @Named("portletName")
+   public static String producePortletName() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      return pap.config.getPortletName();
+   }
+
+   /**
     * Producer method for the context root. 
-    * @return
     */
    @Produces @ContextPath @Named("contextPath")
    public static String produceContextPath() {
@@ -420,25 +524,64 @@ public class PortletArtifactProducer {
       assert pap != null;
       return pap.req.getContextPath();
    }
-
+   
    /**
-    * Producer method for the URL factory. 
-    * @return
+    * Producer method for the render paramters.
     */
-   @Produces @PortletRequestScoped @Named("urlFactory")
-   public static URLFactory produceURLFactory() {
+   @Produces @PortletRequestScoped @Named("renderParams")
+   public static RenderParameters getRenderParameters() {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
-      return new URLFactoryImpl(pap.resp);
+      return pap.req.getRenderParameters();
+   }
+   
+   /**
+    * Producer method for the mutable render parameters.
+    */
+   @Produces @PortletRequestScoped @Named("mutableRenderParams")
+   public static MutableRenderParameters getMutableRenderParameters() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      MutableRenderParameters obj = null;
+      if (pap.resp instanceof StateAwareResponse) {
+         obj = ((StateAwareResponse)pap.resp).getRenderParameters();
+      }
+      return obj;
+   }
+   
+   /**
+    * Producer method for the action parameters.
+    */
+   @Produces @PortletRequestScoped @Named("actionParams")
+   public static ActionParameters getActionParameters() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      ActionParameters obj = null;
+      if (pap.req instanceof ActionRequest) {
+         obj = ((ActionRequest)pap.req).getActionParameters();
+      }
+      return obj;
+   }
+   
+   /**
+    * Producer method for the resource parameters.
+    */
+   @Produces @PortletRequestScoped @Named("resourceParams")
+   public static ResourceParameters getResourceParameters() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      ResourceParameters obj = null;
+      if (pap.req instanceof ResourceRequest) {
+         obj = ((ResourceRequest)pap.req).getResourceParameters();
+      }
+      return obj;
    }
    
    /**
     * Producer method for the parameter as String.
-    * <p>
-    * Dependent scoped to allow reading the injection point.
+    * Note that this method must be dependent scoped.
     *  
     * @param ip      The injection point
-    * @return
     */
    @Produces @ActionParam("")
    public static String getActionParameter(InjectionPoint ip) {
@@ -456,11 +599,8 @@ public class PortletArtifactProducer {
    
    /**
     * Producer method for the parameter as String[].
-    * <p>
-    * Dependent scoped to allow reading the injection point.
     *  
     * @param ip      The injection point
-    * @return
     */
    @Produces @ActionParam("")
    public static String[] getActionParameterValues(InjectionPoint ip) {
@@ -478,11 +618,8 @@ public class PortletArtifactProducer {
    
    /**
     * Producer method for the parameter as String.
-    * <p>
-    * Dependent scoped to allow reading the injection point.
     *  
     * @param ip      The injection point
-    * @return
     */
    @Produces @RenderParam("")
    public static String getRenderParameter(InjectionPoint ip) {
@@ -497,11 +634,8 @@ public class PortletArtifactProducer {
    
    /**
     * Producer method for the parameter as String[].
-    * <p>
-    * Dependent scoped to allow reading the injection point.
     *  
     * @param ip      The injection point
-    * @return
     */
    @Produces @RenderParam("")
    public static String[] getRenderParameterValues(InjectionPoint ip) {
@@ -516,11 +650,8 @@ public class PortletArtifactProducer {
    
    /**
     * Producer method for the parameter as String.
-    * <p>
-    * Dependent scoped to allow reading the injection point.
     *  
     * @param ip      The injection point
-    * @return
     */
    @Produces @ResourceParam("")
    public static String getResourceParameter(InjectionPoint ip) {
@@ -538,11 +669,8 @@ public class PortletArtifactProducer {
    
    /**
     * Producer method for the parameter as String[].
-    * <p>
-    * Dependent scoped to allow reading the injection point.
     *  
     * @param ip      The injection point
-    * @return
     */
    @Produces @ResourceParam("")
    public static String[] getResourceParameterValues(InjectionPoint ip) {

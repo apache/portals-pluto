@@ -22,6 +22,11 @@
     <ul>
     <li>
     20160524:
+    Deleted the <code>URLFactory</code> interface, as a <code>MimeResponse</code> object
+    can be injected instead with no loss of functionality.
+    Added the 
+    {@link javax.portlet.annotations.PortletName} qualifier annotation for 
+    injection of the portlet name.
     Deleted the <code>@BeanPortlet</code> qualifier annotation as it is no longer needed 
     for disambiguation.
     Deleted the <code>@InitMethod</code> and <code>@DestroyMethod</code> annotations, as the

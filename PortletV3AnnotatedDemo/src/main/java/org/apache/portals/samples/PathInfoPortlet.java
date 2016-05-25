@@ -37,7 +37,7 @@ import javax.portlet.ResourceURL;
 import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
-import javax.portlet.annotations.URLFactory;
+import javax.portlet.MimeResponse;
 
 /**
  * Resource portlet for viewing path information.
@@ -50,14 +50,14 @@ public class PathInfoPortlet {
    private static final String SERVLET = "/Named/Bob/Some/Path/Info?mix1&qp1=qval1&mix2=qmix2";
    private static final String NAME = "Bob";
 
-   // Injecting the namespace & URLFactory
+   // Injecting the namespace & MimeResponse
    @Inject
    @Namespace
    private String             pid;
    @Inject 
    private PortletConfig      pcfg;
    @Inject
-   private URLFactory         uf;
+   private MimeResponse         mimeresp;
    
    @RenderMethod(portletNames = { "PathInfoPortlet" }, ordinal = 100)
    public void getImageInclude(RenderRequest req, RenderResponse resp) throws IOException, PortletException {
@@ -154,7 +154,7 @@ public class PathInfoPortlet {
             rd.include(req, resp);
          } else if (op.equals("inc")) {
 
-            ResourceURL resurl = uf.createResourceURL();
+            ResourceURL resurl = mimeresp.createResourceURL();
             MutableResourceParameters resparms = resurl.getResourceParameters();
             resparms.setValue("resp1", "resval1");
             resparms.setValue("mix1", "resval2");
@@ -176,7 +176,7 @@ public class PathInfoPortlet {
 
             writer.append("<h5>Forward:</h5>");
 
-            resurl = uf.createResourceURL();
+            resurl = mimeresp.createResourceURL();
             resurl.setResourceID("fwd");
             resurl.getResourceParameters().set(resparms);
 

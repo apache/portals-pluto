@@ -33,7 +33,7 @@ import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.PortletSerializable;
 import javax.portlet.annotations.RenderStateScoped;
 import javax.portlet.annotations.RenderMethod;
-import javax.portlet.annotations.URLFactory;
+import javax.portlet.MimeResponse;
 import javax.portlet.MimeResponse.Copy;
 
 /**
@@ -46,8 +46,8 @@ public class NameBean implements PortletSerializable {
    // Inject the portlet namespace 
    @Inject @Namespace private String pid;
    
-   // Inject the URLFactory to allow URL creation
-   @Inject private            URLFactory uf;
+   // Inject the MimeResponse to allow URL creation
+   @Inject private            MimeResponse mimeresp;
    
    private final static String PARAM_NAME = "name";
 
@@ -81,7 +81,7 @@ public class NameBean implements PortletSerializable {
    public String getActionForm() {
       StringBuilder txt = new StringBuilder(128);
       
-      PortletURL aurl = uf.createActionURL(Copy.ALL);
+      PortletURL aurl = mimeresp.createActionURL(Copy.ALL);
       txt.append("<FORM id='").append(pid).append("-setParams' METHOD='POST' ACTION='").append(aurl);
       txt.append("' enctype='application/x-www-form-urlencoded' accept-charset='UTF-8'>");
       txt.append("   <table><tr><td align='left'>");

@@ -168,20 +168,6 @@
  * </tr>
  * <!-- ************* -->
  * <tr>
- * <td>URLFactory</td>
- * <td>Provides methods for creating URLs.
- * See {@link javax.portlet.annotations.URLFactory URLFactory}.
- * </td>
- * <td>Any</td>
- * <td>
- * <div class='codebox'>
- * {@literal @}Inject<br/>
- * private URLFactory urlFactory;
- * </div>
- * </td>
- * </tr>
- * <!-- ************* -->
- * <tr>
  * <td>PortletMode</td>
  * <td>The PortletMode object.
  * </td>
@@ -290,9 +276,9 @@
  * current request are automatically stored on the URL as render parameters.
  * When creating render or action URLs, {@literal @}RenderStateScoped beans can be
  * automatically stored on the URL with the state valid for the current request by
- * using the appropriate option with the <code>URLFactory</code>
- * {@link  javax.portlet.annotations.URLFactory#createActionURL createActionURL} and
- * {@link  javax.portlet.annotations.URLFactory#createRenderURL createRenderURL}
+ * using the appropriate option with the <code>MimeResponse</code>
+ * {@link  javax.portlet.MimeResponse#createActionURL createActionURL} and
+ * {@link  javax.portlet.MimeResponse#createRenderURL createRenderURL}
  * methods.
  * </p>
  * <p>

@@ -28,7 +28,7 @@ import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ResourceParam;
 import javax.portlet.annotations.ServeResourceMethod;
-import javax.portlet.annotations.URLFactory;
+import javax.portlet.MimeResponse;
 
 /**
  * Contains a resource method and associated markup generator to insert 
@@ -38,9 +38,9 @@ public class HelloWorldImage {
 
    public static final String RESPARAM_DISPLAY = "display";
    
-   // Injecting the namespace & URLFactory
+   // Injecting the namespace & MimeResponse
    @Inject @Namespace private String pid;
-   @Inject private            URLFactory uf;
+   @Inject private            MimeResponse mimeresp;
    
    @Inject @ContextPath
    String ctxPath;
@@ -63,7 +63,7 @@ public class HelloWorldImage {
    public String getImageInclude() {
       
       StringBuilder txt = new StringBuilder(128);
-      ResourceURL resurl = uf.createResourceURL();
+      ResourceURL resurl = mimeresp.createResourceURL();
       if (nameBean.getName() != null) {
          resurl.getResourceParameters().setValue(RESPARAM_DISPLAY, "true");
       }
@@ -106,7 +106,7 @@ public class HelloWorldImage {
          
          int ind = (int) (Math.random() * chimps.length);
          String imgSrc = ctxPath + chimps[ind];
-         imgSrc = uf.encodeURL(imgSrc);
+         imgSrc = mimeresp.encodeURL(imgSrc);
          req.setAttribute("imgSrc", imgSrc);
          
          // set the output
