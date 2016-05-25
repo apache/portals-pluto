@@ -25,10 +25,12 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -57,6 +59,9 @@ public class DependencyPortlet {
    private static final String ATTRIB_XMAP = "xmap";
    private static final String[] invalidDeps = {"Hi there!", "<script dffsfssf", 
       "<p>bad head tag</p>", "<link href='hi'>bad string<link href='bye'>"};
+
+   @Inject 
+   private PortletConfig      pcfg;
 
    /**
     * Adds required dynamic dependencies
@@ -124,7 +129,8 @@ public class DependencyPortlet {
       req.getPortletSession().removeAttribute(ATTRIB_XMAP);
       
       StringBuilder txt = new StringBuilder(128);
-      txt.append("Parameter: ").append(PARAM_VER);
+      txt.append("Portlet name: ").append(pcfg.getPortletName());
+      txt.append(", parameter: ").append(PARAM_VER);
       txt.append(", value: ").append(vers);
       LOGGER.fine(txt.toString());
       

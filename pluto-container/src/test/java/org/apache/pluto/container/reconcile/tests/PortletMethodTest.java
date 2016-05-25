@@ -267,19 +267,7 @@ public class PortletMethodTest {
    public void test4Contains() throws Exception {
       Set<MethodIdentifier> meths = ams.getMethodIDsForPortlet("Portlet4");
       assertNotNull(meths);
-      assertEquals(7, meths.size());
-   }
-   
-   @Test
-   public void test4init() throws Exception {
-      MethodIdentifier mi = new MethodIdentifier("Portlet4", "", MethodType.INIT);
-      assertNotNull(ams.getMethod(mi));
-   }
-   
-   @Test
-   public void test4destroy() throws Exception {
-      MethodIdentifier mi = new MethodIdentifier("Portlet4", "", MethodType.DESTROY);
-      assertNotNull(ams.getMethod(mi));
+      assertEquals(5, meths.size());
    }
    
    @Test

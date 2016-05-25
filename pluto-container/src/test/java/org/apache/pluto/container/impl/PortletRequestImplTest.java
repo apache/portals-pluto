@@ -30,8 +30,6 @@ import org.apache.pluto.container.PortletRenderResponseContext;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.impl.PortletContainerImpl;
-import org.apache.pluto.container.impl.RenderRequestImpl;
 import org.jmock.Mock;
 import org.jmock.cglib.MockObjectTestCase;
 
@@ -48,14 +46,18 @@ public class PortletRequestImplTest extends MockObjectTestCase
     private Mock mockContainer;
     private Mock mockServices;
     private Mock mockCCPPProfileService;
-    private Mock mockPortalContext;
-    private Mock mockPortletContext;
+    @SuppressWarnings("unused")
+   private Mock mockPortalContext;
+    @SuppressWarnings("unused")
+   private Mock mockPortletContext;
     private Mock mockHttpServletRequest;
-    private Mock mockPortletURLProvider;
+    @SuppressWarnings("unused")
+   private Mock mockPortletURLProvider;
     private Mock mockPortletRequestContext;
-    private Mock mockPortletResponseContext;
-    private Mock mockCacheControl;
-    private PortletWindow window;
+    @SuppressWarnings("unused")
+   private Mock mockPortletResponseContext;
+    @SuppressWarnings("unused")
+   private PortletWindow window;
     
 
     /* (non-Javadoc)
@@ -78,7 +80,7 @@ public class PortletRequestImplTest extends MockObjectTestCase
         mockHttpServletRequest = mock( HttpServletRequest.class );
         mockPortletRequestContext = mock ( PortletRequestContext.class );
         mockPortletResponseContext = mock ( PortletRenderResponseContext.class );
-        mockCacheControl = mock ( CacheControl.class );
+        mock ( CacheControl.class );
 
         // Constructor expectations for RenderRequestImpl
 //        mockContainer.expects( atLeastOnce() ).method( "getOptionalContainerServices" ).will( returnValue( mockOptionalServices.proxy() ) );
@@ -114,10 +116,6 @@ public class PortletRequestImplTest extends MockObjectTestCase
         mockContainer.expects(atLeastOnce()).method("getOptionalContainerServices").will(returnValue( mockServices.proxy() ));
         mockPortletRequestContext.expects(atLeastOnce()).method("getContainer").will(returnValue( mockContainer.proxy()));
         
-        // Create the render request that is under test, and initialize its state
-        RenderRequestImpl request = new RenderRequestImpl( (PortletRequestContext)mockPortletRequestContext.proxy(), (PortletRenderResponseContext)mockPortletResponseContext.proxy() );
-
-        // Mock the HttpSession, and set its expectations: it will return 0 for the last accessed time, and 5
         // for the maximum inactive interval
         Mock mockHttpSession = mock( HttpSession.class );
         mockHttpSession.expects( once() ).method( "getLastAccessedTime" ).will( returnValue( lastAccessedTime ) );
@@ -139,6 +137,5 @@ public class PortletRequestImplTest extends MockObjectTestCase
         Mock mockPortletSession = mock( PortletSession.class );
         mockPortletEnvironmentService.expects( once() ).method( "createPortletSession" ).will( returnValue( mockPortletSession.proxy() ));
 
-        PortletSession s = request.getPortletSession( true );
     }
 }

@@ -44,7 +44,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
 import javax.portlet.annotations.ActionParam;
-import javax.portlet.annotations.BeanPortlet;
 import javax.portlet.annotations.ContextPath;
 import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.PortletRequestScoped;
@@ -146,7 +145,7 @@ public class PortletArtifactProducer {
     * Producer method for the portlet config. 
     * @return
     */
-   @Produces @PortletRequestScoped @BeanPortlet @Named("portletConfig")
+   @Produces @PortletRequestScoped @Named("portletConfig")
    public static PortletConfig producePortletConfig() {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;

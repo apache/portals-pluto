@@ -20,10 +20,8 @@
 package org.apache.pluto.container.bean.processor;
 
 import static org.apache.pluto.container.bean.processor.MethodDescription.METH_ACT;
-import static org.apache.pluto.container.bean.processor.MethodDescription.METH_DES;
 import static org.apache.pluto.container.bean.processor.MethodDescription.METH_EVT;
 import static org.apache.pluto.container.bean.processor.MethodDescription.METH_HDR;
-import static org.apache.pluto.container.bean.processor.MethodDescription.METH_INI;
 import static org.apache.pluto.container.bean.processor.MethodDescription.METH_REN;
 import static org.apache.pluto.container.bean.processor.MethodDescription.METH_RES;
 
@@ -44,14 +42,12 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 import javax.portlet.annotations.ActionMethod;
-import javax.portlet.annotations.DestroyMethod;
 import javax.portlet.annotations.EventMethod;
 import javax.portlet.annotations.HeaderMethod;
-import javax.portlet.annotations.InitMethod;
 import javax.portlet.annotations.PortletSerializable;
 import javax.portlet.annotations.PortletSessionScoped;
-import javax.portlet.annotations.RenderStateScoped;
 import javax.portlet.annotations.RenderMethod;
+import javax.portlet.annotations.RenderStateScoped;
 import javax.portlet.annotations.ServeResourceMethod;
 
 import org.slf4j.Logger;
@@ -84,18 +80,6 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
       
       ArrayList<MethodDescription> list;
       MethodDescription md;
-      
-      // Add method definitions for init methods
-      
-      list = new ArrayList<MethodDescription>();
-      list.add(METH_INI);
-      descriptions.put(InitMethod.class, list);
-      
-      // Add method definitions for destroy methods
-      
-      list = new ArrayList<MethodDescription>();
-      list.add(METH_DES);
-      descriptions.put(DestroyMethod.class, list);
       
       // Add method definitions for action methods
       
@@ -310,12 +294,6 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
          ServeResourceMethod tcc = (ServeResourceMethod) anno;
          portletNames.addAll(Arrays.asList(tcc.portletNames()));
          dispatchId = tcc.resourceID();
-      } else if (anno instanceof DestroyMethod) {
-         DestroyMethod tcc = (DestroyMethod) anno;
-         portletNames.add(tcc.value());
-      } else if (anno instanceof InitMethod) {
-         InitMethod tcc = (InitMethod) anno;
-         portletNames.add(tcc.value());
       } else {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Unrecognized method annotation: ")

@@ -35,8 +35,8 @@ public abstract class PlutoTestCase extends MockObjectTestCase {
     }
 
     protected void assertException(Object target, String methodName,
-                                 Object[] parameters, Class exceptionType) {
-            Class[] parameterClasses = new Class[parameters.length];
+                                 Object[] parameters, Class<?> exceptionType) {
+            Class<?>[] parameterClasses = new Class<?>[parameters.length];
             for(int i=0;i<parameters.length;i++) {
                 parameterClasses[i] = parameters[i]==null?Object.class:parameters[i].getClass();
             }
@@ -44,10 +44,10 @@ public abstract class PlutoTestCase extends MockObjectTestCase {
     }
 
     protected void assertException(Object target, String methodName,
-                                 Class[] parameterClasses,
-                                 Object[] parameters, Class exceptionType) {
+                                 Class<?>[] parameterClasses,
+                                 Object[] parameters, Class<?> exceptionType) {
         try {
-            Class targetClass = target.getClass();
+            Class<?> targetClass = target.getClass();
             Method method = targetClass.getMethod(methodName, parameterClasses);
             method.invoke(target, parameters);
         }

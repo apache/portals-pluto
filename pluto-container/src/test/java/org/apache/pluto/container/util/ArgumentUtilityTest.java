@@ -42,7 +42,7 @@ public class ArgumentUtilityTest extends PlutoTestCase {
     public void testValidateNotNullOrEmptyWhenNull() {
 
         Object[] parameters = new Object[] {"arg", null};
-        Class[] parameterTypes = new Class[] { String.class, String.class };
+        Class<?>[] parameterTypes = new Class<?>[] { String.class, String.class };
         assertException(new ArgumentUtility(), "validateNotEmpty",
                         parameterTypes,
                         parameters, IllegalArgumentException.class);

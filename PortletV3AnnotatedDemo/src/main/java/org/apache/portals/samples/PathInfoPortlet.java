@@ -34,7 +34,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
-import javax.portlet.annotations.BeanPortlet;
 import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
@@ -55,7 +54,7 @@ public class PathInfoPortlet {
    @Inject
    @Namespace
    private String             pid;
-   @Inject @BeanPortlet
+   @Inject 
    private PortletConfig      pcfg;
    @Inject
    private URLFactory         uf;

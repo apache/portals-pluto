@@ -22,7 +22,12 @@
     <ul>
     <li>
     20160524:
-    Renamed @PortletRequestFilter to
+    Deleted the <code>@BeanPortlet</code> qualifier annotation as it is no longer needed 
+    for disambiguation.
+    Deleted the <code>@InitMethod</code> and <code>@DestroyMethod</code> annotations, as the
+    CDI annotations <code>@PostConstruct</code> and <code>@PreDestroy</code> annotations
+    should be used for bean initialization and tear down instead.
+    Renamed <code>@PortletRequestFilter</code> to
     {@link javax.portlet.annotations.PortletLifecycleFilter PortletLifecycleFilter},
     Changed method name from ActionResponse#getRedirectURL to
     {@link javax.portlet.ActionResponse#createRedirectURL ActionResponse.createRedirectURL()}.

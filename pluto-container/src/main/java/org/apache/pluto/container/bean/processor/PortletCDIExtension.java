@@ -19,17 +19,25 @@
 
 package org.apache.pluto.container.bean.processor;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
 import javax.enterprise.inject.spi.AfterDeploymentValidation;
+import javax.enterprise.inject.spi.AnnotatedConstructor;
+import javax.enterprise.inject.spi.AnnotatedField;
+import javax.enterprise.inject.spi.AnnotatedMethod;
+import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.BeforeBeanDiscovery;
 import javax.enterprise.inject.spi.Extension;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
+import javax.portlet.PortletConfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +77,80 @@ public class PortletCDIExtension implements Extension {
     */
    void processType(@Observes ProcessAnnotatedType<?> pat) throws InvalidAnnotationException {
       par.checkAnnotatedType(pat);
+   }
+   
+   
+   <X extends PortletConfig> void processPortletConfig(@Observes ProcessAnnotatedType<X> pat) {
+
+      final AnnotatedType<X> pcfg = pat.getAnnotatedType();
+      final Set<Type> types = new HashSet<Type>(pcfg.getTypeClosure());
+      
+      if (types.contains(PortletConfig.class)) {
+         if (LOG.isTraceEnabled()) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("Found a PortletConfig.");
+            txt.append(" Class: ").append(pcfg.getJavaClass().getCanonicalName());
+            txt.append(", Base type: ").append(((Class<?>)pcfg.getBaseType()).getCanonicalName());
+            LOG.debug(txt.toString());
+         }
+         
+         // wrap the type, removing the PortletConfig from the type closure so as to 
+         // avoid injection conflict with the producer method.
+         
+         types.remove(PortletConfig.class);
+         
+         AnnotatedType<X> wrapped = new AnnotatedType<X>() {
+
+            @Override
+            public <T extends Annotation> T getAnnotation(Class<T> arg0) {
+               return pcfg.getAnnotation(arg0);
+            }
+
+            @Override
+            public Set<Annotation> getAnnotations() {
+               return pcfg.getAnnotations();
+            }
+
+            @Override
+            public Type getBaseType() {
+               return pcfg.getBaseType();
+            }
+
+            @Override
+            public Set<Type> getTypeClosure() {
+               return types;
+            }
+
+            @Override
+            public boolean isAnnotationPresent(Class<? extends Annotation> arg0) {
+               return pcfg.isAnnotationPresent(arg0);
+            }
+
+            @Override
+            public Set<AnnotatedConstructor<X>> getConstructors() {
+               return pcfg.getConstructors();
+            }
+
+            @Override
+            public Set<AnnotatedField<? super X>> getFields() {
+               return pcfg.getFields();
+            }
+
+            @Override
+            public Class<X> getJavaClass() {
+               return pcfg.getJavaClass();
+            }
+
+            @Override
+            public Set<AnnotatedMethod<? super X>> getMethods() {
+               return pcfg.getMethods();
+            }
+         };
+         
+         pat.setAnnotatedType(wrapped);
+         
+      }
+
    }
    
    /**
