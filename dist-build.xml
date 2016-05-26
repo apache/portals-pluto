@@ -58,7 +58,8 @@
 	<property name="dist.dir" value="${dist.basedir}/${base.name}"/>
 	<property name="pluto.name" value="pluto-${pluto.version}"/>
 	<property name="pluto.dir" value="${dist.basedir}/${pluto.name}"/>
-	<property name="unzip.file" value="${dist.basedir}/${base.name}.tar.gz"/>
+	<property name="cache.dir" value="${user.home}/.m2/repository/org/apache/tomcat/dist" />
+	<property name="download.file" value="${cache.dir}/${base.name}.tar.gz" />
 	<property name="tar.file" value="${dist.basedir}/${base.name}.tar"/>
 
 	<target name="bundle-dist"
@@ -108,12 +109,11 @@
 			<arg line="clean:clean"/>
 		</exec>
 		<mkdir dir="${dist.basedir}"/>
-
+		<mkdir dir="${cache.dir}" />
 		<get src="http://archive.apache.org/dist/tomcat/tomcat-${tomcat.major.version}/v${tomcat.full.version}/bin/${base.name}.tar.gz"
-		     dest="${unzip.file}"
-		/>
+		     dest="${download.file}" skipexisting="true" />
 
-		<gunzip src="${unzip.file}"
+		<gunzip src="${download.file}"
 			dest="${dist.basedir}"
 			description="Creates tar from tar.gz tomcat dist"
 		/>
@@ -181,7 +181,6 @@
 		
 	<target name="clean">
 		<delete dir="${dist.dir}"/>
-		<delete file="${unzip.file}"/>	
 		<delete file="${tar.file}"/>	
 	</target>
 
