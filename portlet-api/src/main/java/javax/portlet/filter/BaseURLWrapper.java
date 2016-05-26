@@ -165,4 +165,11 @@ public class BaseURLWrapper extends RenderStateWrapper implements BaseURL {
       ((BaseURL)wrapped).setProperty(key, value);
    }
 
+   /* (non-Javadoc)
+    * @see javax.portlet.BaseURL#toString()
+    */
+   @Override
+   public String toString() {
+      return wrapped.toString();
+   }
 }
