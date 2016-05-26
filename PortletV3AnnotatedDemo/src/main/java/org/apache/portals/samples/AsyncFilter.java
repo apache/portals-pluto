@@ -39,11 +39,11 @@ import javax.servlet.DispatcherType;
  *
  */
 @PortletLifecycleFilter(portletNames="AsyncPortlet")
-public class APFilter implements ResourceFilter {
-   private static final Logger LOGGER = Logger.getLogger(APFilter.class.getName());
+public class AsyncFilter implements ResourceFilter {
+   private static final Logger LOGGER = Logger.getLogger(AsyncFilter.class.getName());
    
    @Inject private PortletRequestRandomNumberBean reqnum;
-   @Inject private AsyncDialogBean adb;
+   @Inject private AsyncDialogBean asyncDialogBean;
 
    @Override
    public void init(FilterConfig filterConfig) throws PortletException {
@@ -54,28 +54,28 @@ public class APFilter implements ResourceFilter {
    }
 
    @Override
-   public void doFilter(ResourceRequest request, ResourceResponse response, FilterChain chain) throws IOException,
+   public void doFilter(ResourceRequest resourceRequest, ResourceResponse resourceResponse, FilterChain chain) throws IOException,
          PortletException {
       
-      DispatcherType type = request.getDispatcherType();
+      DispatcherType dispatcherType = resourceRequest.getDispatcherType();
       
       StringBuilder txt = new StringBuilder(128);
-      txt.append("Entering request. Dispatcher type: ").append(type);
+      txt.append("Entering request. DispatcherType: ").append(dispatcherType);
       txt.append(", request #: ").append(reqnum.getRandomNumber());
       LOGGER.fine(txt.toString());
       
-      if (adb.isShowFilter()) {
+      if (asyncDialogBean.isShowFilter()) {
          txt.setLength(0);
          txt.append("<div class='msgbox'>");
          txt.append("Filter: Request number: ").append(reqnum.getRandomNumber());
-         txt.append(", dispatcher type: ").append(request.getDispatcherType());
+         txt.append(", DispatcherType: ").append(resourceRequest.getDispatcherType());
          txt.append("</div>");
-         response.getWriter().write(txt.toString());
+         resourceResponse.getWriter().write(txt.toString());
       }
       
-      chain.doFilter(request, response);
+      chain.doFilter(resourceRequest, resourceResponse);
       
-      LOGGER.fine("Exiting request. Dispatcher type: " + request.getDispatcherType());
+      LOGGER.fine("Exiting request. DispatcherType: " + resourceRequest.getDispatcherType());
       
    }
 

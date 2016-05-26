@@ -27,11 +27,11 @@ import javax.portlet.annotations.PortletRequestScoped;
  * @author Scott Nicklous
  */
 @PortletRequestScoped
-public class APComplete {
+public class AsyncCompleteBean {
 
    private boolean complete = false;
    
-   public APComplete() {
+   public AsyncCompleteBean() {
    }
 
    /**

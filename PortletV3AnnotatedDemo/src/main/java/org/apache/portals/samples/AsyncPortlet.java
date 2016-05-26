@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletConfig;
@@ -44,163 +46,73 @@ import org.apache.portals.samples.AsyncDialogBean.OutputType;
  * 
  */
 public class AsyncPortlet {
+
    private static final Logger LOGGER = Logger.getLogger(AsyncPortlet.class.getName());
    private static final boolean isTrace = LOGGER.isLoggable(Level.FINEST);
    
-   private final static String JSP         = "/WEB-INF/jsp/asyncOutput.jsp?qp1=qval1";
    private final static String ATTRIB_REPS = "reps";
-   private final static String ATTRIB_AUTO = "auto";
-   public  final static String ATTRIB_TITLE = "title";
    public  final static String ATTRIB_TIMEOUT = "timeout";
 
-   public static class AsyncRunnable implements Runnable {
+   @Inject private AsyncDialogBean asyncDialogBean;
+   @Inject private PortletRequestRandomNumberBean randomNumberBean;
+   @Inject private AsyncRunnable asyncRunnable;
 
-      private PortletAsyncContext ctx;
-      private int          delay;
-      private OutputType   type;
-      
-      @Inject private PortletRequestRandomNumberBean reqnum;
-      @Inject private APComplete complete;
-
-      public void init(PortletAsyncContext ctx, int delay, OutputType type) {
-         this.ctx = ctx;
-         this.delay = delay;
-         this.type = type;
-         
-         StringBuilder txt = new StringBuilder(128);
-         txt.append("Initializing runnable.");
-         txt.append(" delay: ").append(delay);
-         txt.append(", type: ").append(type);
-         LOGGER.fine(txt.toString());
-      }
-
-      @Override
-      public void run() {
-         try {
-            Thread.sleep(delay);
-            
-            if (complete.isComplete()) {
-               LOGGER.warning("Request completed before work was finished. processing will be aborted.");
-               return;
-            }
-
-            ResourceRequest req = ctx.getResourceRequest();
-            ResourceResponse resp = ctx.getResourceResponse();
-            PortletRequestDispatcher rd = req.getPortletContext().getRequestDispatcher(JSP);
-            
-            AsyncPortlet.trace(req, "Runnable: ");
-            
-            PortletConfig config = (PortletConfig) req.getAttribute("javax.portlet.config");
-            String portletName = "Could not get PortletConfig";
-            if (config != null) {
-               portletName = config.getPortletName();
-            }
-
-            switch (type) {
-            case TEXT:
-               LOGGER.fine("Producing text output.");
-               StringBuilder txt = new StringBuilder(128);
-               txt.append("<h5>Thread producing text output for portlet: " + portletName + "</h5>");
-               txt.append("<p>Dispatcher type: ").append(req.getDispatcherType().toString());
-               txt.append("<span style='margin-left: 2em;'>Request #: ");
-               try { // in case context not active
-                  txt.append(reqnum.getRandomNumber());
-               } catch (Exception e) {}
-               txt.append("</span></p><hr>");
-               resp.getWriter().write(txt.toString());
-               ctx.complete();
-               break;
-            case AUTO:
-               StringBuilder str = new StringBuilder(128);
-               str.append("Dispatching to resource method.");
-               str.append(" context path: ").append(req.getPortletContext().getContextPath());
-               LOGGER.fine(str.toString());
-               req.setAttribute(ATTRIB_AUTO, new Boolean(true));
-               ctx.dispatch();
-               break;
-            case DISPATCH:
-               LOGGER.fine("Dispatching to JSP.");
-               req.setAttribute(ATTRIB_TITLE, "Thread dispatching to JSP");
-               ctx.dispatch(JSP);
-               break;
-            case FWD:
-               LOGGER.fine("Doing request dispatcher forward to JSP: " + JSP);
-               req.setAttribute(ATTRIB_TITLE, "Thread forwarding to JSP");
-               rd.forward(req, resp);
-               LOGGER.fine("After request dispatcher forward to JSP.");
-               ctx.complete();
-               break;
-            case INC:
-               LOGGER.fine("Including JSP: " + JSP);
-               req.setAttribute(ATTRIB_TITLE, "Thread including JSP");
-               rd.include(req, resp);
-               ctx.complete();
-               break;
-            }
-
-         } catch (IllegalStateException e) {
-            LOGGER.warning("Request may have timed out before it could complete. Exception: " + e.toString());
-         } catch (Exception e) {
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            pw.flush();
-            LOGGER.fine("Exception during runner execution: \n" + sw.toString());
-         }
-      }
-
+   @PostConstruct
+   public void postConstruct() {
+      LOGGER.fine("AsyncPortlet @PostConstruct called");
    }
 
-   @Inject private AsyncDialogBean adb;
-   @Inject private PortletRequestRandomNumberBean reqnum;
-   @Inject private AsyncRunnable runner;
+   @PreDestroy
+   public void preDestroy() {
+      LOGGER.fine("AsyncPortlet @PreDestroy called");
+   }
 
    @ServeResourceMethod(portletNames = "AsyncPortlet", asyncSupported = true)
-   public void getResource(ResourceRequest req, ResourceResponse resp) throws IOException, PortletException {
-      
-      if (req.getAttribute(ATTRIB_TIMEOUT) != null) {
+   public void getResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException, PortletException {
+
+      if (resourceRequest.getAttribute(ATTRIB_TIMEOUT) != null) {
          StringBuilder txt = new StringBuilder(128);
          txt.append("<p>Resource method: listener reports timout.");
          txt.append("<span style='margin-left: 2em;'>Request #: ");
-         txt.append("dispatcher type: ").append(req.getDispatcherType().toString());
+         txt.append("DispatcherType: ").append(resourceRequest.getDispatcherType().toString());
          txt.append("</span>");
          txt.append("<span style='margin-left: 2em;'>Request #: ");
-         txt.append(reqnum.getRandomNumber());
+         txt.append(randomNumberBean.getRandomNumber());
          txt.append("</span></p><hr>");
-         resp.getWriter().write(txt.toString());
+         resourceResponse.getWriter().write(txt.toString());
          return;
       }
 
-      Boolean auto = (Boolean) req.getAttribute(ATTRIB_AUTO);
+      Boolean auto = (Boolean) resourceRequest.getAttribute(AsyncConstants.ATTRIB_AUTO);
       if (auto == null) {
          auto = false;
       }
-      req.removeAttribute(ATTRIB_AUTO);
+      resourceRequest.removeAttribute(AsyncConstants.ATTRIB_AUTO);
 
-      Integer reps = (Integer) req.getAttribute(ATTRIB_REPS);
+      Integer reps = (Integer) resourceRequest.getAttribute(ATTRIB_REPS);
       if (reps == null) {
-         reps = adb.getReps();
+         reps = asyncDialogBean.getReps();
       }
       
-      boolean done = (reps <= 0) || (adb.getDelay() <= 0);
+      boolean done = (reps <= 0) || (asyncDialogBean.getDelay() <= 0);
 
       reps--;
-      req.setAttribute(ATTRIB_REPS, reps);
+      resourceRequest.setAttribute(ATTRIB_REPS, reps);
       
       StringBuilder txt = new StringBuilder(128);
       txt.append("Resource method.");
-      txt.append(" delay: ").append(adb.getDelay());
-      txt.append(", type: ").append(adb.getType());
+      txt.append(" delay: ").append(asyncDialogBean.getDelay());
+      txt.append(", type: ").append(asyncDialogBean.getType());
       txt.append(", reps: ").append(reps);
-      txt.append(", total reps: ").append(adb.getReps());
-      txt.append(", auto: ").append(adb.isAutoDispatch());
+      txt.append(", total reps: ").append(asyncDialogBean.getReps());
+      txt.append(", auto: ").append(asyncDialogBean.isAutoDispatch());
       txt.append(", auto-dispatch: ").append(auto);
       LOGGER.fine(txt.toString());
       
-      PortletAsyncContext ctx = req.startPortletAsync();
-      ctx.setTimeout(4000);
+      PortletAsyncContext portletAsyncContext = resourceRequest.startPortletAsync();
+      portletAsyncContext.setTimeout(4000);
       try {
-         ctx.addListener(ctx.createPortletAsyncListener(APListener.class));
+         portletAsyncContext.addListener(portletAsyncContext.createPortletAsyncListener(AsyncListener.class));
       } catch (PortletException e) {
          StringWriter sw = new StringWriter();
          PrintWriter pw = new PrintWriter(sw);
@@ -209,59 +121,58 @@ public class AsyncPortlet {
          LOGGER.fine("Exception adding listener: \n" + sw.toString());
       }
 
-      if (auto || (adb.getDelay() <= 0)) {
+      if (auto || (asyncDialogBean.getDelay() <= 0)) {
          
          // produce output if dispatched from work thread or if there is no delay requested
          
-         PortletRequestDispatcher rd;
+         PortletRequestDispatcher portletRequestDispatcher;
 
-         trace(req, "Resource method: ");
+         trace(resourceRequest, "Resource method: ");
          
-         // HttpServletRequest hreq = (HttpServletRequest) ctx.getRequest();
-         PortletConfig config = (PortletConfig) req.getAttribute("javax.portlet.config");
+         PortletConfig portletConfig = (PortletConfig) resourceRequest.getAttribute("javax.portlet.config");
          String portletName = "Could not get PortletConfig";
-         if (config != null) {
-            portletName = config.getPortletName();
+         if (portletConfig != null) {
+            portletName = portletConfig.getPortletName();
          }
 
-         switch (adb.getType()) {
+         switch (asyncDialogBean.getType()) {
          case DISPATCH:
             LOGGER.fine("Dispatching to JSP.");
-            req.setAttribute(ATTRIB_TITLE, "Resource Method dispatching to JSP");
-            ctx.dispatch(JSP);
+            resourceRequest.setAttribute(AsyncConstants.ATTRIB_TITLE, "Resource Method dispatching to JSP");
+            portletAsyncContext.dispatch(AsyncConstants.JSP);
             break;
          case FWD:
             LOGGER.fine("Doing request dispatcher forward to JSP.");
-            req.setAttribute(ATTRIB_TITLE, "Resource Method forwarding to JSP");
-            rd = req.getPortletContext().getRequestDispatcher(JSP);
-            rd.forward(req, resp);
-            resp.flushBuffer();
+            resourceRequest.setAttribute(AsyncConstants.ATTRIB_TITLE, "Resource Method forwarding to JSP");
+            portletRequestDispatcher = resourceRequest.getPortletContext().getRequestDispatcher(AsyncConstants.JSP);
+            portletRequestDispatcher.forward(resourceRequest, resourceResponse);
+            resourceResponse.flushBuffer();
             if (done) {
-               ctx.complete();
+               portletAsyncContext.complete();
             }
             break;
          case INC:
             LOGGER.fine("Doing request dispatcher include of JSP.");
-            req.setAttribute(ATTRIB_TITLE, "Resource Method including JSP");
-            rd = req.getPortletContext().getRequestDispatcher(JSP);
-            rd.include(req, resp);
-            resp.flushBuffer();
+            resourceRequest.setAttribute(AsyncConstants.ATTRIB_TITLE, "Resource Method including JSP");
+            portletRequestDispatcher = resourceRequest.getPortletContext().getRequestDispatcher(AsyncConstants.JSP);
+            portletRequestDispatcher.include(resourceRequest, resourceResponse);
+            resourceResponse.flushBuffer();
             if (done) {
-               ctx.complete();
+               portletAsyncContext.complete();
             }
             break;
          default:
             LOGGER.fine("Producing text output.");
             txt.setLength(0);
             txt.append("<h5>Resource method producing text output for portlet: " + portletName + "</h5>");
-            txt.append("<p>dispatcher type: ").append(req.getDispatcherType().toString());
+            txt.append("<p>DispatcherType: ").append(resourceRequest.getDispatcherType().toString());
             txt.append("<span style='margin-left: 2em;'>Request #: ");
-            txt.append(reqnum.getRandomNumber());
+            txt.append(randomNumberBean.getRandomNumber());
             txt.append("</span></p><hr>");
-            resp.getWriter().write(txt.toString());
-            resp.flushBuffer();
+            resourceResponse.getWriter().write(txt.toString());
+            resourceResponse.flushBuffer();
             if (done) {
-               ctx.complete();
+               portletAsyncContext.complete();
             }
             break;
          }
@@ -271,13 +182,13 @@ public class AsyncPortlet {
          
          // now start the executor thread 
          
-         OutputType type = adb.getType();
-         if (adb.isAutoDispatch()) {
+         OutputType type = asyncDialogBean.getType();
+         if (asyncDialogBean.isAutoDispatch()) {
             type = OutputType.AUTO;
          }
 
-         runner.init(ctx, adb.getDelay(), type);
-         ctx.start(runner);
+         asyncRunnable.init(portletAsyncContext, asyncDialogBean.getDelay(), type);
+         portletAsyncContext.start(asyncRunnable);
       }
    }
    

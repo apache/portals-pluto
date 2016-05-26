@@ -38,14 +38,14 @@ import org.apache.portals.samples.AsyncDialogBean.TimeoutType;
  * @author Scott Nicklous
  * 
  */
-public class APListener implements PortletAsyncListener {
-   private static final Logger            LOGGER = Logger.getLogger(APListener.class.getName());
+public class AsyncListener implements PortletAsyncListener {
+   private static final Logger            LOGGER = Logger.getLogger(AsyncListener.class.getName());
 
    private long                           start  = System.currentTimeMillis();
 
    @Inject private PortletRequestRandomNumberBean reqnum;
-   @Inject private AsyncDialogBean                adb;
-   @Inject private APComplete                     completeBean;
+   @Inject private AsyncCompleteBean              asyncCompleteBean;
+   @Inject private AsyncDialogBean                asyncDialogBean;
 
    /*
     * (non-Javadoc)
@@ -60,7 +60,7 @@ public class APListener implements PortletAsyncListener {
       txt.append("Listener: Completed. Execution time: ").append(delta).append(" milliseconds.");
       LOGGER.fine(txt.toString());
       
-      completeBean.setComplete(true);
+      asyncCompleteBean.setComplete(true);
    }
 
    /*
@@ -105,7 +105,7 @@ public class APListener implements PortletAsyncListener {
       // Try to write some output.
 
       try {
-         if (adb.isShowListener()) {
+         if (asyncDialogBean.isShowListener()) {
             ResourceRequest req = ctx.getResourceRequest();
             ResourceResponse resp = ctx.getResourceResponse();
             txt.setLength(0);
@@ -115,7 +115,7 @@ public class APListener implements PortletAsyncListener {
             txt.append("Request number: ").append(reqnum.getRandomNumber());
             txt.append("</span>");
             txt.append("<span style='margin-left: 2em;'>");
-            txt.append("Dispatcher type: ").append(req.getDispatcherType());
+            txt.append("DispatcherType: ").append(req.getDispatcherType());
             txt.append("</span>");
             txt.append("</div>");
             resp.getWriter().write(txt.toString());
@@ -139,29 +139,29 @@ public class APListener implements PortletAsyncListener {
       long delta = System.currentTimeMillis() - start;
 
       try {
-         ResourceRequest req = evt.getPortletAsyncContext().getResourceRequest();
-         if (adb.isShowListener()) {
+         ResourceRequest resourceRequest = evt.getPortletAsyncContext().getResourceRequest();
+         if (asyncDialogBean.isShowListener()) {
             StringBuilder txt = new StringBuilder(128);
             txt.append("<div class='orangebox'>");
-            txt.append("APListener: Timeout after ").append(delta).append(" milliseconds.");
+            txt.append("AsyncListener: Timeout after ").append(delta).append(" milliseconds.");
             txt.append("<span style='margin-left: 2em;'>");
-            txt.append("Action: ").append(adb.getHandleTimeout().toString());
+            txt.append("Action: ").append(asyncDialogBean.getHandleTimeout().toString());
             txt.append("</span>");
             txt.append("<span style='margin-left: 2em;'>");
             txt.append("Request number: ").append(reqnum.getRandomNumber());
             txt.append("</span>");
             txt.append("<span style='margin-left: 2em;'>");
-            txt.append("Dispatcher type: ").append(req.getDispatcherType());
+            txt.append("DispatcherType: ").append(resourceRequest.getDispatcherType());
             txt.append("</span>");
             txt.append("</div>");
             PrintWriter writer = evt.getPortletAsyncContext().getResourceResponse().getWriter();
             writer.println(txt.toString());
          }
          
-         if (adb.getHandleTimeout() == TimeoutType.CPL) {
+         if (asyncDialogBean.getHandleTimeout() == TimeoutType.CPL) {
             evt.getPortletAsyncContext().complete();
-         } else if (adb.getHandleTimeout() == TimeoutType.DIS) {
-            req.setAttribute(ATTRIB_TIMEOUT, ATTRIB_TIMEOUT);
+         } else if (asyncDialogBean.getHandleTimeout() == TimeoutType.DIS) {
+            resourceRequest.setAttribute(ATTRIB_TIMEOUT, ATTRIB_TIMEOUT);
             evt.getPortletAsyncContext().dispatch();
          }
       } catch (Exception e) {

@@ -23,7 +23,35 @@ limitations under the License.
 
 <portlet:defineObjects />
 
-<h3>Async Portlet</h3>
+<h3>Async Portlet: asyncDialog.jsp</h3>
+<script type="text/javascript">
+   function show_hide(id) {
+      var elem = document.getElementById(id);
+      if(elem.style.display == 'block') {
+         elem.style.display = 'none';
+      }
+      else {
+         elem.style.display = 'block';
+      }
+   }
+</script>
+<a href="#" onclick="show_hide('help');">Show/Hide Help</a>
+<div id="help" style="display: none;">
+<p>When this JSP is initially rendered, it automatically triggers a GET XmlHttpRequest to a ResourceURL which causes the following sequence:
+   <ul>
+      <li>AsyncPortlet.getResource(...) is invoked
+         <ul>
+            <li>ResourceRequest.getPortletAsyncContext().startAsync(new AsyncRunnable(...)) is called to start a new thread</li>
+            <li>The ResourceResponse is left open by the portlet container and processing is given over to the AsyncRunnable thread</li>
+            <li>The AsyncRunnable thread sleeps for 1 second, then wakes up and calls PortletAsyncContext.dispatch() in order to have the AsyncPortlet.getResource(...) method get called again</li>
+            <li>The AsyncRunnable thread finishes execution</li>
+         </ul></li>
+      <li>AsyncPortlet.getResource(...) is invoked again because of the call to PortletAsyncContext.dispatch() above <strong><em>(currently broken because of a bug in Tomcat)</em></strong></li>
+   </ul>
+</p>
+<p>The <strong>AsyncFilter</strong> is always present within the FilterChain but will only output information to the response if the "show filter" checkbox is checked</p>
+<p>The <strong>AsyncListener</strong> is always added to the PortletAsyncContext but will only output information to the response if the "show listener" checkbox is checked</p>
+</div>
 <div class='parmbox'>
 <FORM  ACTION='<portlet:actionURL/>' id='<portlet:namespace/>-setParams' method='POST' enctype='application/x-www-form-urlencoded'>
    <table style='width:100%;'><tr><td align='left'>
