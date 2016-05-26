@@ -54,6 +54,7 @@ import org.apache.pluto.container.om.portlet10.impl.PortletNameType;
 import org.apache.pluto.container.om.portlet10.impl.PortletPreferencesType;
 import org.apache.pluto.container.om.portlet10.impl.PortletType;
 import org.apache.pluto.container.om.portlet10.impl.PreferenceType;
+import org.apache.pluto.container.om.portlet10.impl.RoleLinkType;
 import org.apache.pluto.container.om.portlet10.impl.SecurityConstraintType;
 import org.apache.pluto.container.om.portlet10.impl.SecurityRoleRefType;
 import org.apache.pluto.container.om.portlet10.impl.SupportedLocaleType;
@@ -411,18 +412,22 @@ public class JSR168ConfigurationProcessor extends ConfigurationProcessor {
       for (SecurityRoleRefType item : args) {
 
          // validate data
-         if ((item.getRoleName() == null) || (item.getRoleLink() == null)
-               || (item.getRoleLink().getValue() == null)) {
-            String warning = "Bad security role reference. Name or link was null.";
+         if ((item.getRoleName() == null) || (item.getRoleName().length() == 0)) {
+            String warning = "Bad security role reference. Name was null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
          }
 
          // set up the role ref
          String name = item.getRoleName();
-         String link = item.getRoleLink().getValue();
          SecurityRoleRef srr = new SecurityRoleRefImpl(name);
-         srr.setRoleLink(link);
+         RoleLinkType roleLink = item.getRoleLink();
+         if (roleLink != null) {
+            String roleLinkValue = roleLink.getValue();
+            if ((roleLinkValue != null) && (roleLinkValue.length() > 0)) {
+               srr.setRoleLink(roleLinkValue);
+            }
+         }
          for (Description desc : handleDescriptions(item.getDescription())) {
             srr.addDescription(desc);
          }

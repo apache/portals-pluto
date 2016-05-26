@@ -602,7 +602,7 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
 
          // validate data
          if ((item.getRoleName() == null) || (item.getRoleName().length() == 0)) {
-            String warning = "Bad security role reference. Name or link was null.";
+            String warning = "Bad security role reference. Name was null.";
             LOG.warn(warning);
             throw new IllegalArgumentException(warning);
          }
