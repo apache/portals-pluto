@@ -185,7 +185,7 @@ public class PortletArtifactProducer {
    /**
     * Producer method for the portlet request. 
     */
-   @Produces @PortletRequestScoped @Named("RenderState")
+   @Produces @PortletRequestScoped @Named("renderState")
    public static RenderState produceRenderState() {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
