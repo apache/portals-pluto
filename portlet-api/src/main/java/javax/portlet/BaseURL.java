@@ -323,10 +323,16 @@ public interface BaseURL extends RenderState {
    /**
     * Writes the portlet URL to the output stream using the provided writer.
     * If the parameter escapeXML is set to true the URL will be escaped to be
-    * valid XML characters, i.e. &lt, &gt, &amp, &#039, &#034 will get converted
+    * valid XML characters<span class="changed_deleted_3_0">, i.e. &lt, &gt, &amp, 
+    * &#039, &#034 will get converted
     * into their corresponding character entity codes (&lt to &&lt, &gt to &&gt, 
     * &amp to &&amp, &#039 to &&#039, &#034 to &&#034).
-    * If escapeXML is set to false no escaping will be done.
+    * If escapeXML is set to false no escaping will be done</span>.
+    * <span class="changed_added_3_0">The manner in which escaping is performed is 
+    * implementation specific.
+    * If <code>escapeXML</code> is set to <code>false</code>, escaping the URL is
+    * left to the implementation.
+    * </span>
     * <p>
     * Note that the URL written to the output stream may not be a valid URL, as it may
     * be rewritten by the portal/portlet-container before returning the 
@@ -369,11 +375,12 @@ public interface BaseURL extends RenderState {
     * <div class="changed_added_3_0">
     * Appends the portlet URL to the appendable object.
     * <p>
-    * If the parameter escapeXML is set to true the URL will be escaped to be
-    * valid XML characters, i.e. &lt, &gt, &amp, &#039, &#034 will get converted
-    * into their corresponding character entity codes (&lt to &&lt, &gt to &&gt, 
-    * &amp to &&amp, &#039 to &&#039, &#034 to &&#034).
-    * If escapeXML is set to false no escaping will be done.
+    * If the parameter escapeXML is set to <code>true</code>, the URL will be escaped to be
+    * valid XML characters.
+    * The manner in which escaping is performed is 
+    * implementation specific.
+    * If <code>escapeXML</code> is set to <code>false</code>, escaping the URL is
+    * left to the implementation.
     * <p>
     * Note that the appended URL may not be a valid URL, as it may
     * be rewritten by the portal/portlet-container before returning the 

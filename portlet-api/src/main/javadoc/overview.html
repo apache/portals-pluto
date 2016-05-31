@@ -21,6 +21,15 @@
     <div class="indexContainer-not">
     <ul>
     <li>
+    20160530:
+    Added 
+    {@link javax.portlet.filter.PortletAsyncContextWrapper PortletAsyncContextWrapper}.
+    Modified descriptions for 
+    {@link javax.portlet.BaseURL#write(Writer, boolean) BaseURL#write(String, boolean)} and
+    {@link javax.portlet.BaseURL#append(Appendable, boolean) BaseURL#append(String, boolean)}
+    to update documentation on escape XML flag handling.
+    </li>
+    <li>
     20160524:
     Deleted the <code>URLFactory</code> interface, as a <code>MimeResponse</code> object
     can be injected instead with no loss of functionality.
@@ -160,10 +169,10 @@
     <a href="https://java.net/jira/browse/PORTLETSPEC3-62">PORTLETSPEC3-62</a>,
     (see {@link javax.portlet.filter filter package}).
     Update following annotations for consistency with spec {@literal &} RI:
-    {@link javax.portlet.annotations.DestroyMethod DestroyMethod},
+    {@literal DestroyMethod},
     {@link javax.portlet.annotations.EventMethod EventMethod},
     {@link javax.portlet.annotations.HeaderMethod HeaderMethod},
-    {@link javax.portlet.annotations.InitMethod InitMethod},
+    {@literal InitMethod},
     {@link javax.portlet.annotations.PortletSessionScoped PortletSessionScoped}.
     Added {@link javax.portlet.annotations.PortletRequestScoped PortletRequestScoped} annotation.
     </li>
@@ -173,7 +182,7 @@
     deployment descriptor. Updated classes:
     {@link javax.portlet.annotations.InitParameter InitParameter},
     {@link javax.portlet.annotations.PortletConfiguration PortletConfiguration},
-    {@link javax.portlet.annotations.PortletRequestFilter PortletRequestFilter},
+    {@literal PortletRequestFilter},
     {@link javax.portlet.annotations.RuntimeOption RuntimeOption},
     {@link javax.portlet.annotations.SecurityRoleRef SecurityRoleRef},
     {@link javax.portlet.annotations.Supports Supports}.
@@ -197,8 +206,8 @@
     <li>
     20150923: 
     Added method annotations 
-    {@link javax.portlet.annotations.InitMethod}, and
-    {@link javax.portlet.annotations.DestroyMethod}.
+    {@literal javax.portlet.annotations.InitMethod}, and
+    {@literal javax.portlet.annotations.DestroyMethod}.
     Added filter and wrappers for header phase. Added new wrappers
     for requests and responses not yet wrapped and modified
     existing wrappers to use them. New classes:
@@ -274,7 +283,7 @@
     {@link javax.portlet.PortletURL#setBeanParameter PortletURL.setBeanParameter}.
     Updated annotations:
     {@link javax.portlet.annotations.PortletSessionScoped} and
-    {@link javax.portlet.annotations.URLFactory}.
+    {@literal javax.portlet.annotations.URLFactory}.
     </li>
     <li>20150812: Update for 
     <a href="https://java.net/jira/browse/PORTLETSPEC3-56">PORTLETSPEC3-56</a>,
@@ -283,7 +292,7 @@
     Changed classes:
     {@link javax.portlet.MimeResponse.Copy}.
     Added method:
-    {@link javax.portlet.ActionResponse#getRedirectURL ActionResponse.getRedirectURL()}.
+    <code>ActionResponse.getRedirectURL()</code>.
     Updated annotations:
     {@link javax.portlet.annotations.HeaderMethod},
     {@link javax.portlet.annotations.RenderMethod}, and

@@ -587,7 +587,8 @@ h1.hidden {
 .indexContainer a[href*="PortletConfigurations.html"],
 .indexContainer a[href*="EventDefinition.html"],
 .indexContainer a[href*="PortletQName.html"],
-.indexContainer a[href*="PortletRequestFilter.html"],
+.indexContainer a[href*="PortletName.html"],
+.indexContainer a[href*="PortletLifecycleFilter.html"],
 .indexContainer a[href*="PortletRequestScoped.html"],
 .indexContainer a[href*="PortletResources.html"],
 .indexContainer a[href*="PortletSerializable.html"],
@@ -631,6 +632,7 @@ h1.hidden {
 .indexContainer a[href*="RenderURLWrapper.html"],
 .indexContainer a[href*="ResourceParametersWrapper.html"],
 .indexContainer a[href*="ResourceURLWrapper.html"],
+.indexContainer a[href*="PortletAsyncContextWrapper.html"],
 
 .indexContainer a[href*="PortletAsyncContext.html"],
 .indexContainer a[href*="PortletAsyncListener.html"],
