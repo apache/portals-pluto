@@ -181,31 +181,6 @@ public class PortletArtifactProducer {
       assert pap != null;
       return pap.config.getPortletContext();
    }
-   
-   /**
-    * Producer method for the portlet request. 
-    */
-   @Produces @PortletRequestScoped @Named("renderState")
-   public static RenderState produceRenderState() {
-      PortletArtifactProducer pap = producers.get();
-      assert pap != null;
-      return pap.req;
-   }
-
-   /**
-    * Producer method for the portlet response. 
-    * @return
-    */
-   @Produces @PortletRequestScoped @Named("mutableRenderState")
-   public static MutableRenderState produceMutableRenderState() {
-      PortletArtifactProducer pap = producers.get();
-      assert pap != null;
-      MutableRenderState mrs = null;
-      if (pap.resp instanceof MutableRenderState) {
-         mrs = (MutableRenderState) pap.resp;
-      }
-      return mrs;
-   }
 
    /**
     * Producer method for the portlet request. 
@@ -489,10 +464,10 @@ public class PortletArtifactProducer {
     * Producer method for the window ID. 
     */
    @Produces @PortletRequestScoped @Named("locales") 
-   public static Enumeration<Locale> produceLocales() {
+   public static Locale[] produceLocales() {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
-      return pap.req.getLocales();
+      return Collections.list(pap.req.getLocales()).toArray(new Locale[0]);
    }
 
    /**

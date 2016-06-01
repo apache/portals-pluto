@@ -23,8 +23,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
-import javax.portlet.HeaderRequest;
-import javax.portlet.HeaderResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -89,7 +87,7 @@ public class DefineObjectsTag286 extends TagSupport {
      * 
      * @return void
      */
-	private void setAttribute(Object attribute, String attributeName){
+	protected void setAttribute(Object attribute, String attributeName){
 		if (pageContext.getAttribute(attributeName) == null){   //Set attributes only once
  
             pageContext.setAttribute(attributeName,
@@ -107,7 +105,7 @@ public class DefineObjectsTag286 extends TagSupport {
      * @param request PortletRequest
      * @param response PortletResponse
      */
-    private void setPortletRequestResponseAttribute(PortletRequest request, 
+    protected void setPortletRequestResponseAttribute(PortletRequest request, 
     		PortletResponse response ){
     	
     	String phase = (String)request.getAttribute(PortletRequest.LIFECYCLE_PHASE);
@@ -128,10 +126,6 @@ public class DefineObjectsTag286 extends TagSupport {
     		setAttribute(request, "renderRequest");
     		setAttribute(response, "renderResponse");
     	}    	
-      else if(PortletRequest.HEADER_PHASE.equals(phase)){
-         setAttribute(request, "headerRequest");
-         setAttribute(response, "headerResponse");
-      }     
     	else if(PortletRequest.RESOURCE_PHASE.equals(phase)){
     		setAttribute(request, "resourceRequest");
     		setAttribute(response, "resourceResponse");
@@ -205,22 +199,13 @@ public class DefineObjectsTag286 extends TagSupport {
      */
     public static class TEI extends TagExtraInfo {
 
-        public VariableInfo[] getVariableInfo(TagData tagData) {
-            VariableInfo[] info = new VariableInfo[]{
+       protected static VariableInfo[] info286 = new VariableInfo[]{
                 new VariableInfo("portletRequest",
                                  PortletRequest.class.getCanonicalName(),
                                  true,
                                  VariableInfo.AT_BEGIN),            		
                 new VariableInfo("portletResponse",
             	                 PortletResponse.class.getCanonicalName(),
-                                 true,
-                                 VariableInfo.AT_BEGIN),
-                new VariableInfo("headerRequest",
-                                 HeaderRequest.class.getCanonicalName(),
-                                 true,
-                                 VariableInfo.AT_BEGIN),            		
-                new VariableInfo("headerResponse",
-            	                 HeaderResponse.class.getCanonicalName(),
                                  true,
                                  VariableInfo.AT_BEGIN),
                 new VariableInfo("actionRequest",
@@ -275,10 +260,11 @@ public class DefineObjectsTag286 extends TagSupport {
                                  "java.util.Map",
                                  true,
                                  VariableInfo.AT_BEGIN),                                
-                
             };
-            return info;
-        }
+
+       public VariableInfo[] getVariableInfo(TagData tagData) {
+          return info286;
+       }
     }
 }
 
