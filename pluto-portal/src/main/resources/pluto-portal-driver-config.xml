@@ -237,6 +237,7 @@ limitations under the License.
     </page>
     <page name="Tag Library" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/PortletV3Demo" name="TagLibPortlet"/>
+      <portlet context="/PortletV3Demo" name="TagLibTagsPortlet"/>
     </page>
     ${includeDemosEnd}
   </render-config>
