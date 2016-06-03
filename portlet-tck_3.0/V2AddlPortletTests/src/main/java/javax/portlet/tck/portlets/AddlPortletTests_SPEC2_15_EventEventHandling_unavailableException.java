@@ -18,19 +18,17 @@ package javax.portlet.tck.portlets;
 import java.io.*;
 import java.util.logging.*;
 import javax.portlet.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
-import static javax.portlet.PortletSession.*;
+import javax.portlet.UnavailableException;
 
 /**
  * This is the event processing portlet for the test cases. This portlet processes events, but does
  * not publish them. Events are published in the main portlet for the test cases.
  * @author ahmed
  */
-public class AddlPortletTests_SPEC2_15_Event_event implements Portlet, EventPortlet {
-  private static final String LOG_CLASS = AddlPortletTests_SPEC2_15_Event_event.class.getName();
+public class AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException
+    implements Portlet, EventPortlet, ResourceServingPortlet {
+  private static final String LOG_CLASS =
+      AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException.class.getName();
   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
 
@@ -38,7 +36,9 @@ public class AddlPortletTests_SPEC2_15_Event_event implements Portlet, EventPort
   public void init(PortletConfig config) throws PortletException {}
 
   @Override
-  public void destroy() {}
+  public void destroy() {
+    AddlPortletTests_SPEC2_15_EventEventHandling_event.tr8 = true;
+  }
 
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
@@ -47,56 +47,31 @@ public class AddlPortletTests_SPEC2_15_Event_event implements Portlet, EventPort
   }
 
   @Override
-  public void processEvent(EventRequest portletReq, EventResponse portletResp)
+  public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion processEvent");
-
-
-    portletResp.setRenderParameters(portletReq);
-
-    long tid = Thread.currentThread().getId();
-    portletReq.setAttribute(THREADID_ATTR, tid);
-
-    StringWriter writer = new StringWriter();
-
-    JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
-
-    // Create result objects for the tests
-
-    /* TestCase: V2AddlPortletTests_SPEC2_15_Event_event1 */
-    /* Details: "Event names are defined in the deployment descriptor" */
-    TestResult tr0 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_15_EVENT_EVENT1);
-    Event event = portletReq.getEvent();
-    if (event.getName().equals("AddlPortletTests_SPEC2_15_Event")) {
-      tr0.setTcSuccess(true);
-    } else {
-      tr0.appendTcDetail(
-          "Event name is not \"AddlPortletTests_SPEC2_15_Event\" but \"" + event.getName() + "\"");
-    }
-    tr0.writeTo(writer);
-
-    portletReq.getPortletSession().setAttribute(
-        Constants.RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_15_Event", writer.toString(),
-        APPLICATION_SCOPE);
-
+    LOGGER.entering(LOG_CLASS, "event companion serveResource - ERROR!!");
   }
 
   @Override
-  public void render(RenderRequest portletReq, RenderResponse portletResp)
+  public void processEvent(EventRequest portletReq, EventResponse portletResp)
       throws PortletException, IOException {
+    LOGGER.entering(LOG_CLASS, "event companion processEvent");
+    /* TestCase: V2AddlPortletTests_SPEC2_15_EventEventHandling_event16 */
+    /* Details: "If a portlet throws a permanent UnavailableException */
+    /* during event processing, the portlet container must remove the */
+    /* portlet from service immediately, call the portlet's destroy */
+    /* method, and release the portlet object" */
+    throw new UnavailableException(
+        "UnavailableException from V2AddlPortletTests_SPEC2_15_EventEventHandling_event16");
+  }
 
+  @Override
+  public void render(RenderRequest request, RenderResponse portletResp)
+      throws PortletException, IOException {
     LOGGER.entering(LOG_CLASS, "event companion render");
-
     portletResp.setContentType("text/html");
     PrintWriter writer = portletResp.getWriter();
     writer.write("<h3>Event Companion Portlet </h3>\n");
-    writer.write("<p>AddlPortletTests_SPEC2_15_Event_event</p>\n");
-
-    String msg = (String) portletReq.getPortletSession()
-        .getAttribute(RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_15_Event", APPLICATION_SCOPE);
-    msg = (msg == null) ? "Not ready. click test case link." : msg;
-    writer.write("<p>" + msg + "</p>\n");
-
+    writer.write("<p>AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException</p>\n");
   }
-
 }

@@ -19,14 +19,8 @@
 package javax.portlet.tck.portlets;
 
 import java.io.*;
-import java.util.*;
 import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
 import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
 import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.constants.Constants.*;
@@ -36,18 +30,15 @@ import static javax.portlet.PortletSession.*;
 /**
  * This is the event processing portlet for the test cases. This portlet processes events, 
  * but does not publish them. Events are published in the main portlet for the test cases. 
+ * @author ahmed
  */
-public class AddlPortletTests_SPEC2_5_EventHandling_event implements Portlet, EventPortlet, ResourceServingPortlet {
+public class AddlPortletTests_SPEC2_5_EventHandling_event implements Portlet, EventPortlet {
    private static final String LOG_CLASS = 
          AddlPortletTests_SPEC2_5_EventHandling_event.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-   
-   private PortletConfig portletConfig = null;
 
    @Override
-   public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
-   }
+   public void init(PortletConfig config) throws PortletException {}
 
    @Override
    public void destroy() {
@@ -60,12 +51,6 @@ public class AddlPortletTests_SPEC2_5_EventHandling_event implements Portlet, Ev
    }
 
    @Override
-   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion serveResource - ERROR!!");
-   }
-
-   @Override
    public void processEvent(EventRequest portletReq, EventResponse portletResp)
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "event companion processEvent");
@@ -75,34 +60,36 @@ public class AddlPortletTests_SPEC2_5_EventHandling_event implements Portlet, Ev
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
-
-      StringWriter writer = new StringWriter();
-
-      JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
-
-      // Create result objects for the tests
-
-      /* TestCase: V2AddlPortletTests_SPEC2_5_EventHandling_exception4        */
-      /* Details: "If the portlet throws an PortletException in               */
-      /* processEvent, all operations on the EventResponse, including set     */
-      /* events, must be ignored"                                             */
-      TestResult tr0 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_5_EVENTHANDLING_EXCEPTION4);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
-
-      /* TestCase: V2AddlPortletTests_SPEC2_5_EventHandling_exception5        */
-      /* Details: "If the portlet throws a RuntimeException in                */
-      /* processEvent, all operations on the EventResponse, including set     */
-      /* events, must be ignored"                                             */
-      TestResult tr1 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_5_EVENTHANDLING_EXCEPTION5);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
-      tr1.writeTo(writer);
-
-      portletReq.getPortletSession().setAttribute(
-                   Constants.RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_EventHandling",
-                   writer.toString(), APPLICATION_SCOPE);
+      
+      Event event = portletReq.getEvent();
+      String qName = event.getName();
+      if (qName.equals("AddlPortletTests_SPEC2_5_EventHandling_exception4")) {
+        /* TestCase: V2AddlPortletTests_SPEC2_5_EventHandling_exception4        */
+        /* Details: "If the portlet throws an PortletException in               */
+        /* processEvent, all operations on the EventResponse, including set     */
+        /* events, must be ignored"                                             */
+        LOGGER.entering(LOG_CLASS, "First case");
+        portletResp.setRenderParameter("tr0", "true");
+        portletReq.getPortletSession().setAttribute(
+            Constants.RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_EventHandling_portletException",
+            "true", APPLICATION_SCOPE);
+        throw new PortletException(
+            "PortletException from V2AddlPortletTests_SPEC2_5_EventHandling_exception4");
+      } else if(qName.equals("AddlPortletTests_SPEC2_5_EventHandling_exception5")){
+        /* TestCase: V2AddlPortletTests_SPEC2_5_EventHandling_exception5        */
+        /* Details: "If the portlet throws a RuntimeException in                */
+        /* processEvent, all operations on the EventResponse, including set     */
+        /* events, must be ignored"                                             */
+      // TODO: RuntimeException is not handled by pluto. So, this test crashes.
+        // Report in JIRA
+        LOGGER.entering(LOG_CLASS, "Second case");
+        portletResp.setRenderParameter("tr1", "true");
+        portletReq.getPortletSession().setAttribute(
+            Constants.RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_EventHandling_runtimeException",
+            "true", APPLICATION_SCOPE);
+        //throw new RuntimeException(
+         //   "RuntimeException from V2AddlPortletTests_SPEC2_5_EventHandling_exception5");
+      }
 
    }
 
@@ -111,15 +98,46 @@ public class AddlPortletTests_SPEC2_5_EventHandling_event implements Portlet, Ev
          throws PortletException, IOException {
       
       LOGGER.entering(LOG_CLASS, "event companion render");
-
+      JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
       portletResp.setContentType("text/html");
       PrintWriter writer = portletResp.getWriter();
       writer.write("<h3>Event Companion Portlet </h3>\n");
       writer.write("<p>AddlPortletTests_SPEC2_5_EventHandling_event</p>\n");
-
-      String msg = (String) portletReq.getPortletSession()
-            .getAttribute(RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_EventHandling", APPLICATION_SCOPE);
-      msg = (msg==null) ? "Not ready. click test case link." : msg;
+      
+      
+      /* TestCase: V2AddlPortletTests_SPEC2_5_EventHandling_exception4        */
+      /* Details: "If the portlet throws an PortletException in               */
+      /* processEvent, all operations on the EventResponse, including set     */
+      /* events, must be ignored"                                             */
+      TestResult tr0 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_5_EVENTHANDLING_EXCEPTION4);
+      String dataInEventResponse_tr0 = (String) portletReq.getPortletSession().getAttribute(
+          RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_EventHandling_portletException",
+          APPLICATION_SCOPE);
+      if (dataInEventResponse_tr0 != null && dataInEventResponse_tr0.equals("true")
+          && portletReq.getParameter("tr0") == null) {
+        tr0.setTcSuccess(true);
+      } else {
+        tr0.appendTcDetail("Failed because data is set in EventResponse: " + dataInEventResponse_tr0);
+      }
+      String msg = tr0.toString();
+      
+      /* TestCase: V2AddlPortletTests_SPEC2_5_EventHandling_exception5        */
+      /* Details: "If the portlet throws a RuntimeException in                */
+      /* processEvent, all operations on the EventResponse, including set     */
+      /* events, must be ignored"                                             */
+      // TODO: RuntimeException is not handled by pluto. So, this test crashes.
+      TestResult tr1 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_5_EVENTHANDLING_EXCEPTION5);
+      String dataInEventResponse_tr1 = (String) portletReq.getPortletSession().getAttribute(
+          RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_EventHandling_runtimeException",
+          APPLICATION_SCOPE);
+      if (dataInEventResponse_tr1 != null && dataInEventResponse_tr1.equals("true")
+          && portletReq.getParameter("tr1") == null) {
+        tr1.setTcSuccess(true);
+      } else {
+        tr1.appendTcDetail("Failed because data is set in EventResponse: " + dataInEventResponse_tr1);
+      }
+      msg = msg + tr1.toString();
+      
       writer.write("<p>" + msg + "</p>\n");
 
    }

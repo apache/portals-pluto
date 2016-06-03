@@ -21,18 +21,10 @@ package javax.portlet.tck.portlets;
 import java.io.*;
 import java.util.*;
 import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
 import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
 import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -43,23 +35,12 @@ import static javax.portlet.ResourceURL.*;
  * This is the main portlet for the test cases. If the test cases call for events, this portlet
  * will initiate the events, but not process them. The processing is done in the companion 
  * portlet AddlPortletTests_SPEC2_8_PortletModes_event
- *
+ * @author ahmed
  */
-public class AddlPortletTests_SPEC2_8_PortletModes implements Portlet, ResourceServingPortlet {
+public class AddlPortletTests_SPEC2_8_PortletModes extends GenericPortlet {
    private static final String LOG_CLASS = 
          AddlPortletTests_SPEC2_8_PortletModes.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-   
-   private PortletConfig portletConfig = null;
-
-   @Override
-   public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
-   }
-
-   @Override
-   public void destroy() {
-   }
 
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
@@ -69,20 +50,6 @@ public class AddlPortletTests_SPEC2_8_PortletModes implements Portlet, ResourceS
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
-
-      StringWriter writer = new StringWriter();
-
-   }
-
-   @Override
-   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
-
-      long tid = Thread.currentThread().getId();
-      portletReq.setAttribute(THREADID_ATTR, tid);
-
-      PrintWriter writer = portletResp.getWriter();
 
    }
 
@@ -104,24 +71,33 @@ public class AddlPortletTests_SPEC2_8_PortletModes implements Portlet, ResourceS
       /* Details: "Support for the VIEW mode does not need to be declared     */
       /* in the deployment descriptor"                                        */
       TestResult tr0 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES1);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      if(portletReq.isPortletModeAllowed(PortletMode.VIEW)){
+        tr0.setTcSuccess(true);
+      } else {
+        tr0.appendTcDetail("Failed because VIEW portlet mode is not allowed.");
+      }
       tr0.writeTo(writer);
 
       /* TestCase: V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes2 */
       /* Details: "Support for the HELP mode must be declared in the          */
       /* deployment descriptor"                                               */
       TestResult tr1 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      if(portletReq.isPortletModeAllowed(PortletMode.HELP)){
+        tr1.setTcSuccess(true);
+      } else {
+        tr1.appendTcDetail("Failed because HELP portlet mode is not allowed.");
+      }
       tr1.writeTo(writer);
 
       /* TestCase: V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes3 */
       /* Details: "A custom portlet mode may be declared in the deployment    */
       /* descriptor"                                                          */
       TestResult tr2 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES3);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      if(portletReq.isPortletModeAllowed(new PortletMode("custom1"))){
+        tr2.setTcSuccess(true);
+      } else {
+        tr2.appendTcDetail("Failed because CUSTOM1 portlet mode is not allowed.");
+      }
       tr2.writeTo(writer);
 
       /* TestCase: V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes4 */
@@ -129,8 +105,11 @@ public class AddlPortletTests_SPEC2_8_PortletModes implements Portlet, ResourceS
       /* &lt;portal-managed&gt;false&lt;/portal-managed&gt; may be declared   */
       /* in the deployment descriptor"                                        */
       TestResult tr3 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES4);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      if(portletReq.isPortletModeAllowed(new PortletMode("custom1"))){
+        tr3.setTcSuccess(true);
+      } else {
+        tr3.appendTcDetail("Failed because CUSTOM1 portlet mode is not allowed.");
+      }
       tr3.writeTo(writer);
 
       /* TestCase: V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes5 */
@@ -139,8 +118,11 @@ public class AddlPortletTests_SPEC2_8_PortletModes implements Portlet, ResourceS
       /* &lt;portal-managed&gt;true&lt;/portal-managed&gt; that is not        */
       /* supported by the portlet container"                                  */
       TestResult tr4 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES5);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      if(!portletReq.isPortletModeAllowed(new PortletMode("custom2"))){
+        tr4.setTcSuccess(true);
+      } else {
+        tr4.appendTcDetail("Failed because CUSTOM2 portlet mode is allowed.");
+      }
       tr4.writeTo(writer);
 
       /* TestCase: V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes6 */
@@ -149,36 +131,81 @@ public class AddlPortletTests_SPEC2_8_PortletModes implements Portlet, ResourceS
       /* &lt;portal-managed&gt;true&lt;/portal-managed&gt; that is not        */
       /* supported by the portlet container"                                  */
       TestResult tr5 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES6);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      if(!portletReq.isPortletModeAllowed(new PortletMode("custom2"))){
+        tr5.setTcSuccess(true);
+      } else {
+        tr5.appendTcDetail("Failed because CUSTOM2 portlet mode is allowed.");
+      }
       tr5.writeTo(writer);
-
-      /* TestCase: V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes7 */
-      /* Details: "A custom portlet mode with                                 */
-      /* &lt;portal-managed&gt;false&lt;/portal-managed&gt; corresponds to    */
-      /* the VIEW mode from the portal point of view"                         */
-      TestResult tr6 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES7);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
-      tr6.writeTo(writer);
 
       /* TestCase: V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes8 */
       /* Details: "A custom portlet mode can have a localized decoration      */
       /* name in the resource bundle with the name of                         */
       /* javax.portlet.app.custom-portlet-mode.&lt;name&gt;.decoration-name"  */
       TestResult tr7 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES8);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      Locale locale = portletReq.getLocale();
+      ResourceBundle res = getResourceBundle(locale);
+      if (res.getString("javax.portlet.app.custom-portlet-mode.custom1.decoration-name").equals("decoration")) {
+        tr7.setTcSuccess(true);
+      } else {
+        tr7.appendTcDetail("Failed because custom1 decoration name is" + res.getString("javax.portlet.app.custom-portlet-mode.custom1.decoration-name"));
+      }
       tr7.writeTo(writer);
 
       /* TestCase: V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes9 */
       /* Details: "The portlet must not be invoked in a mode that has not     */
       /* been declared to be supported for a given markup type"               */
       TestResult tr8 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES9);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
-      tr8.writeTo(writer);
+      try{
+        PortletURL rurl = portletResp.createRenderURL();
+        rurl.setPortletMode(new PortletMode("custom3"));
+        tr8.setTcDetail("Failed because portlet mode custom3 is set which has not been declared to be supported by this portlet.");
+      } catch (PortletModeException e){
+        tr8.appendTcDetail(e.toString());
+        tr8.setTcSuccess(true);
+      }
+      tr8.writeTo(writer);      
+      
+      /* TestCase: V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes7 */
+      /* Details: "A custom portlet mode with                                 */
+      /* &lt;portal-managed&gt;false&lt;/portal-managed&gt; corresponds to    */
+      /* the VIEW mode from the portal point of view"                         */
+      if(portletReq.getParameter("tr6")==null) {
+        PortletURL rurl = portletResp.createRenderURL();
+        rurl.setPortletMode(new PortletMode("custom1"));
+        rurl.setParameter("tr6", "true");
+        TestSetupLink tl = new TestSetupLink("V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes7", rurl);
+        tl.writeTo(writer);
+      } else {
+        super.render(portletReq, portletResp);
+      }
+   }
+   
+   @RenderMode(name = "custom1")
+   public void doView(RenderRequest portletReq, RenderResponse portletResp)
+         throws PortletException, IOException {
+     LOGGER.entering(LOG_CLASS, "main portlet render custom1 entry");
 
+     long tid = Thread.currentThread().getId();
+     portletReq.setAttribute(THREADID_ATTR, tid);
+
+     PrintWriter writer = portletResp.getWriter();
+
+     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
+     
+     /* TestCase: V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes7 */
+     /* Details: "A custom portlet mode with                                 */
+     /* &lt;portal-managed&gt;false&lt;/portal-managed&gt; corresponds to    */
+     /* the VIEW mode from the portal point of view"                         */
+     if(portletReq.getParameter("tr6")!=null && portletReq.getParameter("tr6").equals("true")){
+       TestResult tr6 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES7);
+       if(portletReq.getPortletMode().equals(new PortletMode("custom1"))){
+         tr6.setTcSuccess(true);
+       } else {
+         tr6.appendTcDetail("Failed because portlet mode is not VIEW but "+portletReq.getPortletMode().toString());
+       }
+       tr6.writeTo(writer);
+     }
    }
 
 }
