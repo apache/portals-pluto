@@ -19,20 +19,11 @@
 package javax.portlet.tck.portlets;
 
 import java.io.*;
-import java.util.*;
 import java.util.logging.*;
-import static java.util.logging.Logger.*;
 import javax.xml.namespace.QName;
 import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
 import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -43,19 +34,15 @@ import static javax.portlet.ResourceURL.*;
  * This is the main portlet for the test cases. If the test cases call for events, this portlet
  * will initiate the events, but not process them. The processing is done in the companion 
  * portlet AddlRequestTests_SPEC2_11_EventAttr_event
- *
+ * @author ahmed
  */
-public class AddlRequestTests_SPEC2_11_EventAttr implements Portlet, ResourceServingPortlet {
+public class AddlRequestTests_SPEC2_11_EventAttr implements Portlet{
    private static final String LOG_CLASS = 
          AddlRequestTests_SPEC2_11_EventAttr.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-   
-   private PortletConfig portletConfig = null;
 
    @Override
-   public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
-   }
+   public void init(PortletConfig config) throws PortletException { }
 
    @Override
    public void destroy() {
@@ -70,23 +57,9 @@ public class AddlRequestTests_SPEC2_11_EventAttr implements Portlet, ResourceSer
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      StringWriter writer = new StringWriter();
-
       QName eventQName = new QName(TCKNAMESPACE,
              "AddlRequestTests_SPEC2_11_EventAttr");
       portletResp.setEvent(eventQName, "Hi!");
-   }
-
-   @Override
-   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
-
-      long tid = Thread.currentThread().getId();
-      portletReq.setAttribute(THREADID_ATTR, tid);
-
-      PrintWriter writer = portletResp.getWriter();
-
    }
 
    @Override

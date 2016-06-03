@@ -33,6 +33,8 @@
       <portlet-info>
          <title>AddlRequestTests_SPEC2_11_Action</title>
       </portlet-info>
+      <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+      <supported-public-render-parameter>tckPRP1a</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -49,6 +51,10 @@
       <supported-publishing-event>
          <qname>tck:AddlRequestTests_SPEC2_11_Event</qname>
       </supported-publishing-event>
+      <supported-processing-event>
+         <qname>tck:AddlRequestTests_SPEC2_11_Event</qname>
+      </supported-processing-event>
+      <supported-public-render-parameter>tckPRP2</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -65,6 +71,7 @@
       <supported-processing-event>
          <qname>tck:AddlRequestTests_SPEC2_11_Event</qname>
       </supported-processing-event>
+      <supported-public-render-parameter>tckPRP2</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -78,6 +85,22 @@
       <portlet-info>
          <title>AddlRequestTests_SPEC2_11_Render</title>
       </portlet-info>
+      <supported-public-render-parameter>tckPRP3</supported-public-render-parameter>
+      <supported-public-render-parameter>tr1_ready</supported-public-render-parameter>
+   </portlet>
+   
+   <portlet>
+      <portlet-name>AddlRequestTests_SPEC2_11_Render_parameter11</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_Render_parameter11</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlRequestTests_SPEC2_11_Render_parameter11</title>
+      </portlet-info>
+      <supported-public-render-parameter>tr1_ready</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -91,19 +114,7 @@
       <portlet-info>
          <title>AddlRequestTests_SPEC2_11_Resource</title>
       </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>AddlRequestTests_SPEC2_11_RenderPRP</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_RenderPRP</portlet-class>
-      <expiration-cache>0</expiration-cache>
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-      <supported-locale>en_US</supported-locale>
-      <portlet-info>
-         <title>AddlRequestTests_SPEC2_11_RenderPRP</title>
-      </portlet-info>
+      <supported-public-render-parameter>tckPRP2</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -117,6 +128,23 @@
       <portlet-info>
          <title>AddlRequestTests_SPEC2_11_RenderAttr</title>
       </portlet-info>
+   </portlet>
+   
+   <portlet>
+      <portlet-name>AddlRequestTests_SPEC2_11_RenderAttr_RenderHeaders</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_RenderAttr_RenderHeaders</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlRequestTests_SPEC2_11_RenderAttr_RenderHeaders</title>
+      </portlet-info>
+      <container-runtime-option>
+         <name>javax.portlet.renderHeaders</name>
+         <value>true</value>
+      </container-runtime-option>
    </portlet>
 
    <portlet>
@@ -182,7 +210,7 @@
       <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_ActionReq</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
-         <mime-type>text/html</mime-type>
+         <mime-type>*/*</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
@@ -195,7 +223,7 @@
       <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_EventReq</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
-         <mime-type>text/html</mime-type>
+         <mime-type>*/*</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
@@ -211,7 +239,7 @@
       <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_EventReq_event</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
-         <mime-type>text/html</mime-type>
+         <mime-type>*/*</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
@@ -227,7 +255,7 @@
       <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_RenderReq</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
-         <mime-type>text/html</mime-type>
+         <mime-type>*/*</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
@@ -240,7 +268,7 @@
       <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_ResourceReq</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
-         <mime-type>text/html</mime-type>
+         <mime-type>*/*</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
@@ -285,6 +313,26 @@
 
    <public-render-parameter>
       <identifier>tckPRP1</identifier>
-      <qname>tck:tckPRP1</qname>
+      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">tck:tckPRP1</qname>
+   </public-render-parameter>
+   <public-render-parameter>
+      <identifier>tr1_ready</identifier>
+      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">tck:tr1_ready</qname>
+   </public-render-parameter>
+   <public-render-parameter>
+      <identifier>tckPRP1a</identifier>
+      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">tck:tckPRP1a</qname>
+   </public-render-parameter>
+   <public-render-parameter>
+      <identifier>tckPRP2</identifier>
+      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">tck:tckPRP2</qname>
+   </public-render-parameter>
+   <public-render-parameter>
+      <identifier>tckPRP3</identifier>
+      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">tck:tckPRP3</qname>
+   </public-render-parameter>
+   <public-render-parameter>
+      <identifier>tckPRP4</identifier>
+      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">tck:tckPRP4</qname>
    </public-render-parameter>
 </portlet-app>

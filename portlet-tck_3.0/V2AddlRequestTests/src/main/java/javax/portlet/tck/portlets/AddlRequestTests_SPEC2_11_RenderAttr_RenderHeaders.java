@@ -33,9 +33,12 @@ import static javax.portlet.tck.constants.Constants.*;
  * AddlRequestTests_SPEC2_11_RenderAttr_event
  * @author ahmed
  */
-public class AddlRequestTests_SPEC2_11_RenderAttr implements Portlet {
-  private static final String LOG_CLASS = AddlRequestTests_SPEC2_11_RenderAttr.class.getName();
+public class AddlRequestTests_SPEC2_11_RenderAttr_RenderHeaders implements Portlet {
+  private static final String LOG_CLASS =
+      AddlRequestTests_SPEC2_11_RenderAttr_RenderHeaders.class.getName();
   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+
+  private Boolean successTr3 = false;
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -66,36 +69,43 @@ public class AddlRequestTests_SPEC2_11_RenderAttr implements Portlet {
 
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
 
-    // Create result objects for the tests
-
-    /* TestCase: V2AddlRequestTests_SPEC2_11_RenderAttr_attributes1 */
-    /* Details: "The portlet can access a map with user information */
-    /* attributes via the request attribute PortletRequest.USER_INFO" */
-    TestResult tr0 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RENDERATTR_ATTRIBUTES1);
-    if (portletReq.getAttribute(PortletRequest.USER_INFO) != null) {
-      tr0.setTcSuccess(true);
+    /* TestCase: V2AddlRequestTests_SPEC2_11_RenderAttr_attributes3 */
+    /* Details: "If the portlet container runtime option */
+    /* javax.portlet.renderHeaders is set to TRUE, the RENDER_PART */
+    /* attribute will be set when the render method is called" */
+    TestResult tr2 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RENDERATTR_ATTRIBUTES3);
+    if (portletReq.getAttribute(PortletRequest.RENDER_PART) != null
+        && portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_MARKUP")) {
+      tr2.setTcSuccess(true);
+      tr2.writeTo(writer);
     }
-    tr0.writeTo(writer);
 
-    /* TestCase: V2AddlRequestTests_SPEC2_11_RenderAttr_attributes2 */
-    /* Details: "The PortletRequest.CCPP_PROFILE request attribute must */
-    /* return a javax.ccpp.Profile based on the current portlet request" */
-    TestResult tr1 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RENDERATTR_ATTRIBUTES2);
-    if (portletReq.getAttribute(PortletRequest.CCPP_PROFILE) != null) {
-      tr1.setTcSuccess(true);
+    /* TestCase: V2AddlRequestTests_SPEC2_11_RenderAttr_attributes4 */
+    /* Details: "If the portlet container runtime option */
+    /* javax.portlet.renderHeaders is set to TRUE, render method will be */
+    /* called first with the RENDER_PART attribute set to */
+    /* \"RENDER_HEADERS\"" */
+    TestResult tr3 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RENDERATTR_ATTRIBUTES4);
+    if (portletReq.getAttribute(PortletRequest.RENDER_PART) != null
+        && portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_HEADERS")) {
+      successTr3 = true;
+    } else if (portletReq.getAttribute(PortletRequest.RENDER_PART) != null
+        && portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_MARKUP")) {
+      tr3.setTcSuccess(successTr3);
+      tr3.writeTo(writer);
     }
-    tr1.writeTo(writer);
 
-    /* TestCase: V2AddlRequestTests_SPEC2_11_RenderAttr_attributes8 */
-    /* Details: "During render processing, the LIFECYCLE_PHASE */
-    /* (\"javax.portlet.lifecycle_phase\") attribute will contain the */
-    /* string \"RENDER_PHASE\"" */
-    TestResult tr5 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RENDERATTR_ATTRIBUTES8);
-    if (portletReq.getAttribute(PortletRequest.LIFECYCLE_PHASE) != null
-        && portletReq.getAttribute(PortletRequest.LIFECYCLE_PHASE).equals("RENDER_PHASE")) {
-      tr5.setTcSuccess(true);
+    /* TestCase: V2AddlRequestTests_SPEC2_11_RenderAttr_attributes5 */
+    /* Details: "If the portlet container runtime option */
+    /* javax.portlet.renderHeaders is set to TRUE, render method will be */
+    /* called a second time with the RENDER_PART attribute set to */
+    /* \"RENDER_MARKUP\"" */
+    TestResult tr4 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RENDERATTR_ATTRIBUTES5);
+    if (portletReq.getAttribute(PortletRequest.RENDER_PART) != null
+        && portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_MARKUP")) {
+      tr4.setTcSuccess(true);
+      tr4.writeTo(writer);
     }
-    tr5.writeTo(writer);
+
   }
-
 }

@@ -30,12 +30,14 @@ import static javax.portlet.tck.constants.Constants.*;
  *
  * This is the main portlet for the test cases. If the test cases call for events, this portlet will
  * initiate the events, but not process them. The processing is done in the companion portlet
- * AddlRequestTests_SPEC2_11_RenderAttr_event
+ * AddlRequestTests_SPEC2_11_Render_event
  * @author ahmed
  */
-public class AddlRequestTests_SPEC2_11_RenderAttr implements Portlet {
-  private static final String LOG_CLASS = AddlRequestTests_SPEC2_11_RenderAttr.class.getName();
+public class AddlRequestTests_SPEC2_11_Render_parameter11 implements Portlet {
+  private static final String LOG_CLASS =
+      AddlRequestTests_SPEC2_11_Render_parameter11.class.getName();
   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -47,8 +49,6 @@ public class AddlRequestTests_SPEC2_11_RenderAttr implements Portlet {
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
     LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
-
-    portletResp.setRenderParameters(portletReq.getParameterMap());
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
 
@@ -59,43 +59,45 @@ public class AddlRequestTests_SPEC2_11_RenderAttr implements Portlet {
       throws PortletException, IOException {
     LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
+    JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
+
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
 
     PrintWriter writer = portletResp.getWriter();
 
-    JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
-
-    // Create result objects for the tests
-
-    /* TestCase: V2AddlRequestTests_SPEC2_11_RenderAttr_attributes1 */
-    /* Details: "The portlet can access a map with user information */
-    /* attributes via the request attribute PortletRequest.USER_INFO" */
-    TestResult tr0 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RENDERATTR_ATTRIBUTES1);
-    if (portletReq.getAttribute(PortletRequest.USER_INFO) != null) {
-      tr0.setTcSuccess(true);
+    /* TestCase: V2AddlRequestTests_SPEC2_11_Render_parameters11 */
+    /* Details: "If a portlet receives a render request that is the */
+    /* result of a client request targeted to another portlet in the */
+    /* portal page, the parameters should be the same parameters as of */
+    /* the previous render request from this client" */
+    if (portletReq.getParameter("tr1") == null) {
+      PortletURL rurl = portletResp.createRenderURL();
+      rurl.setParameters(portletReq.getPrivateParameterMap());
+      rurl.setParameter("tr1", "true");
+      TestSetupLink tb = new TestSetupLink(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS11, rurl);
+      tb.writeTo(writer);
+    } else {
+      TestResult tr1 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS11);
+      if (portletReq.getParameter("tr1_ready") != null
+          && portletReq.getParameter("tr1_ready").equals("true")) {
+        /* TestCase: V2AddlRequestTests_SPEC2_11_Render_parameters11 */
+        /* Details: "If a portlet receives a render request that is the */
+        /* result of a client request targeted to another portlet in the */
+        /* portal page, the parameters should be the same parameters as of */
+        /* the previous render request from this client" */
+        if (portletReq.getParameter("tr1") != null
+            && portletReq.getParameter("tr1").equals("true")) {
+          tr1.setTcSuccess(true);
+        } else {
+          tr1.appendTcDetail(
+              "Test case failed as render parameter of this client didn't remain same after recieving render request from another portlet");
+        }
+      } else {
+        tr1.appendTcDetail(
+            "Test case failed as public parameter tr1_ready is not set by V2AddlRequestTests_SPEC2_11_Render portlet");
+      }
+      tr1.writeTo(writer);
     }
-    tr0.writeTo(writer);
-
-    /* TestCase: V2AddlRequestTests_SPEC2_11_RenderAttr_attributes2 */
-    /* Details: "The PortletRequest.CCPP_PROFILE request attribute must */
-    /* return a javax.ccpp.Profile based on the current portlet request" */
-    TestResult tr1 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RENDERATTR_ATTRIBUTES2);
-    if (portletReq.getAttribute(PortletRequest.CCPP_PROFILE) != null) {
-      tr1.setTcSuccess(true);
-    }
-    tr1.writeTo(writer);
-
-    /* TestCase: V2AddlRequestTests_SPEC2_11_RenderAttr_attributes8 */
-    /* Details: "During render processing, the LIFECYCLE_PHASE */
-    /* (\"javax.portlet.lifecycle_phase\") attribute will contain the */
-    /* string \"RENDER_PHASE\"" */
-    TestResult tr5 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RENDERATTR_ATTRIBUTES8);
-    if (portletReq.getAttribute(PortletRequest.LIFECYCLE_PHASE) != null
-        && portletReq.getAttribute(PortletRequest.LIFECYCLE_PHASE).equals("RENDER_PHASE")) {
-      tr5.setTcSuccess(true);
-    }
-    tr5.writeTo(writer);
   }
-
 }
