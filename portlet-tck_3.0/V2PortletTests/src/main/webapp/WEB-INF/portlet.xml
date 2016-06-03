@@ -160,6 +160,9 @@
       <supported-publishing-event>
          <qname>tck:PortletTests_Event_ApiEvent</qname>
       </supported-publishing-event>
+      <supported-publishing-event>
+         <name>PortletTests_Event_ApiEvent_localPart</name>
+      </supported-publishing-event>
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
@@ -176,6 +179,9 @@
       </portlet-info>
       <supported-processing-event>
          <qname>tck:PortletTests_Event_ApiEvent</qname>
+      </supported-processing-event>
+      <supported-processing-event>
+         <name>PortletTests_Event_ApiEvent_localPart</name>
       </supported-processing-event>
    </portlet>
 
@@ -244,7 +250,10 @@
       <qname>tck:PortletTests_Event_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
-
+   <event-definition>
+      <name>PortletTests_Event_ApiEvent_localPart</name>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
    <event-definition>
       <qname>tck:PortletTests_EventPortlet_ApiEvent</qname>
       <value-type>java.lang.String</value-type>

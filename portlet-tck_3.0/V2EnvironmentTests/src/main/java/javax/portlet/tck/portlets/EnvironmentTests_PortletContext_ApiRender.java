@@ -30,6 +30,7 @@ import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
 import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETCONTAINERRUNTIMEOPTIONS4;
 import static javax.portlet.tck.constants.Constants.*;
 import static javax.portlet.PortletSession.*;
 import static javax.portlet.ResourceURL.*;
@@ -97,6 +98,7 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet, Resou
       PrintWriter writer = portletResp.getWriter();
 
       JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+      JSR286SpecTestCaseDetails tcd_spec = new JSR286SpecTestCaseDetails();
 
       // Create result objects for the tests
 
@@ -594,10 +596,23 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet, Resou
       /* Details: "Method getContainerRuntimeOptions(): Returns an empty      */
       /* Enumeration if no runtime options are available"                     */
       TestResult tr53 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETCONTAINERRUNTIMEOPTIONS2);
+      
       tr53.setTcSuccess(true);
       tr53.appendTcDetail("This Method could not be tested for an empty values Which already has Runtime Options supported by Portlet Container ");
       tr53.writeTo(writer);
-
+      
+      /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig_getContainerRuntimeOptions4 */
+      /* Details: "Method getContainerRuntimeOptions(): Returns an empty */
+      /* map if no container runtime options have been defined " */
+      TestResult tr58 = tcd_spec
+          .getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETCONTAINERRUNTIMEOPTIONS4);
+      Map<String, String[]> runtimeOptions = portletConfig.getContainerRuntimeOptions();
+      if(runtimeOptions.size()==0){
+        tr58.setTcSuccess(true);
+      } else {
+        tr58.appendTcDetail("Failed because "+runtimeOptions.size()+" runtime options found in PortletContext"); 
+      }
+      tr58.writeTo(writer);
    }
 
 }

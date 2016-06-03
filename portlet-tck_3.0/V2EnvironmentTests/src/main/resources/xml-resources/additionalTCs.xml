@@ -336,4 +336,5 @@
 <entry key="V2EnvironmentTests_PortletSessionUtil_ApiRender_decodeScope1">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletSessionUtil_ApiRender_decodeScope2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletSessionUtil_ApiRender_decodeScope3">V2EnvironmentTests</entry>
+<entry key="V2AddlPortletTests_SPEC2_6_RenderConfig_getContainerRuntimeOptions4">V2EnvironmentTests</entry>
 </properties>
