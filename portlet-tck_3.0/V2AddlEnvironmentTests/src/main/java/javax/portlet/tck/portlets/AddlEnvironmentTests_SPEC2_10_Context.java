@@ -18,21 +18,33 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Logger;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.constants.Constants;
+import javax.portlet.tck.servlet.StartupListener;
+import javax.servlet.ServletContext;
+
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -68,7 +80,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute(THREADID_ATTR, tid);
+      portletReq.setAttribute(Constants.THREADID_ATTR, tid);
 
       StringWriter writer = new StringWriter();
 
@@ -80,7 +92,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
 
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute(THREADID_ATTR, tid);
+      portletReq.setAttribute(Constants.THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
 
@@ -92,7 +104,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute(THREADID_ATTR, tid);
+      portletReq.setAttribute(Constants.THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
 
@@ -104,40 +116,171 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       /* Details: "The initialization parameters accessible through the       */
       /* PortletContext must be the same that are accessible through the      */
       /* ServletContext of the portlet application"                           */
-      TestResult tr0 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_PORTLETCONTEXTSERVLETCONTEXT1);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      /* Test Implementation */
+      boolean succeeded = true;
+      TestResult tr0 = tcd.getTestResultSucceeded(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_PORTLETCONTEXTSERVLETCONTEXT1);
+      ServletContext servletContext = StartupListener.getServletContext();
+	  PortletContext portletContext = portletReq.getPortletSession().getPortletContext();
+	  
+	  // Compare the list of context-param entries from web.xml with those from portletContext.
+      Enumeration<?> servletContextParamNames = servletContext.getInitParameterNames();
+      while (servletContextParamNames.hasMoreElements()) {
+    	  String servletContextParamName = (String) servletContextParamNames.nextElement();
+    	  String servletContextParamValue = servletContext.getInitParameter(servletContextParamName);
+    	  String portletContextParamValue = portletContext.getInitParameter(servletContextParamName);
+    	  if ((servletContextParamValue == null) && (portletContextParamValue == null)) {
+    		  tr0.appendTcDetail("<br/>servletContextParamName=[" + servletContextParamName + "] servletContextParamValue=[null] == portletContextParamValue=null]");
+    	  }
+    	  else if (servletContextParamValue == null) {
+    		  tr0.appendTcDetail("<br/>servletContextParamName=[" + servletContextParamName + "] servletContextParamValue=[null] != portletContextParamValue=[" + portletContextParamValue + "]");
+    		  succeeded = false;
+    	  }
+    	  else if (portletContextParamValue == null) {
+    		  tr0.appendTcDetail("<br/>servletContextParamName=[" + servletContextParamName + "] servletContextParamValue=[" + servletContextParamValue + "] != portletContextParamValue=[null]");
+    		  succeeded = false;
+    	  }
+    	  else {
+    		  if (servletContextParamValue.equals(portletContextParamValue)) {
+        		  tr0.appendTcDetail("<br/>servletContextParamName=[" + servletContextParamName + "] servletContextParamValue=[" + servletContextParamValue + "] == portletContextParamValue=[" + portletContextParamValue + "]");
+    		  }
+    		  else {
+    			  tr0.appendTcDetail("<br/>servletContextParamName=[" + servletContextParamName + "] servletContextParamValue=[" + servletContextParamValue + "] != portletContextParamValue=[" + portletContextParamValue + "]");
+        		  succeeded = false;
+    		  }
+    	  }
+      }
+
+	  // Compare the list of context-param entries from from portletContext with those from web.xml
+      Enumeration<?> portletContextParamNames = portletContext.getInitParameterNames();
+      while (portletContextParamNames.hasMoreElements()) {
+    	  String portletContextParamName = (String) portletContextParamNames.nextElement();
+    	  String portletContextParamValue = portletContext.getInitParameter(portletContextParamName);
+    	  String servletContextParamValue = servletContext.getInitParameter(portletContextParamName);
+    	  if ((servletContextParamValue == null) && (portletContextParamValue == null)) {
+    		  tr0.appendTcDetail("<br/>portletContextParamName=[" + portletContextParamName + "] portletContextParamValue=[null] == portletContextParamValue=null]");
+    	  }
+    	  else if (servletContextParamValue == null) {
+    		  tr0.appendTcDetail("<br/>portletContextParamName=[" + portletContextParamName + "] portletContextParamValue=[null] != servletContextParamValue=[" + servletContextParamValue + "]");
+    		  succeeded = false;
+    	  }
+    	  else if (portletContextParamValue == null) {
+    		  tr0.appendTcDetail("<br/>portletContextParamName=[" + portletContextParamName + "] portletContextParamValue=[" + portletContextParamValue + "] != servletContextParamValue=[null]");
+    		  succeeded = false;
+    	  }
+    	  else {
+    		  if (portletContextParamValue.equals(servletContextParamValue)) {
+        		  tr0.appendTcDetail("<br/>portletContextParamName=[" + portletContextParamName + "] portletContextParamValue=[" + portletContextParamValue + "] == servletContextParamValue=[" + servletContextParamValue + "]");
+    		  }
+    		  else {
+    			  tr0.appendTcDetail("<br/>portletContextParamName=[" + portletContextParamName + "] portletContextParamValue=[" + portletContextParamValue + "] != servletContextParamValue=[" + servletContextParamValue + "]");
+        		  succeeded = false;
+    		  }
+    	  }
+      }
+      tr0.setTcSuccess(succeeded);
       tr0.writeTo(writer);
 
       /* TestCase: V2AddlEnvironmentTests_SPEC2_10_Context_portletContextServletContext2 */
       /* Details: "The context initialization parameters are set in the       */
       /* web.xml file"                                                        */
-      TestResult tr1 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_PORTLETCONTEXTSERVLETCONTEXT2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      succeeded = true;
+      TestResult tr1 = tcd.getTestResultSucceeded(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_PORTLETCONTEXTSERVLETCONTEXT2);
+      Map<String, String> configuredContextParams = StartupListener.getConfiguredContextParams();
+      Set<Map.Entry<String, String>> entrySet = configuredContextParams.entrySet();
+      for (Map.Entry<String, String> mapEntry: entrySet) {
+    	  String webXmlContextParamName = mapEntry.getKey();
+    	  String webXmlContextParamValue = mapEntry.getValue();
+    	  String portletContextParamValue = portletContext.getInitParameter(webXmlContextParamName);
+    	  if ((webXmlContextParamValue == null) && (portletContextParamValue == null)) {
+    		  tr1.appendTcDetail("<br/>webXmlContextParamName=[" + webXmlContextParamName + "] webXmlContextParamValue=[null] == portletContextParamValue=null]");
+    	  }
+    	  else if (webXmlContextParamValue == null) {
+    		  tr1.appendTcDetail("<br/>webXmlContextParamName=[" + webXmlContextParamName + "] webXmlContextParamValue=[null] != portletContextParamValue=[" + portletContextParamValue + "]");
+    		  succeeded = false;
+    	  }
+    	  else if (portletContextParamValue == null) {
+    		  tr1.appendTcDetail("<br/>webXmlContextParamName=[" + webXmlContextParamName + "] webXmlContextParamValue=[" + webXmlContextParamValue + "] != portletContextParamValue=[null]");
+    		  succeeded = false;
+    	  }
+    	  else {
+    		  if (webXmlContextParamValue.equals(portletContextParamValue)) {
+    			  tr1.appendTcDetail("<br/>webXmlContextParamName=[" + webXmlContextParamName + "] webXmlContextParamValue=[" + webXmlContextParamValue + "] == portletContextParamValue=[" + portletContextParamValue + "]");
+    		  }
+    		  else {
+    			  tr1.appendTcDetail("<br/>webXmlContextParamName=[" + webXmlContextParamName + "] webXmlContextParamValue=[" + webXmlContextParamValue + "] != portletContextParamValue=[" + portletContextParamValue + "]");
+        		  succeeded = false;
+    		  }
+    	  }
+      }
+      
+      tr1.setTcSuccess(succeeded);
       tr1.writeTo(writer);
 
       /* TestCase: V2AddlEnvironmentTests_SPEC2_10_Context_portletContextServletContext3 */
       /* Details: "The PortletContext must offer access to the same set of    */
       /* resources the ServletContext exposes"                                */
-      TestResult tr2 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_PORTLETCONTEXTSERVLETCONTEXT3);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      succeeded = true;
+      TestResult tr2 = tcd.getTestResultSucceeded(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_PORTLETCONTEXTSERVLETCONTEXT3);
+      Set<String> servletResourcePaths = (Set<String>) servletContext.getResourcePaths("/");
+      Set<String> portletResourcePaths = portletContext.getResourcePaths("/");
+      for (String servletResourcePath: servletResourcePaths) {
+    	  if (servletResourcePath != null) {
+    		  if (portletResourcePaths.contains(servletResourcePath)) {
+    			  tr2.appendTcDetail("<br/>servletContext resourcePath=[" + servletResourcePath + "] is also available in portletContext");
+    		  }
+    		  else {
+    			  tr2.appendTcDetail("<br/>servletContext resourcePath=[" + servletResourcePath + "] IS NOT AVAILABLE in portletContext");
+        		  succeeded = false;
+    		  }
+    	  }
+      }
+      
+      for (String portletResourcePath: portletResourcePaths) {
+    	  if (portletResourcePath != null) {
+    		  if (servletResourcePaths.contains(portletResourcePath)) {
+    			  tr2.appendTcDetail("<br/>portletContext resourcePath=[" + portletResourcePath + "] is also available in servletContext");
+    		  }
+    		  else {
+    			  tr2.appendTcDetail("<br/>portletContext resourcePath=[" + portletResourcePath + "] IS NOT AVAILABLE in servletContext");
+        		  succeeded = false;
+    		  }
+    	  }
+      }
+      
+      URL servletContextResourceURL = servletContext.getResource("/WEB-INF/web.xml");
+      URL portletContextResourceURL = portletContext.getResource("/WEB-INF/web.xml");
+      if (servletContextResourceURL.equals(portletContextResourceURL)) {
+    	  tr2.appendTcDetail("<br/>servletContextResourceURL=[" + servletContextResourceURL + "] is also available in portletContext");
+      }
+      else {
+    	  tr2.appendTcDetail("<br/>servletContextResourceURL=[" + servletContextResourceURL + "] IS NOT AVAILABLE in portletContext");
+    	  succeeded = false;
+      }
+      tr2.setTcSuccess(succeeded);
       tr2.writeTo(writer);
 
       /* TestCase: V2AddlEnvironmentTests_SPEC2_10_Context_portletContextServletContext4 */
       /* Details: "The temporary working directory must be accessible as a    */
       /* context attribute through the PortletContext using the attribute     */
       /* name \"javax.servlet.context.tempdir\""                              */
-      TestResult tr3 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_PORTLETCONTEXTSERVLETCONTEXT4);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      succeeded = true;
+      TestResult tr3 = tcd.getTestResultSucceeded(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_PORTLETCONTEXTSERVLETCONTEXT4);
+      File servletContextTempDir = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
+      File portletContextTempDir = (File) portletContext.getAttribute("javax.servlet.context.tempdir");
+      if (servletContextTempDir.equals(portletContextTempDir)) {
+    	  tr3.appendTcDetail("<br/>servletContextTempDir=[" + servletContextTempDir + "] is also available in portletContext");
+      }
+      else {
+    	  tr3.appendTcDetail("<br/>servletContextTempDir=[" + servletContextTempDir + "] IS NOT AVAILABLE in portletContext");
+    	  succeeded = false;
+      }
+      tr3.setTcSuccess(succeeded);
       tr3.writeTo(writer);
 
       /* TestCase: V2AddlEnvironmentTests_SPEC2_10_Context_getAttribute       */
       /* Details: "The PortletContext.getAttribute method provides the same   */
       /* functionality as the ServletContext.getAttribute method"             */
-      TestResult tr4 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETATTRIBUTE);
+      TestResult tr4 = tcd.getTestResultFailed(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETATTRIBUTE);
       /* TODO: implement test */
       tr4.appendTcDetail("Not implemented.");
       tr4.writeTo(writer);
@@ -145,7 +288,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       /* TestCase: V2AddlEnvironmentTests_SPEC2_10_Context_getAttributeNames  */
       /* Details: "The PortletContext.getAttributeNames method provides the   */
       /* same functionality as the ServletContext.getAttributeNames method"   */
-      TestResult tr5 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETATTRIBUTENAMES);
+      TestResult tr5 = tcd.getTestResultFailed(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETATTRIBUTENAMES);
       /* TODO: implement test */
       tr5.appendTcDetail("Not implemented.");
       tr5.writeTo(writer);
@@ -153,7 +296,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       /* TestCase: V2AddlEnvironmentTests_SPEC2_10_Context_getInitParameter   */
       /* Details: "The PortletContext.getInitParameter method provides the    */
       /* same functionality as the ServletContext.getInitParameter method"    */
-      TestResult tr6 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETINITPARAMETER);
+      TestResult tr6 = tcd.getTestResultFailed(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETINITPARAMETER);
       /* TODO: implement test */
       tr6.appendTcDetail("Not implemented.");
       tr6.writeTo(writer);
@@ -162,7 +305,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       /* Details: "The PortletContext.getInitParameterNames method provides   */
       /* the same functionality as the ServletContext.getInitParameterNames   */
       /* method"                                                              */
-      TestResult tr7 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETINITPARAMETERNAMES);
+      TestResult tr7 = tcd.getTestResultFailed(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETINITPARAMETERNAMES);
       /* TODO: implement test */
       tr7.appendTcDetail("Not implemented.");
       tr7.writeTo(writer);
@@ -170,7 +313,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       /* TestCase: V2AddlEnvironmentTests_SPEC2_10_Context_getMimeType        */
       /* Details: "The PortletContext.getMimeType method provides the same    */
       /* functionality as the ServletContext.getMimeType method"              */
-      TestResult tr8 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETMIMETYPE);
+      TestResult tr8 = tcd.getTestResultFailed(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETMIMETYPE);
       /* TODO: implement test */
       tr8.appendTcDetail("Not implemented.");
       tr8.writeTo(writer);
@@ -178,7 +321,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       /* TestCase: V2AddlEnvironmentTests_SPEC2_10_Context_getRealPath        */
       /* Details: "The PortletContext.getRealPath method provides the same    */
       /* functionality as the ServletContext.getRealPath method"              */
-      TestResult tr9 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETREALPATH);
+      TestResult tr9 = tcd.getTestResultFailed(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETREALPATH);
       /* TODO: implement test */
       tr9.appendTcDetail("Not implemented.");
       tr9.writeTo(writer);
@@ -186,7 +329,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       /* TestCase: V2AddlEnvironmentTests_SPEC2_10_Context_getResource        */
       /* Details: "The PortletContext.getResource method provides the same    */
       /* functionality as the ServletContext.getResource method"              */
-      TestResult tr10 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETRESOURCE);
+      TestResult tr10 = tcd.getTestResultFailed(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETRESOURCE);
       /* TODO: implement test */
       tr10.appendTcDetail("Not implemented.");
       tr10.writeTo(writer);
@@ -194,7 +337,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       /* TestCase: V2AddlEnvironmentTests_SPEC2_10_Context_getResourcePaths   */
       /* Details: "The PortletContext.getResourcePaths method provides the    */
       /* same functionality as the ServletContext.getResourcePaths method"    */
-      TestResult tr11 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETRESOURCEPATHS);
+      TestResult tr11 = tcd.getTestResultFailed(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETRESOURCEPATHS);
       /* TODO: implement test */
       tr11.appendTcDetail("Not implemented.");
       tr11.writeTo(writer);
@@ -203,7 +346,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       /* Details: "The PortletContext.getResourceAsStream method provides     */
       /* the same functionality as the ServletContext.getResourceAsStream     */
       /* method"                                                              */
-      TestResult tr12 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETRESOURCEASSTREAM);
+      TestResult tr12 = tcd.getTestResultFailed(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETRESOURCEASSTREAM);
       /* TODO: implement test */
       tr12.appendTcDetail("Not implemented.");
       tr12.writeTo(writer);
@@ -211,7 +354,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       /* TestCase: V2AddlEnvironmentTests_SPEC2_10_Context_log                */
       /* Details: "The PortletContext.log method provides the same            */
       /* functionality as the ServletContext.log method"                      */
-      TestResult tr13 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_LOG);
+      TestResult tr13 = tcd.getTestResultFailed(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_LOG);
       /* TODO: implement test */
       tr13.appendTcDetail("Not implemented.");
       tr13.writeTo(writer);
@@ -219,7 +362,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       /* TestCase: V2AddlEnvironmentTests_SPEC2_10_Context_removeAttribute    */
       /* Details: "The PortletContext.removeAttribute method provides the     */
       /* same functionality as the ServletContext.removeAttribute method"     */
-      TestResult tr14 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_REMOVEATTRIBUTE);
+      TestResult tr14 = tcd.getTestResultFailed(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_REMOVEATTRIBUTE);
       /* TODO: implement test */
       tr14.appendTcDetail("Not implemented.");
       tr14.writeTo(writer);
@@ -227,7 +370,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       /* TestCase: V2AddlEnvironmentTests_SPEC2_10_Context_setAttribute       */
       /* Details: "The PortletContext.setAttribute method provides the same   */
       /* functionality as the ServletContext.setAttribute method"             */
-      TestResult tr15 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_SETATTRIBUTE);
+      TestResult tr15 = tcd.getTestResultFailed(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_SETATTRIBUTE);
       /* TODO: implement test */
       tr15.appendTcDetail("Not implemented.");
       tr15.writeTo(writer);

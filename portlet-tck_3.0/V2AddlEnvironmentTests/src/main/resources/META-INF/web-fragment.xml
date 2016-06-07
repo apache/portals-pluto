@@ -17,25 +17,10 @@
     specific language governing permissions and limitations
     under the License.     
 -->
-<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	<display-name>javax.portlet-tck-AddlEnvironmentTests</display-name>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
 	<context-param>
-		<param-name>testParam1</param-name>
-		<param-value>testValue1</param-value>
+		<param-name>testParam5</param-name>
+		<param-value>testValue5</param-value>
 	</context-param>
-	<context-param>
-		<param-name>testParam2</param-name>
-		<param-value>testValue2</param-value>
-	</context-param>
-	<context-param>
-		<param-name>testParam3</param-name>
-		<param-value>testValue3</param-value>
-	</context-param>
-	<context-param>
-		<param-name>testParam4</param-name>
-		<param-value></param-value>
-	</context-param>
-	<listener>
-		<listener-class>javax.portlet.tck.servlet.StartupListener</listener-class>
-	</listener>
 </web-app>
