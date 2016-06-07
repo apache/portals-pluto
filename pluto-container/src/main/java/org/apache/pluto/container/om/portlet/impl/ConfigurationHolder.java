@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Set;
 
+import javax.enterprise.inject.spi.BeanManager;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletConfigurations;
@@ -64,6 +65,7 @@ public class ConfigurationHolder {
                                                            + "org.apache.pluto.container.om.portlet30.impl";
 
    private AnnotatedMethodStore methodStore;
+   private boolean portletsInstantiated = false;
    
    /**
     * Default constructor
@@ -277,6 +279,24 @@ public class ConfigurationHolder {
    }
 
    /**
+    * Instantiates the portlets with the helpt of the bean manager. If the bean 
+    * manager is <code>null</code>, the classes are instantiated the old-fashioned way.
+    * 
+    * @param bm   the bean manager; may be <code>null</code>
+    */
+   public void instantiatePortlets(BeanManager bm) {
+      
+      // This method will be called once for each deployed portlet servlet. However,
+      // it's important that the methods only be instantiated once per servlet context 
+      // to avoid losing initialization data.
+      
+      if (!portletsInstantiated) {
+         portletsInstantiated = true;
+         jcp.instantiatePortlets(methodStore, bm);
+      }
+   }
+
+   /**
     * Reconciles the bean configuration with the config from annotations & portlet DD.
     */
    public void reconcileBeanConfig(AnnotatedMethodStore ams) {
@@ -284,6 +304,7 @@ public class ConfigurationHolder {
          jcp = new JSR362ConfigurationProcessor(pad);
       }
       jcp.reconcileBeanConfig(ams);
+      jcp.instantiatePortlets(ams, ams.getBeanMgr());
    }
 
 }

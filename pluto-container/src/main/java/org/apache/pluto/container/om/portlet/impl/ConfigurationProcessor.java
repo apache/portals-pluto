@@ -60,6 +60,7 @@ public abstract class ConfigurationProcessor {
    /** Logger. */
    private static final Logger LOG = LoggerFactory.getLogger(ConfigurationProcessor.class);
    private static final boolean isDebug = LOG.isDebugEnabled();
+   private static final boolean isTrace = LOG.isTraceEnabled();
 
 
    protected PortletApplicationDefinition pad;
@@ -494,70 +495,15 @@ public abstract class ConfigurationProcessor {
                }
             }
          }
-         
-         Object instance = null;
-         if (cls != null) {
-            
-            // Let CDI instantiate the portlet to allow for injection. 
-            // Get the single bean instance for the portlet class.
-            
-            StringBuilder txt = new StringBuilder(128);
-            BeanManager bm = ams.getBeanMgr();
-            if (bm == null) {
-               txt.append("Could not get portlet bean. Bean manager is null.");
-            } else {
-               Set<Bean<?>> beans = bm.getBeans(cls);
-               if (beans == null || beans.size() == 0) {
-                  txt.append("Could not get portlet bean. No beans found.");
-               } else {
-                  Bean<?> bean = bm.resolve(beans);
-                  if (bean == null) {
-                     txt.append("Could not get portlet bean. Could not resolve bean.");
-                  } else {
-                     instance = bm.getReference(bean, bean.getBeanClass(), bm.createCreationalContext(bean));
-                     if (instance == null) {
-                        txt.append("Could not get portlet bean. Could not get bean instance.");
-                     }
-                  }
-               }
-            }
-            
-            // If the instance is still null, the portlet class might not be in a valid bean 
-            // archive, as a JSR 286 portlet might be. Try to get a regular old instance.
-            
-            if (instance == null) {
-               LOG.debug("Could not create bean (possibly not in a valid bean archive). Now directly instantiating class: " + cls.getCanonicalName());
-               try {
-                  instance = cls.newInstance();
-               } catch(Exception e) {
-                  txt.append(" Exception creating instance of class: ").append(e.toString());
-               }
-            }
-            
-            
-            if ((instance == null) && (txt.length() > 0)) {
-               txt.append(" Portlet name: ").append(pd.getPortletName());
-               txt.append(", portlet class: ").append(cls);
-               LOG.warn(txt.toString());
-            }
-         }
 
-         if (instance != null) {
-            
-            // The annotated method store might contain methods from the configured
-            // portlet class being processed. For example, this may occur when an action
-            // or event method in the portlet class is annotated to specify processing or
-            // publishing event references. Such annotated methods must use the same bean
-            // instance, so fix up the method store.
-            
-            ams.setPortletClassInstance(pd.getPortletName(), cls, instance);
+         if (cls != null) {
 
             // extract the methods from the portlet class and add them to the method store
             // as long there is no corresponding annotated method already present.
             // (annotated methods take precedence over portlet class methods). 
             
             AnnotatedMethod am;
-            am = getMethod(instance, "init", METH_INI);
+            am = getMethod(cls, "init", METH_INI);
             if (am != null) {
                MethodIdentifier mi = new MethodIdentifier(pd.getPortletName(), "", MethodType.INIT);
                if (ams.getMethods(mi).size() == 0) {
@@ -565,7 +511,7 @@ public abstract class ConfigurationProcessor {
                }
             }
             
-            am = getMethod(instance, "destroy", METH_DES);
+            am = getMethod(cls, "destroy", METH_DES);
             if (am != null) {
                MethodIdentifier mi = new MethodIdentifier(pd.getPortletName(), "", MethodType.DESTROY);
                if (ams.getMethods(mi).size() == 0) {
@@ -573,7 +519,7 @@ public abstract class ConfigurationProcessor {
                }
             }
             
-            am = getMethod(instance, "processAction", METH_ACT);
+            am = getMethod(cls, "processAction", METH_ACT);
             if (am != null) {
                MethodIdentifier mi = new MethodIdentifier(pd.getPortletName(), "", MethodType.ACTION);
                if (ams.getMethods(mi).size() == 0) {
@@ -581,7 +527,7 @@ public abstract class ConfigurationProcessor {
                }
             }
             
-            am = getMethod(instance, "processEvent", METH_EVT);
+            am = getMethod(cls, "processEvent", METH_EVT);
             if (am != null) {
                MethodIdentifier mi = new MethodIdentifier(pd.getPortletName(), "", MethodType.EVENT);
                if (ams.getMethods(mi).size() == 0) {
@@ -589,7 +535,7 @@ public abstract class ConfigurationProcessor {
                }
             }
             
-            am = getMethod(instance, "render", METH_REN);
+            am = getMethod(cls, "render", METH_REN);
             if (am != null) {
                MethodIdentifier mi = new MethodIdentifier(pd.getPortletName(), "", MethodType.RENDER);
                if (ams.getMethods(mi).size() == 0) {
@@ -597,7 +543,7 @@ public abstract class ConfigurationProcessor {
                }
             }
             
-            am = getMethod(instance, "renderHeaders", METH_HDR);
+            am = getMethod(cls, "renderHeaders", METH_HDR);
             if (am != null) {
                MethodIdentifier mi = new MethodIdentifier(pd.getPortletName(), "", MethodType.HEADER);
                if (ams.getMethods(mi).size() == 0) {
@@ -605,7 +551,7 @@ public abstract class ConfigurationProcessor {
                }
             }
             
-            am = getMethod(instance, "serveResource", METH_RES);
+            am = getMethod(cls, "serveResource", METH_RES);
             if (am != null) {
                MethodIdentifier mi = new MethodIdentifier(pd.getPortletName(), "", MethodType.RESOURCE);
                if (ams.getMethods(mi).size() == 0) {
@@ -655,18 +601,120 @@ public abstract class ConfigurationProcessor {
    }
    
    /**
+    * Activates the bean methods in the method store. Instantiates any portlet classes and fixes 
+    * up the method store so that methods of the same class use the same class instance.
+    */
+   public void instantiatePortlets(AnnotatedMethodStore ams, BeanManager bm) {
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Instantiating the portlets.");
+         txt.append(" bean mgr = null: ").append(bm == null);
+         txt.append(", portlet names: ").append(Arrays.toString(ams.getPortletNames().toArray()));
+         LOG.debug(txt.toString());
+      }
+      
+      ams.activateMethods(bm);
+    
+      for (PortletDefinition pd : pad.getPortlets()) {
+         String clsName = pd.getPortletClass();
+         
+         if (clsName != null) {
+            ClassLoader cl = Thread.currentThread().getContextClassLoader();
+            if (cl == null) {
+               cl = this.getClass().getClassLoader();
+            }
+            try {
+               Class<?> cls = cl.loadClass(clsName);
+               Object instance = null;
+               
+               // Let CDI instantiate the portlet to allow for injection. 
+               // Get the single bean instance for the portlet class.
+               
+               StringBuilder txt = new StringBuilder(128);
+               if (bm == null) {
+                  txt.append("Could not get portlet bean. Bean manager is null.");
+               } else {
+                  Set<Bean<?>> beans = bm.getBeans(cls);
+                  if (beans == null || beans.size() == 0) {
+                     txt.append("Could not get portlet bean. No beans found.");
+                  } else {
+                     Bean<?> bean = bm.resolve(beans);
+                     if (bean == null) {
+                        txt.append("Could not get portlet bean. Could not resolve bean.");
+                     } else {
+                        instance = bm.getReference(bean, bean.getBeanClass(), bm.createCreationalContext(bean));
+                        if (instance == null) {
+                           txt.append("Could not get portlet bean. Could not get bean instance.");
+                        }
+                     }
+                  }
+               }
+               
+               // If the instance is still null, the portlet class might not be in a valid bean 
+               // archive, as a JSR 286 portlet might be. Try to get a regular old instance.
+               
+               if (instance == null) {
+                  LOG.debug("Could not create bean (possibly not in a valid bean archive). Now directly instantiating class: " + cls.getCanonicalName());
+                  try {
+                     instance = cls.newInstance();
+                  } catch(Exception e) {
+                     txt.append(" Exception creating instance of class: ").append(e.toString());
+                  }
+               }
+               
+               // If all went well, fix up the method store with the instance
+               
+               if (instance != null) {
+                  
+                  // The annotated method store might contain methods from the configured
+                  // portlet class being processed. For example, this may occur when an action
+                  // or event method in the portlet class is annotated to specify processing or
+                  // publishing event references. Such annotated methods must use the same bean
+                  // instance, so fix up the method store.
+
+                  ams.setPortletClassInstance(pd.getPortletName(), cls, instance);
+                  
+                  if (isTrace) {
+                     StringBuilder str = new StringBuilder();
+                     str.append("Updating class instances.");
+                     str.append(" portlet name: ").append(pd.getPortletName());
+                     str.append(", class: ").append(cls.getCanonicalName());
+                     str.append(", instance: ").append((instance == null) ? "null" : "not null");
+                     LOG.debug(str.toString());
+                  }
+
+               }
+               
+               // handle error situation
+               
+               if (instance == null) {
+                  txt.append(" Portlet name: ").append(pd.getPortletName());
+                  txt.append(", portlet class: ").append(cls);
+                  LOG.warn(txt.toString());
+               }
+
+               
+            } catch (ClassNotFoundException e) {
+               LOG.debug("Could not instantiate portlet class: " + clsName);
+            }
+
+         }
+      }
+   }
+   
+   /**
     * helper method for extracting the portlet methods from the portlet class.
     * @param cls
     * @param name
     * @param md
     * @return
     */
-   private AnnotatedMethod getMethod(Object instance, String name, MethodDescription md) {
+   private AnnotatedMethod getMethod(Class<?> cls, String name, MethodDescription md) {
       AnnotatedMethod am = null;
-      Class<?> cls = instance.getClass();
       try {
          Method meth = cls.getMethod(name, md.getArgTypes());
-         am = new AnnotatedMethod(cls, instance, meth, md);
+         am = new AnnotatedMethod(cls, null, meth, md);
       } catch (Exception e) {
          if (isDebug) {
             StringBuilder txt = new StringBuilder();

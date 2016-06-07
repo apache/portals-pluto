@@ -145,13 +145,14 @@ public class PortletServlet3 extends HttpServlet {
       // Retrieve portlet name as defined as an initialization parameter.
       portletName = getInitParameter(PORTLET_NAME);
       
-      // Get the config bean and create the invoker
+      // Get the config bean, instantiate the portlets, and create the invoker
       holder = (ConfigurationHolder) config.getServletContext().getAttribute(ConfigurationHolder.ATTRIB_NAME);
       try {
          if (holder == null || holder.getMethodStore() == null) {
             LOG.error("Could not obtain configuration bean for portlet " + portletName + ". Exiting.");
             return;
          } else {
+            holder.instantiatePortlets(beanmgr);
             invoker = new PortletInvoker(holder.getMethodStore(), portletName);
             LOG.debug("Created the portlet invoker for portlet: " + portletName);
          }

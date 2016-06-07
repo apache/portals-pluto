@@ -550,7 +550,7 @@ public class AnnotatedMethodStore {
       for (MethodIdentifier mi : getMethodIDsForPortlet(portletName)) {
          List<AnnotatedMethod> list =  methods.get(mi);
          for (AnnotatedMethod am : list) {
-            if (am.getJavaMethod().getDeclaringClass().equals(cls)) {
+            if (am.getBeanClass().equals(cls)) {
                am.setPortletClassInstance(beanInstance);
             }
          }

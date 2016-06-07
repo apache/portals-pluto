@@ -8,7 +8,13 @@ import java.util.Set;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class AnnotatedMethod {
+   private static final Logger LOG = LoggerFactory.getLogger(AnnotatedMethod.class);
+   private static final boolean isTrace = LOG.isTraceEnabled();
+   
    
    private final Class<?>           beanClass; 
    private final Method             meth;
@@ -83,6 +89,13 @@ public class AnnotatedMethod {
    }
 
    /**
+    * @return the beanClass
+    */
+   public Class<?> getBeanClass() {
+      return beanClass;
+   }
+
+   /**
     * The annotated method is activated by using the specified BeanManager to
     * obtain a reference to a bean that can be used for method invocation.
     * 
@@ -102,6 +115,15 @@ public class AnnotatedMethod {
     * @param beanInstance
     */
    public void setPortletClassInstance(Object beanInstance) {
+      
+      if (isTrace) {
+         StringBuilder str = new StringBuilder();
+         str.append("Updating class instance.");
+         str.append(", bean class: ").append(beanClass.getCanonicalName());
+         str.append(", instance: ").append((beanInstance == null) ? "null" : "not null");
+         LOG.debug(str.toString());
+      }
+
       this.beanInstance = beanInstance;
       this.isPortletClass = true;
    }
@@ -123,6 +145,7 @@ public class AnnotatedMethod {
          // scope of the bean.
          beanInstance = beanMgr.getReference(bean, bean.getBeanClass(), beanMgr.createCreationalContext(bean));
       }
+
       return meth.invoke(beanInstance, args);
    }
 

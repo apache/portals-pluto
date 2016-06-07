@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
@@ -94,7 +93,6 @@ public abstract class AnnotationRecognizer {
    @SuppressWarnings({ "unchecked", "rawtypes" })
    public void checkAnnotatedType(ProcessAnnotatedType pat) throws InvalidAnnotationException {
       AnnotatedType<?> aType = pat.getAnnotatedType();
-      String typeName = aType.getJavaClass().getCanonicalName();
       try {
          
          // Process the class annotations
@@ -115,78 +113,7 @@ public abstract class AnnotationRecognizer {
             }
          }
          
-         // Get the annotated methods and handle them
-         
-         for (AnnotatedMethod<?> meth : aType.getMethods()) {
-            annos = meth.getAnnotations();
-            for (Annotation anno : annos) {
-               Class<? extends Annotation> keyAnno = 
-                     setContains(descriptions.keySet(), anno);
-               if (keyAnno != null) {
-                  
-                  // Get the valid method descriptions for this annotation
-                  
-                  List<MethodDescription> descs = descriptions.get(keyAnno);
-                  assert descs != null;
-                  assert descs.size() > 0;
-                  
-                  // try to find the matching method description
-                  
-                  MethodDescription matchingDesc = null;
-                  StringBuilder errtxt = new StringBuilder(128);
-                  String sep = "   ";
-                  for (MethodDescription desc : descs) {
-                     if (desc.isMethodMatched(meth.getJavaMember())) {
-                        matchingDesc = desc;
-                        break;
-                     } else {
-                        errtxt.append(sep).append(desc.getExpectedSignature(true));
-                        sep = "\n   ";
-                     }
-                  }
-  
-                  if (isTrace) {
-                     StringBuilder txt = new StringBuilder(128);
-                     txt.append("For method annotation: ").append(anno.annotationType().getSimpleName());
-                     txt.append(" on class: ").append(typeName);
-                     txt.append(", method: ").append(meth.getJavaMember().getName());
-                     if (matchingDesc != null) {
-                        txt.append(", recognized type: ").append(matchingDesc.getType());
-                        txt.append(", signature variant: ").append(matchingDesc.getVariant());
-                     } else {
-                        txt.append(", No match found. Error string:\n");
-                        txt.append(errtxt);
-                     }
-                     LOG.trace(txt.toString());
-                  }
-
-                  if (matchingDesc != null) {
-                     
-                     // Found a matching method, so handle.
-                     
-                     handleMethod(anno, aType.getJavaClass(), meth.getJavaMember(), matchingDesc);
-                  } else {
-                     
-                     // Method doesn't match any of the descriptions. 
-                     // this might occur when someone makes a mistake with configuration,
-                     // so handle gracefully.
-                     
-                     StringBuilder txt = new StringBuilder(128);
-                     txt.append("Unrecognized method annotation: ")
-                        .append(anno.annotationType().getSimpleName());
-                     txt.append(", Class: ").append(typeName);
-                     txt.append(", Method: ").append(meth.getJavaMember().getName());
-                     txt.append("\n").append(errtxt);
-                     LOG.debug(txt.toString());
-                     
-                     // Store the error for each portlet name in array 
-                     for (String n : getDisplayNames(anno)) {
-                        summary.addErrorString(n, txt.toString());
-                     }
-                  }
-               }
-            }
-         }
+         checkForMethodAnnotations(aType.getJavaClass());
          
       } catch (Exception e) {
          
@@ -197,6 +124,88 @@ public abstract class AnnotationRecognizer {
          txt.append(aType.toString());
          throw new InvalidAnnotationException(txt.toString(), e); 
       }
+   }
+   
+   /**
+    * recognizes and registers all portlet method annotations for the given class.
+    * 
+    * @param aClass  the annotated class 
+    */
+   protected void checkForMethodAnnotations(Class<?> aClass) {
+      String typeName = aClass.getCanonicalName();
+      
+      // Get the annotated methods and handle them
+      
+      for (Method meth : aClass.getMethods()) {
+         for (Annotation anno : meth.getAnnotations()) {
+            Class<? extends Annotation> keyAnno = 
+                  setContains(descriptions.keySet(), anno);
+            if (keyAnno != null) {
+               
+               // Get the valid method descriptions for this annotation
+               
+               List<MethodDescription> descs = descriptions.get(keyAnno);
+               assert descs != null;
+               assert descs.size() > 0;
+               
+               // try to find the matching method description
+               
+               MethodDescription matchingDesc = null;
+               StringBuilder errtxt = new StringBuilder(128);
+               String sep = "   ";
+               for (MethodDescription desc : descs) {
+                  if (desc.isMethodMatched(meth)) {
+                     matchingDesc = desc;
+                     break;
+                  } else {
+                     errtxt.append(sep).append(desc.getExpectedSignature(true));
+                     sep = "\n   ";
+                  }
+               }
+
+               if (isTrace) {
+                  StringBuilder txt = new StringBuilder(128);
+                  txt.append("For method annotation: ").append(anno.annotationType().getSimpleName());
+                  txt.append(" on class: ").append(typeName);
+                  txt.append(", method: ").append(meth.getName());
+                  if (matchingDesc != null) {
+                     txt.append(", recognized type: ").append(matchingDesc.getType());
+                     txt.append(", signature variant: ").append(matchingDesc.getVariant());
+                  } else {
+                     txt.append(", No match found. Error string:\n");
+                     txt.append(errtxt);
+                  }
+                  LOG.trace(txt.toString());
+               }
+
+               if (matchingDesc != null) {
+                  
+                  // Found a matching method, so handle.
+                  
+                  handleMethod(anno, aClass, meth, matchingDesc);
+               } else {
+                  
+                  // Method doesn't match any of the descriptions. 
+                  // this might occur when someone makes a mistake with configuration,
+                  // so handle gracefully.
+                  
+                  StringBuilder txt = new StringBuilder(128);
+                  txt.append("Unrecognized method annotation: ")
+                     .append(anno.annotationType().getSimpleName());
+                  txt.append(", Class: ").append(typeName);
+                  txt.append(", Method: ").append(meth.getName());
+                  txt.append("\n").append(errtxt);
+                  LOG.debug(txt.toString());
+                  
+                  // Store the error for each portlet name in array 
+                  for (String n : getDisplayNames(anno)) {
+                     summary.addErrorString(n, txt.toString());
+                  }
+               }
+            }
+         }
+      }
+
    }
 
    /**
@@ -257,12 +266,15 @@ public abstract class AnnotationRecognizer {
 
    /**
     * To be called by the CDI extension afterDeploymentValidation method to
-    * verify that the stored methods are consistent and to create the bean referenecs.
+    * activate the custom scoped beans by providing a bean manager.
     *  
     * @param bm      BeanManager needed to activate the beans.
-    * @throws InvalidAnnotationException  If the deployment is inconsistent or if the
-    *                                     beans cannot be instantiated.
     */
-   protected abstract void activateDeployment(BeanManager bm)
-         throws InvalidAnnotationException;
+   protected abstract void activateCustomScopes(BeanManager bm);
+
+   /**
+    * To be after the beans have been recognized and CDI is initialized to
+    * verify that the stored methods are consistent.
+    */
+   protected abstract void activateAnnotatedMethods(BeanManager bm);
 }
