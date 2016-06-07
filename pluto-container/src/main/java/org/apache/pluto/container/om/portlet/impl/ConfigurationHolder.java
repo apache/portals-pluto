@@ -63,6 +63,8 @@ public class ConfigurationHolder {
                                                            + "org.apache.pluto.container.om.portlet20.impl:"
                                                            + "org.apache.pluto.container.om.portlet30.impl";
 
+   private AnnotatedMethodStore methodStore;
+   
    /**
     * Default constructor
     */
@@ -85,6 +87,20 @@ public class ConfigurationHolder {
     */
    public PortletApplicationDefinition getPad() {
       return pad;
+   }
+
+   /**
+    * @return the methodStore
+    */
+   public AnnotatedMethodStore getMethodStore() {
+      return methodStore;
+   }
+
+   /**
+    * @param methodStore the methodStore to set
+    */
+   public void setMethodStore(AnnotatedMethodStore methodStore) {
+      this.methodStore = methodStore;
    }
 
    /**
@@ -248,6 +264,16 @@ public class ConfigurationHolder {
          jcp = new JSR362ConfigurationProcessor(pad);
       }
       jcp.validate();
+   }
+
+   /**
+    * Reconciles the bean configuration with the config from annotations & portlet DD.
+    */
+   public void reconcileBeanConfig() {
+      if (jcp == null) {
+         jcp = new JSR362ConfigurationProcessor(pad);
+      }
+      jcp.reconcileBeanConfig(methodStore);
    }
 
    /**

@@ -62,15 +62,23 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
    private static final Logger       LOG     = LoggerFactory.getLogger(PortletInvoker.class);
    private static final boolean      isDebug = LOG.isDebugEnabled();
 
-   private final AnnotatedConfigBean acb;
-   private final String              portletName;
-   private PortletConfig             config;
+   private final AnnotatedMethodStore  methodStore;
+   private final String                portletName;
+   private PortletConfig               config;
+
+   /**
+    * Construct for given portlet name.
+    */
+   public PortletInvoker(AnnotatedMethodStore methodStore, String portletName) {
+      this.methodStore = methodStore;
+      this.portletName = portletName;
+   }
 
    /**
     * Construct for given portlet name.
     */
    public PortletInvoker(AnnotatedConfigBean acb, String portletName) {
-      this.acb = acb;
+      this.methodStore = acb.getMethodStore();
       this.portletName = portletName;
    }
 
@@ -93,7 +101,7 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
          LOG.debug("Retrieving method for method identifier: " + mi.toString());
       }
 
-      List<AnnotatedMethod> meths = acb.getMethodStore().getMethods(mi);
+      List<AnnotatedMethod> meths = methodStore.getMethods(mi);
       if (meths.isEmpty()) {
          Object id = mi.getId();
          if ((id != null) && (id instanceof String) && ((String) id).length() > 0) {
@@ -101,7 +109,7 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
             if (isDebug) {
                LOG.debug("Retrying retrieval with method identifier: " + mi.toString());
             }
-            meths = acb.getMethodStore().getMethods(mi);
+            meths = methodStore.getMethods(mi);
          }
       }
 
