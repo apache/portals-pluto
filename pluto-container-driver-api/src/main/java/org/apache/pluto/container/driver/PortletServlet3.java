@@ -17,6 +17,8 @@
 package org.apache.pluto.container.driver;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -157,7 +159,17 @@ public class PortletServlet3 extends HttpServlet {
             LOG.debug("Created the portlet invoker for portlet: " + portletName);
          }
       } catch(Exception e) {
-         LOG.error("Exception obtaining configuration bean for portlet " + portletName + ". Exiting. Exception: " + e.toString());
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Exception obtaining configuration bean for portlet ");
+         txt.append(portletName).append(". Exiting. Exception: ");
+
+         StringWriter sw = new StringWriter();
+         PrintWriter pw = new PrintWriter(sw);
+         e.printStackTrace(pw);
+         pw.flush();
+         txt.append(sw.toString());
+         
+         LOG.error(txt.toString());
          return;
       }
 

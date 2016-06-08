@@ -99,13 +99,15 @@ public class AnnotatedMethod {
     * The annotated method is activated by using the specified BeanManager to
     * obtain a reference to a bean that can be used for method invocation.
     * 
-    * @param bm   The BeanManager
+    * @param bm   The BeanManager, may be null if non-bean class
     */
    public void activate(BeanManager bm) {
       beanMgr = bm;
-      Set<Bean<?>> beans = bm.getBeans(beanClass);
-      bean = bm.resolve(beans);
-      assert bean != null;
+      if (bm != null) {
+         Set<Bean<?>> beans = bm.getBeans(beanClass);
+         bean = bm.resolve(beans);
+         assert bean != null;
+      }
    }
    
    /**
