@@ -18,15 +18,24 @@
 
 package org.apache.pluto.container.bean.processor;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.annotation.Annotation;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.portlet.annotations.ActionMethod;
 import javax.portlet.annotations.EventMethod;
 import javax.portlet.annotations.HeaderMethod;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
+import javax.servlet.ServletContext;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.infomas.annotation.AnnotationDetector;
 
@@ -36,18 +45,25 @@ import eu.infomas.annotation.AnnotationDetector;
  * @author Scott Nicklous
  * 
  */
-public class MethodAnnoRecognizer implements AnnotationDetector.MethodReporter {
-   private static final Logger  LOGGER  = Logger.getLogger(MethodAnnoRecognizer.class.getName());
-   private static final boolean isDebug = LOGGER.isLoggable(Level.FINE);
-   private static final boolean isTrace = LOGGER.isLoggable(Level.FINEST);
+public class MethodAnnotationRecognizer extends PortletAnnotationRecognizer implements AnnotationDetector.MethodReporter {
+   private static final Logger LOG = LoggerFactory.getLogger(MethodAnnotationRecognizer.class);
+   private static final boolean isDebug = LOG.isDebugEnabled();
    
-   AnnotationDetector ad;
+   private static final String  CLASSDIR  = "/WEB-INF/classes";
+   private static final String  LIBDIR    = "/WEB-INF/lib";
+   
+   private AnnotationDetector ad;
+   private Set<String> handledClasses = new HashSet<String>();
 
 
-   public MethodAnnoRecognizer() {
+   public MethodAnnotationRecognizer(AnnotatedMethodStore pms, ConfigSummary summary) {
+      super(pms, summary);
       ad = new AnnotationDetector(this);
    }
 
+   /**
+    * Defines the annotation classes to be scanned for
+    */
    @SuppressWarnings("unchecked")
    @Override
    public Class<? extends Annotation>[] annotations() {
@@ -55,15 +71,174 @@ public class MethodAnnoRecognizer implements AnnotationDetector.MethodReporter {
             ServeResourceMethod.class };
    }
 
+   /**
+    * Callback when a target annotation is found. Reuses superclass functionality to
+    * register all portlet annotated methods in the class.
+    */
    @Override
    public void reportMethodAnnotation(Class<? extends Annotation> anno, String className, String methName) {
-      if (isDebug) {
+      
+      if (!handledClasses.contains(className)) {
+         handledClasses.add(className);
+         
+         Class<?> valClass = null;
          StringBuilder txt = new StringBuilder(128);
-         txt.append("Found: ").append(anno.getSimpleName());
-         txt.append(", class name: ").append(className);
-         txt.append(", method name: ").append(methName);
-         LOGGER.fine(txt.toString());
+         try {
+            ClassLoader cl = Thread.currentThread().getContextClassLoader();
+            if (cl == null) {
+               cl = this.getClass().getClassLoader();
+            }
+            valClass = cl.loadClass(className);
+         } catch (Exception e) {
+         }
+
+         if (isDebug) {
+            txt.append("Found: ").append(anno.getSimpleName());
+            txt.append(", class name: ").append(className);
+            txt.append(", method name: ").append(methName);
+            txt.append(", class: ").append((valClass == null) ? "could not be loaded." : "loaded.");
+            LOG.debug(txt.toString());
+         }
+
+         if (valClass != null) {
+            checkForMethodAnnotations(valClass);
+         }
       }
    }
+   
+   /**
+    * Scans the servlet context classes and libraries for portlet method
+    * annotations.
+    * 
+    * @param ctx     the servlet context
+    */
+   public void scanContext(ServletContext ctx) {
+      Set<File> files;
+      
+      files = getClassFilesForPath(ctx, CLASSDIR);
+      scanFiles(files);
+      
+      files = getLibFilesForPath(ctx, LIBDIR);
+      scanFiles(files);
+      
+      activateAnnotatedMethods(null);
+   }
+   
+   /**
+    * Scans the given set of files for annotations.
+    * 
+    * @param files   the files to scan
+    */
+   public void scanFiles(Set<File> files) {
+      
+      long start = System.currentTimeMillis();
+      try {
+         ad.detect(files.toArray(new File[0]));
+      } catch (IOException e) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Exception scanning for method annotations.");
+         
+         StringWriter sw = new StringWriter();
+         PrintWriter pw = new PrintWriter(sw);
+         e.printStackTrace(pw);
+         pw.flush();
+         txt.append(sw.toString());
+         
+         LOG.warn(txt.toString());
+      }
+      long delta = System.currentTimeMillis() - start;
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Scanned ").append(files.size()).append(" files.");
+         txt.append(" Time: ").append(delta).append(" ms.");
+         txt.append("Files: ");
+         String sep = "";
+         for (File file : files) {
+            txt.append(sep).append(file.toString());
+            sep = ", ";
+         }
+         LOG.debug(txt.toString());
+      }
+   }
+   
+
+   /**
+    * Generates a list of all class files available on a given servlet context 
+    * resource path.
+    * 
+    * @param ctx     the servlet context
+    * @param path    the resource path
+    * 
+    * @return        a set of class files
+    */
+   public Set<File> getClassFilesForPath(ServletContext ctx, String path) {
+      Set<File> files = new HashSet<File>();
+      Set<String> paths = ctx.getResourcePaths(path);
+      if (paths != null) {
+         for (String pth : paths) {
+            if (pth.endsWith("META-INF/")) {
+               continue;
+            } else if (pth.endsWith("/")) {
+               files.addAll(getClassFilesForPath(ctx, pth));
+            } else if (pth.endsWith(".class")) {
+               try {
+                  URL url = ctx.getResource(pth);
+                  File f = new File(url.toURI());
+                  files.add(f);
+               } catch(Exception e) {
+                  StringBuilder txt = new StringBuilder(128);
+                  txt.append("Exception getting library file.");
+
+                  StringWriter sw = new StringWriter();
+                  PrintWriter pw = new PrintWriter(sw);
+                  e.printStackTrace(pw);
+                  pw.flush();
+                  txt.append(sw.toString());
+
+                  LOG.warn(txt.toString());
+               }
+            }
+         }
+      }
+      return files;
+   }
+
+   /**
+    * Returns a set of all library files in the designated servlet context resource path.
+    * 
+    * @param ctx     the servlet context
+    * @param path    the resource path
+    * 
+    * @return        a set of class files
+    */
+   public Set<File> getLibFilesForPath(ServletContext ctx, String path) {
+      Set<File> files = new HashSet<File>();
+      Set<String> libs = ctx.getResourcePaths(path);
+      if (libs != null) {
+         for (String lib : libs) {
+            if (lib.endsWith(".jar")) {
+               try {
+                  URL url = ctx.getResource(lib);
+                  File f = new File(url.toURI());
+                  files.add(f);
+               } catch(Exception e) {
+                  StringBuilder txt = new StringBuilder(128);
+                  txt.append("Exception getting library file.");
+                  
+                  StringWriter sw = new StringWriter();
+                  PrintWriter pw = new PrintWriter(sw);
+                  e.printStackTrace(pw);
+                  pw.flush();
+                  txt.append(sw.toString());
+                  
+                  LOG.warn(txt.toString());
+               }
+            }
+         }
+      }
+      return files;
+   }
+
 
 }

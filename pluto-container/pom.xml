@@ -68,6 +68,13 @@
          <scope>provided</scope>
       </dependency>
 
+      <!-- CDI API for extension -->
+      <dependency>
+         <groupId>javax.enterprise</groupId>
+         <artifactId>cdi-api</artifactId>
+         <version>1.2</version>
+      </dependency>
+
       <!-- Testing Libraries ================================================= -->
       <dependency>
          <groupId>org.slf4j</groupId>

@@ -415,9 +415,6 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
          }
       }
       
-      //TODO: remove ams initialization
-      ams.activateMethods(bm);
-      
    }
 
    /**

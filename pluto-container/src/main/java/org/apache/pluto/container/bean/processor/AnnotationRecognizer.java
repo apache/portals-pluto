@@ -113,8 +113,6 @@ public abstract class AnnotationRecognizer {
             }
          }
          
-         checkForMethodAnnotations(aType.getJavaClass());
-         
       } catch (Exception e) {
          
          // The rest of the possible exceptions are unexpected, so someone will
