@@ -221,9 +221,21 @@ public class ResourceConfig implements PropertyConfigService
     }
     
     /**
-     * Writes config info to log depending on trace settings.
+     * Makes sure that defaults are set for backward compatibility if the page def file 
+     * had no page resource definitions. Writes config info to log depending on trace settings.
      */
-    public void traceConfig() {
+    public void initialized() {
+       
+       // let the page resources set defaults
+       pageResources.initialized();
+       
+       if (defaultPageResources.isEmpty()) {
+          defaultPageResources.add(new PageResourceId("pluto.css", "org.apache.portals", "3.0.0"));
+          defaultPageResources.add(new PageResourceId("portlet-spec-1.0.css", "org.apache.portals", "1.0.0"));
+          defaultPageResources.add(new PageResourceId("portlet-spec-2.0.css", "org.apache.portals", "2.0.0"));
+          defaultPageResources.add(new PageResourceId("pluto.js", "org.apache.portals", "3.0.0"));
+       }
+       
        if (LOG.isDebugEnabled()) {
           StringBuilder txt = new StringBuilder(128);
           txt.append("Logging config info.\n");

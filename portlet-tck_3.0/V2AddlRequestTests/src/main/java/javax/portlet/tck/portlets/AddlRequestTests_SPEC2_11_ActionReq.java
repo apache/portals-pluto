@@ -80,9 +80,20 @@ public class AddlRequestTests_SPEC2_11_ActionReq implements Portlet {
     /* types for the output in order of preference" */
     TestResult tr1 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE2);
     Enumeration<String> contentTypesTr1 = portletReq.getResponseContentTypes();
-    if (contentTypesTr1 != null && contentTypesTr1.hasMoreElements()
-        && !contentTypesTr1.nextElement().isEmpty())
-      tr1.setTcSuccess(true);
+    if (contentTypesTr1 != null) {
+       List<String> list = Collections.list(contentTypesTr1);
+       if (list.isEmpty()) {
+          tr1.appendTcDetail("Enumeration was empty.");
+       } else {
+          if (list.get(0).isEmpty()) {
+             tr1.appendTcDetail("First content type string is empty.");
+          } else {
+             tr1.setTcSuccess(true);
+          }
+       }
+    } else {
+       tr1.appendTcDetail("Enumeration was null.");
+    }
     tr1.writeTo(writer);
 
     /* TestCase: V2AddlRequestTests_SPEC2_11_ActionReq_contentType3 */
@@ -90,9 +101,21 @@ public class AddlRequestTests_SPEC2_11_ActionReq implements Portlet {
     /* getResponseContentTypes method must equal the value returned by */
     /* the getResponseContentType method" */
     TestResult tr2 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE3);
-    if (portletReq.getResponseContentTypes().nextElement()
-        .equals(portletReq.getResponseContentType()))
-      tr2.setTcSuccess(true);
+    Enumeration<String> contentTypesTr2 = portletReq.getResponseContentTypes();
+    if (contentTypesTr2 != null) {
+       List<String> list = Collections.list(contentTypesTr2);
+       if (list.isEmpty()) {
+          tr2.appendTcDetail("Enumeration was empty.");
+       } else {
+          if (!list.get(0).equals(portletReq.getResponseContentType())) {
+             tr2.appendTcDetail("First content type string does not equal PortletRequest#getResponseContentType().");
+          } else {
+             tr2.setTcSuccess(true);
+          }
+       }
+    } else {
+       tr2.appendTcDetail("Enumeration was null.");
+    }
     tr2.writeTo(writer);
 
     /* TestCase: V2AddlRequestTests_SPEC2_11_ActionReq_contentType4 */

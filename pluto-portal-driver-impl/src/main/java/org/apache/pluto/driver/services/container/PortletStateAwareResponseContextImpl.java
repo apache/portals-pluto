@@ -104,6 +104,16 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
         super.release();
     }
     
+    /**
+     * called to discard any set events or render parameters
+     */
+    @Override
+    public void reset() {
+       events = null;
+       portletURLProvider = new PortletURLProviderImpl(getPortalURL(), 
+             PortletURLProvider.TYPE.RENDER, getPortletWindow(), getRequestContext());
+    }
+    
     public List<Event> getEvents()
     {
         if (isReleased())

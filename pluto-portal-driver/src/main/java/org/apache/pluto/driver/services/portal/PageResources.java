@@ -69,7 +69,36 @@ public class PageResources {
          return txt.toString();
       }
    }
+
+   // Initialization for backward compatibility with page config files that don't 
+   // define resources
+
+   private static final Map<PageResourceId, Source> defaultResources = new HashMap<PageResourceId, Source>();
+   static {
+      
+      PageResourceId resid;
+      Source src;
+      
+      resid = new PageResourceId("pluto.css", "org.apache.portals", "3.0.0");
+      src = new Source(Type.CSS, "/css/pluto.css");
+      defaultResources.put(resid, src);
+      
+      resid = new PageResourceId("portlet-spec-1.0.css", "org.apache.portals", "1.0.0");
+      src = new Source(Type.CSS, "/css/portlet-spec-1.0.css");
+      defaultResources.put(resid, src);
+      
+      resid = new PageResourceId("portlet-spec-2.0.css", "org.apache.portals", "2.0.0");
+      src = new Source(Type.CSS, "/css/portlet-spec-2.0.css");
+      defaultResources.put(resid, src);
+      
+      resid = new PageResourceId("pluto.js", "org.apache.portals", "3.0.0");
+      src = new Source(Type.SCRIPT, "/javascript/portletHub.js");
+      defaultResources.put(resid, src);
+      
+   }
    
+   // The map containing the current page resources
+
    private Map<PageResourceId, Source> resources = new HashMap<PageResourceId, Source>();
    
    public PageResources() {
@@ -86,6 +115,18 @@ public class PageResources {
       }
    }
    
+   /**
+    * called after initial config read to set defaults if necessary
+    */
+   public void initialized() {
+      if (resources.isEmpty()) {
+         resources.putAll(defaultResources);
+      }
+   }
+   
+   /**
+    * adds a resource
+    */
    public void addResource(PageResourceId id, Type type, String source) {
       if (id.getName() != null && id.getScope() != null  && type != null && 
             id.getVersion() != null && source != null) {
