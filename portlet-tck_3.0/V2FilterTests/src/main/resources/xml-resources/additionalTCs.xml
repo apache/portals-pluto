@@ -22,16 +22,12 @@
 <!-- JSR 286 API FilterTests test case names and page mappings -->
 <entry key="V2FilterTests_FilterChain_ApiActionFilter_invokeActionFilter">V2FilterTests</entry>
 <entry key="V2FilterTests_FilterChain_ApiActionFilter_invokeActionFilter2">V2FilterTests</entry>
-<entry key="V2FilterTests_FilterChain_ApiActionFilter_invokeActionException">V2FilterTests</entry>
 <entry key="V2FilterTests_FilterChain_ApiEventFilter_invokeEventFilter">V2FilterTests</entry>
 <entry key="V2FilterTests_FilterChain_ApiEventFilter_invokeEventFilter2">V2FilterTests</entry>
-<entry key="V2FilterTests_FilterChain_ApiEventFilter_invokeEventException">V2FilterTests</entry>
 <entry key="V2FilterTests_FilterChain_ApiRenderFilter_invokeRenderFilter">V2FilterTests</entry>
 <entry key="V2FilterTests_FilterChain_ApiRenderFilter_invokeRenderFilter2">V2FilterTests</entry>
-<entry key="V2FilterTests_FilterChain_ApiRenderFilter_invokeRenderException">V2FilterTests</entry>
 <entry key="V2FilterTests_FilterChain_ApiResourceFilter_invokeResourceFilter">V2FilterTests</entry>
 <entry key="V2FilterTests_FilterChain_ApiResourceFilter_invokeResourceFilter2">V2FilterTests</entry>
-<entry key="V2FilterTests_FilterChain_ApiResourceFilter_invokeResourceException">V2FilterTests</entry>
 <entry key="V2FilterTests_FilterConfig_ApiRenderFilter_getFilterName">V2FilterTests</entry>
 <entry key="V2FilterTests_FilterConfig_ApiRenderFilter_getPortletContext">V2FilterTests</entry>
 <entry key="V2FilterTests_FilterConfig_ApiRenderFilter_getInitParameter1">V2FilterTests</entry>
@@ -40,24 +36,18 @@
 <entry key="V2FilterTests_FilterConfig_ApiRenderFilter_getInitParameterNames2">V2FilterTests</entry>
 <entry key="V2FilterTests_PortletFilter_ApiActionFilter_initAction1">V2FilterTests</entry>
 <entry key="V2FilterTests_PortletFilter_ApiActionFilter_initAction2">V2FilterTests</entry>
-<entry key="V2FilterTests_PortletFilter_ApiActionFilter_initAction3">V2FilterTests</entry>
 <entry key="V2FilterTests_PortletFilter_ApiEventFilter_initEvent1">V2FilterTests</entry>
 <entry key="V2FilterTests_PortletFilter_ApiEventFilter_initEvent2">V2FilterTests</entry>
-<entry key="V2FilterTests_PortletFilter_ApiEventFilter_initEvent3">V2FilterTests</entry>
 <entry key="V2FilterTests_PortletFilter_ApiRenderFilter_initRender1">V2FilterTests</entry>
 <entry key="V2FilterTests_PortletFilter_ApiRenderFilter_initRender2">V2FilterTests</entry>
-<entry key="V2FilterTests_PortletFilter_ApiRenderFilter_initRender3">V2FilterTests</entry>
 <entry key="V2FilterTests_PortletFilter_ApiResourceFilter_initResource1">V2FilterTests</entry>
 <entry key="V2FilterTests_PortletFilter_ApiResourceFilter_initResource2">V2FilterTests</entry>
-<entry key="V2FilterTests_PortletFilter_ApiResourceFilter_initResource3">V2FilterTests</entry>
 <entry key="V2FilterTests_ActionFilter_ApiActionFilter_canBeConfigured1">V2FilterTests</entry>
 <entry key="V2FilterTests_ActionFilter_ApiActionFilter_canBeConfigured2">V2FilterTests</entry>
 <entry key="V2FilterTests_ActionFilter_ApiActionFilter_doFilterIsCalled">V2FilterTests</entry>
 <entry key="V2FilterTests_ActionFilter_ApiActionFilter_doFilterProcessAction1">V2FilterTests</entry>
 <entry key="V2FilterTests_ActionFilter_ApiActionFilter_doFilterProcessAction2">V2FilterTests</entry>
 <entry key="V2FilterTests_ActionFilter_ApiActionFilter_doFilterBlock">V2FilterTests</entry>
-<entry key="V2FilterTests_ActionFilter_ApiActionFilter_doFilterException1">V2FilterTests</entry>
-<entry key="V2FilterTests_ActionFilter_ApiActionFilter_doFilterException2">V2FilterTests</entry>
 <entry key="V2FilterTests_ActionFilter_ApiActionFilter_doFilterExamine">V2FilterTests</entry>
 <entry key="V2FilterTests_EventFilter_ApiEventFilter_canBeConfigured1">V2FilterTests</entry>
 <entry key="V2FilterTests_EventFilter_ApiEventFilter_canBeConfigured2">V2FilterTests</entry>
@@ -65,8 +55,6 @@
 <entry key="V2FilterTests_EventFilter_ApiEventFilter_doFilterProcessEvent1">V2FilterTests</entry>
 <entry key="V2FilterTests_EventFilter_ApiEventFilter_doFilterProcessEvent2">V2FilterTests</entry>
 <entry key="V2FilterTests_EventFilter_ApiEventFilter_doFilterBlock">V2FilterTests</entry>
-<entry key="V2FilterTests_EventFilter_ApiEventFilter_doFilterException1">V2FilterTests</entry>
-<entry key="V2FilterTests_EventFilter_ApiEventFilter_doFilterException2">V2FilterTests</entry>
 <entry key="V2FilterTests_EventFilter_ApiEventFilter_doFilterExamine">V2FilterTests</entry>
 <entry key="V2FilterTests_RenderFilter_ApiRenderFilter_canBeConfigured1">V2FilterTests</entry>
 <entry key="V2FilterTests_RenderFilter_ApiRenderFilter_canBeConfigured2">V2FilterTests</entry>
@@ -74,8 +62,6 @@
 <entry key="V2FilterTests_RenderFilter_ApiRenderFilter_doFilterProcessRender1">V2FilterTests</entry>
 <entry key="V2FilterTests_RenderFilter_ApiRenderFilter_doFilterProcessRender2">V2FilterTests</entry>
 <entry key="V2FilterTests_RenderFilter_ApiRenderFilter_doFilterBlock">V2FilterTests</entry>
-<entry key="V2FilterTests_RenderFilter_ApiRenderFilter_doFilterException1">V2FilterTests</entry>
-<entry key="V2FilterTests_RenderFilter_ApiRenderFilter_doFilterException2">V2FilterTests</entry>
 <entry key="V2FilterTests_RenderFilter_ApiRenderFilter_doFilterExamine">V2FilterTests</entry>
 <entry key="V2FilterTests_ResourceFilter_ApiResourceFilter_canBeConfigured1">V2FilterTests</entry>
 <entry key="V2FilterTests_ResourceFilter_ApiResourceFilter_canBeConfigured2">V2FilterTests</entry>
@@ -83,7 +69,5 @@
 <entry key="V2FilterTests_ResourceFilter_ApiResourceFilter_doFilterProcessResource1">V2FilterTests</entry>
 <entry key="V2FilterTests_ResourceFilter_ApiResourceFilter_doFilterProcessResource2">V2FilterTests</entry>
 <entry key="V2FilterTests_ResourceFilter_ApiResourceFilter_doFilterBlock">V2FilterTests</entry>
-<entry key="V2FilterTests_ResourceFilter_ApiResourceFilter_doFilterException1">V2FilterTests</entry>
-<entry key="V2FilterTests_ResourceFilter_ApiResourceFilter_doFilterException2">V2FilterTests</entry>
 <entry key="V2FilterTests_ResourceFilter_ApiResourceFilter_doFilterExamine">V2FilterTests</entry>
 </properties>

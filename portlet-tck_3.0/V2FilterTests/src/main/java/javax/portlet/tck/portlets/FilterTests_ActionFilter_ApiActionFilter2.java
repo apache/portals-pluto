@@ -17,9 +17,10 @@ package javax.portlet.tck.portlets;
 
 import java.io.*;
 import java.util.logging.*;
-import javax.xml.namespace.QName;
 import javax.portlet.*;
 import javax.portlet.tck.beans.*;
+
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
 import static javax.portlet.tck.constants.Constants.*;
 
 /**
@@ -30,13 +31,13 @@ import static javax.portlet.tck.constants.Constants.*;
  *
  * This is the main portlet for the test cases. If the test cases call for events, this portlet will
  * initiate the events, but not process them. The processing is done in the companion portlet
- * FilterTests_PortletFilter_ApiEventFilter_event
- *
+ * FilterTests_ActionFilter_ApiActionFilter_event
+ * 
+ * @author ahmed
  */
-public class FilterTests_PortletFilter_ApiEventFilter implements Portlet {
-  private static final String LOG_CLASS = FilterTests_PortletFilter_ApiEventFilter.class.getName();
+public class FilterTests_ActionFilter_ApiActionFilter2 implements Portlet {
+  private static final String LOG_CLASS = FilterTests_ActionFilter_ApiActionFilter2.class.getName();
   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -48,13 +49,7 @@ public class FilterTests_PortletFilter_ApiEventFilter implements Portlet {
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
     LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
-
-    portletResp.setRenderParameters(portletReq.getParameterMap());
-    long tid = Thread.currentThread().getId();
-    portletReq.setAttribute(THREADID_ATTR, tid);
-
-    QName eventQName = new QName(TCKNAMESPACE, "FilterTests_PortletFilter_ApiEventFilter");
-    portletResp.setEvent(eventQName, "Hi!");
+    portletResp.setRenderParameter("tr5", "false");
   }
 
   @Override
@@ -62,31 +57,36 @@ public class FilterTests_PortletFilter_ApiEventFilter implements Portlet {
       throws PortletException, IOException {
     LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
+    JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
 
     PrintWriter writer = portletResp.getWriter();
 
-    /* TestCase: V2FilterTests_PortletFilter_ApiEventFilter_initEvent1 */
-    /* Details: "The init(FilterConfig): method is called when an */
-    /* EventFilter is configured" */
-    {
+    /* TestCase: V2FilterTests_ActionFilter_ApiActionFilter_doFilterBlock */
+    /* Details: "If the doFilter(ActionRequest, ActionResponse, */
+    /* FilterChain): method does not invoke the next filter, */
+    /* processAction is not called" */
+    if (portletReq.getParameter("tr5_success") != null
+        && portletReq.getParameter("tr5_success").equals("true")) {
+      TestResult tr5 =
+          tcd.getTestResultFailed(V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_DOFILTERBLOCK);
+      if (portletReq.getParameter("tr5") == null) {
+        tr5.setTcSuccess(true);
+      } else {
+        tr5.appendTcDetail(
+            "Failed because processAction was executed which set the tr5 parameter value to "
+                + portletReq.getParameter("tr5"));
+      }
+      tr5.writeTo(writer);
+    } else {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2FilterTests_PortletFilter_ApiEventFilter_initEvent1", aurl);
+      TestButton tb =
+          new TestButton("V2FilterTests_ActionFilter_ApiActionFilter_doFilterBlock", aurl);
       tb.writeTo(writer);
     }
-
-    /* TestCase: V2FilterTests_PortletFilter_ApiEventFilter_initEvent2 */
-    /* Details: "The init(FilterConfig): method for an EventFilter is */
-    /* passed a FilterConfig object" */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2FilterTests_PortletFilter_ApiEventFilter_initEvent2", aurl);
-      tb.writeTo(writer);
-    }
-
 
   }
 

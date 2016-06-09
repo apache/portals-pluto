@@ -23,16 +23,17 @@ import javax.portlet.filter.*;
 
 /**
  * Filter for JSR 362 request dispatcher testing. Used by portlet:
- * FilterTests_FilterChain_ApiActionFilter
+ * FilterTests_EventFilter_ApiEventFilter2
  *
  * @author ahmed
  *
  */
-public class FilterTests_FilterChain_ApiActionFilter_filter implements ActionFilter {
+public class FilterTests_EventFilter_ApiEventFilter_filter3 implements EventFilter {
   private static final String LOG_CLASS =
-      FilterTests_FilterChain_ApiActionFilter_filter.class.getName();
+      FilterTests_EventFilter_ApiEventFilter_filter3.class.getName();
   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-  public static boolean tr0_success = false;
+  public static boolean tr2_success = false;
+  public static boolean tr3_success = false;
 
 
   @Override
@@ -42,15 +43,9 @@ public class FilterTests_FilterChain_ApiActionFilter_filter implements ActionFil
   public void destroy() {}
 
   @Override
-  public void doFilter(ActionRequest portletReq, ActionResponse portletResp, FilterChain chain)
+  public void doFilter(EventRequest portletReq, EventResponse portletResp, FilterChain chain)
       throws IOException, PortletException {
     LOGGER.entering(LOG_CLASS, "doFilter");
-
-    /* TestCase: V2FilterTests_FilterChain_ApiActionFilter_invokeActionFilter */
-    /* Details: "Invoking doFilter(ActionRequest, ActionResponse): causes */
-    /* next filter to be invoked" */
-    FilterTests_FilterChain_ApiActionFilter_filter.tr0_success = true;
-
-    chain.doFilter(portletReq, portletResp);
+    portletResp.setRenderParameter("tr5_success", "true");
   }
 }

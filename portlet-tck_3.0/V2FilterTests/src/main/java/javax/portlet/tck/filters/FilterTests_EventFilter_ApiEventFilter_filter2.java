@@ -22,6 +22,7 @@ import javax.portlet.*;
 import javax.portlet.filter.*;
 import javax.portlet.tck.beans.*;
 import javax.portlet.tck.constants.*;
+import static javax.portlet.tck.constants.Constants.*;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
 import static javax.portlet.PortletSession.*;
 
@@ -32,18 +33,16 @@ import static javax.portlet.PortletSession.*;
  * @author ahmed
  *
  */
-public class FilterTests_EventFilter_ApiEventFilter_filter implements EventFilter {
+public class FilterTests_EventFilter_ApiEventFilter_filter2 implements EventFilter {
   private static final String LOG_CLASS =
-      FilterTests_EventFilter_ApiEventFilter_filter.class.getName();
+      FilterTests_EventFilter_ApiEventFilter_filter2.class.getName();
   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-  public static boolean tr4_success = false;
+  public static boolean tr2_success = false;
+  public static boolean tr3_success = false;
 
-  private FilterConfig filterConfig;
 
   @Override
-  public void init(FilterConfig filterConfig) throws PortletException {
-    this.filterConfig = filterConfig;
-  }
+  public void init(FilterConfig filterConfig) throws PortletException {}
 
   @Override
   public void destroy() {}
@@ -57,34 +56,47 @@ public class FilterTests_EventFilter_ApiEventFilter_filter implements EventFilte
 
     JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
-    /* TestCase: V2FilterTests_EventFilter_ApiEventFilter_canBeConfigured1 */
-    /* Details: "An EventFilter can be configured in the portlet */
-    /* descriptor" */
-    TestResult tr0 =
-        tcd.getTestResultFailed(V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_CANBECONFIGURED1);
-    String action = filterConfig.getFilterName();
-    if (action.equals("FilterTests_EventFilter_ApiEventFilter_filter")) {
-      tr0.setTcSuccess(true);
-    }
-    tr0.writeTo(writer);
+
+    /* TestCase: V2FilterTests_EventFilter_ApiEventFilter_canBeConfigured2 */
+    /* Details: "Multiple EventFilter classes can be configured in the */
+    /* portlet descriptor" */
+    TestResult tr1 =
+        tcd.getTestResultFailed(V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_CANBECONFIGURED2);
+    tr1.setTcSuccess(true);
+    tr1.writeTo(writer);
+
+    /* TestCase: V2FilterTests_EventFilter_ApiEventFilter_doFilterIsCalled */
+    /* Details: "The doFilter(EventRequest, EventResponse, FilterChain): */
+    /* method is called before the processEvent method for the portlet" */
+    tr2_success = true;
+
+    /* TestCase: V2FilterTests_EventFilter_ApiEventFilter_doFilterProcessEvent1 */
+    /* Details: "After the doFilter(EventRequest, EventResponse, */
+    /* FilterChain): method has sucessfully completed and invokes the */
+    /* next filter, the processEventMethod is called" */
+    tr3_success = true;
 
     /* TestCase: V2FilterTests_EventFilter_ApiEventFilter_doFilterProcessEvent2 */
     /* Details: "After the doFilter(EventRequest, EventResponse, */
     /* FilterChain): method has sucessfully completed and invokes the */
     /* next filter, the next filter in the chain is called if multiple */
     /* filters are defined" */
-    tr4_success = true;
+    TestResult tr4 =
+        tcd.getTestResultFailed(V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_DOFILTERPROCESSEVENT2);
+    if (FilterTests_EventFilter_ApiEventFilter_filter.tr4_success) {
+      tr4.setTcSuccess(true);
+    }
+    tr4.writeTo(writer);
 
+    PortletSession ps = portletReq.getPortletSession();
+    String msg =
+        (String) ps.getAttribute(RESULT_ATTR_PREFIX + "FilterTests_EventFilter_ApiEventFilter",
+            APPLICATION_SCOPE);
     portletReq.getPortletSession().setAttribute(
-        Constants.RESULT_ATTR_PREFIX + "FilterTests_EventFilter_ApiEventFilter", writer.toString(),
-        APPLICATION_SCOPE);
-    chain.doFilter(portletReq, portletResp);
+        Constants.RESULT_ATTR_PREFIX + "FilterTests_EventFilter_ApiEventFilter",
+        msg + writer.toString(), APPLICATION_SCOPE);
 
-    /* TestCase: V2FilterTests_EventFilter_ApiEventFilter_doFilterExamine */
-    /* Details: "Method doFilter(EventRequest, EventResponse, */
-    /* FilterChain): After the next filter has been successfully invoked, */
-    /* the EventResponse may be examined" */
-    portletResp.setRenderParameter("tr8", "true");
+    chain.doFilter(portletReq, portletResp);
 
   }
 }
