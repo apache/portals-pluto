@@ -17,6 +17,8 @@
 package org.apache.pluto.container.driver;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -65,6 +67,7 @@ import org.apache.pluto.container.bean.processor.PortletRequestScopedBeanHolder;
 import org.apache.pluto.container.bean.processor.PortletSessionBeanHolder;
 import org.apache.pluto.container.bean.processor.PortletStateScopedBeanHolder;
 import org.apache.pluto.container.impl.HttpServletPortletRequestWrapper;
+import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,8 +91,16 @@ public class PortletServlet3 extends HttpServlet {
 
    // Private Member Variables ------------------------------------------------
    
+   /**
+    * For CDI support
+    */
    @Inject private AnnotatedConfigBean acb;
    @Inject private BeanManager beanmgr;
+   
+   /**
+    * The webapp configuration
+    */
+   ConfigurationHolder holder;
 
    /**
     * The portlet name as defined in the portlet app descriptor.
@@ -132,21 +143,33 @@ public class PortletServlet3 extends HttpServlet {
 
       // Call the super initialization method.
       super.init(config);
-
+      
       // Retrieve portlet name as defined as an initialization parameter.
       portletName = getInitParameter(PORTLET_NAME);
       
-      // Get the config bean and create the invoker
+      // Get the config bean, instantiate the portlets, and create the invoker
+      holder = (ConfigurationHolder) config.getServletContext().getAttribute(ConfigurationHolder.ATTRIB_NAME);
       try {
-         if (acb == null || acb.getMethodStore() == null) {
+         if (holder == null || holder.getMethodStore() == null) {
             LOG.error("Could not obtain configuration bean for portlet " + portletName + ". Exiting.");
             return;
          } else {
-            invoker = new PortletInvoker(acb, portletName);
+            holder.instantiatePortlets(beanmgr);
+            invoker = new PortletInvoker(holder.getMethodStore(), portletName);
             LOG.debug("Created the portlet invoker for portlet: " + portletName);
          }
       } catch(Exception e) {
-         LOG.error("Exception obtaining configuration bean for portlet " + portletName + ". Exiting. Exception: " + e.toString());
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Exception obtaining configuration bean for portlet ");
+         txt.append(portletName).append(". Exiting. Exception: ");
+
+         StringWriter sw = new StringWriter();
+         PrintWriter pw = new PrintWriter(sw);
+         e.printStackTrace(pw);
+         pw.flush();
+         txt.append(sw.toString());
+         
+         LOG.error(txt.toString());
          return;
       }
 
@@ -513,19 +536,30 @@ public class PortletServlet3 extends HttpServlet {
     */
    private void beforeInvoke(PortletRequest req, PortletResponse resp, PortletConfig config) {
 
-      // Set the portlet session bean holder for the thread & session
-      PortletRequestScopedBeanHolder.setBeanHolder();
+      if (acb != null) {
 
-      // Set the portlet session bean holder for the thread & session
-      PortletSessionBeanHolder.setBeanHolder(req, acb.getSessionScopedConfig());
+         // Set the portlet session bean holder for the thread & session
+         PortletRequestScopedBeanHolder.setBeanHolder();
 
-      // Set the render state scoped bean holder
-      PortletStateScopedBeanHolder.setBeanHolder(req, acb.getStateScopedConfig());
+         // Set the portlet session bean holder for the thread & session
+         PortletSessionBeanHolder.setBeanHolder(req, acb.getSessionScopedConfig());
 
-      // Set up the artifact producer with request, response, and portlet config
-      PortletArtifactProducer.setPrecursors(req, resp, config);
+         // Set the render state scoped bean holder
+         PortletStateScopedBeanHolder.setBeanHolder(req, acb.getStateScopedConfig());
+
+         // Set up the artifact producer with request, response, and portlet config
+         PortletArtifactProducer.setPrecursors(req, resp, config);
+         
+         if (LOG.isTraceEnabled()) {
+            LOG.trace("CDI context is now set up.");
+         }
+
+      } else {
+         if (LOG.isTraceEnabled()) {
+            LOG.trace("CDI contextual support not available");
+         }
+      }      
       
-      LOG.debug("CDI context is now set up.");
    }
 
    /**
@@ -534,25 +568,31 @@ public class PortletServlet3 extends HttpServlet {
     */
    private void afterInvoke(PortletResponse resp) {
 
-      // Remove the portlet session bean holder for the thread
-      PortletRequestScopedBeanHolder.removeBeanHolder();
+      if (acb != null) {
 
-      // Remove the portlet session bean holder for the thread
-      PortletSessionBeanHolder.removeBeanHolder();
+         // Remove the portlet session bean holder for the thread
+         PortletRequestScopedBeanHolder.removeBeanHolder();
 
-      // Remove the render state bean holder. pass response if we're
-      // dealing with a StateAwareResponse. The response is used for state
-      // storage.
+         // Remove the portlet session bean holder for the thread
+         PortletSessionBeanHolder.removeBeanHolder();
 
-      StateAwareResponse sar = null;
-      if (resp instanceof StateAwareResponse) {
-         sar = (StateAwareResponse) resp;
+         // Remove the render state bean holder. pass response if we're
+         // dealing with a StateAwareResponse. The response is used for state
+         // storage.
+
+         StateAwareResponse sar = null;
+         if (resp instanceof StateAwareResponse) {
+            sar = (StateAwareResponse) resp;
+         }
+         PortletStateScopedBeanHolder.removeBeanHolder(sar);
+
+         // remove the portlet artifact producer
+         PortletArtifactProducer.remove();
+         
+         if (LOG.isTraceEnabled()) {
+            LOG.trace("CDI context is now deactivated.");
+         }
+      
       }
-      PortletStateScopedBeanHolder.removeBeanHolder(sar);
-
-      // remove the portlet artifact producer
-      PortletArtifactProducer.remove();
-
-      LOG.debug("CDI context is now deactivated.");
    }
 }

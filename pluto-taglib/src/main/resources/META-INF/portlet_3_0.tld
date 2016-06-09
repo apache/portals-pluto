@@ -28,8 +28,8 @@
     <description>Pluto Tag Library</description>
     <tag>
         <name>defineObjects</name>
-        <tag-class>org.apache.pluto.tags.DefineObjectsTag286</tag-class>
-        <tei-class>org.apache.pluto.tags.DefineObjectsTag286$TEI</tei-class>
+        <tag-class>org.apache.pluto.tags.DefineObjectsTag362</tag-class>
+        <tei-class>org.apache.pluto.tags.DefineObjectsTag362$TEI</tei-class>
         <body-content>empty</body-content>
     </tag>
     <tag>
@@ -44,6 +44,11 @@
         <attribute>
             <name>value</name>
             <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>type</name>
+            <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
@@ -64,7 +69,7 @@
     </tag>    
     <tag>
         <name>actionURL</name>
-        <tag-class>org.apache.pluto.tags.ActionURLTag286</tag-class>
+        <tag-class>org.apache.pluto.tags.ActionURLTag362</tag-class>
         <tei-class>org.apache.pluto.tags.PortletURLTag168$TEI</tei-class>
         <body-content>JSP</body-content>
         <attribute>
@@ -105,7 +110,7 @@
     </tag>
     <tag>
         <name>renderURL</name>
-        <tag-class>org.apache.pluto.tags.RenderURLTag286</tag-class>
+        <tag-class>org.apache.pluto.tags.RenderURLTag362</tag-class>
         <tei-class>org.apache.pluto.tags.PortletURLTag168$TEI</tei-class>
         <body-content>JSP</body-content>
         <attribute>

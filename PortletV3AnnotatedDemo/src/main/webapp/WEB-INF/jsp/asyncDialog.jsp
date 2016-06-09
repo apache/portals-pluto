@@ -40,13 +40,19 @@ limitations under the License.
 <p>When this JSP is initially rendered, it automatically triggers a GET XmlHttpRequest to a ResourceURL which causes the following sequence:
    <ul>
       <li>AsyncPortlet.getResource(...) is invoked
-         <ul>
-            <li>ResourceRequest.getPortletAsyncContext().startAsync(new AsyncRunnable(...)) is called to start a new thread</li>
+         <ol>
+            <li>ResourceRequest.startPortletAsyncContext() is called to get a new PortletAsyncContext</li>
+            <li>Pass the @DependentScoped AsyncRunnable (injected into AsyncPortlet by CDI), to portletAsyncContext.startAsync(asyncRunnable)</li>
+            <li>This has the effect of starting a new thread and calling the AsyncRunnable.run() method</li>
             <li>The ResourceResponse is left open by the portlet container and processing is given over to the AsyncRunnable thread</li>
-            <li>The AsyncRunnable thread sleeps for 1 second, then wakes up and calls PortletAsyncContext.dispatch() in order to have the AsyncPortlet.getResource(...) method get called again</li>
+            <li>The AsyncRunnable thread sleeps for 1 second, then wakes up</li>
+            <li>The AsyncRunnable thread recognizes that the "recursive" (auto dispatch) feature is enabled and as a result calls PortletAsyncContext.dispatch() in order to have the AsyncPortlet.getResource(...) method get called again, which in turn writes some text to the response</li>
             <li>The AsyncRunnable thread finishes execution</li>
-         </ul></li>
-      <li>AsyncPortlet.getResource(...) is invoked again because of the call to PortletAsyncContext.dispatch() above <strong><em>(currently broken because of a bug in Tomcat)</em></strong></li>
+         </ol></li>
+   </ul>
+   <ul>
+      <li>Clicking on the Execute button will cause a full HTTP postback of the page, but when the page re-renders after the POST-REDIRECT-GET, then the page triggers a subsequent GET XmlHttpRequest to a ResourceURL</li>
+      <li>Note that if the "recursive" checkbox is <strong>not</strong> checked, then clicking Execute will cause the AsyncRunnable thread to write to the respose, rather than dispatching back to the AsyncPortlet.getResource(...) method to write to the response</li>
    </ul>
 </p>
 <p>The <strong>AsyncFilter</strong> is always present within the FilterChain but will only output information to the response if the "show filter" checkbox is checked</p>

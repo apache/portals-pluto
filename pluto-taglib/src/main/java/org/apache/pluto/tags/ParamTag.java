@@ -40,6 +40,7 @@ public class ParamTag extends TagSupport {
 
     private String name = null;
     private String value = null;
+    private String type = null;
 
     /* (non-Javadoc)
      * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
@@ -54,8 +55,27 @@ public class ParamTag extends TagSupport {
                 "the 'param' Tag must have a actionURL, renderURL " +
                 "or resourceURL tag as a parent");
         }
-
-        urlTag.addParameter(getName(), getValue());
+        
+        // if it's an action URL, handle the type
+        
+        if (urlTag instanceof ActionURLTag362) {
+           boolean action = true;
+           if (type != null) {
+              if (type.equalsIgnoreCase("render")) {
+                 action = false;
+              } else if (!type.equalsIgnoreCase("action")) {
+                 throw new JspException("The 'param' tag on an action URL must have a value of 'action' or 'render'.");
+              }
+           }
+           
+           if (action) {
+              urlTag.addParameter(getName(), getValue());
+           } else {
+              ((ActionURLTag362)urlTag).addRenderParameter(getName(), getValue());
+           }
+        } else {
+           urlTag.addParameter(getName(), getValue());
+        }
 
         return SKIP_BODY;
     }
@@ -94,5 +114,19 @@ public class ParamTag extends TagSupport {
     public void setValue(String value) {
         this.value = value;
     }
+
+   /**
+    * @return the type
+    */
+   public String getType() {
+      return type;
+   }
+
+   /**
+    * @param type the type to set
+    */
+   public void setType(String type) {
+      this.type = type;
+   }
 
 }

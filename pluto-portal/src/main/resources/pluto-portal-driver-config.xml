@@ -235,6 +235,10 @@ limitations under the License.
       <portlet context="/PortletV3Demo" name="DependencyPortlet"/>
       <portlet context="/PortletV3AnnotatedDemo" name="AsyncPortlet"/>
     </page>
+    <page name="Tag Library" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/PortletV3Demo" name="TagLibPortlet"/>
+      <portlet context="/PortletV3Demo" name="TagLibTagsPortlet"/>
+    </page>
     ${includeDemosEnd}
   </render-config>
   

@@ -25,9 +25,9 @@ import java.util.Set;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletConfigurations;
+import javax.portlet.annotations.PortletLifecycleFilter;
 import javax.portlet.annotations.PortletListener;
 import javax.portlet.annotations.PortletPreferencesValidator;
-import javax.portlet.annotations.PortletLifecycleFilter;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import javax.servlet.MultipartConfigElement;
@@ -39,6 +39,8 @@ import javax.servlet.annotation.HandlesTypes;
 
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
+import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
+import org.apache.pluto.container.bean.processor.ConfigSummary;
 import org.apache.pluto.container.bean.processor.PortletCDIExtension;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
@@ -79,21 +81,20 @@ public class PortletContainerInitializer implements ServletContainerInitializer 
 
          // Get the bean configuration from the CDI extension
 
+         ConfigurationHolder holder = new ConfigurationHolder();
          AnnotatedConfigBean acb = PortletCDIExtension.getConfig();
          if (acb == null) {
-            StringBuilder txt = new StringBuilder();
-            txt.append("The managed bean configuration could not be obtained. \n\nMake sure Tomcat is configured correctly.");
-            txt.append("\nVerify that the CDI implementation is available and configured to run before the Pluto portlet container initializer.");
-            txt.append("\nVerify that the file 'weld-servlet-2.3.1.Final.jar' is in the ${catalina.base}/lib directory.");
-            txt.append("\nVerify that the catalina.properties file contains a line similar to:.");
-            txt.append("\n   common.loader=\"${catalina.home}/lib/weld-servlet-2.3.1.Final.jar\",\"${catalina.base}/lib\",\"${catalina.base}/lib/*.jar\",\"${catalina.home}/lib\",\"${catalina.home}/lib/*.jar\"");
-            txt.append("\n");
-            LOG.warn(txt.toString());
+            holder.setMethodStore(new AnnotatedMethodStore(new ConfigSummary()));
+            if (isDebug) {
+               StringBuilder txt = new StringBuilder();
+               txt.append("CDI not available. Created new method store.");
+               LOG.debug(txt.toString());
+            }
+         } else {
+            holder.setMethodStore(acb.getMethodStore());
          }
 
          // Read the annotated configuration
-
-         ConfigurationHolder holder = new ConfigurationHolder();
 
          if (classes != null) {
             holder.processConfigAnnotations(classes);
@@ -130,12 +131,9 @@ public class PortletContainerInitializer implements ServletContainerInitializer 
 
          holder.validate();
          
-         // If we were able to obtain a bean config, reconcile the bean config with the
-         // explicitly declared portlet configuration.
+         // Reconcile the bean config with the explicitly declared portlet configuration.
          
-         if (acb != null) {
-            holder.reconcileBeanConfig(acb.getMethodStore());
-         }
+         holder.reconcileBeanConfig();
          
          // If portlets have been found in this servlet context, launch the portlet servlets
 

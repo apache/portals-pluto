@@ -42,8 +42,9 @@ import javax.servlet.jsp.tagext.VariableInfo;
  */
 
 public abstract class BaseURLTag extends TagSupport {
-	
-	protected String secure = null;
+   private static final long serialVersionUID = -267464414827109840L;
+
+   protected String secure = null;
 	
 	protected Boolean secureBoolean = null;
 	
@@ -62,31 +63,38 @@ public abstract class BaseURLTag extends TagSupport {
 		new HashMap<String, List<String>>();
 	
 	
+	/**
+	 * Sets the secure flag on the URl as required
+	 * 
+	 * @throws JspException
+	 */
+	protected void handleSecureFlag() throws JspException {
+      
+      BaseURL url = getUrl();
+      
+      if(url == null){
+         throw new IllegalStateException("internal error: url not set");
+      }
+      
+      if (var != null) {
+            pageContext.removeAttribute(var, PageContext.PAGE_SCOPE);
+        }
+      
+      if (secure != null) {
+            try {                   
+                url.setSecure(getSecureBoolean());                    
+            } catch (PortletSecurityException e) {                   
+                throw new JspException(e);                    
+            }
+        }
+	}
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
 	 */
 	@Override
 	public int doStartTag() throws JspException{
-		
-		BaseURL url = getUrl();
-		
-		if(url == null){
-			throw new IllegalStateException("internal error: url not set");
-		}
-		
-		if (var != null) {
-            pageContext.removeAttribute(var, PageContext.PAGE_SCOPE);
-        }
-		
-		if (secure != null) {
-            try {                	
-                url.setSecure(getSecureBoolean());                    
-            } catch (PortletSecurityException e) {                	
-                throw new JspException(e);                    
-            }
-        }
-		
+		handleSecureFlag();
 		return EVAL_BODY_INCLUDE;
 	}
 	
@@ -292,7 +300,8 @@ public abstract class BaseURLTag extends TagSupport {
      * @param url BaseURL
      * @return void
      */
-    protected void setUrlParameters(BaseURL url) {
+    @SuppressWarnings("deprecation")
+   protected void setUrlParameters(BaseURL url) {
     	
     	Set<String> keySet = parametersMap.keySet();
     			

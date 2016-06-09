@@ -21,7 +21,6 @@ package org.apache.pluto.container.bean.processor;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.Locale;
 
 import javax.enterprise.inject.Produces;
@@ -38,7 +37,6 @@ import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
 import javax.portlet.MimeResponse;
 import javax.portlet.MutableRenderParameters;
-import javax.portlet.MutableRenderState;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
@@ -49,7 +47,6 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderParameters;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.RenderState;
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -180,31 +177,6 @@ public class PortletArtifactProducer {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
       return pap.config.getPortletContext();
-   }
-   
-   /**
-    * Producer method for the portlet request. 
-    */
-   @Produces @PortletRequestScoped @Named("renderState")
-   public static RenderState produceRenderState() {
-      PortletArtifactProducer pap = producers.get();
-      assert pap != null;
-      return pap.req;
-   }
-
-   /**
-    * Producer method for the portlet response. 
-    * @return
-    */
-   @Produces @PortletRequestScoped @Named("mutableRenderState")
-   public static MutableRenderState produceMutableRenderState() {
-      PortletArtifactProducer pap = producers.get();
-      assert pap != null;
-      MutableRenderState mrs = null;
-      if (pap.resp instanceof MutableRenderState) {
-         mrs = (MutableRenderState) pap.resp;
-      }
-      return mrs;
    }
 
    /**
@@ -489,10 +461,10 @@ public class PortletArtifactProducer {
     * Producer method for the window ID. 
     */
    @Produces @PortletRequestScoped @Named("locales") 
-   public static Enumeration<Locale> produceLocales() {
+   public static Locale[] produceLocales() {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
-      return pap.req.getLocales();
+      return Collections.list(pap.req.getLocales()).toArray(new Locale[0]);
    }
 
    /**

@@ -11,7 +11,7 @@ faces-config.pageflow
 *.bak[0-9]
 .svn
 branches
-tags
+refs/tags
 *.dir
 maven-eclipse.xml
 .externalToolBuilders
