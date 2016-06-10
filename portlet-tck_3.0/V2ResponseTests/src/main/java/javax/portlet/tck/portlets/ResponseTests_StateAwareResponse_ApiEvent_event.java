@@ -56,19 +56,16 @@ public class ResponseTests_StateAwareResponse_ApiEvent_event implements Portlet,
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
    }
 
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion serveResource - ERROR!!");
    }
 
    @Override
    public void processEvent(EventRequest portletReq, EventResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion processEvent");
 
 
       portletResp.setRenderParameters(portletReq);
@@ -752,7 +749,6 @@ public class ResponseTests_StateAwareResponse_ApiEvent_event implements Portlet,
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
       
-      LOGGER.entering(LOG_CLASS, "event companion render");
 
       portletResp.setContentType("text/html");
       PrintWriter writer = portletResp.getWriter();
