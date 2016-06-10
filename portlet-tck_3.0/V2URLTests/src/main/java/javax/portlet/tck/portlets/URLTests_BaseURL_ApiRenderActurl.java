@@ -64,7 +64,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
+
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
@@ -78,7 +78,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr0 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA1);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA1")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA1")) {
             String aval = portletReq.getParameter("parm1");
             String eval = "val1";
             CompareUtils.stringsEqual("Request", aval, " expected: ", eval, tr0);
@@ -93,7 +93,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr1 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA4);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA4")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA4")) {
             String aval = portletReq.getParameter("parm1");
             String eval = "val1";
             CompareUtils.stringsEqual("Request", aval, " expected: ", eval, tr1);
@@ -108,7 +108,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr2 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA6);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA6")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA6")) {
             String aval = portletReq.getParameter("parm1");
             String eval = "newVal";
             CompareUtils.stringsEqual("Request", aval, " expected: ", eval, tr2);
@@ -123,7 +123,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr3 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA7);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA7")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA7")) {
             String aval = portletReq.getParameter("parm1");
             String eval = null;
             CompareUtils.stringsEqual("Request", aval, " expected: ", eval, tr3);
@@ -138,7 +138,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB1);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB1")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB1")) {
             String[] aval = portletReq.getParameterValues("parm1");
             String[] eval = new String[]{"val1", "val2"};
             CompareUtils.arraysEqual("Request", aval, " expected: ", eval, tr5);
@@ -153,7 +153,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB4);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB4")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB4")) {
             String[] aval = portletReq.getParameterValues("parm1");
             String[] eval = new String[]{"val1", "val2"};
             CompareUtils.arraysEqual("Request", aval, " expected: ", eval, tr6);
@@ -168,7 +168,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr7 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB6);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB6")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB6")) {
             String[] aval = portletReq.getParameterValues("parm1");
             String[] eval = new String[]{"newVal"};
             CompareUtils.arraysEqual("Request", aval, " expected: ", eval, tr7);
@@ -183,7 +183,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr8 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB7);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB7")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB7")) {
             String[] aval = portletReq.getParameterValues("parm1");
             String[] eval = null;
             CompareUtils.arraysEqual("Request", aval, " expected: ", eval, tr8);
@@ -198,11 +198,12 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr10 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS1);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters1")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters1")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
             eval.put("tc", new String[]{"V2URLTests_BaseURL_ApiRenderActurl_setParameters1"});
             eval.put("parm1", new String[]{"val1", "val2"});
+            eval.put(BUTTON_PARAM_NAME, new String[] {V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS1});
             CompareUtils.mapsEqual("Request", aval, " expected: ", eval, tr10);
             PortletSession ps = portletReq.getPortletSession();
             ps.setAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters1", tr10);
@@ -215,11 +216,12 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr11 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS4);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters4")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters4")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
             eval.put("tc", new String[]{"V2URLTests_BaseURL_ApiRenderActurl_setParameters4"});
             eval.put("parm1", new String[]{"val1", "val2"});
+            eval.put(BUTTON_PARAM_NAME, new String[] {V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS4});
             CompareUtils.mapsEqual("Request", aval, " expected: ", eval, tr11);
             PortletSession ps = portletReq.getPortletSession();
             ps.setAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters4", tr11);
@@ -232,11 +234,12 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr12 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS6);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters6")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters6")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
             eval.put("tc", new String[]{"V2URLTests_BaseURL_ApiRenderActurl_setParameters6"});
             eval.put("parm1", new String[]{"val1", "val2"});
+            eval.put(BUTTON_PARAM_NAME, new String[] {V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS6});
             CompareUtils.mapsEqual("Request", aval, " expected: ", eval, tr12);
             PortletSession ps = portletReq.getPortletSession();
             ps.setAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters6", tr12);
@@ -249,12 +252,13 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr13 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS7);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters7")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters7")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
             eval.put("tc", new String[]{"V2URLTests_BaseURL_ApiRenderActurl_setParameters7"});
             eval.put("parm1", new String[]{"val1", "val2"});
             eval.put("tckPRP1", new String[]{"V2URLTests_BaseURL_ApiRenderActurl_setParameters7"});
+            eval.put(BUTTON_PARAM_NAME, new String[] {V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS7});
             CompareUtils.mapsEqual("Request", aval, " expected: ", eval, tr13);
             PortletSession ps = portletReq.getPortletSession();
             ps.setAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters7", tr13);
@@ -267,11 +271,12 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr14 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS8);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters8")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters8")) {
             Map<String, String[]> aval = portletReq.getParameterMap();
             Map<String, String[]> eval = new HashMap<String, String[]>();
             eval.put("tc", new String[]{"V2URLTests_BaseURL_ApiRenderActurl_setParameters8"});
             eval.put("parm1", new String[]{"val1", "val2"});
+            eval.put(BUTTON_PARAM_NAME, new String[] {V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS8});
             CompareUtils.mapsEqual("Request", aval, " expected: ", eval, tr14);
             PortletSession ps = portletReq.getPortletSession();
             ps.setAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters8", tr14);
@@ -284,7 +289,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr18 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETSECURE2);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setSecure2")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setSecure2")) {
             String val = portletReq.getParameter("setSecure");
             boolean ok = (val != null);
             if (ok) {
@@ -303,7 +308,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr19 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_TOSTRING);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_toString")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_toString")) {
             // If execution makes it to here, the test was successful
             tr19.setTcSuccess(true);
             PortletSession ps = portletReq.getPortletSession();
@@ -317,7 +322,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr23 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_WRITEA1);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_writeA1")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_writeA1")) {
             // If execution makes it to here, the test was successful
             tr23.setTcSuccess(true);
             PortletSession ps = portletReq.getPortletSession();
@@ -331,7 +336,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          TestResult tr24 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_WRITEB1);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_writeB1")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_writeB1")) {
             // If execution makes it to here, the test was successful
             tr24.setTcSuccess(true);
             PortletSession ps = portletReq.getPortletSession();
@@ -344,7 +349,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
+
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -356,7 +361,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
+
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -385,8 +390,9 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA1")) {
+         if (tcval !=  null && tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA1")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA1");
             if (tmp != null) {
@@ -394,7 +400,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA1");
             }
          }
-      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr0.appendTcDetail(e);}
       tr0.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterA4          */
@@ -412,8 +418,9 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
+         
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA4")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA4")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA4");
             if (tmp != null) {
@@ -421,7 +428,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA4");
             }
          }
-      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr1.appendTcDetail(e);}
       tr1.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterA6          */
@@ -441,7 +448,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA6")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA6")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA6");
             if (tmp != null) {
@@ -449,7 +456,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA6");
             }
          }
-      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr2.appendTcDetail(e);}
       tr2.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterA7          */
@@ -469,7 +476,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA7")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA7")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA7");
             if (tmp != null) {
@@ -477,7 +484,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA7");
             }
          }
-      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr3.appendTcDetail(e);}
       tr3.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterA8          */
@@ -492,9 +499,9 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          } catch (IllegalArgumentException iae) {
             tr4.setTcSuccess(true);
          } catch (Exception e) {
-            tr4.appendTcDetail(e.toString());
+            tr4.appendTcDetail(e);
          }
-      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr4.appendTcDetail(e);}
       tr4.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterB1          */
@@ -513,7 +520,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB1")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB1")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB1");
             if (tmp != null) {
@@ -521,7 +528,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB1");
             }
          }
-      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr5.appendTcDetail(e);}
       tr5.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterB4          */
@@ -540,7 +547,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB4")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB4")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB4");
             if (tmp != null) {
@@ -548,7 +555,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB4");
             }
          }
-      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr6.appendTcDetail(e);}
       tr6.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterB6          */
@@ -568,7 +575,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB6")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB6")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB6");
             if (tmp != null) {
@@ -576,7 +583,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB6");
             }
          }
-      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr7.appendTcDetail(e);}
       tr7.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterB7          */
@@ -596,7 +603,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB7")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB7")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB7");
             if (tmp != null) {
@@ -604,7 +611,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB7");
             }
          }
-      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr8.appendTcDetail(e);}
       tr8.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterB8          */
@@ -619,9 +626,9 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          } catch (IllegalArgumentException iae) {
             tr9.setTcSuccess(true);
          } catch (Exception e) {
-            tr9.appendTcDetail(e.toString());
+            tr9.appendTcDetail(e);
          }
-      } catch(Exception e) {tr9.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr9.appendTcDetail(e);}
       tr9.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters1          */
@@ -648,7 +655,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters1")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters1")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters1");
             if (tmp != null) {
@@ -656,7 +663,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters1");
             }
          }
-      } catch(Exception e) {tr10.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr10.appendTcDetail(e);}
       tr10.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters4          */
@@ -683,7 +690,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters4")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters4")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters4");
             if (tmp != null) {
@@ -691,7 +698,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters4");
             }
          }
-      } catch(Exception e) {tr11.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr11.appendTcDetail(e);}
       tr11.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters6          */
@@ -720,7 +727,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters6")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters6")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters6");
             if (tmp != null) {
@@ -728,7 +735,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters6");
             }
          }
-      } catch(Exception e) {tr12.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr12.appendTcDetail(e);}
       tr12.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters7          */
@@ -756,7 +763,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters7")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters7")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters7");
             if (tmp != null) {
@@ -764,7 +771,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters7");
             }
          }
-      } catch(Exception e) {tr13.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr13.appendTcDetail(e);}
       tr13.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters8          */
@@ -791,7 +798,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters8")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setParameters8")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters8");
             if (tmp != null) {
@@ -799,7 +806,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setParameters8");
             }
          }
-      } catch(Exception e) {tr14.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr14.appendTcDetail(e);}
       tr14.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters9          */
@@ -814,9 +821,9 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          } catch (IllegalArgumentException iae) {
             tr15.setTcSuccess(true);
          } catch (Exception e) {
-            tr15.appendTcDetail(e.toString());
+            tr15.appendTcDetail(e);
          }
-      } catch(Exception e) {tr15.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr15.appendTcDetail(e);}
       tr15.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters10         */
@@ -834,9 +841,9 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          } catch (IllegalArgumentException iae) {
             tr16.setTcSuccess(true);
          } catch (Exception e) {
-            tr16.appendTcDetail(e.toString());
+            tr16.appendTcDetail(e);
          }
-      } catch(Exception e) {tr16.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr16.appendTcDetail(e);}
       tr16.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters12         */
@@ -854,9 +861,9 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          } catch (IllegalArgumentException iae) {
             tr17.setTcSuccess(true);
          } catch (Exception e) {
-            tr17.appendTcDetail(e.toString());
+            tr17.appendTcDetail(e);
          }
-      } catch(Exception e) {tr17.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr17.appendTcDetail(e);}
       tr17.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setSecure2              */
@@ -880,7 +887,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setSecure2")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_setSecure2")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setSecure2");
             if (tmp != null) {
@@ -888,7 +895,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_setSecure2");
             }
          }
-      } catch(Exception e) {tr18.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr18.appendTcDetail(e);}
       tr18.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_toString                */
@@ -907,7 +914,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_toString")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_toString")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_toString");
             if (tmp != null) {
@@ -915,7 +922,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_toString");
             }
          }
-      } catch(Exception e) {tr19.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr19.appendTcDetail(e);}
       tr19.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_getParameterMap1        */
@@ -931,7 +938,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          } else {
             tr20.setTcSuccess(true);
          }
-      } catch(Exception e) {tr20.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr20.appendTcDetail(e);}
       tr20.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_getParameterMap3        */
@@ -947,7 +954,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          testparms.put("tckPRP1", new String[]{"PRPval1"});
          Map<String, String[]> parms = turl.getParameterMap();
          CompareUtils.mapsEqual("Test parameters", testparms, "Parameters from URL", parms, tr21);
-      } catch(Exception e) {tr21.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr21.appendTcDetail(e);}
       tr21.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_getParameterMap6        */
@@ -962,7 +969,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          } else {
             tr22.setTcSuccess(parms.isEmpty());
          }
-      } catch(Exception e) {tr22.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr22.appendTcDetail(e);}
       tr22.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_writeA1                 */
@@ -983,7 +990,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_writeA1")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_writeA1")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_writeA1");
             if (tmp != null) {
@@ -991,7 +998,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_writeA1");
             }
          }
-      } catch(Exception e) {tr23.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr23.appendTcDetail(e);}
       tr23.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_writeB1                 */
@@ -1012,7 +1019,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_writeB1")) {
+         if (tcval !=  null &&  tcval !=  null &&  tcval.equals("V2URLTests_BaseURL_ApiRenderActurl_writeB1")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_writeB1");
             if (tmp != null) {
@@ -1020,7 +1027,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_BaseURL_ApiRenderActurl_writeB1");
             }
          }
-      } catch(Exception e) {tr24.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr24.appendTcDetail(e);}
       tr24.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_addProperty1            */
@@ -1032,7 +1039,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          PortletURL turl = portletResp.createActionURL();
          turl.addProperty("prop1", "val1");
          tr25.setTcSuccess(true);
-      } catch(Exception e) {tr25.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr25.appendTcDetail(e);}
       tr25.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_addProperty3            */
@@ -1047,9 +1054,9 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          } catch (IllegalArgumentException iae) {
             tr26.setTcSuccess(true);
          } catch (Exception e) {
-            tr26.appendTcDetail(e.toString());
+            tr26.appendTcDetail(e);
          }
-      } catch(Exception e) {tr26.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr26.appendTcDetail(e);}
       tr26.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setProperty1            */
@@ -1061,7 +1068,7 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          PortletURL turl = portletResp.createActionURL();
          turl.setProperty("prop1", "val1");
          tr27.setTcSuccess(true);
-      } catch(Exception e) {tr27.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr27.appendTcDetail(e);}
       tr27.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setProperty3            */
@@ -1076,9 +1083,9 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
          } catch (IllegalArgumentException iae) {
             tr28.setTcSuccess(true);
          } catch (Exception e) {
-            tr28.appendTcDetail(e.toString());
+            tr28.appendTcDetail(e);
          }
-      } catch(Exception e) {tr28.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr28.appendTcDetail(e);}
       tr28.writeTo(writer);
 
    }

@@ -35,6 +35,8 @@
 package javax.portlet.tck.beans;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 
 import javax.portlet.tck.constants.Constants;
@@ -106,6 +108,23 @@ public class TestResult {
    public void appendTcDetail(String tcDetail) {
       if (!this.tcDetail.endsWith(".")) this.tcDetail += ".";
       this.tcDetail += " " + tcDetail;
+   }
+   
+   /**
+    * Appends error message to the test case detail string to indicate
+    * what went wrong when a test fails.
+    * 
+    * @param t       the throwable
+    */
+   public void appendTcDetail(Throwable t) {
+      if (!this.tcDetail.endsWith(".")) this.tcDetail += ".";
+      this.tcDetail += " " + t.toString();
+      
+      StringWriter sw = new StringWriter();
+      PrintWriter pw = new PrintWriter(sw);
+      t.printStackTrace(pw);
+      pw.flush();
+      this.tcDetail += sw.toString().replaceAll("\\n", "<br>");
    }
 
    /**

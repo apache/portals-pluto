@@ -64,7 +64,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
+
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
@@ -77,7 +77,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
+
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -89,7 +89,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
+
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -119,7 +119,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
          // evaluate results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL1")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL1")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Render");
@@ -128,7 +128,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
             }
             tr0.setTcSuccess(ok);
          }
-      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr0.appendTcDetail(e);}
       tr0.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL2 */
@@ -150,7 +150,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
          // evaluate results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL2")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL2")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Render");
@@ -159,7 +159,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
             }
             tr1.setTcSuccess(ok);
          }
-      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr1.appendTcDetail(e);}
       tr1.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL3 */
@@ -181,7 +181,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
          // evaluate results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL3")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL3")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Render");
@@ -190,7 +190,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
             }
             tr2.setTcSuccess(ok);
          }
-      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr2.appendTcDetail(e);}
       tr2.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL4 */
@@ -210,7 +210,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
          // evaluate results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL4")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL4")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Render");
@@ -219,7 +219,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
             }
             tr3.setTcSuccess(ok);
          }
-      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr3.appendTcDetail(e);}
       tr3.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL5 */
@@ -239,7 +239,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
          // evaluate results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL5")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderRenurl_filterRenderURL5")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Render");
@@ -248,7 +248,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderRenurl implements Po
             }
             tr4.setTcSuccess(ok);
          }
-      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr4.appendTcDetail(e);}
       tr4.writeTo(writer);
 
    }

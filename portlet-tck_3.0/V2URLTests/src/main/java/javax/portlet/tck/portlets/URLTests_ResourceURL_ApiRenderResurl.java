@@ -64,7 +64,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
+
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
@@ -77,7 +77,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
+
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -90,7 +90,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          TestResult tr4 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL4);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL4")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL4")) {
             String[] vals = portletReq.getParameterValues("tckPRP1");
             String[] evals = {"resourceParm", "renderParm"};
             CompareUtils.arraysEqual("Request parameter name=tckPRP1 ", vals, " expected ", evals, tr4);
@@ -104,7 +104,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL5);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL5")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL5")) {
             String[] vals = portletReq.getParameterValues("parm1");
             String[] evals = {"resourceParm", "renderParm"};
             CompareUtils.arraysEqual("Request parameter name=parm1 ", vals, " expected ", evals, tr5);
@@ -118,7 +118,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL6);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL6")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL6")) {
             String val = portletReq.getParameter("tckPRP1");
             CompareUtils.stringsEqual("Request parameter name=tckPRP1 ", val, " expected ", "V2URLTests_ResourceURL_ApiRenderResurl_resourceURL6", tr6);
             tr6.writeTo(writer);
@@ -131,7 +131,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          TestResult tr8 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_RESOURCEURL8);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL8")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL8")) {
             String val = portletReq.getParameter("parm1");
             CompareUtils.stringsEqual("Request parameter name=parm1 ", val, " expected ", "V2URLTests_ResourceURL_ApiRenderResurl_resourceURL8", tr8);
             tr8.writeTo(writer);
@@ -144,7 +144,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          TestResult tr10 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETRESOURCEID);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_setResourceID")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_setResourceID")) {
             String resid = portletReq.getResourceID();
             boolean ok = (resid.equals("TestResourceID"));
             if (!ok) {
@@ -161,7 +161,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          TestResult tr12 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY1);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_setCacheability1")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_setCacheability1")) {
             String c = portletReq.getCacheability();
             boolean ok = (c.equals(ResourceURL.PORTLET));
             if (!ok) {
@@ -178,14 +178,14 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          TestResult tr14 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_SETCACHEABILITY3);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_setCacheability3")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_ResourceURL_ApiRenderResurl_setCacheability3")) {
             try {
                ResourceURL rurl = portletResp.createResourceURL();
                rurl.setCacheability(ResourceURL.PAGE);
             } catch (IllegalStateException ise) {
                tr14.setTcSuccess(true);
             } catch (Exception e) {
-               tr14.appendTcDetail(e.toString());
+               tr14.appendTcDetail(e);
             }
             tr14.writeTo(writer);
          }
@@ -196,7 +196,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
+
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -214,7 +214,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
       TestResult tr0 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDFULL);
       try {
          tr0.setTcSuccess(cc.hasField("FULL", "cacheLevelFull"));
-      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr0.appendTcDetail(e);}
       tr0.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_fieldPAGE           */
@@ -222,7 +222,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
       TestResult tr1 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDPAGE);
       try {
          tr1.setTcSuccess(cc.hasField("PAGE", "cacheLevelPage"));
-      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr1.appendTcDetail(e);}
       tr1.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_fieldPORTLET        */
@@ -231,7 +231,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
       TestResult tr2 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDPORTLET);
       try {
          tr2.setTcSuccess(cc.hasField("PORTLET", "cacheLevelPortlet"));
-      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr2.appendTcDetail(e);}
       tr2.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_fieldSHARED         */
@@ -240,7 +240,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
       TestResult tr3 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDSHARED);
       try {
          tr3.setTcSuccess(cc.hasField("SHARED", "javax.portlet.shared"));
-      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr3.appendTcDetail(e);}
       tr3.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_resourceURL4        */
@@ -263,7 +263,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          ResourceLink rl = new ResourceLink("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL4", turl);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr4.appendTcDetail(e.toString());
+         tr4.appendTcDetail(e);
          tr4.writeTo(writer);
       }
 
@@ -287,7 +287,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          ResourceLink rl = new ResourceLink("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL5", turl);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr5.appendTcDetail(e.toString());
+         tr5.appendTcDetail(e);
          tr5.writeTo(writer);
       }
 
@@ -310,7 +310,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          ResourceLink rl = new ResourceLink("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL6", turl);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr6.appendTcDetail(e.toString());
+         tr6.appendTcDetail(e);
          tr6.writeTo(writer);
       }
 
@@ -329,7 +329,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          ResourceURL turl = portletResp.createResourceURL();
          String[] vals = (String[]) turl.getParameterMap().get("tckPRP1");
          CompareUtils.arraysEqual("Request parameter name=tckPRP1 ", vals, " expected ", null, tr7);
-      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr7.appendTcDetail(e);}
       tr7.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_resourceURL8        */
@@ -351,7 +351,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          ResourceLink rl = new ResourceLink("V2URLTests_ResourceURL_ApiRenderResurl_resourceURL8", turl);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr8.appendTcDetail(e.toString());
+         tr8.appendTcDetail(e);
          tr8.writeTo(writer);
       }
 
@@ -370,7 +370,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          ResourceURL turl = portletResp.createResourceURL();
          String[] vals = (String[]) turl.getParameterMap().get("parm1");
          CompareUtils.arraysEqual("Request parameter name=parm1 ", vals, " expected ", null, tr9);
-      } catch(Exception e) {tr9.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr9.appendTcDetail(e);}
       tr9.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_setResourceID       */
@@ -386,7 +386,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          ResourceLink rl = new ResourceLink("V2URLTests_ResourceURL_ApiRenderResurl_setResourceID", turl);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr10.appendTcDetail(e.toString());
+         tr10.appendTcDetail(e);
          tr10.writeTo(writer);
       }
 
@@ -403,7 +403,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
             tr11.appendTcDetail("Cacheability expected: " + ResourceURL.PAGE + ", actual: " + c);
          }
          tr11.setTcSuccess(ok);
-      } catch(Exception e) {tr11.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr11.appendTcDetail(e);}
       tr11.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_setCacheability1    */
@@ -419,7 +419,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          ResourceLink rl = new ResourceLink("V2URLTests_ResourceURL_ApiRenderResurl_setCacheability1", turl);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr12.appendTcDetail(e.toString());
+         tr12.appendTcDetail(e);
          tr12.writeTo(writer);
       }
 
@@ -436,9 +436,9 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          } catch (IllegalArgumentException iae) {
             tr13.setTcSuccess(true);
          } catch (Exception e) {
-            tr13.appendTcDetail(e.toString());
+            tr13.appendTcDetail(e);
          }
-      } catch(Exception e) {tr13.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr13.appendTcDetail(e);}
       tr13.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_setCacheability3    */
@@ -455,7 +455,7 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
          ResourceLink rl = new ResourceLink("V2URLTests_ResourceURL_ApiRenderResurl_setCacheability3", turl);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr14.appendTcDetail(e.toString());
+         tr14.appendTcDetail(e);
          tr14.writeTo(writer);
       }
 

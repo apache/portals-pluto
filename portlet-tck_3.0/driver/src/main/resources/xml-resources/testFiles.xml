@@ -39,7 +39,6 @@
    <fl:file>tck-V2AddlPortletTests-tests.xml</fl:file>
    <fl:file>tck-V2AddlRequestTests-tests.xml</fl:file>
    <fl:file>tck-V2AddlResponseTests-tests.xml</fl:file>
-   <fl:file>tck-V2AddlUrlTests-tests.xml</fl:file>
    <fl:file>tck-V2PortletTagLibraryTests-tests.xml</fl:file>
    <fl:file>tck-V2PortletTagLibraryTests2-tests.xml</fl:file>
    <fl:file>tck-V2PortletTagLibraryTests3-tests.xml</fl:file>

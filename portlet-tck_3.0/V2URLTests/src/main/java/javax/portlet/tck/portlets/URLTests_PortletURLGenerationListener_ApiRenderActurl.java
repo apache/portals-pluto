@@ -64,7 +64,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
+
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
@@ -78,7 +78,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          TestResult tr0 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_CONFIGURATION);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_configuration")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_configuration")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Action");
@@ -97,7 +97,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          TestResult tr1 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_PORTLETURLGENERATIONLISTENER6);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_portletURLGenerationListener6")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_portletURLGenerationListener6")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL2");
             boolean ok = (val != null) && val.equals("Action");
@@ -116,7 +116,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          TestResult tr2 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL1);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL1")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL1")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Action");
@@ -135,7 +135,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          TestResult tr3 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL2);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL2")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL2")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Action");
@@ -154,7 +154,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          TestResult tr4 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL3);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL3")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL3")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Action");
@@ -173,7 +173,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL4);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL4")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL4")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Action");
@@ -192,7 +192,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          TestResult tr6 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERACTURL_FILTERACTIONURL5);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL5")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL5")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Action");
@@ -210,7 +210,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
+
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -222,7 +222,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
+
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -251,7 +251,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_configuration")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_configuration")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_configuration");
             if (tmp != null) {
@@ -259,7 +259,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_configuration");
             }
          }
-      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr0.appendTcDetail(e);}
       tr0.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRenderActurl_portletURLGenerationListener6 */
@@ -279,7 +279,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_portletURLGenerationListener6")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_portletURLGenerationListener6")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_portletURLGenerationListener6");
             if (tmp != null) {
@@ -287,7 +287,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_portletURLGenerationListener6");
             }
          }
-      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr1.appendTcDetail(e);}
       tr1.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL1 */
@@ -307,7 +307,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL1")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL1")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL1");
             if (tmp != null) {
@@ -315,7 +315,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL1");
             }
          }
-      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr2.appendTcDetail(e);}
       tr2.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL2 */
@@ -337,7 +337,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL2")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL2")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL2");
             if (tmp != null) {
@@ -345,7 +345,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL2");
             }
          }
-      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr3.appendTcDetail(e);}
       tr3.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL3 */
@@ -367,7 +367,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL3")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL3")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL3");
             if (tmp != null) {
@@ -375,7 +375,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL3");
             }
          }
-      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr4.appendTcDetail(e);}
       tr4.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL4 */
@@ -395,7 +395,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL4")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL4")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL4");
             if (tmp != null) {
@@ -403,7 +403,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL4");
             }
          }
-      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr5.appendTcDetail(e);}
       tr5.writeTo(writer);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL5 */
@@ -423,7 +423,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
          // display evaluated results
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL5")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL5")) {
             PortletSession ps = portletReq.getPortletSession();
             TestResult tmp = (TestResult)ps.getAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL5");
             if (tmp != null) {
@@ -431,7 +431,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderActurl implements Po
                ps.removeAttribute(RESULT_ATTR_PREFIX + "V2URLTests_PortletURLGenerationListener_ApiRenderActurl_filterActionURL5");
             }
          }
-      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr6.appendTcDetail(e);}
       tr6.writeTo(writer);
 
    }
