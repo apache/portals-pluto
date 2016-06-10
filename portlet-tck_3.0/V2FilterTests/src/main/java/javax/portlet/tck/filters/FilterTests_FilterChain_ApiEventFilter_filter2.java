@@ -22,35 +22,32 @@ import javax.portlet.*;
 import javax.portlet.filter.*;
 import javax.portlet.tck.beans.*;
 import javax.portlet.tck.constants.*;
+import static javax.portlet.tck.constants.Constants.*;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
 import static javax.portlet.PortletSession.*;
 
 /**
  * Filter for JSR 362 request dispatcher testing. Used by portlet:
- * FilterTests_PortletFilter_ApiActionFilter
+ * FilterTests_FilterChain_ApiEventFilter
  *
- * @author nick
+ * @author ahmed
  *
  */
-public class FilterTests_PortletFilter_ApiActionFilter_filter implements ActionFilter {
+public class FilterTests_FilterChain_ApiEventFilter_filter2 implements EventFilter {
   private static final String LOG_CLASS =
-      FilterTests_PortletFilter_ApiActionFilter_filter.class.getName();
+      FilterTests_FilterChain_ApiEventFilter_filter2.class.getName();
   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+  public static boolean tr1_success = false;
 
-  private FilterConfig filterConfig = null;
-  private boolean initCalled = false;
 
   @Override
-  public void init(FilterConfig filterConfig) throws PortletException {
-    this.filterConfig = filterConfig;
-    initCalled = true;
-  }
+  public void init(FilterConfig filterConfig) throws PortletException {}
 
   @Override
   public void destroy() {}
 
   @Override
-  public void doFilter(ActionRequest portletReq, ActionResponse portletResp, FilterChain chain)
+  public void doFilter(EventRequest portletReq, EventResponse portletResp, FilterChain chain)
       throws IOException, PortletException {
     LOGGER.entering(LOG_CLASS, "doFilter");
 
@@ -62,29 +59,26 @@ public class FilterTests_PortletFilter_ApiActionFilter_filter implements ActionF
 
     // Create result objects for the tests
 
-    /* TestCase: V2FilterTests_PortletFilter_ApiActionFilter_initAction1 */
-    /* Details: "The init(FilterConfig): method is called when an */
-    /* ActionFilter is configured" */
+    /* TestCase: V2FilterTests_FilterChain_ApiEventFilter_invokeEventFilter */
+    /* Details: "Invoking doFilter(EventRequest, EventResponse): causes */
+    /* next filter to be invoked" */
     TestResult tr0 =
-        tcd.getTestResultFailed(V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION1);
-    if (initCalled == true) {
+        tcd.getTestResultFailed(V2FILTERTESTS_FILTERCHAIN_APIEVENTFILTER_INVOKEEVENTFILTER);
+    if (FilterTests_FilterChain_ApiEventFilter_filter.tr0_success) {
       tr0.setTcSuccess(true);
     }
     tr0.writeTo(writer);
 
-    /* TestCase: V2FilterTests_PortletFilter_ApiActionFilter_initAction2 */
-    /* Details: "The init(FilterConfig): method for an ActionFilter is */
-    /* passed a FilterConfig object" */
-    TestResult tr1 =
-        tcd.getTestResultFailed(V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION2);
-    if (this.filterConfig != null) {
-      tr1.setTcSuccess(true);
-    }
-    tr1.writeTo(writer);
+    /* TestCase: V2FilterTests_FilterChain_ApiEventFilter_invokeEventFilter2 */
+    /* Details: "Invoking doFilter(EventRequest, EventResponse): causes */
+    /* portlet Event method to be invoked" */
+    FilterTests_FilterChain_ApiEventFilter_filter2.tr1_success = true;
 
+    String msg = (String) portletReq.getPortletSession().getAttribute(
+        RESULT_ATTR_PREFIX + "FilterTests_FilterChain_ApiEventFilter", APPLICATION_SCOPE);
     portletReq.getPortletSession().setAttribute(
-        Constants.RESULT_ATTR_PREFIX + "FilterTests_PortletFilter_ApiActionFilter",
-        writer.toString(), APPLICATION_SCOPE);
+        Constants.RESULT_ATTR_PREFIX + "FilterTests_FilterChain_ApiEventFilter",
+        msg + writer.toString(), APPLICATION_SCOPE);
 
     chain.doFilter(portletReq, portletResp);
 

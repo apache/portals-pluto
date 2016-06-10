@@ -23,16 +23,15 @@ import javax.portlet.filter.*;
 
 /**
  * Filter for JSR 362 request dispatcher testing. Used by portlet:
- * FilterTests_FilterChain_ApiActionFilter
+ * FilterTests_ActionFilter_ApiActionFilter2
  *
  * @author ahmed
  *
  */
-public class FilterTests_FilterChain_ApiActionFilter_filter implements ActionFilter {
+public class FilterTests_ActionFilter_ApiActionFilter_filter3 implements ActionFilter {
   private static final String LOG_CLASS =
-      FilterTests_FilterChain_ApiActionFilter_filter.class.getName();
+      FilterTests_ActionFilter_ApiActionFilter_filter3.class.getName();
   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-  public static boolean tr0_success = false;
 
 
   @Override
@@ -46,11 +45,6 @@ public class FilterTests_FilterChain_ApiActionFilter_filter implements ActionFil
       throws IOException, PortletException {
     LOGGER.entering(LOG_CLASS, "doFilter");
 
-    /* TestCase: V2FilterTests_FilterChain_ApiActionFilter_invokeActionFilter */
-    /* Details: "Invoking doFilter(ActionRequest, ActionResponse): causes */
-    /* next filter to be invoked" */
-    FilterTests_FilterChain_ApiActionFilter_filter.tr0_success = true;
-
-    chain.doFilter(portletReq, portletResp);
+    portletResp.setRenderParameter("tr5_success", "true");
   }
 }

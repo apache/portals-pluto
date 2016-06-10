@@ -20,31 +20,25 @@
 package javax.portlet.tck.filters;
 
 import java.io.*;
-import java.util.*;
 import java.util.logging.*;
-import static java.util.logging.Logger.*;
 import javax.portlet.*;
 import javax.portlet.filter.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
 
 /**
  * Filter for JSR 362 request dispatcher testing.
  * Used by portlet: FilterTests_FilterChain_ApiRenderFilter
  *
- * @author nick
+ * @author ahmed
  *
  */
 public class FilterTests_FilterChain_ApiRenderFilter_filter implements RenderFilter {
    private static final String LOG_CLASS = 
          FilterTests_FilterChain_ApiRenderFilter_filter.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+   public static boolean tr0_success = false;
 
-   private FilterConfig filterConfig;
+   @SuppressWarnings("unused")
+  private FilterConfig filterConfig;
 
    @Override
    public void init(FilterConfig filterConfig) throws PortletException {
@@ -59,44 +53,12 @@ public class FilterTests_FilterChain_ApiRenderFilter_filter implements RenderFil
    public void doFilter(RenderRequest portletReq, RenderResponse portletResp,
          FilterChain chain) throws IOException, PortletException {
       LOGGER.entering(LOG_CLASS, "doFilter");
-
-      PrintWriter writer = portletResp.getWriter();
-
-      // first execute the chain
-
-      chain.doFilter(portletReq, portletResp);
-
-      // now do the tests and write output
-
-      JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
-
-      // Create result objects for the tests
-
+      
       /* TestCase: V2FilterTests_FilterChain_ApiRenderFilter_invokeRenderFilter */
       /* Details: "Invoking doFilter(RenderRequest, RenderResponse): causes   */
       /* next filter to be invoked"                                           */
-      TestResult tr0 = tcd.getTestResultFailed(V2FILTERTESTS_FILTERCHAIN_APIRENDERFILTER_INVOKERENDERFILTER);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
-
-      /* TestCase: V2FilterTests_FilterChain_ApiRenderFilter_invokeRenderFilter2 */
-      /* Details: "Invoking doFilter(RenderRequest, RenderResponse): causes   */
-      /* portlet Render method to be invoked"                                 */
-      TestResult tr1 = tcd.getTestResultFailed(V2FILTERTESTS_FILTERCHAIN_APIRENDERFILTER_INVOKERENDERFILTER2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
-      tr1.writeTo(writer);
-
-      /* TestCase: V2FilterTests_FilterChain_ApiRenderFilter_invokeRenderException */
-      /* Details: "Method doFilter(RenderRequest, RenderResponse): If a       */
-      /* PortletException is thrown before invoking the next filter in the    */
-      /* chain, processing does not continue down the chain "                 */
-      TestResult tr2 = tcd.getTestResultFailed(V2FILTERTESTS_FILTERCHAIN_APIRENDERFILTER_INVOKERENDEREXCEPTION);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
-      tr2.writeTo(writer);
-
-
+      FilterTests_FilterChain_ApiRenderFilter_filter.tr0_success = true;
+      
+      chain.doFilter(portletReq, portletResp);
    }
 }

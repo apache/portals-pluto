@@ -20,17 +20,11 @@
 package javax.portlet.tck.filters;
 
 import java.io.*;
-import java.util.*;
 import java.util.logging.*;
-import static java.util.logging.Logger.*;
 import javax.portlet.*;
 import javax.portlet.filter.*;
 import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
 
 /**
  * Filter for JSR 362 request dispatcher testing.
@@ -44,7 +38,7 @@ public class FilterTests_PortletFilter_ApiRenderFilter_filter implements RenderF
          FilterTests_PortletFilter_ApiRenderFilter_filter.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
-   private FilterConfig filterConfig;
+   private FilterConfig filterConfig=null;
    private boolean initCalled = false;
 
    @Override
@@ -64,17 +58,9 @@ public class FilterTests_PortletFilter_ApiRenderFilter_filter implements RenderF
 
       PrintWriter writer = portletResp.getWriter();
 
-      // first execute the chain
-
-      chain.doFilter(portletReq, portletResp);
-
-      // now do the tests and write output
-
       JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
       // Create result objects for the tests
-
-      ClassChecker cc = new ClassChecker(PortletFilter.class);
 
       /* TestCase: V2FilterTests_PortletFilter_ApiRenderFilter_initRender1    */
       /* Details: "The init(FilterConfig): method is called when an           */
@@ -89,18 +75,11 @@ public class FilterTests_PortletFilter_ApiRenderFilter_filter implements RenderF
       /* Details: "The init(FilterConfig): method for an RenderFilter is      */
       /* passed a FilterConfig object"                                        */
       TestResult tr1 = tcd.getTestResultFailed(V2FILTERTESTS_PORTLETFILTER_APIRENDERFILTER_INITRENDER2);
-      if(this.filterConfig==filterConfig) {
+      if(this.filterConfig!=null) {
     	  tr1.setTcSuccess(true);
       }
       tr1.writeTo(writer);
 
-      /* TestCase: V2FilterTests_PortletFilter_ApiRenderFilter_initRender3    */
-      /* Details: "If the init(FilterConfig): method for an RenderFilter      */
-      /* throws a PortletException, the filter is not placed in service"      */
-      TestResult tr2 = tcd.getTestResultSucceeded(V2FILTERTESTS_PORTLETFILTER_APIRENDERFILTER_INITRENDER3);
-      tr2.appendTcDetail("This Method could not be Tested for Filter Portlet which is already placed in service");
-      tr2.writeTo(writer);
-
-
+      chain.doFilter(portletReq, portletResp);
    }
 }

@@ -17,44 +17,41 @@
 package javax.portlet.tck.filters;
 
 import java.io.*;
+import java.util.*;
 import java.util.logging.*;
 import javax.portlet.*;
 import javax.portlet.filter.*;
 import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.PortletSession.*;
 
 /**
  * Filter for JSR 362 request dispatcher testing. Used by portlet:
- * FilterTests_PortletFilter_ApiActionFilter
+ * FilterTests_FilterConfig_ApiRenderFilter
  *
- * @author nick
+ * @author ahmed
  *
  */
-public class FilterTests_PortletFilter_ApiActionFilter_filter implements ActionFilter {
+public class FilterTests_FilterConfig_ApiRenderFilter_filter2 implements RenderFilter {
   private static final String LOG_CLASS =
-      FilterTests_PortletFilter_ApiActionFilter_filter.class.getName();
+      FilterTests_FilterConfig_ApiRenderFilter_filter2.class.getName();
   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
-  private FilterConfig filterConfig = null;
-  private boolean initCalled = false;
+  private FilterConfig filterConfig;
 
   @Override
   public void init(FilterConfig filterConfig) throws PortletException {
     this.filterConfig = filterConfig;
-    initCalled = true;
   }
 
   @Override
   public void destroy() {}
 
   @Override
-  public void doFilter(ActionRequest portletReq, ActionResponse portletResp, FilterChain chain)
+  public void doFilter(RenderRequest portletReq, RenderResponse portletResp, FilterChain chain)
       throws IOException, PortletException {
     LOGGER.entering(LOG_CLASS, "doFilter");
 
-    StringWriter writer = new StringWriter();
+    PrintWriter writer = portletResp.getWriter();
 
     // now do the tests and write output
 
@@ -62,31 +59,19 @@ public class FilterTests_PortletFilter_ApiActionFilter_filter implements ActionF
 
     // Create result objects for the tests
 
-    /* TestCase: V2FilterTests_PortletFilter_ApiActionFilter_initAction1 */
-    /* Details: "The init(FilterConfig): method is called when an */
-    /* ActionFilter is configured" */
-    TestResult tr0 =
-        tcd.getTestResultFailed(V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION1);
-    if (initCalled == true) {
-      tr0.setTcSuccess(true);
+    /* TestCase: V2FilterTests_FilterConfig_ApiRenderFilter_getInitParameterNames1 */
+    /* Details: "Method getInitParameterNames(): Returns empty */
+    /* Enumeration if no parameters defined" */
+    TestResult tr4 =
+        tcd.getTestResultFailed(V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETINITPARAMETERNAMES1);
+    Enumeration<String> initParams = filterConfig.getInitParameterNames();
+    if (!initParams.hasMoreElements()) {
+      tr4.setTcSuccess(true);
+    } else {
+      tr4.appendTcDetail("Failed because found init paramerters.");
     }
-    tr0.writeTo(writer);
-
-    /* TestCase: V2FilterTests_PortletFilter_ApiActionFilter_initAction2 */
-    /* Details: "The init(FilterConfig): method for an ActionFilter is */
-    /* passed a FilterConfig object" */
-    TestResult tr1 =
-        tcd.getTestResultFailed(V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION2);
-    if (this.filterConfig != null) {
-      tr1.setTcSuccess(true);
-    }
-    tr1.writeTo(writer);
-
-    portletReq.getPortletSession().setAttribute(
-        Constants.RESULT_ATTR_PREFIX + "FilterTests_PortletFilter_ApiActionFilter",
-        writer.toString(), APPLICATION_SCOPE);
+    tr4.writeTo(writer);
 
     chain.doFilter(portletReq, portletResp);
-
   }
 }
