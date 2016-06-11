@@ -20,7 +20,6 @@ import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTES
 import static javax.portlet.tck.constants.Constants.BUTTON_PARAM_NAME;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
-import static javax.xml.XMLConstants.NULL_NS_URI;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -56,7 +55,8 @@ import javax.xml.namespace.QName;
  */
 public class PortletTests_Event_ApiEvent implements Portlet, ResourceServingPortlet {
   private static final String LOG_CLASS = PortletTests_Event_ApiEvent.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+  @SuppressWarnings("unused")
+private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
   private PortletConfig portletConfig = null;
 
 
@@ -69,29 +69,26 @@ public class PortletTests_Event_ApiEvent implements Portlet, ResourceServingPort
   public void destroy() {}
 
   @Override
-  public void processAction(ActionRequest portletReq, ActionResponse portletResp)
-      throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
+   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
 
-    portletResp.setRenderParameters(portletReq.getParameterMap());
-    long tid = Thread.currentThread().getId();
-    portletReq.setAttribute(THREADID_ATTR, tid);
+      portletResp.setRenderParameters(portletReq.getParameterMap());
+      long tid = Thread.currentThread().getId();
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
-
-    QName eventQName = new QName(TCKNAMESPACE, "PortletTests_Event_ApiEvent");
-    String val = portletReq.getParameter(BUTTON_PARAM_NAME);
-    if (val != null && val.equals(V2PORTLETTESTS_EVENT_APIEVENT_GETVALUE2)) {
-      portletResp.setEvent(eventQName, null);
-    } else {
-      portletResp.setEvent(eventQName, "Hi");
-      portletResp.setEvent("PortletTests_Event_ApiEvent_localPart", "Hi!");
-    }
-  }
+      String val = portletReq.getParameter(BUTTON_PARAM_NAME);
+      if (val != null && val.equals(V2PORTLETTESTS_EVENT_APIEVENT_GETVALUE2)) {
+         QName eventQName = new QName(TCKNAMESPACE, "PortletTests_Event_ApiEvent2");
+         portletResp.setEvent(eventQName, null);
+      } else {
+         QName eventQName = new QName(TCKNAMESPACE, "PortletTests_Event_ApiEvent");
+         portletResp.setEvent(eventQName, "Hi");
+         portletResp.setEvent("PortletTests_Event_ApiEvent_localPart", "Hi!");
+      }
+   }
 
   @Override
   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
@@ -101,7 +98,6 @@ public class PortletTests_Event_ApiEvent implements Portlet, ResourceServingPort
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
