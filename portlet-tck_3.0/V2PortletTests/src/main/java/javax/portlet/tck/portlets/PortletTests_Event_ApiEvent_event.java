@@ -119,6 +119,18 @@ public class PortletTests_Event_ApiEvent_event
         tr12.appendTcDetail("Failed because default namespace is not \"https://www.apache.org\"");
       }
       tr12.writeTo(writer);
+    } else if (eventName.equals("PortletTests_Event_ApiEvent_tr5")) {
+      /* TestCase: V2PortletTests_Event_ApiEvent_getValue2 */
+      /* Details: "Method getValue(String, String): Returned value is null */
+      /* if the event has no payload" */
+      TestResult tr5 = tcd.getTestResultFailed(V2PORTLETTESTS_EVENT_APIEVENT_GETVALUE2);
+      Serializable val1 = evt.getValue();
+      if (val1 == null) {
+        tr5.setTcSuccess(true);
+      } else {
+        tr5.appendTcDetail("EventPayload has a value:" + val1.toString());
+      }
+      tr5.writeTo(writer);
     } else if (eventName.equals("PortletTests_Event_ApiEvent")) {
       /* TestCase: V2PortletTests_Event_ApiEvent_getQName1 */
       /* Details: "Method getQName(): Returns the javax.xml.namespace.QName */
@@ -196,27 +208,13 @@ public class PortletTests_Event_ApiEvent_event
         tr4.appendTcDetail(e.toString());
       }
       tr4.writeTo(writer);
-
-      /* TestCase: V2PortletTests_Event_ApiEvent_getValue2 */
-      /* Details: "Method getValue(String, String): Returned value is null */
-      /* if the event has no payload" */
-      TestResult tr5 = tcd.getTestResultFailed(V2PORTLETTESTS_EVENT_APIEVENT_GETVALUE2);
-      Serializable val1 = evt.getValue();
-      if (val1 == null) {
-        tr5.setTcSuccess(true);
-      } else {
-        tr5.appendTcDetail("EventPayload has a value:" + val1.toString());
-      }
-      tr5.writeTo(writer);
     }
-    
-    String msg = (String) portletReq.getPortletSession().getAttribute(
-        RESULT_ATTR_PREFIX + "PortletTests_Event_ApiEvent",
-        APPLICATION_SCOPE);
+
+    String msg = (String) portletReq.getPortletSession()
+        .getAttribute(RESULT_ATTR_PREFIX + "PortletTests_Event_ApiEvent", APPLICATION_SCOPE);
     msg = msg + writer.toString();
     portletReq.getPortletSession().setAttribute(
-        Constants.RESULT_ATTR_PREFIX + "PortletTests_Event_ApiEvent", msg,
-        APPLICATION_SCOPE);
+        Constants.RESULT_ATTR_PREFIX + "PortletTests_Event_ApiEvent", msg, APPLICATION_SCOPE);
   }
 
   @Override
@@ -234,15 +232,15 @@ public class PortletTests_Event_ApiEvent_event
         .getAttribute(RESULT_ATTR_PREFIX + "PortletTests_Event_ApiEvent", APPLICATION_SCOPE);
     msg = (msg == null) ? "Not ready. click test case link." : msg;
     writer.write("<p>" + msg + "</p>\n");
-    
+
     /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig_getProcessingEventQnames3 */
     /* Details: "getProcessingEventQnames - If the event was defined */
     /* using the &lt;name&gt; element rather than the &lt;qname&gt; */
     /* element, default namespace defined with the */
     /* &lt;default-namespace&gt; element must be added as the event */
     /* namespace" */
-    TestResult tr6 =
-        tcd_spec.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETPROCESSINGEVENTQNAMES3);
+    TestResult tr6 = tcd_spec
+        .getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETPROCESSINGEVENTQNAMES3);
     Enumeration<QName> processingEvents = portletConfig.getProcessingEventQNames();
     while (processingEvents.hasMoreElements()) {
       QName qName = processingEvents.nextElement();

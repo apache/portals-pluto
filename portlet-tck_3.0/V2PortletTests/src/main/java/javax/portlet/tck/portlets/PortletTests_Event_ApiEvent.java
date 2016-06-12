@@ -79,9 +79,10 @@ public class PortletTests_Event_ApiEvent implements Portlet, ResourceServingPort
 
 
     QName eventQName = new QName(TCKNAMESPACE, "PortletTests_Event_ApiEvent");
+    QName eventQName_tr5 = new QName(TCKNAMESPACE, "PortletTests_Event_ApiEvent_tr5");
     String val = portletReq.getParameter(BUTTON_PARAM_NAME);
     if (val != null && val.equals(V2PORTLETTESTS_EVENT_APIEVENT_GETVALUE2)) {
-      portletResp.setEvent(eventQName, null);
+      portletResp.setEvent(eventQName_tr5, null);
     } else {
       portletResp.setEvent(eventQName, "Hi");
       portletResp.setEvent("PortletTests_Event_ApiEvent_localPart", "Hi!");
