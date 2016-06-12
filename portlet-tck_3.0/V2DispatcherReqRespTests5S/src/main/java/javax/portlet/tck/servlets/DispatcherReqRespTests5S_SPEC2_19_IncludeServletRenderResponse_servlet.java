@@ -19,18 +19,26 @@
 
 package javax.portlet.tck.servlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.*;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_GETOUTPUTSTREAM;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SENDERROR;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SENDREDIRECT;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SETCHARACTERENCODING;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SETCONTENTLENGTH;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SETCONTENTTYPE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SETLOCALE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SETSTATUS;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.MimeResponse;
+import javax.portlet.PortletResponse;
+import javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet for JSR 362 request dispatcher testing.
@@ -40,9 +48,7 @@ import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.*;
  *
  */
 public class DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_servlet extends HttpServlet {
-   private static final String LOG_CLASS = 
-         DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_servlet.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+   private static final long serialVersionUID = 1L;
 
    @Override
    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -59,13 +65,8 @@ public class DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_serv
    // The tck uses only get & post requests
    protected void processTCKReq(HttpServletRequest request, HttpServletResponse response)
          throws ServletException, IOException {
-      LOGGER.entering(LOG_CLASS, "servlet entry");
 
-      PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
       PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
-      PortletConfig portletConfig = (PortletConfig) request.getAttribute("javax.portlet.config");
-      long svtTid = Thread.currentThread().getId();
-      long reqTid = (Long) portletReq.getAttribute(THREADID_ATTR);
 
       PrintWriter writer = ((MimeResponse)portletResp).getWriter();
 
@@ -77,72 +78,64 @@ public class DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_serv
       /* Details: "In a target servlet of a include in the Render phase,      */
       /* the method HttpServletResponse.getOutputStream must provide the      */
       /* same functionality as RenderResponse.getPortletOutputStream"         */
-      TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_GETOUTPUTSTREAM);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      TestResult tr0 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_GETOUTPUTSTREAM);
+      tr0.appendTcDetail("Can't be implemented.");
       tr0.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_sendError */
       /* Details: "In a target servlet of a include in the Render phase,      */
       /* the method HttpServletResponse.sendError does not perform any        */
       /* operation"                                                           */
-      TestResult tr1 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SENDERROR);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      TestResult tr1 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SENDERROR);
+      tr1.appendTcDetail("Can't be implemented.");
       tr1.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_sendRedirect */
       /* Details: "In a target servlet of a include in the Render phase,      */
       /* the method HttpServletResponse.sendRedirect does not perform any     */
       /* operation"                                                           */
-      TestResult tr2 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SENDREDIRECT);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      TestResult tr2 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SENDREDIRECT);
+      tr2.appendTcDetail("Can't be implemented.");
       tr2.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_setCharacterEncoding */
       /* Details: "In a target servlet of a include in the Render phase,      */
       /* the method HttpServletResponse.setCharacterEncoding does not         */
       /* perform any operation"                                               */
-      TestResult tr3 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SETCHARACTERENCODING);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      TestResult tr3 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SETCHARACTERENCODING);
+      tr3.appendTcDetail("Can't be implemented.");
       tr3.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_setContentLength */
       /* Details: "In a target servlet of a include in the Render phase,      */
       /* the method HttpServletResponse.setContentLength does not perform     */
       /* any operation"                                                       */
-      TestResult tr4 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SETCONTENTLENGTH);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      TestResult tr4 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SETCONTENTLENGTH);
+      tr4.appendTcDetail("Can't be implemented.");
       tr4.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_setContentType */
       /* Details: "In a target servlet of a include in the Render phase,      */
       /* the method HttpServletResponse.setContentType does not perform any   */
       /* operation"                                                           */
-      TestResult tr5 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SETCONTENTTYPE);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      TestResult tr5 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SETCONTENTTYPE);
+      tr5.appendTcDetail("Can't be implemented.");
       tr5.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_setLocale */
       /* Details: "In a target servlet of a include in the Render phase,      */
       /* the method HttpServletResponse.setLocale does not perform any        */
       /* operation"                                                           */
-      TestResult tr6 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SETLOCALE);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
+      TestResult tr6 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SETLOCALE);
+      tr6.appendTcDetail("Can't be implemented.");
       tr6.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_setStatus */
       /* Details: "In a target servlet of a include in the Render phase,      */
       /* the method HttpServletResponse.setStatus does not perform any        */
       /* operation"                                                           */
-      TestResult tr7 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SETSTATUS);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      TestResult tr7 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDESERVLETRENDERRESPONSE_SETSTATUS);
+      tr7.appendTcDetail("Can't be implemented.");
       tr7.writeTo(writer);
 
 

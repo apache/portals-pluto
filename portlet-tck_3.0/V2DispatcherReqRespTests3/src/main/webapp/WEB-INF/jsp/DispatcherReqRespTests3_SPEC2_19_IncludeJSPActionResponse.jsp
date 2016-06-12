@@ -114,7 +114,7 @@
       /* method HttpServletResponse.getLocale must return null"               */
       TestResult tr8 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPACTIONRESPONSE_GETLOCALE);
       try {
-         Locale loc = request.getLocale();
+         Locale loc = response.getLocale();
          if (loc != null) tr8.appendTcDetail("Locale is " + loc);
          tr8.setTcSuccess(loc == null);
       } catch(Exception e) {tr8.appendTcDetail(e.toString());}

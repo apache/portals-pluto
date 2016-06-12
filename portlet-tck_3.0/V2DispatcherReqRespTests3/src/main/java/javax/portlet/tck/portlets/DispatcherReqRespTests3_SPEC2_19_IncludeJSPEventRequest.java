@@ -18,21 +18,25 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
+import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -46,15 +50,9 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest implements Portlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-   
-   private PortletConfig portletConfig = null;
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
    }
 
    @Override
@@ -64,13 +62,10 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest implements 
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
-
-      StringWriter writer = new StringWriter();
 
       QName eventQName = new QName(TCKNAMESPACE,
              "DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest");
@@ -80,19 +75,15 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest implements 
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
-
-      PrintWriter writer = portletResp.getWriter();
 
    }
 
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);

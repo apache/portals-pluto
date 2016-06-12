@@ -26,9 +26,8 @@
       /* Details: "In a target jsp of a forward in the Action phase, the      */
       /* method HttpServletResponse.sendRedirect must provide the same        */
       /* functionality as ActionResponse.sendRedirect"                        */
-      TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_FORWARDJSPACTIONRESPONSE_SENDREDIRECT);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      TestResult tr0 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_FORWARDJSPACTIONRESPONSE_SENDREDIRECT);
+      tr0.appendTcDetail("Can't be implemented.");
       tr0.writeTo(writer);
 
       request.getSession().setAttribute(

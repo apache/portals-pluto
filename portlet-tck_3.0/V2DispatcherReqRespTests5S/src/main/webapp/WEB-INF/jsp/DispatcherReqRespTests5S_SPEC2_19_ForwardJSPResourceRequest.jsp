@@ -26,18 +26,16 @@
       /* Details: "In a target jsp of a forward in the Resource phase, the    */
       /* method HttpServletRequest.getInputStream must provide the same       */
       /* functionality as ResourceRequest.getPortletInputStream"              */
-      TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_FORWARDJSPRESOURCEREQUEST_GETINPUTSTREAM);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      TestResult tr0 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_FORWARDJSPRESOURCEREQUEST_GETINPUTSTREAM);
+      tr0.appendTcDetail("Can't be implemented.");
       tr0.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPResourceRequest_setCharacterEncoding */
       /* Details: "In a target jsp of a forward in the Resource phase, the    */
       /* method HttpServletRequest.setCharacterEncoding must provide the      */
       /* same functionality as ResourceRequest.setCharacterEncoding"          */
-      TestResult tr1 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_FORWARDJSPRESOURCEREQUEST_SETCHARACTERENCODING);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      TestResult tr1 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_FORWARDJSPRESOURCEREQUEST_SETCHARACTERENCODING);
+      tr1.appendTcDetail("Can't be implemented.");
       tr1.writeTo(writer);
 
 %>

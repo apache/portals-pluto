@@ -172,7 +172,7 @@ public class HttpServletPortletResponseWrapper extends HttpServletResponseWrappe
    @Override
    public String getCharacterEncoding() {
       if (portletResponse instanceof MimeResponse) {
-         ((MimeResponse) portletResponse).getCharacterEncoding(); 
+         return ((MimeResponse) portletResponse).getCharacterEncoding(); 
       }
       return null;
    }
@@ -180,7 +180,7 @@ public class HttpServletPortletResponseWrapper extends HttpServletResponseWrappe
    @Override
    public String getContentType() {
       if (portletResponse instanceof MimeResponse) {
-         ((MimeResponse) portletResponse).getContentType(); 
+         return ((MimeResponse) portletResponse).getContentType(); 
       }
       return null;
    }

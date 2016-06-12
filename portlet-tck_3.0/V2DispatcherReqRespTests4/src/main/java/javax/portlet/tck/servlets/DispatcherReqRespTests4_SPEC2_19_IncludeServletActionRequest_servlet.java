@@ -19,18 +19,85 @@
 
 package javax.portlet.tck.servlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.*;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETATTRIBUTE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETATTRIBUTENAMES;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETAUTHTYPE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETCHARACTERENCODING;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETCONTENTLENGTH;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETCONTENTTYPE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETCONTEXTPATH;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETCOOKIES;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETDATEHEADER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETHEADER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETHEADERNAMES;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETHEADERS;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETINTHEADER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETLOCALADDR;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETLOCALE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETLOCALES;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETLOCALNAME;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETLOCALPORT;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETMETHOD;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETERMAP;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETERNAMES;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETERVALUES;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPATHINFO;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPATHTRANSLATED;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPROTOCOL;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETQUERYSTRING;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREALPATH;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREMOTEADDR;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREMOTEHOST;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREMOTEPORT;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREMOTEUSER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREQUESTDISPATCHER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREQUESTEDSESSIONID;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREQUESTURI;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREQUESTURL;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETSCHEME;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETSERVERNAME;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETSERVERPORT;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETSERVLETPATH;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETSESSION;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETUSERPRINCIPAL;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_ISREQUESTEDSESSIONIDVALID;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_ISSECURE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_ISUSERINROLE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_REMOVEATTRIBUTE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_SETATTRIBUTE;
+import static javax.portlet.tck.constants.Constants.ACCEPT_HEADER;
+import static javax.portlet.tck.constants.Constants.ACCEPT_LANG_HEADER;
+import static javax.portlet.tck.constants.Constants.ATTR_PREFIX;
+import static javax.portlet.tck.constants.Constants.CONTENT_LENGTH_HEADER;
+import static javax.portlet.tck.constants.Constants.DATE_HEADER;
+import static javax.portlet.tck.constants.Constants.PARM_NAME;
+import static javax.portlet.tck.constants.Constants.QUERY_STRING;
+import static javax.portlet.tck.constants.Constants.ROLE_NAME;
+import static javax.portlet.tck.constants.Constants.SERVLET_PREFIX;
+import static javax.portlet.tck.constants.Constants.SERVLET_SUFFIX;
+
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
+import javax.portlet.tck.beans.CompareUtils;
+import javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.constants.Constants;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet for JSR 362 request dispatcher testing.
@@ -40,9 +107,7 @@ import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.*;
  *
  */
 public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_servlet extends HttpServlet {
-   private static final String LOG_CLASS = 
-         DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_servlet.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+   private static final long serialVersionUID = 1L;
 
    @Override
    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -57,15 +122,11 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_servle
    }
 
    // The tck uses only get & post requests
+   @SuppressWarnings({ "unchecked", "deprecation" })
    protected void processTCKReq(HttpServletRequest request, HttpServletResponse response)
          throws ServletException, IOException {
-      LOGGER.entering(LOG_CLASS, "servlet entry");
 
       PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
-      PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
-      PortletConfig portletConfig = (PortletConfig) request.getAttribute("javax.portlet.config");
-      long svtTid = Thread.currentThread().getId();
-      long reqTid = (Long) portletReq.getAttribute(THREADID_ATTR);
 
       StringWriter writer = new StringWriter();
 
