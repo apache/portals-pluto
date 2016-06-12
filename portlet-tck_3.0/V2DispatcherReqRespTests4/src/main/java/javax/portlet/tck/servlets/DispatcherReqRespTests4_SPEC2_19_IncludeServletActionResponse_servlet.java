@@ -19,18 +19,30 @@
 
 package javax.portlet.tck.servlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.*;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_CONTAINSHEADER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_ENCODEREDIRECTURL;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_ENCODEREDIRECTURL1;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_ENCODEURL;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_ENCODEURL1;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_GETBUFFERSIZE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_GETCHARACTERENCODING;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_GETCONTENTTYPE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_GETLOCALE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_ISCOMMITTED;
+
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.Locale;
+
+import javax.portlet.PortletResponse;
+import javax.portlet.tck.beans.CompareUtils;
+import javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.constants.Constants;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet for JSR 362 request dispatcher testing.
@@ -40,9 +52,7 @@ import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.*;
  *
  */
 public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_servlet extends HttpServlet {
-   private static final String LOG_CLASS = 
-         DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_servlet.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+   private static final long serialVersionUID = 1L;
 
    @Override
    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -57,15 +67,11 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_servl
    }
 
    // The tck uses only get & post requests
+   @SuppressWarnings("deprecation")
    protected void processTCKReq(HttpServletRequest request, HttpServletResponse response)
          throws ServletException, IOException {
-      LOGGER.entering(LOG_CLASS, "servlet entry");
 
-      PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
       PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
-      PortletConfig portletConfig = (PortletConfig) request.getAttribute("javax.portlet.config");
-      long svtTid = Thread.currentThread().getId();
-      long reqTid = (Long) portletReq.getAttribute(THREADID_ATTR);
 
       StringWriter writer = new StringWriter();
 
@@ -166,7 +172,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_servl
       /* the method HttpServletResponse.getLocale must return null"           */
       TestResult tr8 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_GETLOCALE);
       try {
-         Locale loc = request.getLocale();
+         Locale loc = response.getLocale();
          if (loc != null) tr8.appendTcDetail("Locale is " + loc);
          tr8.setTcSuccess(loc == null);
       } catch(Exception e) {tr8.appendTcDetail(e.toString());}

@@ -161,7 +161,7 @@
          <qname>tck:PortletTests_Event_ApiEvent</qname>
       </supported-publishing-event>
       <supported-publishing-event>
-         <qname>tck:PortletTests_Event_ApiEvent_tr5</qname>
+         <qname>tck:PortletTests_Event_ApiEvent2</qname>
       </supported-publishing-event>
       <supported-publishing-event>
          <name>PortletTests_Event_ApiEvent_localPart</name>
@@ -184,7 +184,7 @@
          <qname>tck:PortletTests_Event_ApiEvent</qname>
       </supported-processing-event>
       <supported-processing-event>
-         <qname>tck:PortletTests_Event_ApiEvent_tr5</qname>
+         <qname>tck:PortletTests_Event_ApiEvent2</qname>
       </supported-processing-event>
       <supported-processing-event>
          <name>PortletTests_Event_ApiEvent_localPart</name>
@@ -257,15 +257,15 @@
       <value-type>java.lang.String</value-type>
    </event-definition>
    <event-definition>
+      <qname>tck:PortletTests_Event_ApiEvent2</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+   <event-definition>
       <name>PortletTests_Event_ApiEvent_localPart</name>
       <value-type>java.lang.String</value-type>
    </event-definition>
    <event-definition>
       <qname>tck:PortletTests_EventPortlet_ApiEvent</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-   <event-definition>
-      <qname>tck:PortletTests_EventPortlet_ApiEvent_tr5</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
    <public-render-parameter>

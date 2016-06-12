@@ -64,7 +64,6 @@ public class ResponseTests_EventResponse_ApiEvent implements Portlet, ResourceSe
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       
@@ -82,7 +81,6 @@ public class ResponseTests_EventResponse_ApiEvent implements Portlet, ResourceSe
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -94,7 +92,6 @@ public class ResponseTests_EventResponse_ApiEvent implements Portlet, ResourceSe
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
