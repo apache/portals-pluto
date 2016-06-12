@@ -211,25 +211,6 @@ public class PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource extends Generic
         /* \"copyCurrentRenderParameters\" attribute is set to false, the       */
         /* current render parameters are not attached to the URL"               */
         portletResp.setRenderParameter("tr32", "true");
-      } else if (action.equals("V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL25")
-          && portletReq.getParameter("specialCharsTr35") != null
-          && (portletReq.getParameter("specialCharsTr35")).equals("<>&'\"")) {
-
-        /*
-         * TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL25 Details:
-         * "If the optional actionURL \"escapeXML\" attribute is set to false, the characters \
-         * "&lt;&gt;&'\\\"\" are not converted to their entity codes"
-         */
-        portletResp.setRenderParameter("tr35", "true");
-      } else if (action.equals("V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL26")
-          && portletReq.getParameter("specialCharsTr36") != null) {
-        if ((portletReq.getParameter("specialCharsTr36")).equals("&lt;&gt;&amp;&#39;&#34;")) {
-          /*
-           * TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL26 Details:
-           * "The \"escapeXML\" attribute default value is true"
-           */
-          portletResp.setRenderParameter("tr36", "true");
-        }
       } else if (action.equals("V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL27")) {
         /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL27 */
         /* Details: "If the optional actionURL \"name\" attribute is set, the */
