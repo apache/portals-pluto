@@ -55,6 +55,5 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions_invalidate1 extends HttpServ
     LOGGER.entering(LOG_CLASS, "servlet entry");
     HttpSession httpSession = request.getSession();
     httpSession.invalidate();
-    
   }
 }
