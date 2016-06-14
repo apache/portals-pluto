@@ -53,6 +53,7 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
 
     private List<Event> events;
     private PortletURLProviderImpl portletURLProvider;
+    private EventProviderImpl eventProviderImpl;
     
     public PortletStateAwareResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
                                                 HttpServletResponse containerResponse, PortletWindow window, PortletRequestContext requestContext)
@@ -60,6 +61,7 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
         super(container, containerRequest, containerResponse, window, requestContext);
         this.portletURLProvider = new PortletURLProviderImpl(getPortalURL(), 
               PortletURLProvider.TYPE.RENDER, window, getRequestContext());
+        this.eventProviderImpl = new EventProviderImpl(getPortletWindow(), PlutoServices.getServices().getPortletRegistryService());
         
         if (isDebug) {
            LOGGER.debug("Initialized.");
@@ -155,7 +157,7 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
 
     public EventProvider getEventProvider()
     {
-        return isClosed() ? null : new EventProviderImpl(getPortletWindow(), PlutoServices.getServices().getPortletRegistryService());
+        return isClosed() ? null : eventProviderImpl;
     }
 
     

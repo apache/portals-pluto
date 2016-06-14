@@ -18,29 +18,48 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
-import static javax.portlet.PortletSession.*;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH1;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH2;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH3;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH4;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH5;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH6;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.EventPortlet;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails;
+import javax.portlet.tck.beans.TckParameters;
+import javax.portlet.tck.beans.TckParameters.Parameter;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.constants.Constants;
 
 /**
  * This is the event processing portlet for the test cases. This portlet processes events, 
  * but does not publish them. Events are published in the main portlet for the test cases. 
  */
 public class DispatcherTests_SPEC2_19_DispatchServletEvent_event implements Portlet, EventPortlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         DispatcherTests_SPEC2_19_DispatchServletEvent_event.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+
+
    
    private PortletConfig portletConfig = null;
 
@@ -56,19 +75,19 @@ public class DispatcherTests_SPEC2_19_DispatchServletEvent_event implements Port
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
+
    }
 
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion serveResource - ERROR!!");
+
    }
 
    @Override
    public void processEvent(EventRequest portletReq, EventResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion processEvent");
+
 
 
       portletResp.setRenderParameters(portletReq);
@@ -77,6 +96,11 @@ public class DispatcherTests_SPEC2_19_DispatchServletEvent_event implements Port
       portletReq.setAttribute(THREADID_ATTR, tid);
 
       StringWriter writer = new StringWriter();
+
+      TckParameters params = (TckParameters)portletReq.getEvent().getValue();
+      for (Parameter p : params.getParams()) {
+         portletResp.setRenderParameter(p.getName(), p.getVals());
+      }
 
       JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();
 
@@ -161,7 +185,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletEvent_event implements Port
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
       
-      LOGGER.entering(LOG_CLASS, "event companion render");
+
 
       portletResp.setContentType("text/html");
       PrintWriter writer = portletResp.getWriter();
