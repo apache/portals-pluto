@@ -17,9 +17,10 @@
  */
 package javax.portlet.tck.beans;
 
-import java.security.*;
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletMode;
@@ -34,9 +35,9 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 
 /**
- * This class tests a wrapper class by simulating the class to be wrapped.The test code
- * verifies that the arguments passed to the wrapping method are correctly passed to
- * the wrapped class. Simulated return data is passed back to the caller.  
+ * This class tests a wrapper class by simulating the class to be wrapped.The test code verifies that the arguments
+ * passed to the wrapping method are correctly passed to the wrapped class. Simulated return data is passed back to the
+ * caller.
  * 
  * @author nick
  */
@@ -44,17 +45,17 @@ import org.w3c.dom.Element;
 public class ActionResponseWrapperChecker extends WrapperChecker implements ActionResponse {
 
    PortletResponse resp;
-   Element element;
-   
+   Element         element;
+
    public ActionResponseWrapperChecker(PortletResponse portletResp) {
       resp = portletResp;
       element = resp.createElement("p");
    }
-   
+
    @Override
    public void setWindowState(WindowState windowState) throws WindowStateException {
       String meth = "setWindowState";
-      Object[] args = {windowState};
+      Object[] args = { windowState };
       checkArgs(meth, args);
       return;
 
@@ -63,7 +64,7 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    @Override
    public void setRenderParameters(Map<String, String[]> parameters) {
       String meth = "setRenderParameters";
-      Object[] args = {parameters};
+      Object[] args = { parameters };
       checkArgs(meth, args);
       return;
 
@@ -72,7 +73,7 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    @Override
    public void setRenderParameter(String key, String[] values) {
       String meth = "setRenderParameter";
-      Object[] args = {key, values};
+      Object[] args = { key, values };
       checkArgs(meth, args);
       return;
 
@@ -83,8 +84,8 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
       String meth = "getRenderParameterMap";
       Object[] args = {};
       Map<String, String[]> parms = new HashMap<String, String[]>();
-      parms.put("parm1", new String[] {"val1", "val2"});
-      parms.put("parm2", new String[] {"val1", "val2"});
+      parms.put("parm1", new String[] { "val1", "val2" });
+      parms.put("parm2", new String[] { "val1", "val2" });
       Map<String, String[]> ret = parms;
       retVal = ret;
       checkArgs(meth, args);
@@ -114,7 +115,7 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    @Override
    public void removePublicRenderParameter(String name) {
       String meth = "removePublicRenderParameter";
-      Object[] args = {name};
+      Object[] args = { name };
       checkArgs(meth, args);
       return;
 
@@ -123,7 +124,7 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    @Override
    public void setEvent(QName arg0, Serializable arg1) {
       String meth = "setEvent";
-      Object[] args = {arg0, arg1};
+      Object[] args = { arg0, arg1 };
       checkArgs(meth, args);
       return;
 
@@ -132,7 +133,7 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    @Override
    public void setPortletMode(PortletMode portletMode) throws PortletModeException {
       String meth = "setPortletMode";
-      Object[] args = {portletMode};
+      Object[] args = { portletMode };
       checkArgs(meth, args);
       return;
 
@@ -141,7 +142,7 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    @Override
    public void setRenderParameter(String key, String value) {
       String meth = "setRenderParameter";
-      Object[] args = {key, value};
+      Object[] args = { key, value };
       checkArgs(meth, args);
       return;
 
@@ -150,7 +151,7 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    @Override
    public void setEvent(String name, Serializable value) {
       String meth = "setEvent";
-      Object[] args = {name, value};
+      Object[] args = { name, value };
       checkArgs(meth, args);
       return;
 
@@ -159,7 +160,7 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    @Override
    public void addProperty(String key, String value) {
       String meth = "addProperty";
-      Object[] args = {key, value};
+      Object[] args = { key, value };
       checkArgs(meth, args);
       return;
 
@@ -168,7 +169,7 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    @Override
    public void setProperty(String key, String value) {
       String meth = "setProperty";
-      Object[] args = {key, value};
+      Object[] args = { key, value };
       checkArgs(meth, args);
       return;
 
@@ -177,7 +178,7 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    @Override
    public String encodeURL(String path) {
       String meth = "encodeURL";
-      Object[] args = {path};
+      Object[] args = { path };
       String ret = "value";
       retVal = ret;
       checkArgs(meth, args);
@@ -197,7 +198,7 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    @Override
    public void addProperty(Cookie cookie) {
       String meth = "addProperty";
-      Object[] args = {cookie};
+      Object[] args = { cookie };
       checkArgs(meth, args);
       return;
 
@@ -206,7 +207,7 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    @Override
    public void addProperty(String key, Element element) {
       String meth = "addProperty";
-      Object[] args = {key, element};
+      Object[] args = { key, element };
       checkArgs(meth, args);
       return;
 
@@ -215,7 +216,7 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    @Override
    public Element createElement(String tagName) throws DOMException {
       String meth = "createElement";
-      Object[] args = {tagName};
+      Object[] args = { tagName };
       Element ret = element;
       retVal = ret;
       checkArgs(meth, args);
@@ -225,7 +226,7 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    @Override
    public void sendRedirect(String location) throws IOException {
       String meth = "sendRedirect";
-      Object[] args = {location};
+      Object[] args = { location };
       checkArgs(meth, args);
       return;
 
@@ -234,11 +235,10 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    @Override
    public void sendRedirect(String location, String renderUrlParamName) throws IOException {
       String meth = "sendRedirect";
-      Object[] args = {location, renderUrlParamName};
+      Object[] args = { location, renderUrlParamName };
       checkArgs(meth, args);
       return;
 
    }
 
 }
-

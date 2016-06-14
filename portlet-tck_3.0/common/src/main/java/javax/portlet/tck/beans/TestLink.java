@@ -46,13 +46,13 @@ import javax.portlet.tck.constants.Constants;
  * @author nick
  */
 public class TestLink {
-   
-   String tcName;
-   String urlstr;
+
+   String     tcName;
+   String     urlstr;
    PortletURL purl;
-   String actId;
-   String title;
-   
+   String     actId;
+   String     title;
+
    /**
     * Creates an empty test result.
     */
@@ -67,8 +67,10 @@ public class TestLink {
    /**
     * Creates a test link initialized according to the parameters.
     * 
-    * @param tcName     test case name
-    * @param url        url for the test case
+    * @param tcName
+    *           test case name
+    * @param url
+    *           url for the test case
     */
    public TestLink(String tcName, PortletURL purl) {
       this.tcName = tcName;
@@ -79,11 +81,13 @@ public class TestLink {
    }
 
    /**
-    * Creates a test link initialized with a URL in string form.
-    * This enables certain URL test cases such as "*URL.toString()"
+    * Creates a test link initialized with a URL in string form. This enables certain URL test cases such as
+    * "*URL.toString()"
     * 
-    * @param tcName     test case name
-    * @param urlstr     url for the test case in string form
+    * @param tcName
+    *           test case name
+    * @param urlstr
+    *           url for the test case in string form
     */
    public TestLink(String tcName, String urlstr) {
       this.tcName = tcName;
@@ -94,17 +98,18 @@ public class TestLink {
    }
 
    /**
-    * Generates HTML markup representing the test link. 
+    * Generates HTML markup representing the test link.
     * 
-    * Note that the div element containing the item that is to be acted upon
-    * by the client must have an id equal to the test case name.
+    * Note that the div element containing the item that is to be acted upon by the client must have an id equal to the
+    * test case name.
     * 
-    * @return  HTML markup representing the test link
+    * @return HTML markup representing the test link
     */
    @Override
    public String toString() {
-      
-      if (urlstr == null) urlstr = purl.toString();
+
+      if (urlstr == null)
+         urlstr = purl.toString();
       StringBuilder sb = new StringBuilder();
       sb.append("<div class='portletTCKTestcase' name='");
       sb.append(tcName);
@@ -124,15 +129,15 @@ public class TestLink {
 
       return sb.toString();
    }
-   
+
    /**
-    * Generates HTML markup representing the test link and
-    * writes them to the writer provided.
+    * Generates HTML markup representing the test link and writes them to the writer provided.
     * 
-    * @param writer  Writer to which the string is written
+    * @param writer
+    *           Writer to which the string is written
     */
-   public void writeTo(Writer writer)throws IOException {
+   public void writeTo(Writer writer) throws IOException {
       writer.write(this.toString());
    }
-   
+
 }

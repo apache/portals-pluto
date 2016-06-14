@@ -18,35 +18,32 @@
 
 package javax.portlet.tck.beans;
 
-import java.text.Format;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Formatter;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-
-/** Contains some useful comparison methods 
+/**
+ * Contains some useful comparison methods
  * 
  * @author nick
  */
 public class CompareUtils {
-   private static final String LOG_CLASS = CompareUtils.class.getName();
-   private static final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-   
+
    /**
-    * Compares two strings and sets the test result accordingly. 
-    * If both strings are null, comparison is successful.
+    * Compares two strings and sets the test result accordingly. If both strings are null, comparison is successful.
     * 
-    * @param a    1st string to compare
-    * @param b    2nd string to compare
-    * @param tr   test result to be updated
+    * @param a
+    *           1st string to compare
+    * @param b
+    *           2nd string to compare
+    * @param tr
+    *           test result to be updated
     */
    static public void stringsEqual(String a, String b, TestResult tr) {
-      boolean ok = (a==null) && (b == null);
+      boolean ok = (a == null) && (b == null);
       if (!ok) {
          if ((a != null) && (b != null)) {
             ok = a.equals(b);
@@ -60,26 +57,29 @@ public class CompareUtils {
    }
 
    /**
-    * Compares two strings and sets the test result accordingly. 
-    * If both strings are null, comparison is successful.
+    * Compares two strings and sets the test result accordingly. If both strings are null, comparison is successful.
     * 
-    * @param asrc Source of 1st string to compare
-    * @param a    1st string to compare
-    * @param bsrc Source of 2nd string to compare
-    * @param b    2nd string to compare
-    * @param tr   test result to be updated
+    * @param asrc
+    *           Source of 1st string to compare
+    * @param a
+    *           1st string to compare
+    * @param bsrc
+    *           Source of 2nd string to compare
+    * @param b
+    *           2nd string to compare
+    * @param tr
+    *           test result to be updated
     */
    static public void stringsEqual(String asrc, String a, String bsrc, String b, TestResult tr) {
-      boolean ok = (a==null) && (b == null);
+      boolean ok = (a == null) && (b == null);
       if (!ok) {
          if ((a != null) && (b != null)) {
             ok = a.equals(b);
          }
          if (!ok) {
-            a = (a==null) ? "null" : ("\"" + a + "\"");
-            b = (b==null) ? "null" : ("\"" + b + "\"");
-            String str = "Error: " + a + "from " + asrc + " does not equal " + 
-                         b + " from " + bsrc + ".";
+            a = (a == null) ? "null" : ("\"" + a + "\"");
+            b = (b == null) ? "null" : ("\"" + b + "\"");
+            String str = "Error: " + a + "from " + asrc + " does not equal " + b + " from " + bsrc + ".";
             tr.appendTcDetail(str);
          }
       }
@@ -87,26 +87,30 @@ public class CompareUtils {
    }
 
    /**
-    * Compares two string arrays and sets the test result accordingly. 
-    * If both string arrays are null, comparison is successful.
+    * Compares two string arrays and sets the test result accordingly. If both string arrays are null, comparison is
+    * successful.
     * 
-    * @param asrc Source of 1st string to compare
-    * @param a    1st string array to compare
-    * @param bsrc Source of 2nd string to compare
-    * @param b    2nd string array to compare
-    * @param tr   test result to be updated
+    * @param asrc
+    *           Source of 1st string to compare
+    * @param a
+    *           1st string array to compare
+    * @param bsrc
+    *           Source of 2nd string to compare
+    * @param b
+    *           2nd string array to compare
+    * @param tr
+    *           test result to be updated
     */
    static public void arraysEqual(String asrc, String[] a, String bsrc, String[] b, TestResult tr) {
-      boolean ok = (a==null) && (b == null);
+      boolean ok = (a == null) && (b == null);
       if (!ok) {
          if ((a != null) && (b != null)) {
             ok = Arrays.deepEquals(a, b);
          }
          if (!ok) {
-            String ra = (a==null) ? "null" : Arrays.asList(a).toString();
-            String rb = (b==null) ? "null" : Arrays.asList(b).toString();
-            String str = "Error: " + ra + "from " + asrc + " does not equal " + 
-                         rb + " from " + bsrc + ".";
+            String ra = (a == null) ? "null" : Arrays.asList(a).toString();
+            String rb = (b == null) ? "null" : Arrays.asList(b).toString();
+            String str = "Error: " + ra + "from " + asrc + " does not equal " + rb + " from " + bsrc + ".";
             tr.appendTcDetail(str);
          }
       }
@@ -114,17 +118,23 @@ public class CompareUtils {
    }
 
    /**
-    * Compares two Enumerations and sets the test result accordingly. 
-    * If both strings are empty, comparison is successful.
+    * Compares two Enumerations and sets the test result accordingly. If both strings are empty, comparison is
+    * successful.
     * 
-    * @param aname   Name of 1st Enumeration to compare
-    * @param a       1st Enumeration to compare
-    * @param bname   Name of 2nd Enumeration to compare
-    * @param b       2nd Enumeration to compare
-    * @param tr      test result to be updated
+    * @param aname
+    *           Name of 1st Enumeration to compare
+    * @param a
+    *           1st Enumeration to compare
+    * @param bname
+    *           Name of 2nd Enumeration to compare
+    * @param b
+    *           2nd Enumeration to compare
+    * @param tr
+    *           test result to be updated
     */
    @SuppressWarnings({ "rawtypes", "unchecked" })
-   static public void enumsEqual(String aname, Enumeration<? extends Object> a, String bname, Enumeration<? extends Object> b, TestResult tr) {
+   static public void enumsEqual(String aname, Enumeration<? extends Object> a, String bname,
+         Enumeration<? extends Object> b, TestResult tr) {
 
       HashSet ha = new HashSet();
       while (a.hasMoreElements()) {
@@ -160,29 +170,35 @@ public class CompareUtils {
    }
 
    /**
-    * Compares two Map<String, String[]>s and sets the test result accordingly. 
-    * If both maps are empty, comparison is successful.
+    * Compares two Map<String, String[]>s and sets the test result accordingly. If both maps are empty, comparison is
+    * successful.
     * 
     * This compares only the map keys, not the values.
     * 
-    * @param aname   Name of 1st Map<String, String[]> to compare
-    * @param a       1st Map<String, String[]> to compare
-    * @param bname   Name of 2nd Map<String, String[]> to compare
-    * @param b       2nd Map<String, String[]> to compare
-    * @param tr      test result to be updated
+    * @param aname
+    *           Name of 1st Map<String, String[]> to compare
+    * @param a
+    *           1st Map<String, String[]> to compare
+    * @param bname
+    *           Name of 2nd Map<String, String[]> to compare
+    * @param b
+    *           2nd Map<String, String[]> to compare
+    * @param tr
+    *           test result to be updated
     */
    @SuppressWarnings({ "rawtypes", "unchecked" })
-   static public void mapsEqual(String aname, Map<String, String[]> a, String bname, Map<String, String[]> b, TestResult tr) {
+   static public void mapsEqual(String aname, Map<String, String[]> a, String bname, Map<String, String[]> b,
+         TestResult tr) {
 
       StringBuffer dstr = new StringBuffer(256);
-      dstr.append("<br/>a.keyset: " + a.keySet()+ "<br/>b.keyset: " + b.keySet() + "<br/>");
+      dstr.append("<br/>a.keyset: " + a.keySet() + "<br/>b.keyset: " + b.keySet() + "<br/>");
       boolean ok = a.keySet().equals(b.keySet());
       if (ok) {
          dstr.append("keys compare OK: " + ok + "<br/>");
          for (String key : a.keySet()) {
-            ok = ok & (Arrays.deepEquals((String[])a.get(key), (String[])b.get(key)));
-            dstr.append("Key: " + key + ", val a:" + Arrays.asList(((String[])a.get(key))) + "<br/>");
-            dstr.append("Key: " + key + ", val b:" + Arrays.asList(((String[])b.get(key))) + "<br/>");
+            ok = ok & (Arrays.deepEquals(a.get(key), b.get(key)));
+            dstr.append("Key: " + key + ", val a:" + Arrays.asList((a.get(key))) + "<br/>");
+            dstr.append("Key: " + key + ", val b:" + Arrays.asList((b.get(key))) + "<br/>");
          }
          dstr.append("values compare OK: " + ok + "<br/>");
       }
@@ -199,14 +215,14 @@ public class CompareUtils {
             diffs.addAll(a.keySet());
             diffs.removeAll(b.keySet());
             for (Object key : diffs) {
-               sb.append((String)key + "<br/>\n");
+               sb.append((String) key + "<br/>\n");
             }
             fmtr.format(str, bname, aname);
             diffs.clear();
             diffs.addAll(b.keySet());
             diffs.removeAll(a.keySet());
             for (Object key : diffs) {
-               sb.append((String)key + "<br/>\n");
+               sb.append((String) key + "<br/>\n");
             }
             fmtr.close();
             tr.appendTcDetail(sb.toString());
@@ -219,21 +235,25 @@ public class CompareUtils {
    }
 
    /**
-    * Compares two Sets and generates the test result accordingly. 
-    * If both sets are empty, comparison is successful.
+    * Compares two Sets and generates the test result accordingly. If both sets are empty, comparison is successful.
     * 
-    * @param aname   name of 1st Set to compare
-    * @param a       1st Set to compare
-    * @param bname   name of 2nd Set to compare
-    * @param b       2nd Set to compare
-    * @param tr      test result to be updated
+    * @param aname
+    *           name of 1st Set to compare
+    * @param a
+    *           1st Set to compare
+    * @param bname
+    *           name of 2nd Set to compare
+    * @param b
+    *           2nd Set to compare
+    * @param tr
+    *           test result to be updated
     */
    @SuppressWarnings({ "rawtypes", "unchecked" })
-   static public void setsEqual(String aname, Set<? extends Object> a, 
-                                String bname, Set<? extends Object> b, TestResult tr) {
+   static public void setsEqual(String aname, Set<? extends Object> a, String bname, Set<? extends Object> b,
+         TestResult tr) {
 
       boolean ok = a.equals(b);
-      
+
       // if not OK, write debug output:
       if (!ok) {
          StringBuffer sb = new StringBuffer(256);

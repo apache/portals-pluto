@@ -16,7 +16,6 @@
  *  under the License.
  */
 
-
 package javax.portlet.tck.beans;
 
 import java.io.Serializable;
@@ -41,12 +40,12 @@ public class TckParameters implements Serializable {
 
    @XmlAccessorType(XmlAccessType.FIELD)
    public static class Parameter {
-      private String name;
+      private String   name;
       private String[] vals;
-      
+
       public Parameter() {
       }
-      
+
       public Parameter(String name, String[] vals) {
          this.setName(name);
          this.setVals(vals);
@@ -60,7 +59,8 @@ public class TckParameters implements Serializable {
       }
 
       /**
-       * @param name the name to set
+       * @param name
+       *           the name to set
        */
       public void setName(String name) {
          this.name = name;
@@ -74,19 +74,20 @@ public class TckParameters implements Serializable {
       }
 
       /**
-       * @param vals the vals to set
+       * @param vals
+       *           the vals to set
        */
       public void setVals(String[] vals) {
          this.vals = vals;
       }
    }
-   
+
    @XmlElement(name = "params")
    private Parameter[] params;
-   
+
    public TckParameters() {
    }
-   
+
    public TckParameters(Map<String, String[]> map) {
       List<Parameter> params = new ArrayList<Parameter>();
       for (String name : map.keySet()) {
@@ -105,7 +106,8 @@ public class TckParameters implements Serializable {
    }
 
    /**
-    * @param params the params to set
+    * @param params
+    *           the params to set
     */
    public void setParams(Parameter[] params) {
       this.params = params;
