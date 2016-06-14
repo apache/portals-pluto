@@ -18,37 +18,41 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
+import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_ACTION;
+import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_TARGET;
+import static javax.portlet.tck.constants.Constants.EXTRA_PATH;
+import static javax.portlet.tck.constants.Constants.QUERY_STRING;
+import static javax.portlet.tck.constants.Constants.SERVLET_INCFWD;
+import static javax.portlet.tck.constants.Constants.SERVLET_PREFIX;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import java.io.IOException;
+import java.io.StringWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
 
 /**
- * This portlet implements several test cases for the JSR 362 TCK. The test case names
- * are defined in the /src/main/resources/xml-resources/additionalTCs.xml
- * file. The build process will integrate the test case names defined in the 
- * additionalTCs.xml file into the complete list of test case names for execution by the driver.
- *
- * This is the main portlet for the test cases. If the test cases call for events, this portlet
- * will initiate the events, but not process them. The processing is done in the companion 
- * portlet DispatcherTests5_SPEC2_19_IncThenForwardServletRender_event
- *
+ * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined in the
+ * /src/main/resources/xml-resources/additionalTCs.xml file. The build process will integrate the test case names
+ * defined in the additionalTCs.xml file into the complete list of test case names for execution by the driver.
+ * 
+ * This is the main portlet for the test cases. If the test cases call for events, this portlet will initiate the
+ * events, but not process them. The processing is done in the companion portlet
+ * DispatcherTests5_SPEC2_19_IncThenForwardServletRender_event
+ * 
  */
 public class DispatcherTests5_SPEC2_19_IncThenForwardServletRender implements Portlet, ResourceServingPortlet {
 
-
-   
    private PortletConfig portletConfig = null;
 
    @Override
@@ -61,49 +65,44 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletRender implements Po
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
-         throws PortletException, IOException {
-
+   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      StringWriter writer = new StringWriter();
+      new StringWriter();
 
    }
 
    @Override
-   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
-         throws PortletException, IOException {
-
+   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp) throws PortletException,
+         IOException {
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
+      portletResp.getWriter();
 
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp)
-         throws PortletException, IOException {
-
+   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
+      portletResp.getWriter();
 
       // Multilevel forward / include
       portletReq.setAttribute(ATTR_DISPATCH_ACTION, "forward");
-      String targ = SERVLET_PREFIX + "DispatcherTests5_SPEC2_19_IncThenForwardServletRender_servlet" + EXTRA_PATH + "?" + QUERY_STRING;
+      String targ = SERVLET_PREFIX + "DispatcherTests5_SPEC2_19_IncThenForwardServletRender_servlet" + EXTRA_PATH + "?"
+            + QUERY_STRING;
       portletReq.setAttribute(ATTR_DISPATCH_TARGET, targ);
 
       // Now do the actual dispatch
       String target = SERVLET_INCFWD + "?" + QUERY_STRING;
-      PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher(target);
+      PortletRequestDispatcher rd = portletConfig.getPortletContext().getRequestDispatcher(target);
       rd.include(portletReq, portletResp);
    }
 
