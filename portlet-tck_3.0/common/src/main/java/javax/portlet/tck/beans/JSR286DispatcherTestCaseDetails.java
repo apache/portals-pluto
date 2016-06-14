@@ -2629,10 +2629,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETACTION_ATTRIBUTES1,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETACTION_ATTRIBUTES1A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETACTION_ATTRIBUTES1B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.request_uri will not be set");
@@ -2641,10 +2641,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.request_uri will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETACTION_ATTRIBUTES2,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETACTION_ATTRIBUTES2A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETACTION_ATTRIBUTES2B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.context_path will not be set");
@@ -2653,10 +2653,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.context_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETACTION_ATTRIBUTES3,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETACTION_ATTRIBUTES3A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETACTION_ATTRIBUTES3B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.servlet_path will not be set");
@@ -2665,10 +2665,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.servlet_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETACTION_ATTRIBUTES4,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETACTION_ATTRIBUTES4A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETACTION_ATTRIBUTES4B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.path_info will not be set");
@@ -2677,10 +2677,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.path_info will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETACTION_ATTRIBUTES5,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETACTION_ATTRIBUTES5A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETACTION_ATTRIBUTES5B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.query_string will not be set");
@@ -2716,10 +2716,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_ATTRIBUTES1,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_ATTRIBUTES1A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_ATTRIBUTES1B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.request_uri will not be set");
@@ -2728,10 +2728,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.request_uri will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_ATTRIBUTES2,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_ATTRIBUTES2A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_ATTRIBUTES2B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.context_path will not be set");
@@ -2740,10 +2740,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.context_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_ATTRIBUTES3,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_ATTRIBUTES3A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_ATTRIBUTES3B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.servlet_path will not be set");
@@ -2752,10 +2752,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.servlet_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_ATTRIBUTES4,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_ATTRIBUTES4A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_ATTRIBUTES4B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.path_info will not be set");
@@ -2764,10 +2764,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.path_info will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_ATTRIBUTES5,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_ATTRIBUTES5A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_ATTRIBUTES5B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.query_string will not be set");
@@ -2805,10 +2805,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the included servlet must be handled as an HTTP GET request");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES1,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES1A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES1B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.request_uri will not be set");
@@ -2817,10 +2817,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.request_uri will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES2,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES2A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES2B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.context_path will not be set");
@@ -2829,10 +2829,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.context_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES3,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES3A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES3B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.servlet_path will not be set");
@@ -2841,10 +2841,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.servlet_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES4,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES4A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES4B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.path_info will not be set");
@@ -2853,10 +2853,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.path_info will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES5,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES5A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRENDER_ATTRIBUTES5B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.query_string will not be set");
@@ -2894,10 +2894,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the included servlet must be handled as an HTTP GET request");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRESOURCE_ATTRIBUTES1,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRESOURCE_ATTRIBUTES1A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRESOURCE_ATTRIBUTES1B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.request_uri will not be set");
@@ -2906,10 +2906,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.request_uri will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRESOURCE_ATTRIBUTES2,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRESOURCE_ATTRIBUTES2A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRESOURCE_ATTRIBUTES2B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.context_path will not be set");
@@ -2918,10 +2918,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.context_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRESOURCE_ATTRIBUTES3,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRESOURCE_ATTRIBUTES3A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRESOURCE_ATTRIBUTES3B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.servlet_path will not be set");
@@ -2930,10 +2930,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.servlet_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRESOURCE_ATTRIBUTES4,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRESOURCE_ATTRIBUTES4A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRESOURCE_ATTRIBUTES4B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.path_info will not be set");
@@ -2942,10 +2942,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of an include, the servlet request attribute javax.servlet.forward.path_info will not be set");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRESOURCE_ATTRIBUTES5,
-            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the portlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRESOURCE_ATTRIBUTES5A,
-            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of an include, the servlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETRESOURCE_ATTRIBUTES5B,
             "In a servlet included by the target of an include, the portlet request attribute javax.servlet.forward.query_string will not be set");
@@ -3329,10 +3329,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETACTION_ATTRIBUTES1,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETACTION_ATTRIBUTES1A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETACTION_ATTRIBUTES1B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.request_uri will not be set");
@@ -3341,10 +3341,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.request_uri will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETACTION_ATTRIBUTES2,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETACTION_ATTRIBUTES2A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETACTION_ATTRIBUTES2B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.context_path will not be set");
@@ -3353,10 +3353,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.context_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETACTION_ATTRIBUTES3,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETACTION_ATTRIBUTES3A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETACTION_ATTRIBUTES3B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.servlet_path will not be set");
@@ -3365,10 +3365,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.servlet_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETACTION_ATTRIBUTES4,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETACTION_ATTRIBUTES4A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETACTION_ATTRIBUTES4B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.path_info will not be set");
@@ -3377,10 +3377,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.path_info will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETACTION_ATTRIBUTES5,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETACTION_ATTRIBUTES5A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETACTION_ATTRIBUTES5B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.query_string will not be set");
@@ -3416,10 +3416,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETEVENT_ATTRIBUTES1,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETEVENT_ATTRIBUTES1A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETEVENT_ATTRIBUTES1B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.request_uri will not be set");
@@ -3428,10 +3428,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.request_uri will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETEVENT_ATTRIBUTES2,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETEVENT_ATTRIBUTES2A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETEVENT_ATTRIBUTES2B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.context_path will not be set");
@@ -3440,10 +3440,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.context_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETEVENT_ATTRIBUTES3,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETEVENT_ATTRIBUTES3A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETEVENT_ATTRIBUTES3B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.servlet_path will not be set");
@@ -3452,10 +3452,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.servlet_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETEVENT_ATTRIBUTES4,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETEVENT_ATTRIBUTES4A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETEVENT_ATTRIBUTES4B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.path_info will not be set");
@@ -3464,10 +3464,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.path_info will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETEVENT_ATTRIBUTES5,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETEVENT_ATTRIBUTES5A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETEVENT_ATTRIBUTES5B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.query_string will not be set");
@@ -3505,10 +3505,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the included servlet must be handled as an HTTP GET request");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRENDER_ATTRIBUTES1,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRENDER_ATTRIBUTES1A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRENDER_ATTRIBUTES1B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.request_uri will not be set");
@@ -3517,10 +3517,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.request_uri will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRENDER_ATTRIBUTES2,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRENDER_ATTRIBUTES2A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRENDER_ATTRIBUTES2B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.context_path will not be set");
@@ -3529,10 +3529,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.context_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRENDER_ATTRIBUTES3,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRENDER_ATTRIBUTES3A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRENDER_ATTRIBUTES3B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.servlet_path will not be set");
@@ -3541,10 +3541,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.servlet_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRENDER_ATTRIBUTES4,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRENDER_ATTRIBUTES4A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRENDER_ATTRIBUTES4B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.path_info will not be set");
@@ -3553,10 +3553,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.path_info will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRENDER_ATTRIBUTES5,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRENDER_ATTRIBUTES5A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRENDER_ATTRIBUTES5B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.query_string will not be set");
@@ -3594,10 +3594,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the included servlet must be handled as an HTTP GET request");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRESOURCE_ATTRIBUTES1,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRESOURCE_ATTRIBUTES1A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.request_uri will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRESOURCE_ATTRIBUTES1B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.request_uri will not be set");
@@ -3606,10 +3606,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.request_uri will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRESOURCE_ATTRIBUTES2,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRESOURCE_ATTRIBUTES2A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContextPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.context_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRESOURCE_ATTRIBUTES2B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.context_path will not be set");
@@ -3618,10 +3618,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.context_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRESOURCE_ATTRIBUTES3,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRESOURCE_ATTRIBUTES3A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.servlet_path will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRESOURCE_ATTRIBUTES3B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.servlet_path will not be set");
@@ -3630,10 +3630,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.servlet_path will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRESOURCE_ATTRIBUTES4,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRESOURCE_ATTRIBUTES4A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.path_info will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRESOURCE_ATTRIBUTES4B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.path_info will not be set");
@@ -3642,10 +3642,10 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
             "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.forward.path_info will not be set");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRESOURCE_ATTRIBUTES5,
-            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRESOURCE_ATTRIBUTES5A,
-            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain");
+            "In a servlet included by the target of a forward, the servlet request attribute javax.servlet.include.query_string will be set, and reflects the path values of the included servlet.");
       tcd.put(
             V2DISPATCHERTESTS6_SPEC2_19_FWDTHENINCLUDESERVLETRESOURCE_ATTRIBUTES5B,
             "In a servlet included by the target of a forward, the portlet request attribute javax.servlet.forward.query_string will not be set");

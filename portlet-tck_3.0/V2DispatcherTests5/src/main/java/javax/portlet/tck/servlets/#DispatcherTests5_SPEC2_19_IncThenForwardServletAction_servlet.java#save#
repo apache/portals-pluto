@@ -34,12 +34,12 @@ import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
 
 /**
  * Servlet for JSR 362 request dispatcher testing.
- * Used by portlet: DispatcherTests5_SPEC2_19_IncThenForwardServletResource
+ * Used by portlet: DispatcherTests5_SPEC2_19_IncThenForwardServletAction
  *
  * @author nick
  *
  */
-public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet extends HttpServlet {
+public class DispatcherTests5_SPEC2_19_IncThenForwardServletAction_servlet extends HttpServlet {
 
 
 
@@ -61,11 +61,16 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
 
 
       // values from first servlet in forward/include chain
-      String fsfcRequest_uri  = (String) request.getAttribute(ATTR_DISPATCH_REQUEST_URI );
+      String target = (String) request.getAttribute(ATTR_DISPATCH_TARGET);
+      int index = target.indexOf(EXTRA_PATH);
+      if (index >= 0) {
+         target = target.substring(0, index);
+      }
       String fsfcContext_path = (String) request.getAttribute(ATTR_DISPATCH_CONTEXT_PATH);
-      String fsfcServlet_path = (String) request.getAttribute(ATTR_DISPATCH_SERVLET_PATH);
-      String fsfcPath_info    = (String) request.getAttribute(ATTR_DISPATCH_PATH_INFO   );
-      String fsfcQuery_string = (String) request.getAttribute(ATTR_DISPATCH_QUERY_STRING);
+      String fsfcServlet_path = target;
+      String fsfcPath_info    = EXTRA_PATH;
+      String fsfcRequest_uri  = fsfcContext_path + fsfcServlet_path + fsfcPath_info;
+      String fsfcQuery_string = QUERY_STRING;
 
 
       PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
@@ -74,18 +79,18 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       long svtTid = Thread.currentThread().getId();
       long reqTid = (Long) portletReq.getAttribute(THREADID_ATTR);
 
-      PrintWriter writer = ((MimeResponse)portletResp).getWriter();
+      StringWriter writer = new StringWriter();
 
       JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();
 
       // Create result objects for the tests
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_dispatch1 */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_dispatch1 */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* if the path provided to getRequestDispatcher method contains query   */
       /* strings, parameters specified in the query strings must be passed    */
       /* to the target servlet during an forward"                             */
-      TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_DISPATCH1);
+      TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_DISPATCH1);
       try {
          String qparm1 = portletReq.getParameter("qparm1");
          String qparm2 = portletReq.getParameter("qparm2");
@@ -96,11 +101,11 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_dispatch2 */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_dispatch2 */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* parameters specified in the query strings must be aggregated with    */
       /* the portlet render parameters"                                       */
-      TestResult tr1 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_DISPATCH2);
+      TestResult tr1 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_DISPATCH2);
       try {
          String[] qparm2 = portletReq.getParameterValues("qparm2");
          boolean ok = ((qparm2 != null) && (qparm2.length > 1));
@@ -110,12 +115,12 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_dispatch3 */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_dispatch3 */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* if query string parameters have the same names as render parameter   */
       /* names, the query string parameters appear in the parameter values    */
       /* array before the render parameter values"                            */
-      TestResult tr2 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_DISPATCH3);
+      TestResult tr2 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_DISPATCH3);
       try {
          String qparm1 = portletReq.getParameter("qparm1");
          String qparm2 = portletReq.getParameter("qparm2");
@@ -126,34 +131,34 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_invoke2 */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_invoke2 */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* parameters to the forward method for a target servlet can be the     */
       /* request and response classes from the portlet lifecyle method        */
       /* initiating the include"                                              */
-      TestResult tr3 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_INVOKE2);
+      TestResult tr3 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_INVOKE2);
       try {
          // If this gets executed, include worked.
          tr3.setTcSuccess(true);
       } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_invoke4 */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_invoke4 */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the portlet container must invoke the target servlet in the same     */
       /* thread as the PortletRequestDispatcher include invocation"           */
-      TestResult tr4 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_INVOKE4);
+      TestResult tr4 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_INVOKE4);
       try {
          tr4.setTcSuccess(reqTid == svtTid);
       } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_invoke7 */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_invoke7 */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the path elements of the request object exposed to the target        */
       /* servlet must reflect the path used to obtain the                     */
       /* RequestDispatcher"                                                   */
-      TestResult tr5 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_INVOKE7);
+      TestResult tr5 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_INVOKE7);
       try {
 
          String path= request.getServletPath();
@@ -161,13 +166,13 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes1 */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes1 */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the portlet request attribute javax.servlet.forward.request_uri      */
       /* will be set, and equals the value from                               */
       /* HTTPServletRequest.getRequestURI for the first servlet in the        */
       /* forward chain"                                                       */
-      TestResult tr6 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES1);
+      TestResult tr6 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES1);
       try {
          String name = "javax.servlet.forward.request_uri";
          String attrVal = (String) portletReq.getAttribute(name);
@@ -176,13 +181,13 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes1a */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes1a */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the servlet request attribute javax.servlet.forward.request_uri      */
       /* will be set, and equals the value from                               */
       /* HTTPServletRequest.getRequestURI for the first servlet in the        */
       /* forward chain"                                                       */
-      TestResult tr7 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES1A);
+      TestResult tr7 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES1A);
       try {
          String name = "javax.servlet.forward.request_uri";
          String attrVal = (String) request.getAttribute(name);
@@ -191,11 +196,11 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes1b */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes1b */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the portlet request attribute javax.servlet.include.request_uri      */
       /* will not be set"                                                     */
-      TestResult tr8 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES1B);
+      TestResult tr8 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES1B);
       try {
          String name = "javax.servlet.include.request_uri";
          String attrVal = (String) portletReq.getAttribute(name);
@@ -206,11 +211,11 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr8.appendTcDetail(e.toString());}
       tr8.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes1c */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes1c */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the servlet request attribute javax.servlet.include.request_uri      */
       /* will not be set"                                                     */
-      TestResult tr9 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES1C);
+      TestResult tr9 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES1C);
       try {
          String name = "javax.servlet.include.request_uri";
          String attrVal = (String) request.getAttribute(name);
@@ -221,13 +226,13 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr9.appendTcDetail(e.toString());}
       tr9.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes2 */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes2 */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the portlet request attribute javax.servlet.forward.context_path     */
       /* will be set, and equals the value from                               */
       /* HTTPServletRequest.getContextPath for the first servlet in the       */
       /* forward chain"                                                       */
-      TestResult tr10 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES2);
+      TestResult tr10 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES2);
       try {
          String name = "javax.servlet.forward.context_path";
          String attrVal = (String) portletReq.getAttribute(name);
@@ -236,13 +241,13 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr10.appendTcDetail(e.toString());}
       tr10.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes2a */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes2a */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the servlet request attribute javax.servlet.forward.context_path     */
       /* will be set, and equals the value from                               */
       /* HTTPServletRequest.getContextPath for the first servlet in the       */
       /* forward chain"                                                       */
-      TestResult tr11 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES2A);
+      TestResult tr11 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES2A);
       try {
          String name = "javax.servlet.forward.context_path";
          String attrVal = (String) request.getAttribute(name);
@@ -251,11 +256,11 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr11.appendTcDetail(e.toString());}
       tr11.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes2b */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes2b */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the portlet request attribute javax.servlet.include.context_path     */
       /* will not be set"                                                     */
-      TestResult tr12 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES2B);
+      TestResult tr12 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES2B);
       try {
          String name = "javax.servlet.include.context_path";
          String attrVal = (String) portletReq.getAttribute(name);
@@ -266,11 +271,11 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr12.appendTcDetail(e.toString());}
       tr12.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes2c */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes2c */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the servlet request attribute javax.servlet.include.context_path     */
       /* will not be set"                                                     */
-      TestResult tr13 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES2C);
+      TestResult tr13 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES2C);
       try {
          String name = "javax.servlet.include.context_path";
          String attrVal = (String) request.getAttribute(name);
@@ -281,13 +286,13 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr13.appendTcDetail(e.toString());}
       tr13.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes3 */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes3 */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the portlet request attribute javax.servlet.forward.servlet_path     */
       /* will be set, and equals the value from                               */
       /* HTTPServletRequest.getServletPath for the first servlet in the       */
       /* forward chain"                                                       */
-      TestResult tr14 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES3);
+      TestResult tr14 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES3);
       try {
          String name = "javax.servlet.forward.servlet_path";
          String attrVal = (String) portletReq.getAttribute(name);
@@ -296,13 +301,13 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr14.appendTcDetail(e.toString());}
       tr14.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes3a */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes3a */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the servlet request attribute javax.servlet.forward.servlet_path     */
       /* will be set, and equals the value from                               */
       /* HTTPServletRequest.getServletPath for the first servlet in the       */
       /* forward chain"                                                       */
-      TestResult tr15 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES3A);
+      TestResult tr15 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES3A);
       try {
          String name = "javax.servlet.forward.servlet_path";
          String attrVal = (String) request.getAttribute(name);
@@ -311,11 +316,11 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr15.appendTcDetail(e.toString());}
       tr15.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes3b */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes3b */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the portlet request attribute javax.servlet.include.servlet_path     */
       /* will not be set"                                                     */
-      TestResult tr16 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES3B);
+      TestResult tr16 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES3B);
       try {
          String name = "javax.servlet.include.servlet_path";
          String attrVal = (String) portletReq.getAttribute(name);
@@ -326,11 +331,11 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr16.appendTcDetail(e.toString());}
       tr16.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes3c */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes3c */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the servlet request attribute javax.servlet.include.servlet_path     */
       /* will not be set"                                                     */
-      TestResult tr17 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES3C);
+      TestResult tr17 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES3C);
       try {
          String name = "javax.servlet.include.servlet_path";
          String attrVal = (String) request.getAttribute(name);
@@ -341,12 +346,12 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr17.appendTcDetail(e.toString());}
       tr17.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes4 */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes4 */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the portlet request attribute javax.servlet.forward.path_info will   */
       /* be set, and equals the value from HTTPServletRequest.getPathInfo     */
       /* for the first servlet in the forward chain"                          */
-      TestResult tr18 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES4);
+      TestResult tr18 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES4);
       try {
          String name = "javax.servlet.forward.path_info";
          String attrVal = (String) portletReq.getAttribute(name);
@@ -355,12 +360,12 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr18.appendTcDetail(e.toString());}
       tr18.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes4a */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes4a */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the servlet request attribute javax.servlet.forward.path_info will   */
       /* be set, and equals the value from HTTPServletRequest.getPathInfo     */
       /* for the first servlet in the forward chain"                          */
-      TestResult tr19 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES4A);
+      TestResult tr19 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES4A);
       try {
          String name = "javax.servlet.forward.path_info";
          String attrVal = (String) request.getAttribute(name);
@@ -369,11 +374,11 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr19.appendTcDetail(e.toString());}
       tr19.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes4b */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes4b */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the portlet request attribute javax.servlet.include.path_info will   */
       /* not be set"                                                          */
-      TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES4B);
+      TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES4B);
       try {
          String name = "javax.servlet.include.path_info";
          String attrVal = (String) portletReq.getAttribute(name);
@@ -384,11 +389,11 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr20.appendTcDetail(e.toString());}
       tr20.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes4c */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes4c */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the servlet request attribute javax.servlet.include.path_info will   */
       /* not be set"                                                          */
-      TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES4C);
+      TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES4C);
       try {
          String name = "javax.servlet.include.path_info";
          String attrVal = (String) request.getAttribute(name);
@@ -399,13 +404,13 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr21.appendTcDetail(e.toString());}
       tr21.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes5 */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes5 */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the portlet request attribute javax.servlet.forward.query_string     */
       /* will be set, and equals the value from                               */
       /* HTTPServletRequest.getQueryString for the first servlet in the       */
       /* forward chain"                                                       */
-      TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES5);
+      TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES5);
       try {
          String name = "javax.servlet.forward.query_string";
          String attrVal = (String) portletReq.getAttribute(name);
@@ -414,13 +419,13 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr22.appendTcDetail(e.toString());}
       tr22.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes5a */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes5a */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the servlet request attribute javax.servlet.forward.query_string     */
       /* will be set, and equals the value from                               */
       /* HTTPServletRequest.getQueryString for the first servlet in the       */
       /* forward chain"                                                       */
-      TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES5A);
+      TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES5A);
       try {
          String name = "javax.servlet.forward.query_string";
          String attrVal = (String) request.getAttribute(name);
@@ -429,11 +434,11 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr23.appendTcDetail(e.toString());}
       tr23.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes5b */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes5b */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the portlet request attribute javax.servlet.include.query_string     */
       /* will not be set"                                                     */
-      TestResult tr24 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES5B);
+      TestResult tr24 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES5B);
       try {
          String name = "javax.servlet.include.query_string";
          String attrVal = (String) portletReq.getAttribute(name);
@@ -444,11 +449,11 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr24.appendTcDetail(e.toString());}
       tr24.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes5c */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes5c */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the servlet request attribute javax.servlet.include.query_string     */
       /* will not be set"                                                     */
-      TestResult tr25 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES5C);
+      TestResult tr25 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES5C);
       try {
          String name = "javax.servlet.include.query_string";
          String attrVal = (String) request.getAttribute(name);
@@ -459,11 +464,11 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr25.appendTcDetail(e.toString());}
       tr25.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes6 */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes6 */
       /* Details: "In a servlet forwarded to by the target of an include,     */
       /* the request attribute javax.portlet.config must be set to the        */
       /* javax.portlet.PortletConfig object"                                  */
-      TestResult tr26 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES6);
+      TestResult tr26 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES6);
       try {
          ClassChecker cc = new ClassChecker(portletConfig.getClass());
          boolean ok = cc.implementsInterface(PortletConfig.class);
@@ -471,32 +476,35 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet ext
       } catch(Exception e) {tr26.appendTcDetail(e.toString());}
       tr26.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes7 */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes7 */
       /* Details: "In a servlet forwarded to by the target of an include,     */
-      /* for forwards from the serveResource method, The request attribute    */
+      /* for forwards from the processAction method, The request attribute    */
       /* javax.portlet.request must be set to the                             */
-      /* javax.portlet.ResourceRequest object"                                */
-      TestResult tr27 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES7);
+      /* javax.portlet.ActionRequest object"                                  */
+      TestResult tr27 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES7);
       try {
          ClassChecker cc = new ClassChecker(portletReq.getClass());
-         boolean ok = cc.implementsInterface(ResourceRequest.class);
+         boolean ok = cc.implementsInterface(ActionRequest.class);
          tr27.setTcSuccess(ok);
       } catch(Exception e) {tr27.appendTcDetail(e.toString());}
       tr27.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_attributes8 */
+      /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenForwardServletAction_attributes8 */
       /* Details: "In a servlet forwarded to by the target of an include,     */
-      /* for forwards from the serveResource method, The request attribute    */
+      /* for forwards from the processAction method, The request attribute    */
       /* javax.portlet.response must be set to the                            */
-      /* javax.portlet.ResourceResponse object"                               */
-      TestResult tr28 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETRESOURCE_ATTRIBUTES8);
+      /* javax.portlet.ActionResponse object"                                 */
+      TestResult tr28 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_ATTRIBUTES8);
       try {
          ClassChecker cc = new ClassChecker(portletResp.getClass());
-         boolean ok = cc.implementsInterface(ResourceResponse.class);
+         boolean ok = cc.implementsInterface(ActionResponse.class);
          tr28.setTcSuccess(ok);
       } catch(Exception e) {tr28.appendTcDetail(e.toString());}
       tr28.writeTo(writer);
 
+      request.getSession().setAttribute(
+                   Constants.RESULT_ATTR_PREFIX + "DispatcherTests5_SPEC2_19_IncThenForwardServletAction",
+                   writer.toString());
 
    }
 }

@@ -21,7 +21,7 @@ package javax.portlet.tck.portlets;
 import java.io.*;
 import java.util.*;
 import java.util.logging.*;
-import static java.util.logging.Logger.*;
+
 import javax.xml.namespace.QName;
 import javax.portlet.*;
 import javax.portlet.filter.*;
@@ -38,9 +38,8 @@ import static javax.portlet.PortletSession.*;
  * but does not publish them. Events are published in the main portlet for the test cases. 
  */
 public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_event implements Portlet, EventPortlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_event.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+
+
    
    private PortletConfig portletConfig = null;
 
@@ -56,19 +55,19 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_event implemen
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
+
    }
 
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion serveResource - ERROR!!");
+
    }
 
    @Override
    public void processEvent(EventRequest portletReq, EventResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion processEvent");
+
 
 
       portletResp.setRenderParameters(portletReq);
@@ -80,11 +79,11 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_event implemen
 
       // Multilevel forward / include
       portletReq.setAttribute(ATTR_DISPATCH_ACTION, "include");
-      String targ = SERVLET_PREFIX + "DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_servlet" + SERVLET_SUFFIX + "?" + QUERY_STRING;
+      String targ = SERVLET_PREFIX + "DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_servlet" + EXTRA_PATH + "?" + QUERY_STRING;
       portletReq.setAttribute(ATTR_DISPATCH_TARGET, targ);
 
       // Now do the actual dispatch
-      String target = "/IncluderForwarderServlet" + "?" + QUERY_STRING;
+      String target = SERVLET_INCFWD + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);
       rd.include(portletReq, portletResp);
@@ -95,7 +94,7 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_event implemen
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
       
-      LOGGER.entering(LOG_CLASS, "event companion render");
+
 
       portletResp.setContentType("text/html");
       PrintWriter writer = portletResp.getWriter();

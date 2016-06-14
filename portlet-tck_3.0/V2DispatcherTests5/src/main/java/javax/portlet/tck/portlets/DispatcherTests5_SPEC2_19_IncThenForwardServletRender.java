@@ -21,7 +21,7 @@ package javax.portlet.tck.portlets;
 import java.io.*;
 import java.util.*;
 import java.util.logging.*;
-import static java.util.logging.Logger.*;
+
 import javax.xml.namespace.QName;
 import javax.portlet.*;
 import javax.portlet.filter.*;
@@ -46,9 +46,8 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 public class DispatcherTests5_SPEC2_19_IncThenForwardServletRender implements Portlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         DispatcherTests5_SPEC2_19_IncThenForwardServletRender.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+
+
    
    private PortletConfig portletConfig = null;
 
@@ -64,7 +63,7 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletRender implements Po
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
+
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
@@ -77,7 +76,7 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletRender implements Po
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
+
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -89,7 +88,7 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletRender implements Po
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
+
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -98,11 +97,11 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletRender implements Po
 
       // Multilevel forward / include
       portletReq.setAttribute(ATTR_DISPATCH_ACTION, "forward");
-      String targ = SERVLET_PREFIX + "DispatcherTests5_SPEC2_19_IncThenForwardServletRender_servlet" + SERVLET_SUFFIX + "?" + QUERY_STRING;
+      String targ = SERVLET_PREFIX + "DispatcherTests5_SPEC2_19_IncThenForwardServletRender_servlet" + EXTRA_PATH + "?" + QUERY_STRING;
       portletReq.setAttribute(ATTR_DISPATCH_TARGET, targ);
 
       // Now do the actual dispatch
-      String target = "/IncluderForwarderServlet" + "?" + QUERY_STRING;
+      String target = SERVLET_INCFWD + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);
       rd.include(portletReq, portletResp);

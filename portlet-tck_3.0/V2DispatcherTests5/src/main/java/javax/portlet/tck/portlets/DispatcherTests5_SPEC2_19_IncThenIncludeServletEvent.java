@@ -21,7 +21,7 @@ package javax.portlet.tck.portlets;
 import java.io.*;
 import java.util.*;
 import java.util.logging.*;
-import static java.util.logging.Logger.*;
+
 import javax.xml.namespace.QName;
 import javax.portlet.*;
 import javax.portlet.filter.*;
@@ -46,9 +46,8 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent implements Portlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+
+
    
    private PortletConfig portletConfig = null;
 
@@ -64,7 +63,7 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent implements Por
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
+
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
@@ -80,7 +79,7 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent implements Por
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
+
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -92,7 +91,7 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent implements Por
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
+
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -171,8 +170,7 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent implements Por
       /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_attributes1 */
       /* Details: "In a servlet included by the target of an include, the     */
       /* portlet request attribute javax.servlet.include.request_uri will     */
-      /* be set, and equals the value from HTTPServletRequest.getRequestURI   */
-      /* for the first servlet in the include chain"                          */
+      /* be set, and reflects the path values of the included servlet." */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -183,8 +181,7 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent implements Por
       /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_attributes1a */
       /* Details: "In a servlet included by the target of an include, the     */
       /* servlet request attribute javax.servlet.include.request_uri will     */
-      /* be set, and equals the value from HTTPServletRequest.getRequestURI   */
-      /* for the first servlet in the include chain"                          */
+      /* be set, and reflects the path values of the included servlet." */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -217,9 +214,7 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent implements Por
       /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_attributes2 */
       /* Details: "In a servlet included by the target of an include, the     */
       /* portlet request attribute javax.servlet.include.context_path will    */
-      /* be set, and equals the value from                                    */
-      /* HTTPServletRequest.getContextPath for the first servlet in the       */
-      /* include chain"                                                       */
+      /* be set, and reflects the path values of the included servlet." */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -230,9 +225,7 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent implements Por
       /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_attributes2a */
       /* Details: "In a servlet included by the target of an include, the     */
       /* servlet request attribute javax.servlet.include.context_path will    */
-      /* be set, and equals the value from                                    */
-      /* HTTPServletRequest.getContextPath for the first servlet in the       */
-      /* include chain"                                                       */
+      /* be set, and reflects the path values of the included servlet." */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -265,9 +258,7 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent implements Por
       /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_attributes3 */
       /* Details: "In a servlet included by the target of an include, the     */
       /* portlet request attribute javax.servlet.include.servlet_path will    */
-      /* be set, and equals the value from                                    */
-      /* HTTPServletRequest.getServletPath for the first servlet in the       */
-      /* include chain"                                                       */
+      /* be set, and reflects the path values of the included servlet." */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -278,9 +269,7 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent implements Por
       /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_attributes3a */
       /* Details: "In a servlet included by the target of an include, the     */
       /* servlet request attribute javax.servlet.include.servlet_path will    */
-      /* be set, and equals the value from                                    */
-      /* HTTPServletRequest.getServletPath for the first servlet in the       */
-      /* include chain"                                                       */
+      /* be set, and reflects the path values of the included servlet." */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -313,8 +302,7 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent implements Por
       /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_attributes4 */
       /* Details: "In a servlet included by the target of an include, the     */
       /* portlet request attribute javax.servlet.include.path_info will be    */
-      /* set, and equals the value from HTTPServletRequest.getPathInfo for    */
-      /* the first servlet in the include chain"                              */
+      /* set, and reflects the path values of the included servlet." */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -325,8 +313,7 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent implements Por
       /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_attributes4a */
       /* Details: "In a servlet included by the target of an include, the     */
       /* servlet request attribute javax.servlet.include.path_info will be    */
-      /* set, and equals the value from HTTPServletRequest.getPathInfo for    */
-      /* the first servlet in the include chain"                              */
+      /* set, and reflects the path values of the included servlet." */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -359,9 +346,7 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent implements Por
       /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_attributes5 */
       /* Details: "In a servlet included by the target of an include, the     */
       /* portlet request attribute javax.servlet.include.query_string will    */
-      /* be set, and equals the value from                                    */
-      /* HTTPServletRequest.getQueryString for the first servlet in the       */
-      /* include chain"                                                       */
+      /* be set, and reflects the path values of the included servlet." */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -372,9 +357,7 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent implements Por
       /* TestCase: V2DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_attributes5a */
       /* Details: "In a servlet included by the target of an include, the     */
       /* servlet request attribute javax.servlet.include.query_string will    */
-      /* be set, and equals the value from                                    */
-      /* HTTPServletRequest.getQueryString for the first servlet in the       */
-      /* include chain"                                                       */
+      /* be set, and reflects the path values of the included servlet." */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
