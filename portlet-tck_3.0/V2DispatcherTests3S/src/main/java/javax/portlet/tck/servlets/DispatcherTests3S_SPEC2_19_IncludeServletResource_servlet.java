@@ -16,71 +16,59 @@
  *  under the License.
  */
 
-
 package javax.portlet.tck.servlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+
+import javax.portlet.MimeResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet for JSR 362 request dispatcher testing.
- * Used by portlet: DispatcherTests3S_SPEC2_19_IncludeServletResource
- *
+ * Servlet for JSR 362 request dispatcher testing. Used by portlet: DispatcherTests3S_SPEC2_19_IncludeServletResource
+ * 
  * @author nick
- *
+ * 
  */
 public class DispatcherTests3S_SPEC2_19_IncludeServletResource_servlet extends HttpServlet {
-   private static final String LOG_CLASS = 
-         DispatcherTests3S_SPEC2_19_IncludeServletResource_servlet.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
 
    @Override
-   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-         throws ServletException, IOException {
+   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       processTCKReq(req, resp);
    }
 
    @Override
-   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-         throws ServletException, IOException {
+   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       processTCKReq(req, resp);
    }
 
    // The tck uses only get & post requests
-   protected void processTCKReq(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      LOGGER.entering(LOG_CLASS, "servlet entry");
+   protected void processTCKReq(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+         IOException {
 
       PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
       PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
-      PortletConfig portletConfig = (PortletConfig) request.getAttribute("javax.portlet.config");
-      long svtTid = Thread.currentThread().getId();
-      long reqTid = (Long) portletReq.getAttribute(THREADID_ATTR);
+      request.getAttribute("javax.portlet.config");
+      Thread.currentThread().getId();
+      portletReq.getAttribute(THREADID_ATTR);
 
-      PrintWriter writer = ((MimeResponse)portletResp).getWriter();
+      ((MimeResponse) portletResp).getWriter();
 
-      JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();
+      new JSR286DispatcherTestCaseDetails();
 
       // Create result objects for the tests
-
-      /* TestCase: V2DispatcherTests3S_SPEC2_19_IncludeServletResource_dispatch4 */
-      /* Details: "The parameters associated with a request dispatcher are    */
-      /* scoped only for the duration of the include or forward call"         */
-      TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERTESTS3S_SPEC2_19_INCLUDESERVLETRESOURCE_DISPATCH4);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
-
 
    }
 }

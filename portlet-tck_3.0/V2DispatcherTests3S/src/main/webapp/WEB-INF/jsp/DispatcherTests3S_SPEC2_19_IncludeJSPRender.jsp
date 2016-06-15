@@ -21,14 +21,5 @@
 
       JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();
 
-      // Create result objects for the tests
-
-      /* TestCase: V2DispatcherTests3S_SPEC2_19_IncludeJSPRender_dispatch4    */
-      /* Details: "The parameters associated with a request dispatcher are    */
-      /* scoped only for the duration of the include or forward call"         */
-      TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERTESTS3S_SPEC2_19_INCLUDEJSPRENDER_DISPATCH4);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
 
 %>
