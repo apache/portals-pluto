@@ -1215,7 +1215,25 @@
       /* IllegalStateException that caused this error is thrown"              */
       /* TODO: Fix the test case when the exception is resolved. */
       TestResult tr89 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL27);
-      tr89.appendTcDetail("Not implemented. Getting org.apache.jasper.JasperException: Unable to find setter method for attribute: cacheability on using <portlet:resourceURL cacheability=\"PAGE\"></portlet:resourceURL>");
+      //tr89.appendTcDetail("Not implemented. Getting org.apache.jasper.JasperException: Unable to find setter method for attribute: cacheability on using <portlet:resourceURL cacheability=\"PAGE\"></portlet:resourceURL>");
+      %>
+      <c:catch var ="exceptionTr89">
+         <portlet:resourceURL cacheability="FULL"></portlet:resourceURL>
+      </c:catch>
+      <c:if test = "${exceptionTr89 != null}">
+         <%
+         tr89.setTcSuccess(true);
+         String exceptionTr89 = ""; 
+         exceptionTr89 = exceptionTr89 + pageContext.getAttribute("exceptionTr89");
+         tr89.appendTcDetail(exceptionTr89);
+         %>
+      </c:if>
+      <c:if test = "${exceptionTr89 == null}">
+         <%
+         tr89.appendTcDetail("Test case failed as no Exception is raised while defining action parameter with empty name.");
+         %>
+      </c:if>
+      <%
       tr89.writeTo(writer);
 
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramAction1 */

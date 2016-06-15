@@ -313,7 +313,7 @@
 
    <public-render-parameter>
       <identifier>tckPRP1</identifier>
-      <qname xmlns:x="http://www.apache.org/portals/pluto/pub-render-params">tck:tckPRP1</qname>
+      <qname>tck:tckPRP1</qname>
    </public-render-parameter>
    <public-render-parameter>
       <identifier>tr1_ready</identifier>

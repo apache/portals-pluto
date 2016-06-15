@@ -630,16 +630,6 @@
       </DIV>
       <% }
 
-      /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL29 */
-      /* Details: "If this tag is used in markup provided by a                */
-      /* serveResource call that was directly or indirectly triggered via a   */
-      /* resource URL of type FULL, a JspException with the                   */
-      /* IllegalStateException that caused this error is thrown"              */
-      TestResult tr39 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_ACTIONURL29);
-      /* TODO: implement test */
-      tr39.appendTcDetail("Unable to set cacheability in resourceURL Tag.");      
-      tr39.writeTo(writer);
-
       /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL30 */
       /* Details: "If this tag is used in markup provided by a                */
       /* serveResource call that was directly or indirectly triggered via a   */
@@ -1248,7 +1238,26 @@
       /* IllegalStateException that caused this error is thrown"              */
       /* TODO: Fix the test case when the exception is resolved. */
       TestResult tr89 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RESOURCEURL27);
-      tr89.appendTcDetail("Not implemented. Getting org.apache.jasper.JasperException: Unable to find setter method for attribute: cacheability on using <portlet:resourceURL cacheability=\"PAGE\"></portlet:resourceURL>");
+      //tr89.appendTcDetail("Not implemented. Getting org.apache.jasper.JasperException: Unable to find setter method for attribute: cacheability on using <portlet:resourceURL cacheability=\"PAGE\"></portlet:resourceURL>");
+      %>
+      <c:catch var ="exceptionTr89">
+         <portlet:resourceURL cacheability="FULL"></portlet:resourceURL>
+      </c:catch>
+      <c:if test = "${exceptionTr89 != null}">
+         <%
+         tr89.setTcSuccess(true);
+         String exceptionTr89 = ""; 
+         exceptionTr89 = exceptionTr89 + pageContext.getAttribute("exceptionTr89");
+         tr89.appendTcDetail(exceptionTr89);
+         %>
+      </c:if>
+      <c:if test = "${exceptionTr89 == null}">
+         <%
+         tr89.appendTcDetail("Test case failed as no Exception is raised while defining action parameter with empty name.");
+         %>
+      </c:if>
+      <%
+      tr89.writeTo(writer);
       tr89.writeTo(writer);
 
       /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramAction1 */
