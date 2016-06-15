@@ -259,8 +259,8 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
       if (portletReq.getParameter("tckPRP3") == null) {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tckPRP3", "true");
-        TestLink tl =
-            new TestLink("V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters16", purl);
+        TestSetupLink tl =
+            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters16", purl);
         tl.writeTo(writer);
       } else {
         PortletURL aurl = portletResp.createRenderURL();
@@ -278,8 +278,8 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
       if (portletReq.getParameter("tckPRP3") == null) {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tckPRP3", "true");
-        TestLink tl =
-            new TestLink("V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters13a", purl);
+        TestSetupLink tl =
+            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters13a", purl);
         tl.writeTo(writer);
       } else {
         PortletURL purl = portletResp.createRenderURL();
@@ -309,7 +309,7 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
       } else {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tr3a", "true");
-        TestLink tl = new TestLink("V2AddlRequestTests_SPEC2_11_Render_parameters15", purl);
+        TestSetupLink tl = new TestSetupLink("V2AddlRequestTests_SPEC2_11_Render_parameters15", purl);
         tl.writeTo(writer);
       }
     }

@@ -247,7 +247,7 @@ public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServ
       if (portletReq.getParameter("tr3") == null) {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tr3", "true");
-        TestLink tl = new TestLink("V2AddlRequestTests_SPEC2_11_Resource_parameters17", purl);
+        TestSetupLink tl = new TestSetupLink("V2AddlRequestTests_SPEC2_11_Resource_parameters17", purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr3 = portletResp.createResourceURL();
@@ -281,8 +281,8 @@ public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServ
       if (portletReq.getParameter("tckPRP4") == null) {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tckPRP4", "true");
-        TestLink tl =
-            new TestLink("V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters16", purl);
+        TestSetupLink tl =
+            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters16", purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr5 = portletResp.createResourceURL();
@@ -302,8 +302,8 @@ public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServ
       if (portletReq.getParameter("tckPRP4") == null) {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tckPRP4", "true");
-        TestLink tl =
-            new TestLink("V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters7", purl);
+        TestSetupLink tl =
+            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters7", purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr6 = portletResp.createResourceURL();
@@ -325,8 +325,8 @@ public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServ
       if (portletReq.getParameter("tckPRP4") == null) {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tckPRP4", "true");
-        TestLink tl =
-            new TestLink("V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters12", purl);
+        TestSetupLink tl =
+            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters12", purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr7 = portletResp.createResourceURL();

@@ -123,8 +123,8 @@ public class AddlRequestTests_SPEC2_11_Event implements Portlet, EventPortlet {
       if (portletReq.getParameter("tckPRP2") == null) {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tckPRP2", "true");
-        TestLink tl =
-            new TestLink("V2AddlRequestTests_SPEC2_11_Event_publicRenderParameters16", purl);
+        TestSetupLink tl =
+            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Event_publicRenderParameters16", purl);
         tl.writeTo(writer);
       } else {
         PortletURL aurl = portletResp.createActionURL();
@@ -142,8 +142,8 @@ public class AddlRequestTests_SPEC2_11_Event implements Portlet, EventPortlet {
       if (portletReq.getParameter("tckPRP2") == null) {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tckPRP2", "true");
-        TestLink tl =
-            new TestLink("V2AddlRequestTests_SPEC2_11_Event_publicRenderParameters5", purl);
+        TestSetupLink tl =
+            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Event_publicRenderParameters5", purl);
         tl.writeTo(writer);
       } else {
         PortletURL aurl = portletResp.createActionURL();
