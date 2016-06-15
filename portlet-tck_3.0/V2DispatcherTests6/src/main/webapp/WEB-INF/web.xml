@@ -30,7 +30,7 @@
    </servlet>
    <servlet-mapping>
       <servlet-name>DispatcherTests6_SPEC2_19_FwdThenIncludeServletAction_servlet</servlet-name>
-      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenIncludeServletAction_servlet</url-pattern>
+      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenIncludeServletAction_servlet/*</url-pattern>
    </servlet-mapping>
 
    <servlet>
@@ -43,7 +43,7 @@
    </servlet>
    <servlet-mapping>
       <servlet-name>DispatcherTests6_SPEC2_19_FwdThenIncludeServletEvent_servlet</servlet-name>
-      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenIncludeServletEvent_servlet</url-pattern>
+      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenIncludeServletEvent_servlet/*</url-pattern>
    </servlet-mapping>
 
    <servlet>
@@ -56,7 +56,7 @@
    </servlet>
    <servlet-mapping>
       <servlet-name>DispatcherTests6_SPEC2_19_FwdThenIncludeServletRender_servlet</servlet-name>
-      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenIncludeServletRender_servlet</url-pattern>
+      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenIncludeServletRender_servlet/*</url-pattern>
    </servlet-mapping>
 
    <servlet>
@@ -69,7 +69,7 @@
    </servlet>
    <servlet-mapping>
       <servlet-name>DispatcherTests6_SPEC2_19_FwdThenIncludeServletResource_servlet</servlet-name>
-      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenIncludeServletResource_servlet</url-pattern>
+      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenIncludeServletResource_servlet/*</url-pattern>
    </servlet-mapping>
 
    <servlet>
@@ -82,7 +82,7 @@
    </servlet>
    <servlet-mapping>
       <servlet-name>DispatcherTests6_SPEC2_19_FwdThenForwardServletAction_servlet</servlet-name>
-      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenForwardServletAction_servlet</url-pattern>
+      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenForwardServletAction_servlet/*</url-pattern>
    </servlet-mapping>
 
    <servlet>
@@ -95,7 +95,7 @@
    </servlet>
    <servlet-mapping>
       <servlet-name>DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_servlet</servlet-name>
-      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_servlet</url-pattern>
+      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_servlet/*</url-pattern>
    </servlet-mapping>
 
    <servlet>
@@ -108,7 +108,7 @@
    </servlet>
    <servlet-mapping>
       <servlet-name>DispatcherTests6_SPEC2_19_FwdThenForwardServletRender_servlet</servlet-name>
-      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenForwardServletRender_servlet</url-pattern>
+      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenForwardServletRender_servlet/*</url-pattern>
    </servlet-mapping>
 
    <servlet>
@@ -121,7 +121,7 @@
    </servlet>
    <servlet-mapping>
       <servlet-name>DispatcherTests6_SPEC2_19_FwdThenForwardServletResource_servlet</servlet-name>
-      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenForwardServletResource_servlet</url-pattern>
+      <url-pattern>/DispatcherTests6_SPEC2_19_FwdThenForwardServletResource_servlet/*</url-pattern>
    </servlet-mapping>
 
    <servlet>

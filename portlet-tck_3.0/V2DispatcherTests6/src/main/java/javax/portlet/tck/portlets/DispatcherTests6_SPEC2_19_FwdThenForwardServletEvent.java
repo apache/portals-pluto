@@ -18,43 +18,41 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
+import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
 
 /**
- * This portlet implements several test cases for the JSR 362 TCK. The test case names
- * are defined in the /src/main/resources/xml-resources/additionalTCs.xml
- * file. The build process will integrate the test case names defined in the 
- * additionalTCs.xml file into the complete list of test case names for execution by the driver.
- *
- * This is the main portlet for the test cases. If the test cases call for events, this portlet
- * will initiate the events, but not process them. The processing is done in the companion 
- * portlet DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_event
- *
+ * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined in the
+ * /src/main/resources/xml-resources/additionalTCs.xml file. The build process will integrate the test case names
+ * defined in the additionalTCs.xml file into the complete list of test case names for execution by the driver.
+ * 
+ * This is the main portlet for the test cases. If the test cases call for events, this portlet will initiate the
+ * events, but not process them. The processing is done in the companion portlet
+ * DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_event
+ * 
  */
 public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Portlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-   
-   private PortletConfig portletConfig = null;
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
    }
 
    @Override
@@ -62,37 +60,31 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
+   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      StringWriter writer = new StringWriter();
+      new StringWriter();
 
-      QName eventQName = new QName(TCKNAMESPACE,
-             "DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent");
+      QName eventQName = new QName(TCKNAMESPACE, "DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent");
       portletResp.setEvent(eventQName, "Hi!");
    }
 
    @Override
-   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
+   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp) throws PortletException,
+         IOException {
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
+      portletResp.getWriter();
 
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
+   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -100,10 +92,10 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       PrintWriter writer = portletResp.getWriter();
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_dispatch1 */
-      /* Details: "In a servlet forwarded to by the target of a forward, if   */
-      /* the path provided to getRequestDispatcher method contains query      */
-      /* strings, parameters specified in the query strings must be passed    */
-      /* to the target servlet during an forward"                             */
+      /* Details: "In a servlet forwarded to by the target of a forward, if */
+      /* the path provided to getRequestDispatcher method contains query */
+      /* strings, parameters specified in the query strings must be passed */
+      /* to the target servlet during an forward" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -112,9 +104,9 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_dispatch2 */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* parameters specified in the query strings must be aggregated with    */
-      /* the portlet render parameters"                                       */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* parameters specified in the query strings must be aggregated with */
+      /* the portlet render parameters" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -123,10 +115,10 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_dispatch3 */
-      /* Details: "In a servlet forwarded to by the target of a forward, if   */
-      /* query string parameters have the same names as render parameter      */
-      /* names, the query string parameters appear in the parameter values    */
-      /* array before the render parameter values"                            */
+      /* Details: "In a servlet forwarded to by the target of a forward, if */
+      /* query string parameters have the same names as render parameter */
+      /* names, the query string parameters appear in the parameter values */
+      /* array before the render parameter values" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -135,10 +127,10 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_invoke2 */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* parameters to the forward method for a target servlet can be the     */
-      /* request and response classes from the portlet lifecyle method        */
-      /* initiating the include"                                              */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* parameters to the forward method for a target servlet can be the */
+      /* request and response classes from the portlet lifecyle method */
+      /* initiating the include" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -147,9 +139,9 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_invoke4 */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the portlet container must invoke the target servlet in the same     */
-      /* thread as the PortletRequestDispatcher include invocation"           */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the portlet container must invoke the target servlet in the same */
+      /* thread as the PortletRequestDispatcher include invocation" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -158,10 +150,10 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_invoke7 */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the path elements of the request object exposed to the target        */
-      /* servlet must reflect the path used to obtain the                     */
-      /* RequestDispatcher"                                                   */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the path elements of the request object exposed to the target */
+      /* servlet must reflect the path used to obtain the */
+      /* RequestDispatcher" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -170,11 +162,11 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes1 */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the portlet request attribute javax.servlet.forward.request_uri      */
-      /* will be set, and equals the value from                               */
-      /* HTTPServletRequest.getRequestURI for the first servlet in the        */
-      /* forward chain"                                                       */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the portlet request attribute javax.servlet.forward.request_uri */
+      /* will be set, and equals the value from */
+      /* HTTPServletRequest.getRequestURI for the first servlet in the */
+      /* forward chain" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -183,11 +175,11 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes1a */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the servlet request attribute javax.servlet.forward.request_uri      */
-      /* will be set, and equals the value from                               */
-      /* HTTPServletRequest.getRequestURI for the first servlet in the        */
-      /* forward chain"                                                       */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the servlet request attribute javax.servlet.forward.request_uri */
+      /* will be set, and equals the value from */
+      /* HTTPServletRequest.getRequestURI for the first servlet in the */
+      /* forward chain" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -196,9 +188,9 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes1b */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the portlet request attribute javax.servlet.include.request_uri      */
-      /* will not be set"                                                     */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the portlet request attribute javax.servlet.include.request_uri */
+      /* will not be set" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -207,9 +199,9 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes1c */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the servlet request attribute javax.servlet.include.request_uri      */
-      /* will not be set"                                                     */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the servlet request attribute javax.servlet.include.request_uri */
+      /* will not be set" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -218,11 +210,11 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes2 */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the portlet request attribute javax.servlet.forward.context_path     */
-      /* will be set, and equals the value from                               */
-      /* HTTPServletRequest.getContextPath for the first servlet in the       */
-      /* forward chain"                                                       */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the portlet request attribute javax.servlet.forward.context_path */
+      /* will be set, and equals the value from */
+      /* HTTPServletRequest.getContextPath for the first servlet in the */
+      /* forward chain" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -231,11 +223,11 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes2a */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the servlet request attribute javax.servlet.forward.context_path     */
-      /* will be set, and equals the value from                               */
-      /* HTTPServletRequest.getContextPath for the first servlet in the       */
-      /* forward chain"                                                       */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the servlet request attribute javax.servlet.forward.context_path */
+      /* will be set, and equals the value from */
+      /* HTTPServletRequest.getContextPath for the first servlet in the */
+      /* forward chain" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -244,9 +236,9 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes2b */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the portlet request attribute javax.servlet.include.context_path     */
-      /* will not be set"                                                     */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the portlet request attribute javax.servlet.include.context_path */
+      /* will not be set" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -255,9 +247,9 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes2c */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the servlet request attribute javax.servlet.include.context_path     */
-      /* will not be set"                                                     */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the servlet request attribute javax.servlet.include.context_path */
+      /* will not be set" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -266,11 +258,11 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes3 */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the portlet request attribute javax.servlet.forward.servlet_path     */
-      /* will be set, and equals the value from                               */
-      /* HTTPServletRequest.getServletPath for the first servlet in the       */
-      /* forward chain"                                                       */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the portlet request attribute javax.servlet.forward.servlet_path */
+      /* will be set, and equals the value from */
+      /* HTTPServletRequest.getServletPath for the first servlet in the */
+      /* forward chain" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -279,11 +271,11 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes3a */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the servlet request attribute javax.servlet.forward.servlet_path     */
-      /* will be set, and equals the value from                               */
-      /* HTTPServletRequest.getServletPath for the first servlet in the       */
-      /* forward chain"                                                       */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the servlet request attribute javax.servlet.forward.servlet_path */
+      /* will be set, and equals the value from */
+      /* HTTPServletRequest.getServletPath for the first servlet in the */
+      /* forward chain" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -292,9 +284,9 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes3b */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the portlet request attribute javax.servlet.include.servlet_path     */
-      /* will not be set"                                                     */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the portlet request attribute javax.servlet.include.servlet_path */
+      /* will not be set" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -303,9 +295,9 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes3c */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the servlet request attribute javax.servlet.include.servlet_path     */
-      /* will not be set"                                                     */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the servlet request attribute javax.servlet.include.servlet_path */
+      /* will not be set" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -314,10 +306,10 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes4 */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the portlet request attribute javax.servlet.forward.path_info will   */
-      /* be set, and equals the value from HTTPServletRequest.getPathInfo     */
-      /* for the first servlet in the forward chain"                          */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the portlet request attribute javax.servlet.forward.path_info will */
+      /* be set, and equals the value from HTTPServletRequest.getPathInfo */
+      /* for the first servlet in the forward chain" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -326,10 +318,10 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes4a */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the servlet request attribute javax.servlet.forward.path_info will   */
-      /* be set, and equals the value from HTTPServletRequest.getPathInfo     */
-      /* for the first servlet in the forward chain"                          */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the servlet request attribute javax.servlet.forward.path_info will */
+      /* be set, and equals the value from HTTPServletRequest.getPathInfo */
+      /* for the first servlet in the forward chain" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -338,9 +330,9 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes4b */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the portlet request attribute javax.servlet.include.path_info will   */
-      /* not be set"                                                          */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the portlet request attribute javax.servlet.include.path_info will */
+      /* not be set" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -349,9 +341,9 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes4c */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the servlet request attribute javax.servlet.include.path_info will   */
-      /* not be set"                                                          */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the servlet request attribute javax.servlet.include.path_info will */
+      /* not be set" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -360,11 +352,11 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes5 */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the portlet request attribute javax.servlet.forward.query_string     */
-      /* will be set, and equals the value from                               */
-      /* HTTPServletRequest.getQueryString for the first servlet in the       */
-      /* forward chain"                                                       */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the portlet request attribute javax.servlet.forward.query_string */
+      /* will be set, and equals the value from */
+      /* HTTPServletRequest.getQueryString for the first servlet in the */
+      /* forward chain" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -373,11 +365,11 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes5a */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the servlet request attribute javax.servlet.forward.query_string     */
-      /* will be set, and equals the value from                               */
-      /* HTTPServletRequest.getQueryString for the first servlet in the       */
-      /* forward chain"                                                       */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the servlet request attribute javax.servlet.forward.query_string */
+      /* will be set, and equals the value from */
+      /* HTTPServletRequest.getQueryString for the first servlet in the */
+      /* forward chain" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -386,9 +378,9 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes5b */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the portlet request attribute javax.servlet.include.query_string     */
-      /* will not be set"                                                     */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the portlet request attribute javax.servlet.include.query_string */
+      /* will not be set" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -397,9 +389,9 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes5c */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the servlet request attribute javax.servlet.include.query_string     */
-      /* will not be set"                                                     */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the servlet request attribute javax.servlet.include.query_string */
+      /* will not be set" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -408,9 +400,9 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes6 */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* the request attribute javax.portlet.config must be set to the        */
-      /* javax.portlet.PortletConfig object"                                  */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* the request attribute javax.portlet.config must be set to the */
+      /* javax.portlet.PortletConfig object" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -419,10 +411,10 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes7 */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* for forwards from the processEvent method, The request attribute     */
-      /* javax.portlet.request must be set to the                             */
-      /* javax.portlet.EventRequest object"                                   */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* for forwards from the processEvent method, The request attribute */
+      /* javax.portlet.request must be set to the */
+      /* javax.portlet.EventRequest object" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -431,10 +423,10 @@ public class DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent implements Por
       }
 
       /* TestCase: V2DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_attributes8 */
-      /* Details: "In a servlet forwarded to by the target of a forward,      */
-      /* for forwards from the processEvent method, The request attribute     */
-      /* javax.portlet.response must be set to the                            */
-      /* javax.portlet.EventResponse object"                                  */
+      /* Details: "In a servlet forwarded to by the target of a forward, */
+      /* for forwards from the processEvent method, The request attribute */
+      /* javax.portlet.response must be set to the */
+      /* javax.portlet.EventResponse object" */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
