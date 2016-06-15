@@ -67,7 +67,6 @@ public class IncluderForwarderServlet extends HttpServlet {
    // The tck uses only get & post requests
    protected void processTCKReq(HttpServletRequest request, HttpServletResponse response)
          throws ServletException, IOException {
-      LOGGER.entering(LOG_CLASS, "servlet entry");
 
       String action = (String) request.getAttribute(ATTR_DISPATCH_ACTION);
       if (action == null || !action.matches("(include|forward)")) {
