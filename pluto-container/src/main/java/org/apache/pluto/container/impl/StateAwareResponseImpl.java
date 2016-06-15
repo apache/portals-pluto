@@ -97,6 +97,14 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl
 
    public void setEvent(QName qname, Serializable value) {
       ArgumentUtility.validateNotNull("qname", qname);
+      
+      if (LOGGER.isTraceEnabled()) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("QName: ").append(qname.toString());
+         txt.append(", value class: ").append((value == null) ? "null": value.getClass().getCanonicalName());
+         LOGGER.debug(txt.toString());
+      }
+
       Event event = responseContext.getEventProvider()
             .createEvent(qname, value);
       if (event != null) {

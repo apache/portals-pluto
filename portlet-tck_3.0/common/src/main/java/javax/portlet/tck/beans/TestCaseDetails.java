@@ -23,36 +23,31 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-
 /**
- * Contains all test case names and detail strings used by a
- * portlet. Provides helper methods for dealing with test
- * case results.
+ * Contains all test case names and detail strings used by a portlet. Provides helper methods for dealing with test case
+ * results.
  * 
- * The goal is to allow additional test cases to be added by adding 
- * new test modules without having all test cases defined in a
- * central location, otherwise we could just define all test case
- * names / details here.
- *  
+ * The goal is to allow additional test cases to be added by adding new test modules without having all test cases
+ * defined in a central location, otherwise we could just define all test case names / details here.
+ * 
  * @author nick
  */
 public class TestCaseDetails implements Map<String, String> {
-   
+
    private Map<String, String> detailsMap = null;
-   
+
    /**
-    * For use when a new instance with a new map is to be created,
-    * for example, when a portlet uses the class directly.
+    * For use when a new instance with a new map is to be created, for example, when a portlet uses the class directly.
     */
    public TestCaseDetails() {
       detailsMap = new HashMap<String, String>();
    }
-   
+
    /**
-    * Creates an instance using an existing map. Mainly for use 
-    * by classes that extend this one.
+    * Creates an instance using an existing map. Mainly for use by classes that extend this one.
     * 
-    * @param map  Existing test case name - test case details map.
+    * @param map
+    *           Existing test case name - test case details map.
     */
    public TestCaseDetails(Map<String, String> map) {
       detailsMap = map;
@@ -117,25 +112,25 @@ public class TestCaseDetails implements Map<String, String> {
    public Collection<String> values() {
       return detailsMap.values();
    }
-   
+
    /**
-    * Gets a test result initialied with the test case name, the
-    * test case detail string, and the results set to 
+    * Gets a test result initialied with the test case name, the test case detail string, and the results set to
     * <code>false</code> (test failed).
     * 
-    * @param tcName  test case name
+    * @param tcName
+    *           test case name
     * @return
     */
    public TestResult getTestResultFailed(String tcName) {
       return new TestResult(tcName, false, detailsMap.get(tcName));
    }
-   
+
    /**
-    * Gets a test result initialied with the test case name, the
-    * test case detail string, and the results set to 
+    * Gets a test result initialied with the test case name, the test case detail string, and the results set to
     * <code>true</code> (test succeeded).
     * 
-    * @param tcName  test case name
+    * @param tcName
+    *           test case name
     * @return
     */
    public TestResult getTestResultSucceeded(String tcName) {

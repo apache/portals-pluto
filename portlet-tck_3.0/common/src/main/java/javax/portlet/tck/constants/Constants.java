@@ -39,10 +39,13 @@ public class Constants {
    
    // For generating the target for the getRequestDispatcher call
    // target = <prefix> + <servlet/jsp name> + <suffix> + ? + <query string> 
+   public static final String SERVLET_INCFWD = "/IncluderForwarderServlet";
    public static final String SERVLET_PREFIX = "/";
    public static final String SERVLET_SUFFIX = "";
    public static final String JSP_PREFIX = "/WEB-INF/jsp/";
    public static final String JSP_SUFFIX = ".jsp";
+   public static final String EXTRA_PATH = "/extra/path";
+   public static final String EXTRA_QUERY_STRING = "eqparm1=eqvalue1";
    public static final String QUERY_STRING = "qparm1=qvalue1&qparm2=qvalue2";
    
    // for several tests to servlet / jsp for comparison

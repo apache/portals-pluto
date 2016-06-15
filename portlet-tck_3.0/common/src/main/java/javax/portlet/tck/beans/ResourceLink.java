@@ -46,17 +46,17 @@ import javax.portlet.tck.constants.Constants;
  * @author nick
  */
 public class ResourceLink {
-   
-   String tcName;
-   String urlstr;
+
+   String      tcName;
+   String      urlstr;
    ResourceURL rurl;
-   String actId;
-   String linkId;
-   String divId;
-   String resId;
-   String detId;
-   String title;
-   
+   String      actId;
+   String      linkId;
+   String      divId;
+   String      resId;
+   String      detId;
+   String      title;
+
    /**
     * Creates an empty link.
     */
@@ -75,8 +75,10 @@ public class ResourceLink {
    /**
     * Creates a resource link initialized according to the parameters.
     * 
-    * @param tcName     test case name
-    * @param url        url for the test case
+    * @param tcName
+    *           test case name
+    * @param url
+    *           url for the test case
     */
    public ResourceLink(String tcName, ResourceURL rurl) {
       this.tcName = tcName;
@@ -91,11 +93,13 @@ public class ResourceLink {
    }
 
    /**
-    * Creates a resource link initialized with a URL in string form.
-    * This enables certain URL test cases such as "*URL.toString()"
+    * Creates a resource link initialized with a URL in string form. This enables certain URL test cases such as
+    * "*URL.toString()"
     * 
-    * @param tcName     test case name
-    * @param urlstr     url for the test case in string form
+    * @param tcName
+    *           test case name
+    * @param urlstr
+    *           url for the test case in string form
     */
    public ResourceLink(String tcName, String urlstr) {
       this.tcName = tcName;
@@ -110,17 +114,18 @@ public class ResourceLink {
    }
 
    /**
-    * Generates HTML markup representing the test link. 
+    * Generates HTML markup representing the test link.
     * 
-    * Note that the div element containing the item that is to be acted upon
-    * by the client must have an id equal to the test case name.
+    * Note that the div element containing the item that is to be acted upon by the client must have an id equal to the
+    * test case name.
     * 
-    * @return  HTML markup representing the test link
+    * @return HTML markup representing the test link
     */
    @Override
    public String toString() {
-      
-      if (urlstr == null) urlstr = rurl.toString();
+
+      if (urlstr == null)
+         urlstr = rurl.toString();
       StringBuilder sb = new StringBuilder();
       sb.append("<div class='portletTCKTestcase' name='");
       sb.append(tcName);
@@ -140,33 +145,33 @@ public class ResourceLink {
 
       return sb.toString();
    }
-   
+
    /**
-    * Generates HTML markup representing the test link and
-    * writes them to the writer provided.
+    * Generates HTML markup representing the test link and writes them to the writer provided.
     * 
-    * @param writer  Writer to which the string is written
+    * @param writer
+    *           Writer to which the string is written
     */
-   public void writeTo(Writer writer)throws IOException {
+   public void writeTo(Writer writer) throws IOException {
       writer.write(this.toString());
    }
-   
+
    /**
     * Writes resource-fetching JavaScript code into the output stream.
     * 
-    * This method is meant to be used by a test case whose evaluation code is 
-    * located in the serveResource method accessed through the resource link
-    * information contained in this class. 
+    * This method is meant to be used by a test case whose evaluation code is located in the serveResource method
+    * accessed through the resource link information contained in this class.
     * 
-    * When the link in the output is clicked, the result will be retrieved
-    * and inserted into the markup.
+    * When the link in the output is clicked, the result will be retrieved and inserted into the markup.
     * 
-    * @param writer     Writer to which the string is written
-    * @throws IOException 
+    * @param writer
+    *           Writer to which the string is written
+    * @throws IOException
     */
    public void writeResourceFetcher(Writer writer) throws IOException {
 
-      if (urlstr == null) urlstr = rurl.toString();
+      if (urlstr == null)
+         urlstr = rurl.toString();
       StringBuilder sb = new StringBuilder();
       TestResult tr = new TestResult(tcName, false, "");
       sb.append("<div class='portletTCKTestcase' name='").append(tcName);
@@ -204,5 +209,5 @@ public class ResourceLink {
 
       writer.write(sb.toString());
    }
-   
+
 }

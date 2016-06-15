@@ -83,8 +83,9 @@ public abstract class BaseURLTag extends TagSupport {
       if (secure != null) {
             try {                   
                 url.setSecure(getSecureBoolean());                    
-            } catch (PortletSecurityException e) {                   
-                throw new JspException(e);                    
+            } catch (PortletSecurityException e) {
+                // ignore exception as Pluto doesn't support setSecure
+                // throw new JspException(e);                    
             }
         }
 	}

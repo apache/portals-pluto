@@ -42,17 +42,17 @@ import java.io.Writer;
 import javax.portlet.tck.constants.Constants;
 
 /**
- * Encapsulates test results containint the test case name, the test case 
- * detail description, and the test case result (<code>true</code> = success, 
- * <code>false</code> = failure). 
+ * Encapsulates test results containint the test case name, the test case detail description, and the test case result (
+ * <code>true</code> = success, <code>false</code> = failure).
+ * 
  * @author nick
  */
 public class TestResult {
-   
-   private String tcName;
-   private String tcDetail;
+
+   private String  tcName;
+   private String  tcDetail;
    private boolean tcSuccess;
-   
+
    /**
     * Creates an empty test result.
     */
@@ -65,61 +65,66 @@ public class TestResult {
    /**
     * Creates a test result initialized according to the parameters.
     * 
-    * @param tcName     test case name
-    * @param tcSuccess  test case result
-    * @param tcDetail   test case detail description
+    * @param tcName
+    *           test case name
+    * @param tcSuccess
+    *           test case result
+    * @param tcDetail
+    *           test case detail description
     */
    public TestResult(String tcName, boolean tcSuccess, String tcDetail) {
       this.tcName = tcName;
       this.tcDetail = tcDetail;
       this.tcSuccess = tcSuccess;
    }
-   
+
    public String getTcName() {
       return tcName;
    }
-   
+
    public void setTcName(String tcName) {
       this.tcName = tcName;
    }
-   
+
    public String getTcDetail() {
       return tcDetail;
    }
-   
+
    public void setTcDetail(String tcDetail) {
       this.tcDetail = tcDetail;
    }
-   
+
    public boolean isTcSuccess() {
       return tcSuccess;
    }
-   
+
    public void setTcSuccess(boolean tcSuccess) {
       this.tcSuccess = tcSuccess;
    }
-   
+
    /**
-    * Appends error message to the test case detail string to indicate
-    * what went wrong when a test fails.
+    * Appends error message to the test case detail string to indicate what went wrong when a test fails.
     * 
-    * @param tcDetail   String containing detailed error message
+    * @param tcDetail
+    *           String containing detailed error message
     */
    public void appendTcDetail(String tcDetail) {
-      if (!this.tcDetail.endsWith(".")) this.tcDetail += ".";
+      if (!this.tcDetail.endsWith("."))
+         this.tcDetail += ".";
       this.tcDetail += " " + tcDetail;
    }
-   
+
    /**
-    * Appends error message to the test case detail string to indicate
-    * what went wrong when a test fails.
+    * Appends error message to the test case detail string to indicate what went wrong when a test fails.
     * 
-    * @param t       the throwable
+    * @param t
+    *           the throwable
     */
    public void appendTcDetail(Throwable t) {
-      if (!this.tcDetail.endsWith(".")) this.tcDetail += ".";
+      if (!this.tcDetail.endsWith("."))
+         this.tcDetail += ".";
       this.tcDetail += " " + t.toString();
-      
+
       StringWriter sw = new StringWriter();
       PrintWriter pw = new PrintWriter(sw);
       t.printStackTrace(pw);
@@ -130,17 +135,17 @@ public class TestResult {
    /**
     * Generates HTML markup representing the test result.
     * 
-    * Note that the div element containing the item that is to be acted upon
-    * by the client must have an id equal to the test case name.
+    * Note that the div element containing the item that is to be acted upon by the client must have an id equal to the
+    * test case name.
     * 
-    * @return  HTML markup representing the test result
+    * @return HTML markup representing the test result
     */
    @Override
    public String toString() {
       final String resId = tcName + Constants.RESULT_ID;
       final String detId = tcName + Constants.DETAIL_ID;
-      final String resStr = tcSuccess?Constants.SUCCESS:Constants.FAILURE;
-      
+      final String resStr = tcSuccess ? Constants.SUCCESS : Constants.FAILURE;
+
       StringBuilder sb = new StringBuilder();
       sb.append("<div class='portletTCKTestcase' name='");
       sb.append(tcName);
@@ -163,15 +168,15 @@ public class TestResult {
 
       return sb.toString();
    }
-   
+
    /**
-    * Generates HTML markup representing the test results and
-    * writes them to the writer provided.
+    * Generates HTML markup representing the test results and writes them to the writer provided.
     * 
-    * @param writer  Writer to which the string is written
+    * @param writer
+    *           Writer to which the string is written
     */
-   public void writeTo(Writer writer)throws IOException {
+   public void writeTo(Writer writer) throws IOException {
       writer.write(this.toString());
    }
-   
+
 }

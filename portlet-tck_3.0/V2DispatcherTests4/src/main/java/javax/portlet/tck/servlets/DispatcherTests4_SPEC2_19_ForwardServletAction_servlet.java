@@ -16,56 +16,55 @@
  *  under the License.
  */
 
-
 package javax.portlet.tck.servlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS4_SPEC2_19_FORWARDSERVLETACTION_INVOKE3;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+import java.io.StringWriter;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.constants.Constants;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet for JSR 362 request dispatcher testing.
- * Used by portlet: DispatcherTests4_SPEC2_19_ForwardServletAction
- *
+ * Servlet for JSR 362 request dispatcher testing. Used by portlet: DispatcherTests4_SPEC2_19_ForwardServletAction
+ * 
  * @author nick
- *
+ * 
  */
 public class DispatcherTests4_SPEC2_19_ForwardServletAction_servlet extends HttpServlet {
-   private static final String LOG_CLASS = 
-         DispatcherTests4_SPEC2_19_ForwardServletAction_servlet.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
 
    @Override
-   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-         throws ServletException, IOException {
+   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       processTCKReq(req, resp);
    }
 
    @Override
-   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-         throws ServletException, IOException {
+   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       processTCKReq(req, resp);
    }
 
    // The tck uses only get & post requests
-   protected void processTCKReq(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      LOGGER.entering(LOG_CLASS, "servlet entry");
+   protected void processTCKReq(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+         IOException {
 
       PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
-      PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
-      PortletConfig portletConfig = (PortletConfig) request.getAttribute("javax.portlet.config");
-      long svtTid = Thread.currentThread().getId();
-      long reqTid = (Long) portletReq.getAttribute(THREADID_ATTR);
+      request.getAttribute("javax.portlet.response");
+      request.getAttribute("javax.portlet.config");
+      Thread.currentThread().getId();
+      portletReq.getAttribute(THREADID_ATTR);
 
       StringWriter writer = new StringWriter();
 
@@ -73,20 +72,21 @@ public class DispatcherTests4_SPEC2_19_ForwardServletAction_servlet extends Http
 
       // Create result objects for the tests
 
-      /* TestCase: V2DispatcherTests4_SPEC2_19_ForwardServletAction_invoke3   */
-      /* Details: "Parameters to the forward method for a target servlet      */
-      /* can be wrapped request and response classes from the portlet         */
-      /* lifecyle method initiating the include"                              */
+      /* TestCase: V2DispatcherTests4_SPEC2_19_ForwardServletAction_invoke3 */
+      /* Details: "Parameters to the forward method for a target servlet */
+      /* can be wrapped request and response classes from the portlet */
+      /* lifecyle method initiating the include" */
       TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERTESTS4_SPEC2_19_FORWARDSERVLETACTION_INVOKE3);
       try {
          // If this gets executed, include worked.
          tr0.setTcSuccess(true);
-      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
+      } catch (Exception e) {
+         tr0.appendTcDetail(e.toString());
+      }
       tr0.writeTo(writer);
 
       request.getSession().setAttribute(
-                   Constants.RESULT_ATTR_PREFIX + "DispatcherTests4_SPEC2_19_ForwardServletAction",
-                   writer.toString());
+            Constants.RESULT_ATTR_PREFIX + "DispatcherTests4_SPEC2_19_ForwardServletAction", writer.toString());
 
    }
 }
