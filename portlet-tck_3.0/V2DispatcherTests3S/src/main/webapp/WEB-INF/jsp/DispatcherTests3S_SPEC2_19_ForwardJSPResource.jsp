@@ -19,7 +19,10 @@
 
       PrintWriter writer = ((MimeResponse)portletResp).getWriter();
 
-      JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();
-
+      // Create result objects for the tests
+      
+      PortletURL purl = ((MimeResponse) portletResp).createRenderURL();
+      TestLink tl = new TestLink(V2DISPATCHERTESTS3S_SPEC2_19_FORWARDJSPRESOURCE_DISPATCH4, purl);
+      tl.writeTo(writer);
 
 %>

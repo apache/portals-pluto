@@ -39,7 +39,6 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -48,7 +47,6 @@ import javax.portlet.ResourceServingPortlet;
 import javax.portlet.ResourceURL;
 import javax.portlet.tck.beans.CompareUtils;
 import javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails;
-import javax.portlet.tck.beans.TestLink;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.constants.Constants;
 
@@ -81,8 +79,6 @@ public class DispatcherTests3S_SPEC2_19_ForwardServletResource implements Portle
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
-
-      new StringWriter();
 
    }
 
@@ -122,9 +118,8 @@ public class DispatcherTests3S_SPEC2_19_ForwardServletResource implements Portle
       tr0.writeTo(writer);
 
       portletReq.getPortletSession().setAttribute(
-            Constants.RESULT_ATTR_PREFIX + V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRESOURCE_DISPATCH4, 
-            writer.toString(),
-            APPLICATION_SCOPE);
+            Constants.RESULT_ATTR_PREFIX + V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRESOURCE_DISPATCH4,
+            writer.toString(), APPLICATION_SCOPE);
 
    }
 
@@ -132,16 +127,12 @@ public class DispatcherTests3S_SPEC2_19_ForwardServletResource implements Portle
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
 
       PrintWriter writer = portletResp.getWriter();
-      
+
       String msg = (String) portletReq.getPortletSession().getAttribute(
             RESULT_ATTR_PREFIX + V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRESOURCE_DISPATCH4, APPLICATION_SCOPE);
 
       if (msg == null) {
          writer.write("<p>Not ready. click test case link.</p>\n");
-         
-         PortletURL purl = portletResp.createRenderURL();
-         TestLink tl = new TestLink(V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRESOURCE_DISPATCH4, purl);
-         tl.writeTo(writer);
 
          writer.write("<div id=\"DispatcherTests3S_SPEC2_19_ForwardServletResource\">no resource output.</div>\n");
          ResourceURL resurl = portletResp.createResourceURL();
@@ -164,8 +155,7 @@ public class DispatcherTests3S_SPEC2_19_ForwardServletResource implements Portle
                RESULT_ATTR_PREFIX + V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRESOURCE_DISPATCH4, APPLICATION_SCOPE);
          writer.write("<p>" + msg + "</p>\n");
       }
-      
-      
+
    }
 
 }
