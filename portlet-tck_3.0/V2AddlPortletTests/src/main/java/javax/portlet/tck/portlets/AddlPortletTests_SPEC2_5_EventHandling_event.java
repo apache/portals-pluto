@@ -80,15 +80,13 @@ public class AddlPortletTests_SPEC2_5_EventHandling_event implements Portlet, Ev
         /* Details: "If the portlet throws a RuntimeException in                */
         /* processEvent, all operations on the EventResponse, including set     */
         /* events, must be ignored"                                             */
-      // TODO: RuntimeException is not handled by pluto. So, this test crashes.
-        // Report in JIRA
         LOGGER.entering(LOG_CLASS, "Second case");
         portletResp.setRenderParameter("tr1", "true");
         portletReq.getPortletSession().setAttribute(
             Constants.RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_EventHandling_runtimeException",
             "true", APPLICATION_SCOPE);
-        //throw new RuntimeException(
-         //   "RuntimeException from V2AddlPortletTests_SPEC2_5_EventHandling_exception5");
+        throw new RuntimeException(
+            "RuntimeException from V2AddlPortletTests_SPEC2_5_EventHandling_exception5");
       }
 
    }
@@ -125,7 +123,6 @@ public class AddlPortletTests_SPEC2_5_EventHandling_event implements Portlet, Ev
       /* Details: "If the portlet throws a RuntimeException in                */
       /* processEvent, all operations on the EventResponse, including set     */
       /* events, must be ignored"                                             */
-      // TODO: RuntimeException is not handled by pluto. So, this test crashes.
       TestResult tr1 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_5_EVENTHANDLING_EXCEPTION5);
       String dataInEventResponse_tr1 = (String) portletReq.getPortletSession().getAttribute(
           RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_EventHandling_runtimeException",

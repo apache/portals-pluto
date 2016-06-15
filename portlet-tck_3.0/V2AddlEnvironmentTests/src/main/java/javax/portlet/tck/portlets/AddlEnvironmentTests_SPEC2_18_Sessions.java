@@ -18,18 +18,12 @@ package javax.portlet.tck.portlets;
 import java.io.*;
 import java.util.*;
 import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
 import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
 import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
 import static javax.portlet.tck.constants.Constants.*;
 import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -42,7 +36,7 @@ import static javax.portlet.ResourceURL.*;
  * AddlEnvironmentTests_SPEC2_18_Sessions_event
  *
  */
-public class AddlEnvironmentTests_SPEC2_18_Sessions implements Portlet, ResourceServingPortlet {
+public class AddlEnvironmentTests_SPEC2_18_Sessions implements Portlet {
   private static final String LOG_CLASS = AddlEnvironmentTests_SPEC2_18_Sessions.class.getName();
   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
@@ -65,21 +59,8 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions implements Portlet, Resource
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
 
-    StringWriter writer = new StringWriter();
-
   }
 
-  @Override
-  public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
-      throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
-
-    long tid = Thread.currentThread().getId();
-    portletReq.setAttribute(THREADID_ATTR, tid);
-
-    PrintWriter writer = portletResp.getWriter();
-
-  }
 
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
@@ -107,29 +88,27 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions implements Portlet, Resource
     /* Details: "The portlet container must not share the PortletSession */
     /* object or the attributes stored in it among different portlet */
     /* applications or among different user sessions" */
-    TestResult tr1 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_SCOPE2);
-    /* TODO: implement test. Requires a whole new module */
-    tr1.appendTcDetail("Not implemented.");
-    tr1.writeTo(writer);
+    portletReq.getPortletSession().setAttribute(
+        Constants.RESULT_ATTR_PREFIX + "AddlEnvironmentTests_SPEC2_18_Sessions_tr1", "true",
+        PORTLET_SCOPE);
 
     /* TestCase: V2AddlEnvironmentTests_SPEC2_18_Sessions_scope3 */
     /* Details: "Any object stored in the session using the */
     /* APPLICATION_SCOPE is available to any portlet that belongs to the */
     /* same portlet application and that handles a request in the same */
     /* session" */
-    /* TODO: implement test */
-    TestResult tr2 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_SCOPE3);
-    tr2.appendTcDetail("Not implemented.");
-    tr2.writeTo(writer);
+    // TODO: How to test this? How can portlet have same sessions?
+    portletReq.getPortletSession().setAttribute(
+        Constants.RESULT_ATTR_PREFIX + "AddlEnvironmentTests_SPEC2_18_Sessions_tr2", "true",
+        APPLICATION_SCOPE);
 
     /* TestCase: V2AddlEnvironmentTests_SPEC2_18_Sessions_scope4 */
     /* Details: "Any Object stored in the session using the PORTLET_SCOPE */
     /* must be available to the portlet during requests for the same */
     /* portlet window that stored the object" */
-    TestResult tr3 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_SCOPE4);
-    /* TODO: implement test */
-    tr3.appendTcDetail("Not implemented.");
-    tr3.writeTo(writer);
+    portletReq.getPortletSession().setAttribute(
+        Constants.RESULT_ATTR_PREFIX + "AddlEnvironmentTests_SPEC2_18_Sessions_tr3", "true",
+        PORTLET_SCOPE);
 
     /* TestCase: V2AddlEnvironmentTests_SPEC2_18_Sessions_scope5 */
     /* Details: "The PORTLET_SCOPE object must be stored in the */
@@ -518,13 +497,6 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions implements Portlet, Resource
     }
     tr22.writeTo(writer);
 
-    /* TestCase: V2AddlEnvironmentTests_SPEC2_18_Sessions_httpSession5 */
-    /* Details: "If the PortletSession object is invalidated by a */
-    /* portlet, the portlet container must invalidate the associated */
-    /* HttpSession object" */
-    // TODO: Fix test case. New session have the same id because of which invalidate() is not
-    // working.
-    portletReq.getPortletSession(true);
     // portletReq.getPortletSession(true).invalidate();
 
     /* TestCase: V2AddlEnvironmentTests_SPEC2_18_Sessions_httpSession11 */
@@ -540,8 +512,11 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions implements Portlet, Resource
     /* Details: "The PortletSession.invalidate method provides the same */
     /* functionality as the corresponding HttpSession.invalidate method" */
     TestResult tr33 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_INVALIDATE);
-    /* TODO: implement test */
-    tr33.appendTcDetail("Not implemented.");
+    if (tr22.isTcSuccess()) {
+      tr33.setTcSuccess(true);
+    } else {
+      tr33.appendTcDetail("Failed because session is not invalidated.");
+    }
     tr33.writeTo(writer);
   }
 

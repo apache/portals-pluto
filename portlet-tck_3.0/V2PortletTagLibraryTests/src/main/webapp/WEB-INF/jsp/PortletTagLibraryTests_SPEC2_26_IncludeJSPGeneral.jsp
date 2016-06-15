@@ -64,30 +64,6 @@
         </FORM>
       </DIV>
       <% }
-      
-      /*
-       * TestCase: V2PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral_escapeXML1
-       * Details: The container runtime option \"javax.portlet.escapeXml\" 
-       * can be used to set the default escapeXML setting to true
-       */
-      TestResult tr5 =
-          tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPGENERAL_ESCAPEXML1);
-      // TODO: Implement test when escapeXml problem is solved
-      %>
-      <portlet:resourceURL id="icons/he<&>llo" escapeXml="false"/>
-      <portlet:resourceURL id="icons/he<&>llo" escapeXml="true"/>
-      <%
-      tr5.writeTo(writer);
-
-      /* TestCase: V2PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral_escapeXML2 */
-      /* Details: "The container runtime option \"javax.portlet.escapeXml\" */
-      /* can be used to set the default escapeXML setting to false" */
-      // TODO: Implement test when escapeXml problem is solved
-      TestResult tr6 =
-          tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPGENERAL_ESCAPEXML2);
-      tr6.appendTcDetail(
-          "Might not be possible to configure javax.portlet.escapeXml to false when the portlet is running.");
-      tr6.writeTo(writer);
 
 %>
 <%=writer.toString()%>

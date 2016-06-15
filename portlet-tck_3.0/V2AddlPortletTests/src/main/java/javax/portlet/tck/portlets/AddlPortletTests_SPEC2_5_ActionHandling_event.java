@@ -28,6 +28,7 @@ import static javax.portlet.PortletSession.*;
 /**
  * This is the event processing portlet for the test cases. This portlet processes events, but does
  * not publish them. Events are published in the main portlet for the test cases.
+ * 
  * @author ahmed
  */
 public class AddlPortletTests_SPEC2_5_ActionHandling_event implements Portlet, EventPortlet {
@@ -60,7 +61,6 @@ public class AddlPortletTests_SPEC2_5_ActionHandling_event implements Portlet, E
         /* Details: "If the portlet throws an PortletException in */
         /* processAction, all operations on the ActionResponse, including set */
         /* events, must be ignored" */
-        // TODO: PortletException is not handled by pluto
         portletResp.setRenderParameter("tr3_action", "true");
         portletReq.getPortletSession().setAttribute(
             Constants.RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_ActionHandling_event_tr3",
@@ -74,7 +74,6 @@ public class AddlPortletTests_SPEC2_5_ActionHandling_event implements Portlet, E
         /* Details: "If the portlet throws a RuntimeException in */
         /* processAction, all operations on the ActionResponse, including set */
         /* events, must be ignored" */
-        // TODO: RuntimeException is not handled by pluto
         portletResp.setRenderParameter("tr4_action", "true");
         portletReq.getPortletSession().setAttribute(
             Constants.RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_ActionHandling_event_tr4",
@@ -113,7 +112,6 @@ public class AddlPortletTests_SPEC2_5_ActionHandling_event implements Portlet, E
     /* Details: "If the portlet throws an PortletException in */
     /* processAction, all operations on the ActionResponse, including set */
     /* events, must be ignored" */
-    // TODO: PortletException is not handled by pluto
     String tr3_success = (String) ps.getAttribute(
         RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_ActionHandling_event_tr3",
         APPLICATION_SCOPE);
@@ -134,14 +132,13 @@ public class AddlPortletTests_SPEC2_5_ActionHandling_event implements Portlet, E
     /* Details: "If the portlet throws a RuntimeException in */
     /* processAction, all operations on the ActionResponse, including set */
     /* events, must be ignored" */
-    // TODO: RuntimeException is not handled by pluto
     String tr4_success = (String) ps.getAttribute(
         RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_ActionHandling_event_tr4",
         APPLICATION_SCOPE);
     if (tr4_success != null && tr4_success.equals("true") && !this.tr4
         && portletReq.getParameter("tr4_action") == null) {
       TestResult tr3 =
-          tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_5_ACTIONHANDLING_EXCEPTION1);
+          tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_5_ACTIONHANDLING_EXCEPTION2);
       tr3.setTcSuccess(true);
       tr3.writeTo(writer);
     } else {

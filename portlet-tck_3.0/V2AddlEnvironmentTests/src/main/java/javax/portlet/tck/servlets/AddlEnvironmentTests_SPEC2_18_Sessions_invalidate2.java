@@ -24,6 +24,7 @@ import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
 import javax.portlet.tck.constants.*;
 
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_HTTPSESSION5;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_SETMAXINACTIVEINTERVAL;
 
@@ -63,7 +64,7 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions_invalidate2 extends HttpServ
     PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
     PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
     PortletSession portletSession = portletReq.getPortletSession();
-    HttpSession httpSession = request.getSession(false);
+    
 
     PrintWriter writer = ((MimeResponse) portletResp).getWriter();
 
@@ -75,11 +76,14 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions_invalidate2 extends HttpServ
     /* HttpSession object" */
     TestResult tr23 =
         tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_HTTPSESSION5);
+    portletSession.invalidate();
+    HttpSession httpSession = request.getSession();
     if(httpSession.isNew()){
       tr23.setTcSuccess(true);
     } else {
       tr23.appendTcDetail("Failed because session is not invalidated.");
     }
+    
     tr23.writeTo(writer);
     
   }

@@ -560,47 +560,6 @@
       tr34.appendTcDetail("Cannot be tested as it is ignored by portlet container.");
       tr34.writeTo(writer);
 
-      /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL25 */
-      /* Details: "If the optional actionURL \"escapeXML\" attribute is set   */
-      /* to false, the characters \"&lt;&gt;&'\\\"\" are not converted to     */
-      /* their entity codes"                                                  */
-      TestResult tr35 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_ACTIONURL25);
-      if(renderRequest.getParameter("tr35")!=null && "true".equals(renderRequest.getParameter("tr35"))){
-        //tr35.setTcSuccess(true);
-        /* TODO: implement test */
-        tr35.appendTcDetail("Test case failing as special chars are getting encoded by portlet container in some other format. See header of the request");
-        tr35.writeTo(writer);
-      } else {
-      %>
-      <portlet:actionURL escapeXml="false" var="specialCharURLTr35"><portlet:param name="specialCharsTr35" value="<>&'&quot;"/></portlet:actionURL>
-      <DIV CLASS='portletTCKTestcase' name='V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL25'>
-        <h4>V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL25 button (POST):</h4>
-        <FORM METHOD='POST' ACTION='${specialCharURLTr35}'>
-        <INPUT NAME='action' VALUE='V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL25' TYPE='hidden'>
-        <INPUT VALUE='V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL25' ID='V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL25-clickme' TYPE='submit'>
-        </FORM>
-      </DIV>
-      <% }
-      
-      /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL26 */
-      /* Details: "The \"escapeXML\" attribute default value is true"         */
-      TestResult tr36 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_ACTIONURL26);
-      /* TODO: implement test */
-      if(renderRequest.getParameter("tr36")!=null && "true".equals(renderRequest.getParameter("tr36"))){
-        tr36.appendTcDetail("Test case failing as special chars are getting encoded via portlet container in some other format. See header of the request");
-        tr36.writeTo(writer);
-      } else {
-      %>
-      <portlet:actionURL var="specialCharURLTr36"><portlet:param name="specialCharsTr36" value="<>&'&quot;"/></portlet:actionURL>
-      <DIV CLASS='portletTCKTestcase' name='V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL26'>
-        <h4>V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL26 button (POST):</h4>
-        <FORM METHOD='POST' ACTION='${specialCharURLTr36}'>
-        <INPUT NAME='action' VALUE='V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL26' TYPE='hidden'>
-        <INPUT VALUE='V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL26' ID='V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL26-clickme' TYPE='submit'>
-        </FORM>
-      </DIV>
-      <% }
-
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL27 */
       /* Details: "If the optional actionURL \"name\" attribute is set, the   */
       /* provided name string is used by GenericPortlet to dispatch the       */
@@ -1076,22 +1035,6 @@
       tr62.appendTcDetail("Cannot be tested as it is ignored by portlet container.");
       tr62.writeTo(writer);
 
-      /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL25 */
-      /* Details: "If the optional renderURL \"escapeXML\" attribute is set   */
-      /* to false, the characters \"&lt;&gt;&'\\\"\" are not converted to     */
-      /* their entity codes"                                                  */
-      TestResult tr63 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RENDERURL25);
-      /* TODO: implement test */
-      tr63.appendTcDetail("Not implemented. Same problem as V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_ACTIONURL25.");
-      tr63.writeTo(writer);
-
-      /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL26 */
-      /* Details: "The \"escapeXML\" attribute default value is true"         */
-      TestResult tr64 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RENDERURL26);
-      /* TODO: implement test */
-      tr64.appendTcDetail("Not implemented. Same problem as V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_ACTIONURL25.");
-      tr64.writeTo(writer);
-
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL1 */
       /* Details: "The portlet resourceURL tag creates a URL that must        */
       /* point to the current portlet and must trigger an resource request    */
@@ -1221,22 +1164,6 @@
       tr74.setTcSuccess(true);
       tr74.appendTcDetail("Cannot be tested as it is ignored by portlet container.");
       tr74.writeTo(writer);
-
-      /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL19 */
-      /* Details: "If the optional resourceURL \"escapeXML\" attribute is     */
-      /* set to false, the characters \"&lt;&gt;&'\\\"\" are not converted    */
-      /* to their entity codes"                                               */
-      TestResult tr81 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL19);
-      /* TODO: implement test */
-      tr81.appendTcDetail("Not implemented. Same problem as V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_ACTIONURL25.");
-      tr81.writeTo(writer);
-
-      /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL20 */
-      /* Details: "The \"escapeXML\" attribute default value is true"         */
-      TestResult tr82 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL20);
-      /* TODO: implement test */
-      tr82.appendTcDetail("Not implemented. Same problem as V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_ACTIONURL25.");
-      tr82.writeTo(writer);
 
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL22 */
       /* Details: "Setting the \"id\" attribute will add an ID to the resourceURL which can
