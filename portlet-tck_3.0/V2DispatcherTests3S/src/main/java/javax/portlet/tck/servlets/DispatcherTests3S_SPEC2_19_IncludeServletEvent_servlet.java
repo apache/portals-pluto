@@ -21,10 +21,8 @@ package javax.portlet.tck.servlets;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
 import java.io.IOException;
-import java.io.StringWriter;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -62,10 +60,6 @@ public class DispatcherTests3S_SPEC2_19_IncludeServletEvent_servlet extends Http
       request.getAttribute("javax.portlet.config");
       Thread.currentThread().getId();
       portletReq.getAttribute(THREADID_ATTR);
-
-      new StringWriter();
-
-      new JSR286DispatcherTestCaseDetails();
 
       // Create result objects for the tests
 

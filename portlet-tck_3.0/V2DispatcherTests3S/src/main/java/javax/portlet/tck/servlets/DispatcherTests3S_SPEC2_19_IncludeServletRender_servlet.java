@@ -22,9 +22,7 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
 import java.io.IOException;
 
-import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -59,12 +57,10 @@ public class DispatcherTests3S_SPEC2_19_IncludeServletRender_servlet extends Htt
          IOException {
 
       PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
-      PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
+      request.getAttribute("javax.portlet.response");
       request.getAttribute("javax.portlet.config");
       Thread.currentThread().getId();
       portletReq.getAttribute(THREADID_ATTR);
-
-      ((MimeResponse) portletResp).getWriter();
 
       new JSR286DispatcherTestCaseDetails();
 

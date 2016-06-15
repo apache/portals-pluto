@@ -18,14 +18,15 @@
 
 package javax.portlet.tck.servlets;
 
-import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRENDER_DISPATCH4;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.portlet.MimeResponse;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails;
+import javax.portlet.PortletURL;
+import javax.portlet.tck.beans.TestLink;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -58,17 +59,15 @@ public class DispatcherTests3S_SPEC2_19_ForwardServletRender_servlet extends Htt
    protected void processTCKReq(HttpServletRequest request, HttpServletResponse response) throws ServletException,
          IOException {
 
-      PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
       PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
-      request.getAttribute("javax.portlet.config");
-      Thread.currentThread().getId();
-      portletReq.getAttribute(THREADID_ATTR);
 
-      ((MimeResponse) portletResp).getWriter();
-
-      new JSR286DispatcherTestCaseDetails();
+      PrintWriter writer = ((MimeResponse)portletResp).getWriter();
 
       // Create result objects for the tests
+      
+      PortletURL purl = ((MimeResponse) portletResp).createRenderURL();
+      TestLink tl = new TestLink(V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRENDER_DISPATCH4, purl);
+      tl.writeTo(writer);
 
    }
 }

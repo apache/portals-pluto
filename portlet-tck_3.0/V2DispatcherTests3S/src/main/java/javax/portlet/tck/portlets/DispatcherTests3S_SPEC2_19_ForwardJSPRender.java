@@ -18,10 +18,12 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS3S_SPEC2_19_FORWARDJSPRENDER_DISPATCH4;
 import static javax.portlet.tck.constants.Constants.JSP_PREFIX;
 import static javax.portlet.tck.constants.Constants.JSP_SUFFIX;
 import static javax.portlet.tck.constants.Constants.QUERY_STRING;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
 import java.io.IOException;
@@ -44,6 +46,7 @@ import javax.portlet.ResourceServingPortlet;
 import javax.portlet.tck.beans.CompareUtils;
 import javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.constants.Constants;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined in the
@@ -96,35 +99,54 @@ public class DispatcherTests3S_SPEC2_19_ForwardJSPRender implements Portlet, Res
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
+      String msg = (String) portletReq.getPortletSession().getAttribute(
+            RESULT_ATTR_PREFIX + V2DISPATCHERTESTS3S_SPEC2_19_FORWARDJSPRENDER_DISPATCH4, APPLICATION_SCOPE);
 
-      Map<String, String[]> oldmap = new HashMap<String, String[]>();
-      for (String name : portletReq.getParameterMap().keySet()) {
-         String[] vals = portletReq.getParameterValues(name);
-         vals = (vals == null) ? null : vals.clone();
-         oldmap.put(name, vals);
+      if (msg != null) {
+
+         PrintWriter writer = portletResp.getWriter();
+         writer.write(msg);
+         portletReq.getPortletSession().removeAttribute(
+               RESULT_ATTR_PREFIX + V2DISPATCHERTESTS3S_SPEC2_19_FORWARDJSPRENDER_DISPATCH4, APPLICATION_SCOPE);
+
+         
+      } else {
+
+         StringWriter writer = new StringWriter();
+
+         Map<String, String[]> oldmap = new HashMap<String, String[]>();
+         for (String name : portletReq.getParameterMap().keySet()) {
+            String[] vals = portletReq.getParameterValues(name);
+            vals = (vals == null) ? null : vals.clone();
+            oldmap.put(name, vals);
+         }
+
+         // Now do the actual dispatch
+         String target = JSP_PREFIX + "DispatcherTests3S_SPEC2_19_ForwardJSPRender" + JSP_SUFFIX + "?" + QUERY_STRING;
+         PortletRequestDispatcher rd = portletConfig.getPortletContext().getRequestDispatcher(target);
+         rd.forward(portletReq, portletResp);
+
+         Map<String, String[]> newmap = new HashMap<String, String[]>();
+         for (String name : portletReq.getParameterMap().keySet()) {
+            String[] vals = portletReq.getParameterValues(name);
+            vals = (vals == null) ? null : vals.clone();
+            newmap.put(name, vals);
+         }
+
+         JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();
+
+         /* TestCase: DispatcherTests3S_SPEC2_19_ForwardJSPRender_dispatch4 */
+         /* Details: "The parameters associated with a request dispatcher are */
+         /* scoped only for the duration of the include or forward call" */
+         TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERTESTS3S_SPEC2_19_FORWARDJSPRENDER_DISPATCH4);
+         CompareUtils.mapsEqual("Before dispatch", oldmap, "After dispatch", newmap, tr0);
+         tr0.writeTo(writer);
+
+         portletReq.getPortletSession().setAttribute(
+               Constants.RESULT_ATTR_PREFIX + V2DISPATCHERTESTS3S_SPEC2_19_FORWARDJSPRENDER_DISPATCH4,
+               writer.toString(), APPLICATION_SCOPE);
+
       }
-
-      // Now do the actual dispatch
-      String target = JSP_PREFIX + "DispatcherTests3S_SPEC2_19_ForwardJSPRender" + JSP_SUFFIX + "?" + QUERY_STRING;
-      PortletRequestDispatcher rd = portletConfig.getPortletContext().getRequestDispatcher(target);
-      rd.forward(portletReq, portletResp);
-
-      Map<String, String[]> newmap = new HashMap<String, String[]>();
-      for (String name : portletReq.getParameterMap().keySet()) {
-         String[] vals = portletReq.getParameterValues(name);
-         vals = (vals == null) ? null : vals.clone();
-         newmap.put(name, vals);
-      }
-
-      JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();
-
-      /* TestCase: DispatcherTests3S_SPEC2_19_ForwardJSPRender_dispatch4 */
-      /* Details: "The parameters associated with a request dispatcher are */
-      /* scoped only for the duration of the include or forward call" */
-      TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERTESTS3S_SPEC2_19_FORWARDJSPRENDER_DISPATCH4);
-      CompareUtils.mapsEqual("Before dispatch", oldmap, "After dispatch", newmap, tr0);
-      tr0.writeTo(writer);
 
    }
 
