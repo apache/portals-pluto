@@ -44,6 +44,13 @@
          <version>${project.version}</version>
          <scope>compile</scope>
       </dependency>
+      
+      <!-- for JSP editing purposes -->
+      <dependency>
+         <groupId>org.apache.portals.pluto</groupId>
+         <artifactId>pluto-taglib</artifactId>
+         <scope>provided</scope>
+      </dependency>
    </dependencies>
 
    <properties>

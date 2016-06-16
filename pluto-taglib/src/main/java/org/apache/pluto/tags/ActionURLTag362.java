@@ -61,7 +61,7 @@ public class ActionURLTag362 extends ActionURLTag286 {
 
       MimeResponse resp = (MimeResponse) obj;
       ActionURL aurl = null;
-      if (getCopyCurrentRenderParameters() == true) {
+      if (isCopyCurrentRenderParameters() == true) {
          aurl = resp.createActionURL(Copy.ALL);
       } else {
          aurl = resp.createActionURL(Copy.NONE);

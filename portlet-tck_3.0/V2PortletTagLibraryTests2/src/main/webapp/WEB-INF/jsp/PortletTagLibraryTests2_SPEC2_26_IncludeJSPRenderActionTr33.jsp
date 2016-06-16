@@ -12,4 +12,47 @@
 <%@ page import="static javax.portlet.tck.constants.Constants.*" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*" %>
 <portlet:defineObjects/>
-<p style="display:none;"><portlet:actionURL copyCurrentRenderParameters="invalid"/></p>
+<!-- p style="display:none;"  -->
+<p><portlet:resourceURL cacheability="FULL"/>/></p>
+<p><portlet:resourceURL cacheability="PORTLET"/>/></p>
+<p><portlet:resourceURL cacheability="PAGE"/>/></p>
+
+<c:catch var ="exp">
+   <p><portlet:resourceURL cacheability="BAD!"/></p>
+</c:catch>
+<c:if test = "${exp != null}">
+   <p style='color:blue;'>Exception:<br>${exp}</p>
+</c:if>
+
+<p><portlet:actionURL secure="false"/></p>
+<p><portlet:actionURL secure="true"/></p>
+
+<c:catch var ="exp">
+   <p><portlet:actionURL secure="invalid"/></p>
+</c:catch>
+<c:if test = "${exp != null}">
+   <p style='color:blue;'>Exception:<br>${exp}</p>
+</c:if>
+
+<p><portlet:actionURL escapeXml="false"/></p>
+<p><portlet:actionURL escapeXml="true"/></p>
+
+<c:catch var ="exp">
+   <p><portlet:actionURL escapeXml="invalid"/></p>
+</c:catch>
+<c:if test = "${exp != null}">
+   <p style='color:blue;'>Exception:<br>${exp}</p>
+</c:if>
+
+<p><portlet:actionURL copyCurrentRenderParameters="false"/></p>
+<p><portlet:actionURL copyCurrentRenderParameters="true"/></p>
+
+<c:catch var ="exp">
+   <p><portlet:actionURL copyCurrentRenderParameters="invalid"/></p>
+</c:catch>
+<c:if test = "${exp != null}">
+   <p style='color:blue;'>Exception:<br>${exp}</p>
+</c:if>
+
+
+

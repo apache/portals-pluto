@@ -44,14 +44,14 @@ import javax.servlet.jsp.tagext.VariableInfo;
 public abstract class BaseURLTag extends TagSupport {
    private static final long serialVersionUID = -267464414827109840L;
 
-   protected String secure = null;
+   private String secure = null;
 	
-	protected Boolean secureBoolean = null;
+	private Boolean secureBoolean = null;
 	
 	protected String var = null;
 	
 	//Attention: for JSR 286 Tags the default value is true
-	protected Boolean escapeXml = false;
+	private String escapeXml = null;
 		
 	protected Map<String, List<String>> parametersMap = 
 		new HashMap<String, List<String>>();
@@ -72,6 +72,13 @@ public abstract class BaseURLTag extends TagSupport {
       
       BaseURL url = getUrl();
       
+      if (secure != null && !secure.equalsIgnoreCase("true") && !secure.equalsIgnoreCase("false")) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Invalid secure option: ").append(secure);
+         txt.append(", valid options: true, false");
+         throw new JspException(txt.toString());
+      }
+
       if(url == null){
          throw new IllegalStateException("internal error: url not set");
       }
@@ -82,7 +89,7 @@ public abstract class BaseURLTag extends TagSupport {
       
       if (secure != null) {
             try {                   
-                url.setSecure(getSecureBoolean());                    
+                url.setSecure(isSecure());                    
             } catch (PortletSecurityException e) {
                 // ignore exception as Pluto doesn't support setSecure
                 // throw new JspException(e);                    
@@ -96,6 +103,16 @@ public abstract class BaseURLTag extends TagSupport {
 	@Override
 	public int doStartTag() throws JspException{
 		handleSecureFlag();
+		
+      if (escapeXml != null && 
+            !escapeXml.equalsIgnoreCase("true") && 
+            !escapeXml.equalsIgnoreCase("false")) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Invalid escapeXml option: ").append(escapeXml);
+         txt.append(", valid options: true, false");
+         throw new JspException(txt.toString());
+      }
+		
 		return EVAL_BODY_INCLUDE;
 	}
 	
@@ -121,7 +138,7 @@ public abstract class BaseURLTag extends TagSupport {
 		//	properly encoding urls to allow non-cookie enabled sessions - PLUTO-252 
 		String urlString = response.encodeURL(url.toString());
 
- 		if(escapeXml)
+ 		if(Boolean.parseBoolean(escapeXml))
  		{
 			 urlString = doEscapeXml(urlString);
 		}
@@ -172,10 +189,20 @@ public abstract class BaseURLTag extends TagSupport {
     
     
     /**
+     * Sets secure property to boolean value of the string.
+     * @param secure
+     * @return void
+     */
+    public void setSecure(String secure) {
+        this.secure = secure;
+        this.secureBoolean = new Boolean(secure);
+    }
+
+   /**
      * Returns secure property as Boolean.
      * @return boolean
      */
-    public boolean getSecureBoolean() {
+    private boolean isSecure() {
     	if(this.secureBoolean != null){
     		return this.secureBoolean.booleanValue();
     	}
@@ -195,32 +222,20 @@ public abstract class BaseURLTag extends TagSupport {
     
     
     /**
-     * Returns escapeXml property.
-     * @return Boolean
-     */
-    public Boolean getEscapeXml() {
-        return escapeXml;
-    }
-    
-    
-    /**
-     * Sets secure property to boolean value of the string.
-     * @param secure
-     * @return void
-     */
-    public void setSecure(String secure) {
-        this.secure = secure;
-        this.secureBoolean = new Boolean(secure);
-    }
-     
-    
-    /**
      * Sets the var property.
      * @param var The var to set
      * @return void
      */
     public void setVar(String var) {
         this.var = var;
+    }
+
+   /**
+     * Returns escapeXml property.
+     * @return Boolean
+     */
+    public String getEscapeXml() {
+        return escapeXml;
     }
     
     
@@ -229,12 +244,11 @@ public abstract class BaseURLTag extends TagSupport {
      * @param escapeXml
      * @return void
      */
-    public void setEscapeXml(Boolean escapeXml) {
+    public void setEscapeXml(String escapeXml) {
         this.escapeXml = escapeXml;
     }
-    
-    
-    /**
+
+   /**
      * Adds a key,value pair to the parameter map. 
      * @param key String
      * @param value String
