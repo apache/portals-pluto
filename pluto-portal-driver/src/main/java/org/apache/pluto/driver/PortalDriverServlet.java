@@ -309,7 +309,8 @@ public class PortalDriverServlet extends HttpServlet {
                // handle markup for document head section
                markup.append(hd.getHeadSectionMarkup()).append("\n");
 
-               // add the cookies to the response
+               // add the cookies & http headers to the response
+               
                List<Cookie> cookies = hd.getCookies();
                for (Cookie c : cookies) {
                   resp.addCookie(c);

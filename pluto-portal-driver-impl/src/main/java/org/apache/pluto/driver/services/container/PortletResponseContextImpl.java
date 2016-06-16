@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.MimeResponse;
@@ -81,7 +82,7 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
    private final static String VALID_HEADER_CHARS = "^[a-zA-Z0-9!#$%&'*+-.^_`|~]+$";
    
    // holder for the header data
-   protected HeaderData             headerData        = new HeaderData();
+   protected final HeaderData headerData = new HeaderData();
    
    private final PortletRequestContext requestContext;
 
@@ -156,7 +157,12 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
 
    public void addProperty(Cookie cookie) {
       if (!isClosed() && isSetPropsAllowed) {
-         headerData.addCookie(cookie);
+         if (lifecycle.matches(RESOURCE_PHASE)) {
+            // apply headers directly to response
+            containerResponse.addCookie(cookie);
+         } else {
+            headerData.addCookie(cookie);
+         }
       }
    }
 
@@ -198,7 +204,43 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
             LOG.warn(txt.toString());
          } else {
             if (!isClosed() && isSetPropsAllowed) {
-               headerData.addHttpHeader(key, value);
+               if (lifecycle.matches(RESOURCE_PHASE)) {
+                  // apply headers directly to response
+                  containerResponse.addHeader(key, value);
+               } else {
+                  headerData.addHttpHeader(key, value);
+               }
+            }
+         }
+      }
+   }
+
+   public void setProperty(String key, String value) {
+      if (value == null) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Ignoring attempt to add property with null value. Key: ").append(key);
+         LOG.warn(txt.toString());
+      } else if (!key.matches(VALID_HEADER_CHARS)) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Ignoring attempt to add key containing disallowed characters. Key: ").append(key);
+         txt.append(", value: ").append(value);
+         LOG.warn(txt.toString());
+      } else {
+         // header names are case insensitive. allow setting all headers 
+         // during the resource phase.
+         if (!lifecycle.matches(RESOURCE_PHASE) && disallowedHeaders.contains(key.toUpperCase())) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("Ignoring disallowed HTTP header: ").append(key);
+            txt.append(" with value: ").append(value);
+            LOG.warn(txt.toString());
+         } else {
+            if (!isClosed() && isSetPropsAllowed) {
+               if (lifecycle.matches(RESOURCE_PHASE)) {
+                  // apply headers directly to response
+                  containerResponse.addHeader(key, value);
+               } else {
+                  headerData.setHttpHeader(key, value);
+               }
             }
          }
       }
@@ -237,6 +279,28 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
       }
       return names;
    }
+   
+   /**
+    * to be called after request has been successfully processed and before 
+    * response has been committed.
+    */
+   @Override
+   public void processHttpHeaders() {
+      
+      // add the cookies to the response
+      for (Cookie c : headerData.getCookies()) {
+         containerResponse.addCookie(c);
+      }
+
+      // Add the HTTP headers to the response
+      Map<String, List<String>> headers = headerData.getHttpHeaders();
+      for (String name : headers.keySet()) {
+         for (String val : headers.get(name)) {
+            containerResponse.addHeader(name, val);
+         }
+      }
+
+   }
 
    public void close() {
       closed = true;
@@ -273,32 +337,6 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
       servletRequest = null;
       servletResponse = null;
       window = null;
-   }
-
-   public void setProperty(String key, String value) {
-      if (value == null) {
-         StringBuilder txt = new StringBuilder(128);
-         txt.append("Ignoring attempt to add property with null value. Key: ").append(key);
-         LOG.warn(txt.toString());
-      } else if (!key.matches(VALID_HEADER_CHARS)) {
-         StringBuilder txt = new StringBuilder(128);
-         txt.append("Ignoring attempt to add key containing disallowed characters. Key: ").append(key);
-         txt.append(", value: ").append(value);
-         LOG.warn(txt.toString());
-      } else {
-         // header names are case insensitive. allow setting all headers 
-         // during the resource phase.
-         if (!lifecycle.matches(RESOURCE_PHASE) && disallowedHeaders.contains(key.toUpperCase())) {
-            StringBuilder txt = new StringBuilder(128);
-            txt.append("Ignoring disallowed HTTP header: ").append(key);
-            txt.append(" with value: ").append(value);
-            LOG.warn(txt.toString());
-         } else {
-            if (!isClosed() && isSetPropsAllowed) {
-               headerData.setHttpHeader(key, value);
-            }
-         }
-      }
    }
 
    public ResourceURLProvider getResourceURLProvider() {

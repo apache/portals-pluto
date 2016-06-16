@@ -339,6 +339,9 @@ public class PortletContainerImpl implements PortletContainer
             debugWithName(logtxt + " processed for: "
                     + portletWindow.getPortletDefinition().getPortletName());
 
+            // add http headers to response
+            responseContext.processHttpHeaders();
+            
             // Mark portlet interaction is completed: backend implementation can flush response state now
             responseContext.close();
 
@@ -514,6 +517,7 @@ public class PortletContainerImpl implements PortletContainer
 
         PortletRequestContext requestContext = rcService.getPortletEventRequestContext(this, request, response, portletWindow);
         PortletEventResponseContext responseContext = rcService.getPortletEventResponseContext(this, request, response, portletWindow, requestContext);
+        responseContext.setPropsAllowed(true);
         EventRequest portletRequest = envService.createEventRequest(requestContext, responseContext, event);
         EventResponse portletResponse = envService.createEventResponse(responseContext);
 
@@ -526,6 +530,9 @@ public class PortletContainerImpl implements PortletContainer
 
             debugWithName("Portlet event processed for: "
                     + portletWindow.getPortletDefinition().getPortletName());
+
+            // add http headers to response
+            responseContext.processHttpHeaders();
 
             // Mark portlet interaction is completed: backend implementation can flush response state now
             responseContext.close();

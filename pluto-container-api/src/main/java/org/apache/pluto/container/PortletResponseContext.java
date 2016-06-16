@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.PortletURLProvider.TYPE;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
@@ -58,6 +57,7 @@ public interface PortletResponseContext
     String getProperty(String key);
     Collection<String> getPropertyValues(String name);
     Collection<String> getPropertyNames();
+    void processHttpHeaders();
 
     /**
      * Closing the response context means processing has been completed and

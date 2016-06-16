@@ -79,9 +79,23 @@ public class AddlResponseTests_SPEC2_12_Action implements Portlet, ResourceServi
         /* Details: "Cookies set during the Action phase should be available */
         /* to the portlet during the Render phase" */
         Cookie c = new Cookie("tr0_cookie", "true");
-        c.setPath(portletReq.getContextPath());
+        
+        // can't add the path like this. The portletReq.getContextPath method 
+        // returns the path to the portlet servlet, NOT to the actual portal servlet
+        // that sets the 'Set-Cookie' header in the HTTP response to the client.
+        // I can explain more if you want to come by my office.
+        
+        // c.setPath(portletReq.getContextPath());
+        
         c.setMaxAge(100);
-        c.setDomain("localhost");
+        
+        // You can set the domain for your own testing, but the domain should not be
+        // specified in the final code, since the tck must be able to run against any 
+        // server, not just against a server located on the same machine. Also, I understand
+        // that the domain 'localhost' does not work reliably on all browsers.
+        
+        // c.setDomain("localhost");
+        
         c.setVersion(0);
         portletResp.addProperty(c);
         portletResp.setRenderParameter("tr0", "true");
@@ -181,16 +195,24 @@ public class AddlResponseTests_SPEC2_12_Action implements Portlet, ResourceServi
     /* to the portlet during the Render phase" */
     if (portletReq.getParameter("tr0") != null && portletReq.getParameter("tr0").equals("true")) {
       Cookie[] cookies = portletReq.getCookies();
-      System.out.println(cookies.length);
+      
+      StringBuilder txt = new StringBuilder(128);
+      txt.append("<p>Debug info:");
+      txt.append("<br>");
+      
+      txt.append("# Cookies: ").append(cookies.length).append("<br>");
       TestResult tr0 = tcd.getTestResultFailed(V2ADDLRESPONSETESTS_SPEC2_12_ACTION_COOKIE1);
       for (Cookie c : cookies) {
-        System.out.println(c.getName() + " " + c.getValue());
+         txt.append("Name: ").append(c.getName());
+         txt.append(", Value: ").append(c.getValue()).append("<br>");
         if (c.getName().equals("tr0_cookie") && c.getValue().equals("true")) {
-          System.out.println(c.getName() + " " + c.getValue());
+           txt.append("<br>").append("Found my cookie!").append("<br>");
           tr0.setTcSuccess(true);
         }
       }
       tr0.writeTo(writer);
+      txt.append("</p>");
+      writer.append(txt.toString());
     } else {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
