@@ -33,6 +33,13 @@
       <portlet-info>
          <title>AddlResponseTests_SPEC2_12_Action</title>
       </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:AddlResponseTests_SPEC2_12_Action</qname>
+      </supported-publishing-event>
+      <supported-processing-event>
+         <qname>tck:AddlResponseTests_SPEC2_12_Action</qname>
+      </supported-processing-event>
+      <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -130,6 +137,11 @@
 
    <event-definition>
       <qname>tck:AddlResponseTests_SPEC2_12_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+   
+   <event-definition>
+      <qname>tck:AddlResponseTests_SPEC2_12_Action</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 

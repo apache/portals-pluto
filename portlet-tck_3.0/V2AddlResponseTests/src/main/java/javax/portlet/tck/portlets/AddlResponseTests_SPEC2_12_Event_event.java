@@ -32,6 +32,7 @@ import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.constants.Constants.*;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
 import static javax.portlet.PortletSession.*;
+import static javax.portlet.ResourceURL.PAGE;
 
 /**
  * This is the event processing portlet for the test cases. This portlet processes events, 
@@ -62,7 +63,33 @@ public class AddlResponseTests_SPEC2_12_Event_event implements Portlet, EventPor
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion serveResource - ERROR!!");
+     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
+     PrintWriter writer = portletResp.getWriter();
+     /* TestCase: V2AddlResponseTests_SPEC2_12_Event_cookie6                 */
+     /* Details: "Cookies set during the Event phase should be available     */
+     /* to the portlet during the Resource phase"                            */
+     if (portletReq.getParameter("tr1") != null && portletReq.getParameter("tr1").equals("true")) {
+       Cookie[] cookies = portletReq.getCookies();
+
+       StringBuilder txt = new StringBuilder(128);
+       txt.append("<p>Debug info:");
+       txt.append("<br>");
+       txt.append("# Cookies: ").append(cookies.length).append("<br>");
+       TestResult tr1 = tcd.getTestResultFailed(V2ADDLRESPONSETESTS_SPEC2_12_EVENT_COOKIE6);
+       for (Cookie c : cookies) {
+         txt.append("Name: ").append(c.getName());
+         txt.append(", Value: ").append(c.getValue()).append("<br>");
+         if (c.getName().equals("event_tr1_cookie") && c.getValue().equals("true")) {
+           txt.append("<br>").append("Found my cookie!").append("<br>");
+           c.setMaxAge(0);
+           c.setValue("");
+           tr1.setTcSuccess(true);
+         }
+       }
+       tr1.writeTo(writer);
+       txt.append("</p>");
+       writer.append(txt.toString());
+     }
    }
 
    @Override
@@ -85,26 +112,57 @@ public class AddlResponseTests_SPEC2_12_Event_event implements Portlet, EventPor
       /* TestCase: V2AddlResponseTests_SPEC2_12_Event_cookie5                 */
       /* Details: "Cookies set during the Event phase should be available     */
       /* to the portlet during the Render phase"                              */
-      TestResult tr0 = tcd.getTestResultFailed(V2ADDLRESPONSETESTS_SPEC2_12_EVENT_COOKIE5);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
+      {
+        Cookie c = new Cookie("event_tr0_cookie", "true");
+        c.setMaxAge(100);
+        c.setPath("/pluto/portal/V2AddlResponseTests");
+        portletResp.addProperty(c);
+        portletResp.setRenderParameter("tr0", "true");
+      }
 
       /* TestCase: V2AddlResponseTests_SPEC2_12_Event_cookie6                 */
       /* Details: "Cookies set during the Event phase should be available     */
       /* to the portlet during the Resource phase"                            */
-      TestResult tr1 = tcd.getTestResultFailed(V2ADDLRESPONSETESTS_SPEC2_12_EVENT_COOKIE6);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
-      tr1.writeTo(writer);
+      {
+        Cookie c = new Cookie("event_tr1_cookie", "true");
+        c.setMaxAge(100);
+        c.setPath("/pluto/portal/V2AddlResponseTests");
+        portletResp.addProperty(c);
+        portletResp.setRenderParameter("tr1", "true");
+      }
 
       /* TestCase: V2AddlResponseTests_SPEC2_12_Event_cookie7                 */
       /* Details: "Cookies set during the Event phase should be available     */
       /* to the portlet during a subsequent request triggered by a URL"       */
-      TestResult tr2 = tcd.getTestResultFailed(V2ADDLRESPONSETESTS_SPEC2_12_EVENT_COOKIE7);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
-      tr2.writeTo(writer);
+      if (portletReq.getParameter("tr2") != null && portletReq.getParameter("tr2").equals("true")) {
+        Cookie[] cookies = portletReq.getCookies();
+
+        StringBuilder txt = new StringBuilder(128);
+        txt.append("<p>Debug info:");
+        txt.append("<br>");
+
+        txt.append("# Cookies: ").append(cookies.length).append("<br>");
+        TestResult tr2 = tcd.getTestResultFailed(V2ADDLRESPONSETESTS_SPEC2_12_EVENT_COOKIE7);
+        for (Cookie c : cookies) {
+          txt.append("Name: ").append(c.getName());
+          txt.append(", Value: ").append(c.getValue()).append("<br>");
+          if (c.getName().equals("event_tr2_cookie") && c.getValue().equals("true")) {
+            txt.append("<br>").append("Found my cookie!").append("<br>");
+            c.setMaxAge(0);
+            c.setValue("");
+            tr2.setTcSuccess(true);
+          }
+        }
+        tr2.writeTo(writer);
+        txt.append("</p>");
+        writer.append(txt.toString());
+      } else {
+        Cookie c = new Cookie("event_tr2_cookie", "true");
+        c.setMaxAge(100);
+        c.setPath("/pluto/portal/V2AddlResponseTests");
+        portletResp.addProperty(c);
+        portletResp.setRenderParameter("tr2", "true");
+      }
 
       portletReq.getPortletSession().setAttribute(
                    Constants.RESULT_ATTR_PREFIX + "AddlResponseTests_SPEC2_12_Event",
@@ -117,6 +175,8 @@ public class AddlResponseTests_SPEC2_12_Event_event implements Portlet, EventPor
          throws PortletException, IOException {
       
       LOGGER.entering(LOG_CLASS, "event companion render");
+      
+      JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
 
       portletResp.setContentType("text/html");
       PrintWriter writer = portletResp.getWriter();
@@ -127,7 +187,50 @@ public class AddlResponseTests_SPEC2_12_Event_event implements Portlet, EventPor
             .getAttribute(RESULT_ATTR_PREFIX + "AddlResponseTests_SPEC2_12_Event", APPLICATION_SCOPE);
       msg = (msg==null) ? "Not ready. click test case link." : msg;
       writer.write("<p>" + msg + "</p>\n");
+      
+      if (portletReq.getParameter("tr0") != null && portletReq.getParameter("tr0").equals("true")) {
+        Cookie[] cookies = portletReq.getCookies();
 
+        StringBuilder txt = new StringBuilder(128);
+        txt.append("<p>Debug info:");
+        txt.append("<br>");
+
+        txt.append("# Cookies: ").append(cookies.length).append("<br>");
+        TestResult tr0 = tcd.getTestResultFailed(V2ADDLRESPONSETESTS_SPEC2_12_EVENT_COOKIE5);
+        for (Cookie c : cookies) {
+          txt.append("Name: ").append(c.getName());
+          txt.append(", Value: ").append(c.getValue()).append("<br>");
+          if (c.getName().equals("event_tr0_cookie") && c.getValue().equals("true")) {
+            txt.append("<br>").append("Found my cookie!").append("<br>");
+            c.setMaxAge(0);
+            c.setValue("");
+            tr0.setTcSuccess(true);
+          }
+        }
+        tr0.writeTo(writer);
+        txt.append("</p>");
+        writer.append(txt.toString());
+      }
+
+      if(portletReq.getParameter("tr1")!=null && portletReq.getParameter("tr1").equals("true")){
+        writer.write("<div id=\"AddlResponseTests_SPEC2_11_Event\">no resource output.</div>\n");
+        ResourceURL resurl = portletResp.createResourceURL();
+        resurl.setCacheability(PAGE);
+        writer.write("<script>\n");
+        writer.write("(function () {\n");
+        writer.write("   var xhr = new XMLHttpRequest();\n");
+        writer.write("   xhr.onreadystatechange=function() {\n");
+        writer.write("      if (xhr.readyState==4 && xhr.status==200) {\n");
+        writer.write(
+            "         document.getElementById(\"AddlResponseTests_SPEC2_11_Event\").innerHTML=xhr.responseText;\n");
+        writer.write("      }\n");
+        writer.write("   };\n");
+        writer.write("   xhr.open(\"GET\",\"" + resurl.toString() + "\",true);\n");
+        writer.write("   xhr.send();\n");
+        writer.write("})();\n");
+        writer.write("</script>\n");
+      }
+      
    }
 
 }

@@ -71,7 +71,7 @@ public class AddlResponseTests_SPEC2_12_Event implements Portlet, ResourceServin
       portletReq.setAttribute(THREADID_ATTR, tid);
 
       StringWriter writer = new StringWriter();
-
+      portletResp.setRenderParameter("tr2", "true");
       QName eventQName = new QName(TCKNAMESPACE,
              "AddlResponseTests_SPEC2_12_Event");
       portletResp.setEvent(eventQName, "Hi!");
@@ -122,11 +122,16 @@ public class AddlResponseTests_SPEC2_12_Event implements Portlet, ResourceServin
       /* TestCase: V2AddlResponseTests_SPEC2_12_Event_cookie7                 */
       /* Details: "Cookies set during the Event phase should be available     */
       /* to the portlet during a subsequent request triggered by a URL"       */
-      {
+      if(portletReq.getParameter("tr2")!=null && portletReq.getParameter("tr2").equals("true")){
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Event_cookie7", aurl);
          tb.writeTo(writer);
+      } else {
+        PortletURL aurl = portletResp.createActionURL();
+        aurl.setParameters(portletReq.getPrivateParameterMap());
+        TestSetupLink tb = new TestSetupLink("V2AddlResponseTests_SPEC2_12_Event_cookie7", aurl);
+        tb.writeTo(writer);
       }
 
    }
