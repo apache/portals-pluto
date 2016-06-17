@@ -9,10 +9,8 @@
 <%@ page import="java.io.StringWriter" %>
 <%@ page import="javax.portlet.PortletRequest" %>
 <%@ page import="javax.portlet.PortletResponse" %>
-<%@ page import="javax.portlet.PortletConfig" %>
 <%@ page import="javax.portlet.tck.beans.JSR286SpecTestCaseDetails" %>
 <%@ page import="javax.portlet.tck.beans.TestResult" %>
-<%@ page import="javax.portlet.tck.constants.Constants" %>
 
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPGENERAL_DEFINEOBJECTS1" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPGENERAL_NAMESPACE" %>

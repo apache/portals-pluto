@@ -14,7 +14,6 @@
 <%@ page import="javax.portlet.tck.beans.JSR286SpecTestCaseDetails" %>
 <%@ page import="javax.portlet.tck.beans.TestResult" %>
 <%@ page import="javax.portlet.tck.beans.TestSetupLink" %>
-<%@ page import="javax.portlet.tck.constants.Constants" %>
 
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_DEFINEOBJECTSRENDER1" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_DEFINEOBJECTSRENDER2" %>

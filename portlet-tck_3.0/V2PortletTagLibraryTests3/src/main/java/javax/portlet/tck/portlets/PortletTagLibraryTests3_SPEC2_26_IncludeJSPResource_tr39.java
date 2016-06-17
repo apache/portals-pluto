@@ -15,10 +15,25 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import javax.portlet.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.ResourceURL.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.GenericPortlet;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
+
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.tck.constants.Constants.JSP_PREFIX;
+import static javax.portlet.tck.constants.Constants.JSP_SUFFIX;
+import static javax.portlet.tck.constants.Constants.QUERY_STRING;
+import static javax.portlet.ResourceURL.FULL;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
