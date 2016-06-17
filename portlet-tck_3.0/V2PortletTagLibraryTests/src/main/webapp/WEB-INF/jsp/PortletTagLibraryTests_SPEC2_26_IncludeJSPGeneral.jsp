@@ -2,17 +2,24 @@
   - Author(s): ahmed
   --%>
 <%@ page session="false" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0"  prefix="portlet" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="javax.portlet.PortletException" %>
-<%@ page import="java.io.*,java.util.*,java.util.logging.*" %>
-<%@ page import="static java.util.logging.Logger.*" %>
-<%@ page import="javax.portlet.*,javax.portlet.filter.*" %>
-<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
-<%@ page import="javax.portlet.tck.beans.*,javax.portlet.tck.constants.*" %>
-<%@ page import="static javax.portlet.tck.constants.Constants.*" %>
-<%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*" %>
+
+<%@ page import="java.io.StringWriter" %>
+<%@ page import="javax.portlet.PortletRequest" %>
+<%@ page import="javax.portlet.PortletResponse" %>
+<%@ page import="javax.portlet.PortletConfig" %>
+<%@ page import="javax.portlet.tck.beans.JSR286SpecTestCaseDetails" %>
+<%@ page import="javax.portlet.tck.beans.TestResult" %>
+<%@ page import="javax.portlet.tck.constants.Constants" %>
+
+<%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPGENERAL_DEFINEOBJECTS1" %>
+<%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPGENERAL_NAMESPACE" %>
+<%@ page import="static javax.portlet.tck.constants.Constants.THREADID_ATTR" %>
+
 <portlet:defineObjects/>
+
 <%
       PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
       PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
@@ -56,7 +63,7 @@
         }
       } else {
       %>
-      <DIV CLASS="portletTCKTestcase" name="V2PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral_namespace">
+      <DIV CLASS="portletTCKTestcase">
         <h4>V2PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral_namespace button (POST):</h4>
         <FORM METHOD="POST" ACTION="<portlet:actionURL/>">
           <INPUT NAME='namespace' VALUE='<portlet:namespace/>' TYPE="hidden">
