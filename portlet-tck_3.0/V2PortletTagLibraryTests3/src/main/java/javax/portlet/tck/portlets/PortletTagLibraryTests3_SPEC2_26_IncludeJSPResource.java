@@ -404,6 +404,69 @@ public class PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource extends Generic
               .getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RESOURCEURL23);
           tr85.setTcSuccess(true);
           tr85.writeTo(writer);
+        }  else if (action.equals("V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL24")
+            && (portletReq.getCacheability()).equals(ResourceURL.PAGE)) {
+          /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL24 */
+          /* Details: "If the optional resourceURL \"cacheability\" attribute     */
+          /* is not set, the current cacheability setting is retained"            */
+          TestResult tr86 = tcd
+              .getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RESOURCEURL24);
+          tr86.setTcSuccess(true);
+          tr86.writeTo(writer);
+        } else if (action.equals("V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL25")
+            && (portletReq.getCacheability()).equals(ResourceURL.FULL)) {
+          /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL25 */
+          /* Details: "If the cacheability is set to PAGE in a Resource phase     */
+          /* include with cacheability = FULL, a JspException with the            */
+          /* IllegalStateException that caused this error is thrown"              */
+          TestResult tr87 = tcd
+              .getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RESOURCEURL25);
+          try {
+            String target = JSP_PREFIX + "PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr87" + JSP_SUFFIX
+                + "?" + QUERY_STRING;
+            PortletRequestDispatcher rd = getPortletContext().getRequestDispatcher(target);
+            rd.include(portletReq, portletResp);
+          } catch (Exception e) {
+            tr87.setTcSuccess(true);
+            tr87.appendTcDetail(e.getMessage());
+          }
+          tr87.writeTo(writer);
+        } else if (action.equals("V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL26")
+            && (portletReq.getCacheability()).equals(ResourceURL.FULL)) {
+          /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL26 */
+          /* Details: "If the cacheability is set to PORTLET in a Resource        */
+          /* phase include with cacheability = FULL, a JspException with the      */
+          /* IllegalStateException that caused this error is thrown"              */
+          TestResult tr88 = tcd
+              .getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RESOURCEURL26);
+          try {
+            String target = JSP_PREFIX + "PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr88" + JSP_SUFFIX
+                + "?" + QUERY_STRING;
+            PortletRequestDispatcher rd = getPortletContext().getRequestDispatcher(target);
+            rd.include(portletReq, portletResp);
+          } catch (Exception e) {
+            tr88.setTcSuccess(true);
+            tr88.appendTcDetail(e.getMessage());
+          }
+          tr88.writeTo(writer);
+        } else if (action.equals("V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL27")
+            && (portletReq.getCacheability()).equals(ResourceURL.PORTLET)) {
+          /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL27 */
+          /* Details: "If the cacheability is set to PORTLET in a Resource        */
+          /* phase include with cacheability = FULL, a JspException with the      */
+          /* IllegalStateException that caused this error is thrown"              */
+          TestResult tr89 = tcd
+              .getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RESOURCEURL27);
+          try {
+            String target = JSP_PREFIX + "PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr87" + JSP_SUFFIX
+                + "?" + QUERY_STRING;
+            PortletRequestDispatcher rd = getPortletContext().getRequestDispatcher(target);
+            rd.include(portletReq, portletResp);
+          } catch (Exception e) {
+            tr89.setTcSuccess(true);
+            tr89.appendTcDetail(e.getMessage());
+          }
+          tr89.writeTo(writer);
         } else if (action.equals("V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramResource1")
             && portletReq.getParameter("tr102_value") != null
             && "true".equals(portletReq.getParameter("tr102_value"))) {
@@ -633,6 +696,11 @@ public class PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource extends Generic
       writer.write("         eval(document.getElementById('scriptTr68').innerHTML);");
       writer.write("         eval(document.getElementById('scriptTr69').innerHTML);");
       writer.write("         eval(document.getElementById('scriptTr84').innerHTML);");
+      writer.write("         eval(document.getElementById('scriptTr85').innerHTML);");
+      writer.write("         eval(document.getElementById('scriptTr86').innerHTML);");
+      writer.write("         eval(document.getElementById('scriptTr87').innerHTML);");
+      writer.write("         eval(document.getElementById('scriptTr88').innerHTML);");
+      writer.write("         eval(document.getElementById('scriptTr89').innerHTML);");
       writer.write("         eval(document.getElementById('scriptTr102').innerHTML);");
       writer.write("         eval(document.getElementById('scriptTr103').innerHTML);");
       writer.write("         eval(document.getElementById('scriptTr104').innerHTML);");

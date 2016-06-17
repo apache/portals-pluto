@@ -582,6 +582,31 @@
       </DIV>
       <% }
       
+      /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL22 */
+      /* Details: "If the \"copyCurrentRenderParameters\" attribute */
+      /* specifies an invalid value, a JspException is thrown" */
+      TestResult tr33 =
+          tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_ACTIONURL22);
+      %>
+      <c:catch var ="exceptionTr33">
+         <portlet:renderURL copyCurrentRenderParameters="invalid"/>
+      </c:catch>
+      <c:if test = "${exceptionTr33 != null}">
+         <%
+         tr33.setTcSuccess(true);
+         String exceptionTr33 = ""; 
+         exceptionTr33 = exceptionTr33 + pageContext.getAttribute("exceptionTr33");
+         tr33.appendTcDetail(exceptionTr33);
+         %>
+      </c:if>
+      <c:if test = "${exceptionTr33 == null}">
+         <%
+         tr33.appendTcDetail("Test case failed as no Exception is raised while defining actionURL with copyCurrentRenderParameters = invalid");
+         %>
+      </c:if>
+      <%
+      tr33.writeTo(writer);
+      
       /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL23 */
       /* Details: "The \"copyCurrentRenderParameters\" attribute is not       */
       /* specified, the security setting is retained"                         */
@@ -1023,29 +1048,26 @@
       /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL22 */
       /* Details: "If the \"copyCurrentRenderParameters\" attribute           */
       /* specifies an invalid value, a JspException is thrown"                */
-      // TODO: Ask Scott if we have to delete it
-      // copyCurrentRenderParametersc invalid value is translated as false 
       TestResult tr61 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RENDERURL22);
-      if(resourceRequest.getParameter("renderParamTr61")==null && resourceRequest.getParameter("tr61")==null){
-        PortletURL renderURLTr61 = resourceResponse.createRenderURL();
-        renderURLTr61.setParameter("renderParamTr61", "true");
-        TestSetupLink tr61SetupLink = new TestSetupLink(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RENDERURL22, renderURLTr61);
-        tr61SetupLink.writeTo(writer);
-      } else if(resourceRequest.getParameter("tr61")!=null && "true".equals(resourceRequest.getParameter("tr61"))){
-        tr61.setTcSuccess(true);
-        tr61.writeTo(writer);
-      } else {
       %>
-      <DIV CLASS='portletTCKTestcase' name='V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL22'>
-        <h4>V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL21 button (POST):</h4>
-        <FORM METHOD='POST' ACTION='
-           <portlet:renderURL copyCurrentRenderParameters="invalid">
-              <portlet:param name="action" value="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL22"/>
-           </portlet:renderURL>'>
-        <INPUT VALUE='V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL22' ID='V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL22-clickme' TYPE='submit'>
-        </FORM>
-      </DIV>
-      <% }
+      <c:catch var ="exceptionTr61">
+         <portlet:renderURL copyCurrentRenderParameters="invalid"/>
+      </c:catch>
+      <c:if test = "${exceptionTr61 != null}">
+         <%
+         tr61.setTcSuccess(true);
+         String exceptionTr61 = ""; 
+         exceptionTr61 = exceptionTr61 + pageContext.getAttribute("exceptionTr61");
+         tr61.appendTcDetail(exceptionTr61);
+         %>
+      </c:if>
+      <c:if test = "${exceptionTr61 == null}">
+         <%
+         tr61.appendTcDetail("Test case failed as no Exception is raised while defining renderURL with copyCurrentRenderParameters = invalid");
+         %>
+      </c:if>
+      <%
+      tr61.writeTo(writer);
 
       /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL23 */
       /* Details: "The \"copyCurrentRenderParameters\" attribute is not       */
@@ -1200,65 +1222,55 @@
       /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL23 */
       /* Details: "If the optional resourceURL \"cacheability\" attribute     */
       /* is set, the cacheability is set accordingly"                         */
-      TestResult tr85 = tcd
-            .getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RESOURCEURL23);
-      // TODO: implement test
-      tr85.appendTcDetail("Getting portletException - Unable to find setter method for attribute: cacheability");
-      tr85.writeTo(writer);
+      %>
+      <DIV id="tr85"></DIV>
+      <script type="text/javascript" id="scriptTr85">
+        getResource('tr85','<portlet:resourceURL cacheability="PORTLET"><portlet:param name="action" value="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL23"></portlet:param></portlet:resourceURL>');
+      </script>
+      <%
 
       /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL24 */
       /* Details: "If the optional resourceURL \"cacheability\" attribute     */
       /* is not set, the current cacheability setting is retained"            */
-      TestResult tr86 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RESOURCEURL24);
-      /* TODO: implement test */
-      tr86.appendTcDetail("Not implemented. Same problem as test case V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL23");
-      tr86.writeTo(writer);
+      %>
+      <DIV id="tr86"></DIV>
+      <script type="text/javascript" id="scriptTr86">
+        getResource('tr86','<portlet:resourceURL><portlet:param name="action" value="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL24"></portlet:param></portlet:resourceURL>');
+      </script>
+      <%
 
       /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL25 */
       /* Details: "If the cacheability is set to PAGE in a Resource phase     */
       /* include with cacheability = FULL, a JspException with the            */
       /* IllegalStateException that caused this error is thrown"              */
-      TestResult tr87 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RESOURCEURL25);
-      /* TODO: implement test */
-      tr87.appendTcDetail("Not implemented. Same problem as test case V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL23");
-      tr87.writeTo(writer);
+      %>
+      <DIV id="tr87"></DIV>
+      <script type="text/javascript" id="scriptTr87">
+        getResource('tr87','<portlet:resourceURL cacheability="FULL"><portlet:param name="action" value="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL25"></portlet:param></portlet:resourceURL>');
+      </script>
+      <%
 
       /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL26 */
       /* Details: "If the cacheability is set to PORTLET in a Resource        */
       /* phase include with cacheability = FULL, a JspException with the      */
       /* IllegalStateException that caused this error is thrown"              */
-      TestResult tr88 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RESOURCEURL26);
-      /* TODO: implement test */
-      tr88.appendTcDetail("Not implemented. Same problem as test case V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL23");
-      tr88.writeTo(writer);
+      %>
+      <DIV id="tr88"></DIV>
+      <script type="text/javascript" id="scriptTr88">
+        getResource('tr88','<portlet:resourceURL cacheability="FULL"><portlet:param name="action" value="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL26"></portlet:param></portlet:resourceURL>');
+      </script>
+      <%
 
       /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL27 */
       /* Details: "If the cacheability is set to PAGE in a Resource phase     */
       /* include with cacheability = PORTLET, a JspException with the         */
       /* IllegalStateException that caused this error is thrown"              */
-      /* TODO: Fix the test case when the exception is resolved. */
-      TestResult tr89 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RESOURCEURL27);
-      //tr89.appendTcDetail("Not implemented. Getting org.apache.jasper.JasperException: Unable to find setter method for attribute: cacheability on using <portlet:resourceURL cacheability=\"PAGE\"></portlet:resourceURL>");
       %>
-      <c:catch var ="exceptionTr89">
-         <portlet:resourceURL cacheability="FULL"></portlet:resourceURL>
-      </c:catch>
-      <c:if test = "${exceptionTr89 != null}">
-         <%
-         tr89.setTcSuccess(true);
-         String exceptionTr89 = ""; 
-         exceptionTr89 = exceptionTr89 + pageContext.getAttribute("exceptionTr89");
-         tr89.appendTcDetail(exceptionTr89);
-         %>
-      </c:if>
-      <c:if test = "${exceptionTr89 == null}">
-         <%
-         tr89.appendTcDetail("Test case failed as no Exception is raised while defining action parameter with empty name.");
-         %>
-      </c:if>
+      <DIV id="tr89"></DIV>
+      <script type="text/javascript" id="scriptTr89">
+        getResource('tr89','<portlet:resourceURL cacheability="PORTLET"><portlet:param name="action" value="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL27"></portlet:param></portlet:resourceURL>');
+      </script>
       <%
-      tr89.writeTo(writer);
-      tr89.writeTo(writer);
 
       /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramAction1 */
       /* Details: "The param tag can be used within the actionURL tag to      */

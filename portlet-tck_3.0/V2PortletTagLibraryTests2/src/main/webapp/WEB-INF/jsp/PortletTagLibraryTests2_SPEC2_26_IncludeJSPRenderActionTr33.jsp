@@ -12,6 +12,7 @@
 <%@ page import="static javax.portlet.tck.constants.Constants.*" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*" %>
 <portlet:defineObjects/>
+<portlet:actionURL copyCurrentRenderParameters="invalid"/>
 <!-- p style="display:none;"  -->
 <p><portlet:resourceURL cacheability="FULL"/>/></p>
 <p><portlet:resourceURL cacheability="PORTLET"/>/></p>
