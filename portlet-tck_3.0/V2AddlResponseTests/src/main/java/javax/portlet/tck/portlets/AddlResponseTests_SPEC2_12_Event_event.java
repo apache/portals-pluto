@@ -115,7 +115,7 @@ public class AddlResponseTests_SPEC2_12_Event_event implements Portlet, EventPor
       {
         Cookie c = new Cookie("event_tr0_cookie", "true");
         c.setMaxAge(100);
-        c.setPath("/pluto/portal/V2AddlResponseTests");
+        c.setPath("/");
         portletResp.addProperty(c);
         portletResp.setRenderParameter("tr0", "true");
       }
@@ -126,7 +126,7 @@ public class AddlResponseTests_SPEC2_12_Event_event implements Portlet, EventPor
       {
         Cookie c = new Cookie("event_tr1_cookie", "true");
         c.setMaxAge(100);
-        c.setPath("/pluto/portal/V2AddlResponseTests");
+        c.setPath("/");
         portletResp.addProperty(c);
         portletResp.setRenderParameter("tr1", "true");
       }
@@ -159,7 +159,7 @@ public class AddlResponseTests_SPEC2_12_Event_event implements Portlet, EventPor
       } else {
         Cookie c = new Cookie("event_tr2_cookie", "true");
         c.setMaxAge(100);
-        c.setPath("/pluto/portal/V2AddlResponseTests");
+        c.setPath("/");
         portletResp.addProperty(c);
         portletResp.setRenderParameter("tr2", "true");
       }

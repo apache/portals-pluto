@@ -116,7 +116,7 @@ public class AddlResponseTests_SPEC2_12_Resource implements Portlet, ResourceSer
     {
       Cookie c = new Cookie("resource_tr0_cookie", "true");
       c.setMaxAge(100);
-      c.setPath("/pluto/portal/V2AddlResponseTests");
+      c.setPath("/");
       portletResp.addProperty(c);
     }
 
@@ -142,7 +142,7 @@ public class AddlResponseTests_SPEC2_12_Resource implements Portlet, ResourceSer
         } else {
           Cookie c1 = new Cookie("resource_tr1_cookie", "true");
           c1.setMaxAge(100);
-          c1.setPath("/pluto/portal/V2AddlResponseTests");
+          c1.setPath("/");
           portletResp.addProperty(c1);
         }
       }
@@ -157,7 +157,7 @@ public class AddlResponseTests_SPEC2_12_Resource implements Portlet, ResourceSer
     {
       Cookie c = new Cookie("resource_tr2_cookie", "true");
       c.setMaxAge(100);
-      c.setPath("/pluto/portal/V2AddlResponseTests");
+      c.setPath("/");
       portletResp.addProperty(c);
     }
 
@@ -184,7 +184,7 @@ public class AddlResponseTests_SPEC2_12_Resource implements Portlet, ResourceSer
         } else {
           Cookie c1 = new Cookie("resource_tr3_cookie", "true");
           c1.setMaxAge(100);
-          c1.setPath("/pluto/portal/V2AddlResponseTests");
+          c1.setPath("/");
           portletResp.addProperty(c1);
         }
       }
@@ -274,7 +274,7 @@ public class AddlResponseTests_SPEC2_12_Resource implements Portlet, ResourceSer
         } else {
           Cookie c1 = new Cookie("resource_tr4_cookie", "true");
           c1.setMaxAge(100);
-          c1.setPath("/pluto/portal/V2AddlResponseTests");
+          c1.setPath("/");
           portletResp.addProperty(c1);
         }
       }

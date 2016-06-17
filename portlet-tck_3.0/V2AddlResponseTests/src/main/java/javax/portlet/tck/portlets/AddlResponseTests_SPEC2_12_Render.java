@@ -42,19 +42,9 @@ import static javax.portlet.ResourceURL.*;
  * AddlResponseTests_SPEC2_12_Render_event
  *
  */
-public class AddlResponseTests_SPEC2_12_Render implements Portlet, ResourceServingPortlet {
+public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
   private static final String LOG_CLASS = AddlResponseTests_SPEC2_12_Render.class.getName();
   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-
-  private PortletConfig portletConfig = null;
-
-  @Override
-  public void init(PortletConfig config) throws PortletException {
-    this.portletConfig = config;
-  }
-
-  @Override
-  public void destroy() {}
 
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
@@ -146,74 +136,72 @@ public class AddlResponseTests_SPEC2_12_Render implements Portlet, ResourceServi
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
 
     StringWriter writer = new StringWriter();
-    
-    // TODO: Debug code to specifically set the cookie. 
-    // Problem - setCookie not working in render method.
-    {
-    Cookie c3 = new Cookie("render_tr0_cookie", "true");
-    c3.setMaxAge(100);
-    c3.setPath("/pluto/portal/V2AddlResponseTests");
-    portletResp.addProperty(c3);
-    PortletURL rurl = portletResp.createRenderURL();
-    rurl.setParameters(portletReq.getPrivateParameterMap());
-    TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Render_cookie8", rurl);
-    tb.writeTo(writer);
-  }
-    PortletSession ps = portletReq.getPortletSession();
-    String msg = (String) ps.getAttribute(RESULT_ATTR_PREFIX + "AddlResponseTests_SPEC2_12_Render",
-        APPLICATION_SCOPE);
-    if (msg != null && !msg.equals("nullnull") && !msg.equals("null")) {
-      writer.write("<p>" + msg + "</p><br/>\n");
-      ps.removeAttribute(RESULT_ATTR_PREFIX + "AddlResponseTests_SPEC2_12_Render",
-          APPLICATION_SCOPE);
-    }
 
+    if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_MARKUP")) {
+      PortletSession ps = portletReq.getPortletSession();
+      String msg =
+          (String) ps.getAttribute(RESULT_ATTR_PREFIX + "AddlResponseTests_SPEC2_12_Render",
+              APPLICATION_SCOPE);
+      if (msg != null && !msg.equals("nullnull") && !msg.equals("null")) {
+        writer.write("<p>" + msg + "</p><br/>\n");
+        ps.removeAttribute(RESULT_ATTR_PREFIX + "AddlResponseTests_SPEC2_12_Render",
+            APPLICATION_SCOPE);
+      }
+    }
     // Create result objects for the tests
 
     /* TestCase: V2AddlResponseTests_SPEC2_12_Render_cookie8 */
     /* Details: "Cookies set during the Render phase should be available */
     /* to the portlet during the Resource phase" */
     {
-      Cookie c = new Cookie("render_tr0_cookie", "true");
-      c.setMaxAge(100);
-      c.setPath("/pluto/portal/V2AddlResponseTests");
-      portletResp.addProperty(c);
-      writer.write("<div id=\"AddlResponseTests_SPEC2_11_Render\">no resource output.</div>\n");
-      ResourceURL resurl = portletResp.createResourceURL();
-      resurl.setCacheability(PAGE);
-      writer.write("<script>\n");
-      writer.write("(function () {\n");
-      writer.write("   var xhr = new XMLHttpRequest();\n");
-      writer.write("   xhr.onreadystatechange=function() {\n");
-      writer.write("      if (xhr.readyState==4 && xhr.status==200) {\n");
-      writer.write(
-          "         document.getElementById(\"AddlResponseTests_SPEC2_11_Render\").innerHTML=xhr.responseText;\n");
-      writer.write("      }\n");
-      writer.write("   };\n");
-      writer.write("   xhr.open(\"GET\",\"" + resurl.toString() + "\",true);\n");
-      writer.write("   xhr.send();\n");
-      writer.write("})();\n");
-      writer.write("</script>\n");
+      if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_HEADERS")) {
+        Cookie c = new Cookie("render_tr0_cookie", "true");
+        c.setMaxAge(100);
+        c.setPath("/");
+        portletResp.addProperty(c);
+      } else {
+        writer.write("<div id=\"AddlResponseTests_SPEC2_11_Render\">no resource output.</div>\n");
+        ResourceURL resurl = portletResp.createResourceURL();
+        resurl.setCacheability(PAGE);
+        writer.write("<script>\n");
+        writer.write("(function () {\n");
+        writer.write("   var xhr = new XMLHttpRequest();\n");
+        writer.write("   xhr.onreadystatechange=function() {\n");
+        writer.write("      if (xhr.readyState==4 && xhr.status==200) {\n");
+        writer.write(
+            "         document.getElementById(\"AddlResponseTests_SPEC2_11_Render\").innerHTML=xhr.responseText;\n");
+        writer.write("      }\n");
+        writer.write("   };\n");
+        writer.write("   xhr.open(\"GET\",\"" + resurl.toString() + "\",true);\n");
+        writer.write("   xhr.send();\n");
+        writer.write("})();\n");
+        writer.write("</script>\n");
+      }
     }
 
     /* TestCase: V2AddlResponseTests_SPEC2_12_Render_cookie9 */
     /* Details: "Cookies set during the Render phase should be available */
     /* to the portlet during a subsequent Action phase" */
     {
-      Cookie c = new Cookie("render_tr1_cookie", "true");
-      c.setMaxAge(100);
-      c.setPath("/pluto/portal/V2AddlResponseTests");
-      portletResp.addProperty(c);
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Render_cookie9", aurl);
-      tb.writeTo(writer);
+      if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_HEADERS")) {
+        Cookie c = new Cookie("render_tr1_cookie", "true");
+        c.setMaxAge(100);
+        c.setPath("/");
+        portletResp.addProperty(c);
+      } else {
+        PortletURL aurl = portletResp.createActionURL();
+        aurl.setParameters(portletReq.getPrivateParameterMap());
+        TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Render_cookie9", aurl);
+        tb.writeTo(writer);
+      }
     }
 
     /* TestCase: V2AddlResponseTests_SPEC2_12_Render_cookie10 */
     /* Details: "Cookies set during the Render phase should be available */
     /* to the portlet during a subsequent Render phase" */
-    if(portletReq.getParameter("tr2")!=null && portletReq.getParameter("tr2").equals("true")){
+    if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_MARKUP")
+        && portletReq.getParameter("tr2") != null
+        && portletReq.getParameter("tr2").equals("true")) {
       Cookie[] cookies = portletReq.getCookies();
 
       StringBuilder txt = new StringBuilder(128);
@@ -235,21 +223,26 @@ public class AddlResponseTests_SPEC2_12_Render implements Portlet, ResourceServi
       txt.append("</p>");
       writer.append(txt.toString());
     } else {
-      Cookie c = new Cookie("render_tr2_cookie", "true");
-      c.setMaxAge(100);
-      c.setPath("/pluto/portal/V2AddlResponseTests");
-      portletResp.addProperty(c);
-      PortletURL rurl = portletResp.createRenderURL();
-      rurl.setParameters(portletReq.getPrivateParameterMap());
-      rurl.setParameter("tr2", "true");
-      TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Render_cookie10", rurl);
-      tb.writeTo(writer);
+      if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_HEADERS")) {
+        Cookie c = new Cookie("render_tr2_cookie", "true");
+        c.setMaxAge(100);
+        c.setPath("/");
+        portletResp.addProperty(c);
+      } else {
+        PortletURL rurl = portletResp.createRenderURL();
+        rurl.setParameters(portletReq.getPrivateParameterMap());
+        rurl.setParameter("tr2", "true");
+        TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Render_cookie10", rurl);
+        tb.writeTo(writer);
+      }
     }
 
     /* TestCase: V2AddlResponseTests_SPEC2_12_Render_cookie11 */
     /* Details: "Cookies set during the Render phase should be available */
     /* to the portlet during a subsequent request triggered by a URL" */
-    if(portletReq.getParameter("tr3")!=null && portletReq.getParameter("tr3").equals("true")){
+    if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_MARKUP")
+        && portletReq.getParameter("tr3") != null
+        && portletReq.getParameter("tr3").equals("true")) {
       Cookie[] cookies = portletReq.getCookies();
 
       StringBuilder txt = new StringBuilder(128);
@@ -271,16 +264,20 @@ public class AddlResponseTests_SPEC2_12_Render implements Portlet, ResourceServi
       txt.append("</p>");
       writer.append(txt.toString());
     } else {
-      Cookie c = new Cookie("render_tr3_cookie", "true");
-      c.setMaxAge(100);
-      c.setPath("/pluto/portal/V2AddlResponseTests");
-      portletResp.addProperty(c);
-      PortletURL rurl = portletResp.createRenderURL();
-      rurl.setParameters(portletReq.getPrivateParameterMap());
-      rurl.setParameter("tr3", "true");
-      TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Render_cookie11", rurl);
-      tb.writeTo(writer);
+      if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_HEADERS")) {
+        Cookie c = new Cookie("render_tr3_cookie", "true");
+        c.setMaxAge(100);
+        c.setPath("/");
+        portletResp.addProperty(c);
+      } else {
+        PortletURL rurl = portletResp.createRenderURL();
+        rurl.setParameters(portletReq.getPrivateParameterMap());
+        rurl.setParameter("tr3", "true");
+        TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Render_cookie11", rurl);
+        tb.writeTo(writer);
+      }
     }
+
 
     /* TestCase: V2AddlResponseTests_SPEC2_12_Render_contentType5 */
     /* Details: "If the setContentType method is not called before the */
@@ -308,11 +305,13 @@ public class AddlResponseTests_SPEC2_12_Render implements Portlet, ResourceServi
     }
     tr8.writeTo(writer);
 
+
     /* TestCase: V2AddlResponseTests_SPEC2_12_Render_characterEncoding2 */
     /* Details: "The character encoding can be set via the setLocale */
     /* method and a locale-encoding-mapping-list mapping in the web.xml */
     /* deployment descriptor" */
-    // TODO: setLocale method does not exist for RenderResponse. Ask Scott to delete this test case
+    // TODO: setLocale method does not exist for RenderResponse. Ask Scott to delete this test
+    // case
     Locale loc = new Locale("en");
     // portletResp.setLocale(loc);
     TestResult tr6 =
@@ -342,12 +341,16 @@ public class AddlResponseTests_SPEC2_12_Render implements Portlet, ResourceServi
     tr7.writeTo(writer);
 
     PrintWriter printWriter = portletResp.getWriter();
-    printWriter.write(writer.toString());
-    
+    if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_MARKUP")) {
+      printWriter.write(writer.toString());
+    }
+
     /* TestCase: V2AddlResponseTests_SPEC2_12_Render_cookie12 */
     /* Details: "Cookies set during the Render phase after the response */
     /* has been committed are ignored" */
-    if(portletReq.getParameter("tr4")!=null && portletReq.getParameter("tr4").equals("true")){
+    if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_MARKUP")
+        && portletReq.getParameter("tr4") != null
+        && portletReq.getParameter("tr4").equals("true")) {
       Cookie[] cookies = portletReq.getCookies();
 
       StringBuilder txt = new StringBuilder(128);
@@ -369,17 +372,19 @@ public class AddlResponseTests_SPEC2_12_Render implements Portlet, ResourceServi
       txt.append("</p>");
       printWriter.append(txt.toString());
     } else {
-      Cookie c = new Cookie("tr4_cookie", "true");
-      c.setMaxAge(100);
-      c.setPath("/pluto/portal/V2AddlResponseTests");
-      portletResp.addProperty(c);
-      PortletURL rurl = portletResp.createRenderURL();
-      rurl.setParameters(portletReq.getPrivateParameterMap());
-      rurl.setParameter("tr4", "true");
-      TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Render_cookie12", rurl);
-      tb.writeTo(printWriter);
+      if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_MARKUP")) {
+        Cookie c = new Cookie("tr4_cookie", "true");
+        c.setMaxAge(100);
+        c.setPath("/");
+        portletResp.addProperty(c);
+        PortletURL rurl = portletResp.createRenderURL();
+        rurl.setParameters(portletReq.getPrivateParameterMap());
+        rurl.setParameter("tr4", "true");
+        TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Render_cookie12", rurl);
+        tb.writeTo(printWriter);
+      }
     }
-    
+
   }
 
 }

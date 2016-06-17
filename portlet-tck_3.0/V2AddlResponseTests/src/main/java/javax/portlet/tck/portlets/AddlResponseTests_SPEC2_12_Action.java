@@ -81,7 +81,7 @@ public class AddlResponseTests_SPEC2_12_Action
         /* to the portlet during the Render phase" */
         Cookie c = new Cookie("action_tr0_cookie", "true");
         c.setMaxAge(100);
-        c.setPath("/pluto/portal/V2AddlResponseTests");
+        c.setPath("/");
         portletResp.addProperty(c);
         portletResp.setRenderParameter("tr0", "true");
       } else if (action.equals("V2AddlResponseTests_SPEC2_12_Action_cookie2")) {
@@ -90,7 +90,7 @@ public class AddlResponseTests_SPEC2_12_Action
         /* to the portlet during the Resource phase" */
         Cookie c = new Cookie("action_tr1_cookie", "true");
         c.setMaxAge(100);
-        c.setPath("/pluto/portal/V2AddlResponseTests");
+        c.setPath("/");
         portletResp.addProperty(c);
         portletResp.setRenderParameter("tr1", "true");
       } else if (action.equals("V2AddlResponseTests_SPEC2_12_Action_cookie3")) {
@@ -105,7 +105,7 @@ public class AddlResponseTests_SPEC2_12_Action
         } else {
           Cookie c = new Cookie("action_tr2_cookie", "true");
           c.setMaxAge(100);
-          c.setPath("/pluto/portal/V2AddlResponseTests");
+          c.setPath("/");
           portletResp.addProperty(c);
           portletResp.setRenderParameter("tr2", "true");
         }
@@ -139,7 +139,7 @@ public class AddlResponseTests_SPEC2_12_Action
         } else {
           Cookie c = new Cookie("action_tr3_cookie", "true");
           c.setMaxAge(100);
-          c.setPath("/pluto/portal/V2AddlResponseTests");
+          c.setPath("/");
           portletResp.addProperty(c);
           portletResp.setRenderParameter("tr3", "true");
         }
@@ -157,13 +157,13 @@ public class AddlResponseTests_SPEC2_12_Action
         /* Details: "If a new private render parameter value is set on the */
         /* ActionResponse before the redirect, the new private render */
         /* parameter value must be set on the attached render URL" */
-        portletResp.sendRedirect("/pluto/portal/V2AddlResponseTests", "tr5");
+        portletResp.sendRedirect("/", "tr5");
       } else if (action.equals("V2AddlResponseTests_SPEC2_12_Action_redirect14")) {
         /* TestCase: V2AddlResponseTests_SPEC2_12_Action_redirect14 */
         /* Details: "If a new public render parameter value is set on the */
         /* ActionResponse before the redirect, the new public render */
         /* parameter value must be set on the attached render URL" */
-        portletResp.sendRedirect("/pluto/portal/V2AddlResponseTests", "tckPRP1");
+        portletResp.sendRedirect("/", "tckPRP1");
       }
 
       portletReq.getPortletSession().setAttribute(
