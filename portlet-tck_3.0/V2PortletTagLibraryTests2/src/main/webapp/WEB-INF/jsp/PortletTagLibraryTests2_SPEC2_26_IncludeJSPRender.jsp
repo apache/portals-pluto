@@ -625,26 +625,6 @@
       </DIV>
       <% }
 
-      /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL29 */
-      /* Details: "If this tag is used in markup provided by a                */
-      /* serveResource call that was directly or indirectly triggered via a   */
-      /* resource URL of type FULL, a JspException with the                   */
-      /* IllegalStateException that caused this error is thrown"              */
-      TestResult tr39 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_ACTIONURL29);
-      /* TODO: implement test */
-      tr39.appendTcDetail("Unable to set cacheability in resourceURL Tag.");      
-      tr39.writeTo(writer);
-
-      /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL30 */
-      /* Details: "If this tag is used in markup provided by a                */
-      /* serveResource call that was directly or indirectly triggered via a   */
-      /* resource URL of type PORTLET, a JspException with the                */
-      /* IllegalStateException that caused this error is thrown"              */
-      TestResult tr40 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_ACTIONURL30);
-      /* TODO: implement test */
-      tr40.appendTcDetail("Unable to set cacheability in resourceURL Tag.");
-      tr40.writeTo(writer);
-
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL1 */
       /* Details: "The portlet renderURL tag creates a URL that must point    */
       /* to the current portlet and must trigger an render request with the   */

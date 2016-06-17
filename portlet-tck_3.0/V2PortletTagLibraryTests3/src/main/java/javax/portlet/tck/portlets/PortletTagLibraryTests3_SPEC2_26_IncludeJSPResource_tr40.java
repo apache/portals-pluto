@@ -32,7 +32,7 @@ import static javax.portlet.ResourceURL.*;
  * 
  * @author ahmed
  */
-public class PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr39 extends GenericPortlet {
+public class PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr40 extends GenericPortlet {
 
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
@@ -50,7 +50,7 @@ public class PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr39 extends Ge
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
-    String target = JSP_PREFIX + "PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr39"
+    String target = JSP_PREFIX + "PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr40"
         + JSP_SUFFIX + "?" + QUERY_STRING;
     PortletRequestDispatcher rd = getPortletContext().getRequestDispatcher(target);
     rd.include(portletReq, portletResp);
@@ -60,18 +60,18 @@ public class PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr39 extends Ge
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
     ResourceURL resurl = portletResp.createResourceURL();
-    resurl.setCacheability(FULL);
+    resurl.setCacheability(PORTLET);
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
     PrintWriter writer = portletResp.getWriter();
     
-    writer.write("<div id=\"PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr39\">no resource output.</div>\n");
+    writer.write("<div id=\"PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr40\">no resource output.</div>\n");
     writer.write("<script>\n");
     writer.write("(function () {\n");
     writer.write("   var xhr = new XMLHttpRequest();\n");
     writer.write("   xhr.onreadystatechange=function() {\n");
     writer.write("      if (xhr.readyState==4 && xhr.status==200) {\n");
-    writer.write("         document.getElementById(\"PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr39\").innerHTML=xhr.responseText;\n");
+    writer.write("         document.getElementById(\"PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr40\").innerHTML=xhr.responseText;\n");
     writer.write("      }\n");
     writer.write("   };\n");
     writer.write("   xhr.open(\"GET\",\"" + resurl.toString() + "\",true);\n");
