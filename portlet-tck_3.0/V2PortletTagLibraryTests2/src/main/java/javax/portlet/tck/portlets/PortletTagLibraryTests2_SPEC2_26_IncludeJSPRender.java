@@ -15,21 +15,46 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Logger;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.GenericPortlet;
+import javax.portlet.PortletException;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.ProcessAction;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
+import javax.portlet.WindowState;
+import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL1;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL4;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL22;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL23;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL24;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL25;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL26;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL27;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE1;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE6;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.tck.constants.Constants.JSP_PREFIX;
+import static javax.portlet.tck.constants.Constants.JSP_SUFFIX;
+import static javax.portlet.tck.constants.Constants.QUERY_STRING;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -47,11 +72,10 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
   private static final String LOG_CLASS =
       PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender.class.getName();
   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-
+  
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
     String action = portletReq.getParameter("action");
     if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL1")) {
@@ -294,7 +318,6 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
     }
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
-    StringWriter writer = new StringWriter();
   }
 
   /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL27 */
@@ -308,13 +331,11 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
     portletResp.setRenderParameter("tr37", "true");
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
-    StringWriter writer = new StringWriter();
   }
 
   @Override
   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
@@ -468,8 +489,7 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
         /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramResource1 */
         /* Details: "The param tag can be used within the resourceURL tag to */
         /* add a parameter" */
-        TestResult tr102 = tcd.getTestResultFailed(
-            V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE1);
+        TestResult tr102 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE1);
         tr102.setTcSuccess(true);
         tr102.writeTo(writer);
       } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramResource2")
@@ -477,8 +497,7 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
         /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramResource2 */
         /* Details: "The param tag required attribute \"name\" defines the */
         /* parameter name" */
-        TestResult tr103 = tcd.getTestResultFailed(
-            V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE2);
+        TestResult tr103 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE2);
         tr103.setTcSuccess(true);
         tr103.writeTo(writer);
         portletReq.setAttribute("tr103", "true");
@@ -488,8 +507,7 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
         /* Details: "If more than one tags appear in the resourceURL tag, the */
         /* values must be stored as a multivalued array in order of */
         /* appearance within the resourceURL tag" */
-        TestResult tr104 = tcd.getTestResultFailed(
-            V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE3);
+        TestResult tr104 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE3);
         tr104.setTcSuccess(true);
         tr104.writeTo(writer);
       } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramResource5")
@@ -498,8 +516,7 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
         /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramResource5 */
         /* Details: "The param tag required attribute \"value\" defines the */
         /* parameter value" */
-        TestResult tr106 = tcd.getTestResultFailed(
-            V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE5);
+        TestResult tr106 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE5);
         tr106.setTcSuccess(true);
         tr106.writeTo(writer);
       } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramResource6")
@@ -507,8 +524,7 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
         /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramResource6 */
         /* Details: "If the \"value\" attribute is null or empty, no action */
         /* is performed" */
-        TestResult tr107 = tcd.getTestResultFailed(
-            V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE6);
+        TestResult tr107 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE6);
         tr107.setTcSuccess(true);
         tr107.writeTo(writer);
       }
@@ -646,12 +662,9 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
         portletReq.setAttribute("tr101", "true");
       }
     }
-    JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
-
-    PrintWriter writer = portletResp.getWriter();
 
     // Now do the actual dispatch
     String target = JSP_PREFIX + "PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender" + JSP_SUFFIX
