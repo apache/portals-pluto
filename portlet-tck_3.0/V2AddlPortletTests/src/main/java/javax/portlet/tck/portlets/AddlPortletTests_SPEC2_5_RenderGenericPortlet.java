@@ -15,15 +15,29 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.logging.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.GenericPortlet;
+import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
+import javax.portlet.ProcessEvent;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
+import javax.portlet.tck.beans.TestButton;
+import javax.portlet.tck.beans.TestResult;
 import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
+
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_5_RENDERGENERICPORTLET_EVENTDISPATCHING2;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -34,18 +48,15 @@ import static javax.portlet.PortletSession.*;
  * This is the main portlet for the test cases. If the test cases call for events, this portlet will
  * initiate the events, but not process them. The processing is done in the companion portlet
  * AddlPortletTests_SPEC2_5_RenderGenericPortlet_event
+ * 
  * @author ahmed
  */
 public class AddlPortletTests_SPEC2_5_RenderGenericPortlet extends GenericPortlet {
-  private static final String LOG_CLASS =
-      AddlPortletTests_SPEC2_5_RenderGenericPortlet.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
 
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
     portletResp.setRenderParameters(portletReq.getParameterMap());
     long tid = Thread.currentThread().getId();
@@ -65,15 +76,14 @@ public class AddlPortletTests_SPEC2_5_RenderGenericPortlet extends GenericPortle
       tr0.appendTcDetail(e.toString());
     }
     portletReq.getPortletSession().setAttribute(
-        Constants.RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_RenderGenericPortlet",
-        tr0.toString(), APPLICATION_SCOPE);
+        RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_RenderGenericPortlet", tr0.toString(),
+        APPLICATION_SCOPE);
 
   }
 
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
@@ -124,7 +134,6 @@ public class AddlPortletTests_SPEC2_5_RenderGenericPortlet extends GenericPortle
   @ProcessEvent(name = "AddlPortletTests_SPEC2_5_RenderGenericPortlet_localPart")
   public void processEvent(EventRequest portletReq, EventResponse response)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event main processEvent");
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
 
     /* TestCase: V2AddlPortletTests_SPEC2_5_RenderGenericPortlet_eventDispatching2 */
@@ -135,7 +144,7 @@ public class AddlPortletTests_SPEC2_5_RenderGenericPortlet extends GenericPortle
         tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_5_RENDERGENERICPORTLET_EVENTDISPATCHING2);
     tr2.setTcSuccess(true);
     portletReq.getPortletSession().setAttribute(
-        Constants.RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_RenderGenericPortlet_event_b",
+        RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_RenderGenericPortlet_event_b",
         tr2.toString(), APPLICATION_SCOPE);
 
   }

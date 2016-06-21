@@ -15,13 +15,35 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.tck.beans.*;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.ResourceURL;
+import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
+import javax.portlet.tck.beans.TestLink;
+import javax.portlet.tck.beans.TestResult;
+
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVING_RESOURCEURLS2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVING_RESOURCEURLS4;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVING_RESOURCEURLS5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVING_RESOURCEURLS6;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVING_RESOURCEURLS7;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVING_RESOURCEURLS8;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVING_RESOURCEURLS9;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -35,8 +57,6 @@ import static javax.portlet.tck.constants.Constants.*;
  * @author ahmed
  */
 public class AddlPortletTests_SPEC2_13_ResourceServing implements Portlet, ResourceServingPortlet {
-  private static final String LOG_CLASS = AddlPortletTests_SPEC2_13_ResourceServing.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   private boolean tr0_action = false;
 
@@ -49,7 +69,6 @@ public class AddlPortletTests_SPEC2_13_ResourceServing implements Portlet, Resou
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
     portletResp.setRenderParameters(portletReq.getParameterMap());
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
@@ -59,7 +78,6 @@ public class AddlPortletTests_SPEC2_13_ResourceServing implements Portlet, Resou
   @Override
   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
@@ -178,7 +196,6 @@ public class AddlPortletTests_SPEC2_13_ResourceServing implements Portlet, Resou
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
