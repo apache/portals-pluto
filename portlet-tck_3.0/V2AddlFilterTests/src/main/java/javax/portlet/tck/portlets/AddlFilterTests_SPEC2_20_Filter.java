@@ -15,43 +15,78 @@
 
 package javax.portlet.tck.portlets;
 
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Enumeration;
-import java.util.logging.Logger;
 
-import javax.portlet.*;
-import javax.portlet.filter.*;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.filter.ActionFilter;
+import javax.portlet.filter.ActionRequestWrapper;
+import javax.portlet.filter.ActionResponseWrapper;
+import javax.portlet.filter.EventFilter;
+import javax.portlet.filter.EventRequestWrapper;
+import javax.portlet.filter.EventResponseWrapper;
+import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.FilterConfig;
+import javax.portlet.filter.RenderFilter;
+import javax.portlet.filter.RenderRequestWrapper;
+import javax.portlet.filter.RenderResponseWrapper;
+import javax.portlet.filter.ResourceFilter;
+import javax.portlet.filter.ResourceRequestWrapper;
+import javax.portlet.filter.ResourceResponseWrapper;
 import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
-import javax.portlet.tck.constants.Constants;
+
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER1;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER6;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER7;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER8;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER9;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER13;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTERWRAPPER1;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_EVENT_FILTER4;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_EVENT_FILTERWRAPPER3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_RENDER_FILTERWRAPPER6;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_RENDER_FILTERWRAPPER5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_RENDER_FILTER3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_RESOURCE_FILTERWRAPPER7;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_RESOURCE_FILTERWRAPPER8;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_RESOURCE_FILTER5;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
  * in the /src/main/resources/xml-resources/additionalTCs.xml file. The build process will integrate
  * the test case names defined in the additionalTCs.xml file into the complete list of test case
  * names for execution by the driver.
+ * 
  * @author ahmed
  */
 public class AddlFilterTests_SPEC2_20_Filter
     implements ActionFilter, EventFilter, ResourceFilter, RenderFilter {
 
-  private static final String LOG_CLASS = AddlFilterTests_SPEC2_20_Filter.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-
   StringWriter initWriter = new StringWriter();
 
   public void init(FilterConfig config) throws PortletException {
-    LOGGER.entering(LOG_CLASS, "filter init entry");
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
-    String portletNameAction = (String) config.getPortletContext().getAttribute("PortletNameAction");
-    String portletNameRender = (String) config.getPortletContext().getAttribute("PortletNameRender");
-    String portletNameResource = (String) config.getPortletContext().getAttribute("PortletNameResource");
+    String portletNameAction =
+        (String) config.getPortletContext().getAttribute("PortletNameAction");
+    String portletNameRender =
+        (String) config.getPortletContext().getAttribute("PortletNameRender");
+    String portletNameResource =
+        (String) config.getPortletContext().getAttribute("PortletNameResource");
     String filterName = config.getFilterName();
     initWriter.flush();
 
@@ -172,17 +207,18 @@ public class AddlFilterTests_SPEC2_20_Filter
     } else {
       tr8.appendTcDetail("Filter is not configured for V2AddlFilterTests_SPEC2_20_Action portlet");
     }
-    
+
     /* TestCase: V2AddlFilterTests_SPEC2_20_Action_filter14 */
     /* Details: "Filters can be associated with groups of portlets using */
     /* the '*' character as a wildcard at the end of a string to indicate */
     /* that the filter must be applied to any portlet whose name starts */
     /* with the characters before the \"*\" character" */
-    if (portletNameResource != null && portletNameResource.equals("AddlFilterTests_SPEC2_20_Resource")
+    if (portletNameResource != null
+        && portletNameResource.equals("AddlFilterTests_SPEC2_20_Resource")
         && filterName.equals("AddlFilterTests_SPEC2_20_Filter3")) {
       AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr9_success = true;
     }
-    
+
     /* TestCase: V2AddlFilterTests_SPEC2_20_Action_filter15 */
     /* Details: "The order the container uses in building the chain of */
     /* filters to be applied for a particular request is the order in */
@@ -190,8 +226,8 @@ public class AddlFilterTests_SPEC2_20_Filter
     /* the deployment descriptor" */
     if (portletNameAction != null && portletNameAction.equals("AddlFilterTests_SPEC2_20_Action")
         && filterName.equals("AddlFilterTests_SPEC2_20_Filter1")) {
-      AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr10a_success=true;
-    } 
+      AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr10a_success = true;
+    }
 
     try {
       tr0.writeTo(initWriter);
@@ -207,7 +243,6 @@ public class AddlFilterTests_SPEC2_20_Filter
 
   public void doFilter(ActionRequest portletReq, ActionResponse portletResp, FilterChain chain)
       throws IOException, PortletException {
-    LOGGER.entering(LOG_CLASS, "filter doFilter entry");
 
     portletResp.setRenderParameters(portletReq.getParameterMap());
     long tid = Thread.currentThread().getId();
@@ -226,7 +261,7 @@ public class AddlFilterTests_SPEC2_20_Filter
     /* with a custom wrapper" */
     TestResult tr11 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTERWRAPPER1);
     ActionRequestWrapper actionReq = new ActionRequestWrapper(portletReq);
-    if(actionReq.getParameter("tr11")!=null && actionReq.getParameter("tr11").equals("true")){
+    if (actionReq.getParameter("tr11") != null && actionReq.getParameter("tr11").equals("true")) {
       tr11.setTcSuccess(true);
     } else {
       tr11.appendTcDetail("Action Parameter tr11 is not found in the wrapper");
@@ -248,7 +283,7 @@ public class AddlFilterTests_SPEC2_20_Filter
     tr13.writeTo(writer);
 
     portletReq.getPortletSession().setAttribute(
-        Constants.RESULT_ATTR_PREFIX + "AddlFilterTests_SPEC2_20_Action", writer.toString(),
+        RESULT_ATTR_PREFIX + "AddlFilterTests_SPEC2_20_Action", writer.toString(),
         APPLICATION_SCOPE);
 
     chain.doFilter(portletReq, portletResp);
@@ -273,26 +308,27 @@ public class AddlFilterTests_SPEC2_20_Filter
     tr13.setTcSuccess(true);
     tr13.writeTo(writer);
 
-    /* TestCase: V2AddlFilterTests_SPEC2_20_Event_filterWrapper3            */
-    /* Details: "An EVENT_PHASE filter can wrap the EventRequest object     */
-    /* with a custom wrapper"                                               */
+    /* TestCase: V2AddlFilterTests_SPEC2_20_Event_filterWrapper3 */
+    /* Details: "An EVENT_PHASE filter can wrap the EventRequest object */
+    /* with a custom wrapper" */
     TestResult tr11 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_EVENT_FILTERWRAPPER3);
     EventRequestWrapper eventReq = new EventRequestWrapper(portletReq);
-    if(eventReq.getParameter("tr11_event")!=null && eventReq.getParameter("tr11_event").equals("true")){
+    if (eventReq.getParameter("tr11_event") != null
+        && eventReq.getParameter("tr11_event").equals("true")) {
       tr11.setTcSuccess(true);
     } else {
       tr11.appendTcDetail("Event Parameter tr11_event is not found in the wrapper");
     }
     tr11.writeTo(writer);
 
-    /* TestCase: V2AddlFilterTests_SPEC2_20_Event_filterWrapper4            */
-    /* Details: "An EVENT_PHASE filter can wrap the EventResponse object    */
-    /* with a custom wrapper"                                               */
+    /* TestCase: V2AddlFilterTests_SPEC2_20_Event_filterWrapper4 */
+    /* Details: "An EVENT_PHASE filter can wrap the EventResponse object */
+    /* with a custom wrapper" */
     EventResponseWrapper eventResp = new EventResponseWrapper(portletResp);
     eventResp.setRenderParameter("tr12", "true");
-    
+
     portletReq.getPortletSession().setAttribute(
-        Constants.RESULT_ATTR_PREFIX + "AddlFilterTests_SPEC2_20_Event", writer.toString(),
+        RESULT_ATTR_PREFIX + "AddlFilterTests_SPEC2_20_Event", writer.toString(),
         APPLICATION_SCOPE);
     chain.doFilter(portletReq, portletResp);
   }
@@ -304,33 +340,33 @@ public class AddlFilterTests_SPEC2_20_Filter
     portletReq.setAttribute(THREADID_ATTR, tid);
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
 
-    /* TestCase: V2AddlFilterTests_SPEC2_20_Render_filterWrapper6           */
-    /* Details: "An RENDER_PHASE filter can wrap the RenderResponse         */
-    /* object with a custom wrapper"                                        */
+    /* TestCase: V2AddlFilterTests_SPEC2_20_Render_filterWrapper6 */
+    /* Details: "An RENDER_PHASE filter can wrap the RenderResponse */
+    /* object with a custom wrapper" */
     RenderResponseWrapper renderResp = new RenderResponseWrapper(portletResp);
     PrintWriter writer = renderResp.getWriter();
     TestResult tr12 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_RENDER_FILTERWRAPPER6);
     tr12.setTcSuccess(true);
     tr12.writeTo(writer);
-    
- // Create result objects for the tests
 
-    /* TestCase: V2AddlFilterTests_SPEC2_20_Render_filterWrapper5           */
-    /* Details: "An RENDER_PHASE filter can wrap the RenderRequest object   */
-    /* with a custom wrapper"                                               */
+    // Create result objects for the tests
+
+    /* TestCase: V2AddlFilterTests_SPEC2_20_Render_filterWrapper5 */
+    /* Details: "An RENDER_PHASE filter can wrap the RenderRequest object */
+    /* with a custom wrapper" */
     TestResult tr11 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_RENDER_FILTERWRAPPER5);
     RenderRequestWrapper renderReq = new RenderRequestWrapper(portletReq);
-    if(renderReq.getParameter("tr11")!=null && renderReq.getParameter("tr11").equals("true")){
+    if (renderReq.getParameter("tr11") != null && renderReq.getParameter("tr11").equals("true")) {
       tr11.setTcSuccess(true);
     } else {
       tr11.appendTcDetail("Render Parameter tr11 is not found in the wrapper");
     }
     tr11.writeTo(writer);
 
-    /* TestCase: V2AddlFilterTests_SPEC2_20_Render_filter3                  */
-    /* Details: "If the filter declaration specifies the                    */
-    /* &lt;lifecycle&gt; tag value RENDER_PHASE, the                        */
-    /* RenderFilter.doFilter method is called"                              */
+    /* TestCase: V2AddlFilterTests_SPEC2_20_Render_filter3 */
+    /* Details: "If the filter declaration specifies the */
+    /* &lt;lifecycle&gt; tag value RENDER_PHASE, the */
+    /* RenderFilter.doFilter method is called" */
     TestResult tr13 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_RENDER_FILTER3);
     tr13.setTcSuccess(true);
     tr13.writeTo(writer);
@@ -341,7 +377,7 @@ public class AddlFilterTests_SPEC2_20_Filter
   @Override
   public void doFilter(ResourceRequest portletReq, ResourceResponse portletResp, FilterChain chain)
       throws IOException, PortletException {
-    
+
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
 
@@ -352,35 +388,36 @@ public class AddlFilterTests_SPEC2_20_Filter
 
     // Create result objects for the tests
 
-    /* TestCase: V2AddlFilterTests_SPEC2_20_Resource_filterWrapper7         */
-    /* Details: "An RESOURCE_PHASE filter can wrap the ResourceRequest      */
-    /* object with a custom wrapper"                                        */
+    /* TestCase: V2AddlFilterTests_SPEC2_20_Resource_filterWrapper7 */
+    /* Details: "An RESOURCE_PHASE filter can wrap the ResourceRequest */
+    /* object with a custom wrapper" */
     TestResult tr12 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_RESOURCE_FILTERWRAPPER7);
-    
+
     ResourceRequestWrapper resourceReq = new ResourceRequestWrapper(portletReq);
-    if(resourceReq.getParameter("tr12")!=null && resourceReq.getParameter("tr12").equals("true")){
+    if (resourceReq.getParameter("tr12") != null
+        && resourceReq.getParameter("tr12").equals("true")) {
       tr12.setTcSuccess(true);
     } else {
       tr12.appendTcDetail("Render Parameter tr12 is not found in the wrapper");
     }
     tr12.writeTo(writer);
 
-    /* TestCase: V2AddlFilterTests_SPEC2_20_Resource_filterWrapper8         */
-    /* Details: "An RESOURCE_PHASE filter can wrap the ResourceResponse     */
-    /* object with a custom wrapper"                                        */
+    /* TestCase: V2AddlFilterTests_SPEC2_20_Resource_filterWrapper8 */
+    /* Details: "An RESOURCE_PHASE filter can wrap the ResourceResponse */
+    /* object with a custom wrapper" */
     TestResult tr13 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_RESOURCE_FILTERWRAPPER8);
     tr13.setTcSuccess(true);
     tr13.writeTo(writer);
-    
 
-    /* TestCase: V2AddlFilterTests_SPEC2_20_Resource_filter5                */
-    /* Details: "If the filter declaration specifies the                    */
-    /* &lt;lifecycle&gt; tag value RESOURCE_PHASE, the                      */
-    /* ResourceFilter.doFilter method is called"                            */
+
+    /* TestCase: V2AddlFilterTests_SPEC2_20_Resource_filter5 */
+    /* Details: "If the filter declaration specifies the */
+    /* &lt;lifecycle&gt; tag value RESOURCE_PHASE, the */
+    /* ResourceFilter.doFilter method is called" */
     TestResult tr11 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_RESOURCE_FILTER5);
     tr11.setTcSuccess(true);
     tr11.writeTo(writer);
-    
+
     chain.doFilter(portletReq, portletResp);
   }
 }
