@@ -74,8 +74,6 @@ public class AddlRequestTests_SPEC2_11_EventReq_event implements Portlet, EventP
   @Override
   public void processEvent(EventRequest portletReq, EventResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion processEvent");
-
 
     portletResp.setRenderParameters(portletReq);
 
@@ -185,8 +183,6 @@ public class AddlRequestTests_SPEC2_11_EventReq_event implements Portlet, EventP
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-
-    LOGGER.entering(LOG_CLASS, "event companion render");
 
     portletResp.setContentType("text/html");
     PrintWriter writer = portletResp.getWriter();

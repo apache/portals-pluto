@@ -68,7 +68,6 @@ public class AddlRequestTests_SPEC2_11_EventAttr_event implements Portlet, Event
   public void processEvent(EventRequest portletReq, EventResponse portletResp)
       throws PortletException, IOException {
 
-
     portletResp.setRenderParameters(portletReq);
 
     long tid = Thread.currentThread().getId();
@@ -117,8 +116,6 @@ public class AddlRequestTests_SPEC2_11_EventAttr_event implements Portlet, Event
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-
-    LOGGER.entering(LOG_CLASS, "event companion render");
 
     portletResp.setContentType("text/html");
     PrintWriter writer = portletResp.getWriter();
