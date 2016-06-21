@@ -99,8 +99,6 @@ public class AddlPortletTests_SPEC2_15_Event_event implements Portlet, EventPort
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
 
-    LOGGER.entering(LOG_CLASS, "event companion render");
-
     portletResp.setContentType("text/html");
     PrintWriter writer = portletResp.getWriter();
     writer.write("<h3>Event Companion Portlet </h3>\n");

@@ -66,8 +66,6 @@ public class AddlPortletTests_SPEC2_5_EventHandling_event implements Portlet, Ev
   @Override
   public void processEvent(EventRequest portletReq, EventResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion processEvent");
-
 
     portletResp.setRenderParameters(portletReq);
 
@@ -81,7 +79,6 @@ public class AddlPortletTests_SPEC2_5_EventHandling_event implements Portlet, Ev
       /* Details: "If the portlet throws an PortletException in */
       /* processEvent, all operations on the EventResponse, including set */
       /* events, must be ignored" */
-      LOGGER.entering(LOG_CLASS, "First case");
       portletResp.setRenderParameter("tr0", "true");
       portletReq.getPortletSession().setAttribute(
           RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_EventHandling_portletException", "true",
@@ -93,7 +90,6 @@ public class AddlPortletTests_SPEC2_5_EventHandling_event implements Portlet, Ev
       /* Details: "If the portlet throws a RuntimeException in */
       /* processEvent, all operations on the EventResponse, including set */
       /* events, must be ignored" */
-      LOGGER.entering(LOG_CLASS, "Second case");
       portletResp.setRenderParameter("tr1", "true");
       portletReq.getPortletSession().setAttribute(
           RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_5_EventHandling_runtimeException", "true",
@@ -107,8 +103,7 @@ public class AddlPortletTests_SPEC2_5_EventHandling_event implements Portlet, Ev
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-
-    LOGGER.entering(LOG_CLASS, "event companion render");
+    
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
     portletResp.setContentType("text/html");
     PrintWriter writer = portletResp.getWriter();
