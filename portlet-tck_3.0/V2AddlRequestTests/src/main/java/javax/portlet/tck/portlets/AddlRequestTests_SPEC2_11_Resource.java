@@ -15,14 +15,29 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.tck.beans.*;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.ResourceURL.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.ResourceURL;
+import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.beans.TestSetupLink;
+
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RESOURCE_PARAMETERS6;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.ResourceURL.PORTLET;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -33,11 +48,10 @@ import static javax.portlet.ResourceURL.*;
  * This is the main portlet for the test cases. If the test cases call for events, this portlet will
  * initiate the events, but not process them. The processing is done in the companion portlet
  * AddlRequestTests_SPEC2_11_Resource_event
+ * 
  * @author ahmed
  */
 public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServingPortlet {
-  private static final String LOG_CLASS = AddlRequestTests_SPEC2_11_Resource.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -48,7 +62,6 @@ public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServ
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
     portletResp.setRenderParameters(portletReq.getParameterMap());
     long tid = Thread.currentThread().getId();
@@ -59,7 +72,6 @@ public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServ
   @Override
   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
@@ -193,7 +205,6 @@ public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServ
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
@@ -247,7 +258,8 @@ public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServ
       if (portletReq.getParameter("tr3") == null) {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tr3", "true");
-        TestSetupLink tl = new TestSetupLink("V2AddlRequestTests_SPEC2_11_Resource_parameters17", purl);
+        TestSetupLink tl =
+            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Resource_parameters17", purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr3 = portletResp.createResourceURL();
@@ -281,8 +293,8 @@ public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServ
       if (portletReq.getParameter("tckPRP4") == null) {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tckPRP4", "true");
-        TestSetupLink tl =
-            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters16", purl);
+        TestSetupLink tl = new TestSetupLink(
+            "V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters16", purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr5 = portletResp.createResourceURL();
@@ -325,8 +337,8 @@ public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServ
       if (portletReq.getParameter("tckPRP4") == null) {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tckPRP4", "true");
-        TestSetupLink tl =
-            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters12", purl);
+        TestSetupLink tl = new TestSetupLink(
+            "V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters12", purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr7 = portletResp.createResourceURL();
