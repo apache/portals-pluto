@@ -61,7 +61,7 @@
         }
       } else {
       %>
-      <DIV CLASS="portletTCKTestcase">
+      <DIV CLASS="portletTCKTestcase" name="V2PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral_namespace">
         <h4>V2PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral_namespace button (POST):</h4>
         <FORM METHOD="POST" ACTION="<portlet:actionURL/>">
           <INPUT NAME='namespace' VALUE='<portlet:namespace/>' TYPE="hidden">
