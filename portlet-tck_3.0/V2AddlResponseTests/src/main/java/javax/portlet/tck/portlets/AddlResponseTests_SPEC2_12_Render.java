@@ -15,21 +15,41 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Locale;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.GenericPortlet;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
+import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
+import javax.portlet.tck.beans.TestButton;
+import javax.portlet.tck.beans.TestResult;
+import javax.servlet.http.Cookie;
+
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE9;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE8;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE10;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE11;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CONTENTTYPE5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING4;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE12;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.ResourceURL.PAGE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -43,13 +63,10 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
-  private static final String LOG_CLASS = AddlResponseTests_SPEC2_12_Render.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
 
@@ -84,7 +101,7 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
     writer.append(txt.toString());
 
     portletReq.getPortletSession().setAttribute(
-        Constants.RESULT_ATTR_PREFIX + "AddlResponseTests_SPEC2_12_Render", writer.toString(),
+        RESULT_ATTR_PREFIX + "AddlResponseTests_SPEC2_12_Render", writer.toString(),
         APPLICATION_SCOPE);
 
   }
@@ -128,7 +145,6 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
@@ -137,7 +153,7 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
 
     StringWriter writer = new StringWriter();
 
-    if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_MARKUP")) {
+    if (portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_MARKUP")) {
       PortletSession ps = portletReq.getPortletSession();
       String msg =
           (String) ps.getAttribute(RESULT_ATTR_PREFIX + "AddlResponseTests_SPEC2_12_Render",
@@ -154,7 +170,7 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
     /* Details: "Cookies set during the Render phase should be available */
     /* to the portlet during the Resource phase" */
     {
-      if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_HEADERS")) {
+      if (portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_HEADERS")) {
         Cookie c = new Cookie("render_tr0_cookie", "true");
         c.setMaxAge(100);
         c.setPath("/");
@@ -183,7 +199,7 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
     /* Details: "Cookies set during the Render phase should be available */
     /* to the portlet during a subsequent Action phase" */
     {
-      if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_HEADERS")) {
+      if (portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_HEADERS")) {
         Cookie c = new Cookie("render_tr1_cookie", "true");
         c.setMaxAge(100);
         c.setPath("/");
@@ -199,7 +215,7 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
     /* TestCase: V2AddlResponseTests_SPEC2_12_Render_cookie10 */
     /* Details: "Cookies set during the Render phase should be available */
     /* to the portlet during a subsequent Render phase" */
-    if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_MARKUP")
+    if (portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_MARKUP")
         && portletReq.getParameter("tr2") != null
         && portletReq.getParameter("tr2").equals("true")) {
       Cookie[] cookies = portletReq.getCookies();
@@ -223,7 +239,7 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
       txt.append("</p>");
       writer.append(txt.toString());
     } else {
-      if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_HEADERS")) {
+      if (portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_HEADERS")) {
         Cookie c = new Cookie("render_tr2_cookie", "true");
         c.setMaxAge(100);
         c.setPath("/");
@@ -240,7 +256,7 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
     /* TestCase: V2AddlResponseTests_SPEC2_12_Render_cookie11 */
     /* Details: "Cookies set during the Render phase should be available */
     /* to the portlet during a subsequent request triggered by a URL" */
-    if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_MARKUP")
+    if (portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_MARKUP")
         && portletReq.getParameter("tr3") != null
         && portletReq.getParameter("tr3").equals("true")) {
       Cookie[] cookies = portletReq.getCookies();
@@ -264,7 +280,7 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
       txt.append("</p>");
       writer.append(txt.toString());
     } else {
-      if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_HEADERS")) {
+      if (portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_HEADERS")) {
         Cookie c = new Cookie("render_tr3_cookie", "true");
         c.setMaxAge(100);
         c.setPath("/");
@@ -341,14 +357,14 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
     tr7.writeTo(writer);
 
     PrintWriter printWriter = portletResp.getWriter();
-    if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_MARKUP")) {
+    if (portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_MARKUP")) {
       printWriter.write(writer.toString());
     }
 
     /* TestCase: V2AddlResponseTests_SPEC2_12_Render_cookie12 */
     /* Details: "Cookies set during the Render phase after the response */
     /* has been committed are ignored" */
-    if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_MARKUP")
+    if (portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_MARKUP")
         && portletReq.getParameter("tr4") != null
         && portletReq.getParameter("tr4").equals("true")) {
       Cookie[] cookies = portletReq.getCookies();
@@ -372,7 +388,7 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
       txt.append("</p>");
       printWriter.append(txt.toString());
     } else {
-      if (portletReq.getAttribute(portletReq.RENDER_PART).equals("RENDER_MARKUP")) {
+      if (portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_MARKUP")) {
         Cookie c = new Cookie("tr4_cookie", "true");
         c.setMaxAge(100);
         c.setPath("/");
