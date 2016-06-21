@@ -17,7 +17,6 @@ package javax.portlet.tck.portlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -46,9 +45,6 @@ import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
  * @author ahmed
  */
 public class PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent implements Portlet {
-  private static final String LOG_CLASS =
-      PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -59,7 +55,6 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent implements Portlet 
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
     portletResp.setRenderParameters(portletReq.getParameterMap());
     long tid = Thread.currentThread().getId();
@@ -72,7 +67,6 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent implements Portlet 
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);

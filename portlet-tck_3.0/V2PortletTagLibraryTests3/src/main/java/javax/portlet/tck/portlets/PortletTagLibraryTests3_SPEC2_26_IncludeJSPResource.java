@@ -17,7 +17,6 @@ package javax.portlet.tck.portlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -71,9 +70,6 @@ import static javax.portlet.ResourceURL.PAGE;
  * @author ahmed
  */
 public class PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource extends GenericPortlet {
-  private static final String LOG_CLASS =
-      PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
@@ -330,7 +326,6 @@ public class PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource extends Generic
   @ProcessAction(name = "actionNameTr27")
   public void actionUrlViaName(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet actionUrlViaName entry");
     portletResp.setRenderParameter("tr37", "true");
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
