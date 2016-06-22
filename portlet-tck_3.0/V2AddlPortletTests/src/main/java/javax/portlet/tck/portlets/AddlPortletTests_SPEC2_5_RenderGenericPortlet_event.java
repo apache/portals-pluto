@@ -15,11 +15,6 @@
 
 package javax.portlet.tck.portlets;
 
-import static javax.portlet.PortletSession.APPLICATION_SCOPE;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_5_RENDERGENERICPORTLET_EVENTDISPATCHING1;
-import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
@@ -37,6 +32,11 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.constants.Constants;
+
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_5_RENDERGENERICPORTLET_EVENTDISPATCHING1;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -63,7 +63,6 @@ public class AddlPortletTests_SPEC2_5_RenderGenericPortlet_event extends Generic
   @ProcessEvent(qname = "AddlPortletTests_SPEC2_5_RenderGenericPortlet")
   public void processEvent(EventRequest portletReq, EventResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion processEvent");
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
 
     /* TestCase: V2AddlPortletTests_SPEC2_5_RenderGenericPortlet_eventDispatching1 */
@@ -90,7 +89,6 @@ public class AddlPortletTests_SPEC2_5_RenderGenericPortlet_event extends Generic
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion render");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);

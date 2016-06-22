@@ -15,21 +15,27 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.tck.constants.Constants.JSP_PREFIX;
+import static javax.portlet.tck.constants.Constants.JSP_SUFFIX;
+import static javax.portlet.tck.constants.Constants.QUERY_STRING;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPGENERAL_DEFINEOBJECTS2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPGENERAL_DEFINEOBJECTS3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPGENERAL_DEFINEOBJECTS4;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -40,13 +46,10 @@ import static javax.portlet.ResourceURL.*;
  * This is the main portlet for the test cases. If the test cases call for events, this portlet will
  * initiate the events, but not process them. The processing is done in the companion portlet
  * PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral_event
+ * 
  * @author ahmed
  */
-public class PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral
-    implements Portlet, ResourceServingPortlet {
-  private static final String LOG_CLASS =
-      PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+public class PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral implements Portlet {
 
   private PortletConfig portletConfig = null;
 
@@ -61,29 +64,14 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
     portletResp.setRenderParameters(portletReq.getParameterMap());
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
-    StringWriter writer = new StringWriter();
-  }
-
-  @Override
-  public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
-      throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
-
-    long tid = Thread.currentThread().getId();
-    portletReq.setAttribute(THREADID_ATTR, tid);
-
-    PrintWriter writer = portletResp.getWriter();
-
   }
 
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
 
     long tid = Thread.currentThread().getId();

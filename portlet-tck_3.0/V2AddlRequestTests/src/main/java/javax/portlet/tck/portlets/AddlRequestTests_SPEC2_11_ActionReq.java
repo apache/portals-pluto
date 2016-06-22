@@ -15,18 +15,40 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
+import javax.portlet.tck.beans.TestButton;
+import javax.portlet.tck.beans.TestResult;
 
 import org.apache.commons.lang3.StringUtils;
 
-import javax.portlet.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE1;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE4;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_WINDOWID4;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE6;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE7;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -37,11 +59,10 @@ import static javax.portlet.PortletSession.*;
  * This is the main portlet for the test cases. If the test cases call for events, this portlet will
  * initiate the events, but not process them. The processing is done in the companion portlet
  * AddlRequestTests_SPEC2_11_ActionReq_event
+ * 
  * @author ahmed
  */
 public class AddlRequestTests_SPEC2_11_ActionReq implements Portlet {
-  private static final String LOG_CLASS = AddlRequestTests_SPEC2_11_ActionReq.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -52,7 +73,6 @@ public class AddlRequestTests_SPEC2_11_ActionReq implements Portlet {
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
     portletResp.setRenderParameters(portletReq.getParameterMap());
     long tid = Thread.currentThread().getId();
@@ -81,18 +101,18 @@ public class AddlRequestTests_SPEC2_11_ActionReq implements Portlet {
     TestResult tr1 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE2);
     Enumeration<String> contentTypesTr1 = portletReq.getResponseContentTypes();
     if (contentTypesTr1 != null) {
-       List<String> list = Collections.list(contentTypesTr1);
-       if (list.isEmpty()) {
-          tr1.appendTcDetail("Enumeration was empty.");
-       } else {
-          if (list.get(0).isEmpty()) {
-             tr1.appendTcDetail("First content type string is empty.");
-          } else {
-             tr1.setTcSuccess(true);
-          }
-       }
+      List<String> list = Collections.list(contentTypesTr1);
+      if (list.isEmpty()) {
+        tr1.appendTcDetail("Enumeration was empty.");
+      } else {
+        if (list.get(0).isEmpty()) {
+          tr1.appendTcDetail("First content type string is empty.");
+        } else {
+          tr1.setTcSuccess(true);
+        }
+      }
     } else {
-       tr1.appendTcDetail("Enumeration was null.");
+      tr1.appendTcDetail("Enumeration was null.");
     }
     tr1.writeTo(writer);
 
@@ -103,18 +123,19 @@ public class AddlRequestTests_SPEC2_11_ActionReq implements Portlet {
     TestResult tr2 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE3);
     Enumeration<String> contentTypesTr2 = portletReq.getResponseContentTypes();
     if (contentTypesTr2 != null) {
-       List<String> list = Collections.list(contentTypesTr2);
-       if (list.isEmpty()) {
-          tr2.appendTcDetail("Enumeration was empty.");
-       } else {
-          if (!list.get(0).equals(portletReq.getResponseContentType())) {
-             tr2.appendTcDetail("First content type string does not equal PortletRequest#getResponseContentType().");
-          } else {
-             tr2.setTcSuccess(true);
-          }
-       }
+      List<String> list = Collections.list(contentTypesTr2);
+      if (list.isEmpty()) {
+        tr2.appendTcDetail("Enumeration was empty.");
+      } else {
+        if (!list.get(0).equals(portletReq.getResponseContentType())) {
+          tr2.appendTcDetail(
+              "First content type string does not equal PortletRequest#getResponseContentType().");
+        } else {
+          tr2.setTcSuccess(true);
+        }
+      }
     } else {
-       tr2.appendTcDetail("Enumeration was null.");
+      tr2.appendTcDetail("Enumeration was null.");
     }
     tr2.writeTo(writer);
 
@@ -177,14 +198,13 @@ public class AddlRequestTests_SPEC2_11_ActionReq implements Portlet {
     tr7.writeTo(writer);
 
     portletReq.getPortletSession().setAttribute(
-        Constants.RESULT_ATTR_PREFIX + "AddlRequestTests_SPEC2_11_ActionReq", writer.toString(),
+        RESULT_ATTR_PREFIX + "AddlRequestTests_SPEC2_11_ActionReq", writer.toString(),
         APPLICATION_SCOPE);
   }
 
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);

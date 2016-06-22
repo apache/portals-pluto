@@ -15,17 +15,35 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.tck.beans.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
-import static javax.portlet.PortletSession.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Logger;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.EventPortlet;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_EVENT_FILTERWRAPPER4;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 
 /**
  * This is the event processing portlet for the test cases. This portlet processes events, but does
  * not publish them. Events are published in the main portlet for the test cases.
+ * 
  * @author ahmed
  */
 public class AddlFilterTests_SPEC2_20_Event_event
@@ -35,12 +53,12 @@ public class AddlFilterTests_SPEC2_20_Event_event
 
   @Override
   public void init(PortletConfig config) throws PortletException {
-    
+
   }
 
   @Override
   public void destroy() {
-    
+
   }
 
   @Override
@@ -58,9 +76,6 @@ public class AddlFilterTests_SPEC2_20_Event_event
   @Override
   public void processEvent(EventRequest portletReq, EventResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion processEvent");
-
-
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
@@ -71,7 +86,6 @@ public class AddlFilterTests_SPEC2_20_Event_event
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
 
-    LOGGER.entering(LOG_CLASS, "event companion render");
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
 
     portletResp.setContentType("text/html");

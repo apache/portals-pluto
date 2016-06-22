@@ -15,11 +15,20 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.tck.beans.*;
-import static javax.portlet.tck.constants.Constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.tck.beans.TestLink;
+
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -30,11 +39,10 @@ import static javax.portlet.tck.constants.Constants.*;
  * This is the main portlet for the test cases. If the test cases call for events, this portlet will
  * initiate the events, but not process them. The processing is done in the companion portlet
  * AddlFilterTests_SPEC2_20_Render_event
+ * 
  * @author ahmed
  */
 public class AddlFilterTests_SPEC2_20_Render implements Portlet {
-  private static final String LOG_CLASS = AddlFilterTests_SPEC2_20_Render.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   private PortletConfig portletConfig = null;
 
@@ -51,7 +59,6 @@ public class AddlFilterTests_SPEC2_20_Render implements Portlet {
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
     portletResp.setRenderParameters(portletReq.getParameterMap());
     long tid = Thread.currentThread().getId();
@@ -63,7 +70,6 @@ public class AddlFilterTests_SPEC2_20_Render implements Portlet {
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);

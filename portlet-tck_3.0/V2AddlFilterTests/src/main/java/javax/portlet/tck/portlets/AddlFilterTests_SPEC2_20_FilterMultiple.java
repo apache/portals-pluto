@@ -18,7 +18,6 @@ package javax.portlet.tck.portlets;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Enumeration;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -27,44 +26,40 @@ import javax.portlet.filter.ActionFilter;
 import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.FilterConfig;
 
+
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
  * in the /src/main/resources/xml-resources/additionalTCs.xml file. The build process will integrate
  * the test case names defined in the additionalTCs.xml file into the complete list of test case
  * names for execution by the driver.
+ * 
  * @author ahmed
  */
-public class AddlFilterTests_SPEC2_20_FilterMultiple
-    implements ActionFilter {
+public class AddlFilterTests_SPEC2_20_FilterMultiple implements ActionFilter {
 
-  private static final String LOG_CLASS = AddlFilterTests_SPEC2_20_FilterMultiple.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-  
   StringWriter initWriter = new StringWriter();
 
-
   public void init(FilterConfig config) throws PortletException {
-    LOGGER.entering(LOG_CLASS, "filter init entry");
-    String portletNameAction = (String) config.getPortletContext().getAttribute("PortletNameAction");
+    String portletNameAction =
+        (String) config.getPortletContext().getAttribute("PortletNameAction");
     String filterName = config.getFilterName();
-    
+
     /* TestCase: V2AddlFilterTests_SPEC2_20_Action_filter10 */
     /* Details: "For multiple filter declarations for a single filter */
     /* class, the filter instance must receive all initialization */
     /* parameters defined in the filter declaration" */
-    if(portletNameAction!=null
-        && portletNameAction.equals("AddlFilterTests_SPEC2_20_Action") 
-        && filterName.equals("AddlFilterTests_SPEC2_20_Filter1a")){
+    if (portletNameAction != null && portletNameAction.equals("AddlFilterTests_SPEC2_20_Action")
+        && filterName.equals("AddlFilterTests_SPEC2_20_Filter1a")) {
       Enumeration<String> initParams = config.getInitParameterNames();
-      if(initParams.nextElement().equals("tr4") && initParams.nextElement().equals("tr5")){
-        AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr5b_success=true;
-        AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr6b_success=true;
+      if (initParams.nextElement().equals("tr4") && initParams.nextElement().equals("tr5")) {
+        AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr5b_success = true;
+        AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr6b_success = true;
       } else {
-        AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr5b_success=false;
-        AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr6b_success=false;
+        AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr5b_success = false;
+        AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr6b_success = false;
       }
     }
-    
+
     /* TestCase: V2AddlFilterTests_SPEC2_20_Action_filter15 */
     /* Details: "The order the container uses in building the chain of */
     /* filters to be applied for a particular request is the order in */
@@ -73,14 +68,13 @@ public class AddlFilterTests_SPEC2_20_FilterMultiple
     if (portletNameAction != null && portletNameAction.equals("AddlFilterTests_SPEC2_20_Action")
         && filterName.equals("AddlFilterTests_SPEC2_20_Filter1a")
         && AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr10a_success) {
-      AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr10b_success=true;
-    } 
-    
+      AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr10b_success = true;
+    }
+
   }
 
   public void doFilter(ActionRequest portletReq, ActionResponse portletResp, FilterChain chain)
       throws IOException, PortletException {
-    LOGGER.entering(LOG_CLASS, "filter doFilter entry");
     chain.doFilter(portletReq, portletResp);
   }
 

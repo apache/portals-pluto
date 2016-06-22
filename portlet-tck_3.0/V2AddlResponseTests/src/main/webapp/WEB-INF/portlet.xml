@@ -85,6 +85,10 @@
       <portlet-info>
          <title>AddlResponseTests_SPEC2_12_Render</title>
       </portlet-info>
+      <container-runtime-option>
+      	<name>javax.portlet.renderHeaders</name>
+      	<value>true</value>
+      </container-runtime-option>
    </portlet>
 
    <portlet>

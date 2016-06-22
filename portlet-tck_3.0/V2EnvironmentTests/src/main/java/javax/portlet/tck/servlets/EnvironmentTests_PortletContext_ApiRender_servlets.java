@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class EnvironmentTests_PortletContext_ApiRender_servlets extends HttpServlet {
-	private static final String LOG_CLASS = 
+  private static final long serialVersionUID = 1L;
+  private static final String LOG_CLASS = 
 			   EnvironmentTests_PortletContext_ApiRender_servlets.class.getName();
 		   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 

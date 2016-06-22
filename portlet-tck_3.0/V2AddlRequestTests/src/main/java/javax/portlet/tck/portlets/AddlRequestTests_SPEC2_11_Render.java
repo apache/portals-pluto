@@ -15,13 +15,31 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.tck.beans.*;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
+import javax.portlet.tck.beans.TestButton;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.beans.TestSetupLink;
+
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS10;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS13;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS6;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS11;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PUBLICRENDERPARAMETERS15;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PUBLICRENDERPARAMETERS16;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS15;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -32,11 +50,10 @@ import static javax.portlet.tck.constants.Constants.*;
  * This is the main portlet for the test cases. If the test cases call for events, this portlet will
  * initiate the events, but not process them. The processing is done in the companion portlet
  * AddlRequestTests_SPEC2_11_Render_event
+ * 
  * @author ahmed
  */
 public class AddlRequestTests_SPEC2_11_Render implements Portlet {
-  private static final String LOG_CLASS = AddlRequestTests_SPEC2_11_Render.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -47,7 +64,6 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
     String action = portletReq.getParameter("inputval");
     if (V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS10.equals(action)
@@ -78,7 +94,6 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
@@ -309,7 +324,8 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
       } else {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tr3a", "true");
-        TestSetupLink tl = new TestSetupLink("V2AddlRequestTests_SPEC2_11_Render_parameters15", purl);
+        TestSetupLink tl =
+            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Render_parameters15", purl);
         tl.writeTo(writer);
       }
     }

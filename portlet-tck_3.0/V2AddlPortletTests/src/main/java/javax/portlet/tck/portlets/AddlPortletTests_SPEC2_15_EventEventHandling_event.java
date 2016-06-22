@@ -15,28 +15,56 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.logging.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.logging.Logger;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Event;
+import javax.portlet.EventPortlet;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
 import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
-import static javax.portlet.PortletSession.*;
+
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT9;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT6;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT6;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT7;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT8;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT10;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT11;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT15;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT16;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 import static javax.xml.XMLConstants.NULL_NS_URI;
 
 /**
  * This is the event processing portlet for the test cases. This portlet processes events, but does
  * not publish them. Events are published in the main portlet for the test cases.
+ * 
  * @author ahmed
  */
-public class AddlPortletTests_SPEC2_15_EventEventHandling_event
-    implements Portlet, EventPortlet {
+public class AddlPortletTests_SPEC2_15_EventEventHandling_event implements Portlet, EventPortlet {
   private static final String LOG_CLASS =
       AddlPortletTests_SPEC2_15_EventEventHandling_event.class.getName();
   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-  
+
   public static boolean tr8 = false;
 
   @Override
@@ -54,8 +82,6 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_event
   @Override
   public void processEvent(EventRequest portletReq, EventResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion processEvent");
-
 
     portletResp.setRenderParameters(portletReq);
 
@@ -67,7 +93,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_event
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
     Event event = portletReq.getEvent();
     String qName = event.getName();
-    LOGGER.entering(LOG_CLASS, "Event name is "+event.getQName().getNamespaceURI());
+    LOGGER.entering(LOG_CLASS, "Event name is " + event.getQName().getNamespaceURI());
     if (qName.equals("AddlPortletTests_SPEC2_15_EventEventHandling_empty")) {
       /* TestCase: V2AddlPortletTests_SPEC2_15_EventEventHandling_event9 */
       /* Details: "If the Event object does not have a value set when the */
@@ -92,7 +118,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_event
       // is passed
       tr11.setTcSuccess(true);
       tr11.writeTo(writer);
-      
+
       /* TestCase: V2AddlPortletTests_SPEC2_15_EventEventHandling_eventProcessEvent5 */
       /* Details: "If an event is published with only the local part of the */
       /* Qname and no default namespace is defined in the deployment */
@@ -100,10 +126,11 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_event
       /* used as the Qname namespace" */
       TestResult tr13 = tcd
           .getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT5);
-      if(event.getQName().getNamespaceURI().equals(NULL_NS_URI)){
+      if (event.getQName().getNamespaceURI().equals(NULL_NS_URI)) {
         tr13.setTcSuccess(true);
       } else {
-        tr13.appendTcDetail("Failure because Qname namespace is not equal to \""+NULL_NS_URI+"\" but \""+event.getQName().getNamespaceURI()+"\"");
+        tr13.appendTcDetail("Failure because Qname namespace is not equal to \"" + NULL_NS_URI
+            + "\" but \"" + event.getQName().getNamespaceURI() + "\"");
       }
       tr13.writeTo(writer);
     } else if (qName.equals("AddlPortletTests_SPEC2_15_EventEventHandling_serializableData")) {
@@ -127,8 +154,8 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_event
       /* method, all operations on the EventResponse must be ignored" */
       portletResp.setRenderParameter("tr7", "true");
       portletReq.getPortletSession().setAttribute(
-          Constants.RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_15_EventEventHandling_exception",
-          "true", APPLICATION_SCOPE);
+          RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_15_EventEventHandling_exception", "true",
+          APPLICATION_SCOPE);
       throw new PortletException(
           "Exception from V2AddlPortletTests_SPEC2_15_EventEventHandling_event15");
     } else if (qName.equals("AddlPortletTests_SPEC2_15_EventEventHandling")) {
@@ -141,7 +168,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_event
           tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT5);
       if (event != null) {
         tr0.setTcSuccess(true);
-      } 
+      }
       tr0.writeTo(writer);
 
       /* TestCase: V2AddlPortletTests_SPEC2_15_EventEventHandling_event6 */
@@ -231,15 +258,13 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_event
         APPLICATION_SCOPE);
     msg = msg + writer.toString();
     portletReq.getPortletSession().setAttribute(
-        Constants.RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_15_EventEventHandling_event", msg,
+        RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_15_EventEventHandling_event", msg,
         APPLICATION_SCOPE);
   }
 
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-
-    LOGGER.entering(LOG_CLASS, "event companion render");
 
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
 
@@ -254,12 +279,12 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_event
         + (String) portletReq.getPortletSession().getAttribute(
             RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_15_EventEventHandling", APPLICATION_SCOPE);
     msg = (msg.equals("nullnull")) ? "Not ready. click test case link." : msg;
-    
+
     portletReq.getPortletSession().setAttribute(
-        RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_15_EventEventHandling_event",null,
+        RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_15_EventEventHandling_event", null,
         APPLICATION_SCOPE);
     portletReq.getPortletSession().setAttribute(
-        RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_15_EventEventHandling",null,
+        RESULT_ATTR_PREFIX + "AddlPortletTests_SPEC2_15_EventEventHandling", null,
         APPLICATION_SCOPE);
 
     /* TestCase: V2AddlPortletTests_SPEC2_15_EventEventHandling_event15 */

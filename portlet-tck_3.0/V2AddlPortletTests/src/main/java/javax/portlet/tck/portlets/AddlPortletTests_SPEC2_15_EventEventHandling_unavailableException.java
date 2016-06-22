@@ -15,14 +15,29 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Logger;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.EventPortlet;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
 import javax.portlet.UnavailableException;
 
 /**
  * This is the event processing portlet for the test cases. This portlet processes events, but does
  * not publish them. Events are published in the main portlet for the test cases.
+ * 
  * @author ahmed
  */
 public class AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException
@@ -55,7 +70,6 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException
   @Override
   public void processEvent(EventRequest portletReq, EventResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion processEvent");
     /* TestCase: V2AddlPortletTests_SPEC2_15_EventEventHandling_event16 */
     /* Details: "If a portlet throws a permanent UnavailableException */
     /* during event processing, the portlet container must remove the */
@@ -68,7 +82,6 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException
   @Override
   public void render(RenderRequest request, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion render");
     portletResp.setContentType("text/html");
     PrintWriter writer = portletResp.getWriter();
     writer.write("<h3>Event Companion Portlet </h3>\n");

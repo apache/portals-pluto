@@ -34,6 +34,7 @@
          <title>PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource</title>
       </portlet-info>
    </portlet>
+   
    <portlet>
       <portlet-name>PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr39</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr39</portlet-class>
@@ -44,6 +45,19 @@
       <supported-locale>en_US</supported-locale>
       <portlet-info>
          <title>PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr39</title>
+      </portlet-info>
+   </portlet>
+   
+   <portlet>
+      <portlet-name>PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr40</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr40</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_tr40</title>
       </portlet-info>
    </portlet>
 
