@@ -74,4 +74,7 @@ public interface PortletResponseContext
      * If any outstanding changes have not been processed yet, those will be lost.
      */
     void release();
+    
+    // needed for action scoped request attribute processing
+    void setActionScopedId(String windowId, String[] values);
 }

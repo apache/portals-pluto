@@ -38,6 +38,17 @@
 		<portlet-info>
 			<title>AddlEnvironmentTests_SPEC2_10_ContextOptions</title>
 		</portlet-info>
+
+      <supported-processing-event>
+         <qname>tck:AddlEnvironmentTests_SPEC2_10_ContextOptions</qname>
+      </supported-processing-event>
+      <supported-publishing-event>
+         <qname>tck:AddlEnvironmentTests_SPEC2_10_ContextOptions</qname>
+      </supported-publishing-event>
+      <supported-publishing-event>
+         <qname>tck:AddlEnvironmentTests_SPEC2_10_ContextOptions_event</qname>
+      </supported-publishing-event>
+
 		<container-runtime-option>
 			<name>javax.portlet.actionScopedRequestAttributes</name>
 			<value>true</value>
@@ -53,6 +64,26 @@
 			<value>PORTLET_SCOPE</value>
 		</container-runtime-option>
 	</portlet>
+
+   <portlet>
+      <portlet-name>AddlEnvironmentTests_SPEC2_10_ContextOptions_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_10_ContextOptions_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlEnvironmentTests_SPEC2_10_ContextOptions_event</title>
+      </portlet-info>
+
+      <supported-processing-event>
+         <qname>tck:AddlEnvironmentTests_SPEC2_10_ContextOptions_event</qname>
+      </supported-processing-event>
+      <supported-publishing-event>
+         <qname>tck:AddlEnvironmentTests_SPEC2_10_ContextOptions</qname>
+      </supported-publishing-event>
+   </portlet>
 
 	<portlet>
 		<portlet-name>AddlEnvironmentTests_SPEC2_17_ActionPreferences</portlet-name>
@@ -285,6 +316,16 @@
 		<qname>tck:AddlEnvironmentTests_SPEC2_17_EventPreferences</qname>
 		<value-type>java.lang.String</value-type>
 	</event-definition>
+
+   <event-definition>
+      <qname>tck:AddlEnvironmentTests_SPEC2_10_ContextOptions</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AddlEnvironmentTests_SPEC2_10_ContextOptions_event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
 	<public-render-parameter>
 		<identifier>tckPRP1</identifier>

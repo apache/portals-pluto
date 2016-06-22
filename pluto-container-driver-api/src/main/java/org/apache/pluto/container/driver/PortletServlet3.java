@@ -356,7 +356,7 @@ public class PortletServlet3 extends HttpServlet {
             
             LOG.debug("Extracted wrapped request. Dispatch type: " + hreq.getDispatcherType());
 
-            requestContext.init(portletConfig, getServletContext(), hreq, hresp);
+            requestContext.init(portletConfig, getServletContext(), hreq, hresp, responseContext);
             requestContext.setAsyncServletRequest(request);       // store original request
             responseContext.init(hreq, hresp);
             
@@ -371,7 +371,7 @@ public class PortletServlet3 extends HttpServlet {
          
          // Not an async dispatch
          
-         requestContext.init(portletConfig, getServletContext(), request, response);
+         requestContext.init(portletConfig, getServletContext(), request, response, responseContext);
          requestContext.setExecutingRequestBody(true);
          responseContext.init(request, response);
 

@@ -174,6 +174,7 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
    public final static String               V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES3  = "V2AddlEnvironmentTests_SPEC2_10_ContextOptions_actionScopedRequestAttributes3";
    public final static String               V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES4  = "V2AddlEnvironmentTests_SPEC2_10_ContextOptions_actionScopedRequestAttributes4";
    public final static String               V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES5  = "V2AddlEnvironmentTests_SPEC2_10_ContextOptions_actionScopedRequestAttributes5";
+   public final static String               V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES5A  = "V2AddlEnvironmentTests_SPEC2_10_ContextOptions_actionScopedRequestAttributes5a";
    public final static String               V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES6  = "V2AddlEnvironmentTests_SPEC2_10_ContextOptions_actionScopedRequestAttributes6";
    public final static String               V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES7  = "V2AddlEnvironmentTests_SPEC2_10_ContextOptions_actionScopedRequestAttributes7";
    public final static String               V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES8  = "V2AddlEnvironmentTests_SPEC2_10_ContextOptions_actionScopedRequestAttributes8";
@@ -1079,6 +1080,9 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
             V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES5,
             "If the option is set to TRUE and an attribute is set during an action request, the attribute can be accessed in a subsequent render request");
       tcd.put(
+            V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES5A,
+            "If the option is set to TRUE and an attribute is set during an action request, the attribute can be accessed in a subsequent resource request");
+      tcd.put(
             V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES6,
             "If the option is set to TRUE, a request attribute set during an event request is persisted in the same manner as an attribute set during action processing");
       tcd.put(
@@ -1095,13 +1099,13 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
             "If the option is set to TRUE, receiving an event with an existing scope ID after the first render for this scope had occurred starts a new action scope with a new scope ID, all previous attributes are no longer accessible, new attributes can be stored");
       tcd.put(
             V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES11,
-            "The render parameter PortletRequest.ACTION_SCOPE_ID (\"javax.portlet.as\") can be removed from a URL in a PortletURLGenerationListener");
+            "The render parameter PortletRequest.ACTION_SCOPE_ID (\"javax.portlet.as\") can be removed from a render URL");
       tcd.put(
             V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES12,
-            "The render parameter PortletRequest.ACTION_SCOPE_ID (\"javax.portlet.as\") can be removed from a ResourceURL in a PortletURLGenerationListener");
+            "The render parameter PortletRequest.ACTION_SCOPE_ID (\"javax.portlet.as\") can be removed from a resource URL");
       tcd.put(
             V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES13,
-            "If the actionScopedRequestAttributes option is set to FALSE, request attributes that are set in an action are released at the end of the request");
+            "The actionScopedRequestAttributes option can be set to TRUE");
       tcd.put(V2ADDLENVIRONMENTTESTS_SPEC2_17_ACTIONPREFERENCES_SETVALUES4,
             "The setValues method allows the value array to be set to  null");
       tcd.put(

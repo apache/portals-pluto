@@ -47,9 +47,13 @@ import javax.portlet.tck.constants.Constants;
  */
 public class TestButton {
 
-   private String     tcName;
-   private String     urlstr;
-   private PortletURL purl;
+   protected String     tcName;
+   protected String     urlstr;
+   protected PortletURL purl;
+   protected String     actId;
+   protected String     title = " Execute Button:";
+   protected String     paramName;
+
 
    /**
     * Creates an empty test result.
@@ -58,6 +62,8 @@ public class TestButton {
       tcName = "";
       purl = null;
       urlstr = null;
+      actId = "";
+      paramName = "";
    }
 
    /**
@@ -72,6 +78,8 @@ public class TestButton {
       this.tcName = tcName;
       this.purl = purl;
       this.urlstr = null;
+      this.paramName = tcName;
+      this.actId = tcName + Constants.CLICK_ID;
    }
 
    /**
@@ -87,6 +95,8 @@ public class TestButton {
       this.tcName = tcName;
       this.urlstr = urlstr;
       this.purl = null;
+      this.paramName = tcName;
+      this.actId = tcName + Constants.CLICK_ID;
    }
 
    /**
@@ -99,7 +109,6 @@ public class TestButton {
     */
    @Override
    public String toString() {
-      final String actId = tcName + Constants.CLICK_ID;
 
       if (urlstr == null)
          urlstr = purl.toString();
@@ -109,10 +118,10 @@ public class TestButton {
       sb.append("'>");
       sb.append("<h4>");
       sb.append(tcName);
-      sb.append(" button (POST):");
+      sb.append(title);
       sb.append("</h4>");
       sb.append("<form  class='portletTCKButton'" + " action='" + urlstr + "' method='post'>");
-      sb.append("<input type='submit' value='").append(tcName);
+      sb.append("<input type='submit' value='").append(paramName);
       sb.append("'  name='").append(Constants.BUTTON_PARAM_NAME);
       sb.append("'  id='").append(actId);
       sb.append("'/>");

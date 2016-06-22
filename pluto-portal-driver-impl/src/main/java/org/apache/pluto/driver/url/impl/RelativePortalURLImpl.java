@@ -17,12 +17,15 @@
 package org.apache.pluto.driver.url.impl;
 
 import static org.apache.pluto.driver.url.PortalURLParameter.PARAM_TYPE_PUBLIC;
+import static org.apache.pluto.driver.url.PortalURLParameter.PARAM_TYPE_RESOURCE;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletMode;
@@ -437,13 +440,38 @@ public class RelativePortalURLImpl implements PortalURL {
     * url.PortalURL.URLType)
     */
    public void setType(URLType type) {
+      
+      // Special handling for persistent parameters with resource URLs.
+      // "promote" them to be resource parameters so that they can be deleted.
+      // (for actionScopedResuestAttribute support)
+      
+      List<PortalURLParameter> promotes = new ArrayList<PortalURLParameter>();
+      if (type.equals(URLType.Resource)) {
+         for (PortalURLParameter pup : parameters) {
+            if (pup.isPersistent()) {
+               promotes.add(pup);
+            }
+         }
+      }
+      
+      // Note: need to do it like this due to the HashSet implementation of 'parameters'
+      for (PortalURLParameter pup : promotes) {
+         parameters.remove(pup);
+         pup.setType(PARAM_TYPE_RESOURCE);
+         parameters.add(pup);
+      }
+      
       if (isTrace) {
          long tid = Thread.currentThread().getId();
          StringBuilder txt = new StringBuilder();
          txt.append("old type= ").append(this.type);
          txt.append(", new type= ").append(type);
          txt.append(", clone ID= ").append(cloneId);
-         txt.append(". ThreadId=").append(tid);
+         txt.append(", ThreadId=").append(tid);
+         txt.append(", promoted params:");
+         for (PortalURLParameter pup : promotes) {
+            txt.append("\n   ").append(pup.toString());
+         }
          LOG.debug(txt.toString());
       }
       this.type = type;
@@ -503,12 +531,21 @@ public class RelativePortalURLImpl implements PortalURL {
          HashSet<PortalURLParameter> rem = new HashSet<PortalURLParameter>();
          for (PortalURLParameter pup : parameters) {
             if (pup.getType().equals(paramType)
-                  && pup.getWindowId().equals(window)) {
+                  && pup.getWindowId().equals(window) && !pup.isPersistent()) {
                rem.add(pup);
             }
          }
          removed = rem.size();
          parameters.removeAll(rem);
+         
+         if (isTrace) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("Cleared private parameters:");
+            for (PortalURLParameter pup : rem) {
+               txt.append("\n   ").append(pup.toString());
+            }
+            LOG.debug(txt.toString());
+         }
       }
       if (isTrace) {
          StringBuilder txt = new StringBuilder("Removing ");
@@ -579,11 +616,9 @@ public class RelativePortalURLImpl implements PortalURL {
    public void removeParameter(PortalURLParameter param) {
       handleServletRequestParams();
       if (isTrace) {
-         StringBuilder txt = new StringBuilder(
-               "Removing private render parameter: ");
-         txt.append(" window ID: " + param.getWindowId());
-         txt.append(", Name: " + param.getName());
-         txt.append(", Values: " + Arrays.toString(param.getValues()));
+         StringBuilder txt = new StringBuilder();
+         txt.append("Removing private render parameter: ");
+         txt.append(param.toString());
          if (!parameters.contains(param)) {
             txt.append(", Not in parameter set!");
          }

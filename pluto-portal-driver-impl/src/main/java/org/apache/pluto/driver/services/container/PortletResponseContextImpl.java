@@ -16,9 +16,11 @@
  */
 package org.apache.pluto.driver.services.container;
 
+import static javax.portlet.PortletRequest.ACTION_SCOPE_ID;
 import static javax.portlet.PortletRequest.HEADER_PHASE;
 import static javax.portlet.PortletRequest.RENDER_PHASE;
 import static javax.portlet.PortletRequest.RESOURCE_PHASE;
+import static org.apache.pluto.driver.url.PortalURLParameter.PARAM_TYPE_RENDER;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,12 +39,14 @@ import org.apache.pluto.container.HeaderData;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletResponseContext;
+import org.apache.pluto.container.PortletStateAwareResponseContext;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletURLProvider.TYPE;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.ResourceURLProvider;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURLParameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMException;
@@ -346,5 +350,27 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
    public PortletURLProvider getPortletURLProvider(TYPE type) {
       return isClosed() ? null : 
          new PortletURLProviderImpl(getPortalURL(), type, getPortletWindow(), getRequestContext());
+   }
+   
+   /**
+    * Used when action scoped request attribute processing is active in order
+    * to set the scope ID render parameter on the response and generated URLs
+    * 
+    * @param values     The values array to set. If null, the parameter is removed.
+    */
+   @Override
+   public void setActionScopedId(String windowId, String[] values) {
+      if (this instanceof PortletStateAwareResponseContext) {
+         ((PortletStateAwareResponseContext)this).getRenderParameters(windowId).setValues(ACTION_SCOPE_ID, values);
+      }
+      else {
+         PortalURLParameter pup = new PortalURLParameter(windowId, ACTION_SCOPE_ID, values, PARAM_TYPE_RENDER);
+         if (values == null) {
+            this.getPortalURL().removeParameter(pup);
+         } else {
+            pup.setPersistent(true);
+            this.getPortalURL().setParameter(pup);
+         }
+      }
    }
 }

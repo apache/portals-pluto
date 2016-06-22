@@ -16,17 +16,25 @@
 
 package javax.portlet.tck.servlets;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-
-import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_HTTPSESSION5;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_SETMAXINACTIVEINTERVAL;
+import static javax.portlet.tck.constants.Constants.BUTTON_PARAM_NAME;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Logger;
+
+import javax.portlet.MimeResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletSession;
+import javax.portlet.PortletURL;
+import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
+import javax.portlet.tck.beans.TestLink;
+import javax.portlet.tck.beans.TestResult;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet for JSR 362 request dispatcher testing. Used by portlet:
@@ -74,17 +82,30 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions_invalidate2 extends HttpServ
     /* Details: "If the PortletSession object is invalidated by a */
     /* portlet, the portlet container must invalidate the associated */
     /* HttpSession object" */
-    TestResult tr23 =
-        tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_HTTPSESSION5);
-    portletSession.invalidate();
-    HttpSession httpSession = request.getSession();
-    if(httpSession.isNew()){
-      tr23.setTcSuccess(true);
-    } else {
-      tr23.appendTcDetail("Failed because session is not invalidated.");
+    {
+       String tcid = portletReq.getParameter(BUTTON_PARAM_NAME);
+       if (tcid == null || !tcid.equals(V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_HTTPSESSION5)) {
+          
+          // generate test link 
+          
+          PortletURL rurl = ((MimeResponse)portletResp).createRenderURL();
+          rurl.setParameter(BUTTON_PARAM_NAME, V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_HTTPSESSION5);
+          TestLink tl = new TestLink(V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_HTTPSESSION5, rurl);
+          tl.writeTo(writer);
+       } else {
+          
+          // perform test
+          
+          TestResult result = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_HTTPSESSION5);
+          portletSession.invalidate();
+          if (!request.isRequestedSessionIdValid()) {
+            result.setTcSuccess(true);
+          } else {
+            result.appendTcDetail("Failed because session is not invalidated.");
+          }
+          result.writeTo(writer);
+       }
     }
-    
-    tr23.writeTo(writer);
     
   }
 }
