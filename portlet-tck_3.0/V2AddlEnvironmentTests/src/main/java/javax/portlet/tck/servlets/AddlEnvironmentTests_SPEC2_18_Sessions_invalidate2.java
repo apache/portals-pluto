@@ -21,7 +21,6 @@ import static javax.portlet.tck.constants.Constants.BUTTON_PARAM_NAME;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Logger;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
@@ -44,13 +43,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  */
 public class AddlEnvironmentTests_SPEC2_18_Sessions_invalidate2 extends HttpServlet {
-  /**
-   * 
-   */
   private static final long serialVersionUID = 2L;
-  private static final String LOG_CLASS =
-      AddlEnvironmentTests_SPEC2_18_Sessions_invalidate2.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -67,7 +60,6 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions_invalidate2 extends HttpServ
   // The tck uses only get & post requests
   protected void processTCKReq(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    LOGGER.entering(LOG_CLASS, "servlet entry");
 
     PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
     PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");

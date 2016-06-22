@@ -16,10 +16,13 @@
 
 package javax.portlet.tck.servlets;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet for JSR 362 request dispatcher testing. Used by portlet:
@@ -33,9 +36,6 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions_invalidate1 extends HttpServ
    * 
    */
   private static final long serialVersionUID = 2L;
-  private static final String LOG_CLASS =
-      AddlEnvironmentTests_SPEC2_18_Sessions_invalidate1.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -52,7 +52,6 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions_invalidate1 extends HttpServ
   // The tck uses only get & post requests
   protected void processTCKReq(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    LOGGER.entering(LOG_CLASS, "servlet entry");
     HttpSession httpSession = request.getSession();
     httpSession.invalidate();
   }

@@ -1133,10 +1133,10 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
             V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_RESET1,
             "The reset method sets the value of the specified preference to its default value. The actual default value itself is implementation-specific and cannot be tested.");
       tcd.put(V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_STORE1,
-            "The store method persists preference changes previously made during the processAction method");
+            "The store method persists preference changes previously made during the processEvent method");
       tcd.put(
             V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_STORE4,
-            "If preference changes are made during the processAction method, but the method completes without store being called, the preference changes are discarded");
+            "If preference changes are made during the processEvent method, but the method completes without store being called, the preference changes are discarded");
       tcd.put(V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_DEPLOYMENT3,
             "A preference attribute definition may indicate if the attribute is read only");
       tcd.put(

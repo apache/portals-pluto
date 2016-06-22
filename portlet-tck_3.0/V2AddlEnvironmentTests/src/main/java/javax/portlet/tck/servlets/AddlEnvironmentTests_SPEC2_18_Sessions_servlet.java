@@ -16,15 +16,6 @@
 
 package javax.portlet.tck.servlets;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-
-import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_GETCREATIONTIME;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_GETID;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_GETLASTACCESSTIME;
@@ -35,6 +26,22 @@ import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMEN
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_ISNEW;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_SETMAXINACTIVEINTERVAL;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.MimeResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletSession;
+import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.constants.Constants;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 /**
  * Servlet for JSR 362 request dispatcher testing. Used by portlet:
  * AddlEnvironmentTests_SPEC2_18_Sessions
@@ -43,13 +50,7 @@ import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMEN
  *
  */
 public class AddlEnvironmentTests_SPEC2_18_Sessions_servlet extends HttpServlet {
-  /**
-   * 
-   */
   private static final long serialVersionUID = 2L;
-  private static final String LOG_CLASS =
-      AddlEnvironmentTests_SPEC2_18_Sessions_servlet.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -66,7 +67,6 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions_servlet extends HttpServlet 
   // The tck uses only get & post requests
   protected void processTCKReq(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    LOGGER.entering(LOG_CLASS, "servlet entry");
 
     PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
     PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");

@@ -39,7 +39,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -62,8 +61,8 @@ import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.ResourceLink;
 import javax.portlet.tck.beans.TestButton;
 import javax.portlet.tck.beans.TestLink;
-import javax.portlet.tck.beans.TestSetupButton;
 import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.beans.TestSetupButton;
 import javax.portlet.tck.constants.Constants;
 import javax.xml.namespace.QName;
 
@@ -78,8 +77,6 @@ import javax.xml.namespace.QName;
  * 
  */
 public class AddlEnvironmentTests_SPEC2_10_ContextOptions implements Portlet, ResourceServingPortlet, EventPortlet {
-   private static final String LOG_CLASS     = AddlEnvironmentTests_SPEC2_10_ContextOptions.class.getName();
-   private final Logger        LOGGER        = Logger.getLogger(LOG_CLASS);
 
    private static final String ATTRIB_NAME   = "attribName";
 
@@ -268,7 +265,6 @@ public class AddlEnvironmentTests_SPEC2_10_ContextOptions implements Portlet, Re
       TestResult tr0 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_CONTAINERRUNTIMEOPTIONS1);
       Enumeration<String> runtimeOptions = portletConfig.getPortletContext().getContainerRuntimeOptions();
       if (runtimeOptions != null && runtimeOptions.hasMoreElements()) {
-         LOGGER.entering(LOG_CLASS, runtimeOptions.nextElement());
          tr0.setTcSuccess(true);
       } else {
          tr0.appendTcDetail("Failed because getContainerRuntimeOptions() returned null or no elements");
