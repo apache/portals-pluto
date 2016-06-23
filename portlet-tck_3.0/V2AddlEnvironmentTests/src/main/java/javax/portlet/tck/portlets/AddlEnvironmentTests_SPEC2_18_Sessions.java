@@ -62,6 +62,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.TestLink;
 import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.beans.TestSetupLink;
 import javax.portlet.tck.constants.Constants;
 
 /**
@@ -131,9 +132,17 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions implements Portlet {
     /* APPLICATION_SCOPE is available to any portlet that belongs to the */
     /* same portlet application and that handles a request in the same */
     /* session" */
-    portletReq.getPortletSession().setAttribute(
-          V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_SCOPE3, "true",
-        APPLICATION_SCOPE);
+    {
+       portletReq.getPortletSession().setAttribute(
+             V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_SCOPE3, "true",
+           APPLICATION_SCOPE);
+       
+       // add setup link to make sure this is executed before the testing portlet executes.
+       PortletURL rurl = portletResp.createRenderURL();
+       rurl.setParameter(BUTTON_PARAM_NAME, V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_SCOPE3);
+       TestSetupLink link = new TestSetupLink(V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_SCOPE3, rurl);
+       link.writeTo(writer);
+    }
 
     /* TestCase: V2AddlEnvironmentTests_SPEC2_18_Sessions_scope4 */
     /* Details: "Any Object stored in the session using the PORTLET_SCOPE */
