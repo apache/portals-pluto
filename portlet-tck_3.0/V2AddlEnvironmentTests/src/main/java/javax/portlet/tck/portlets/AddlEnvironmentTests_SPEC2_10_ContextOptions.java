@@ -410,7 +410,7 @@ public class AddlEnvironmentTests_SPEC2_10_ContextOptions implements Portlet, Re
          if (tc != null && tc.equals(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES5A)) {
             ResourceURL resurl = portletResp.createResourceURL();
             ResourceLink rl = new ResourceLink(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES5A, resurl);
-            rl.writeGetResource(writer);
+            rl.writeResourceFetcherImmediate(writer);
          }
          PortletURL aurl = portletResp.createActionURL();
          TestButton tb = new TestButton(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES5A, aurl);
@@ -691,7 +691,7 @@ public class AddlEnvironmentTests_SPEC2_10_ContextOptions implements Portlet, Re
                   rurl.setParameter(Constants.BUTTON_PARAM_NAME, V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES12);
                   rurl.setParameter(PortletRequest.ACTION_SCOPE_ID, (String)null);
                   ResourceLink link = new ResourceLink(V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXTOPTIONS_ACTIONSCOPEDREQUESTATTRIBUTES12, rurl);
-                  link.writeGetResource(writer);
+                  link.writeResourceFetcherImmediate(writer);
 
                }
 

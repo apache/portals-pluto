@@ -212,13 +212,12 @@ public class ResourceLink {
    /**
     * Writes resource-fetching JavaScript code into the output stream.
     * The resource is retrieved without waiting for a link to be clicked. 
-    * This method does not handle test results.
     * 
     * @param writer
     *           Writer to which the string is written
     * @throws IOException
     */
-   public void writeGetResource(Writer writer) throws IOException {
+   public void writeResourceFetcherImmediate(Writer writer) throws IOException {
 
       if (urlstr == null)
          urlstr = rurl.toString();
