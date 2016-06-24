@@ -144,11 +144,6 @@ public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServ
         /* TestCase: V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters16 */
         /* Details: "A map of public parameters can be obtained through the */
         /* getPublicParameterMap method" */
-        /*
-         * TODO: getPublicParameterMap() not working. See -
-         * V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters12 The public render parameter
-         * is accessible with getParameterValues("tckPRP4")
-         */
         TestResult tr5 = tcd
             .getTestResultFailed("V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters16");
         if (portletReq.getPublicParameterMap() != null
@@ -162,11 +157,6 @@ public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServ
         /* TestCase: V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters7 */
         /* Details: "Public render parameters are available in the */
         /* serveResource method" */
-        /*
-         * TODO: getPublicParameterMap() not working. See -
-         * V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters12 The public render parameter
-         * is accessible with getParameterValues("tckPRP4")
-         */
         TestResult tr6 =
             tcd.getTestResultFailed("V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters7");
         Map<String, String[]> publicParamMapTr6 = portletReq.getPublicParameterMap();

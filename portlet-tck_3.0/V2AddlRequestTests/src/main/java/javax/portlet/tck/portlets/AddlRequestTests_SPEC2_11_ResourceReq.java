@@ -125,24 +125,18 @@ public class AddlRequestTests_SPEC2_11_ResourceReq implements Portlet, ResourceS
     /* Details: "If a portlet defines support for all content types using */
     /* a wildcard and the portlet container supports all content types, */
     /* the getResponseContentType may return the wildcard" */
-    TestResult tr3 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE4);
-    if (portletReq.getResponseContentType().equals("*/*")) {
-      tr3.setTcSuccess(true);
-    } else {
-      tr3.appendTcDetail("Content type is " + portletReq.getResponseContentType());
-    }
+    TestResult tr3 = tcd.getTestResultSucceeded(V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE4);
+    tr3.appendTcDetail("Can't be tested, since the implementation defines the supported content types.");
+    tr3.appendTcDetail("Content type is " + portletReq.getResponseContentType());
     tr3.writeTo(writer);
 
     /* TestCase: V2AddlRequestTests_SPEC2_11_ResourceReq_contentType5 */
     /* Details: "If a portlet defines support for all content types using */
     /* a wildcard and the portlet container supports all content types, */
     /* the getResponseContentType may return the preferred content type" */
-    TestResult tr4 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE5);
-    if (portletReq.getResponseContentType().equals("*/*")) {
-      tr4.setTcSuccess(true);
-    } else {
-      tr4.appendTcDetail("Content type is " + portletReq.getResponseContentType());
-    }
+    TestResult tr4 = tcd.getTestResultSucceeded(V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE5);
+    tr4.appendTcDetail("Can't be tested, since the implementation defines the supported content types.");
+    tr4.appendTcDetail("Content type is " + portletReq.getResponseContentType());
     tr4.writeTo(writer);
 
     /* TestCase: V2AddlRequestTests_SPEC2_11_ResourceReq_windowId4 */

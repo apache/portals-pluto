@@ -48,12 +48,12 @@
       <portlet-info>
          <title>AddlRequestTests_SPEC2_11_Event</title>
       </portlet-info>
-      <supported-publishing-event>
-         <qname>tck:AddlRequestTests_SPEC2_11_Event</qname>
-      </supported-publishing-event>
       <supported-processing-event>
          <qname>tck:AddlRequestTests_SPEC2_11_Event</qname>
       </supported-processing-event>
+      <supported-publishing-event>
+         <qname>tck:AddlRequestTests_SPEC2_11_Event</qname>
+      </supported-publishing-event>
       <supported-public-render-parameter>tckPRP2</supported-public-render-parameter>
    </portlet>
 
@@ -115,6 +115,7 @@
          <title>AddlRequestTests_SPEC2_11_Resource</title>
       </portlet-info>
       <supported-public-render-parameter>tckPRP2</supported-public-render-parameter>
+      <supported-public-render-parameter>tckPRP4</supported-public-render-parameter>
    </portlet>
 
    <portlet>

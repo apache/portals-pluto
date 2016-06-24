@@ -15,10 +15,21 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.ResourceURL.PAGE;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING4;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CONTENTTYPE5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE10;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE11;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE12;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE8;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE9;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -36,18 +47,6 @@ import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.TestButton;
 import javax.portlet.tck.beans.TestResult;
 import javax.servlet.http.Cookie;
-
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE9;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE8;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE10;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE11;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CONTENTTYPE5;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING4;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE12;
-import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
-import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.APPLICATION_SCOPE;
-import static javax.portlet.ResourceURL.PAGE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -308,7 +307,6 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
     /* TestCase: V2AddlResponseTests_SPEC2_12_Render_characterEncoding4 */
     /* Details: "If the portlet does not set the character encoding, the */
     /* portlet container uses UTF-8 as the default character encoding" */
-    // TODO: Fix test case or remove
     TestResult tr8 =
         tcd.getTestResultFailed(V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING4);
     if (portletResp.getCharacterEncoding().equals("UTF-8")) {
