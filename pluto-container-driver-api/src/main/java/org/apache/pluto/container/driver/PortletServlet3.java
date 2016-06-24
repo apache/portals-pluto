@@ -121,7 +121,7 @@ public class PortletServlet3 extends HttpServlet {
     * The internal portlet config instance.
     */
    private DriverPortletConfig    portletConfig;
-
+   private boolean isOutOfService = false;
    private PortletContextService  contextService;
 
    private boolean                started = false;
@@ -217,11 +217,25 @@ public class PortletServlet3 extends HttpServlet {
          try {
             invoker.init(portletConfig);
             return true;
-         } catch (Exception ex) {
-            context.log(ex.getMessage(), ex);
+         } catch (Throwable ex) {
+ 
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("Portlet threw exception during initialization and will be taken out of service. Portlet name: ");
+            txt.append(portletName).append(". Exiting. Exception: ");
+
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            ex.printStackTrace(pw);
+            pw.flush();
+            txt.append(sw.toString());
+            
+            LOG.error(txt.toString());
+
             // take out of service
+            
             invoker = null;
             portletConfig = null;
+            isOutOfService = true;
             return true;
          }
       }
@@ -287,12 +301,19 @@ public class PortletServlet3 extends HttpServlet {
          txt.append(", request URI: ").append(request.getRequestURI());
          LOG.debug(txt.toString());
       }
-      if (invoker == null) {
-         throw new javax.servlet.UnavailableException("Portlet " + portletName + " unavailable");
-      }
 
       // Retrieve attributes from the servlet request.
       Integer methodId = (Integer) request.getAttribute(PortletInvokerService.METHOD_ID);
+      
+      // check for out of service. If it's a render, display string.
+      if (isOutOfService) {
+         LOG.warn("Portlet is out of service. Portlet name: " + portletName);
+         if (methodId == PortletInvokerService.METHOD_RENDER) {
+            PrintWriter writer = response.getWriter();
+            writer.write("<p>Out of service.</p>");
+         }
+         return;
+      }
 
       final PortletRequest portletRequest = (PortletRequest) request
             .getAttribute(PortletInvokerService.PORTLET_REQUEST);
@@ -469,8 +490,9 @@ public class PortletServlet3 extends HttpServlet {
             // Don't care for Exception
             this.getServletContext().log("Error during portlet destroy.", th);
          }
+         
          // take portlet out of service
-         invoker = null;
+         isOutOfService = true;
 
          throw new javax.servlet.UnavailableException(ex.getMessage());
 

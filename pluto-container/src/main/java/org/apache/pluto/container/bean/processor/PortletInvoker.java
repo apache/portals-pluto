@@ -42,6 +42,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceServingPortlet;
+import javax.portlet.UnavailableException;
 import javax.portlet.annotations.HeaderMethod;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
@@ -180,12 +181,13 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
       assert meths.size() == 1;
       AnnotatedMethod meth = meths.get(0);
 
-      // Set up the method arguments and do the incovation
+      // Set up the method arguments and do the invocation
 
       Object[] args = new Object[] { config };
       try {
          invokePortletMethod(meth, args);
-      } catch (Exception e) {
+      } catch (Throwable t) {
+         throw new PortletException("Portlet could not be initialized.", t);
       }
 
    }
