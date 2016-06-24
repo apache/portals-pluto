@@ -236,7 +236,7 @@
       /* access to the portletSession, does not create a new session, only    */
       /* returns an existing session or null if no session exists."           */
       TestResult tr9 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_DEFINEOBJECTSRENDER10);
-      if(portletSession==null || portletSession.equals(portletReq.getPortletSession())){
+      if(portletSession != null){
         tr9.setTcSuccess(true);
       }
       tr9.writeTo(writer);
