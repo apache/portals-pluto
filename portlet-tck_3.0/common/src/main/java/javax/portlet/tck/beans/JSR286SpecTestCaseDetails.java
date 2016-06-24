@@ -350,13 +350,10 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
    public final static String               V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE11                                   = "V2AddlResponseTests_SPEC2_12_Render_cookie11";
    public final static String               V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE12                                   = "V2AddlResponseTests_SPEC2_12_Render_cookie12";
    public final static String               V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CONTENTTYPE5                               = "V2AddlResponseTests_SPEC2_12_Render_contentType5";
-   public final static String               V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING2                         = "V2AddlResponseTests_SPEC2_12_Render_characterEncoding2";
-   public final static String               V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING3                         = "V2AddlResponseTests_SPEC2_12_Render_characterEncoding3";
    public final static String               V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING4                         = "V2AddlResponseTests_SPEC2_12_Render_characterEncoding4";
    public final static String               V2ADDLRESPONSETESTS_SPEC2_12_RESOURCE_COOKIE13                                 = "V2AddlResponseTests_SPEC2_12_Resource_cookie13";
    public final static String               V2ADDLRESPONSETESTS_SPEC2_12_RESOURCE_COOKIE14                                 = "V2AddlResponseTests_SPEC2_12_Resource_cookie14";
    public final static String               V2ADDLRESPONSETESTS_SPEC2_12_RESOURCE_COOKIE15                                 = "V2AddlResponseTests_SPEC2_12_Resource_cookie15";
-   public final static String               V2ADDLRESPONSETESTS_SPEC2_12_RESOURCE_COOKIE16                                 = "V2AddlResponseTests_SPEC2_12_Resource_cookie16";
    public final static String               V2ADDLRESPONSETESTS_SPEC2_12_RESOURCE_COOKIE17                                 = "V2AddlResponseTests_SPEC2_12_Resource_cookie17";
    public final static String               V2ADDLRESPONSETESTS_SPEC2_12_RESOURCE_CONTENTTYPE5                             = "V2AddlResponseTests_SPEC2_12_Resource_contentType5";
    public final static String               V2ADDLRESPONSETESTS_SPEC2_12_RESOURCE_CHARACTERENCODING2                       = "V2AddlResponseTests_SPEC2_12_Resource_characterEncoding2";
@@ -1530,12 +1527,6 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
             V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CONTENTTYPE5,
             "If the setContentType method is not called before the getWriter or getPortletOutputStream method is used, the portlet container uses the content type returned by getResponseContentType");
       tcd.put(
-            V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING2,
-            "The character encoding can be set via the setLocale method and a locale-encoding-mapping-list mapping in the web.xml deployment descriptor");
-      tcd.put(
-            V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING3,
-            "The character encoding can be set via the setContentType method if the given content type string provides a value for the charset attribute");
-      tcd.put(
             V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING4,
             "If the portlet does not set the character encoding, the portlet container uses UTF-8 as the default character encoding");
       tcd.put(V2ADDLRESPONSETESTS_SPEC2_12_RESOURCE_COOKIE13,
@@ -1544,9 +1535,6 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
             "Cookies set during the Resource phase should be available to the portlet during a subsequent Resource phase");
       tcd.put(V2ADDLRESPONSETESTS_SPEC2_12_RESOURCE_COOKIE15,
             "Cookies set during the Resource phase should be available to the portlet during a subsequent Render phase");
-      tcd.put(
-            V2ADDLRESPONSETESTS_SPEC2_12_RESOURCE_COOKIE16,
-            "Cookies set during the Resource phase should be available to the portlet during a subsequent request triggered by a URL");
       tcd.put(V2ADDLRESPONSETESTS_SPEC2_12_RESOURCE_COOKIE17,
             "Cookies set during the Resource phase after the response has been committed are ignored");
       tcd.put(

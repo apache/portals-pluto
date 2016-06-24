@@ -43,8 +43,6 @@ import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETE
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE11;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CONTENTTYPE5;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING4;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING2;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING3;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE12;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
@@ -321,40 +319,6 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
     }
     tr8.writeTo(writer);
 
-
-    /* TestCase: V2AddlResponseTests_SPEC2_12_Render_characterEncoding2 */
-    /* Details: "The character encoding can be set via the setLocale */
-    /* method and a locale-encoding-mapping-list mapping in the web.xml */
-    /* deployment descriptor" */
-    // TODO: setLocale method does not exist for RenderResponse. Ask Scott to delete this test
-    // case
-    Locale loc = new Locale("en");
-    // portletResp.setLocale(loc);
-    TestResult tr6 =
-        tcd.getTestResultFailed(V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING2);
-    if (portletResp.getCharacterEncoding().equals("iso-8859-16")) {
-      tr6.setTcSuccess(true);
-    } else {
-      tr6.appendTcDetail("Failed because character encoding is not \"iso-8859-16\" but "
-          + portletResp.getCharacterEncoding());
-    }
-    tr6.writeTo(writer);
-
-    /* TestCase: V2AddlResponseTests_SPEC2_12_Render_characterEncoding3 */
-    /* Details: "The character encoding can be set via the setContentType */
-    /* method if the given content type string provides a value for the */
-    /* charset attribute" */
-    // TODO: Fix test case or remove
-    TestResult tr7 =
-        tcd.getTestResultFailed(V2ADDLRESPONSETESTS_SPEC2_12_RENDER_CHARACTERENCODING3);
-    portletResp.setContentType("text/html;charset=utf-16");
-    if (portletResp.getCharacterEncoding().equals("utf-16")) {
-      tr7.setTcSuccess(true);
-    } else {
-      tr7.appendTcDetail("Failed because character encoding is not \"utf-16\" but "
-          + portletResp.getCharacterEncoding());
-    }
-    tr7.writeTo(writer);
 
     PrintWriter printWriter = portletResp.getWriter();
     if (portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_MARKUP")) {

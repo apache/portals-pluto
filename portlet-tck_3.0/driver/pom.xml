@@ -44,6 +44,11 @@
          <artifactId>selenium-java</artifactId>
          <scope>compile</scope>
       </dependency>
+      <dependency>
+         <groupId>org.seleniumhq.selenium</groupId>
+         <artifactId>htmlunit-driver</artifactId>
+         <scope>compile</scope>
+      </dependency>
       
       <!-- PhantomJs Headless browser - Use if the default headless browser of Selenium is not working.
            In order to use - 

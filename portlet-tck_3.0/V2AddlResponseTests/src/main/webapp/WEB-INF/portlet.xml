@@ -33,12 +33,12 @@
       <portlet-info>
          <title>AddlResponseTests_SPEC2_12_Action</title>
       </portlet-info>
-      <supported-publishing-event>
-         <qname>tck:AddlResponseTests_SPEC2_12_Action</qname>
-      </supported-publishing-event>
       <supported-processing-event>
          <qname>tck:AddlResponseTests_SPEC2_12_Action</qname>
       </supported-processing-event>
+      <supported-publishing-event>
+         <qname>tck:AddlResponseTests_SPEC2_12_Action</qname>
+      </supported-publishing-event>
       <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 

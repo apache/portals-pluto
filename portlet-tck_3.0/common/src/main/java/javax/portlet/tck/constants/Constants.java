@@ -34,6 +34,9 @@ public class Constants {
    public static final String FAILURE = "Failed";
    public static final String BUTTON_PARAM_NAME="inputval";
    
+   // Render parameter name for redirect testing
+   public static final String TCKPAGE = "tckPage";
+   
    // for session attributes passing info between phases
    public static final String RESULT_ATTR_PREFIX = "attr.result.";
    

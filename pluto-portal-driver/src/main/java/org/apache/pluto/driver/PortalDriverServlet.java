@@ -222,6 +222,7 @@ public class PortalDriverServlet extends HttpServlet {
             LOG.debug("Executing header requests for target portlets.");
          }
 
+         response.setContentType("text/html;charset=UTF-8");
          doHeaders(request, response, portalURL);
 
          if (LOG.isDebugEnabled()) {

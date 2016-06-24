@@ -54,8 +54,7 @@ import org.slf4j.LoggerFactory;
  * @author Scott Nicklous
  */
 public class ActionScopedRequestAttributeHandler {
-   private static final Logger       LOG                = LoggerFactory
-                                                              .getLogger(ActionScopedRequestAttributeHandler.class);
+   private static final Logger       LOG                = LoggerFactory.getLogger(ActionScopedRequestAttributeHandler.class);
    private static final boolean      isDebug            = LOG.isDebugEnabled();
    @SuppressWarnings("unused")
    private static final boolean      isTrace            = LOG.isTraceEnabled();
@@ -66,8 +65,7 @@ public class ActionScopedRequestAttributeHandler {
    static {
       ResourceBundle configBundle = null;
       try {
-         configBundle = ResourceBundle
-               .getBundle("org.apache.pluto.driver.services.container.ActionScopedRequestAttributeHandler");
+         configBundle = ResourceBundle.getBundle("org.apache.pluto.driver.services.container.ActionScopedRequestAttributeHandler");
       } catch (Throwable t) {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Exception getting configuration file: \n");
@@ -121,25 +119,24 @@ public class ActionScopedRequestAttributeHandler {
 
    // private fields
 
-   private final PortletRequestContext      requestContext;
-   private final PortletParameterFactory    paramFactory;
-   private final String                     phase;
+   private final PortletRequestContext   requestContext;
+   private final PortletParameterFactory paramFactory;
+   private final String                  phase;
 
-   private String                           windowId;
-   private boolean                          active          = false;
-   private boolean                          settable        = false;
-   private int                              numScopes       = -1;
+   private String                        windowId;
+   private boolean                       active       = false;
+   private boolean                       settable     = false;
+   private int                           numScopes    = -1;
 
-   private SessionData                      sessionData     = null;
-   private Map<String, Object>              activeMap       = null;
+   private SessionData                   sessionData  = null;
+   private Map<String, Object>           activeMap    = null;
 
-   private Integer                          currentIndex    = null;
+   private Integer                       currentIndex = null;
 
    /**
     * Constructor.
     */
-   public ActionScopedRequestAttributeHandler(PortletRequestContext requestContext,
-         PortletParameterFactory paramFactory, String phase) {
+   public ActionScopedRequestAttributeHandler(PortletRequestContext requestContext, PortletParameterFactory paramFactory, String phase) {
       this.paramFactory = paramFactory;
       this.requestContext = requestContext;
       this.phase = phase;
@@ -174,92 +171,94 @@ public class ActionScopedRequestAttributeHandler {
          txt.append(Arrays.toString(vals));
          LOG.warn(txt.toString());
       }
-
-      synchronized (LOCK) {
-
-         PortletSession ps = requestContext.getPortletSession(true);
-         if (active && ps != null) {
-            sessionData = (SessionData) ps.getAttribute(ATTRIB_NAME);
-            if (sessionData != null) {
-               currentIndex = getCurrentIndex();
-               if (phase.equals(RENDER_PHASE)) {
-                  sessionData.rendered = true;
-               }
-            }
-         }
-
-         if (sessionData != null) {
-            if (currentIndex == null) {
-
-               // If session data exists, but the index is null, it means that the portlet window
-               // was accessed with a URL that does not contain a scope ID that matches any of the
-               // currently stored scopes. In this case, delete the stale stored session data.
-
-               sessionData = null;
-               activeMap = null;
-               ps.removeAttribute(ATTRIB_NAME);
-
-            } else {
-               // session data is available and there is a current index
-               activeMap = sessionData.attribs.get(currentIndex);
-            }
-         }
-
-         // now handle the case where a new scope needs to be created
-
-         if (phase.equals(ACTION_PHASE) || (phase.equals(EVENT_PHASE) && sessionData == null)
-               || (phase.equals(EVENT_PHASE) && sessionData.rendered)) {
-
-            if (sessionData == null) {
-
-               // create new data structures & scope
-
-               sessionData = new SessionData();
-               currentIndex = 0;
-
-               sessionData.attribs.put(currentIndex, new ConcurrentHashMap<String, Object>());
-               sessionData.rendered = false;
-               activeMap = sessionData.attribs.get(currentIndex);
-               ps.setAttribute(ATTRIB_NAME, sessionData);
-
-            } else {
-
-               // Create a new scope. Make sure the current scope is the top one, then increment.
-               // If, after the increment, the number of scopes is too big, delete the bottom one.
-
-               List<Integer> activeScopes = new ArrayList<Integer>(sessionData.attribs.keySet());
-               Collections.sort(activeScopes);
-
-               int index = activeScopes.indexOf(currentIndex);
-               for (int ii = index + 1; ii < activeScopes.size(); ii++) {
-                  sessionData.attribs.remove(activeScopes.get(ii));
-               }
-
-               currentIndex++;
-               sessionData.attribs.put(currentIndex, new ConcurrentHashMap<String, Object>());
-               sessionData.rendered = false;
-
-               activeMap = sessionData.attribs.get(currentIndex);
-
-               if (sessionData.attribs.size() > numScopes) {
-                  sessionData.attribs.remove(activeScopes.get(0));
-               }
-            }
-         }
-      }
-      
-      // now we have a scope if we need one, so handle the scope id parameter
       
       String[] scopeId = null;
-      if (sessionData != null) {
-         scopeId = new String[]{ Long.toString(sessionData.id), currentIndex.toString() };
+
+      if (active) {
+         synchronized (LOCK) {
+
+            PortletSession ps = requestContext.getPortletSession(true);
+            if (active && ps != null) {
+               sessionData = (SessionData) ps.getAttribute(ATTRIB_NAME);
+               if (sessionData != null) {
+                  currentIndex = getCurrentIndex();
+                  if (phase.equals(RENDER_PHASE)) {
+                     sessionData.rendered = true;
+                  }
+               }
+            }
+
+            if (sessionData != null) {
+               if (currentIndex == null) {
+
+                  // If session data exists, but the index is null, it means that the portlet window
+                  // was accessed with a URL that does not contain a scope ID that matches any of the
+                  // currently stored scopes. In this case, delete the stale stored session data.
+
+                  sessionData = null;
+                  activeMap = null;
+                  ps.removeAttribute(ATTRIB_NAME);
+
+               } else {
+                  // session data is available and there is a current index
+                  activeMap = sessionData.attribs.get(currentIndex);
+               }
+            }
+
+            // now handle the case where a new scope needs to be created
+
+            if (phase.equals(ACTION_PHASE) || (phase.equals(EVENT_PHASE) && sessionData == null) || (phase.equals(EVENT_PHASE) && sessionData.rendered)) {
+
+               if (sessionData == null) {
+
+                  // create new data structures & scope
+
+                  sessionData = new SessionData();
+                  currentIndex = 0;
+
+                  sessionData.attribs.put(currentIndex, new ConcurrentHashMap<String, Object>());
+                  sessionData.rendered = false;
+                  activeMap = sessionData.attribs.get(currentIndex);
+                  ps.setAttribute(ATTRIB_NAME, sessionData);
+
+               } else {
+
+                  // Create a new scope. Make sure the current scope is the top one, then increment.
+                  // If, after the increment, the number of scopes is too big, delete the bottom one.
+
+                  List<Integer> activeScopes = new ArrayList<Integer>(sessionData.attribs.keySet());
+                  Collections.sort(activeScopes);
+
+                  int index = activeScopes.indexOf(currentIndex);
+                  for (int ii = index + 1; ii < activeScopes.size(); ii++) {
+                     sessionData.attribs.remove(activeScopes.get(ii));
+                  }
+
+                  currentIndex++;
+                  sessionData.attribs.put(currentIndex, new ConcurrentHashMap<String, Object>());
+                  sessionData.rendered = false;
+
+                  activeMap = sessionData.attribs.get(currentIndex);
+
+                  if (sessionData.attribs.size() > numScopes) {
+                     sessionData.attribs.remove(activeScopes.get(0));
+                  }
+               }
+            }
+         }
+
+         // now we have a scope if we need one, so handle the scope id parameter
+
+         if (sessionData != null) {
+            scopeId = new String[] { Long.toString(sessionData.id), currentIndex.toString() };
+         }
+
+         // Set the parameter on the response
+         responseContext.setActionScopedId(windowId, scopeId);
       }
 
-      // Set the parameter on the response
-      responseContext.setActionScopedId(windowId, scopeId);
-
       // and finally output some debugging stuff
-      
+
       if (isDebug) {
          StringBuilder txt = new StringBuilder();
          txt.append("isActive: ").append(active);
@@ -297,7 +296,7 @@ public class ActionScopedRequestAttributeHandler {
             index = new Integer(asvals[1]);
             if (id != sessionData.id || !sessionData.attribs.containsKey(index)) {
                index = null;
-            } 
+            }
          } catch (Exception e) {
          }
       }
