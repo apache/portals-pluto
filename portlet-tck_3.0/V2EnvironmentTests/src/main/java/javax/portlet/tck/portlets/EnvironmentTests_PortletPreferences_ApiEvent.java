@@ -42,9 +42,10 @@ import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
  * initiate the events, but not process them. The processing is done in the companion portlet
  * EnvironmentTests_PortletPreferences_ApiEvent_event
  *
+ * @author ahmed
  */
 public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
-
+  
   @Override
   public void init(PortletConfig config) throws PortletException {}
 
@@ -408,26 +409,6 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       tb.writeTo(writer);
     }
 
-    /* TestCase: V2EnvironmentTests_PortletPreferences_ApiEvent_store1 */
-    /* Details: "Method store(): Commits changes made to the preferences */
-    /* to the persistent store " */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_store1", aurl);
-      tb.writeTo(writer);
-    }
-
-    /* TestCase: V2EnvironmentTests_PortletPreferences_ApiEvent_store2 */
-    /* Details: "Method store(): If the store(): method is not called, */
-    /* changes made are discarded" */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_store2", aurl);
-      tb.writeTo(writer);
-    }
-
     /* TestCase: V2EnvironmentTests_PortletPreferences_ApiEvent_store3 */
     /* Details: "Method store(): If a validator is defined, it is called */
     /* before the actual store is performed" */
@@ -445,16 +426,6 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb = new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_store4", aurl);
-      tb.writeTo(writer);
-    }
-
-    /* TestCase: V2EnvironmentTests_PortletPreferences_ApiEvent_store5 */
-    /* Details: "Method store(): Throws IllegalStateException if store(): */
-    /* is called in the render method " */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_store5", aurl);
       tb.writeTo(writer);
     }
 

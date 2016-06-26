@@ -63,6 +63,7 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
  * initiate the events, but not process them. The processing is done in the companion portlet
  * EnvironmentTests_PortletPreferences_ApiRender_event
  *
+ * @author ahmed
  */
 public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet {
 
@@ -143,6 +144,7 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet {
         prefs.isReadOnly(null);
         tr3.appendTcDetail("Method did not throw an exception.");
       } catch (IllegalArgumentException iae) {
+        tr3.appendTcDetail(iae.toString());
         tr3.setTcSuccess(true);
       } catch (Exception e) {
         tr3.appendTcDetail(e.toString());
@@ -209,6 +211,7 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet {
         prefs.getValue(null, null);
         tr7.appendTcDetail("Method did not throw an exception.");
       } catch (IllegalArgumentException iae) {
+        tr7.appendTcDetail(iae.toString());
         tr7.setTcSuccess(true);
       } catch (Exception e) {
         tr7.appendTcDetail(e.toString());
@@ -276,6 +279,7 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet {
         prefs.getValues(null, new String[] {"val1-1", "val1-2"});
         tr11.appendTcDetail("Method did not throw an exception.");
       } catch (IllegalArgumentException iae) {
+        tr11.appendTcDetail(iae.toString());
         tr11.setTcSuccess(true);
       } catch (Exception e) {
         tr11.appendTcDetail(e.toString());
@@ -296,6 +300,7 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet {
       tr12.appendTcDetail("Method Did Not Throw Exception");
     } catch (ReadOnlyException roe) {
       tr12.setTcSuccess(true);
+      tr12.appendTcDetail(roe.toString());
     }
     tr12.writeTo(writer);
 
@@ -352,6 +357,7 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet {
       pp.reset("TestPreference1");
       tr17.appendTcDetail("Method Did Not Throw Exception");
     } catch (ReadOnlyException roe) {
+      tr17.appendTcDetail(roe.toString());
       tr17.setTcSuccess(true);
     }
     tr17.writeTo(writer);
@@ -364,6 +370,7 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet {
     try {
       pp.store();
     } catch (IllegalStateException ise) {
+      tr18.appendTcDetail(ise.toString());
       tr18.setTcSuccess(true);
     }
     tr18.writeTo(writer);

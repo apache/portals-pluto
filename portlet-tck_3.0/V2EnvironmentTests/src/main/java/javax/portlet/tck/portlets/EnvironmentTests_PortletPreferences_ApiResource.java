@@ -33,6 +33,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceServingPortlet;
 import javax.portlet.ResourceURL;
+import javax.portlet.ValidatorException;
 import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
 
@@ -66,11 +67,8 @@ import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTEST
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_RESET1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_RESET2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_RESET3;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE1;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE3;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE4;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE5;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE6;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.ResourceURL.PAGE;
@@ -85,10 +83,12 @@ import static javax.portlet.ResourceURL.PAGE;
  * initiate the events, but not process them. The processing is done in the companion portlet
  * EnvironmentTests_PortletPreferences_ApiResource_event
  *
+ * @author ahmed
  */
 public class EnvironmentTests_PortletPreferences_ApiResource
     implements Portlet, ResourceServingPortlet {
 
+  public static boolean tr32_success = false;
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -168,6 +168,7 @@ public class EnvironmentTests_PortletPreferences_ApiResource
         prefs.isReadOnly(null);
         tr3.appendTcDetail("Method did not throw an exception.");
       } catch (IllegalArgumentException iae) {
+        tr3.appendTcDetail(iae.toString());
         tr3.setTcSuccess(true);
       } catch (Exception e) {
         tr3.appendTcDetail(e.toString());
@@ -234,6 +235,7 @@ public class EnvironmentTests_PortletPreferences_ApiResource
         prefs.getValue(null, null);
         tr7.appendTcDetail("Method did not throw an exception.");
       } catch (IllegalArgumentException iae) {
+        tr7.appendTcDetail(iae.toString());
         tr7.setTcSuccess(true);
       } catch (Exception e) {
         tr7.appendTcDetail(e.toString());
@@ -301,6 +303,7 @@ public class EnvironmentTests_PortletPreferences_ApiResource
         prefs.getValues(null, new String[] {"val1-1", "val1-2"});
         tr11.appendTcDetail("Method did not throw an exception.");
       } catch (IllegalArgumentException iae) {
+        tr11.appendTcDetail(iae.toString());
         tr11.setTcSuccess(true);
       } catch (Exception e) {
         tr11.appendTcDetail(e.toString());
@@ -368,6 +371,7 @@ public class EnvironmentTests_PortletPreferences_ApiResource
       pp.setValue("TestPreference1", "Value");
       tr15.appendTcDetail("Method Did Not Throw Exception");
     } catch (ReadOnlyException roe) {
+      tr15.appendTcDetail(roe.toString());
       tr15.setTcSuccess(true);
     }
     tr15.writeTo(writer);
@@ -383,6 +387,7 @@ public class EnvironmentTests_PortletPreferences_ApiResource
         prefs.setValue(null, "value");
         tr16.appendTcDetail("Method did not throw an exception.");
       } catch (IllegalArgumentException iae) {
+        tr16.appendTcDetail(iae.toString());
         tr16.setTcSuccess(true);
       } catch (Exception e) {
         tr16.appendTcDetail(e.toString());
@@ -470,6 +475,7 @@ public class EnvironmentTests_PortletPreferences_ApiResource
       pp.setValues("TestPreference1", new String[] {"Val1"});
       tr21.appendTcDetail("Method did not Throw Exception");
     } catch (ReadOnlyException roe) {
+      tr21.appendTcDetail(roe.toString());
       tr21.setTcSuccess(true);
     }
     tr21.writeTo(writer);
@@ -485,6 +491,7 @@ public class EnvironmentTests_PortletPreferences_ApiResource
         prefs.setValues(null, new String[] {"val1-1", "val1-2"});
         tr22.appendTcDetail("Method did not throw an exception.");
       } catch (IllegalArgumentException iae) {
+        tr22.appendTcDetail(iae.toString());
         tr22.setTcSuccess(true);
       } catch (Exception e) {
         tr22.appendTcDetail(e.toString());
@@ -564,6 +571,7 @@ public class EnvironmentTests_PortletPreferences_ApiResource
       pp.reset("TestPreference1");
       tr28.appendTcDetail("Method Did not Throw Exception");
     } catch (ReadOnlyException roe) {
+      tr28.appendTcDetail(roe.toString());
       tr28.setTcSuccess(true);
     }
     tr28.writeTo(writer);
@@ -579,6 +587,7 @@ public class EnvironmentTests_PortletPreferences_ApiResource
         prefs.reset(null);
         tr29.appendTcDetail("Method did not throw an exception.");
       } catch (IllegalArgumentException iae) {
+        tr29.appendTcDetail(iae.toString());
         tr29.setTcSuccess(true);
       } catch (Exception e) {
         tr29.appendTcDetail(e.toString());
@@ -588,28 +597,19 @@ public class EnvironmentTests_PortletPreferences_ApiResource
     }
     tr29.writeTo(writer);
 
-    /* TestCase: V2EnvironmentTests_PortletPreferences_ApiResource_store1 */
-    /* Details: "Method store(): Commits changes made to the preferences */
-    /* to the persistent store " */
-    TestResult tr30 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE1);
-    tr30.setTcSuccess(true);
-    tr30.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletPreferences_ApiResource_store2 */
-    /* Details: "Method store(): If the store(): method is not called, */
-    /* changes made are discarded" */
-    TestResult tr31 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE2);
-    tr31.setTcSuccess(true);
-    tr31.writeTo(writer);
-
     /* TestCase: V2EnvironmentTests_PortletPreferences_ApiResource_store3 */
     /* Details: "Method store(): If a validator is defined, it is called */
     /* before the actual store is performed" */
     TestResult tr32 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE3);
-    tr32.setTcSuccess(true);
+    EnvironmentTests_PortletPreferences_ApiResource.tr32_success = false;
+    pp.setValue("tr33", "true");
+    pp.store();
+    if (EnvironmentTests_PortletPreferences_ApiResource.tr32_success) {
+      tr32.setTcSuccess(true);
+    } else {
+      tr32.appendTcDetail("Failed because validator is not called");
+    }
     tr32.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletPreferences_ApiResource_store4 */
@@ -617,24 +617,27 @@ public class EnvironmentTests_PortletPreferences_ApiResource
     /* performed" */
     TestResult tr33 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE4);
-    tr33.setTcSuccess(true);
+    try {
+      pp.setValue("tr33", "false");
+      pp.store();
+    } catch (ValidatorException e) {
+      tr33.setTcSuccess(true);
+      tr33.appendTcDetail(e.toString() + ". Preferences are not stored");
+    }
     tr33.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletPreferences_ApiResource_store5 */
-    /* Details: "Method store(): Throws IllegalStateException if store(): */
-    /* is called in the render method " */
-    TestResult tr34 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE5);
-    tr34.setTcSuccess(true);
-    tr34.appendTcDetail("This Method could not be Tested Under Action Method");
-    tr34.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletPreferences_ApiResource_store6 */
     /* Details: "Method store(): Throws ValidatorException if the */
     /* validation performed by the associated validator fails " */
     TestResult tr35 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE6);
-    tr35.setTcSuccess(true);
+    try {
+      pp.setValue("tr33", "false");
+      pp.store();
+    } catch (ValidatorException e) {
+      tr35.setTcSuccess(true);
+      tr35.appendTcDetail(e.toString());
+    }
     tr35.writeTo(writer);
 
   }

@@ -16,11 +16,15 @@
 package javax.portlet.tck.portlets;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -50,9 +54,7 @@ import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTEST
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE3;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE4;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE5;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREALPATH1;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREALPATH2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREALPATH3;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEPATHS1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEPATHS2;
@@ -67,10 +69,8 @@ import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTEST
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTE3;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTENAMES1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTENAMES2;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETER1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETER2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETER3;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETERNAMES1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETERNAMES2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_LOGA;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_LOGB;
@@ -98,6 +98,7 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
  * initiate the events, but not process them. The processing is done in the companion portlet
  * EnvironmentTests_PortletContext_ApiRender_event
  *
+ * @author ahmed
  */
 public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
 
@@ -201,7 +202,7 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETNAMEDDISPATCHER1);
     try {
       PortletRequestDispatcher rd =
-          pc.getNamedDispatcher("EnvironmentTests_PortletContext_ApiRender_servlets");
+          pc.getNamedDispatcher("V2EnvironmentTests_PortletRequestDispatcher_ApiRender_PortletRequest_Forward");
       tr4.setTcSuccess(rd != null);
     } catch (Exception e) {
       tr4.appendTcDetail(e.toString());
@@ -220,7 +221,6 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     } catch (Exception e) {
       tr5.appendTcDetail(e.toString());
     }
-
     tr5.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResourceAsStream1 */
@@ -228,9 +228,13 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* java.io.InputStream for the resource at the specified path" */
     TestResult tr6 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEASSTREAM1);
-
-    tr6.setTcSuccess(true);
-
+    try {
+      InputStream is = pc.getResourceAsStream(
+          "/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html");
+      tr6.setTcSuccess(is != null);
+    } catch (Exception e) {
+      tr6.appendTcDetail(e.toString());
+    }
     tr6.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResourceAsStream2 */
@@ -238,9 +242,13 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* can be accessed by prefixing the path with \"/WEB-INF/\"" */
     TestResult tr7 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEASSTREAM2);
-
-    tr7.setTcSuccess(true);
-
+    try {
+      InputStream is = pc.getResourceAsStream(
+          "/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html");
+      tr7.setTcSuccess(is != null);
+    } catch (Exception e) {
+      tr7.appendTcDetail(e.toString());
+    }
     tr7.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResourceAsStream3 */
@@ -248,9 +256,12 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* resource exists at the specified path" */
     TestResult tr8 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEASSTREAM3);
-
-    tr8.setTcSuccess(true);
-
+    try {
+      InputStream is = pc.getResourceAsStream("invalid path");
+      tr8.setTcSuccess(is == null);
+    } catch (Exception e) {
+      tr8.appendTcDetail(e.toString());
+    }
     tr8.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getMajorVersion */
@@ -280,7 +291,16 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* the MIME type of the specified file name" */
     TestResult tr11 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE1);
-    tr11.setTcSuccess(true);
+    try {
+      if (pc.getMimeType("/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html")
+          .equals("text/html")) {
+        tr11.setTcSuccess(true);
+      } else {
+        tr11.appendTcDetail("Failed because MIME type is not text/html");
+      }
+    } catch (Exception e) {
+      tr11.appendTcDetail(e.toString());
+    }
     tr11.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getMimeType2 */
@@ -289,9 +309,16 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* web.xml " */
     TestResult tr12 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE2);
-
-    tr12.setTcSuccess(true);
-
+    try {
+      if (pc.getMimeType("/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html")
+          .equals("text/html")) {
+        tr12.setTcSuccess(true);
+      } else {
+        tr12.appendTcDetail("Failed because MIME type is not text/html");
+      }
+    } catch (Exception e) {
+      tr12.appendTcDetail(e.toString());
+    }
     tr12.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getMimeType3 */
@@ -300,7 +327,16 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* web.xml" */
     TestResult tr13 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE3);
-    tr13.setTcSuccess(true);
+    try {
+      if (pc.getMimeType("/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType3.gif")
+          .equals("image/gif")) {
+        tr13.setTcSuccess(true);
+      } else {
+        tr13.appendTcDetail("Failed because MIME type is not image/gif");
+      }
+    } catch (Exception e) {
+      tr13.appendTcDetail(e.toString());
+    }
     tr13.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getMimeType4 */
@@ -308,39 +344,54 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* type cannot be determined" */
     TestResult tr14 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE4);
-    tr14.setTcSuccess(true);
+    try {
+      String mimeType = pc
+          .getMimeType("/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType4.invalid");
+      if (mimeType == null) {
+        tr14.setTcSuccess(true);
+      } else {
+        tr14.appendTcDetail("Failed because MIME type is not null but " + mimeType);
+      }
+    } catch (Exception e) {
+      tr14.appendTcDetail(e.toString());
+    }
     tr14.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getMimeType5 */
-    /* Details: "Method getMimeType(String): Returns null if the file */
-    /* does not exist" */
-    TestResult tr15 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE5);
-    tr15.setTcSuccess(true);
-    tr15.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getRealPath1 */
     /* Details: "Method getRealPath(String): Returns a String containing */
     /* the OS-specific real path for the given virtual path" */
     TestResult tr16 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREALPATH1);
-    tr16.setTcSuccess(true);
+    try {
+      if (pc.getRealPath(
+          "/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html") != null) {
+        tr16.appendTcDetail(pc
+            .getRealPath("/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html"));
+        tr16.setTcSuccess(true);
+      } else {
+        tr16.appendTcDetail("Failed because real path cannot be determined.");
+      }
+    } catch (Exception e) {
+      tr16.appendTcDetail(e.toString());
+    }
     tr16.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getRealPath2 */
-    /* Details: "Method getRealPath(String): Returns null if the file */
-    /* does not exist" */
-    TestResult tr17 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREALPATH2);
-    tr17.setTcSuccess(true);
-    tr17.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getRealPath3 */
     /* Details: "Method getRealPath(String): Returns null if the */
     /* transformation cannot be performed" */
     TestResult tr18 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREALPATH3);
-    tr18.setTcSuccess(true);
+    try {
+      String realPath =
+          pc.getRealPath("&^*#V2EnvironmentTests_PortletContext_ApiRender_getMimeType4.invalid");
+      if (realPath == null) {
+        tr18.setTcSuccess(true);
+      } else {
+        tr18.appendTcDetail("Failed because real path if not null but " + realPath);
+      }
+    } catch (Exception e) {
+      tr18.appendTcDetail(e.toString());
+    }
     tr18.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResourcePaths1 */
@@ -350,7 +401,17 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* matches the supplied path argument " */
     TestResult tr19 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEPATHS1);
-    tr19.setTcSuccess(true);
+    try {
+      Set<String> resourcePaths = pc.getResourcePaths("/WEB-INF/");
+      if (resourcePaths.size() != 0) {
+        tr19.setTcSuccess(true);
+        tr19.appendTcDetail("Found " + resourcePaths.size() + " resources");
+      } else {
+        tr19.appendTcDetail("No resources are available at /WEB-INF/");
+      }
+    } catch (Exception e) {
+      tr19.appendTcDetail(e.toString());
+    }
     tr19.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResourcePaths2 */
@@ -358,7 +419,19 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* file does not end with a slash (/)" */
     TestResult tr20 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEPATHS2);
-    tr20.setTcSuccess(true);
+    try {
+      Set<String> resourcePaths = pc.getResourcePaths(
+          "/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html/");
+      if (resourcePaths != null) {
+        tr20.appendTcDetail("Found " + resourcePaths.size() + " resources");
+      } else {
+        tr20.setTcSuccess(true);
+        tr20.appendTcDetail(
+            "Cannot access the file with path - /WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html/");
+      }
+    } catch (Exception e) {
+      tr20.appendTcDetail(e.toString());
+    }
     tr20.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResourcePaths3 */
@@ -366,7 +439,17 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* subdirectory ends with a slash (/)" */
     TestResult tr21 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEPATHS3);
-    tr21.setTcSuccess(true);
+    try {
+      Set<String> resourcePaths = pc.getResourcePaths("/WEB-INF/");
+      if (resourcePaths.size() != 0) {
+        tr21.setTcSuccess(true);
+        tr21.appendTcDetail("Found " + resourcePaths.size() + " resources");
+      } else {
+        tr21.appendTcDetail("No resources are available at /WEB-INF/");
+      }
+    } catch (Exception e) {
+      tr21.appendTcDetail(e.toString());
+    }
     tr21.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResourcePaths4 */
@@ -375,7 +458,16 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* with the supplied path" */
     TestResult tr22 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEPATHS4);
-    tr22.setTcSuccess(true);
+    try {
+      Set<String> resourcePaths = pc.getResourcePaths("/WEB-INF/invalid_path/");
+      if (resourcePaths == null) {
+        tr22.setTcSuccess(true);
+      } else {
+        tr22.appendTcDetail("Found " + resourcePaths.size() + " resources");
+      }
+    } catch (Exception e) {
+      tr22.appendTcDetail(e.toString());
+    }
     tr22.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResource1 */
@@ -383,7 +475,18 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* object that maps to the specified path" */
     TestResult tr23 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCE1);
-    tr23.setTcSuccess(true);
+    try {
+      URL resourceURL =
+          pc.getResource("/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html");
+      if (resourceURL != null) {
+        tr23.setTcSuccess(true);
+        tr23.appendTcDetail("Found resource URL - " + resourceURL.toString());
+      } else {
+        tr23.appendTcDetail("Failed because resource URL is null");
+      }
+    } catch (Exception e) {
+      tr23.appendTcDetail(e.toString());
+    }
     tr23.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResource2 */
@@ -391,7 +494,18 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* is mapped to the path" */
     TestResult tr24 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCE2);
-    tr24.setTcSuccess(true);
+    try {
+      URL resourceURL =
+          pc.getResource("/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getResource2.html");
+      if (resourceURL == null) {
+        tr24.setTcSuccess(true);
+      } else {
+        tr24.appendTcDetail(
+            "Failed because resource URL is not null but " + resourceURL.toString());
+      }
+    } catch (Exception e) {
+      tr24.appendTcDetail(e.toString());
+    }
     tr24.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResource3 */
@@ -400,7 +514,13 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* slash (/)" */
     TestResult tr25 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCE3);
-    tr25.setTcSuccess(true);
+    try {
+      pc.getResource("WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html");
+      tr25.appendTcDetail("Failed because no exception is thrown");
+    } catch (MalformedURLException e) {
+      tr25.setTcSuccess(true);
+      tr25.appendTcDetail(e.toString());
+    }
     tr25.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getResource4 */
@@ -408,7 +528,13 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* java.net.MalformedURLException if the path is malformed" */
     TestResult tr26 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCE4);
-    tr26.setTcSuccess(true);
+    try {
+      pc.getResource("WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html");
+      tr26.appendTcDetail("Failed because no exception is thrown");
+    } catch (MalformedURLException e) {
+      tr26.setTcSuccess(true);
+      tr26.appendTcDetail(e.toString());
+    }
     tr26.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getAttribute1 */
@@ -416,7 +542,10 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* attribute value for the specified name" */
     TestResult tr27 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTE1);
-    tr27.setTcSuccess(true);
+    pc.setAttribute("tr27", "true");
+    if (pc.getAttribute("tr27").equals("true")) {
+      tr27.setTcSuccess(true);
+    }
     tr27.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getAttribute2 */
@@ -424,7 +553,9 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* attribute value for the specified name" */
     TestResult tr28 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTE2);
-    tr28.setTcSuccess(true);
+    if (pc.getAttribute("tr28") == null) {
+      tr28.setTcSuccess(true);
+    }
     tr28.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getAttribute3 */
@@ -433,15 +564,11 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     TestResult tr29 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTE3);
     try {
-      try {
-        PortletContext cntxt = portletConfig.getPortletContext();
-        cntxt.getAttribute(null);
-        tr29.appendTcDetail("Method did not throw an exception.");
-      } catch (IllegalArgumentException iae) {
-        tr29.setTcSuccess(true);
-      } catch (Exception e) {
-        tr29.appendTcDetail(e.toString());
-      }
+      pc.getAttribute(null);
+      tr29.appendTcDetail("Method did not throw an exception.");
+    } catch (IllegalArgumentException iae) {
+      tr29.setTcSuccess(true);
+      tr29.appendTcDetail(iae.toString());
     } catch (Exception e) {
       tr29.appendTcDetail(e.toString());
     }
@@ -457,6 +584,7 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     List<String> li30 = Collections.list(getAttNames);
     if (li30 != null) {
       tr30.setTcSuccess(true);
+      tr30.appendTcDetail("Found " + li30.size() + " attributes.");
     }
     tr30.writeTo(writer);
 
@@ -469,22 +597,12 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     tr31.appendTcDetail("This Method Could Not be Tested Which already has Attribute Names ");
     tr31.writeTo(writer);
 
-    /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getInitParameter1 */
-    /* Details: "Method getInitParameter(String): Returns a */
-    /* java.lang.String PortletContext initialization parameter value for */
-    /* the specified name" */
-    TestResult tr32 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETER1);
-    tr32.setTcSuccess(true);
-    tr32.appendTcDetail("Could not be Tested Which Does not have Init Parameteres");
-    tr32.writeTo(writer);
-
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getInitParameter2 */
     /* Details: "Method getInitParameter(String): Returns null if there */
-    /* is no inittialization parameter for the specified name" */
+    /* is no initialization parameter for the specified name" */
     TestResult tr33 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETER2);
-    String initParm2 = pc.getInitParameter("Test");
+    String initParm2 = portletConfig.getInitParameter("Test");
     if (initParm2 == null) {
       tr33.setTcSuccess(true);
     }
@@ -496,44 +614,22 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     TestResult tr34 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETER3);
     try {
-      try {
-        PortletContext cntxt = portletConfig.getPortletContext();
-        cntxt.getInitParameter(null);
-        tr34.appendTcDetail("Method did not throw an exception.");
-      } catch (IllegalArgumentException iae) {
-        tr34.setTcSuccess(true);
-      } catch (Exception e) {
-        tr34.appendTcDetail(e.toString());
-      }
+      pc.getInitParameter(null);
+      tr34.appendTcDetail("Method did not throw an exception.");
+    } catch (IllegalArgumentException iae) {
+      tr34.setTcSuccess(true);
+      tr34.appendTcDetail(iae.toString());
     } catch (Exception e) {
       tr34.appendTcDetail(e.toString());
     }
     tr34.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getInitParameterNames1 */
-    /* Details: "Method getInitParameterNames(): Returns an */
-    /* java.util.Enumeration&lt;java.lang.String&gt; containing the */
-    /* InitParameter names in the PortletContext" */
-    TestResult tr39 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETERNAMES1);
-    Enumeration<String> getInitNames1 = pc.getInitParameterNames();
-    List<String> li39 = Collections.list(getInitNames1);
-    if (li39 == null) {
-      tr39.setTcSuccess(true);
-      tr39.appendTcDetail("InitParameter has Null Value");
-    } else {
-      tr39.appendTcDetail("The InitParmater has Names " + li39.toString());
-      tr39.setTcSuccess(true);
-    }
-
-    tr39.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getInitParameterNames2 */
     /* Details: "Method getInitParameterNames(): Returns an empty */
     /* Enumeration if no InitParameters are available" */
     TestResult tr40 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETERNAMES2);
-    Enumeration<String> getInitNames2 = pc.getInitParameterNames();
+    Enumeration<String> getInitNames2 = portletConfig.getInitParameterNames();
     List<String> li40 = Collections.list(getInitNames2);
     if (li40.isEmpty()) {
       tr40.setTcSuccess(true);
@@ -547,6 +643,7 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* portlet log file" */
     TestResult tr41 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_LOGA);
     tr41.setTcSuccess(true);
+    tr41.appendTcDetail("Optional Test case. Portlet log is optional and implementation specific");
     tr41.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_logB */
@@ -554,6 +651,7 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* and stack trace to a portlet log file" */
     TestResult tr42 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_LOGB);
     tr42.setTcSuccess(true);
+    tr42.appendTcDetail("Optional Test case. Portlet log is optional and implementation specific");
     tr42.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_removeAttribute1 */
@@ -561,8 +659,12 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* with the specified nale" */
     TestResult tr43 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_REMOVEATTRIBUTE1);
-    tr43.setTcSuccess(true);
-    tr43.appendTcDetail("Could not Remove Attributes for Test Portlets");
+    pc.removeAttribute("tr27");
+    if (pc.getAttribute("tr27") == null) {
+      tr43.setTcSuccess(true);
+    } else {
+      tr43.appendTcDetail("Failed because attribute tr27 is still present");
+    }
     tr43.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_removeAttribute2 */
@@ -571,15 +673,11 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     TestResult tr44 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_REMOVEATTRIBUTE2);
     try {
-      try {
-        PortletContext cntxt = portletConfig.getPortletContext();
-        cntxt.removeAttribute(null);
-        tr44.appendTcDetail("Method did not throw an exception.");
-      } catch (IllegalArgumentException iae) {
-        tr44.setTcSuccess(true);
-      } catch (Exception e) {
-        tr44.appendTcDetail(e.toString());
-      }
+      pc.removeAttribute(null);
+      tr44.appendTcDetail("Method did not throw an exception.");
+    } catch (IllegalArgumentException iae) {
+      tr44.setTcSuccess(true);
+      tr44.appendTcDetail(iae.toString());
     } catch (Exception e) {
       tr44.appendTcDetail(e.toString());
     }
@@ -605,7 +703,14 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* attribute for the specified name is removed" */
     TestResult tr46 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_SETATTRIBUTE2);
-    tr46.setTcSuccess(true);
+    try {
+      pc.setAttribute("Test", "Value2");
+      if (pc.getAttribute("Test").equals("Value2")) {
+        tr46.setTcSuccess(true);
+      }
+    } catch (Exception e) {
+      tr46.appendTcDetail(e.toString());
+    }
     tr46.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_setAttribute3 */
@@ -613,7 +718,10 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* name is null, the attribute is removed" */
     TestResult tr47 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_SETATTRIBUTE3);
-    tr47.setTcSuccess(true);
+    pc.setAttribute("tr47", null);
+    if (pc.getAttribute("tr47") == null) {
+      tr47.setTcSuccess(true);
+    }
     tr47.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_setAttribute4 */
@@ -622,15 +730,11 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     TestResult tr48 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_SETATTRIBUTE4);
     try {
-      try {
-        PortletContext cntxt = portletConfig.getPortletContext();
-        cntxt.setAttribute(null, "value");
-        tr48.appendTcDetail("Method did not throw an exception.");
-      } catch (IllegalArgumentException iae) {
-        tr48.setTcSuccess(true);
-      } catch (Exception e) {
-        tr48.appendTcDetail(e.toString());
-      }
+      pc.setAttribute(null, "value");
+      tr48.appendTcDetail("Method did not throw an exception.");
+    } catch (IllegalArgumentException iae) {
+      tr48.setTcSuccess(true);
+      tr48.appendTcDetail(iae.toString());
     } catch (Exception e) {
       tr48.appendTcDetail(e.toString());
     }
@@ -642,8 +746,9 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     TestResult tr49 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETPORTLETCONTEXTNAME1);
     String getCntName1 = pc.getPortletContextName();
-    if (getCntName1 != null) {
+    if (getCntName1.equals("javax.portlet-tck-EnvironmentTests")) {
       tr49.setTcSuccess(true);
+      tr49.appendTcDetail("Portlet Application name is - " + getCntName1);
     } else {
       tr49.appendTcDetail("The Portlet application name is null");
     }
@@ -658,8 +763,9 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     if (getCntName2.equals("javax.portlet-tck-EnvironmentTests")) {
       tr50.setTcSuccess(true);
     } else {
-      tr50.appendTcDetail("The Portlet application name has Unexpected value ");
-      tr50.appendTcDetail("Expected :" + getCntName2.toString());
+      tr50.appendTcDetail(
+          "Failed because poetlet context name is not javax.portlet-tck-EnvironmentTests but "
+              + getCntName2);
     }
     tr50.writeTo(writer);
 
@@ -670,8 +776,6 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     TestResult tr51 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETPORTLETCONTEXTNAME3);
     tr51.setTcSuccess(true);
-    tr51.appendTcDetail(
-        "This Method could not be tested which already defined the name in web.xml");
     tr51.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getContainerRuntimeOptions1 */
@@ -694,7 +798,6 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     /* Enumeration if no runtime options are available" */
     TestResult tr53 = tcd.getTestResultFailed(
         V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETCONTAINERRUNTIMEOPTIONS2);
-
     tr53.setTcSuccess(true);
     tr53.appendTcDetail(
         "This Method could not be tested for an empty values Which already has Runtime Options supported by Portlet Container ");

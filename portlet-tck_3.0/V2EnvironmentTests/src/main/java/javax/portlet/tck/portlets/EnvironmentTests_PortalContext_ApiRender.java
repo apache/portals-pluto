@@ -62,6 +62,7 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
  * initiate the events, but not process them. The processing is done in the companion portlet
  * EnvironmentTests_PortalContext_ApiRender_event
  *
+ * @author ahmed
  */
 public class EnvironmentTests_PortalContext_ApiRender implements Portlet {
 
@@ -144,15 +145,12 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet {
     TestResult tr3 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPROPERTY3);
     try {
-      try {
-        PortalContext cntxt = portletReq.getPortalContext();
-        cntxt.getProperty(null);
-        tr3.appendTcDetail("Method did not throw an exception.");
-      } catch (IllegalArgumentException iae) {
-        tr3.setTcSuccess(true);
-      } catch (Exception e) {
-        tr3.appendTcDetail(e.toString());
-      }
+      PortalContext cntxt = portletReq.getPortalContext();
+      cntxt.getProperty(null);
+      tr3.appendTcDetail("Method did not throw an exception.");
+    } catch (IllegalArgumentException iae) {
+      tr3.appendTcDetail(iae.toString());
+      tr3.setTcSuccess(true);
     } catch (Exception e) {
       tr3.appendTcDetail(e.toString());
     }
@@ -165,7 +163,7 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet {
     TestResult tr4 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPROPERTYNAMES1);
     Enumeration<String> propName1 = pcn.getPropertyNames();
-    if (propName1 != null) {
+    if (propName1 != null && propName1.hasMoreElements()) {
       tr4.setTcSuccess(true);
     } else {
       tr4.appendTcDetail("The getPropertyNames has null value");
@@ -201,7 +199,7 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet {
     /* returned must contain the view mode" */
     TestResult tr7 = tcd
         .getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETSUPPORTEDPORTLETMODES2);
-    if (listmode != null && listmode.toString().contains("view")) {
+    if (listmode != null && listmode.contains(PortletMode.VIEW)) {
       tr7.setTcSuccess(true);
     } else {
       tr7.appendTcDetail(
@@ -214,7 +212,7 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet {
     /* returned must contain the edit mode" */
     TestResult tr8 = tcd
         .getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETSUPPORTEDPORTLETMODES3);
-    if (listmode != null && listmode.toString().contains("edit")) {
+    if (listmode != null && listmode.contains(PortletMode.EDIT)) {
       tr8.setTcSuccess(true);
     } else {
       tr8.appendTcDetail(
@@ -227,7 +225,7 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet {
     /* returned must contain the help mode" */
     TestResult tr9 = tcd
         .getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETSUPPORTEDPORTLETMODES4);
-    if (listmode != null && listmode.toString().contains("help")) {
+    if (listmode != null && listmode.contains(PortletMode.HELP)) {
       tr9.setTcSuccess(true);
     } else {
       tr9.appendTcDetail(
@@ -255,7 +253,7 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet {
     /* returned must contain the maximized state" */
     TestResult tr11 = tcd
         .getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETSUPPORTEDWINDOWSTATES2);
-    if (liststate != null && liststate.toString().contains("maximized")) {
+    if (liststate != null && liststate.contains(WindowState.MAXIMIZED)) {
       tr11.setTcSuccess(true);
     } else {
       tr11.appendTcDetail(
@@ -268,7 +266,7 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet {
     /* returned must contain the minimized state" */
     TestResult tr12 = tcd
         .getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETSUPPORTEDWINDOWSTATES3);
-    if (liststate != null && liststate.toString().contains("minimized")) {
+    if (liststate != null && liststate.contains(WindowState.MINIMIZED)) {
       tr12.setTcSuccess(true);
     } else {
       tr12.appendTcDetail(
@@ -281,7 +279,7 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet {
     /* returned must contain the normal state" */
     TestResult tr13 = tcd
         .getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETSUPPORTEDWINDOWSTATES4);
-    if (liststate != null && liststate.toString().contains("normal")) {
+    if (liststate != null && liststate.contains(WindowState.NORMAL)) {
       tr13.setTcSuccess(true);
     } else {
       tr13.appendTcDetail(

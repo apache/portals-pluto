@@ -23,12 +23,15 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 import javax.portlet.PortletSessionUtil;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
 
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.PortletSession.PORTLET_SCOPE;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSIONUTIL_APIRENDER_DECODEATTRIBUTENAME1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSIONUTIL_APIRENDER_DECODEATTRIBUTENAME2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSIONUTIL_APIRENDER_DECODESCOPE1;
@@ -45,7 +48,8 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
  * This is the main portlet for the test cases. If the test cases call for events, this portlet will
  * initiate the events, but not process them. The processing is done in the companion portlet
  * EnvironmentTests_PortletSessionUtil_ApiRender_event
- *
+ * 
+ * @author ahmed
  */
 public class EnvironmentTests_PortletSessionUtil_ApiRender implements Portlet {
 
@@ -84,9 +88,12 @@ public class EnvironmentTests_PortletSessionUtil_ApiRender implements Portlet {
     /* an encoded name in PORTLET_SCOPE" */
     TestResult tr0 = tcd
         .getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSIONUTIL_APIRENDER_DECODEATTRIBUTENAME1);
-    String dec = PortletSessionUtil.decodeAttributeName("TestPreference1");
-    if (dec.equals("TestPreference1")) {
+    portletReq.getPortletSession().setAttribute("javax.portlet.p.id?tr0", "true", PORTLET_SCOPE);
+    if (PortletSessionUtil.decodeAttributeName("javax.portlet.p.id?tr0").equals("tr0")) {
       tr0.setTcSuccess(true);
+    } else {
+      tr0.appendTcDetail("Failed because decoded attribute name is not tr0 but "
+          + PortletSessionUtil.decodeAttributeName("javax.portlet.p.id?tr0"));
     }
     tr0.writeTo(writer);
 
@@ -96,9 +103,13 @@ public class EnvironmentTests_PortletSessionUtil_ApiRender implements Portlet {
     /* APPLICATION_SCOPE " */
     TestResult tr1 = tcd
         .getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSIONUTIL_APIRENDER_DECODEATTRIBUTENAME2);
-    String dec1 = PortletSessionUtil.decodeAttributeName("TestPreference2");
-    if (dec1.equals("TestPreference2")) {
+    portletReq.getPortletSession().setAttribute("javax.portlet.p.id?tr1", "true",
+        APPLICATION_SCOPE);
+    if (PortletSessionUtil.decodeAttributeName("javax.portlet.p.id?tr1").equals("tr1")) {
       tr1.setTcSuccess(true);
+    } else {
+      tr1.appendTcDetail("Failed because decoded attribute name is not tr1 but "
+          + PortletSessionUtil.decodeAttributeName("javax.portlet.p.id?tr1"));
     }
     tr1.writeTo(writer);
 
@@ -107,8 +118,7 @@ public class EnvironmentTests_PortletSessionUtil_ApiRender implements Portlet {
     /* attribute scope for the input encoded attribute name" */
     TestResult tr2 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSIONUTIL_APIRENDER_DECODESCOPE1);
-    String dec2 = PortletSessionUtil.decodeAttributeName("TestPreference2");
-    if (dec2.equals("TestPreference2")) {
+    if (PortletSessionUtil.decodeScope("javax.portlet.p.id?tr0") == PortletSession.PORTLET_SCOPE) {
       tr2.setTcSuccess(true);
     }
     tr2.writeTo(writer);
@@ -119,8 +129,7 @@ public class EnvironmentTests_PortletSessionUtil_ApiRender implements Portlet {
     /* APPLICATION_SCOPE" */
     TestResult tr3 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSIONUTIL_APIRENDER_DECODESCOPE2);
-    String dec3 = PortletSessionUtil.decodeAttributeName("TestPreference2");
-    if (dec3.equals("TestPreference2")) {
+    if (PortletSessionUtil.decodeScope("tr1") == PortletSession.APPLICATION_SCOPE) {
       tr3.setTcSuccess(true);
     }
     tr3.writeTo(writer);
@@ -131,7 +140,9 @@ public class EnvironmentTests_PortletSessionUtil_ApiRender implements Portlet {
     /* PORTLET_SCOPE" */
     TestResult tr4 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSIONUTIL_APIRENDER_DECODESCOPE3);
-    tr4.setTcSuccess(true);
+    if (PortletSessionUtil.decodeScope("javax.portlet.p.id?tr0") == PortletSession.PORTLET_SCOPE) {
+      tr4.setTcSuccess(true);
+    }
     tr4.writeTo(writer);
 
   }

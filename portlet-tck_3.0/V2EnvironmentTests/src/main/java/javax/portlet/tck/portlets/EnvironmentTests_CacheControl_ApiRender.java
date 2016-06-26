@@ -33,11 +33,9 @@ import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTEST
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETETAG2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETEXPIRATIONTIME1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETEXPIRATIONTIME2;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETEXPIRATIONTIME3;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE3;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE5;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETETAG1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETETAG2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETETAG3;
@@ -50,7 +48,6 @@ import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTEST
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETUSECACHEDCONTENT2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_USECACHEDCONTENT1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_USECACHEDCONTENT2;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_USECACHEDCONTENT3;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
 /**
@@ -63,6 +60,7 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
  * initiate the events, but not process them. The processing is done in the companion portlet
  * EnvironmentTests_CacheControl_ApiRender_event
  *
+ * @author ahmed
  */
 public class EnvironmentTests_CacheControl_ApiRender implements Portlet {
 
@@ -96,9 +94,43 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet {
 
     // Create result objects for the tests
 
-
-
     CacheControl chc = portletResp.getCacheControl();
+
+    /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_isPublicScope2 */
+    /* Details: "Method isPublicScope(): Returns true if the caching */
+    /* scope default has not been set with the setPublicScope method, but */
+    /* has been set to public in the deployment descriptor " */
+    TestResult tr7 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE2);
+    tr7.setTcSuccess(true);
+    tr7.appendTcDetail("Optional test case. Cache control is implementation specific.");
+    tr7.writeTo(writer);
+
+    /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_getExpirationTime2 */
+    /* Details: "Method getExpirationTime(): Returns the default */
+    /* expiration time from the deployment descriptor if the expiration */
+    /* time has not been set" */
+    TestResult tr1 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETEXPIRATIONTIME2);
+    if (chc.getExpirationTime() == 0) {
+      tr1.setTcSuccess(true);
+    } else {
+      tr1.appendTcDetail("Failed because expiration time is " + chc.getExpirationTime()
+          + " which is not set from deployment descriptor ");
+    }
+    tr1.writeTo(writer);
+
+    /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_setExpirationTime2 */
+    /* Details: "Method setExpirationTime(int): If the expiration value */
+    /* is set to 0, caching is disabled" */
+    TestResult tr4 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETEXPIRATIONTIME2);
+    if (!chc.useCachedContent()) {
+      tr4.setTcSuccess(true);
+    } else {
+      tr4.appendTcDetail("Failed because caching is not disabled");
+    }
+    tr4.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_getExpirationTime1 */
     /* Details: "Method getExpirationTime(): Returns the expiration time */
@@ -114,28 +146,6 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet {
     }
     tr0.writeTo(writer);
 
-    /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_getExpirationTime2 */
-    /* Details: "Method getExpirationTime(): Returns the default */
-    /* expiration time from the deployment descriptor if the expiration */
-    /* time has not been set" */
-    TestResult tr1 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETEXPIRATIONTIME2);
-    tr1.setTcSuccess(true);
-    tr1.appendTcDetail(
-        "The Method could not be Tested under this TestPortlet Which already has been set Expiration Time ");
-    tr1.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_getExpirationTime3 */
-    /* Details: "Method getExpirationTime(): Returns 0 if the expiration */
-    /* time has not been set and no default is set in the deployment */
-    /* descriptor" */
-    TestResult tr2 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETEXPIRATIONTIME3);
-    tr2.setTcSuccess(true);
-    tr2.appendTcDetail(
-        "This Method could not be tested Under this TestPortlet which has default set in Deployment Descriptor");
-    tr2.writeTo(writer);
-
     /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_setExpirationTime1 */
     /* Details: "Method setExpirationTime(int): Sets the expiration time */
     /* for the current response to the specified value" */
@@ -149,22 +159,13 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet {
     }
     tr3.writeTo(writer);
 
-    /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_setExpirationTime2 */
-    /* Details: "Method setExpirationTime(int): If the expiration value */
-    /* is set to 0, caching is disabled" */
-    TestResult tr4 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETEXPIRATIONTIME2);
-    tr4.setTcSuccess(true);
-    tr4.appendTcDetail("This Method Could not be Tested which already has Expiration Time ");
-    tr4.writeTo(writer);
-
     /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_setExpirationTime3 */
     /* Details: "Method setExpirationTime(int): If the expiration value */
     /* is set to -1, the cache does not expire" */
     TestResult tr5 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETEXPIRATIONTIME3);
     tr5.setTcSuccess(true);
-    tr5.appendTcDetail("This Method could not be Tested which already has Expiration Time");
+    tr5.appendTcDetail("Optional test case. Cache control is implementation specific.");
     tr5.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_isPublicScope1 */
@@ -173,25 +174,12 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet {
     TestResult tr6 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE1);
     chc.setPublicScope(true);
-    if (chc.isPublicScope() == true) {
+    if (chc.isPublicScope()) {
       tr6.setTcSuccess(true);
     } else {
       tr6.appendTcDetail("The Public Scope is set to False");
     }
     tr6.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_isPublicScope2 */
-    /* Details: "Method isPublicScope(): Returns true if the caching */
-    /* scope default has not been set with the setPublicScope method, but */
-    /* has been set to public in the deployment descriptor " */
-    TestResult tr7 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE2);
-    if (chc.isPublicScope() == true) {
-      tr7.setTcSuccess(true);
-    } else {
-      tr7.appendTcDetail("The Public Scope is set to False");
-    }
-    tr7.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_isPublicScope3 */
     /* Details: "Method isPublicScope(): Returns false if the caching */
@@ -200,25 +188,12 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet {
     TestResult tr8 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE3);
     chc.setPublicScope(false);
-    if (chc.isPublicScope() == false) {
+    if (!chc.isPublicScope()) {
       tr8.setTcSuccess(true);
     } else {
       tr8.appendTcDetail("The Public Scope is set to True");
     }
     tr8.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_isPublicScope5 */
-    /* Details: "Method isPublicScope(): Returns false if the caching */
-    /* scope has not been set with the setPublicScope method and has not */
-    /* been set in the deployment descriptor" */
-    TestResult tr9 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE5);
-    if (chc.isPublicScope() == false) {
-      tr9.setTcSuccess(true);
-    } else {
-      tr9.appendTcDetail("The Public Scope is set to True");
-    }
-    tr9.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_setPublicScope1 */
     /* Details: "Method setPublicScope(boolean): If the input parameter */
@@ -226,7 +201,7 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet {
     TestResult tr10 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETPUBLICSCOPE1);
     chc.setPublicScope(true);
-    if (chc.isPublicScope() == true) {
+    if (chc.isPublicScope()) {
       tr10.setTcSuccess(true);
     } else {
       tr10.appendTcDetail("The Public Scope is set to False");
@@ -239,33 +214,38 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet {
     TestResult tr11 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETPUBLICSCOPE2);
     chc.setPublicScope(false);
-    if (chc.isPublicScope() == false) {
+    if (!chc.isPublicScope()) {
       tr11.setTcSuccess(true);
     } else {
       tr11.appendTcDetail("The Public Scope is set to True");
     }
     tr11.writeTo(writer);
 
+    /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_getETag2 */
+    /* Details: "Method getETag(): Returns null if no ETag is set on the */
+    /* response" */
+    TestResult tr13 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETETAG2);
+    String tag13 = chc.getETag();
+    if (tag13 == null) {
+      tr13.setTcSuccess(true);
+    } else {
+      tr13.appendTcDetail("Etag doesnot match the specified value : " + tag13);
+    }
+
+    tr13.writeTo(writer);
+
     /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_getETag1 */
     /* Details: "Method getETag(): Returns a String containing the ETag */
     /* for the current response" */
     TestResult tr12 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETETAG1);
     chc.setETag("Test");
-    String tag = chc.getETag();
-    if (tag.equals("Test")) {
+    String tag12 = chc.getETag();
+    if (tag12.equals("Test")) {
       tr12.setTcSuccess(true);
     } else {
-      tr12.appendTcDetail("Etag doesnot match the specified value : " + tag);
+      tr12.appendTcDetail("Etag doesnot match the specified value : " + tag12);
     }
     tr12.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_getETag2 */
-    /* Details: "Method getETag(): Returns null if no ETag is set on the */
-    /* response" */
-    TestResult tr13 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_GETETAG2);
-    tr13.setTcSuccess(true);
-    tr13.appendTcDetail("This Method Could not be Tested which already has EFlag ");
-    tr13.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_setETag1 */
     /* Details: "Method setETag(String): Sets an ETag for the current */
@@ -311,7 +291,7 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet {
     TestResult tr17 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_USECACHEDCONTENT1);
     chc.setUseCachedContent(true);
-    if (chc.useCachedContent() == true) {
+    if (chc.useCachedContent()) {
       tr17.setTcSuccess(true);
     } else {
       tr17.appendTcDetail("The Cached Content has been set to InValid");
@@ -325,22 +305,12 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet {
     TestResult tr18 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_USECACHEDCONTENT2);
     chc.setUseCachedContent(false);
-    if (chc.useCachedContent() == false) {
+    if (!chc.useCachedContent()) {
       tr18.setTcSuccess(true);
     } else {
       tr18.appendTcDetail("The Cached Content has been set to Valid");
     }
     tr18.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_useCachedContent3 */
-    /* Details: "Method useCachedContent(): Returns false if the use */
-    /* cached content indcator has not been set" */
-    TestResult tr19 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_USECACHEDCONTENT3);
-    if (chc.useCachedContent() == false) {
-      tr19.setTcSuccess(true);
-    }
-    tr19.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_setUseCachedContent1 */
     /* Details: "Method setUseCachedContent(boolean): If set to true, the */
@@ -348,7 +318,7 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet {
     TestResult tr20 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETUSECACHEDCONTENT1);
     chc.setUseCachedContent(true);
-    if (chc.useCachedContent() == true) {
+    if (chc.useCachedContent()) {
       tr20.setTcSuccess(true);
     } else {
       tr20.appendTcDetail("The Cached Content has been set to InValid");
@@ -361,7 +331,7 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet {
     TestResult tr21 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETUSECACHEDCONTENT2);
     chc.setUseCachedContent(false);
-    if (chc.useCachedContent() == false) {
+    if (!chc.useCachedContent()) {
       tr21.setTcSuccess(true);
     } else {
       tr21.appendTcDetail("The Cached Content has been set to Valid");

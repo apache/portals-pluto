@@ -17,21 +17,23 @@ package javax.portlet.tck.portlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Logger;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.tck.beans.TestButton;
-import javax.xml.namespace.QName;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
 
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETER1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETERNAMES1;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
-import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -41,16 +43,18 @@ import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
  *
  * This is the main portlet for the test cases. If the test cases call for events, this portlet will
  * initiate the events, but not process them. The processing is done in the companion portlet
- * EnvironmentTests_PreferencesValidator_ApiEvent_event
+ * EnvironmentTests_PortletContext_ApiRender_event
  *
+ * @author ahmed
  */
-public class EnvironmentTests_PreferencesValidator_ApiEvent implements Portlet {
-  private static final String LOG_CLASS =
-      EnvironmentTests_PreferencesValidator_ApiEvent.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+public class EnvironmentTests_PortletContext_ApiRender2 implements Portlet {
+
+  private PortletConfig portletConfig = null;
 
   @Override
-  public void init(PortletConfig config) throws PortletException {}
+  public void init(PortletConfig config) throws PortletException {
+    this.portletConfig = config;
+  }
 
   @Override
   public void destroy() {}
@@ -58,60 +62,52 @@ public class EnvironmentTests_PreferencesValidator_ApiEvent implements Portlet {
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
     portletResp.setRenderParameters(portletReq.getParameterMap());
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
 
-    QName eventQName = new QName(TCKNAMESPACE, "EnvironmentTests_PreferencesValidator_ApiEvent");
-    portletResp.setEvent(eventQName, "Hi!");
   }
 
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
 
     PrintWriter writer = portletResp.getWriter();
 
-    /* TestCase: V2EnvironmentTests_PreferencesValidator_ApiEvent_canBeConfigured */
-    /* Details: "A PreferencesValidator can be configured in the */
-    /* deployment descriptor" */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb =
-          new TestButton("V2EnvironmentTests_PreferencesValidator_ApiEvent_canBeConfigured", aurl);
-      tb.writeTo(writer);
-    }
+    JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
-    /* TestCase: V2EnvironmentTests_PreferencesValidator_ApiEvent_validate1 */
-    /* Details: "Method validate(PortletPreferences): The */
-    /* validate(PortletPreferences): method is called when the */
-    /* preferences are stored " */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb =
-          new TestButton("V2EnvironmentTests_PreferencesValidator_ApiEvent_validate1", aurl);
-      tb.writeTo(writer);
-    }
+    // Create result objects for the tests
 
-    /* TestCase: V2EnvironmentTests_PreferencesValidator_ApiEvent_validate2 */
-    /* Details: "Method validate(PortletPreferences): If a */
-    /* ValidatorException is thrown, the preferences are not stored" */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb =
-          new TestButton("V2EnvironmentTests_PreferencesValidator_ApiEvent_validate2", aurl);
-      tb.writeTo(writer);
+    /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getInitParameter1 */
+    /* Details: "Method getInitParameter(String): Returns a */
+    /* java.lang.String PortletContext initialization parameter value for */
+    /* the specified name" */
+    TestResult tr32 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETER1);
+    String initParam1 = portletConfig.getInitParameter("initParam1");
+    if (initParam1!=null && initParam1.equals("true")) {
+      tr32.setTcSuccess(true);
+    } else {
+      tr32.appendTcDetail("Failed because initialization parameter initParam1 is not found.");
     }
+    tr32.writeTo(writer);
 
+    /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getInitParameterNames1 */
+    /* Details: "Method getInitParameterNames(): Returns an */
+    /* java.util.Enumeration&lt;java.lang.String&gt; containing the */
+    /* InitParameter names in the PortletContext" */
+    TestResult tr39 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETERNAMES1);
+    Enumeration<String> getInitNames = portletConfig.getInitParameterNames();
+    List<String> li39 = Collections.list(getInitNames);
+    if (!li39.isEmpty()) {
+      tr39.setTcSuccess(true);
+    }
+    tr39.writeTo(writer);
   }
 
 }

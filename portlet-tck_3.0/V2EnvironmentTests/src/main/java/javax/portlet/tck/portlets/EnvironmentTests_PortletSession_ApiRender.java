@@ -29,6 +29,7 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.tck.attributes.V2EnvironmentTests_PortletSession_ApiRender_Binding;
 import javax.portlet.tck.beans.ClassChecker;
 import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
@@ -42,7 +43,6 @@ import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTEST
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEB1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEB2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEB3;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEB4;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTENAMESA1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTENAMESA2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTENAMESB1;
@@ -53,7 +53,6 @@ import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTEST
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETLASTACCESSEDTIME;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETMAXINACTIVEINTERVAL;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_INVALIDATE1;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_INVALIDATE2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_ISNEW1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_ISNEW2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_REMOVEATTRIBUTEA1;
@@ -100,8 +99,11 @@ import static javax.portlet.PortletSession.PORTLET_SCOPE;
  * initiate the events, but not process them. The processing is done in the companion portlet
  * EnvironmentTests_PortletSession_ApiRender_event
  *
+ * @author ahmed
  */
 public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
+
+  public static int tr_36;
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -135,6 +137,59 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
     ClassChecker cc = new ClassChecker(portletReq.getPortletSession().getClass());
 
     PortletSession ps = portletReq.getPortletSession();
+
+    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeMapA2 */
+    /* Details: "Method getAttributeMap(): Returns an empty map if no */
+    /* attributes exist in the PORTLET_SCOPE" */
+    TestResult tr51 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEMAPA2);
+    Map<String, Object> attributeMap_tr51 = ps.getAttributeMap();
+    if (attributeMap_tr51.isEmpty()) {
+      tr51.setTcSuccess(true);
+    } else {
+      tr51.appendTcDetail("Failed because there are already attributes in portlet session");
+    }
+    tr51.writeTo(writer);
+
+    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeMapB2 */
+    /* Details: "Method getAttributeMap(int): Returns an empty map if no */
+    /* attributes exist in the PORTLET_SCOPE" */
+    TestResult tr53 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEMAPB2);
+    Map<String, Object> attributeMap_tr53 = ps.getAttributeMap(PORTLET_SCOPE);
+    if (attributeMap_tr53.isEmpty()) {
+      tr53.setTcSuccess(true);
+    } else {
+      tr53.appendTcDetail("Failed because there are already attributes in PORTLET_SCOPE");
+    }
+    tr53.writeTo(writer);
+
+    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeNamesA2 */
+    /* Details: "Method getAttributeNames(): Returns an empty Enumeration */
+    /* if there are no attributes available in the PORTLET_SCOPE" */
+    TestResult tr11 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTENAMESA2);
+    Enumeration<String> attributeNames = ps.getAttributeNames();
+    if (!attributeNames.hasMoreElements()) {
+      tr11.setTcSuccess(true);
+    } else {
+      tr11.appendTcDetail("Failed because there are already attributes available");
+    }
+    tr11.writeTo(writer);
+
+    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeNamesB2 */
+    /* Details: "Method getAttributeNames(int): Returns an empty */
+    /* Enumeration if there are no attributes available in the specified */
+    /* scope" */
+    TestResult tr13 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTENAMESB2);
+    Enumeration<String> attributeNames_tr13 = ps.getAttributeNames(PORTLET_SCOPE);
+    if (!attributeNames_tr13.hasMoreElements()) {
+      tr13.setTcSuccess(true);
+    } else {
+      tr13.appendTcDetail("Failed because there are already attributes available in PORTLET_SCOPE");
+    }
+    tr13.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_fieldAPPLICATION_SCOPE */
     /* Details: "Has int field APPLICATION_SCOPE with value of 0x01 " */
@@ -204,15 +259,6 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
     }
     tr4.writeTo(writer);
 
-    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeA4 */
-    /* Details: "Method getAttribute(String): Throws */
-    /* IllegalStateException if the method is called on an invalidated */
-    /* session" */
-    TestResult tr5 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEA4);
-    tr5.setTcSuccess(true);
-    tr5.writeTo(writer);
-
     /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeB1 */
     /* Details: "Method getAttribute(String): Returns a java.lang.Object */
     /* for the specified attribute name in the specified scope" */
@@ -250,29 +296,18 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
     TestResult tr8 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEB3);
     try {
-      try {
-        PortletSession sess = portletReq.getPortletSession();
-        sess.getAttribute(null);
-        tr8.appendTcDetail("Method did not throw an exception.");
-      } catch (IllegalArgumentException iae) {
-        tr8.setTcSuccess(true);
-      } catch (Exception e) {
-        tr8.appendTcDetail(e.toString());
-      }
+      PortletSession sess = portletReq.getPortletSession();
+      sess.getAttribute(null);
+      tr8.appendTcDetail("Method did not throw an exception.");
+    } catch (IllegalArgumentException iae) {
+      tr8.setTcSuccess(true);
+      tr8.appendTcDetail(iae.toString());
     } catch (Exception e) {
       tr8.appendTcDetail(e.toString());
     }
     tr8.writeTo(writer);
 
-    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeB4 */
-    /* Details: "Method getAttribute(String): Throws */
-    /* IllegalStateException if the method is called on an invalidated */
-    /* session" */
-    TestResult tr9 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEB4);
-    tr9.setTcSuccess(true);
-    tr9.appendTcDetail("Could not invalidate Session for this Test Portlet");
-    tr9.writeTo(writer);
+
 
     /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeNamesA1 */
     /* Details: "Method getAttributeNames(): Returns a */
@@ -281,19 +316,12 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
     TestResult tr10 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTENAMESA1);
     Enumeration<String> getAttr = ps.getAttributeNames();
-    if (getAttr != null) {
+    if (getAttr.hasMoreElements()) {
       tr10.setTcSuccess(true);
     }
     tr10.writeTo(writer);
 
-    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeNamesA2 */
-    /* Details: "Method getAttributeNames(): Returns an empty Enumeration */
-    /* if there are no attributes available in the PORTLET_SCOPE" */
-    TestResult tr11 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTENAMESA2);
-    tr11.setTcSuccess(true);
-    tr11.appendTcDetail("This method Could not be Tested which already has Attributes");
-    tr11.writeTo(writer);
+
 
     /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeNamesB1 */
     /* Details: "Method getAttributeNames(int): Returns a */
@@ -307,15 +335,7 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
     }
     tr12.writeTo(writer);
 
-    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeNamesB2 */
-    /* Details: "Method getAttributeNames(int): Returns an empty */
-    /* Enumeration if there are no attributes available in the specified */
-    /* scope" */
-    TestResult tr13 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTENAMESB2);
-    tr13.setTcSuccess(true);
-    tr13.appendTcDetail("This method Could not be Tested which already has Attributes");
-    tr13.writeTo(writer);
+
 
     /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getCreationTime1 */
     /* Details: "Method getCreationTime(): Returns a long containing the */
@@ -332,14 +352,7 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
     }
     tr14.writeTo(writer);
 
-    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getCreationTime2 */
-    /* Details: "Method getCreationTime(): Throws IllegalStateException */
-    /* if this method is called on an invalidated session" */
-    TestResult tr15 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETCREATIONTIME2);
-    tr15.setTcSuccess(true);
-    tr15.appendTcDetail("Could not Invalidate Session for this Test Portlet.");
-    tr15.writeTo(writer);
+
 
     /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getId */
     /* Details: "Method getId(): Returns a String containing a unique */
@@ -374,33 +387,6 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
       tr18.setTcSuccess(true);
     }
     tr18.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_invalidate1 */
-    /* Details: "Method invalidate(): Invalidates this session (all */
-    /* scopes): and unbinds any objects bound to it" */
-    TestResult tr19 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_INVALIDATE1);
-    tr19.setTcSuccess(true);
-    tr19.appendTcDetail(
-        "This Method could not be tested as Invalidate() could cause exception which affects other Test Cases");
-    tr19.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_invalidate2 */
-    /* Details: "Method invalidate(): The underlying HTTP session is also */
-    /* invalidated" */
-    TestResult tr20 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_INVALIDATE2);
-    tr20.setTcSuccess(true);
-    tr20.appendTcDetail(
-        "This Method could not be tested as Invalidate() could cause exception which affects other Test Cases");
-    tr20.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_isNew1 */
-    /* Details: "Method isNew(): Returns true if the client has not yet */
-    /* joined the session" */
-    TestResult tr21 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_ISNEW1);
-    tr21.setTcSuccess(true);
-    tr21.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_isNew2 */
     /* Details: "Method isNew(): Returns false if the client has joined */
@@ -624,7 +610,16 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
     /* HttpSessionBindingListener.valueBound method is called" */
     TestResult tr34 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_SETATTRIBUTEA4);
-    tr34.setTcSuccess(true);
+    V2EnvironmentTests_PortletSession_ApiRender_Binding binding_tr34 =
+        new V2EnvironmentTests_PortletSession_ApiRender_Binding();
+    binding_tr34.setTr34(false);
+    ps.setAttribute("tr34", binding_tr34);
+    if (binding_tr34.getTr34()) {
+      tr34.setTcSuccess(true);
+    } else {
+      tr34.appendTcDetail(
+          "Failed because HttpSessionBindingListener.valueBound method is not called on setAttribute");
+    }
     tr34.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_setAttributeA5 */
@@ -634,18 +629,17 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
     /* called" */
     TestResult tr35 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_SETATTRIBUTEA5);
-    tr35.setTcSuccess(true);
+    V2EnvironmentTests_PortletSession_ApiRender_Binding binding_tr35 =
+        new V2EnvironmentTests_PortletSession_ApiRender_Binding();
+    binding_tr34.setTr34(true);
+    ps.setAttribute("tr34", binding_tr35);
+    if (!binding_tr34.getTr34()) {
+      tr35.setTcSuccess(true);
+    } else {
+      tr35.appendTcDetail(
+          "Failed because HttpSessionBindingListener.valueBound method is not called on setAttribute");
+    }
     tr35.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_setAttributeA6 */
-    /* Details: "Method setAttribute(String, Object): If an attribute was */
-    /* replaced, the HttpSessionAttributeListener.attributeReplaced */
-    /* method is called on all HttpSessionAttributeListeners in the web */
-    /* application" */
-    TestResult tr36 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_SETATTRIBUTEA6);
-    tr36.setTcSuccess(true);
-    tr36.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_setAttributeA7 */
     /* Details: "Method setAttribute(String, Object): If a new attribute */
@@ -654,8 +648,36 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
     /* application" */
     TestResult tr37 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_SETATTRIBUTEA7);
-    tr37.setTcSuccess(true);
+    EnvironmentTests_PortletSession_ApiRender.tr_36 = 0;
+    ps.setAttribute("tr37", "true");
+    if (EnvironmentTests_PortletSession_ApiRender.tr_36 == 1) {
+      tr37.setTcSuccess(true);
+    } else {
+      tr37.appendTcDetail(
+          "Failed because HttpSessionAttributeListener.attributeAdded method is not called on setAttribute."
+              + " EnvironmentTests_PortletSession_ApiRender.tr_36 value should be 1, but got "
+              + EnvironmentTests_PortletSession_ApiRender.tr_36);
+    }
     tr37.writeTo(writer);
+
+    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_setAttributeA6 */
+    /* Details: "Method setAttribute(String, Object): If an attribute was */
+    /* replaced, the HttpSessionAttributeListener.attributeReplaced */
+    /* method is called on all HttpSessionAttributeListeners in the web */
+    /* application" */
+    TestResult tr36 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_SETATTRIBUTEA6);
+    EnvironmentTests_PortletSession_ApiRender.tr_36 = 0;
+    ps.setAttribute("tr37", "false");
+    if (EnvironmentTests_PortletSession_ApiRender.tr_36 == 3) {
+      tr36.setTcSuccess(true);
+    } else {
+      tr36.appendTcDetail(
+          "Failed because HttpSessionAttributeListener.attributeReplaced method is not called on setAttribute."
+              + " EnvironmentTests_PortletSession_ApiRender.tr_36 value should be 3, but got "
+              + EnvironmentTests_PortletSession_ApiRender.tr_36);
+    }
+    tr36.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_setAttributeA8 */
     /* Details: "Method setAttribute(String, Object): Throws */
@@ -737,7 +759,16 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
     /* HttpSessionBindingListener.valueBound method is called" */
     TestResult tr42 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_SETATTRIBUTEB4);
-    tr42.setTcSuccess(true);
+    V2EnvironmentTests_PortletSession_ApiRender_Binding binding_tr42 =
+        new V2EnvironmentTests_PortletSession_ApiRender_Binding();
+    binding_tr42.setTr34(false);
+    ps.setAttribute("tr42", binding_tr42, PORTLET_SCOPE);
+    if (binding_tr42.getTr34()) {
+      tr42.setTcSuccess(true);
+    } else {
+      tr42.appendTcDetail(
+          "Failed because HttpSessionBindingListener.valueBound method is not called on setAttribute");
+    }
     tr42.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_setAttributeB5 */
@@ -747,18 +778,17 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
     /* called" */
     TestResult tr43 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_SETATTRIBUTEB5);
-    tr43.setTcSuccess(true);
+    V2EnvironmentTests_PortletSession_ApiRender_Binding binding_tr43 =
+        new V2EnvironmentTests_PortletSession_ApiRender_Binding();
+    binding_tr42.setTr34(true);
+    ps.setAttribute("tr42", binding_tr43, PORTLET_SCOPE);
+    if (!binding_tr42.getTr34()) {
+      tr43.setTcSuccess(true);
+    } else {
+      tr43.appendTcDetail(
+          "Failed because HttpSessionBindingListener.valueBound method is not called on setAttribute");
+    }
     tr43.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_setAttributeB6 */
-    /* Details: "Method setAttribute(String, Object, int): If an */
-    /* attribute was replaced, the */
-    /* HttpSessionAttributeListener.attributeReplaced method is called on */
-    /* all HttpSessionAttributeListeners in the web application" */
-    TestResult tr44 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_SETATTRIBUTEB6);
-    tr44.setTcSuccess(true);
-    tr44.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_setAttributeB7 */
     /* Details: "Method setAttribute(String, Object, int): If a new */
@@ -767,8 +797,36 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
     /* all HttpSessionAttributeListeners in the web application" */
     TestResult tr45 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_SETATTRIBUTEB7);
-    tr45.setTcSuccess(true);
+    EnvironmentTests_PortletSession_ApiRender.tr_36 = 0;
+    ps.setAttribute("tr45", "true", PORTLET_SCOPE);
+    if (EnvironmentTests_PortletSession_ApiRender.tr_36 == 1) {
+      tr45.setTcSuccess(true);
+    } else {
+      tr45.appendTcDetail(
+          "Failed because HttpSessionAttributeListener.attributeAdded method is not called on setAttribute."
+              + " EnvironmentTests_PortletSession_ApiRender.tr_36 value should be 1, but got "
+              + EnvironmentTests_PortletSession_ApiRender.tr_36);
+    }
     tr45.writeTo(writer);
+
+    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_setAttributeB6 */
+    /* Details: "Method setAttribute(String, Object, int): If an */
+    /* attribute was replaced, the */
+    /* HttpSessionAttributeListener.attributeReplaced method is called on */
+    /* all HttpSessionAttributeListeners in the web application" */
+    TestResult tr44 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_SETATTRIBUTEB6);
+    EnvironmentTests_PortletSession_ApiRender.tr_36 = 0;
+    ps.setAttribute("tr45", "false", PORTLET_SCOPE);
+    if (EnvironmentTests_PortletSession_ApiRender.tr_36 == 3) {
+      tr44.setTcSuccess(true);
+    } else {
+      tr44.appendTcDetail(
+          "Failed because HttpSessionAttributeListener.attributeReplaced method is not called on setAttribute."
+              + " EnvironmentTests_PortletSession_ApiRender.tr_36 value should be 3, but got "
+              + EnvironmentTests_PortletSession_ApiRender.tr_36);
+    }
+    tr44.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_setAttributeB8 */
     /* Details: "Method setAttribute(String, Object, int): Throws */
@@ -808,6 +866,7 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
     /* time is negative, the session should never timeout" */
     TestResult tr48 = tcd
         .getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_SETMAXINACTIVEINTERVAL2);
+    tr48.appendTcDetail("No way to test this.");
     tr48.setTcSuccess(true);
     tr48.writeTo(writer);
 
@@ -834,15 +893,6 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
     }
     tr50.writeTo(writer);
 
-    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeMapA2 */
-    /* Details: "Method getAttributeMap(): Returns an empty map if no */
-    /* attributes exist in the PORTLET_SCOPE" */
-    TestResult tr51 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEMAPA2);
-    tr51.setTcSuccess(true);
-    tr51.appendTcDetail("This Method could not be Tested Which already has Attributes");
-    tr51.writeTo(writer);
-
     /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeMapB1 */
     /* Details: "Method getAttributeMap(int): Returns an */
     /* java.util.Map&lt;java.lang.String,java.lang.Object&gt; object for */
@@ -855,14 +905,56 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet {
     }
     tr52.writeTo(writer);
 
-    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeMapB2 */
-    /* Details: "Method getAttributeMap(int): Returns an empty map if no */
-    /* attributes exist in the PORTLET_SCOPE" */
-    TestResult tr53 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEMAPB2);
-    tr53.setTcSuccess(true);
-    tr53.appendTcDetail("This Method Could not be Tested Which Already has Attributes");
-    tr53.writeTo(writer);
+    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_invalidate1 */
+    /* Details: "Method invalidate(): Invalidates this session (all */
+    /* scopes): and unbinds any objects bound to it" */
+    TestResult tr19 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_INVALIDATE1);
+    ps.invalidate();
+    if (!portletReq.isRequestedSessionIdValid()) {
+      tr19.setTcSuccess(true);
+    } else {
+      tr19.appendTcDetail("Failed because session is still valid");
+    }
+    tr19.writeTo(writer);
+
+
+    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeA4 */
+    /* Details: "Method getAttribute(String): Throws */
+    /* IllegalStateException if the method is called on an invalidated */
+    /* session" */
+    TestResult tr5 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEA4);
+    try {
+      ps.getAttribute("TestAttr1");
+    } catch (IllegalStateException e) {
+      tr5.setTcSuccess(true);
+      tr5.appendTcDetail(e.toString());
+    }
+    tr5.writeTo(writer);
+
+    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getCreationTime2 */
+    /* Details: "Method getCreationTime(): Throws IllegalStateException */
+    /* if this method is called on an invalidated session" */
+    TestResult tr15 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETCREATIONTIME2);
+    try {
+      ps.getCreationTime();
+    } catch (IllegalStateException e) {
+      tr15.setTcSuccess(true);
+      tr15.appendTcDetail(e.toString());
+    }
+    tr15.writeTo(writer);
+
+    /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_isNew1 */
+    /* Details: "Method isNew(): Returns true if the client has not yet */
+    /* joined the session" */
+    TestResult tr21 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_ISNEW1);
+    ps = portletReq.getPortletSession(true);
+    if (ps.isNew()) {
+      tr21.setTcSuccess(true);
+    }
+    tr21.writeTo(writer);
 
   }
 

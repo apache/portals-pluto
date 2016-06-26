@@ -32,6 +32,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.ReadOnlyException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ValidatorException;
 import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
 import javax.portlet.tck.beans.TestButton;
 import javax.portlet.tck.beans.TestResult;
@@ -66,11 +67,8 @@ import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTEST
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_RESET1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_RESET2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_RESET3;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE1;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE3;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE4;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE5;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE6;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
@@ -86,8 +84,11 @@ import static javax.portlet.PortletSession.APPLICATION_SCOPE;
  * initiate the events, but not process them. The processing is done in the companion portlet
  * EnvironmentTests_PortletPreferences_ApiAction_event
  *
+ * @author ahmed
  */
 public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
+
+  public static boolean tr32_success = false;
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -110,6 +111,15 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
     // Create result objects for the tests
 
     PortletPreferences pp = portletReq.getPreferences();
+
+    /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_getNames2 */
+    /* Details: "Method getNames(): Returns an empty Enumeration if no */
+    /* preference keys are available" */
+    TestResult tr24 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_GETNAMES2);
+    tr24.setTcSuccess(true);
+    tr24.appendTcDetail("Can't be tested as there are already keys in portlet preferences");
+    tr24.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_isReadOnly1 */
     /* Details: "Method isReadOnly(String): Returns true if the */
@@ -152,15 +162,12 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
     TestResult tr3 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_ISREADONLY4);
     try {
-      try {
-        PortletPreferences prefs = portletReq.getPreferences();
-        prefs.isReadOnly(null);
-        tr3.appendTcDetail("Method did not throw an exception.");
-      } catch (IllegalArgumentException iae) {
-        tr3.setTcSuccess(true);
-      } catch (Exception e) {
-        tr3.appendTcDetail(e.toString());
-      }
+      PortletPreferences prefs = portletReq.getPreferences();
+      prefs.isReadOnly(null);
+      tr3.appendTcDetail("Method did not throw an exception.");
+    } catch (IllegalArgumentException iae) {
+      tr3.setTcSuccess(true);
+      tr3.appendTcDetail(iae.toString());
     } catch (Exception e) {
       tr3.appendTcDetail(e.toString());
     }
@@ -218,15 +225,12 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
     TestResult tr7 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_GETVALUE4);
     try {
-      try {
-        PortletPreferences prefs = portletReq.getPreferences();
-        prefs.getValue(null, null);
-        tr7.appendTcDetail("Method did not throw an exception.");
-      } catch (IllegalArgumentException iae) {
-        tr7.setTcSuccess(true);
-      } catch (Exception e) {
-        tr7.appendTcDetail(e.toString());
-      }
+      PortletPreferences prefs = portletReq.getPreferences();
+      prefs.getValue(null, null);
+      tr7.appendTcDetail("Method did not throw an exception.");
+    } catch (IllegalArgumentException iae) {
+      tr7.setTcSuccess(true);
+      tr7.appendTcDetail(iae.toString());
     } catch (Exception e) {
       tr7.appendTcDetail(e.toString());
     }
@@ -290,6 +294,7 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
         prefs.getValues(null, new String[] {"val1-1", "val1-2"});
         tr11.appendTcDetail("Method did not throw an exception.");
       } catch (IllegalArgumentException iae) {
+        tr11.appendTcDetail(iae.toString());
         tr11.setTcSuccess(true);
       } catch (Exception e) {
         tr11.appendTcDetail(e.toString());
@@ -358,6 +363,7 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
       tr15.appendTcDetail("Method Did Not Throw Exception");
     } catch (ReadOnlyException roe) {
       tr15.setTcSuccess(true);
+      tr15.appendTcDetail(roe.toString());
     }
     tr15.writeTo(writer);
 
@@ -367,15 +373,12 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
     TestResult tr16 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_SETVALUE5);
     try {
-      try {
-        PortletPreferences prefs = portletReq.getPreferences();
-        prefs.setValue(null, "value");
-        tr16.appendTcDetail("Method did not throw an exception.");
-      } catch (IllegalArgumentException iae) {
-        tr16.setTcSuccess(true);
-      } catch (Exception e) {
-        tr16.appendTcDetail(e.toString());
-      }
+      PortletPreferences prefs = portletReq.getPreferences();
+      prefs.setValue(null, "value");
+      tr16.appendTcDetail("Method did not throw an exception.");
+    } catch (IllegalArgumentException iae) {
+      tr16.appendTcDetail(iae.toString());
+      tr16.setTcSuccess(true);
     } catch (Exception e) {
       tr16.appendTcDetail(e.toString());
     }
@@ -459,6 +462,7 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
       pp.setValues("TestPreference1", new String[] {"Val1"});
       tr21.appendTcDetail("Method did not Throw Exception");
     } catch (ReadOnlyException roe) {
+      tr21.appendTcDetail(roe.toString());
       tr21.setTcSuccess(true);
     }
     tr21.writeTo(writer);
@@ -474,6 +478,7 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
         prefs.setValues(null, new String[] {"val1-1", "val1-2"});
         tr22.appendTcDetail("Method did not throw an exception.");
       } catch (IllegalArgumentException iae) {
+        tr22.appendTcDetail(iae.toString());
         tr22.setTcSuccess(true);
       } catch (Exception e) {
         tr22.appendTcDetail(e.toString());
@@ -495,15 +500,7 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
     }
     tr23.writeTo(writer);
 
-    /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_getNames2 */
-    /* Details: "Method getNames(): Returns an empty Enumeration if no */
-    /* preference keys are available" */
-    TestResult tr24 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_GETNAMES2);
-    tr24.setTcSuccess(true);
-    tr24.appendTcDetail(
-        "This Method Could not be Tested Which already has Preference keys set for this Portlet");
-    tr24.writeTo(writer);
+
 
     /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_getMap1 */
     /* Details: "Method getMap(): Returns an */
@@ -553,6 +550,7 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
       pp.reset("TestPreference1");
       tr28.appendTcDetail("Method Did not Throw Exception");
     } catch (ReadOnlyException roe) {
+      tr28.appendTcDetail(roe.toString());
       tr28.setTcSuccess(true);
     }
     tr28.writeTo(writer);
@@ -568,6 +566,7 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
         prefs.reset(null);
         tr29.appendTcDetail("Method did not throw an exception.");
       } catch (IllegalArgumentException iae) {
+        tr29.appendTcDetail(iae.toString());
         tr29.setTcSuccess(true);
       } catch (Exception e) {
         tr29.appendTcDetail(e.toString());
@@ -577,28 +576,19 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
     }
     tr29.writeTo(writer);
 
-    /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_store1 */
-    /* Details: "Method store(): Commits changes made to the preferences */
-    /* to the persistent store " */
-    TestResult tr30 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE1);
-    tr30.setTcSuccess(true);
-    tr30.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_store2 */
-    /* Details: "Method store(): If the store(): method is not called, */
-    /* changes made are discarded" */
-    TestResult tr31 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE2);
-    tr31.setTcSuccess(true);
-    tr31.writeTo(writer);
-
     /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_store3 */
     /* Details: "Method store(): If a validator is defined, it is called */
     /* before the actual store is performed" */
     TestResult tr32 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE3);
-    tr32.setTcSuccess(true);
+    EnvironmentTests_PortletPreferences_ApiAction.tr32_success = false;
+    pp.setValue("tr33", "true");
+    pp.store();
+    if (EnvironmentTests_PortletPreferences_ApiAction.tr32_success) {
+      tr32.setTcSuccess(true);
+    } else {
+      tr32.appendTcDetail("Failed because validator is not called");
+    }
     tr32.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_store4 */
@@ -606,24 +596,27 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
     /* performed" */
     TestResult tr33 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE4);
-    tr33.setTcSuccess(true);
+    try {
+      pp.setValue("tr33", "false");
+      pp.store();
+    } catch (ValidatorException e) {
+      tr33.setTcSuccess(true);
+      tr33.appendTcDetail(e.toString() + ". Preferences are not stored");
+    }
     tr33.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_store5 */
-    /* Details: "Method store(): Throws IllegalStateException if store(): */
-    /* is called in the render method " */
-    TestResult tr34 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE5);
-    tr34.setTcSuccess(true);
-    tr34.appendTcDetail("This Method could not be Tested Under Action Method");
-    tr34.writeTo(writer);
 
     /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_store6 */
     /* Details: "Method store(): Throws ValidatorException if the */
     /* validation performed by the associated validator fails " */
     TestResult tr35 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE6);
-    tr35.setTcSuccess(true);
+    try {
+      pp.setValue("tr33", "false");
+      pp.store();
+    } catch (ValidatorException e) {
+      tr35.setTcSuccess(true);
+      tr35.appendTcDetail(e.toString());
+    }
     tr35.writeTo(writer);
 
     portletReq.getPortletSession().setAttribute(
@@ -988,28 +981,6 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
       tb.writeTo(writer);
     }
 
-    /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_store1 */
-    /* Details: "Method store(): Commits changes made to the preferences */
-    /* to the persistent store " */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiAction_store1", aurl);
-      tb.writeTo(writer);
-    }
-
-    /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_store2 */
-    /* Details: "Method store(): If the store(): method is not called, */
-    /* changes made are discarded" */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiAction_store2", aurl);
-      tb.writeTo(writer);
-    }
-
     /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_store3 */
     /* Details: "Method store(): If a validator is defined, it is called */
     /* before the actual store is performed" */
@@ -1029,17 +1000,6 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet {
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
           new TestButton("V2EnvironmentTests_PortletPreferences_ApiAction_store4", aurl);
-      tb.writeTo(writer);
-    }
-
-    /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_store5 */
-    /* Details: "Method store(): Throws IllegalStateException if store(): */
-    /* is called in the render method " */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiAction_store5", aurl);
       tb.writeTo(writer);
     }
 

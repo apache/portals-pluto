@@ -23,23 +23,24 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
 
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEA1;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEA2;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEA3;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEA4;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEB1;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEB2;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEB3;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEB4;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_FORWARD1;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_FORWARD2;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_FORWARD3;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_FORWARD4;
+import static javax.portlet.tck.constants.Constants.JSP_PREFIX;
+import static javax.portlet.tck.constants.Constants.JSP_SUFFIX;
+import static javax.portlet.tck.constants.Constants.QUERY_STRING;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.tck.constants.Constants.SERVLET_PREFIX;
+import static javax.portlet.tck.constants.Constants.SERVLET_SUFFIX;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
 /**
@@ -52,11 +53,18 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
  * initiate the events, but not process them. The processing is done in the companion portlet
  * EnvironmentTests_PortletRequestDispatcher_ApiRender_event
  *
+ * @author ahmed
  */
 public class EnvironmentTests_PortletRequestDispatcher_ApiRender implements Portlet {
 
+  private PortletConfig portletConfig = null;
+  private static final String HTML_PREFIX = "/WEB-INF/html/";
+  private static final String HTML_SUFFIX = ".html";
+
   @Override
-  public void init(PortletConfig config) throws PortletException {}
+  public void init(PortletConfig config) throws PortletException {
+    this.portletConfig = config;
+  }
 
   @Override
   public void destroy() {}
@@ -72,116 +80,136 @@ public class EnvironmentTests_PortletRequestDispatcher_ApiRender implements Port
   }
 
   @Override
-  public void render(RenderRequest portletReq, RenderResponse portletResp)
+  public void render(RenderRequest renderReq, RenderResponse renderResp)
       throws PortletException, IOException {
 
     long tid = Thread.currentThread().getId();
-    portletReq.setAttribute(THREADID_ATTR, tid);
+    renderReq.setAttribute(THREADID_ATTR, tid);
 
-    PrintWriter writer = portletResp.getWriter();
+    PrintWriter writer = renderResp.getWriter();
+    
+    PortletSession ps = renderReq.getPortletSession();
+    String msg = (String) ps.getAttribute(
+        RESULT_ATTR_PREFIX + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward1", APPLICATION_SCOPE);
+    if (msg != null) {
+      writer.write("<p>" + msg + "</p><br/>\n");
+      ps.removeAttribute(RESULT_ATTR_PREFIX + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward1",
+          APPLICATION_SCOPE);
+    }
 
     JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
     // Create result objects for the tests
 
-    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeA1 */
-    /* Details: "Method include(PortletRequest, PortletResponse): */
-    /* Includes the content of a JSP page in the response" */
-    TestResult tr0 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEA1);
-    tr0.setTcSuccess(true);
-    tr0.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeA2 */
-    /* Details: "Method include(PortletRequest, PortletResponse): */
-    /* Includes the content of a HTML Page in the response" */
-    TestResult tr1 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEA2);
-    tr1.setTcSuccess(true);
-    tr1.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeA3 */
-    /* Details: "Method include(PortletRequest, PortletResponse): The */
-    /* included servlet cannot change the status code. The attempt is */
-    /* ignored" */
-    TestResult tr2 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEA3);
-    tr2.setTcSuccess(true);
-    tr2.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeA4 */
-    /* Details: "Method include(PortletRequest, PortletResponse): The */
-    /* included servlet cannot set the headers. The attempt is ignored" */
-    TestResult tr3 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEA4);
-    tr3.setTcSuccess(true);
-    tr3.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeB1 */
-    /* Details: "Method include(RenderRequest, RenderResponse): Includes */
-    /* the content of a JSP page in the response" */
-    TestResult tr4 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEB1);
-    tr4.setTcSuccess(true);
-    tr4.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeB2 */
-    /* Details: "Method include(RenderRequest, RenderResponse): Includes */
-    /* the content of a HTML Page in the response" */
-    TestResult tr5 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEB2);
-    tr5.setTcSuccess(true);
-    tr5.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeB3 */
-    /* Details: "Method include(RenderRequest, RenderResponse): The */
-    /* included servlet cannot change the status code. The attempt is */
-    /* ignored" */
-    TestResult tr6 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEB3);
-    tr6.setTcSuccess(true);
-    tr6.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeB4 */
-    /* Details: "Method include(RenderRequest, RenderResponse): The */
-    /* included servlet cannot set the headers. The attempt is ignored" */
-    TestResult tr7 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEB4);
-    tr7.setTcSuccess(true);
-    tr7.writeTo(writer);
-
-    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward1 */
-    /* Details: "Method forward(PortletRequest, PortletResponse): Can */
-    /* forward to a JSP page to create the response" */
-    TestResult tr8 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_FORWARD1);
-    tr8.setTcSuccess(true);
-    tr8.writeTo(writer);
-
+    PortletRequest portletReq = renderReq;
+    PortletResponse portletResp = renderResp;
+    
+    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward4 */
+    /* Details: "Method forward(PortletRequest, PortletResponse): Throws */
+    /* PortletException if the forwarded servlet throws any excpetion */
+    /* other than IOException or a runtime exception " */
+    // TODO: Fix test case. In servelt, extended HttpServlet class does not allow exceptions to throw exception other than IO and Runtime.
+    TestResult tr11 =
+        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_FORWARD4);
+    String target_tr11 = SERVLET_PREFIX
+        + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_PortletRequest_Forward"
+        + SERVLET_SUFFIX;
+    PortletRequestDispatcher rd_tr11 =
+        portletConfig.getPortletContext().getRequestDispatcher(target_tr11);
+    try{
+    rd_tr11.forward(portletReq, portletResp);
+    } catch (Exception e){
+      tr11.setTcSuccess(true);
+      tr11.appendTcDetail(e.toString());
+    }
+    tr11.writeTo(writer);
+    
     /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward2 */
     /* Details: "Method forward(PortletRequest, PortletResponse): Can */
     /* forward to a HTML Page to create the response" */
-    TestResult tr9 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_FORWARD2);
-    tr9.setTcSuccess(true);
-    tr9.writeTo(writer);
-
+    String target_tr9 = HTML_PREFIX + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward2" + HTML_SUFFIX
+        + "?" + QUERY_STRING;
+    PortletRequestDispatcher rd_tr9 =
+        portletConfig.getPortletContext().getRequestDispatcher(target_tr9);
+    rd_tr9.forward(portletReq, portletResp);
+    
     /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward3 */
     /* Details: "Method forward(PortletRequest, PortletResponse): Throws */
     /* IllegalStateException if the response was already committed" */
     TestResult tr10 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_FORWARD3);
-    tr10.setTcSuccess(true);
+    String target_tr10 = SERVLET_PREFIX
+        + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_PortletRequest_Forward"
+        + SERVLET_SUFFIX;
+    PortletRequestDispatcher rd_tr10 =
+        portletConfig.getPortletContext().getRequestDispatcher(target_tr10);
+    try{
+    rd_tr10.forward(portletReq, portletResp);
+    } catch (Exception e){
+      tr10.setTcSuccess(true);
+      tr10.appendTcDetail(e.toString());
+    }
     tr10.writeTo(writer);
+    
+    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeA1 */
+    /* Details: "Method include(PortletRequest, PortletResponse): */
+    /* Includes the content of a JSP page in the response" */
+    String target_tr0 =
+        JSP_PREFIX + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeA1" + JSP_SUFFIX
+            + "?" + QUERY_STRING;
+    PortletRequestDispatcher rd_tr0 =
+        portletConfig.getPortletContext().getRequestDispatcher(target_tr0);
+    rd_tr0.include(portletReq, portletResp);
 
-    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward4 */
-    /* Details: "Method forward(PortletRequest, PortletResponse): Throws */
-    /* PortletException if the forwarded servlet throws any excpetion */
-    /* other than IOException or a runtime exception " */
-    TestResult tr11 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_FORWARD4);
-    tr11.setTcSuccess(true);
-    tr11.writeTo(writer);
+    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeA2 */
+    /* Details: "Method include(PortletRequest, PortletResponse): */
+    /* Includes the content of a HTML Page in the response" */
+    String target_tr1 = HTML_PREFIX
+        + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeA2" + HTML_SUFFIX;
+    PortletRequestDispatcher rd_tr1 =
+        portletConfig.getPortletContext().getRequestDispatcher(target_tr1);
+    rd_tr1.include(portletReq, portletResp);
+
+    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeA3 */
+    /* Details: "Method include(PortletRequest, PortletResponse): The */
+    /* included servlet cannot change the status code. The attempt is */
+    /* ignored" */
+    String target_tr2 = SERVLET_PREFIX
+        + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_PortletRequest_Include"
+        + SERVLET_SUFFIX;
+    PortletRequestDispatcher rd_tr2 =
+        portletConfig.getPortletContext().getRequestDispatcher(target_tr2);
+    rd_tr2.include(portletReq, portletResp);
+
+    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeB1 */
+    /* Details: "Method include(RenderRequest, RenderResponse): Includes */
+    /* the content of a JSP page in the response" */
+    String target_tr3 =
+        JSP_PREFIX + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeB1" + JSP_SUFFIX
+            + "?" + QUERY_STRING;
+    PortletRequestDispatcher rd_tr3 =
+        portletConfig.getPortletContext().getRequestDispatcher(target_tr3);
+    rd_tr3.include(portletReq, portletResp);
+
+    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeB2 */
+    /* Details: "Method include(RenderRequest, RenderResponse): Includes */
+    /* the content of a HTML Page in the response" */
+    String target_tr4 = HTML_PREFIX
+        + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeB2" + HTML_SUFFIX;
+    PortletRequestDispatcher rd_tr4 =
+        portletConfig.getPortletContext().getRequestDispatcher(target_tr4);
+    rd_tr4.include(portletReq, portletResp);
+    
+    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeB3 */
+    /* Details: "Method include(RenderRequest, RenderResponse): The */
+    /* included servlet cannot change the status code. The attempt is */
+    /* ignored" */
+    String target_tr5 = SERVLET_PREFIX
+        + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_RenderRequest_Include"
+        + SERVLET_SUFFIX;
+    PortletRequestDispatcher rd_tr5 =
+        portletConfig.getPortletContext().getRequestDispatcher(target_tr5);
+    rd_tr5.include(portletReq, portletResp);
 
   }
 
