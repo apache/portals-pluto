@@ -29,12 +29,8 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
-import javax.portlet.tck.beans.TestResult;
 
 import static javax.portlet.PortletSession.APPLICATION_SCOPE;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_FORWARD3;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_FORWARD4;
 import static javax.portlet.tck.constants.Constants.JSP_PREFIX;
 import static javax.portlet.tck.constants.Constants.JSP_SUFFIX;
 import static javax.portlet.tck.constants.Constants.QUERY_STRING;
@@ -87,70 +83,23 @@ public class EnvironmentTests_PortletRequestDispatcher_ApiRender implements Port
     renderReq.setAttribute(THREADID_ATTR, tid);
 
     PrintWriter writer = renderResp.getWriter();
-    
+
     PortletSession ps = renderReq.getPortletSession();
     String msg = (String) ps.getAttribute(
-        RESULT_ATTR_PREFIX + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward1", APPLICATION_SCOPE);
+        RESULT_ATTR_PREFIX + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward1",
+        APPLICATION_SCOPE);
     if (msg != null) {
       writer.write("<p>" + msg + "</p><br/>\n");
-      ps.removeAttribute(RESULT_ATTR_PREFIX + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward1",
+      ps.removeAttribute(
+          RESULT_ATTR_PREFIX + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward1",
           APPLICATION_SCOPE);
     }
-
-    JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
     // Create result objects for the tests
 
     PortletRequest portletReq = renderReq;
     PortletResponse portletResp = renderResp;
-    
-    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward4 */
-    /* Details: "Method forward(PortletRequest, PortletResponse): Throws */
-    /* PortletException if the forwarded servlet throws any excpetion */
-    /* other than IOException or a runtime exception " */
-    // TODO: Fix test case. In servelt, extended HttpServlet class does not allow exceptions to throw exception other than IO and Runtime.
-    TestResult tr11 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_FORWARD4);
-    String target_tr11 = SERVLET_PREFIX
-        + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_PortletRequest_Forward"
-        + SERVLET_SUFFIX;
-    PortletRequestDispatcher rd_tr11 =
-        portletConfig.getPortletContext().getRequestDispatcher(target_tr11);
-    try{
-    rd_tr11.forward(portletReq, portletResp);
-    } catch (Exception e){
-      tr11.setTcSuccess(true);
-      tr11.appendTcDetail(e.toString());
-    }
-    tr11.writeTo(writer);
-    
-    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward2 */
-    /* Details: "Method forward(PortletRequest, PortletResponse): Can */
-    /* forward to a HTML Page to create the response" */
-    String target_tr9 = HTML_PREFIX + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward2" + HTML_SUFFIX
-        + "?" + QUERY_STRING;
-    PortletRequestDispatcher rd_tr9 =
-        portletConfig.getPortletContext().getRequestDispatcher(target_tr9);
-    rd_tr9.forward(portletReq, portletResp);
-    
-    /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward3 */
-    /* Details: "Method forward(PortletRequest, PortletResponse): Throws */
-    /* IllegalStateException if the response was already committed" */
-    TestResult tr10 =
-        tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_FORWARD3);
-    String target_tr10 = SERVLET_PREFIX
-        + "V2EnvironmentTests_PortletRequestDispatcher_ApiRender_PortletRequest_Forward"
-        + SERVLET_SUFFIX;
-    PortletRequestDispatcher rd_tr10 =
-        portletConfig.getPortletContext().getRequestDispatcher(target_tr10);
-    try{
-    rd_tr10.forward(portletReq, portletResp);
-    } catch (Exception e){
-      tr10.setTcSuccess(true);
-      tr10.appendTcDetail(e.toString());
-    }
-    tr10.writeTo(writer);
-    
+
     /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeA1 */
     /* Details: "Method include(PortletRequest, PortletResponse): */
     /* Includes the content of a JSP page in the response" */
@@ -199,7 +148,7 @@ public class EnvironmentTests_PortletRequestDispatcher_ApiRender implements Port
     PortletRequestDispatcher rd_tr4 =
         portletConfig.getPortletContext().getRequestDispatcher(target_tr4);
     rd_tr4.include(portletReq, portletResp);
-    
+
     /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeB3 */
     /* Details: "Method include(RenderRequest, RenderResponse): The */
     /* included servlet cannot change the status code. The attempt is */
@@ -210,6 +159,8 @@ public class EnvironmentTests_PortletRequestDispatcher_ApiRender implements Port
     PortletRequestDispatcher rd_tr5 =
         portletConfig.getPortletContext().getRequestDispatcher(target_tr5);
     rd_tr5.include(portletReq, portletResp);
+
+
 
   }
 
