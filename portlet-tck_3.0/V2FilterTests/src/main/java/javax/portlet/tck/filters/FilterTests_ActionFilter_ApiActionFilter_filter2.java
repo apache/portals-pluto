@@ -16,15 +16,23 @@
 
 package javax.portlet.tck.filters;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
+import java.io.IOException;
+import java.io.StringWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
+import javax.portlet.filter.ActionFilter;
+import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.FilterConfig;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_CANBECONFIGURED2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_DOFILTERPROCESSACTION2;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.*;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 
 /**
  * Filter for JSR 362 request dispatcher testing. Used by portlet:
@@ -34,16 +42,12 @@ import static javax.portlet.PortletSession.*;
  *
  */
 public class FilterTests_ActionFilter_ApiActionFilter_filter2 implements ActionFilter {
-  private static final String LOG_CLASS =
-      FilterTests_ActionFilter_ApiActionFilter_filter2.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
   public static boolean tr2_success = false;
   public static boolean tr3_success = false;
 
 
   @Override
-  public void init(FilterConfig filterConfig) throws PortletException {
-  }
+  public void init(FilterConfig filterConfig) throws PortletException {}
 
   @Override
   public void destroy() {}
@@ -51,7 +55,6 @@ public class FilterTests_ActionFilter_ApiActionFilter_filter2 implements ActionF
   @Override
   public void doFilter(ActionRequest portletReq, ActionResponse portletResp, FilterChain chain)
       throws IOException, PortletException {
-    LOGGER.entering(LOG_CLASS, "doFilter");
 
     StringWriter writer = new StringWriter();
 
@@ -98,8 +101,8 @@ public class FilterTests_ActionFilter_ApiActionFilter_filter2 implements ActionF
         (String) ps.getAttribute(RESULT_ATTR_PREFIX + "FilterTests_ActionFilter_ApiActionFilter",
             APPLICATION_SCOPE);
     portletReq.getPortletSession().setAttribute(
-        Constants.RESULT_ATTR_PREFIX + "FilterTests_ActionFilter_ApiActionFilter",
-        msg + writer.toString(), APPLICATION_SCOPE);
+        RESULT_ATTR_PREFIX + "FilterTests_ActionFilter_ApiActionFilter", msg + writer.toString(),
+        APPLICATION_SCOPE);
 
     chain.doFilter(portletReq, portletResp);
   }

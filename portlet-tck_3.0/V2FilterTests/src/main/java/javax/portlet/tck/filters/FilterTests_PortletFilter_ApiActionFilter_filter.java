@@ -16,14 +16,22 @@
 
 package javax.portlet.tck.filters;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.PortletSession.*;
+import java.io.IOException;
+import java.io.StringWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.filter.ActionFilter;
+import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.FilterConfig;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.constants.Constants;
+
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION2;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 
 /**
  * Filter for JSR 362 request dispatcher testing. Used by portlet:
@@ -33,9 +41,6 @@ import static javax.portlet.PortletSession.*;
  *
  */
 public class FilterTests_PortletFilter_ApiActionFilter_filter implements ActionFilter {
-  private static final String LOG_CLASS =
-      FilterTests_PortletFilter_ApiActionFilter_filter.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   private FilterConfig filterConfig = null;
   private boolean initCalled = false;
@@ -52,7 +57,6 @@ public class FilterTests_PortletFilter_ApiActionFilter_filter implements ActionF
   @Override
   public void doFilter(ActionRequest portletReq, ActionResponse portletResp, FilterChain chain)
       throws IOException, PortletException {
-    LOGGER.entering(LOG_CLASS, "doFilter");
 
     StringWriter writer = new StringWriter();
 

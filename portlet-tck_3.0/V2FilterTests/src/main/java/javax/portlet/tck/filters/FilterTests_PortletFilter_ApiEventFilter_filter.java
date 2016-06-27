@@ -16,14 +16,22 @@
 
 package javax.portlet.tck.filters;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.PortletSession.*;
+import java.io.IOException;
+import java.io.StringWriter;
+
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.PortletException;
+import javax.portlet.filter.EventFilter;
+import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.FilterConfig;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.constants.Constants;
+
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_PORTLETFILTER_APIEVENTFILTER_INITEVENT1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_PORTLETFILTER_APIEVENTFILTER_INITEVENT2;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 
 /**
  * Filter for JSR 362 request dispatcher testing. Used by portlet:
@@ -33,9 +41,6 @@ import static javax.portlet.PortletSession.*;
  *
  */
 public class FilterTests_PortletFilter_ApiEventFilter_filter implements EventFilter {
-  private static final String LOG_CLASS =
-      FilterTests_PortletFilter_ApiEventFilter_filter.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   private FilterConfig filterConfig = null;
   private boolean initCalled = false;
@@ -52,7 +57,6 @@ public class FilterTests_PortletFilter_ApiEventFilter_filter implements EventFil
   @Override
   public void doFilter(EventRequest portletReq, EventResponse portletResp, FilterChain chain)
       throws IOException, PortletException {
-    LOGGER.entering(LOG_CLASS, "doFilter");
 
     StringWriter writer = new StringWriter();
 
@@ -79,7 +83,7 @@ public class FilterTests_PortletFilter_ApiEventFilter_filter implements EventFil
     portletReq.getPortletSession().setAttribute(
         Constants.RESULT_ATTR_PREFIX + "FilterTests_PortletFilter_ApiEventFilter",
         writer.toString(), APPLICATION_SCOPE);
-    
+
     chain.doFilter(portletReq, portletResp);
 
   }

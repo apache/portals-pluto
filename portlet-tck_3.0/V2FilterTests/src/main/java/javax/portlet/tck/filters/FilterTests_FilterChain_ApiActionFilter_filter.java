@@ -16,10 +16,14 @@
 
 package javax.portlet.tck.filters;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
+import java.io.IOException;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.filter.ActionFilter;
+import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.FilterConfig;
 
 /**
  * Filter for JSR 362 request dispatcher testing. Used by portlet:
@@ -29,9 +33,7 @@ import javax.portlet.filter.*;
  *
  */
 public class FilterTests_FilterChain_ApiActionFilter_filter implements ActionFilter {
-  private static final String LOG_CLASS =
-      FilterTests_FilterChain_ApiActionFilter_filter.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+
   public static boolean tr0_success = false;
 
 
@@ -44,7 +46,6 @@ public class FilterTests_FilterChain_ApiActionFilter_filter implements ActionFil
   @Override
   public void doFilter(ActionRequest portletReq, ActionResponse portletResp, FilterChain chain)
       throws IOException, PortletException {
-    LOGGER.entering(LOG_CLASS, "doFilter");
 
     /* TestCase: V2FilterTests_FilterChain_ApiActionFilter_invokeActionFilter */
     /* Details: "Invoking doFilter(ActionRequest, ActionResponse): causes */

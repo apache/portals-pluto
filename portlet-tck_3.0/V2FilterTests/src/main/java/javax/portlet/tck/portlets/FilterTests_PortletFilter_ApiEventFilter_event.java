@@ -15,11 +15,24 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Logger;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.EventPortlet;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 
 /**
  * This is the event processing portlet for the test cases. This portlet processes events, but does
@@ -47,7 +60,6 @@ public class FilterTests_PortletFilter_ApiEventFilter_event implements Portlet, 
   @Override
   public void processEvent(EventRequest portletReq, EventResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion processEvent");
 
 
     portletResp.setRenderParameters(portletReq);
@@ -60,8 +72,6 @@ public class FilterTests_PortletFilter_ApiEventFilter_event implements Portlet, 
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-
-    LOGGER.entering(LOG_CLASS, "event companion render");
 
     portletResp.setContentType("text/html");
     PrintWriter writer = portletResp.getWriter();
