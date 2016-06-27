@@ -170,7 +170,7 @@ public class AddlEnvironmentTests_SPEC2_17_ResourcePreferences
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestLink tb =
-          new TestLink("V2AddlEnvironmentTests_SPEC2_17_ResourcePreferences_store1", aurl);
+          new TestLink(V2ADDLENVIRONMENTTESTS_SPEC2_17_RESOURCEPREFERENCES_STORE1, aurl);
       tb.writeTo(writer);
     }
 
@@ -183,7 +183,7 @@ public class AddlEnvironmentTests_SPEC2_17_ResourcePreferences
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestLink tb =
-          new TestLink("V2AddlEnvironmentTests_SPEC2_17_ResourcePreferences_store4", aurl);
+          new TestLink(V2ADDLENVIRONMENTTESTS_SPEC2_17_RESOURCEPREFERENCES_STORE4, aurl);
       tb.writeTo(writer);
     }
 

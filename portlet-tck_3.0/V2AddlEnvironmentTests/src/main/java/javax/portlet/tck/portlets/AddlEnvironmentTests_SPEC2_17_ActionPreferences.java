@@ -253,7 +253,7 @@ public class AddlEnvironmentTests_SPEC2_17_ActionPreferences
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlEnvironmentTests_SPEC2_17_ActionPreferences_setValues4", aurl);
+          new TestButton(V2ADDLENVIRONMENTTESTS_SPEC2_17_ACTIONPREFERENCES_SETVALUES4, aurl);
       tb.writeTo(writer);
     }
 
@@ -265,7 +265,7 @@ public class AddlEnvironmentTests_SPEC2_17_ActionPreferences
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlEnvironmentTests_SPEC2_17_ActionPreferences_reset1", aurl);
+          new TestButton(V2ADDLENVIRONMENTTESTS_SPEC2_17_ACTIONPREFERENCES_RESET1, aurl);
       tb.writeTo(writer);
     }
 
@@ -276,12 +276,12 @@ public class AddlEnvironmentTests_SPEC2_17_ActionPreferences
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlEnvironmentTests_SPEC2_17_ActionPreferences_store1", aurl);
+          new TestButton(V2ADDLENVIRONMENTTESTS_SPEC2_17_ACTIONPREFERENCES_STORE1, aurl);
       tb.writeTo(writer);
     } else {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestLink tb = new TestLink("V2AddlEnvironmentTests_SPEC2_17_ActionPreferences_store1", aurl);
+      TestLink tb = new TestLink(V2ADDLENVIRONMENTTESTS_SPEC2_17_ACTIONPREFERENCES_STORE1, aurl);
       tb.writeTo(writer);
     }
 
@@ -293,12 +293,12 @@ public class AddlEnvironmentTests_SPEC2_17_ActionPreferences
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlEnvironmentTests_SPEC2_17_ActionPreferences_store4", aurl);
+          new TestButton(V2ADDLENVIRONMENTTESTS_SPEC2_17_ACTIONPREFERENCES_STORE4, aurl);
       tb.writeTo(writer);
     } else {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestLink tb = new TestLink("V2AddlEnvironmentTests_SPEC2_17_ActionPreferences_store4", aurl);
+      TestLink tb = new TestLink(V2ADDLENVIRONMENTTESTS_SPEC2_17_ACTIONPREFERENCES_STORE4, aurl);
       tb.writeTo(writer);
     }
 
@@ -309,7 +309,7 @@ public class AddlEnvironmentTests_SPEC2_17_ActionPreferences
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlEnvironmentTests_SPEC2_17_ActionPreferences_deployment3", aurl);
+          new TestButton(V2ADDLENVIRONMENTTESTS_SPEC2_17_ACTIONPREFERENCES_DEPLOYMENT3, aurl);
       tb.writeTo(writer);
     }
 
@@ -321,7 +321,7 @@ public class AddlEnvironmentTests_SPEC2_17_ActionPreferences
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlEnvironmentTests_SPEC2_17_ActionPreferences_deployment4", aurl);
+          new TestButton(V2ADDLENVIRONMENTTESTS_SPEC2_17_ACTIONPREFERENCES_DEPLOYMENT4, aurl);
       tb.writeTo(writer);
     }
 
@@ -333,7 +333,7 @@ public class AddlEnvironmentTests_SPEC2_17_ActionPreferences
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlEnvironmentTests_SPEC2_17_ActionPreferences_deployment7", aurl);
+          new TestButton(V2ADDLENVIRONMENTTESTS_SPEC2_17_ACTIONPREFERENCES_DEPLOYMENT7, aurl);
       tb.writeTo(writer);
     }
 
@@ -345,7 +345,7 @@ public class AddlEnvironmentTests_SPEC2_17_ActionPreferences
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlEnvironmentTests_SPEC2_17_ActionPreferences_deployment10", aurl);
+          new TestButton(V2ADDLENVIRONMENTTESTS_SPEC2_17_ACTIONPREFERENCES_DEPLOYMENT10, aurl);
       tb.writeTo(writer);
     }
 

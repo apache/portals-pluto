@@ -31,12 +31,20 @@ import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.TestButton;
 import javax.portlet.tck.beans.TestResult;
 
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER1;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER6;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER7;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER8;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER9;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER10;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER11;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER12;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER13;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER14;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER15;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTERWRAPPER1;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTERWRAPPER2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER2;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
 import static javax.portlet.PortletSession.APPLICATION_SCOPE;
@@ -150,7 +158,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Action_filter1", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER1, aurl);
       tb.writeTo(writer);
     }
 
@@ -160,7 +168,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Action_filter6", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER6, aurl);
       tb.writeTo(writer);
     }
 
@@ -171,7 +179,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Action_filter7", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER7, aurl);
       tb.writeTo(writer);
     }
 
@@ -182,7 +190,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Action_filter8", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER8, aurl);
       tb.writeTo(writer);
     }
 
@@ -193,7 +201,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Action_filter9", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER9, aurl);
       tb.writeTo(writer);
     }
 
@@ -204,7 +212,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Action_filter10", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER10, aurl);
       tb.writeTo(writer);
     }
 
@@ -215,7 +223,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Action_filter11", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER11, aurl);
       tb.writeTo(writer);
     }
 
@@ -225,7 +233,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Action_filter12", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER12, aurl);
       tb.writeTo(writer);
     }
 
@@ -235,7 +243,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Action_filter13", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER13, aurl);
       tb.writeTo(writer);
     }
 
@@ -247,7 +255,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Action_filter14", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER14, aurl);
       tb.writeTo(writer);
     }
 
@@ -259,7 +267,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Action_filter15", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER15, aurl);
       tb.writeTo(writer);
     }
 
@@ -270,7 +278,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       aurl.setParameter("tr11", "true");
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Action_filterWrapper1", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTERWRAPPER1, aurl);
       tb.writeTo(writer);
     }
 
@@ -284,7 +292,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet {
     } else {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Action_filterWrapper2", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTERWRAPPER2, aurl);
       tb.writeTo(writer);
     }
 
@@ -295,7 +303,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Action_filter2", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER2, aurl);
       tb.writeTo(writer);
     }
 

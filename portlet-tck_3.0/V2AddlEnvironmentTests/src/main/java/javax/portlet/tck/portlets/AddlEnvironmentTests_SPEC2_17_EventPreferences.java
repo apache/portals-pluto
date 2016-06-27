@@ -18,6 +18,12 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_SETVALUES4;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_RESET1;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_DEPLOYMENT3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_DEPLOYMENT4;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_DEPLOYMENT7;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_DEPLOYMENT10;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_STORE1;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_STORE4;
 import static javax.portlet.tck.constants.Constants.BUTTON_PARAM_NAME;
@@ -96,7 +102,7 @@ public class AddlEnvironmentTests_SPEC2_17_EventPreferences implements Portlet, 
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2AddlEnvironmentTests_SPEC2_17_EventPreferences_setValues4", aurl);
+         TestButton tb = new TestButton(V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_SETVALUES4, aurl);
          tb.writeTo(writer);
       }
 
@@ -107,7 +113,7 @@ public class AddlEnvironmentTests_SPEC2_17_EventPreferences implements Portlet, 
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2AddlEnvironmentTests_SPEC2_17_EventPreferences_reset1", aurl);
+         TestButton tb = new TestButton(V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_RESET1, aurl);
          tb.writeTo(writer);
       }
 
@@ -138,7 +144,7 @@ public class AddlEnvironmentTests_SPEC2_17_EventPreferences implements Portlet, 
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2AddlEnvironmentTests_SPEC2_17_EventPreferences_deployment3", aurl);
+         TestButton tb = new TestButton(V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_DEPLOYMENT3, aurl);
          tb.writeTo(writer);
       }
 
@@ -149,7 +155,7 @@ public class AddlEnvironmentTests_SPEC2_17_EventPreferences implements Portlet, 
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2AddlEnvironmentTests_SPEC2_17_EventPreferences_deployment4", aurl);
+         TestButton tb = new TestButton(V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_DEPLOYMENT4, aurl);
          tb.writeTo(writer);
       }
 
@@ -160,7 +166,7 @@ public class AddlEnvironmentTests_SPEC2_17_EventPreferences implements Portlet, 
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2AddlEnvironmentTests_SPEC2_17_EventPreferences_deployment7", aurl);
+         TestButton tb = new TestButton(V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_DEPLOYMENT7, aurl);
          tb.writeTo(writer);
       }
 
@@ -171,7 +177,7 @@ public class AddlEnvironmentTests_SPEC2_17_EventPreferences implements Portlet, 
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2AddlEnvironmentTests_SPEC2_17_EventPreferences_deployment10", aurl);
+         TestButton tb = new TestButton(V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_DEPLOYMENT10, aurl);
          tb.writeTo(writer);
       }
 

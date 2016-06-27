@@ -16,13 +16,27 @@
 
 package javax.portlet.tck.filters;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.portlet.tck.beans.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+
+import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.FilterConfig;
+import javax.portlet.filter.RenderFilter;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETFILTERNAME;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETPORTLETCONTEXT;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETINITPARAMETER1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETINITPARAMETER2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETINITPARAMETERNAMES2;
 
 /**
  * Filter for JSR 362 request dispatcher testing. Used by portlet:
@@ -32,9 +46,6 @@ import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
  *
  */
 public class FilterTests_FilterConfig_ApiRenderFilter_filter implements RenderFilter {
-  private static final String LOG_CLASS =
-      FilterTests_FilterConfig_ApiRenderFilter_filter.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   private FilterConfig filterConfig;
 
@@ -49,7 +60,6 @@ public class FilterTests_FilterConfig_ApiRenderFilter_filter implements RenderFi
   @Override
   public void doFilter(RenderRequest portletReq, RenderResponse portletResp, FilterChain chain)
       throws IOException, PortletException {
-    LOGGER.entering(LOG_CLASS, "doFilter");
 
     PrintWriter writer = portletResp.getWriter();
 

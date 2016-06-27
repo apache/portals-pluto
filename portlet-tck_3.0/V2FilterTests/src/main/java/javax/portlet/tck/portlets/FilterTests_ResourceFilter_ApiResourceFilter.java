@@ -15,15 +15,28 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.tck.beans.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.ResourceURL;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.filters.FilterTests_ResourceFilter_ApiResourceFilter_filter2;
 
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.ResourceURL.*;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_RESOURCEFILTER_APIRESOURCEFILTER_DOFILTERPROCESSRESOURCE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_RESOURCEFILTER_APIRESOURCEFILTER_DOFILTERISCALLED;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.ResourceURL.PAGE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -38,9 +51,6 @@ import static javax.portlet.ResourceURL.*;
  */
 public class FilterTests_ResourceFilter_ApiResourceFilter
     implements Portlet, ResourceServingPortlet {
-  private static final String LOG_CLASS =
-      FilterTests_ResourceFilter_ApiResourceFilter.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -51,7 +61,6 @@ public class FilterTests_ResourceFilter_ApiResourceFilter
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
     portletResp.setRenderParameters(portletReq.getParameterMap());
     long tid = Thread.currentThread().getId();
@@ -61,7 +70,6 @@ public class FilterTests_ResourceFilter_ApiResourceFilter
   @Override
   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
     JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
     long tid = Thread.currentThread().getId();
@@ -94,7 +102,6 @@ public class FilterTests_ResourceFilter_ApiResourceFilter
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);

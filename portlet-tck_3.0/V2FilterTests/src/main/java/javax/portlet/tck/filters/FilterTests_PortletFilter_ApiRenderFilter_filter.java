@@ -1,85 +1,87 @@
-/*  Licensed to the Apache Software Foundation (ASF) under one
- *  or more contributor license agreements.  See the NOTICE file
- *  distributed with this work for additional information
- *  regarding copyright ownership.  The ASF licenses this file
- *  to you under the Apache License, Version 2.0 (the
- *  "License"); you may not use this file except in compliance
- *  with the License.  You may obtain a copy of the License at
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more contributor license
+ * agreements. See the NOTICE file distributed with this work for additional information regarding
+ * copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance with the License. You may obtain a
+ * copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing,
- *  software distributed under the License is distributed on an
- *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- *  KIND, either express or implied.  See the License for the
- *  specific language governing permissions and limitations
- *  under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 
 package javax.portlet.tck.filters;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.portlet.tck.beans.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.FilterConfig;
+import javax.portlet.filter.RenderFilter;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_PORTLETFILTER_APIRENDERFILTER_INITRENDER1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_PORTLETFILTER_APIRENDERFILTER_INITRENDER2;
 
 /**
- * Filter for JSR 362 request dispatcher testing.
- * Used by portlet: FilterTests_PortletFilter_ApiRenderFilter
+ * Filter for JSR 362 request dispatcher testing. Used by portlet:
+ * FilterTests_PortletFilter_ApiRenderFilter
  *
  * @author nick
  *
  */
 public class FilterTests_PortletFilter_ApiRenderFilter_filter implements RenderFilter {
-   private static final String LOG_CLASS = 
-         FilterTests_PortletFilter_ApiRenderFilter_filter.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
-   private FilterConfig filterConfig=null;
-   private boolean initCalled = false;
+  private FilterConfig filterConfig = null;
+  private boolean initCalled = false;
 
-   @Override
-   public void init(FilterConfig filterConfig) throws PortletException {
-      this.filterConfig = filterConfig;
-      initCalled=true;
-   }
+  @Override
+  public void init(FilterConfig filterConfig) throws PortletException {
+    this.filterConfig = filterConfig;
+    initCalled = true;
+  }
 
-   @Override
-   public void destroy() {
-   }
+  @Override
+  public void destroy() {}
 
-   @Override
-   public void doFilter(RenderRequest portletReq, RenderResponse portletResp,
-         FilterChain chain) throws IOException, PortletException {
-      LOGGER.entering(LOG_CLASS, "doFilter");
+  @Override
+  public void doFilter(RenderRequest portletReq, RenderResponse portletResp, FilterChain chain)
+      throws IOException, PortletException {
 
-      PrintWriter writer = portletResp.getWriter();
+    PrintWriter writer = portletResp.getWriter();
 
-      JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+    JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
-      // Create result objects for the tests
+    // Create result objects for the tests
 
-      /* TestCase: V2FilterTests_PortletFilter_ApiRenderFilter_initRender1    */
-      /* Details: "The init(FilterConfig): method is called when an           */
-      /* RenderFilter is configured"                                          */
-      TestResult tr0 = tcd.getTestResultFailed(V2FILTERTESTS_PORTLETFILTER_APIRENDERFILTER_INITRENDER1);
-      if(initCalled==true) {
-    	  tr0.setTcSuccess(true);
-      }
-      tr0.writeTo(writer);
+    /* TestCase: V2FilterTests_PortletFilter_ApiRenderFilter_initRender1 */
+    /* Details: "The init(FilterConfig): method is called when an */
+    /* RenderFilter is configured" */
+    TestResult tr0 =
+        tcd.getTestResultFailed(V2FILTERTESTS_PORTLETFILTER_APIRENDERFILTER_INITRENDER1);
+    if (initCalled == true) {
+      tr0.setTcSuccess(true);
+    }
+    tr0.writeTo(writer);
 
-      /* TestCase: V2FilterTests_PortletFilter_ApiRenderFilter_initRender2    */
-      /* Details: "The init(FilterConfig): method for an RenderFilter is      */
-      /* passed a FilterConfig object"                                        */
-      TestResult tr1 = tcd.getTestResultFailed(V2FILTERTESTS_PORTLETFILTER_APIRENDERFILTER_INITRENDER2);
-      if(this.filterConfig!=null) {
-    	  tr1.setTcSuccess(true);
-      }
-      tr1.writeTo(writer);
+    /* TestCase: V2FilterTests_PortletFilter_ApiRenderFilter_initRender2 */
+    /* Details: "The init(FilterConfig): method for an RenderFilter is */
+    /* passed a FilterConfig object" */
+    TestResult tr1 =
+        tcd.getTestResultFailed(V2FILTERTESTS_PORTLETFILTER_APIRENDERFILTER_INITRENDER2);
+    if (this.filterConfig != null) {
+      tr1.setTcSuccess(true);
+    }
+    tr1.writeTo(writer);
 
-      chain.doFilter(portletReq, portletResp);
-   }
+    chain.doFilter(portletReq, portletResp);
+  }
 }

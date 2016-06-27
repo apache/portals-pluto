@@ -28,6 +28,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestLink;
 
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_RENDER_FILTERWRAPPER5;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
 /**
@@ -82,7 +83,7 @@ public class AddlFilterTests_SPEC2_20_Render implements Portlet {
     /* Details: "An RENDER_PHASE filter can wrap the RenderRequest object */
     /* with a custom wrapper" */
     PortletURL rurl = portletResp.createActionURL();
-    TestLink tl = new TestLink("V2AddlFilterTests_SPEC2_20_Render_filterWrapper5", rurl);
+    TestLink tl = new TestLink(V2ADDLFILTERTESTS_SPEC2_20_RENDER_FILTERWRAPPER5, rurl);
     tl.writeTo(writer);
   }
 

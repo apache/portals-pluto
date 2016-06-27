@@ -16,15 +16,23 @@
 
 package javax.portlet.tck.filters;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.PortletSession.*;
+import java.io.IOException;
+import java.io.StringWriter;
+
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
+import javax.portlet.filter.EventFilter;
+import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.FilterConfig;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_CANBECONFIGURED2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_DOFILTERPROCESSEVENT2;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 
 /**
  * Filter for JSR 362 request dispatcher testing. Used by portlet:
@@ -34,9 +42,6 @@ import static javax.portlet.PortletSession.*;
  *
  */
 public class FilterTests_EventFilter_ApiEventFilter_filter2 implements EventFilter {
-  private static final String LOG_CLASS =
-      FilterTests_EventFilter_ApiEventFilter_filter2.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
   public static boolean tr2_success = false;
   public static boolean tr3_success = false;
 
@@ -50,7 +55,6 @@ public class FilterTests_EventFilter_ApiEventFilter_filter2 implements EventFilt
   @Override
   public void doFilter(EventRequest portletReq, EventResponse portletResp, FilterChain chain)
       throws IOException, PortletException {
-    LOGGER.entering(LOG_CLASS, "doFilter");
 
     StringWriter writer = new StringWriter();
 
@@ -93,8 +97,8 @@ public class FilterTests_EventFilter_ApiEventFilter_filter2 implements EventFilt
         (String) ps.getAttribute(RESULT_ATTR_PREFIX + "FilterTests_EventFilter_ApiEventFilter",
             APPLICATION_SCOPE);
     portletReq.getPortletSession().setAttribute(
-        Constants.RESULT_ATTR_PREFIX + "FilterTests_EventFilter_ApiEventFilter",
-        msg + writer.toString(), APPLICATION_SCOPE);
+        RESULT_ATTR_PREFIX + "FilterTests_EventFilter_ApiEventFilter", msg + writer.toString(),
+        APPLICATION_SCOPE);
 
     chain.doFilter(portletReq, portletResp);
 

@@ -29,6 +29,9 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
 
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_EVENT_FILTERWRAPPER3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_EVENT_FILTERWRAPPER4;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_EVENT_FILTER4;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 
@@ -79,7 +82,7 @@ public class AddlFilterTests_SPEC2_20_Event implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Event_filterWrapper3", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_EVENT_FILTERWRAPPER3, aurl);
       tb.writeTo(writer);
     }
 
@@ -89,7 +92,7 @@ public class AddlFilterTests_SPEC2_20_Event implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Event_filterWrapper4", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_EVENT_FILTERWRAPPER4, aurl);
       tb.writeTo(writer);
     }
 
@@ -100,7 +103,7 @@ public class AddlFilterTests_SPEC2_20_Event implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlFilterTests_SPEC2_20_Event_filter4", aurl);
+      TestButton tb = new TestButton(V2ADDLFILTERTESTS_SPEC2_20_EVENT_FILTER4, aurl);
       tb.writeTo(writer);
     }
 

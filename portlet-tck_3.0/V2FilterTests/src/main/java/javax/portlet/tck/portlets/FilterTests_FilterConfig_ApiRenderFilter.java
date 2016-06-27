@@ -15,10 +15,17 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import static javax.portlet.tck.constants.Constants.*;
+import java.io.IOException;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -32,8 +39,6 @@ import static javax.portlet.tck.constants.Constants.*;
  *
  */
 public class FilterTests_FilterConfig_ApiRenderFilter implements Portlet {
-  private static final String LOG_CLASS = FilterTests_FilterConfig_ApiRenderFilter.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -44,7 +49,6 @@ public class FilterTests_FilterConfig_ApiRenderFilter implements Portlet {
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
     portletResp.setRenderParameters(portletReq.getParameterMap());
     long tid = Thread.currentThread().getId();
@@ -55,7 +59,6 @@ public class FilterTests_FilterConfig_ApiRenderFilter implements Portlet {
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);

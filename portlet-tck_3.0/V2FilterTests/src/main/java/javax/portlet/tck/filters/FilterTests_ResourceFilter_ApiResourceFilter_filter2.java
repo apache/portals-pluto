@@ -16,12 +16,20 @@
 
 package javax.portlet.tck.filters;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.portlet.tck.beans.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.PortletException;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.FilterConfig;
+import javax.portlet.filter.ResourceFilter;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_RESOURCEFILTER_APIRESOURCEFILTER_CANBECONFIGURED2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_RESOURCEFILTER_APIRESOURCEFILTER_DOFILTERPROCESSRESOURCE2;
 
 /**
  * Filter for JSR 362 request dispatcher testing. Used by portlet:
@@ -31,9 +39,7 @@ import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
  *
  */
 public class FilterTests_ResourceFilter_ApiResourceFilter_filter2 implements ResourceFilter {
-  private static final String LOG_CLASS =
-      FilterTests_ResourceFilter_ApiResourceFilter_filter2.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+
   public static boolean tr2_success = false;
   public static boolean tr3_success = false;
 
@@ -47,7 +53,6 @@ public class FilterTests_ResourceFilter_ApiResourceFilter_filter2 implements Res
   @Override
   public void doFilter(ResourceRequest portletReq, ResourceResponse portletResp, FilterChain chain)
       throws IOException, PortletException {
-    LOGGER.entering(LOG_CLASS, "doFilter");
 
     PrintWriter writer = portletResp.getWriter();
 

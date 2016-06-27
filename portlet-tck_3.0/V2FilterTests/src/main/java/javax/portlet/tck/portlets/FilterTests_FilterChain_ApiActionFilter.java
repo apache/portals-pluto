@@ -15,16 +15,29 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestButton;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.constants.Constants;
 import javax.portlet.tck.filters.FilterTests_FilterChain_ApiActionFilter_filter2;
 
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_FILTERCHAIN_APIACTIONFILTER_INVOKEACTIONFILTER2;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -38,8 +51,6 @@ import static javax.portlet.PortletSession.*;
  *
  */
 public class FilterTests_FilterChain_ApiActionFilter implements Portlet {
-  private static final String LOG_CLASS = FilterTests_FilterChain_ApiActionFilter.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
 
   @Override
@@ -51,7 +62,6 @@ public class FilterTests_FilterChain_ApiActionFilter implements Portlet {
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
     JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
@@ -83,7 +93,6 @@ public class FilterTests_FilterChain_ApiActionFilter implements Portlet {
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);

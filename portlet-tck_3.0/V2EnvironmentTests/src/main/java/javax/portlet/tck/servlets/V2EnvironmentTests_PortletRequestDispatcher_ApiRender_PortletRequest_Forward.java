@@ -46,9 +46,9 @@ public class V2EnvironmentTests_PortletRequestDispatcher_ApiRender_PortletReques
   }
 
   // The tck uses only get & post requests
-  protected void processTCKReq(HttpServletRequest request, HttpServletResponse response){
+  protected void processTCKReq(HttpServletRequest request, HttpServletResponse response) throws ServletException{
     
-    throw new IllegalThreadStateException("Exception for V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward4");
+    throw new ServletException("Exception for V2EnvironmentTests_PortletRequestDispatcher_ApiRender_forward4");
 
   }
 }

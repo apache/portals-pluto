@@ -15,13 +15,23 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.logging.*;
-import javax.portlet.*;
-import javax.portlet.tck.beans.*;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestButton;
+import javax.portlet.tck.beans.TestResult;
+
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_DOFILTERBLOCK;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -36,8 +46,6 @@ import static javax.portlet.tck.constants.Constants.*;
  * @author ahmed
  */
 public class FilterTests_ActionFilter_ApiActionFilter2 implements Portlet {
-  private static final String LOG_CLASS = FilterTests_ActionFilter_ApiActionFilter2.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -48,14 +56,12 @@ public class FilterTests_ActionFilter_ApiActionFilter2 implements Portlet {
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
     portletResp.setRenderParameter("tr5", "false");
   }
 
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
     JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
