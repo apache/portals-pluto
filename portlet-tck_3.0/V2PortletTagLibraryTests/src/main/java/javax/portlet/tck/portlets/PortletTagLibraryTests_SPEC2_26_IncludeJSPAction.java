@@ -30,6 +30,15 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestButton;
 
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS1;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS4;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS6;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS7;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS8;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS9;
 import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
@@ -102,7 +111,7 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPAction implements Portlet
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2PortletTagLibraryTests_SPEC2_26_IncludeJSPAction_defineObjects1", aurl);
+          new TestButton(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS1, aurl);
       tb.writeTo(writer);
     }
 
@@ -114,7 +123,7 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPAction implements Portlet
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2PortletTagLibraryTests_SPEC2_26_IncludeJSPAction_defineObjects2", aurl);
+          new TestButton(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS2, aurl);
       tb.writeTo(writer);
     }
 
@@ -126,7 +135,7 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPAction implements Portlet
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2PortletTagLibraryTests_SPEC2_26_IncludeJSPAction_defineObjects3", aurl);
+          new TestButton(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS3, aurl);
       tb.writeTo(writer);
     }
 
@@ -138,7 +147,7 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPAction implements Portlet
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2PortletTagLibraryTests_SPEC2_26_IncludeJSPAction_defineObjects4", aurl);
+          new TestButton(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS4, aurl);
       tb.writeTo(writer);
     }
 
@@ -150,7 +159,7 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPAction implements Portlet
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2PortletTagLibraryTests_SPEC2_26_IncludeJSPAction_defineObjects5", aurl);
+          new TestButton(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS5, aurl);
       tb.writeTo(writer);
     }
 
@@ -162,7 +171,7 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPAction implements Portlet
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2PortletTagLibraryTests_SPEC2_26_IncludeJSPAction_defineObjects6", aurl);
+          new TestButton(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS6, aurl);
       tb.writeTo(writer);
     }
 
@@ -174,7 +183,7 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPAction implements Portlet
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2PortletTagLibraryTests_SPEC2_26_IncludeJSPAction_defineObjects7", aurl);
+          new TestButton(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS7, aurl);
       tb.writeTo(writer);
     }
 
@@ -186,7 +195,7 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPAction implements Portlet
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2PortletTagLibraryTests_SPEC2_26_IncludeJSPAction_defineObjects8", aurl);
+          new TestButton(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS8, aurl);
       tb.writeTo(writer);
     }
 
@@ -197,7 +206,7 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPAction implements Portlet
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2PortletTagLibraryTests_SPEC2_26_IncludeJSPAction_defineObjects9", aurl);
+          new TestButton(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPACTION_DEFINEOBJECTS9, aurl);
       tb.writeTo(writer);
     }
 
