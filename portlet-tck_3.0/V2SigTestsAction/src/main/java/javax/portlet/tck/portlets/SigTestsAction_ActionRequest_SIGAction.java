@@ -128,7 +128,7 @@ public class SigTestsAction_ActionRequest_SIGAction implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsAction_ActionRequest_SIGAction_fieldACTION_NAME", aurl);
+          new TestButton(V2SIGTESTSACTION_ACTIONREQUEST_SIGACTION_FIELDACTION_NAME, aurl);
       tb.writeTo(writer);
     }
 

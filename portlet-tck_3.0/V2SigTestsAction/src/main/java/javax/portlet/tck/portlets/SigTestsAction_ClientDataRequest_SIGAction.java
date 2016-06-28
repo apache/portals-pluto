@@ -355,7 +355,7 @@ public class SigTestsAction_ClientDataRequest_SIGAction implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsAction_ClientDataRequest_SIGAction_hasGetContentLength", aurl);
+          new TestButton(V2SIGTESTSACTION_CLIENTDATAREQUEST_SIGACTION_HASGETCONTENTLENGTH, aurl);
       tb.writeTo(writer);
     }
 
@@ -375,7 +375,7 @@ public class SigTestsAction_ClientDataRequest_SIGAction implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsAction_ClientDataRequest_SIGAction_hasGetContentType", aurl);
+          new TestButton(V2SIGTESTSACTION_CLIENTDATAREQUEST_SIGACTION_HASGETCONTENTTYPE, aurl);
       tb.writeTo(writer);
     }
 
@@ -395,7 +395,7 @@ public class SigTestsAction_ClientDataRequest_SIGAction implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsAction_ClientDataRequest_SIGAction_hasGetMethod", aurl);
+          new TestButton(V2SIGTESTSACTION_CLIENTDATAREQUEST_SIGACTION_HASGETMETHOD, aurl);
       tb.writeTo(writer);
     }
 
@@ -405,7 +405,7 @@ public class SigTestsAction_ClientDataRequest_SIGAction implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsAction_ClientDataRequest_SIGAction_hasGetMethodReturns", aurl);
+          new TestButton(V2SIGTESTSACTION_CLIENTDATAREQUEST_SIGACTION_HASGETMETHODRETURNS, aurl);
       tb.writeTo(writer);
     }
 
@@ -438,7 +438,7 @@ public class SigTestsAction_ClientDataRequest_SIGAction implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsAction_ClientDataRequest_SIGAction_hasGetReader", aurl);
+          new TestButton(V2SIGTESTSACTION_CLIENTDATAREQUEST_SIGACTION_HASGETREADER, aurl);
       tb.writeTo(writer);
     }
 
@@ -449,7 +449,7 @@ public class SigTestsAction_ClientDataRequest_SIGAction implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsAction_ClientDataRequest_SIGAction_hasGetReaderReturns", aurl);
+          new TestButton(V2SIGTESTSACTION_CLIENTDATAREQUEST_SIGACTION_HASGETREADERRETURNS, aurl);
       tb.writeTo(writer);
     }
 
