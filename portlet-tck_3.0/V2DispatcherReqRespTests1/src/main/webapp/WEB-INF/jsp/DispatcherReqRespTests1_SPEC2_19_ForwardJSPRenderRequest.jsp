@@ -708,7 +708,7 @@
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameter", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETPARAMETER, rurl);
             tl.writeTo(writer);
          }
       }
@@ -720,7 +720,7 @@
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterMap", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETPARAMETERMAP, rurl);
             tl.writeTo(writer);
          }
       }
@@ -732,7 +732,7 @@
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterNames", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETPARAMETERNAMES, rurl);
             tl.writeTo(writer);
          }
       }
@@ -744,7 +744,7 @@
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterValues", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETPARAMETERVALUES, rurl);
             tl.writeTo(writer);
          }
       }
