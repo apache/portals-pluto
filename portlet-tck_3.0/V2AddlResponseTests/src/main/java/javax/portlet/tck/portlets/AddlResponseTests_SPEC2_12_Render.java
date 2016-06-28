@@ -204,7 +204,7 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
       } else {
         PortletURL aurl = portletResp.createActionURL();
         aurl.setParameters(portletReq.getPrivateParameterMap());
-        TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Render_cookie9", aurl);
+        TestButton tb = new TestButton(V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE9, aurl);
         tb.writeTo(writer);
       }
     }
@@ -245,7 +245,7 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
         PortletURL rurl = portletResp.createRenderURL();
         rurl.setParameters(portletReq.getPrivateParameterMap());
         rurl.setParameter("tr2", "true");
-        TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Render_cookie10", rurl);
+        TestButton tb = new TestButton(V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE10, rurl);
         tb.writeTo(writer);
       }
     }
@@ -286,7 +286,7 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
         PortletURL rurl = portletResp.createRenderURL();
         rurl.setParameters(portletReq.getPrivateParameterMap());
         rurl.setParameter("tr3", "true");
-        TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Render_cookie11", rurl);
+        TestButton tb = new TestButton(V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE11, rurl);
         tb.writeTo(writer);
       }
     }
@@ -358,7 +358,7 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
         PortletURL rurl = portletResp.createRenderURL();
         rurl.setParameters(portletReq.getPrivateParameterMap());
         rurl.setParameter("tr4", "true");
-        TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Render_cookie12", rurl);
+        TestButton tb = new TestButton(V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE12, rurl);
         tb.writeTo(printWriter);
       }
     }

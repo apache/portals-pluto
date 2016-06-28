@@ -295,7 +295,7 @@ public class AddlResponseTests_SPEC2_12_Action implements Portlet, ResourceServi
       } else {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Action_cookie1", aurl);
+         TestButton tb = new TestButton(V2ADDLRESPONSETESTS_SPEC2_12_ACTION_COOKIE1, aurl);
          tb.writeTo(writer);
       }
 
@@ -321,7 +321,7 @@ public class AddlResponseTests_SPEC2_12_Action implements Portlet, ResourceServi
       } else {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Action_cookie2", aurl);
+         TestButton tb = new TestButton(V2ADDLRESPONSETESTS_SPEC2_12_ACTION_COOKIE2, aurl);
          tb.writeTo(writer);
       }
 
@@ -331,13 +331,13 @@ public class AddlResponseTests_SPEC2_12_Action implements Portlet, ResourceServi
       if (portletReq.getParameter("tr2") != null && portletReq.getParameter("tr2").equals("true")) {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Action_cookie3", aurl);
+         TestButton tb = new TestButton(V2ADDLRESPONSETESTS_SPEC2_12_ACTION_COOKIE3, aurl);
          tb.writeTo(writer);
       } else {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
          aurl.setParameter("inputval", "V2AddlResponseTests_SPEC2_12_Action_cookie3");
-         TestSetupLink tb = new TestSetupLink("V2AddlResponseTests_SPEC2_12_Action_cookie3", aurl);
+         TestSetupLink tb = new TestSetupLink(V2ADDLRESPONSETESTS_SPEC2_12_ACTION_COOKIE3, aurl);
          tb.writeTo(writer);
       }
 
@@ -347,13 +347,13 @@ public class AddlResponseTests_SPEC2_12_Action implements Portlet, ResourceServi
       if (portletReq.getParameter("tr3") != null && portletReq.getParameter("tr3").equals("true")) {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Action_cookie4", aurl);
+         TestButton tb = new TestButton(V2ADDLRESPONSETESTS_SPEC2_12_ACTION_COOKIE4, aurl);
          tb.writeTo(writer);
       } else {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
          aurl.setParameter("inputval", "V2AddlResponseTests_SPEC2_12_Action_cookie4");
-         TestSetupLink tb = new TestSetupLink("V2AddlResponseTests_SPEC2_12_Action_cookie4", aurl);
+         TestSetupLink tb = new TestSetupLink(V2ADDLRESPONSETESTS_SPEC2_12_ACTION_COOKIE4, aurl);
          tb.writeTo(writer);
       }
 
@@ -368,7 +368,7 @@ public class AddlResponseTests_SPEC2_12_Action implements Portlet, ResourceServi
       } else {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Action_redirect1", aurl);
+         TestButton tb = new TestButton(V2ADDLRESPONSETESTS_SPEC2_12_ACTION_REDIRECT1, aurl);
          tb.writeTo(writer);
       }
 

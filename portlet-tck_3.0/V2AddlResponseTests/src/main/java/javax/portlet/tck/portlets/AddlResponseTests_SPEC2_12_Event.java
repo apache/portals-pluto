@@ -30,6 +30,9 @@ import javax.portlet.tck.beans.TestButton;
 import javax.portlet.tck.beans.TestSetupLink;
 import javax.xml.namespace.QName;
 
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_EVENT_COOKIE5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_EVENT_COOKIE6;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLRESPONSETESTS_SPEC2_12_EVENT_COOKIE7;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 
@@ -79,7 +82,7 @@ public class AddlResponseTests_SPEC2_12_Event implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Event_cookie5", aurl);
+      TestButton tb = new TestButton(V2ADDLRESPONSETESTS_SPEC2_12_EVENT_COOKIE5, aurl);
       tb.writeTo(writer);
     }
 
@@ -89,7 +92,7 @@ public class AddlResponseTests_SPEC2_12_Event implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Event_cookie6", aurl);
+      TestButton tb = new TestButton(V2ADDLRESPONSETESTS_SPEC2_12_EVENT_COOKIE6, aurl);
       tb.writeTo(writer);
     }
 
@@ -99,12 +102,12 @@ public class AddlResponseTests_SPEC2_12_Event implements Portlet {
     if (portletReq.getParameter("tr2") != null && portletReq.getParameter("tr2").equals("true")) {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlResponseTests_SPEC2_12_Event_cookie7", aurl);
+      TestButton tb = new TestButton(V2ADDLRESPONSETESTS_SPEC2_12_EVENT_COOKIE7, aurl);
       tb.writeTo(writer);
     } else {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestSetupLink tb = new TestSetupLink("V2AddlResponseTests_SPEC2_12_Event_cookie7", aurl);
+      TestSetupLink tb = new TestSetupLink(V2ADDLRESPONSETESTS_SPEC2_12_EVENT_COOKIE7, aurl);
       tb.writeTo(writer);
     }
 
