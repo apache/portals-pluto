@@ -43,7 +43,7 @@
       /* aggregated with the portlet render parameters"                       */
       PortletURL urlResource = ((MimeResponse)portletResp).createRenderURL();
       urlResource.setParameter("qparm2", "renderVal2");
-      TestSetupLink tlResource = new TestSetupLink("V2DispatcherTests2_SPEC2_19_ForwardJSPResource_dispatch2", urlResource);
+      TestSetupLink tlResource = new TestSetupLink(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPRESOURCE_DISPATCH2, urlResource);
       tlResource.writeTo(writer);
       TestResult tr1 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPRESOURCE_DISPATCH2);
       try {

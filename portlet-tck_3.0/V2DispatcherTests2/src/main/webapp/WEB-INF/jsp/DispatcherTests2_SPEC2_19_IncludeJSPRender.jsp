@@ -43,7 +43,7 @@
       /* aggregated with the portlet render parameters"                       */
       PortletURL urlRender = ((MimeResponse)portletResp).createRenderURL();
       urlRender.setParameter("qparm2", "renderVal2");
-      TestSetupLink tlRender = new TestSetupLink("V2DispatcherTests2_SPEC2_19_IncludeJSPRender_dispatch2", urlRender);
+      TestSetupLink tlRender = new TestSetupLink(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPRENDER_DISPATCH2, urlRender);
       tlRender.writeTo(writer);
       TestResult tr1 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPRENDER_DISPATCH2);
       try {
