@@ -18,6 +18,8 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS5S_SPEC2_19_FORWARDSERVLETACTIONREQUEST_GETINPUTSTREAM;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS5S_SPEC2_19_FORWARDSERVLETACTIONREQUEST_SETCHARACTERENCODING;
 import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 import static javax.portlet.tck.constants.Constants.QUERY_STRING;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
@@ -114,7 +116,7 @@ public class DispatcherReqRespTests5S_SPEC2_19_ForwardServletActionRequest imple
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletActionRequest_getInputStream", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_FORWARDSERVLETACTIONREQUEST_GETINPUTSTREAM, aurl);
          tb.writeTo(writer);
       }
 
@@ -125,7 +127,7 @@ public class DispatcherReqRespTests5S_SPEC2_19_ForwardServletActionRequest imple
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletActionRequest_setCharacterEncoding", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_FORWARDSERVLETACTIONREQUEST_SETCHARACTERENCODING, aurl);
          tb.writeTo(writer);
       }
 

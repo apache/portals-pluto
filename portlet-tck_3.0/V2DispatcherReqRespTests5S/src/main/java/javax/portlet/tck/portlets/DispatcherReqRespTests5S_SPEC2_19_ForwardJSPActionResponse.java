@@ -18,6 +18,7 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS5S_SPEC2_19_FORWARDJSPACTIONRESPONSE_SENDREDIRECT;
 import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 import static javax.portlet.tck.constants.Constants.JSP_PREFIX;
 import static javax.portlet.tck.constants.Constants.JSP_SUFFIX;
@@ -114,7 +115,7 @@ public class DispatcherReqRespTests5S_SPEC2_19_ForwardJSPActionResponse implemen
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPActionResponse_sendRedirect", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_FORWARDJSPACTIONRESPONSE_SENDREDIRECT, aurl);
          tb.writeTo(writer);
       }
 
