@@ -15,7 +15,13 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_EVENT_APIEVENT_GETQNAME1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_EVENT_APIEVENT_GETQNAME2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_EVENT_APIEVENT_GETNAME1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_EVENT_APIEVENT_GETNAME2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_EVENT_APIEVENT_GETVALUE1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2PORTLETTESTS_EVENT_APIEVENT_GETVALUE2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT4;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETPUBLISHINGEVENTQNAMES3;
 import static javax.portlet.tck.constants.Constants.BUTTON_PARAM_NAME;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
@@ -34,9 +40,6 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-import javax.portlet.ResourceServingPortlet;
 import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.TestButton;
 import javax.portlet.tck.beans.TestResult;
@@ -53,7 +56,7 @@ import javax.xml.namespace.QName;
  * PortletTests_Event_ApiEvent_event
  *
  */
-public class PortletTests_Event_ApiEvent implements Portlet, ResourceServingPortlet {
+public class PortletTests_Event_ApiEvent implements Portlet {
   private static final String LOG_CLASS = PortletTests_Event_ApiEvent.class.getName();
   @SuppressWarnings("unused")
 private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
@@ -87,15 +90,6 @@ private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    }
 
   @Override
-  public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
-      throws PortletException, IOException {
-
-    long tid = Thread.currentThread().getId();
-    portletReq.setAttribute(THREADID_ATTR, tid);
-
-  }
-
-  @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
 
@@ -111,7 +105,7 @@ private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2PortletTests_Event_ApiEvent_getQName1", aurl);
+      TestButton tb = new TestButton(V2PORTLETTESTS_EVENT_APIEVENT_GETQNAME1, aurl);
       tb.writeTo(writer);
     }
 
@@ -120,7 +114,7 @@ private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2PortletTests_Event_ApiEvent_getQName2", aurl);
+      TestButton tb = new TestButton(V2PORTLETTESTS_EVENT_APIEVENT_GETQNAME2, aurl);
       tb.writeTo(writer);
     }
 
@@ -130,7 +124,7 @@ private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2PortletTests_Event_ApiEvent_getName1", aurl);
+      TestButton tb = new TestButton(V2PORTLETTESTS_EVENT_APIEVENT_GETNAME1, aurl);
       tb.writeTo(writer);
     }
 
@@ -139,7 +133,7 @@ private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2PortletTests_Event_ApiEvent_getName2", aurl);
+      TestButton tb = new TestButton(V2PORTLETTESTS_EVENT_APIEVENT_GETNAME2, aurl);
       tb.writeTo(writer);
     }
 
@@ -149,7 +143,7 @@ private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2PortletTests_Event_ApiEvent_getValue1", aurl);
+      TestButton tb = new TestButton(V2PORTLETTESTS_EVENT_APIEVENT_GETVALUE1, aurl);
       tb.writeTo(writer);
     }
 
@@ -159,7 +153,7 @@ private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2PortletTests_Event_ApiEvent_getValue2", aurl);
+      TestButton tb = new TestButton(V2PORTLETTESTS_EVENT_APIEVENT_GETVALUE2, aurl);
       tb.writeTo(writer);
     }
 
@@ -171,7 +165,7 @@ private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_eventProcessEvent4", aurl);
+          new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT4, aurl);
       tb.writeTo(writer);
     }
 

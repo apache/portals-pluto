@@ -25,7 +25,6 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Logger;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
@@ -35,9 +34,6 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-import javax.portlet.ResourceServingPortlet;
 import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
 
@@ -52,10 +48,7 @@ import javax.portlet.tck.beans.TestResult;
  * portlet PortletTests_Portlet_ApiRender_event
  *
  */
-public class PortletTests_Portlet_ApiRender implements Portlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         PortletTests_Portlet_ApiRender.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+public class PortletTests_Portlet_ApiRender implements Portlet {
    
    private PortletConfig portletConfig = null;
    
@@ -66,7 +59,6 @@ public class PortletTests_Portlet_ApiRender implements Portlet, ResourceServingP
       initCalled=true;
    }
    
-   
    @Override
    public void destroy() {
    }
@@ -74,31 +66,16 @@ public class PortletTests_Portlet_ApiRender implements Portlet, ResourceServingP
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      
-
-   }
-
-   @Override
-   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
-
-      long tid = Thread.currentThread().getId();
-      portletReq.setAttribute(THREADID_ATTR, tid);
-
-    
    }
 
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -108,8 +85,6 @@ public class PortletTests_Portlet_ApiRender implements Portlet, ResourceServingP
       JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
       // Create result objects for the tests
-
-     
 
       /* TestCase: V2PortletTests_Portlet_ApiRender_init1                     */
       /* Details: "Method init(PortletConfig): is called for the portlet      */
