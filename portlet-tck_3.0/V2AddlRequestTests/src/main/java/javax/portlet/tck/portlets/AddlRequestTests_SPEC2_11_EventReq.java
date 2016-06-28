@@ -29,6 +29,14 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
 
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE1;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE4;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_WINDOWID4;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE8;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE9;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 
@@ -80,7 +88,7 @@ public class AddlRequestTests_SPEC2_11_EventReq implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_EventReq_contentType1", aurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE1, aurl);
       tb.writeTo(writer);
     }
 
@@ -91,7 +99,7 @@ public class AddlRequestTests_SPEC2_11_EventReq implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_EventReq_contentType2", aurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE2, aurl);
       tb.writeTo(writer);
     }
 
@@ -102,7 +110,7 @@ public class AddlRequestTests_SPEC2_11_EventReq implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_EventReq_contentType3", aurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE3, aurl);
       tb.writeTo(writer);
     }
 
@@ -113,7 +121,7 @@ public class AddlRequestTests_SPEC2_11_EventReq implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_EventReq_contentType4", aurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE4, aurl);
       tb.writeTo(writer);
     }
 
@@ -124,7 +132,7 @@ public class AddlRequestTests_SPEC2_11_EventReq implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_EventReq_contentType5", aurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE5, aurl);
       tb.writeTo(writer);
     }
 
@@ -134,7 +142,7 @@ public class AddlRequestTests_SPEC2_11_EventReq implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_EventReq_windowId4", aurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_WINDOWID4, aurl);
       tb.writeTo(writer);
     }
 
@@ -144,7 +152,7 @@ public class AddlRequestTests_SPEC2_11_EventReq implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_EventReq_contentType8", aurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE8, aurl);
       tb.writeTo(writer);
     }
 
@@ -155,7 +163,7 @@ public class AddlRequestTests_SPEC2_11_EventReq implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_EventReq_contentType9", aurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE9, aurl);
       tb.writeTo(writer);
     }
 

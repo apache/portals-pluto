@@ -113,7 +113,7 @@ public class AddlRequestTests_SPEC2_11_Event_event implements Portlet, EventPort
       PortletURL rurl = portletResp.createRenderURL();
       rurl.setParameters(portletReq.getPrivateParameterMap());
       rurl.setParameter("tr3", "true");
-      TestSetupLink tb = new TestSetupLink("V2AddlRequestTests_SPEC2_11_Event_parameters12", rurl);
+      TestSetupLink tb = new TestSetupLink(V2ADDLREQUESTTESTS_SPEC2_11_EVENT_PARAMETERS12, rurl);
       tb.writeTo(writer);
     }
 

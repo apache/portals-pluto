@@ -39,6 +39,7 @@ import javax.xml.namespace.QName;
 
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENT_PARAMETERS2;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENT_PARAMETERS6;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENT_PARAMETERS12;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENT_PUBLICRENDERPARAMETERS15;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENT_PUBLICRENDERPARAMETERS16;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENT_PUBLICRENDERPARAMETERS5;
@@ -96,7 +97,7 @@ public class AddlRequestTests_SPEC2_11_Event implements Portlet, EventPortlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       aurl.setParameter("tr1", "true&<>\"'");
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_Event_parameters2", aurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENT_PARAMETERS2, aurl);
       tb.writeTo(writer);
     }
 
@@ -106,7 +107,7 @@ public class AddlRequestTests_SPEC2_11_Event implements Portlet, EventPortlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_Event_parameters6", aurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENT_PARAMETERS6, aurl);
       tb.writeTo(writer);
     }
 
@@ -118,7 +119,7 @@ public class AddlRequestTests_SPEC2_11_Event implements Portlet, EventPortlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_Event_parameters12", aurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENT_PARAMETERS12, aurl);
       tb.writeTo(writer);
     }
 
@@ -130,7 +131,7 @@ public class AddlRequestTests_SPEC2_11_Event implements Portlet, EventPortlet {
       aurl.setParameters(portletReq.getPrivateParameterMap());
       aurl.setParameter("tr4", "true");
       TestButton tb =
-          new TestButton("V2AddlRequestTests_SPEC2_11_Event_publicRenderParameters15", aurl);
+          new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENT_PUBLICRENDERPARAMETERS15, aurl);
       tb.writeTo(writer);
     }
 
@@ -142,13 +143,13 @@ public class AddlRequestTests_SPEC2_11_Event implements Portlet, EventPortlet {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tckPRP2", "true");
         TestSetupLink tl =
-            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Event_publicRenderParameters16", purl);
+            new TestSetupLink(V2ADDLREQUESTTESTS_SPEC2_11_EVENT_PUBLICRENDERPARAMETERS16, purl);
         tl.writeTo(writer);
       } else {
         PortletURL aurl = portletResp.createActionURL();
         aurl.setParameters(portletReq.getPrivateParameterMap());
         TestButton tb =
-            new TestButton("V2AddlRequestTests_SPEC2_11_Event_publicRenderParameters16", aurl);
+            new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENT_PUBLICRENDERPARAMETERS16, aurl);
         tb.writeTo(writer);
       }
     }
@@ -161,13 +162,13 @@ public class AddlRequestTests_SPEC2_11_Event implements Portlet, EventPortlet {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tckPRP2", "true");
         TestSetupLink tl =
-            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Event_publicRenderParameters5", purl);
+            new TestSetupLink(V2ADDLREQUESTTESTS_SPEC2_11_EVENT_PUBLICRENDERPARAMETERS5, purl);
         tl.writeTo(writer);
       } else {
         PortletURL aurl = portletResp.createActionURL();
         aurl.setParameters(portletReq.getPrivateParameterMap());
         TestButton tb =
-            new TestButton("V2AddlRequestTests_SPEC2_11_Event_publicRenderParameters5", aurl);
+            new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENT_PUBLICRENDERPARAMETERS5, aurl);
         tb.writeTo(writer);
       }
     }

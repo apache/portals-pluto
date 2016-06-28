@@ -35,6 +35,8 @@ import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.beans.TestSetupLink;
 
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RESOURCE_PARAMETERS17;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RESOURCE_PUBLICRENDERPARAMETERS7;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RESOURCE_PARAMETERS6;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.ResourceURL.PORTLET;
@@ -249,7 +251,7 @@ public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServ
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tr3", "true");
         TestSetupLink tl =
-            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Resource_parameters17", purl);
+            new TestSetupLink(V2ADDLREQUESTTESTS_SPEC2_11_RESOURCE_PARAMETERS17, purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr3 = portletResp.createResourceURL();
@@ -305,7 +307,7 @@ public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServ
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tckPRP4", "true");
         TestSetupLink tl =
-            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters7", purl);
+            new TestSetupLink(V2ADDLREQUESTTESTS_SPEC2_11_RESOURCE_PUBLICRENDERPARAMETERS7, purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr6 = portletResp.createResourceURL();

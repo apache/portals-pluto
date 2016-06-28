@@ -32,13 +32,15 @@ import javax.portlet.tck.beans.TestButton;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.beans.TestSetupLink;
 
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS10;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS13;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS2;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS6;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PUBLICRENDERPARAMETERS16;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PUBLICRENDERPARAMETERS13A;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS15;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS10;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS11;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PUBLICRENDERPARAMETERS15;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PUBLICRENDERPARAMETERS16;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS15;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
 /**
@@ -233,7 +235,7 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
       rurl.setParameters(portletReq.getPrivateParameterMap());
       rurl.setParameter("tr2", "true");
       rurl.setParameter("renderURLTr2", rurl.toString());
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_Render_parameters13", rurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS13, rurl);
       tb.writeTo(writer);
     }
 
@@ -243,7 +245,7 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
       /* \"x-www-form-urlencoded\" decoded" */
       PortletURL purl = portletResp.createRenderURL();
       purl.setParameter("tr5", "true&<>'");
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_Render_parameters2", purl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS2, purl);
       tb.writeTo(writer);
     }
 
@@ -252,7 +254,7 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
       /* Details: "The getParameterMap method must return an unmodifiable */
       /* Map object" */
       PortletURL purl = portletResp.createRenderURL();
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_Render_parameters6", purl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS6, purl);
       tb.writeTo(writer);
     }
 
@@ -275,13 +277,13 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tckPRP3", "true");
         TestSetupLink tl =
-            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters16", purl);
+            new TestSetupLink(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PUBLICRENDERPARAMETERS16, purl);
         tl.writeTo(writer);
       } else {
         PortletURL aurl = portletResp.createRenderURL();
         aurl.setParameters(portletReq.getPrivateParameterMap());
         TestButton tb =
-            new TestButton("V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters16", aurl);
+            new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PUBLICRENDERPARAMETERS16, aurl);
         tb.writeTo(writer);
       }
     }
@@ -294,14 +296,14 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tckPRP3", "true");
         TestSetupLink tl =
-            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters13a", purl);
+            new TestSetupLink(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PUBLICRENDERPARAMETERS13A, purl);
         tl.writeTo(writer);
       } else {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameters(portletReq.getPrivateParameterMap());
         purl.removePublicRenderParameter("tckPRP3");
         TestButton tb =
-            new TestButton("V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters13a", purl);
+            new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PUBLICRENDERPARAMETERS13A, purl);
         tb.writeTo(writer);
       }
     }
@@ -313,7 +315,7 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       aurl.setParameter("tr3a", portletReq.getParameter("tr3a"));
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_Render_parameters15", aurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS15, aurl);
       tb.writeTo(writer);
     } else {
       if (portletReq.getParameter("tr3b") != null
@@ -325,7 +327,7 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tr3a", "true");
         TestSetupLink tl =
-            new TestSetupLink("V2AddlRequestTests_SPEC2_11_Render_parameters15", purl);
+            new TestSetupLink(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS15, purl);
         tl.writeTo(writer);
       }
     }

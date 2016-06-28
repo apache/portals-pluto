@@ -132,7 +132,7 @@ public class AddlRequestTests_SPEC2_11_ActionAttr implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_ActionAttr_attributes1", aurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_ACTIONATTR_ATTRIBUTES1, aurl);
       tb.writeTo(writer);
     }
 
@@ -142,7 +142,7 @@ public class AddlRequestTests_SPEC2_11_ActionAttr implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_ActionAttr_attributes2", aurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_ACTIONATTR_ATTRIBUTES2, aurl);
       tb.writeTo(writer);
     }
 
@@ -153,7 +153,7 @@ public class AddlRequestTests_SPEC2_11_ActionAttr implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlRequestTests_SPEC2_11_ActionAttr_attributes6", aurl);
+      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_ACTIONATTR_ATTRIBUTES6, aurl);
       tb.writeTo(writer);
     }
 
