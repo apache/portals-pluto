@@ -29,6 +29,39 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
 
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_ISREADONLY1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_ISREADONLY2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_ISREADONLY3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_ISREADONLY4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUE3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUE4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUES1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUES2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUES3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUES4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUE3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUE4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUE5;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUES1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUES2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUES3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUES4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUES5;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUES6;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETNAMES1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETNAMES2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETMAP1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETMAP2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_RESET1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_RESET2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_RESET3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_STORE3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_STORE4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_STORE6;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 
@@ -81,7 +114,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_isReadOnly1", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_ISREADONLY1, aurl);
       tb.writeTo(writer);
     }
 
@@ -93,7 +126,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_isReadOnly2", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_ISREADONLY2, aurl);
       tb.writeTo(writer);
     }
 
@@ -104,7 +137,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_isReadOnly3", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_ISREADONLY3, aurl);
       tb.writeTo(writer);
     }
 
@@ -115,7 +148,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_isReadOnly4", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_ISREADONLY4, aurl);
       tb.writeTo(writer);
     }
 
@@ -126,7 +159,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_getValue1", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUE1, aurl);
       tb.writeTo(writer);
     }
 
@@ -137,7 +170,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_getValue2", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUE2, aurl);
       tb.writeTo(writer);
     }
 
@@ -149,7 +182,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_getValue3", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUE3, aurl);
       tb.writeTo(writer);
     }
 
@@ -160,7 +193,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_getValue4", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUE4, aurl);
       tb.writeTo(writer);
     }
 
@@ -171,7 +204,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_getValues1", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUES1, aurl);
       tb.writeTo(writer);
     }
 
@@ -183,7 +216,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_getValues2", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUES2, aurl);
       tb.writeTo(writer);
     }
 
@@ -195,7 +228,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_getValues3", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUES3, aurl);
       tb.writeTo(writer);
     }
 
@@ -206,7 +239,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_getValues4", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUES4, aurl);
       tb.writeTo(writer);
     }
 
@@ -217,7 +250,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_setValue1", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUE1, aurl);
       tb.writeTo(writer);
     }
 
@@ -228,7 +261,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_setValue2", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUE2, aurl);
       tb.writeTo(writer);
     }
 
@@ -239,7 +272,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_setValue3", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUE3, aurl);
       tb.writeTo(writer);
     }
 
@@ -251,7 +284,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_setValue4", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUE4, aurl);
       tb.writeTo(writer);
     }
 
@@ -262,7 +295,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_setValue5", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUE5, aurl);
       tb.writeTo(writer);
     }
 
@@ -273,7 +306,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_setValues1", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUES1, aurl);
       tb.writeTo(writer);
     }
 
@@ -284,7 +317,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_setValues2", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUES2, aurl);
       tb.writeTo(writer);
     }
 
@@ -295,7 +328,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_setValues3", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUES3, aurl);
       tb.writeTo(writer);
     }
 
@@ -306,7 +339,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_setValues4", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUES4, aurl);
       tb.writeTo(writer);
     }
 
@@ -318,7 +351,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_setValues5", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUES5, aurl);
       tb.writeTo(writer);
     }
 
@@ -329,7 +362,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_setValues6", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUES6, aurl);
       tb.writeTo(writer);
     }
 
@@ -341,7 +374,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_getNames1", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETNAMES1, aurl);
       tb.writeTo(writer);
     }
 
@@ -352,7 +385,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_getNames2", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETNAMES2, aurl);
       tb.writeTo(writer);
     }
 
@@ -364,7 +397,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_getMap1", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETMAP1, aurl);
       tb.writeTo(writer);
     }
 
@@ -375,7 +408,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_getMap2", aurl);
+          new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETMAP2, aurl);
       tb.writeTo(writer);
     }
 
@@ -385,7 +418,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_reset1", aurl);
+      TestButton tb = new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_RESET1, aurl);
       tb.writeTo(writer);
     }
 
@@ -395,7 +428,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_reset2", aurl);
+      TestButton tb = new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_RESET2, aurl);
       tb.writeTo(writer);
     }
 
@@ -405,7 +438,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_reset3", aurl);
+      TestButton tb = new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_RESET3, aurl);
       tb.writeTo(writer);
     }
 
@@ -415,7 +448,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_store3", aurl);
+      TestButton tb = new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_STORE3, aurl);
       tb.writeTo(writer);
     }
 
@@ -425,7 +458,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_store4", aurl);
+      TestButton tb = new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_STORE4, aurl);
       tb.writeTo(writer);
     }
 
@@ -435,7 +468,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2EnvironmentTests_PortletPreferences_ApiEvent_store6", aurl);
+      TestButton tb = new TestButton(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_STORE6, aurl);
       tb.writeTo(writer);
     }
 
