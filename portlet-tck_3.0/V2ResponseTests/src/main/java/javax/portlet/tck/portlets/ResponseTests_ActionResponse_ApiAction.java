@@ -43,7 +43,6 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -55,9 +54,6 @@ import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-import javax.portlet.ResourceServingPortlet;
 import javax.portlet.WindowState;
 import javax.portlet.tck.beans.ClassChecker;
 import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
@@ -76,10 +72,7 @@ import javax.portlet.tck.constants.Constants;
  * portlet ResponseTests_ActionResponse_ApiAction_event
  *
  */
-public class ResponseTests_ActionResponse_ApiAction implements Portlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         ResponseTests_ActionResponse_ApiAction.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+public class ResponseTests_ActionResponse_ApiAction implements Portlet {
    
    @SuppressWarnings("unused")
    private PortletConfig portletConfig = null;
@@ -335,17 +328,6 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
    }
 
    @Override
-   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
-         throws PortletException, IOException {
-
-      long tid = Thread.currentThread().getId();
-      portletReq.setAttribute(THREADID_ATTR, tid);
-
-      
-
-   }
-
-   @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
 
@@ -367,7 +349,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectA1", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTA1, aurl);
          tb.writeTo(writer);
       }
 
@@ -377,7 +359,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectA2", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTA2, aurl);
          tb.writeTo(writer);
       }
 
@@ -388,7 +370,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectA3", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTA3, aurl);
          tb.writeTo(writer);
       }
 
@@ -399,7 +381,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectA4", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTA4, aurl);
          tb.writeTo(writer);
       }
 
@@ -410,7 +392,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectA5", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTA5, aurl);
          tb.writeTo(writer);
       }
 
@@ -421,7 +403,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectA6", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTA6, aurl);
          tb.writeTo(writer);
       }
 
@@ -432,7 +414,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectA7", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTA7, aurl);
          tb.writeTo(writer);
       }
 
@@ -442,7 +424,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectB1", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB1, aurl);
          tb.writeTo(writer);
       }
 
@@ -452,7 +434,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectB2", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB2, aurl);
          tb.writeTo(writer);
       }
 
@@ -462,7 +444,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectB3", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB3, aurl);
          tb.writeTo(writer);
       }
 
@@ -472,7 +454,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectB4", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB4, aurl);
          tb.writeTo(writer);
       }
 
@@ -482,7 +464,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectB5", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB5, aurl);
          tb.writeTo(writer);
       }
 
@@ -492,7 +474,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectB6", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB6, aurl);
          tb.writeTo(writer);
       }
 
@@ -503,7 +485,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectB7", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB7, aurl);
          tb.writeTo(writer);
       }
 
@@ -514,7 +496,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectB8", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB8, aurl);
          tb.writeTo(writer);
       }
 
@@ -525,7 +507,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectB9", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB9, aurl);
          tb.writeTo(writer);
       }
 
@@ -536,7 +518,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectB10", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB10, aurl);
          tb.writeTo(writer);
       }
 
@@ -547,7 +529,7 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_ActionResponse_ApiAction_sendRedirectB11", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB11, aurl);
          tb.writeTo(writer);
       }
 
