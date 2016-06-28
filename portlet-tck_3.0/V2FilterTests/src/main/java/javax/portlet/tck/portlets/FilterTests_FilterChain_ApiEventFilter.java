@@ -29,6 +29,8 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
 
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_FILTERCHAIN_APIEVENTFILTER_INVOKEEVENTFILTER;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_FILTERCHAIN_APIEVENTFILTER_INVOKEEVENTFILTER2;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 
@@ -79,7 +81,7 @@ public class FilterTests_FilterChain_ApiEventFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_FilterChain_ApiEventFilter_invokeEventFilter", aurl);
+          new TestButton(V2FILTERTESTS_FILTERCHAIN_APIEVENTFILTER_INVOKEEVENTFILTER, aurl);
       tb.writeTo(writer);
     }
 
@@ -90,7 +92,7 @@ public class FilterTests_FilterChain_ApiEventFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_FilterChain_ApiEventFilter_invokeEventFilter2", aurl);
+          new TestButton(V2FILTERTESTS_FILTERCHAIN_APIEVENTFILTER_INVOKEEVENTFILTER2, aurl);
       tb.writeTo(writer);
     }
   }

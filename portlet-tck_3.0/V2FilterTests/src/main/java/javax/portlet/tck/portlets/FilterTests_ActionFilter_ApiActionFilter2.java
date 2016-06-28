@@ -90,7 +90,7 @@ public class FilterTests_ActionFilter_ApiActionFilter2 implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_ActionFilter_ApiActionFilter_doFilterBlock", aurl);
+          new TestButton(V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_DOFILTERBLOCK, aurl);
       tb.writeTo(writer);
     }
 

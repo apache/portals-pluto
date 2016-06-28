@@ -31,6 +31,8 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestButton;
 import javax.portlet.tck.constants.Constants;
 
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION2;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.PortletSession.APPLICATION_SCOPE;
@@ -100,7 +102,7 @@ public class FilterTests_PortletFilter_ApiActionFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_PortletFilter_ApiActionFilter_initAction1", aurl);
+          new TestButton(V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION1, aurl);
       tb.writeTo(writer);
     }
 
@@ -111,7 +113,7 @@ public class FilterTests_PortletFilter_ApiActionFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_PortletFilter_ApiActionFilter_initAction2", aurl);
+          new TestButton(V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION2, aurl);
       tb.writeTo(writer);
     }
 

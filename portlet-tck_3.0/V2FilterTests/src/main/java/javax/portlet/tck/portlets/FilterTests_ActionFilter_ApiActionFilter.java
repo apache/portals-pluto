@@ -34,9 +34,12 @@ import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.constants.Constants;
 import javax.portlet.tck.filters.FilterTests_ActionFilter_ApiActionFilter_filter2;
 
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_DOFILTEREXAMINE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_CANBECONFIGURED1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_CANBECONFIGURED2;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_DOFILTERISCALLED;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_DOFILTERPROCESSACTION1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_DOFILTERPROCESSACTION2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_DOFILTEREXAMINE;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.PortletSession.APPLICATION_SCOPE;
@@ -132,7 +135,7 @@ public class FilterTests_ActionFilter_ApiActionFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_ActionFilter_ApiActionFilter_canBeConfigured1", aurl);
+          new TestButton(V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_CANBECONFIGURED1, aurl);
       tb.writeTo(writer);
     }
 
@@ -143,7 +146,7 @@ public class FilterTests_ActionFilter_ApiActionFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_ActionFilter_ApiActionFilter_canBeConfigured2", aurl);
+          new TestButton(V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_CANBECONFIGURED2, aurl);
       tb.writeTo(writer);
     }
 
@@ -155,7 +158,7 @@ public class FilterTests_ActionFilter_ApiActionFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_ActionFilter_ApiActionFilter_doFilterIsCalled", aurl);
+          new TestButton(V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_DOFILTERISCALLED, aurl);
       tb.writeTo(writer);
     }
 
@@ -167,7 +170,7 @@ public class FilterTests_ActionFilter_ApiActionFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_ActionFilter_ApiActionFilter_doFilterProcessAction1", aurl);
+          new TestButton(V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_DOFILTERPROCESSACTION1, aurl);
       tb.writeTo(writer);
     }
 
@@ -180,7 +183,7 @@ public class FilterTests_ActionFilter_ApiActionFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_ActionFilter_ApiActionFilter_doFilterProcessAction2", aurl);
+          new TestButton(V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_DOFILTERPROCESSACTION2, aurl);
       tb.writeTo(writer);
     }
 
@@ -197,7 +200,7 @@ public class FilterTests_ActionFilter_ApiActionFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_ActionFilter_ApiActionFilter_doFilterExamine", aurl);
+          new TestButton(V2FILTERTESTS_ACTIONFILTER_APIACTIONFILTER_DOFILTEREXAMINE, aurl);
       tb.writeTo(writer);
     }
 

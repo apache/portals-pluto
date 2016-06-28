@@ -29,6 +29,13 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
 
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_CANBECONFIGURED1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_CANBECONFIGURED2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_DOFILTERISCALLED;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_DOFILTERPROCESSEVENT1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_DOFILTERPROCESSEVENT2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_DOFILTERBLOCK;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_DOFILTEREXAMINE;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 
@@ -85,7 +92,7 @@ public class FilterTests_EventFilter_ApiEventFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_EventFilter_ApiEventFilter_canBeConfigured1", aurl);
+          new TestButton(V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_CANBECONFIGURED1, aurl);
       tb.writeTo(writer);
     }
 
@@ -96,7 +103,7 @@ public class FilterTests_EventFilter_ApiEventFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_EventFilter_ApiEventFilter_canBeConfigured2", aurl);
+          new TestButton(V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_CANBECONFIGURED2, aurl);
       tb.writeTo(writer);
     }
 
@@ -107,7 +114,7 @@ public class FilterTests_EventFilter_ApiEventFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_EventFilter_ApiEventFilter_doFilterIsCalled", aurl);
+          new TestButton(V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_DOFILTERISCALLED, aurl);
       tb.writeTo(writer);
     }
 
@@ -119,7 +126,7 @@ public class FilterTests_EventFilter_ApiEventFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_EventFilter_ApiEventFilter_doFilterProcessEvent1", aurl);
+          new TestButton(V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_DOFILTERPROCESSEVENT1, aurl);
       tb.writeTo(writer);
     }
 
@@ -132,7 +139,7 @@ public class FilterTests_EventFilter_ApiEventFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_EventFilter_ApiEventFilter_doFilterProcessEvent2", aurl);
+          new TestButton(V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_DOFILTERPROCESSEVENT2, aurl);
       tb.writeTo(writer);
     }
 
@@ -144,7 +151,7 @@ public class FilterTests_EventFilter_ApiEventFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_EventFilter_ApiEventFilter_doFilterBlock", aurl);
+          new TestButton(V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_DOFILTERBLOCK, aurl);
       tb.writeTo(writer);
     }
 
@@ -156,7 +163,7 @@ public class FilterTests_EventFilter_ApiEventFilter implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2FilterTests_EventFilter_ApiEventFilter_doFilterExamine", aurl);
+          new TestButton(V2FILTERTESTS_EVENTFILTER_APIEVENTFILTER_DOFILTEREXAMINE, aurl);
       tb.writeTo(writer);
     }
 
