@@ -199,7 +199,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletAction implements Portlet, 
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch1", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETACTION_DISPATCH1, aurl);
          tb.writeTo(writer);
       }
 
@@ -209,7 +209,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletAction implements Portlet, 
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch2", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETACTION_DISPATCH2, aurl);
          tb.writeTo(writer);
       }
 
@@ -219,7 +219,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletAction implements Portlet, 
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch3", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETACTION_DISPATCH3, aurl);
          tb.writeTo(writer);
       }
 
@@ -229,7 +229,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletAction implements Portlet, 
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch4", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETACTION_DISPATCH4, aurl);
          tb.writeTo(writer);
       }
 
@@ -240,7 +240,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletAction implements Portlet, 
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch5", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETACTION_DISPATCH5, aurl);
          tb.writeTo(writer);
       }
 
@@ -250,7 +250,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletAction implements Portlet, 
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch6", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETACTION_DISPATCH6, aurl);
          tb.writeTo(writer);
       }
 

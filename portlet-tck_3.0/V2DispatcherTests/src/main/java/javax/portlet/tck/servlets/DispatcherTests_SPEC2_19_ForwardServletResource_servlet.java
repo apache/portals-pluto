@@ -135,7 +135,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletResource_servlet extends Htt
       /* aggregated with the portlet render parameters" */
       PortletURL urlResource = ((ResourceResponse) portletResp).createRenderURL();
       urlResource.setParameter("qparm2", "renderVal2");
-      TestLink tlResource = new TestLink("V2DispatcherTests_SPEC2_19_ForwardServletResource_dispatch2", urlResource);
+      TestLink tlResource = new TestLink(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETRESOURCE_DISPATCH2, urlResource);
       tlResource.writeTo(writer);
       TestResult tr1 = tcd.getTestResultFailed(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETRESOURCE_DISPATCH2);
       try {

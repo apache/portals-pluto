@@ -18,6 +18,12 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH1;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH2;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH3;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH4;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH5;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH6;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
@@ -102,7 +108,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletEvent implements Portlet, R
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch1", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH1, aurl);
          tb.writeTo(writer);
       }
 
@@ -112,7 +118,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletEvent implements Portlet, R
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch2", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH2, aurl);
          tb.writeTo(writer);
       }
 
@@ -122,7 +128,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletEvent implements Portlet, R
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch3", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH3, aurl);
          tb.writeTo(writer);
       }
 
@@ -132,7 +138,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletEvent implements Portlet, R
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch4", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH4, aurl);
          tb.writeTo(writer);
       }
 
@@ -143,7 +149,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletEvent implements Portlet, R
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch5", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH5, aurl);
          tb.writeTo(writer);
       }
 
@@ -153,7 +159,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletEvent implements Portlet, R
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch6", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH6, aurl);
          tb.writeTo(writer);
       }
 

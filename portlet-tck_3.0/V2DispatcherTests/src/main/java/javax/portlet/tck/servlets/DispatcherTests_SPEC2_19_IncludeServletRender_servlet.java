@@ -136,7 +136,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletRender_servlet extends HttpS
       /* aggregated with the portlet render parameters" */
       PortletURL urlRender = ((RenderResponse) portletResp).createRenderURL();
       urlRender.setParameter("qparm2", "renderVal2");
-      TestLink tlRender = new TestLink("V2DispatcherTests_SPEC2_19_IncludeServletRender_dispatch2", urlRender);
+      TestLink tlRender = new TestLink(V2DISPATCHERTESTS_SPEC2_19_INCLUDESERVLETRENDER_DISPATCH2, urlRender);
       tlRender.writeTo(writer);
       TestResult tr1 = tcd.getTestResultFailed(V2DISPATCHERTESTS_SPEC2_19_INCLUDESERVLETRENDER_DISPATCH2);
       try {

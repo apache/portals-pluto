@@ -18,6 +18,36 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_DISPATCH1;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_DISPATCH2;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_DISPATCH3;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_INVOKE1;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_INVOKE2;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_INVOKE4;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_INVOKE7;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES1;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES1A;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES1B;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES1C;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES2;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES2A;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES2B;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES2C;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES3;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES3A;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES3B;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES3C;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES4;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES4A;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES4B;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES4C;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES5;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES5A;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES5B;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES5C;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES6;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES7;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES8;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
@@ -94,7 +124,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_dispatch1", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_DISPATCH1, aurl);
          tb.writeTo(writer);
       }
 
@@ -104,7 +134,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter("qparm2", "renderVal2");
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_dispatch2", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_DISPATCH2, aurl);
          tb.writeTo(writer);
       }
 
@@ -115,7 +145,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_dispatch3", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_DISPATCH3, aurl);
          tb.writeTo(writer);
       }
 
@@ -125,7 +155,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_invoke1", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_INVOKE1, aurl);
          tb.writeTo(writer);
       }
 
@@ -136,7 +166,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_invoke2", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_INVOKE2, aurl);
          tb.writeTo(writer);
       }
 
@@ -147,7 +177,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_invoke4", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_INVOKE4, aurl);
          tb.writeTo(writer);
       }
 
@@ -158,7 +188,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_invoke7", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_INVOKE7, aurl);
          tb.writeTo(writer);
       }
 
@@ -171,7 +201,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes1", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES1, aurl);
          tb.writeTo(writer);
       }
 
@@ -184,7 +214,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes1a", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES1A, aurl);
          tb.writeTo(writer);
       }
 
@@ -195,7 +225,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes1b", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES1B, aurl);
          tb.writeTo(writer);
       }
 
@@ -206,7 +236,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes1c", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES1C, aurl);
          tb.writeTo(writer);
       }
 
@@ -219,7 +249,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes2", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES2, aurl);
          tb.writeTo(writer);
       }
 
@@ -232,7 +262,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes2a", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES2A, aurl);
          tb.writeTo(writer);
       }
 
@@ -243,7 +273,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes2b", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES2B, aurl);
          tb.writeTo(writer);
       }
 
@@ -254,7 +284,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes2c", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES2C, aurl);
          tb.writeTo(writer);
       }
 
@@ -267,7 +297,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes3", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES3, aurl);
          tb.writeTo(writer);
       }
 
@@ -280,7 +310,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes3a", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES3A, aurl);
          tb.writeTo(writer);
       }
 
@@ -291,7 +321,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes3b", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES3B, aurl);
          tb.writeTo(writer);
       }
 
@@ -302,7 +332,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes3c", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES3C, aurl);
          tb.writeTo(writer);
       }
 
@@ -315,7 +345,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes4", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES4, aurl);
          tb.writeTo(writer);
       }
 
@@ -328,7 +358,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes4a", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES4A, aurl);
          tb.writeTo(writer);
       }
 
@@ -339,7 +369,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes4b", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES4B, aurl);
          tb.writeTo(writer);
       }
 
@@ -350,7 +380,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes4c", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES4C, aurl);
          tb.writeTo(writer);
       }
 
@@ -363,7 +393,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes5", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES5, aurl);
          tb.writeTo(writer);
       }
 
@@ -376,7 +406,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes5a", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES5A, aurl);
          tb.writeTo(writer);
       }
 
@@ -387,7 +417,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes5b", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES5B, aurl);
          tb.writeTo(writer);
       }
 
@@ -398,7 +428,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes5c", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES5C, aurl);
          tb.writeTo(writer);
       }
 
@@ -408,7 +438,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes6", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES6, aurl);
          tb.writeTo(writer);
       }
 
@@ -419,7 +449,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes7", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES7, aurl);
          tb.writeTo(writer);
       }
 
@@ -430,7 +460,7 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_attributes8", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS_SPEC2_19_FORWARDSERVLETEVENT_ATTRIBUTES8, aurl);
          tb.writeTo(writer);
       }
 
