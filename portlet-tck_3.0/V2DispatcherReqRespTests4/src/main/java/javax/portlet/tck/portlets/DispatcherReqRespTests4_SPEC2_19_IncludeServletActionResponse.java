@@ -18,6 +18,16 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_CONTAINSHEADER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_ENCODEREDIRECTURL1;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_ENCODEREDIRECTURL;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_ENCODEURL1;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_ENCODEURL;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_GETBUFFERSIZE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_GETCHARACTERENCODING;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_GETCONTENTTYPE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_GETLOCALE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_ISCOMMITTED;
 import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 import static javax.portlet.tck.constants.Constants.QUERY_STRING;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
@@ -113,7 +123,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse imple
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_containsHeader", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_CONTAINSHEADER, aurl);
          tb.writeTo(writer);
       }
 
@@ -123,7 +133,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse imple
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_encodeRedirectURL1", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_ENCODEREDIRECTURL1, aurl);
          tb.writeTo(writer);
       }
 
@@ -133,7 +143,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse imple
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_encodeRedirectUrl", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_ENCODEREDIRECTURL, aurl);
          tb.writeTo(writer);
       }
 
@@ -144,7 +154,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse imple
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_encodeURL1", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_ENCODEURL1, aurl);
          tb.writeTo(writer);
       }
 
@@ -155,7 +165,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse imple
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_encodeUrl", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_ENCODEURL, aurl);
          tb.writeTo(writer);
       }
 
@@ -165,7 +175,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse imple
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_getBufferSize", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_GETBUFFERSIZE, aurl);
          tb.writeTo(writer);
       }
 
@@ -176,7 +186,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse imple
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_getCharacterEncoding", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_GETCHARACTERENCODING, aurl);
          tb.writeTo(writer);
       }
 
@@ -186,7 +196,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse imple
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_getContentType", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_GETCONTENTTYPE, aurl);
          tb.writeTo(writer);
       }
 
@@ -196,7 +206,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse imple
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_getLocale", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_GETLOCALE, aurl);
          tb.writeTo(writer);
       }
 
@@ -206,7 +216,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse imple
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_isCommitted", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONRESPONSE_ISCOMMITTED, aurl);
          tb.writeTo(writer);
       }
 

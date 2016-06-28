@@ -18,6 +18,10 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCEREQUEST_GETPARAMETER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCEREQUEST_GETPARAMETERMAP;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCEREQUEST_GETPARAMETERNAMES;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCEREQUEST_GETPARAMETERVALUES;
 import static javax.portlet.ResourceURL.PAGE;
 import static javax.portlet.tck.constants.Constants.ATTR_PREFIX;
 import static javax.portlet.tck.constants.Constants.PARM_NAME;
@@ -130,7 +134,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest impl
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameter", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCEREQUEST_GETPARAMETER, rurl);
             tl.writeTo(writer);
          }
       }
@@ -142,7 +146,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest impl
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterMap", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCEREQUEST_GETPARAMETERMAP, rurl);
             tl.writeTo(writer);
          }
       }
@@ -154,7 +158,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest impl
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterNames", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCEREQUEST_GETPARAMETERNAMES, rurl);
             tl.writeTo(writer);
          }
       }
@@ -166,7 +170,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest impl
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterValues", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCEREQUEST_GETPARAMETERVALUES, rurl);
             tl.writeTo(writer);
          }
       }

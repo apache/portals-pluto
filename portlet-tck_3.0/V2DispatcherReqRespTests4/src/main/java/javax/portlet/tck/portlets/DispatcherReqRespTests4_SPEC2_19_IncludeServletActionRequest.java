@@ -18,6 +18,53 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETATTRIBUTE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETATTRIBUTENAMES;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETAUTHTYPE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETCHARACTERENCODING;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETCONTENTLENGTH;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETCONTENTTYPE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETCONTEXTPATH;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETCOOKIES;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETDATEHEADER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETHEADER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETHEADERNAMES;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETHEADERS;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETINTHEADER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETLOCALADDR;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETLOCALNAME;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETLOCALPORT;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETLOCALE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETLOCALES;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETMETHOD;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETERMAP;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETERNAMES;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETERVALUES;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPATHINFO;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPATHTRANSLATED;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPROTOCOL;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETQUERYSTRING;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREALPATH;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREMOTEADDR;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREMOTEHOST;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREMOTEPORT;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREMOTEUSER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREQUESTDISPATCHER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREQUESTURI;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREQUESTURL;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREQUESTEDSESSIONID;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETSCHEME;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETSERVERNAME;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETSERVERPORT;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETSERVLETPATH;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETSESSION;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETUSERPRINCIPAL;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_ISREQUESTEDSESSIONIDVALID;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_ISSECURE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_ISUSERINROLE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_REMOVEATTRIBUTE;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_SETATTRIBUTE;
 import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 import static javax.portlet.tck.constants.Constants.ATTR_PREFIX;
 import static javax.portlet.tck.constants.Constants.PARM_NAME;
@@ -124,7 +171,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getAttribute", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETATTRIBUTE, aurl);
          tb.writeTo(writer);
       }
 
@@ -135,7 +182,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getAttributeNames", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETATTRIBUTENAMES, aurl);
          tb.writeTo(writer);
       }
 
@@ -146,7 +193,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getAuthType", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETAUTHTYPE, aurl);
          tb.writeTo(writer);
       }
 
@@ -157,7 +204,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getCharacterEncoding", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETCHARACTERENCODING, aurl);
          tb.writeTo(writer);
       }
 
@@ -168,7 +215,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getContentLength", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETCONTENTLENGTH, aurl);
          tb.writeTo(writer);
       }
 
@@ -179,7 +226,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getContentType", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETCONTENTTYPE, aurl);
          tb.writeTo(writer);
       }
 
@@ -190,7 +237,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getContextPath", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETCONTEXTPATH, aurl);
          tb.writeTo(writer);
       }
 
@@ -201,7 +248,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getCookies", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETCOOKIES, aurl);
          tb.writeTo(writer);
       }
 
@@ -213,7 +260,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getDateHeader", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETDATEHEADER, aurl);
          tb.writeTo(writer);
       }
 
@@ -225,7 +272,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getHeader", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETHEADER, aurl);
          tb.writeTo(writer);
       }
 
@@ -237,7 +284,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getHeaderNames", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETHEADERNAMES, aurl);
          tb.writeTo(writer);
       }
 
@@ -249,7 +296,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getHeaders", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETHEADERS, aurl);
          tb.writeTo(writer);
       }
 
@@ -261,7 +308,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getIntHeader", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETINTHEADER, aurl);
          tb.writeTo(writer);
       }
 
@@ -271,7 +318,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getLocalAddr", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETLOCALADDR, aurl);
          tb.writeTo(writer);
       }
 
@@ -281,7 +328,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getLocalName", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETLOCALNAME, aurl);
          tb.writeTo(writer);
       }
 
@@ -291,7 +338,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getLocalPort", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETLOCALPORT, aurl);
          tb.writeTo(writer);
       }
 
@@ -302,7 +349,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getLocale", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETLOCALE, aurl);
          tb.writeTo(writer);
       }
 
@@ -313,7 +360,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getLocales", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETLOCALES, aurl);
          tb.writeTo(writer);
       }
 
@@ -324,7 +371,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getMethod", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETMETHOD, aurl);
          tb.writeTo(writer);
       }
 
@@ -335,7 +382,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getParameter", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETER, aurl);
          tb.writeTo(writer);
       }
 
@@ -346,7 +393,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getParameterMap", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETERMAP, aurl);
          tb.writeTo(writer);
       }
 
@@ -357,7 +404,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getParameterNames", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETERNAMES, aurl);
          tb.writeTo(writer);
       }
 
@@ -368,7 +415,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getParameterValues", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETERVALUES, aurl);
          tb.writeTo(writer);
       }
 
@@ -380,7 +427,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getPathInfo", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPATHINFO, aurl);
          tb.writeTo(writer);
       }
 
@@ -392,7 +439,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getPathTranslated", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPATHTRANSLATED, aurl);
          tb.writeTo(writer);
       }
 
@@ -403,7 +450,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getProtocol", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPROTOCOL, aurl);
          tb.writeTo(writer);
       }
 
@@ -415,7 +462,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getQueryString", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETQUERYSTRING, aurl);
          tb.writeTo(writer);
       }
 
@@ -425,7 +472,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getRealPath", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREALPATH, aurl);
          tb.writeTo(writer);
       }
 
@@ -435,7 +482,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getRemoteAddr", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREMOTEADDR, aurl);
          tb.writeTo(writer);
       }
 
@@ -445,7 +492,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getRemoteHost", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREMOTEHOST, aurl);
          tb.writeTo(writer);
       }
 
@@ -455,7 +502,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getRemotePort", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREMOTEPORT, aurl);
          tb.writeTo(writer);
       }
 
@@ -466,7 +513,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getRemoteUser", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREMOTEUSER, aurl);
          tb.writeTo(writer);
       }
 
@@ -477,7 +524,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getRequestDispatcher", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREQUESTDISPATCHER, aurl);
          tb.writeTo(writer);
       }
 
@@ -489,7 +536,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getRequestURI", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREQUESTURI, aurl);
          tb.writeTo(writer);
       }
 
@@ -499,7 +546,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getRequestURL", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREQUESTURL, aurl);
          tb.writeTo(writer);
       }
 
@@ -510,7 +557,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getRequestedSessionId", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETREQUESTEDSESSIONID, aurl);
          tb.writeTo(writer);
       }
 
@@ -521,7 +568,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getScheme", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETSCHEME, aurl);
          tb.writeTo(writer);
       }
 
@@ -532,7 +579,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getServerName", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETSERVERNAME, aurl);
          tb.writeTo(writer);
       }
 
@@ -543,7 +590,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getServerPort", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETSERVERPORT, aurl);
          tb.writeTo(writer);
       }
 
@@ -555,7 +602,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getServletPath", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETSERVLETPATH, aurl);
          tb.writeTo(writer);
       }
 
@@ -567,7 +614,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getSession", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETSESSION, aurl);
          tb.writeTo(writer);
       }
 
@@ -578,7 +625,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getUserPrincipal", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETUSERPRINCIPAL, aurl);
          tb.writeTo(writer);
       }
 
@@ -590,7 +637,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_isRequestedSessionIdValid", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_ISREQUESTEDSESSIONIDVALID, aurl);
          tb.writeTo(writer);
       }
 
@@ -601,7 +648,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_isSecure", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_ISSECURE, aurl);
          tb.writeTo(writer);
       }
 
@@ -612,7 +659,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_isUserInRole", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_ISUSERINROLE, aurl);
          tb.writeTo(writer);
       }
 
@@ -623,7 +670,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_removeAttribute", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_REMOVEATTRIBUTE, aurl);
          tb.writeTo(writer);
       }
 
@@ -634,7 +681,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_setAttribute", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_SETATTRIBUTE, aurl);
          tb.writeTo(writer);
       }
 
@@ -645,7 +692,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getParameter", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETER, rurl);
             tl.writeTo(writer);
          }
       }
@@ -657,7 +704,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getParameterMap", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETERMAP, rurl);
             tl.writeTo(writer);
          }
       }
@@ -669,7 +716,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getParameterNames", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETERNAMES, rurl);
             tl.writeTo(writer);
          }
       }
@@ -681,7 +728,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getParameterValues", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETACTIONREQUEST_GETPARAMETERVALUES, rurl);
             tl.writeTo(writer);
          }
       }
