@@ -29,6 +29,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
 
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENT_EVENT1;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 
@@ -78,7 +79,7 @@ public class AddlPortletTests_SPEC2_15_Event implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlPortletTests_SPEC2_15_Event_event1", aurl);
+      TestButton tb = new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENT_EVENT1, aurl);
       tb.writeTo(writer);
     }
 

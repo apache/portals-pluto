@@ -259,7 +259,7 @@ public class AddlPortletTests_SPEC2_13_ResourceServing implements Portlet, Resou
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tr3", "true");
         TestLink tl =
-            new TestLink("V2AddlPortletTests_SPEC2_13_ResourceServing_resourceURLs6", purl);
+            new TestLink(V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVING_RESOURCEURLS6, purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr3 = portletResp.createResourceURL();
@@ -281,7 +281,7 @@ public class AddlPortletTests_SPEC2_13_ResourceServing implements Portlet, Resou
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tr4", "true");
         TestLink tl =
-            new TestLink("V2AddlPortletTests_SPEC2_13_ResourceServing_resourceURLs7", purl);
+            new TestLink(V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVING_RESOURCEURLS7, purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr4 = portletResp.createResourceURL();
@@ -305,7 +305,7 @@ public class AddlPortletTests_SPEC2_13_ResourceServing implements Portlet, Resou
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tr5", "true");
         TestLink tl =
-            new TestLink("V2AddlPortletTests_SPEC2_13_ResourceServing_resourceURLs8", purl);
+            new TestLink(V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVING_RESOURCEURLS8, purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr5 = portletResp.createResourceURL();
@@ -329,7 +329,7 @@ public class AddlPortletTests_SPEC2_13_ResourceServing implements Portlet, Resou
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tr6", "true");
         TestLink tl =
-            new TestLink("V2AddlPortletTests_SPEC2_13_ResourceServing_resourceURLs9", purl);
+            new TestLink(V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVING_RESOURCEURLS9, purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr6 = portletResp.createResourceURL();

@@ -136,7 +136,7 @@ public class AddlPortletTests_SPEC2_5_ActionHandling_event implements Portlet, E
     } else {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlPortletTests_SPEC2_5_ActionHandling_exception1", aurl);
+      TestButton tb = new TestButton(V2ADDLPORTLETTESTS_SPEC2_5_ACTIONHANDLING_EXCEPTION1, aurl);
       tb.writeTo(writer);
     }
 
@@ -156,7 +156,7 @@ public class AddlPortletTests_SPEC2_5_ActionHandling_event implements Portlet, E
     } else {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlPortletTests_SPEC2_5_ActionHandling_exception2", aurl);
+      TestButton tb = new TestButton(V2ADDLPORTLETTESTS_SPEC2_5_ACTIONHANDLING_EXCEPTION2, aurl);
       tb.writeTo(writer);
     }
 

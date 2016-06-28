@@ -36,8 +36,21 @@ import javax.portlet.tck.beans.TestButton;
 import javax.portlet.tck.beans.TestResult;
 import javax.xml.namespace.QName;
 
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT9;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT6;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT7;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT8;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT9;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT10;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT11;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT15;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT16;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT1;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT6;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT9;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
@@ -151,7 +164,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling implements Portlet, Ev
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_event5", aurl);
+      TestButton tb = new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT5, aurl);
       tb.writeTo(writer);
     }
 
@@ -160,7 +173,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling implements Portlet, Ev
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_event6", aurl);
+      TestButton tb = new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT6, aurl);
       tb.writeTo(writer);
     }
 
@@ -171,7 +184,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling implements Portlet, Ev
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_event7", aurl);
+      TestButton tb = new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT7, aurl);
       tb.writeTo(writer);
     }
 
@@ -182,7 +195,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling implements Portlet, Ev
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_event8", aurl);
+      TestButton tb = new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT8, aurl);
       tb.writeTo(writer);
     }
 
@@ -193,7 +206,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling implements Portlet, Ev
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_event9", aurl);
+      TestButton tb = new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT9, aurl);
       tb.writeTo(writer);
     }
 
@@ -204,7 +217,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling implements Portlet, Ev
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_event10", aurl);
+          new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT10, aurl);
       tb.writeTo(writer);
     }
 
@@ -215,7 +228,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling implements Portlet, Ev
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_event11", aurl);
+          new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT11, aurl);
       tb.writeTo(writer);
     }
 
@@ -226,7 +239,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling implements Portlet, Ev
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_event15", aurl);
+          new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT15, aurl);
       tb.writeTo(writer);
     }
 
@@ -239,7 +252,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling implements Portlet, Ev
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_event16", aurl);
+          new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT16, aurl);
       tb.writeTo(writer);
     }
 
@@ -250,7 +263,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling implements Portlet, Ev
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_eventProcessEvent1", aurl);
+          new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT1, aurl);
       tb.writeTo(writer);
     }
 
@@ -261,7 +274,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling implements Portlet, Ev
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_eventProcessEvent2", aurl);
+          new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT2, aurl);
       tb.writeTo(writer);
     }
 
@@ -273,7 +286,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling implements Portlet, Ev
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_eventProcessEvent3", aurl);
+          new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT3, aurl);
       tb.writeTo(writer);
     }
 
@@ -286,7 +299,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling implements Portlet, Ev
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_eventProcessEvent5", aurl);
+          new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT5, aurl);
       tb.writeTo(writer);
     }
 
@@ -298,7 +311,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling implements Portlet, Ev
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_eventProcessEvent6", aurl);
+          new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT6, aurl);
       tb.writeTo(writer);
     }
 
@@ -309,7 +322,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling implements Portlet, Ev
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2AddlPortletTests_SPEC2_15_EventEventHandling_eventProcessEvent9", aurl);
+          new TestButton(V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT9, aurl);
       tb.writeTo(writer);
     }
 

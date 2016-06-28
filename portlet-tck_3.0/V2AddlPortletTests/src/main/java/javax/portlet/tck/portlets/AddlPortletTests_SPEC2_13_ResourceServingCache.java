@@ -571,7 +571,7 @@ public class AddlPortletTests_SPEC2_13_ResourceServingCache
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tr3", "true");
         TestLink tl =
-            new TestLink("V2AddlPortletTests_SPEC2_13_ResourceServingCache_cachingFULL1", purl);
+            new TestLink(V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVINGCACHE_CACHINGFULL1, purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr3 = portletResp.createResourceURL();
@@ -669,7 +669,7 @@ public class AddlPortletTests_SPEC2_13_ResourceServingCache
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tr12", "true");
         TestLink tl =
-            new TestLink("V2AddlPortletTests_SPEC2_13_ResourceServingCache_cachingPORTLET1", purl);
+            new TestLink(V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVINGCACHE_CACHINGPORTLET1, purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr12 = portletResp.createResourceURL();
@@ -721,7 +721,7 @@ public class AddlPortletTests_SPEC2_13_ResourceServingCache
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tr15", "true");
         TestLink tl =
-            new TestLink("V2AddlPortletTests_SPEC2_13_ResourceServingCache_cachingPORTLET4", purl);
+            new TestLink(V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVINGCACHE_CACHINGPORTLET4, purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr15 = portletResp.createResourceURL();
@@ -820,7 +820,7 @@ public class AddlPortletTests_SPEC2_13_ResourceServingCache
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tr21", "true");
         TestLink tl =
-            new TestLink("V2AddlPortletTests_SPEC2_13_ResourceServingCache_cachingPAGE1", purl);
+            new TestLink(V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVINGCACHE_CACHINGPAGE1, purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr21 = portletResp.createResourceURL();
@@ -872,7 +872,7 @@ public class AddlPortletTests_SPEC2_13_ResourceServingCache
         PortletURL purl = portletResp.createRenderURL();
         purl.setParameter("tr24", "true");
         TestLink tl =
-            new TestLink("V2AddlPortletTests_SPEC2_13_ResourceServingCache_cachingPAGE4", purl);
+            new TestLink(V2ADDLPORTLETTESTS_SPEC2_13_RESOURCESERVINGCACHE_CACHINGPAGE4, purl);
         tl.writeTo(writer);
       } else {
         ResourceURL resurlTr24 = portletResp.createResourceURL();

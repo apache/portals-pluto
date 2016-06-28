@@ -29,6 +29,8 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
 
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_5_EVENTHANDLING_EXCEPTION4;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_5_EVENTHANDLING_EXCEPTION5;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 
@@ -85,7 +87,7 @@ public class AddlPortletTests_SPEC2_5_EventHandling implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlPortletTests_SPEC2_5_EventHandling_exception4", aurl);
+      TestButton tb = new TestButton(V2ADDLPORTLETTESTS_SPEC2_5_EVENTHANDLING_EXCEPTION4, aurl);
       tb.writeTo(writer);
     }
 
@@ -96,7 +98,7 @@ public class AddlPortletTests_SPEC2_5_EventHandling implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlPortletTests_SPEC2_5_EventHandling_exception5", aurl);
+      TestButton tb = new TestButton(V2ADDLPORTLETTESTS_SPEC2_5_EVENTHANDLING_EXCEPTION5, aurl);
       tb.writeTo(writer);
     }
 

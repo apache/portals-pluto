@@ -201,7 +201,7 @@ public class AddlPortletTests_SPEC2_8_PortletModes extends GenericPortlet {
       rurl.setPortletMode(new PortletMode("custom1"));
       rurl.setParameter("tr6", "true");
       TestSetupLink tl =
-          new TestSetupLink("V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes7", rurl);
+          new TestSetupLink(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES7, rurl);
       tl.writeTo(writer);
     } else {
       super.render(portletReq, portletResp);

@@ -35,6 +35,7 @@ import javax.xml.namespace.QName;
 
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_5_ACTIONHANDLING_ACTION5;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_5_ACTIONHANDLING_ACTION6;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_5_ACTIONHANDLING_ACTION7;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
@@ -128,7 +129,7 @@ public class AddlPortletTests_SPEC2_5_ActionHandling implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlPortletTests_SPEC2_5_ActionHandling_action5", aurl);
+      TestButton tb = new TestButton(V2ADDLPORTLETTESTS_SPEC2_5_ACTIONHANDLING_ACTION5, aurl);
       tb.writeTo(writer);
     }
 
@@ -139,7 +140,7 @@ public class AddlPortletTests_SPEC2_5_ActionHandling implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlPortletTests_SPEC2_5_ActionHandling_action6", aurl);
+      TestButton tb = new TestButton(V2ADDLPORTLETTESTS_SPEC2_5_ACTIONHANDLING_ACTION6, aurl);
       tb.writeTo(writer);
     }
 
@@ -149,7 +150,7 @@ public class AddlPortletTests_SPEC2_5_ActionHandling implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2AddlPortletTests_SPEC2_5_ActionHandling_action7", aurl);
+      TestButton tb = new TestButton(V2ADDLPORTLETTESTS_SPEC2_5_ACTIONHANDLING_ACTION7, aurl);
       tb.writeTo(writer);
     }
 
