@@ -58,7 +58,10 @@ public class AddlResponseTests_SPEC_12_Action_servlet extends HttpServlet {
    // The tck uses only get & post requests
    protected void processTCKReq(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+      // Setup for output
+      response.setContentType("text/html");
       PrintWriter writer = response.getWriter();
+      writer.write("<!DOCTYPE HTML><html><head></head><body>");
       JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
       String tc = request.getParameter(BUTTON_PARAM_NAME);
 
@@ -106,6 +109,7 @@ public class AddlResponseTests_SPEC_12_Action_servlet extends HttpServlet {
          }
       }
 
+      writer.write("</body></html>");
 
    }
 }
