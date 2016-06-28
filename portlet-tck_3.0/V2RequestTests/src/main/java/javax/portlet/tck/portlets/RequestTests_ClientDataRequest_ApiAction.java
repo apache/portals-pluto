@@ -449,7 +449,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM1,V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM1);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_getPortletInputStream1", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM1, aurl);
          tb.writeTo(writer);
       }
 
@@ -459,7 +459,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM2, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM2);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_getPortletInputStream2", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM2, aurl);
          tb.writeTo(writer);
       }
 
@@ -470,7 +470,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM3, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM3);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_getPortletInputStream3", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM3, aurl);
          tb.writeTo(writer);
       }
 
@@ -480,7 +480,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING1, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING1);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_setCharacterEncoding1", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING1, aurl);
          tb.writeTo(writer);
       }
 
@@ -491,7 +491,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING2, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING2);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_setCharacterEncoding2", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING2, aurl);
          tb.writeTo(writer);
       }
 
@@ -502,7 +502,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING3, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING3);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_setCharacterEncoding3", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING3, aurl);
          tb.writeTo(writer);
       }
 
@@ -513,7 +513,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING4, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING4);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_setCharacterEncoding4", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_SETCHARACTERENCODING4, aurl);
          tb.writeTo(writer);
       }
 
@@ -523,7 +523,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER1, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER1);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_getReader1", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER1, aurl);
          tb.writeTo(writer);
       }
 
@@ -533,7 +533,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER2, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER2);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_getReader2", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER2, aurl);
          tb.writeTo(writer);
       }
 
@@ -544,7 +544,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER3, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER3);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_getReader3", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER3, aurl);
          tb.writeTo(writer);
       }
 
@@ -555,7 +555,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER5, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER5);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_getReader5", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER5, aurl);
          tb.writeTo(writer);
       }
 
@@ -566,7 +566,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCHARACTERENCODING1, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCHARACTERENCODING1);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_getCharacterEncoding1", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCHARACTERENCODING1, aurl);
          tb.writeTo(writer);
       }
 
@@ -576,7 +576,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCHARACTERENCODING2, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCHARACTERENCODING2);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_getCharacterEncoding2", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCHARACTERENCODING2, aurl);
          tb.writeTo(writer);
       }
 
@@ -586,7 +586,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTTYPE1, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTTYPE1);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_getContentType1", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTTYPE1, aurl);
          tb.writeTo(writer);
       }
 
@@ -596,7 +596,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTTYPE2, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTTYPE2);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_getContentType2", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTTYPE2, aurl);
          tb.writeTo(writer);
       }
 
@@ -606,7 +606,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTLENGTH1, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTLENGTH1);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_getContentLength1", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTLENGTH1, aurl);
          tb.writeTo(writer);
       }
 
@@ -616,7 +616,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTLENGTH2,V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTLENGTH2);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_getContentLength2", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETCONTENTLENGTH2, aurl);
          tb.writeTo(writer);
       }
 
@@ -626,7 +626,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETMETHOD, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETMETHOD);
-         TestButton tb = new TestButton("V2RequestTests_ClientDataRequest_ApiAction_getMethod", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETMETHOD, aurl);
          tb.writeTo(writer);
       }
 

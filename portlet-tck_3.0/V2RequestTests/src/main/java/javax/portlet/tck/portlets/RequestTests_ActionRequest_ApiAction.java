@@ -138,7 +138,7 @@ public class RequestTests_ActionRequest_ApiAction implements Portlet, ResourceSe
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2RequestTests_ActionRequest_ApiAction_fieldACTION_NAME", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_ACTIONREQUEST_APIACTION_FIELDACTION_NAME, aurl);
          tb.writeTo(writer);
       }
 
