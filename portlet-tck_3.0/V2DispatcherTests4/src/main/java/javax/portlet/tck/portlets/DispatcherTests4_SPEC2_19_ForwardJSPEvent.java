@@ -18,6 +18,7 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS4_SPEC2_19_FORWARDJSPEVENT_INVOKE3;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
@@ -98,7 +99,7 @@ public class DispatcherTests4_SPEC2_19_ForwardJSPEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests4_SPEC2_19_ForwardJSPEvent_invoke3", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS4_SPEC2_19_FORWARDJSPEVENT_INVOKE3, aurl);
          tb.writeTo(writer);
       }
 

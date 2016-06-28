@@ -18,6 +18,7 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS4_SPEC2_19_FORWARDJSPACTION_INVOKE3;
 import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 import static javax.portlet.tck.constants.Constants.JSP_PREFIX;
 import static javax.portlet.tck.constants.Constants.JSP_SUFFIX;
@@ -122,7 +123,7 @@ public class DispatcherTests4_SPEC2_19_ForwardJSPAction implements Portlet, Reso
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherTests4_SPEC2_19_ForwardJSPAction_invoke3", aurl);
+         TestButton tb = new TestButton(V2DISPATCHERTESTS4_SPEC2_19_FORWARDJSPACTION_INVOKE3, aurl);
          tb.writeTo(writer);
       }
 
