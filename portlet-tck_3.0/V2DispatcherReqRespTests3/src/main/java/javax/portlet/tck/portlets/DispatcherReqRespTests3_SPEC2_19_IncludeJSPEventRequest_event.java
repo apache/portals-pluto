@@ -18,6 +18,10 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPEVENTREQUEST_GETPARAMETER;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPEVENTREQUEST_GETPARAMETERMAP;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPEVENTREQUEST_GETPARAMETERNAMES;
+import static javax.portlet.tck.beans.JSR286DispatcherReqRespTestCaseDetails.V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPEVENTREQUEST_GETPARAMETERVALUES;
 import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 import static javax.portlet.tck.constants.Constants.ATTR_PREFIX;
 import static javax.portlet.tck.constants.Constants.JSP_PREFIX;
@@ -116,7 +120,7 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_event imple
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_getParameter", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPEVENTREQUEST_GETPARAMETER, rurl);
             tl.writeTo(writer);
          }
       }
@@ -128,7 +132,7 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_event imple
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_getParameterMap", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPEVENTREQUEST_GETPARAMETERMAP, rurl);
             tl.writeTo(writer);
          }
       }
@@ -140,7 +144,7 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_event imple
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_getParameterNames", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPEVENTREQUEST_GETPARAMETERNAMES, rurl);
             tl.writeTo(writer);
          }
       }
@@ -152,7 +156,7 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_event imple
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
             rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_NAME, PARM_VALUE);
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_getParameterValues", rurl);
+            TestSetupLink tl = new TestSetupLink(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPEVENTREQUEST_GETPARAMETERVALUES, rurl);
             tl.writeTo(writer);
          }
       }
