@@ -113,7 +113,7 @@ public class AnnotationTests_ProcessAction_ApiAction implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameter(ActionRequest.ACTION_NAME, V2ANNOTATIONTESTS_PROCESSACTION_APIACTION_NAME);
-      TestButton tb = new TestButton("V2AnnotationTests_ProcessAction_ApiAction_name", aurl);
+      TestButton tb = new TestButton(V2ANNOTATIONTESTS_PROCESSACTION_APIACTION_NAME, aurl);
       tb.writeTo(writer);
     }
 
