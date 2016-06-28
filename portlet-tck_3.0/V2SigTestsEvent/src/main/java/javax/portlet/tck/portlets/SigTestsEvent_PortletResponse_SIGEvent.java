@@ -29,6 +29,20 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
 
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASADDPROPERTY;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASADDPROPERTYA;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASADDPROPERTYB;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASADDPROPERTYRETURNS;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASADDPROPERTYRETURNSA;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASADDPROPERTYRETURNSB;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASCREATEELEMENT;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASCREATEELEMENTRETURNS;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASENCODEURL;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASENCODEURLRETURNS;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASGETNAMESPACE;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASGETNAMESPACERETURNS;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASSETPROPERTY;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASSETPROPERTYRETURNS;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 
@@ -79,7 +93,7 @@ public class SigTestsEvent_PortletResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_PortletResponse_SIGEvent_hasAddProperty", aurl);
+          new TestButton(V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASADDPROPERTY, aurl);
       tb.writeTo(writer);
     }
 
@@ -90,7 +104,7 @@ public class SigTestsEvent_PortletResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_PortletResponse_SIGEvent_hasAddPropertyA", aurl);
+          new TestButton(V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASADDPROPERTYA, aurl);
       tb.writeTo(writer);
     }
 
@@ -101,7 +115,7 @@ public class SigTestsEvent_PortletResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_PortletResponse_SIGEvent_hasAddPropertyB", aurl);
+          new TestButton(V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASADDPROPERTYB, aurl);
       tb.writeTo(writer);
     }
 
@@ -112,7 +126,7 @@ public class SigTestsEvent_PortletResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_PortletResponse_SIGEvent_hasAddPropertyReturns", aurl);
+          new TestButton(V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASADDPROPERTYRETURNS, aurl);
       tb.writeTo(writer);
     }
 
@@ -123,7 +137,7 @@ public class SigTestsEvent_PortletResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_PortletResponse_SIGEvent_hasAddPropertyReturnsA", aurl);
+          new TestButton(V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASADDPROPERTYRETURNSA, aurl);
       tb.writeTo(writer);
     }
 
@@ -134,7 +148,7 @@ public class SigTestsEvent_PortletResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_PortletResponse_SIGEvent_hasAddPropertyReturnsB", aurl);
+          new TestButton(V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASADDPROPERTYRETURNSB, aurl);
       tb.writeTo(writer);
     }
 
@@ -145,7 +159,7 @@ public class SigTestsEvent_PortletResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_PortletResponse_SIGEvent_hasCreateElement", aurl);
+          new TestButton(V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASCREATEELEMENT, aurl);
       tb.writeTo(writer);
     }
 
@@ -156,7 +170,7 @@ public class SigTestsEvent_PortletResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_PortletResponse_SIGEvent_hasCreateElementReturns", aurl);
+          new TestButton(V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASCREATEELEMENTRETURNS, aurl);
       tb.writeTo(writer);
     }
 
@@ -165,7 +179,7 @@ public class SigTestsEvent_PortletResponse_SIGEvent implements Portlet {
     {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton("V2SigTestsEvent_PortletResponse_SIGEvent_hasEncodeURL", aurl);
+      TestButton tb = new TestButton(V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASENCODEURL, aurl);
       tb.writeTo(writer);
     }
 
@@ -175,7 +189,7 @@ public class SigTestsEvent_PortletResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_PortletResponse_SIGEvent_hasEncodeURLReturns", aurl);
+          new TestButton(V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASENCODEURLRETURNS, aurl);
       tb.writeTo(writer);
     }
 
@@ -185,7 +199,7 @@ public class SigTestsEvent_PortletResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_PortletResponse_SIGEvent_hasGetNamespace", aurl);
+          new TestButton(V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASGETNAMESPACE, aurl);
       tb.writeTo(writer);
     }
 
@@ -195,7 +209,7 @@ public class SigTestsEvent_PortletResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_PortletResponse_SIGEvent_hasGetNamespaceReturns", aurl);
+          new TestButton(V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASGETNAMESPACERETURNS, aurl);
       tb.writeTo(writer);
     }
 
@@ -206,7 +220,7 @@ public class SigTestsEvent_PortletResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_PortletResponse_SIGEvent_hasSetProperty", aurl);
+          new TestButton(V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASSETPROPERTY, aurl);
       tb.writeTo(writer);
     }
 
@@ -217,7 +231,7 @@ public class SigTestsEvent_PortletResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_PortletResponse_SIGEvent_hasSetPropertyReturns", aurl);
+          new TestButton(V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASSETPROPERTYRETURNS, aurl);
       tb.writeTo(writer);
     }
 

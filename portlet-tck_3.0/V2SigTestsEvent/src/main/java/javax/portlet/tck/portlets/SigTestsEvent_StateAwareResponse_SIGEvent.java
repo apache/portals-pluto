@@ -29,6 +29,15 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
 
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASGETPORTLETMODE;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASGETWINDOWSTATE;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASSETEVENT;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASSETEVENTA;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASSETEVENTRETURNS;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASSETEVENTRETURNSA;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASSETPORTLETMODE;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASSETRENDERPARAMETER;
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASSETWINDOWSTATE;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 
@@ -78,7 +87,7 @@ public class SigTestsEvent_StateAwareResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_StateAwareResponse_SIGEvent_hasGetPortletMode", aurl);
+          new TestButton(V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASGETPORTLETMODE, aurl);
       tb.writeTo(writer);
     }
 
@@ -120,7 +129,7 @@ public class SigTestsEvent_StateAwareResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_StateAwareResponse_SIGEvent_hasGetWindowState", aurl);
+          new TestButton(V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASGETWINDOWSTATE, aurl);
       tb.writeTo(writer);
     }
 
@@ -167,7 +176,7 @@ public class SigTestsEvent_StateAwareResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetEvent", aurl);
+          new TestButton(V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASSETEVENT, aurl);
       tb.writeTo(writer);
     }
 
@@ -178,7 +187,7 @@ public class SigTestsEvent_StateAwareResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetEventA", aurl);
+          new TestButton(V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASSETEVENTA, aurl);
       tb.writeTo(writer);
     }
 
@@ -189,7 +198,7 @@ public class SigTestsEvent_StateAwareResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetEventReturns", aurl);
+          new TestButton(V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASSETEVENTRETURNS, aurl);
       tb.writeTo(writer);
     }
 
@@ -200,7 +209,7 @@ public class SigTestsEvent_StateAwareResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetEventReturnsA", aurl);
+          new TestButton(V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASSETEVENTRETURNSA, aurl);
       tb.writeTo(writer);
     }
 
@@ -211,7 +220,7 @@ public class SigTestsEvent_StateAwareResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetPortletMode", aurl);
+          new TestButton(V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASSETPORTLETMODE, aurl);
       tb.writeTo(writer);
     }
 
@@ -233,7 +242,7 @@ public class SigTestsEvent_StateAwareResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetRenderParameter", aurl);
+          new TestButton(V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASSETRENDERPARAMETER, aurl);
       tb.writeTo(writer);
     }
 
@@ -299,7 +308,7 @@ public class SigTestsEvent_StateAwareResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetWindowState", aurl);
+          new TestButton(V2SIGTESTSEVENT_STATEAWARERESPONSE_SIGEVENT_HASSETWINDOWSTATE, aurl);
       tb.writeTo(writer);
     }
 

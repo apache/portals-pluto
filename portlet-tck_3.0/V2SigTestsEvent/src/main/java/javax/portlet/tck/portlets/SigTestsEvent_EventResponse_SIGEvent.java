@@ -29,6 +29,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
 
+import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_EVENTRESPONSE_SIGEVENT_HASSETRENDERPARAMETERS;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 
@@ -79,7 +80,7 @@ public class SigTestsEvent_EventResponse_SIGEvent implements Portlet {
       PortletURL aurl = portletResp.createActionURL();
       aurl.setParameters(portletReq.getPrivateParameterMap());
       TestButton tb =
-          new TestButton("V2SigTestsEvent_EventResponse_SIGEvent_hasSetRenderParameters", aurl);
+          new TestButton(V2SIGTESTSEVENT_EVENTRESPONSE_SIGEVENT_HASSETRENDERPARAMETERS, aurl);
       tb.writeTo(writer);
     }
 
