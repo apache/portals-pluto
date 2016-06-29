@@ -258,21 +258,6 @@
                </configuration>
             </plugin>
 
-            <!-- For generating portlets that can be deployed to Pluto -->
-            <plugin>
-               <groupId>org.apache.portals.pluto</groupId>
-               <artifactId>maven-pluto-plugin</artifactId>
-               <version>2.0.3</version>
-               <dependencies>
-                  <dependency>
-                     <groupId>org.apache.portals.pluto</groupId>
-                     <artifactId>pluto-util</artifactId>
-                     <version>2.0.3</version>
-                     <scope>runtime</scope>
-                  </dependency>
-               </dependencies>
-            </plugin>
-
             <!-- For Performing xml translations to create test.xml files -->
             <plugin>
                <groupId>org.codehaus.mojo</groupId>
@@ -291,7 +276,7 @@
 
                      <!-- automatically generate test case list for module -->
                      <transformationSet>
-                        <dir>${basedir}/src/main/webapp/WEB-INF</dir>
+                        <dir>src/main/webapp/WEB-INF</dir>
                         <includes>
                            <include>portlet.xml</include>
                         </includes>
@@ -317,7 +302,7 @@
 
                      <!-- Automatically generate page file for the module -->
                      <transformationSet>
-                        <dir>${basedir}/src/main/webapp/WEB-INF</dir>
+                        <dir>src/main/webapp/WEB-INF</dir>
                         <includes>
                            <include>portlet.xml</include>
                         </includes>

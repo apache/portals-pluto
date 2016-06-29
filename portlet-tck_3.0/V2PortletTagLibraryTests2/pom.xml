@@ -105,29 +105,6 @@
             </dependency>
          </dependencies>
 
-         <build>
-            <plugins>
-               <plugin>
-                  <artifactId>maven-war-plugin</artifactId>
-                  <configuration>
-                     <webXml>${project.build.directory}/pluto-resources/web.xml</webXml>
-                  </configuration>
-               </plugin>
-               <!-- bind 'pluto:assemble' goal to 'generate-resources' lifecycle -->
-               <plugin>
-                  <groupId>org.apache.portals.pluto</groupId>
-                  <artifactId>maven-pluto-plugin</artifactId>
-                  <executions>
-                     <execution>
-                        <phase>generate-resources</phase>
-                        <goals>
-                           <goal>assemble</goal>
-                        </goals>
-                     </execution>
-                  </executions>
-               </plugin>
-            </plugins>
-         </build>
       </profile>
    </profiles>
 
