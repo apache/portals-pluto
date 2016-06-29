@@ -25,6 +25,7 @@ import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -32,13 +33,21 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortalContext;
+import javax.portlet.PortletAsyncContext;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderParameters;
+import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
+import javax.servlet.DispatcherType;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.Part;
 
 /**
  * This class tests a wrapper class by simulating the class to be wrapped.The test code verifies that the arguments
@@ -571,6 +580,71 @@ public class ResourceRequestWrapperChecker extends WrapperChecker implements Res
       retVal = ret;
       checkArgs(meth, args);
       return ret;
+   }
+
+   @Override
+   public long getContentLengthLong() {
+      return 0;
+   }
+
+   @Override
+   public Part getPart(String arg0) throws IOException, PortletException {
+      return null;
+   }
+
+   @Override
+   public Collection<Part> getParts() throws IOException, PortletException {
+      return null;
+   }
+
+   @Override
+   public PortletContext getPortletContext() {
+      return null;
+   }
+
+   @Override
+   public String getUserAgent() {
+      return null;
+   }
+
+   @Override
+   public RenderParameters getRenderParameters() {
+      return null;
+   }
+
+   @Override
+   public DispatcherType getDispatcherType() {
+      return null;
+   }
+
+   @Override
+   public PortletAsyncContext getPortletAsyncContext() {
+      return null;
+   }
+
+   @Override
+   public ResourceParameters getResourceParameters() {
+      return null;
+   }
+
+   @Override
+   public boolean isAsyncStarted() {
+      return false;
+   }
+
+   @Override
+   public boolean isAsyncSupported() {
+      return false;
+   }
+
+   @Override
+   public PortletAsyncContext startPortletAsync() throws IllegalStateException {
+      return null;
+   }
+
+   @Override
+   public PortletAsyncContext startPortletAsync(ResourceRequest arg0, ResourceResponse arg1) throws IllegalStateException {
+      return null;
    }
 
 }

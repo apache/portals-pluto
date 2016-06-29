@@ -320,7 +320,7 @@
       <resources>
          <resource>
             <directory>src/main/resources/xml-resources</directory>
-            <targetPath>${project.build.directory}/${test.file.dir}</targetPath>
+            <targetPath>../${test.file.dir}</targetPath>
             <includes>
                <include>*</include>
             </includes>

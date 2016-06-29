@@ -1,23 +1,16 @@
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.     
--->
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+   license agreements. See the NOTICE file distributed with this work for additional 
+   information regarding copyright ownership. The ASF licenses this file to 
+   you under the Apache License, Version 2.0 (the "License"); you may not use 
+   this file except in compliance with the License. You may obtain a copy of 
+   the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+   by applicable law or agreed to in writing, software distributed under the 
+   License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+   OF ANY KIND, either express or implied. See the License for the specific 
+   language governing permissions and limitations under the License. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
    <modelVersion>4.0.0</modelVersion>
    <groupId>javax.portlet</groupId>
    <artifactId>tck</artifactId>
@@ -33,85 +26,99 @@
    </licenses>
 
    <scm>
-      <connection>scm:git:https://github.com/msnicklous/portletspec3</connection>
-      <developerConnection>scm:git:https://github.com/msnicklous/portletspec3</developerConnection>
-      <url>scm:git:https://github.com/msnicklous/portletspec3</url>
+      <connection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</connection>
+      <developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</developerConnection>
+      <url>https://github.com/apache/portals-pluto</url>
    </scm>
 
    <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-      <!-- To automatically generate a list of test cases, each module transforms the portlet.xml file -->
+      <!-- To automatically generate a list of test cases, each module transforms 
+         the portlet.xml file -->
       <!-- using an XSLT transformation. -->
 
       <!-- Configuration used by XML transformations -->
-      <!-- test.file.xslt Name of stylesheet in ${project.build.directory}/xml-resources/ dirs -->
-      <!-- test.file.dir location of generated xml files in individual modules for tests -->
-      <!-- test.file.name per-module name of xml file containing list of covered test cases -->
+      <!-- test.file.xslt Name of stylesheet in ${project.build.directory}/xml-resources/ 
+         dirs -->
+      <!-- test.file.dir location of generated xml files in individual modules 
+         for tests -->
+      <!-- test.file.name per-module name of xml file containing list of 
+         covered test cases -->
       <test.file.xsl>test.xsl</test.file.xsl>
       <test.file.dir>generated-resources/xml/module</test.file.dir>
       <test.file.name>${project.artifactId}-tests.xml</test.file.name>
 
       <!-- page.file.xsl Name of stylesheet used to create page definititions -->
-      <!-- page.file.name per-module name of xml file containing page definitions for test -->
+      <!-- page.file.name per-module name of xml file containing page definitions 
+         for test -->
       <page.file.xsl>plutoSinglePortletPage.xsl</page.file.xsl>
       <page.file.name>${project.artifactId}-pages.xml</page.file.name>
       <page.file.final.xsl>plutoPageCombiner.xsl</page.file.final.xsl>
       <page.file.final.name>pluto-portal-driver-config.xml</page.file.final.name>
 
-      <!-- test.context.base context string used when addressing test pages. Used by module stylesheet -->
+      <!-- test.context.base context string used when addressing test pages. 
+         Used by module stylesheet -->
       <test.context.base>pluto/portal/</test.context.base>
 
-      <!-- test.list.xsl Name of stylesheet to combine test case lists from subproject -->
-      <!-- test.list.dir location of finished xml file containing complete test case list -->
-      <!-- test.list.name name of xml file containing complete test case list -->
+      <!-- test.list.xsl Name of stylesheet to combine test case lists from 
+         subproject -->
+      <!-- test.list.dir location of finished xml file containing complete 
+         test case list -->
+      <!-- test.list.name name of xml file containing complete test case 
+         list -->
       <test.list.xsl>testCombiner.xsl</test.list.xsl>
       <test.list.dir>generated-resources/xml/final</test.list.dir>
       <test.list.name>test.xml</test.list.name>
 
-      <!-- This variable is used by the test driver to determine how test page links are
-           to be found. Values: 
-      
-           generateURLs    the driver generates URLs based on config information. 
-           followLinks     the driver looks for links containing the page name and clicks them in 
-                           order to access the test pages. In this case, the portal must 
-                           produce navigation links to each of the test pages.
-                                  
-           If configured to generate URLs, the driver generates URLs of the form: 
-           http://<test.server.host>:<test.server.port>/<test.context.base><test.page.name> 
-           where <test.page.name> is the name of the test page generated by the individual modules 
-      -->
+      <!-- This variable is used by the test driver to determine how test 
+         page links are to be found. Values: generateURLs the driver generates URLs 
+         based on config information. followLinks the driver looks for links containing 
+         the page name and clicks them in order to access the test pages. In this 
+         case, the portal must produce navigation links to each of the test pages. 
+         If configured to generate URLs, the driver generates URLs of the form: http://<test.server.host>:<test.server.port>/<test.context.base><test.page.name> 
+         where <test.page.name> is the name of the test page generated by the individual 
+         modules -->
       <test.url.strategy>followLinks</test.url.strategy>
-      
+
       <!-- Configuration of URL to login page -->
       <test.server.login.url>http://localhost:8080/pluto/portal/About Apache Pluto</test.server.login.url>
 
-      <!-- Configuration of portlet container under test for generated URLs-->
-      <!-- (only needed if test.url.strategy=generateURLs)                 -->
+      <!-- Configuration of portlet container under test for generated URLs -->
+      <!-- (only needed if test.url.strategy=generateURLs) -->
       <test.server.host>localhost</test.server.host>
       <test.server.port>8080</test.server.port>
-      
-      <!-- HTML field IDs and values for username & password to enable automatic login -->
+
+      <!-- HTML field IDs and values for username & password to enable automatic 
+         login -->
       <test.server.username.id>j_username</test.server.username.id>
       <test.server.username>pluto</test.server.username>
       <test.server.password.id>j_password</test.server.password.id>
       <test.server.password>pluto</test.server.password>
-      
-      <!-- Specifies the browser to be used by selenium WebDriver for running the tests. -->
-      <!-- Can be used with firefox or HTMLUnit without setting the test.browser.webDriver property. -->
-      <!-- Use of Chrome or IE requires the webDriver to be downloaded ad available. Set the -->
-      <!-- test.browser.webDriver property to point to the appropriate WebDriver server. -->
+
+      <!-- Specifies the browser to be used by selenium WebDriver for running 
+         the tests. -->
+      <!-- Can be used with firefox or HTMLUnit without setting the test.browser.webDriver 
+         property. -->
+      <!-- Use of Chrome or IE requires the webDriver to be downloaded ad 
+         available. Set the -->
+      <!-- test.browser.webDriver property to point to the appropriate WebDriver 
+         server. -->
       <test.browser>firefox</test.browser>
       <test.browser>HTMLUnit</test.browser>
-      <!-- commented outline below shows configuration for the Internet Explorer  driver -->
+      <!-- commented outline below shows configuration for the Internet Explorer 
+         driver -->
       <!-- test.browser.webDriver>C:\ntutil\IEDriverServer_x64_2.42.0\IEDriverServer.exe</test.browser.webDriver -->
 
-     <!-- Specify timeout in seconds for the driver to wait for page load. must be an integer. -->
+      <!-- Specify timeout in seconds for the driver to wait for page load. 
+         must be an integer. -->
       <test.timeout>3</test.timeout>
 
-      <!-- Set in subprojects containing additional test case file. default is no additional file (false) -->
+      <!-- Set in subprojects containing additional test case file. default 
+         is no additional file (false) -->
       <additional.testcase.uri>false</additional.testcase.uri>
-      <!-- Set to true for modules that define all test cases in a file (TCs are not generated from the portlet.xml) -->
+      <!-- Set to true for modules that define all test cases in a file (TCs 
+         are not generated from the portlet.xml) -->
       <additional.testcases.only>false</additional.testcases.only>
 
    </properties>
@@ -167,35 +174,53 @@
    <dependencyManagement>
       <dependencies>
          <dependency>
-            <groupId>javax.portlet</groupId>
+            <groupId>org.apache.portals.pluto</groupId>
             <artifactId>portlet-api</artifactId>
-            <version>2.0</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
          </dependency>
          <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <version>8.0.28</version>
             <scope>provided</scope>
          </dependency>
 
-         <!-- for eclipse JSP tooling purposes -->
+         <!-- for tooling purposes -->
          <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>2.1</version>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jsp-api</artifactId>
+            <version>8.0.28</version>
             <scope>provided</scope>
          </dependency>
          <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-el-api</artifactId>
+            <version>8.0.28</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.apache.taglibs</groupId>
+            <artifactId>taglibs-standard-spec</artifactId>
+            <version>1.2.1</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.apache.taglibs</groupId>
+            <artifactId>taglibs-standard-impl</artifactId>
+            <version>1.2.1</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.apache.taglibs</groupId>
+            <artifactId>taglibs-standard-jstlel</artifactId>
+            <version>1.2.1</version>
             <scope>provided</scope>
          </dependency>
          <dependency>
             <groupId>org.apache.portals.pluto</groupId>
             <artifactId>pluto-taglib</artifactId>
-            <version>2.1.0-M3</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
          </dependency>
 
@@ -239,8 +264,8 @@
                <artifactId>maven-compiler-plugin</artifactId>
                <version>3.1</version>
                <configuration>
-                  <source>1.6</source>
-                  <target>1.6</target>
+                  <source>1.7</source>
+                  <target>1.7</target>
                </configuration>
             </plugin>
             <plugin>
@@ -249,6 +274,7 @@
                <version>2.4</version>
                <configuration>
                   <archiveClasses>false</archiveClasses>
+                  <failOnMissingWebXml>false</failOnMissingWebXml>
                   <webResources>
                      <webResource>
                         <directory>${project.build.directory}/${test.file.dir}</directory>
@@ -283,7 +309,8 @@
                         <outputDir>${project.build.directory}/${test.file.dir}</outputDir>
                         <fileMappers>
                            <fileMapper
-                              implementation="org.codehaus.plexus.components.io.filemappers.MergeFileMapper">
+                              implementation="org.codehaus.plexus.components.io.filemappers.MergeFileMapper"
+                           >
                               <targetName>${test.file.name}</targetName>
                            </fileMapper>
                         </fileMappers>
@@ -309,7 +336,8 @@
                         <outputDir>${project.build.directory}/${test.file.dir}</outputDir>
                         <fileMappers>
                            <fileMapper
-                              implementation="org.codehaus.plexus.components.io.filemappers.MergeFileMapper">
+                              implementation="org.codehaus.plexus.components.io.filemappers.MergeFileMapper"
+                           >
                               <targetName>${page.file.name}</targetName>
                            </fileMapper>
                         </fileMappers>
@@ -326,7 +354,8 @@
                </configuration>
             </plugin>
 
-            <!-- For extracting the XML transformation stylesheets from common module -->
+            <!-- For extracting the XML transformation stylesheets from common 
+               module -->
             <plugin>
                <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-dependency-plugin</artifactId>
@@ -356,10 +385,12 @@
             <version>2.9.1</version>
             <configuration>
                <doctitle>
-                  JSR 362 Portlet Specification 3.0 TCK Working Document
+                  JSR 362 Portlet Specification 3.0 TCK Working
+                  Document
                </doctitle>
                <windowtitle>
-                  JSR 362 Portlet Specification 3.0 TCK Working Document
+                  JSR 362 Portlet Specification 3.0 TCK
+                  Working Document
                </windowtitle>
                <stylesheetfile>${javadoc.css.file}</stylesheetfile>
                <!-- link to Java EE APIs for cross-references -->
@@ -379,7 +410,7 @@
                <execution>
                   <id>aggregate</id>
                   <goals>
-                    <goal>aggregate</goal>
+                     <goal>aggregate</goal>
                   </goals>
                   <phase>site</phase>
                </execution>

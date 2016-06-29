@@ -31,12 +31,12 @@
 
    <dependencies>
       <dependency>
-         <groupId>javax.portlet</groupId>
+         <groupId>org.apache.portals.pluto</groupId>
          <artifactId>portlet-api</artifactId>
       </dependency>
       <dependency>
-         <groupId>javax.servlet</groupId>
-         <artifactId>servlet-api</artifactId>
+         <groupId>org.apache.tomcat</groupId>
+         <artifactId>tomcat-servlet-api</artifactId>
       </dependency>
    </dependencies>
 

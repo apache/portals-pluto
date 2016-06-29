@@ -18,11 +18,13 @@
 package javax.portlet.tck.beans;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletResponse;
@@ -230,6 +232,26 @@ public class EventResponseWrapperChecker extends WrapperChecker implements Event
       checkArgs(meth, args);
       return;
 
+   }
+
+   @Override
+   public String getProperty(String arg0) {
+      return null;
+   }
+
+   @Override
+   public Collection<String> getPropertyNames() {
+      return null;
+   }
+
+   @Override
+   public Collection<String> getPropertyValues(String arg0) {
+      return null;
+   }
+
+   @Override
+   public MutableRenderParameters getRenderParameters() {
+      return null;
    }
 
 }

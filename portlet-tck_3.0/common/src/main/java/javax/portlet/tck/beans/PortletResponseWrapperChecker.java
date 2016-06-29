@@ -17,6 +17,8 @@
  */
 package javax.portlet.tck.beans;
 
+import java.util.Collection;
+
 import javax.portlet.PortletResponse;
 import javax.servlet.http.Cookie;
 
@@ -105,6 +107,21 @@ public class PortletResponseWrapperChecker extends WrapperChecker implements Por
       retVal = ret;
       checkArgs(meth, args);
       return ret;
+   }
+
+   @Override
+   public String getProperty(String arg0) {
+      return null;
+   }
+
+   @Override
+   public Collection<String> getPropertyNames() {
+      return null;
+   }
+
+   @Override
+   public Collection<String> getPropertyValues(String arg0) {
+      return null;
    }
 
 }

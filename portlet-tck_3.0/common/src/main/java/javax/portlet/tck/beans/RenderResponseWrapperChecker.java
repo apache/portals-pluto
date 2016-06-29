@@ -24,12 +24,14 @@ import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Locale;
 
+import javax.portlet.ActionURL;
 import javax.portlet.CacheControl;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
+import javax.portlet.RenderURL;
 import javax.portlet.ResourceURL;
 import javax.servlet.http.Cookie;
 
@@ -229,6 +231,7 @@ public class RenderResponseWrapperChecker extends WrapperChecker implements Rend
       return ret;
    }
 
+   @SuppressWarnings("unchecked")
    @Override
    public PortletURL createRenderURL() {
       String meth = "createRenderURL";
@@ -239,6 +242,7 @@ public class RenderResponseWrapperChecker extends WrapperChecker implements Rend
       return ret;
    }
 
+   @SuppressWarnings("unchecked")
    @Override
    public PortletURL createActionURL() {
       String meth = "createActionURL";
@@ -279,7 +283,7 @@ public class RenderResponseWrapperChecker extends WrapperChecker implements Rend
    }
 
    @Override
-   public void setNextPossiblePortletModes(Collection<PortletMode> portletModes) {
+   public void setNextPossiblePortletModes(Collection<? extends PortletMode> portletModes) {
       String meth = "setNextPossiblePortletModes";
       Object[] args = { portletModes };
       checkArgs(meth, args);
@@ -294,6 +298,31 @@ public class RenderResponseWrapperChecker extends WrapperChecker implements Rend
       checkArgs(meth, args);
       return;
 
+   }
+
+   @Override
+   public ActionURL createActionURL(Copy arg0) {
+      return null;
+   }
+
+   @Override
+   public RenderURL createRenderURL(Copy arg0) {
+      return null;
+   }
+
+   @Override
+   public String getProperty(String arg0) {
+      return null;
+   }
+
+   @Override
+   public Collection<String> getPropertyNames() {
+      return null;
+   }
+
+   @Override
+   public Collection<String> getPropertyValues(String arg0) {
+      return null;
    }
 
 }

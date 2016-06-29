@@ -28,10 +28,12 @@ import java.util.Map;
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.PortalContext;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
 import javax.servlet.http.Cookie;
 
@@ -470,6 +472,21 @@ public class EventRequestWrapperChecker extends WrapperChecker implements EventR
       retVal = ret;
       checkArgs(meth, args);
       return ret;
+   }
+
+   @Override
+   public PortletContext getPortletContext() {
+      return null;
+   }
+
+   @Override
+   public String getUserAgent() {
+      return null;
+   }
+
+   @Override
+   public RenderParameters getRenderParameters() {
+      return null;
    }
 
 }

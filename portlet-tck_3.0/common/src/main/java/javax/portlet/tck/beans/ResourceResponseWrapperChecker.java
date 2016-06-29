@@ -21,12 +21,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.Locale;
 
+import javax.portlet.ActionURL;
 import javax.portlet.CacheControl;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderURL;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 import javax.servlet.http.Cookie;
@@ -273,6 +276,7 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements Re
 
    }
 
+   @SuppressWarnings("unchecked")
    @Override
    public PortletURL createRenderURL() {
       String meth = "createRenderURL";
@@ -283,6 +287,7 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements Re
       return ret;
    }
 
+   @SuppressWarnings("unchecked")
    @Override
    public PortletURL createActionURL() {
       String meth = "createActionURL";
@@ -301,6 +306,44 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements Re
       retVal = ret;
       checkArgs(meth, args);
       return ret;
+   }
+
+   @Override
+   public String getProperty(String arg0) {
+      return null;
+   }
+
+   @Override
+   public Collection<String> getPropertyNames() {
+      return null;
+   }
+
+   @Override
+   public Collection<String> getPropertyValues(String arg0) {
+      return null;
+   }
+
+   @Override
+   public ActionURL createActionURL(Copy arg0) {
+      return null;
+   }
+
+   @Override
+   public RenderURL createRenderURL(Copy arg0) {
+      return null;
+   }
+
+   @Override
+   public int getStatus() {
+      return 0;
+   }
+
+   @Override
+   public void setContentLengthLong(long arg0) {
+   }
+
+   @Override
+   public void setStatus(int arg0) {
    }
 
 }

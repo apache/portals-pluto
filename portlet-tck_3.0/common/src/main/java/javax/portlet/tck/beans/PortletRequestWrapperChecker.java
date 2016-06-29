@@ -26,10 +26,12 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortalContext;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
 import javax.servlet.http.Cookie;
 
@@ -448,6 +450,21 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
       retVal = ret;
       checkArgs(meth, args);
       return ret;
+   }
+
+   @Override
+   public RenderParameters getRenderParameters() {
+      return null;
+   }
+
+   @Override
+   public PortletContext getPortletContext() {
+      return null;
+   }
+
+   @Override
+   public String getUserAgent() {
+      return null;
    }
 
 }

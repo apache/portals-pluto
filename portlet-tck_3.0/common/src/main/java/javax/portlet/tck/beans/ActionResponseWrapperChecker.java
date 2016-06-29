@@ -19,13 +19,17 @@ package javax.portlet.tck.beans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.ActionResponse;
+import javax.portlet.MimeResponse.Copy;
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletResponse;
+import javax.portlet.RenderURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 import javax.servlet.http.Cookie;
@@ -239,6 +243,31 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
       checkArgs(meth, args);
       return;
 
+   }
+
+   @Override
+   public String getProperty(String arg0) {
+      return null;
+   }
+
+   @Override
+   public Collection<String> getPropertyNames() {
+      return null;
+   }
+
+   @Override
+   public Collection<String> getPropertyValues(String arg0) {
+      return null;
+   }
+
+   @Override
+   public MutableRenderParameters getRenderParameters() {
+      return null;
+   }
+
+   @Override
+   public RenderURL createRedirectURL(Copy arg0) throws IllegalStateException {
+      return null;
    }
 
 }
