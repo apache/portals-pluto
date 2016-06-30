@@ -62,6 +62,7 @@ import javax.portlet.tck.constants.Constants;
  * AddlEnvironmentTests_SPEC2_17_ResourcePreferences_event
  *
  */
+@SuppressWarnings("deprecation")
 public class AddlEnvironmentTests_SPEC2_17_ResourcePreferences
     implements Portlet, ResourceServingPortlet {
 
@@ -138,7 +139,7 @@ public class AddlEnvironmentTests_SPEC2_17_ResourcePreferences
     TestResult tr0 =
         tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_17_RESOURCEPREFERENCES_SETVALUES4);
     try {
-      portletPrefs.setValues("tr0", null);
+      portletPrefs.setValues("tr0", (String[])null);
       tr0.setTcSuccess(true);
     } catch (Exception e) {
       tr0.appendTcDetail(e.toString());

@@ -51,6 +51,7 @@ import javax.portlet.tck.constants.Constants;
  * 
  * @author ahmed
  */
+@SuppressWarnings("deprecation")
 public class AddlEnvironmentTests_SPEC2_18_Sessions2 implements Portlet {
 
    private PortletConfig portletConfig = null;

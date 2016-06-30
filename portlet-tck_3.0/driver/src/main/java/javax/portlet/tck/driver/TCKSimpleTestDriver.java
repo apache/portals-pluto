@@ -37,7 +37,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -72,6 +71,7 @@ public class TCKSimpleTestDriver {
     * for parameterized testing.
     * @return  a Collection of test cases to run
     */
+   @SuppressWarnings("rawtypes")
    @Parameters
    public static Collection getTestList () {
       System.out.println("getTestList");
@@ -255,9 +255,6 @@ public class TCKSimpleTestDriver {
    @Test
    public void test() {
       if (debug) System.out.println("   execute test.");
-      String actionId = tcName + Constants.CLICK_ID;
-      String resultId = tcName + Constants.RESULT_ID;
-      String detailId = tcName + Constants.DETAIL_ID;
 
       try {
 

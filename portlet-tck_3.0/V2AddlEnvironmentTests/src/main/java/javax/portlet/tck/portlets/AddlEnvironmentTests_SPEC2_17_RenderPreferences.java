@@ -48,6 +48,7 @@ import javax.portlet.tck.beans.TestResult;
  * AddlEnvironmentTests_SPEC2_17_RenderPreferences_event
  *
  */
+@SuppressWarnings("deprecation")
 public class AddlEnvironmentTests_SPEC2_17_RenderPreferences
     implements Portlet, ResourceServingPortlet {
 

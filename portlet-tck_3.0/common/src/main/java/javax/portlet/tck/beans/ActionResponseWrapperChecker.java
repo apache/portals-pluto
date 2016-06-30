@@ -75,7 +75,7 @@ public class ActionResponseWrapperChecker extends WrapperChecker implements Acti
    }
 
    @Override
-   public void setRenderParameter(String key, String[] values) {
+   public void setRenderParameter(String key, String... values) {
       String meth = "setRenderParameter";
       Object[] args = { key, values };
       checkArgs(meth, args);

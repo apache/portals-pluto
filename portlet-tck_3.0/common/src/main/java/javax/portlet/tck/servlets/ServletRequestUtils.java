@@ -40,7 +40,6 @@ public class ServletRequestUtils {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Servlet request info: \nAttributes for ").append(title).append(":");
          
-         @SuppressWarnings("unchecked")
          Enumeration<String> names = req.getAttributeNames();
          for (String name : Collections.list(names)) {
             txt.append("\nName: ").append(name);

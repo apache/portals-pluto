@@ -91,6 +91,7 @@ public class AddlEnvironmentTests_SPEC2_10_ContextOptions implements Portlet, Re
    public void destroy() {
    }
 
+   @SuppressWarnings("deprecation")
    @Override
    public void processEvent(EventRequest portletReq, EventResponse portletResp) throws PortletException, IOException {
 
@@ -126,6 +127,7 @@ public class AddlEnvironmentTests_SPEC2_10_ContextOptions implements Portlet, Re
       }
    }
 
+   @SuppressWarnings("deprecation")
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
 
@@ -200,6 +202,7 @@ public class AddlEnvironmentTests_SPEC2_10_ContextOptions implements Portlet, Re
 
    }
 
+   @SuppressWarnings("deprecation")
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp) throws PortletException, IOException {
 
@@ -246,6 +249,7 @@ public class AddlEnvironmentTests_SPEC2_10_ContextOptions implements Portlet, Re
 
    }
 
+   @SuppressWarnings("deprecation")
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
 

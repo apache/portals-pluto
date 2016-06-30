@@ -68,6 +68,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
    public void destroy() {
    }
 
+   @SuppressWarnings("deprecation")
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
 
@@ -85,7 +86,6 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
 
    }
 
-   @SuppressWarnings("unchecked")
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
 
@@ -209,7 +209,7 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       /* resources the ServletContext exposes" */
       succeeded = true;
       TestResult tr2 = tcd.getTestResultSucceeded(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_PORTLETCONTEXTSERVLETCONTEXT3);
-      Set<String> servletResourcePaths = (Set<String>) servletContext.getResourcePaths("/");
+      Set<String> servletResourcePaths = servletContext.getResourcePaths("/");
       Set<String> portletResourcePaths = portletContext.getResourcePaths("/");
       for (String servletResourcePath : servletResourcePaths) {
          if (servletResourcePath != null) {
@@ -364,12 +364,12 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
          if (pcis != null && scis != null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream(256);
             int val;
-            
+
             while ((val = scis.read()) >= 0) {
                baos.write(val);
             }
             String scstr = baos.toString("UTF-8");
-            
+
             baos.reset();
             while ((val = pcis.read()) >= 0) {
                baos.write(val);

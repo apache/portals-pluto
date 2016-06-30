@@ -62,6 +62,7 @@ public class AddlEnvironmentTests_SPEC2_10_ContextOptions_event implements Portl
    public void processEvent(EventRequest portletReq, EventResponse portletResp) throws PortletException, IOException {
    }
 
+   @SuppressWarnings("deprecation")
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
 

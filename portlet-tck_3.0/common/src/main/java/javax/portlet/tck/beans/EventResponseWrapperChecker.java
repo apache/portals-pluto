@@ -73,7 +73,7 @@ public class EventResponseWrapperChecker extends WrapperChecker implements Event
    }
 
    @Override
-   public void setRenderParameter(String key, String[] values) {
+   public void setRenderParameter(String key, String... values) {
       String meth = "setRenderParameter";
       Object[] args = { key, values };
       checkArgs(meth, args);

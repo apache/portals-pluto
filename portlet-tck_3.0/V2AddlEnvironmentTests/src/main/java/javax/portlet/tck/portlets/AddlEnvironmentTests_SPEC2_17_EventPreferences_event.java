@@ -56,6 +56,7 @@ import javax.portlet.tck.constants.Constants;
  * This is the event processing portlet for the test cases. This portlet processes events, but does not publish them.
  * Events are published in the main portlet for the test cases.
  */
+@SuppressWarnings("deprecation")
 public class AddlEnvironmentTests_SPEC2_17_EventPreferences_event implements Portlet, EventPortlet, ResourceServingPortlet {
 
    @Override
@@ -120,7 +121,7 @@ public class AddlEnvironmentTests_SPEC2_17_EventPreferences_event implements Por
          /* null" */
          TestResult tr0 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_SETVALUES4);
          try {
-            portletPrefs.setValues("tr0", null);
+            portletPrefs.setValues("tr0", (String[])null);
             if (portletPrefs.getValue("tr0", "tr0") == null) {
                tr0.setTcSuccess(true);
             }

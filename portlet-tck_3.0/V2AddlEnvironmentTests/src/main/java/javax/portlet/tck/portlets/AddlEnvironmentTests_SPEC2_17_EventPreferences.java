@@ -57,6 +57,7 @@ import javax.xml.namespace.QName;
  * AddlEnvironmentTests_SPEC2_17_EventPreferences_event
  * 
  */
+@SuppressWarnings("deprecation")
 public class AddlEnvironmentTests_SPEC2_17_EventPreferences implements Portlet, ResourceServingPortlet {
 
    @Override

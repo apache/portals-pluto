@@ -76,6 +76,7 @@ import javax.portlet.tck.constants.Constants;
  * AddlEnvironmentTests_SPEC2_18_Sessions_event
  *
  */
+@SuppressWarnings("deprecation")
 public class AddlEnvironmentTests_SPEC2_18_Sessions implements Portlet {
 
   private PortletConfig portletConfig = null;
