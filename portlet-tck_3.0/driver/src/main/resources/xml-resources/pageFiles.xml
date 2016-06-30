@@ -62,4 +62,5 @@
    <fl:file>tck-V2SigTestsResource-pages.xml</fl:file>
    <fl:file>tck-V2SigTestsURL-pages.xml</fl:file>
    <fl:file>tck-V2SigTestsWrapper-pages.xml</fl:file>
+   <fl:file>tck-V3PortletContextTests-pages.xml</fl:file>
 </fl:filelist>

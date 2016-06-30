@@ -167,6 +167,7 @@
       <module>V2SigTestsResource</module>
       <module>V2SigTestsURL</module>
       <module>V2SigTestsWrapper</module>
+      <module>V3PortletContextTests</module>
       <module>deploy</module>
       <module>driver</module>
    </modules>
@@ -336,6 +337,35 @@
                   </execution>
                </executions>
             </plugin>
+            
+            <!-- For copying the page & testcase files for V3 module build -->
+            <plugin>
+               <groupId>com.coderplus.maven.plugins</groupId>
+               <artifactId>copy-rename-maven-plugin</artifactId>
+               <version>1.0.1</version>
+               <executions>
+                  <execution>
+                     <id>copy-files</id>
+                     <phase>generate-sources</phase>
+                     <goals>
+                        <goal>copy</goal>
+                     </goals>
+                     <configuration>
+                        <fileSets>
+                           <fileSet>
+                              <sourceFile>src/main/resources/xml-resources/additionalTCs.xml</sourceFile>
+                              <destinationFile>target/${test.file.dir}/${project.artifactId}-tests.xml</destinationFile>
+                           </fileSet>
+                           <fileSet>
+                              <sourceFile>src/main/resources/xml-resources/additionalPages.xml</sourceFile>
+                              <destinationFile>target/${test.file.dir}/${project.artifactId}-pages.xml</destinationFile>
+                           </fileSet>                
+                        </fileSets>
+                     </configuration>
+                  </execution>
+               </executions>
+            </plugin>
+             
          </plugins>
       </pluginManagement>
 
@@ -360,7 +390,6 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>2.9.1</version>
             <configuration>
                <doctitle>
                   JSR 362 Portlet Specification 3.0 TCK Working

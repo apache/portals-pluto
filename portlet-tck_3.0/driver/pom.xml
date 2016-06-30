@@ -312,6 +312,12 @@
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V3PortletContextTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
    </dependencies>
 
    <properties>
@@ -386,7 +392,9 @@
                         tck-V2DispatcherTests4,
                         tck-V2DispatcherTests5,
                         tck-V2DispatcherTests6,
-                        tck-V2DispatcherTests3S
+                        tck-V2DispatcherTests3S,
+                        
+                        tck-V3PortletContextTests
                      </includeArtifactIds>
                      <includes>${test.file.dir}/*.xml</includes>
                      <outputDirectory>${project.build.directory}</outputDirectory>
