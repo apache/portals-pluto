@@ -169,7 +169,7 @@
 
 	<target name="run-maven-include-demos" if="includeDemos" description="Runs the install goal and includes the demos in pluto-portal-driver-config.xml">
 		<exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
-			<arg line="install -DincludeDemosBegin= -DincludeDemosEnd="/>
+			<arg line="install -DskipTests=true -DincludeDemosBegin= -DincludeDemosEnd="/>
 		</exec>
 	</target>
 

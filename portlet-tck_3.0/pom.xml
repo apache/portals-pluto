@@ -168,6 +168,7 @@
       <module>V2SigTestsURL</module>
       <module>V2SigTestsWrapper</module>
       <module>V3PortletContextTests</module>
+      <module>V3PortletConfigTests</module>
       <module>deploy</module>
       <module>driver</module>
    </modules>
