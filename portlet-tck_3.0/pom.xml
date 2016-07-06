@@ -169,6 +169,7 @@
       <module>V2SigTestsWrapper</module>
       <module>V3PortletContextTests</module>
       <module>V3PortletConfigTests</module>
+	  <module>V3URLTests</module>
       <module>deploy</module>
       <module>driver</module>
    </modules>
