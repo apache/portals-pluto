@@ -34,7 +34,7 @@ import java.util.Map;
  */
 public class ModuleTestCaseDetails extends TestCaseDetails {
 
-   public final static String V3PORTLETCONFIGTESTS_CONFIG_GETPORTLETMODES = "V3PortletContextTests_Context_getPortletModes";
+   public final static String V3PORTLETCONFIGTESTS_CONFIG_GETPORTLETMODES = "V3PortletConfigTests_Config_getPortletModes";
 
    
    private final static Map<String, String> tcd = new HashMap<String, String>();
