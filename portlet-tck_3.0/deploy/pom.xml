@@ -292,6 +292,12 @@
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
+	  <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V3URLTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>tck-V3PortletConfigTests</artifactId>
