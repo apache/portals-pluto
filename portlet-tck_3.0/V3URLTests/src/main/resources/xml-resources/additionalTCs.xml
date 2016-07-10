@@ -20,5 +20,5 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <!-- JSR 286 API URLTests test case names and page mappings -->
-<entry key="V3URLTests_BaseURL_	append">V3URLTests</entry>
+<entry key="V3URLTests_BaseURL_append">V3URLTests</entry>
 </properties>
