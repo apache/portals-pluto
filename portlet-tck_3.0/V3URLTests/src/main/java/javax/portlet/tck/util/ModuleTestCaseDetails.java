@@ -35,13 +35,19 @@ import java.util.Map;
 public class ModuleTestCaseDetails extends TestCaseDetails {
 
    public final static String V3URLTESTS_BASEURL_APPEND = "V3URLTests_BaseURL_append";
+   public final static String V3URLTESTS_BASEURL_APPEND2 = "V3URLTests_BaseURL_append2";
+   public final static String V3URLTESTS_BASEURL_APPEND3 = "V3URLTests_BaseURL_append3";
+   public final static String V3URLTESTS_BASEURL_APPEND4 = "V3URLTests_BaseURL_append4";
 
    
    private final static Map<String, String> tcd = new HashMap<String, String>();
    static {
 
       tcd.put(V3URLTESTS_BASEURL_APPEND, "BaseURL.append(Appendable out) method appends the portlet URL to the appendable object.");
-
+      tcd.put(V3URLTESTS_BASEURL_APPEND2, "BaseURL.append(Appendable out) - The appended URL is always XML escaped.");
+      tcd.put(V3URLTESTS_BASEURL_APPEND3, "BaseURL.append(Appendable out, boolean escapeXML) - If the parameter escapeXML is set to true, the URL will be escaped to be valid XML characters. The manner in which escaping is performed is implementation specific.");
+      tcd.put(V3URLTESTS_BASEURL_APPEND4, "BaseURL.append(Appendable out, boolean escapeXML) - If escapeXML is set to false, escaping the URL is left to the implementation.");
+      
    }
 
    /**

@@ -21,4 +21,7 @@
 <properties>
 <!-- JSR 286 API URLTests test case names and page mappings -->
 <entry key="V3URLTests_BaseURL_append">V3URLTests</entry>
+<entry key="V3URLTests_BaseURL_append2">V3URLTests</entry>
+<entry key="V3URLTests_BaseURL_append3">V3URLTests</entry>
+<entry key="V3URLTests_BaseURL_append4">V3URLTests</entry>
 </properties>

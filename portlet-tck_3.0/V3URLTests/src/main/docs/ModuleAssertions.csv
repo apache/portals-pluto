@@ -1,0 +1,7 @@
+PARMS genManual=true tcDetailsClassName=ModuleTestCaseDetails singlePage=true;;;;
+Class / Section;Keywords;Name;Testable;Description
+BaseURLTests;;;;
+SPEC1_13;BaseURL;append;TRUE;BaseURL.append(Appendable out) method appends the portlet URL to the appendable object.
+SPEC1_13;BaseURL;append;TRUE;BaseURL.append(Appendable out) - The appended URL is always XML escaped.
+SPEC1_13;BaseURL;append;TRUE;BaseURL.append(Appendable out, boolean escapeXML) - If the parameter escapeXML is set to true, the URL will be escaped to be valid XML characters. The manner in which escaping is performed is implementation specific.
+SPEC1_13;BaseURL;append;FALSE;BaseURL.append(Appendable out, boolean escapeXML) - If escapeXML is set to false, escaping the URL is left to the implementation.
