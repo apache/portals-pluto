@@ -66,7 +66,7 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3URLTESTS_RESOURCEURL_GETRESOURCEPARAMETERS2, "Modifying the parameter values encapsulated by the returned object directly modifies the resource parameters applied to the URL.");
       tcd.put(V3URLTESTS_RESOURCEURL_GETRESOURCEPARAMETERS3, "Gets the resource parameter values set for this URL.");
       tcd.put(V3URLTESTS_RENDERURL_SETFRAGMENTIDENTIFIER, "Sets a fragment identifier on the URL.");
-      tcd.put(V3URLTESTS_RENDERURL_SETFRAGMENTIDENTIFIER2, "A URL can have only a single fragment identifier. Any previously set fragment identifier will be replaced..");
+      tcd.put(V3URLTESTS_RENDERURL_SETFRAGMENTIDENTIFIER2, "A URL can have only a single fragment identifier. Any previously set fragment identifier will be replaced.");
       tcd.put(V3URLTESTS_RENDERURL_SETFRAGMENTIDENTIFIER3, "The fragment identifier consists of additional information appended to the URL after a '#' character.");
       tcd.put(V3URLTESTS_RENDERURL_SETFRAGMENTIDENTIFIER4, "Setting the fragment identifier to null will remove a fragment identifier previously set through this method.");
       tcd.put(V3URLTESTS_RENDERURL_SETFRAGMENTIDENTIFIER5, "Setting the empty string as the fragment identifier will create an empty fragment identifier.");
