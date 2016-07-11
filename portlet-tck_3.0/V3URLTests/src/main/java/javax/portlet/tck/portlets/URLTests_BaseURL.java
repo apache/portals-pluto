@@ -28,14 +28,12 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.portlet.MimeResponse.Copy;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URISyntaxException;
 
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_BASEURL_APPEND;
@@ -71,7 +69,7 @@ public class URLTests_BaseURL {
 
    @RenderMethod(portletNames = "BaseURLTests")
    public void render(RenderRequest portletReq, RenderResponse portletResp)
-         throws PortletException, IOException, URISyntaxException {
+         throws PortletException, IOException {
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
