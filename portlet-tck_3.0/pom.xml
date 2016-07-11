@@ -170,6 +170,7 @@
       <module>V3PortletContextTests</module>
       <module>V3PortletConfigTests</module>
 	  <module>V3URLTests</module>
+	  <module>V3RenderStateTests</module>
       <module>deploy</module>
       <module>driver</module>
    </modules>
