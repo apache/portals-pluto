@@ -27,4 +27,7 @@
 <entry key="V3URLTests_ActionURL_getActionParameters">V3URLTests</entry>
 <entry key="V3URLTests_ActionURL_getActionParameters2">V3URLTests</entry>
 <entry key="V3URLTests_ActionURL_getActionParameters3">V3URLTests</entry>
+<entry key="V3URLTests_ResourceURL_getResourceParameters">V3URLTests</entry>
+<entry key="V3URLTests_ResourceURL_getResourceParameters2">V3URLTests</entry>
+<entry key="V3URLTests_ResourceURL_getResourceParameters3">V3URLTests</entry>
 </properties>

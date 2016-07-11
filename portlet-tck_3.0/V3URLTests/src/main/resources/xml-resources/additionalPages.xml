@@ -15,6 +15,7 @@
 <page xmlns="" name="V3URLTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
 <portlet context="/tck-V3URLTests-3.0-SNAPSHOT" name="BaseURLTests"/>
 <portlet context="/tck-V3URLTests-3.0-SNAPSHOT" name="ActionURLTests"/>
+<portlet context="/tck-V3URLTests-3.0-SNAPSHOT" name="ResourceURLTests"/>
 </page>
 </render-config>
 </pluto-portal-driver>

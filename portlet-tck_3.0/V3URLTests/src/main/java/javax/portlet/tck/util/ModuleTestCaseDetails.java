@@ -41,6 +41,9 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
    public final static String V3URLTESTS_ACTIONURL_GETACTIONPARAMETERS = "V3URLTests_ActionURL_getActionParameters";
    public final static String V3URLTESTS_ACTIONURL_GETACTIONPARAMETERS2 = "V3URLTests_ActionURL_getActionParameters2";
    public final static String V3URLTESTS_ACTIONURL_GETACTIONPARAMETERS3 = "V3URLTests_ActionURL_getActionParameters3";
+   public final static String V3URLTESTS_RESOURCEURL_GETRESOURCEPARAMETERS = "V3URLTests_ResourceURL_getResourceParameters";
+   public final static String V3URLTESTS_RESOURCEURL_GETRESOURCEPARAMETERS2 = "V3URLTests_ResourceURL_getResourceParameters2";
+   public final static String V3URLTESTS_RESOURCEURL_GETRESOURCEPARAMETERS3 = "V3URLTests_ResourceURL_getResourceParameters3";
 
    
    private final static Map<String, String> tcd = new HashMap<String, String>();
@@ -53,6 +56,9 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3URLTESTS_ACTIONURL_GETACTIONPARAMETERS, "Initially the returned object is empty.");
       tcd.put(V3URLTESTS_ACTIONURL_GETACTIONPARAMETERS2, "Modifying the parameter values encapsulated by the returned object directly modifies the action parameters applied to the URL.");
       tcd.put(V3URLTESTS_ACTIONURL_GETACTIONPARAMETERS3, "Gets the action parameter values set for this URL.");
+      tcd.put(V3URLTESTS_RESOURCEURL_GETRESOURCEPARAMETERS, "Initially the returned object is empty.");
+      tcd.put(V3URLTESTS_RESOURCEURL_GETRESOURCEPARAMETERS2, "Modifying the parameter values encapsulated by the returned object directly modifies the resource parameters applied to the URL.");
+      tcd.put(V3URLTESTS_RESOURCEURL_GETRESOURCEPARAMETERS3, "Gets the resource parameter values set for this URL.");
    
    }
 
