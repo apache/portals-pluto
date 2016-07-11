@@ -16,6 +16,7 @@
 <portlet context="/tck-V3URLTests-3.0-SNAPSHOT" name="BaseURLTests"/>
 <portlet context="/tck-V3URLTests-3.0-SNAPSHOT" name="ActionURLTests"/>
 <portlet context="/tck-V3URLTests-3.0-SNAPSHOT" name="ResourceURLTests"/>
+<portlet context="/tck-V3URLTests-3.0-SNAPSHOT" name="RenderURLTests"/>
 </page>
 </render-config>
 </pluto-portal-driver>
