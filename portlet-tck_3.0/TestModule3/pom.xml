@@ -22,7 +22,7 @@
 
    <parent>
       <groupId>javax.portlet</groupId>
-      <artifactId>tck</artifactId>
+      <artifactId>portlet-tck</artifactId>
       <version>3.0-SNAPSHOT</version>
    </parent>
 
@@ -36,8 +36,8 @@
 
       <resources>
          <resource>
-            <directory>${basedir}/src/main/resources/xml-resources</directory>
-            <targetPath>${project.build.directory}/${test.file.dir}</targetPath>
+            <directory>src/main/resources/xml-resources</directory>
+            <targetPath>../${test.file.dir}</targetPath>
             <includes>
                <include>*.xml</include>
             </includes>

@@ -22,7 +22,7 @@
 
    <parent>
       <groupId>javax.portlet</groupId>
-      <artifactId>tck</artifactId>
+      <artifactId>portlet-tck</artifactId>
       <version>3.0-SNAPSHOT</version>
    </parent>
 
@@ -42,6 +42,11 @@
       <dependency>
          <groupId>org.seleniumhq.selenium</groupId>
          <artifactId>selenium-java</artifactId>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.seleniumhq.selenium</groupId>
+         <artifactId>htmlunit-driver</artifactId>
          <scope>compile</scope>
       </dependency>
       
@@ -166,12 +171,6 @@
       <dependency>
          <groupId>${project.groupId}</groupId>
          <artifactId>tck-V2AddlResponseTests</artifactId>
-         <version>${project.version}</version>
-         <type>war</type>
-      </dependency>
-      <dependency>
-         <groupId>${project.groupId}</groupId>
-         <artifactId>tck-V2AddlUrlTests</artifactId>
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
@@ -313,7 +312,30 @@
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V3PortletContextTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V3PortletConfigTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+	  <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V3URLTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
    </dependencies>
+
+   <properties>
+      <additional.testcases.only>true</additional.testcases.only>
+      <additional.pagefile.only>true</additional.pagefile.only>
+   </properties>
 
    <build>
       <finalName>${project.artifactId}</finalName>
@@ -321,7 +343,7 @@
       <resources>
          <resource>
             <directory>src/main/resources/xml-resources</directory>
-            <targetPath>${project.build.directory}/${test.file.dir}</targetPath>
+            <targetPath>../${test.file.dir}</targetPath>
             <includes>
                <include>*</include>
             </includes>
@@ -360,7 +382,6 @@
                         tck-V2AddlPortletTests,
                         tck-V2AddlRequestTests,
                         tck-V2AddlResponseTests,
-                        tck-V2AddlUrlTests,
                         tck-V2SigTestsAction,
                         tck-V2SigTestsEnv,
                         tck-V2SigTestsEvent,
@@ -383,7 +404,11 @@
                         tck-V2DispatcherTests4,
                         tck-V2DispatcherTests5,
                         tck-V2DispatcherTests6,
-                        tck-V2DispatcherTests3S
+                        tck-V2DispatcherTests3S,
+                        
+                        tck-V3PortletContextTests,
+                        tck-V3PortletConfigTests,
+						tck-V3URLTests
                      </includeArtifactIds>
                      <includes>${test.file.dir}/*.xml</includes>
                      <outputDirectory>${project.build.directory}</outputDirectory>

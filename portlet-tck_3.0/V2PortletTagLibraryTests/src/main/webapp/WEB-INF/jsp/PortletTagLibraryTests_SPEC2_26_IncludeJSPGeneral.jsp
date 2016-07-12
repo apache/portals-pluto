@@ -2,17 +2,22 @@
   - Author(s): ahmed
   --%>
 <%@ page session="false" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0"  prefix="portlet" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="javax.portlet.PortletException" %>
-<%@ page import="java.io.*,java.util.*,java.util.logging.*" %>
-<%@ page import="static java.util.logging.Logger.*" %>
-<%@ page import="javax.portlet.*,javax.portlet.filter.*" %>
-<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
-<%@ page import="javax.portlet.tck.beans.*,javax.portlet.tck.constants.*" %>
-<%@ page import="static javax.portlet.tck.constants.Constants.*" %>
-<%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*" %>
+
+<%@ page import="java.io.StringWriter" %>
+<%@ page import="javax.portlet.PortletRequest" %>
+<%@ page import="javax.portlet.PortletResponse" %>
+<%@ page import="javax.portlet.tck.beans.JSR286SpecTestCaseDetails" %>
+<%@ page import="javax.portlet.tck.beans.TestResult" %>
+
+<%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPGENERAL_DEFINEOBJECTS1" %>
+<%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPGENERAL_NAMESPACE" %>
+<%@ page import="static javax.portlet.tck.constants.Constants.THREADID_ATTR" %>
+
 <portlet:defineObjects/>
+
 <%
       PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
       PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
@@ -64,30 +69,6 @@
         </FORM>
       </DIV>
       <% }
-      
-      /*
-       * TestCase: V2PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral_escapeXML1
-       * Details: The container runtime option \"javax.portlet.escapeXml\" 
-       * can be used to set the default escapeXML setting to true
-       */
-      TestResult tr5 =
-          tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPGENERAL_ESCAPEXML1);
-      // TODO: Implement test when escapeXml problem is solved
-      %>
-      <portlet:resourceURL id="icons/he<&>llo" escapeXml="false"/>
-      <portlet:resourceURL id="icons/he<&>llo" escapeXml="true"/>
-      <%
-      tr5.writeTo(writer);
-
-      /* TestCase: V2PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral_escapeXML2 */
-      /* Details: "The container runtime option \"javax.portlet.escapeXml\" */
-      /* can be used to set the default escapeXML setting to false" */
-      // TODO: Implement test when escapeXml problem is solved
-      TestResult tr6 =
-          tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPGENERAL_ESCAPEXML2);
-      tr6.appendTcDetail(
-          "Might not be possible to configure javax.portlet.escapeXml to false when the portlet is running.");
-      tr6.writeTo(writer);
 
 %>
 <%=writer.toString()%>

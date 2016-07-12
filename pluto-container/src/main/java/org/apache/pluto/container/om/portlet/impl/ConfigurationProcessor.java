@@ -10,7 +10,9 @@ import static org.apache.pluto.container.bean.processor.MethodDescription.METH_R
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -185,6 +187,14 @@ public abstract class ConfigurationProcessor {
             throw new Exception();
          }
       } catch (Exception e) {
+         txt.append(" Exception: ").append(e.toString());
+         if (isDebug) {
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            pw.flush();
+            txt.append("\n").append(sw.toString());
+         }
          LOG.warn(txt.toString());
          throw new IllegalArgumentException(txt.toString(), e);
       }

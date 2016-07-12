@@ -17,35 +17,27 @@
  */
 package javax.portlet.tck.beans;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.Map;
+import java.util.Collection;
 
-import java.security.*;
-import java.util.*;
-import java.io.*;
-
-import javax.portlet.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.portlet.PortletResponse;
+import javax.servlet.http.Cookie;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 
 /**
- * This class tests a wrapper class by simulating the class to be wrapped.The test code
- * verifies that the arguments passed to the wrapping method are correctly passed to
- * the wrapped class. Simulated return data is passed back to the caller.  
+ * This class tests a wrapper class by simulating the class to be wrapped.The test code verifies that the arguments
+ * passed to the wrapping method are correctly passed to the wrapped class. Simulated return data is passed back to the
+ * caller.
  * 
  * @author nick
  */
 
-public class PortletResponseWrapperChecker extends WrapperChecker implements
-      PortletResponse {
+public class PortletResponseWrapperChecker extends WrapperChecker implements PortletResponse {
 
    PortletResponse resp;
-   Element element;
-   
+   Element         element;
+
    public PortletResponseWrapperChecker(PortletResponse portletResp) {
       resp = portletResp;
       element = resp.createElement("p");
@@ -54,7 +46,7 @@ public class PortletResponseWrapperChecker extends WrapperChecker implements
    @Override
    public void addProperty(String key, String value) {
       String meth = "addProperty";
-      Object[] args = {key, value};
+      Object[] args = { key, value };
       checkArgs(meth, args);
       return;
 
@@ -63,7 +55,7 @@ public class PortletResponseWrapperChecker extends WrapperChecker implements
    @Override
    public void setProperty(String key, String value) {
       String meth = "setProperty";
-      Object[] args = {key, value};
+      Object[] args = { key, value };
       checkArgs(meth, args);
       return;
 
@@ -72,7 +64,7 @@ public class PortletResponseWrapperChecker extends WrapperChecker implements
    @Override
    public String encodeURL(String path) {
       String meth = "encodeURL";
-      Object[] args = {path};
+      Object[] args = { path };
       String ret = "value";
       retVal = ret;
       checkArgs(meth, args);
@@ -92,7 +84,7 @@ public class PortletResponseWrapperChecker extends WrapperChecker implements
    @Override
    public void addProperty(Cookie cookie) {
       String meth = "addProperty";
-      Object[] args = {cookie};
+      Object[] args = { cookie };
       checkArgs(meth, args);
       return;
 
@@ -101,7 +93,7 @@ public class PortletResponseWrapperChecker extends WrapperChecker implements
    @Override
    public void addProperty(String key, Element element) {
       String meth = "addProperty";
-      Object[] args = {key, element};
+      Object[] args = { key, element };
       checkArgs(meth, args);
       return;
 
@@ -110,12 +102,26 @@ public class PortletResponseWrapperChecker extends WrapperChecker implements
    @Override
    public Element createElement(String tagName) throws DOMException {
       String meth = "createElement";
-      Object[] args = {tagName};
+      Object[] args = { tagName };
       Element ret = element;
       retVal = ret;
       checkArgs(meth, args);
       return ret;
    }
 
-}
+   @Override
+   public String getProperty(String arg0) {
+      return null;
+   }
 
+   @Override
+   public Collection<String> getPropertyNames() {
+      return null;
+   }
+
+   @Override
+   public Collection<String> getPropertyValues(String arg0) {
+      return null;
+   }
+
+}

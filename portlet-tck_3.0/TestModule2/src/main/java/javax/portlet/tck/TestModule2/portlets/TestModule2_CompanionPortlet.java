@@ -20,7 +20,6 @@ package javax.portlet.tck.TestModule2.portlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,12 +28,9 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
-import javax.portlet.PortletSession;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestCaseDetails;
-import javax.portlet.tck.beans.TestLink;
 import javax.portlet.tck.beans.TestMessage;
 import javax.portlet.tck.beans.TestResult;
 
@@ -42,6 +38,7 @@ import javax.portlet.tck.beans.TestResult;
  * This test portlet contains several tests to generate render URLs and place them
  * into the markup. The test driver clicks the links to execute the tests.
  */
+@SuppressWarnings("deprecation")
 public class TestModule2_CompanionPortlet implements Portlet {
    private static final String LOG_CLASS = TestModule2_CompanionPortlet.class.getName();
 

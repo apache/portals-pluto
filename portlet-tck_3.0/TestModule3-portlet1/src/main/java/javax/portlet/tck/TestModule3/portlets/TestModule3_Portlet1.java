@@ -20,7 +20,6 @@ package javax.portlet.tck.TestModule3.portlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,12 +32,14 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestLink;
+
 import static javax.portlet.tck.beans.TestModule3Definitions.*;
 
 /**
  * This test portlet contains several tests to generate render URLs and place them
  * into the markup. The test driver clicks the links to execute the tests.
  */
+@SuppressWarnings("deprecation")
 public class TestModule3_Portlet1 implements Portlet {
    private static final String LOG_CLASS = TestModule3_Portlet1.class.getName();
 

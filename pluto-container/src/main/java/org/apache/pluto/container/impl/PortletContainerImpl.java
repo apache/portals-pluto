@@ -17,6 +17,8 @@
 package org.apache.pluto.container.impl;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -337,6 +339,9 @@ public class PortletContainerImpl implements PortletContainer
             debugWithName(logtxt + " processed for: "
                     + portletWindow.getPortletDefinition().getPortletName());
 
+            // add http headers to response
+            responseContext.processHttpHeaders();
+            
             // Mark portlet interaction is completed: backend implementation can flush response state now
             responseContext.close();
 
@@ -348,13 +353,33 @@ public class PortletContainerImpl implements PortletContainer
                     getContainerServices().getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
                 }
             }
+        } catch (Throwable t) {
+           
+           // Throw away events and parameters that were set
+           
+           responseContext.reset();
+           
+           // just swallow the exception, ignoring changes to the response
+           
+           StringBuilder txt = new StringBuilder(128);
+           txt.append("Exception during action request processing. Exception: ");
+           
+           StringWriter sw = new StringWriter();
+           PrintWriter pw = new PrintWriter(sw);
+           t.printStackTrace(pw);
+           pw.flush();
+           txt.append(sw.toString());
+           
+           LOG.warn(txt.toString());
+
+        }
+        finally
+        {
 
             // After processing action and possible event handling, retrieve the target response URL to be redirected to
             // This can either be a renderURL or an external URL (optionally containing a future renderURL as query parameter
             location = response.encodeRedirectURL(responseContext.getResponseURL());
-        }
-        finally
-        {
+   
             responseContext.release();
         }
         if (isRedirect) {
@@ -492,6 +517,7 @@ public class PortletContainerImpl implements PortletContainer
 
         PortletRequestContext requestContext = rcService.getPortletEventRequestContext(this, request, response, portletWindow);
         PortletEventResponseContext responseContext = rcService.getPortletEventResponseContext(this, request, response, portletWindow, requestContext);
+        responseContext.setPropsAllowed(true);
         EventRequest portletRequest = envService.createEventRequest(requestContext, responseContext, event);
         EventResponse portletResponse = envService.createEventResponse(responseContext);
 
@@ -505,9 +531,31 @@ public class PortletContainerImpl implements PortletContainer
             debugWithName("Portlet event processed for: "
                     + portletWindow.getPortletDefinition().getPortletName());
 
+            // add http headers to response
+            responseContext.processHttpHeaders();
+
             // Mark portlet interaction is completed: backend implementation can flush response state now
             responseContext.close();
             events = responseContext.getEvents();
+        } catch (Throwable t) {
+           
+           // Throw away events and parameters that were set
+           
+           responseContext.reset();
+           
+           // just swallow the exception, ignoring changes to the response
+           
+           StringBuilder txt = new StringBuilder(128);
+           txt.append("Exception during action request processing. Exception: ");
+           
+           StringWriter sw = new StringWriter();
+           PrintWriter pw = new PrintWriter(sw);
+           t.printStackTrace(pw);
+           pw.flush();
+           txt.append(sw.toString());
+           
+           LOG.warn(txt.toString());
+
         }
         finally
         {

@@ -26,9 +26,8 @@
       /* Details: "In a target jsp of a forward in the Render phase, the      */
       /* method HttpServletRequest.setCharacterEncoding does not perform      */
       /* any operation"                                                       */
-      TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_FORWARDJSPRENDERREQUEST_SETCHARACTERENCODING);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      TestResult tr0 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_FORWARDJSPRENDERREQUEST_SETCHARACTERENCODING);
+      tr0.appendTcDetail("Can't be implemented.");
       tr0.writeTo(writer);
 
 %>

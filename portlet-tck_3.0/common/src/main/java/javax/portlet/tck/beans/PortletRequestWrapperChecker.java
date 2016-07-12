@@ -17,35 +17,39 @@
  */
 package javax.portlet.tck.beans;
 
-import java.security.*;
-import java.util.*;
-import java.io.*;
+import java.security.Principal;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortalContext;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
 import javax.servlet.http.Cookie;
 
 /**
- * This class tests a wrapper class by simulating the class to be wrapped.The test code
- * verifies that the arguments passed to the wrapping method are correctly passed to
- * the wrapped class. Simulated return data is passed back to the caller.  
+ * This class tests a wrapper class by simulating the class to be wrapped.The test code verifies that the arguments
+ * passed to the wrapping method are correctly passed to the wrapped class. Simulated return data is passed back to the
+ * caller.
  * 
  * @author nick
  */
 
-
 public class PortletRequestWrapperChecker extends WrapperChecker implements PortletRequest {
-   
-   private PortletRequest req;
-   private PortletSession sess;
+
+   private PortletRequest     req;
+   private PortletSession     sess;
    private PortletPreferences prefs;
-   private PortalContext pcntxt;
-   private Principal ppal;
+   private PortalContext      pcntxt;
+   private Principal          ppal;
 
    public PortletRequestWrapperChecker(PortletRequest portletReq) {
       req = portletReq;
@@ -58,7 +62,7 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    @Override
    public boolean isWindowStateAllowed(WindowState state) {
       String meth = "isWindowStateAllowed";
-      Object[] args = {state};
+      Object[] args = { state };
       boolean ret = true;
       retVal = ret;
       checkArgs(meth, args);
@@ -68,7 +72,7 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    @Override
    public boolean isPortletModeAllowed(PortletMode mode) {
       String meth = "isPortletModeAllowed";
-      Object[] args = {mode};
+      Object[] args = { mode };
       boolean ret = true;
       retVal = ret;
       checkArgs(meth, args);
@@ -118,7 +122,7 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    @Override
    public PortletSession getPortletSession(boolean create) {
       String meth = "getPortletSession";
-      Object[] args = {create};
+      Object[] args = { create };
       PortletSession ret = sess;
       retVal = ret;
       checkArgs(meth, args);
@@ -128,7 +132,7 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    @Override
    public String getProperty(String name) {
       String meth = "getProperty";
-      Object[] args = {name};
+      Object[] args = { name };
       String ret = "value";
       retVal = ret;
       checkArgs(meth, args);
@@ -138,8 +142,8 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    @Override
    public Enumeration<String> getProperties(String name) {
       String meth = "getProperties";
-      Object[] args = {name};
-      String[] strs = {"val1", "val2"};
+      Object[] args = { name };
+      String[] strs = { "val1", "val2" };
       Enumeration<String> ret = Collections.enumeration(Arrays.asList(strs));
       retVal = ret;
       checkArgs(meth, args);
@@ -150,7 +154,7 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    public Enumeration<String> getPropertyNames() {
       String meth = "getPropertyNames";
       Object[] args = {};
-      String[] strs = {"val1", "val2"};
+      String[] strs = { "val1", "val2" };
       Enumeration<String> ret = Collections.enumeration(Arrays.asList(strs));
       retVal = ret;
       checkArgs(meth, args);
@@ -210,7 +214,7 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    @Override
    public boolean isUserInRole(String role) {
       String meth = "isUserInRole";
-      Object[] args = {role};
+      Object[] args = { role };
       boolean ret = true;
       retVal = ret;
       checkArgs(meth, args);
@@ -220,7 +224,7 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    @Override
    public Object getAttribute(String name) {
       String meth = "getAttribute";
-      Object[] args = {name};
+      Object[] args = { name };
       Object ret = "object";
       retVal = ret;
       checkArgs(meth, args);
@@ -231,7 +235,7 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    public Enumeration<String> getAttributeNames() {
       String meth = "getAttributeNames";
       Object[] args = {};
-      String[] strs = {"val1", "val2"};
+      String[] strs = { "val1", "val2" };
       Enumeration<String> ret = Collections.enumeration(Arrays.asList(strs));
       retVal = ret;
       checkArgs(meth, args);
@@ -241,7 +245,7 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    @Override
    public String getParameter(String name) {
       String meth = "getParameter";
-      Object[] args = {name};
+      Object[] args = { name };
       String ret = "value";
       retVal = ret;
       checkArgs(meth, args);
@@ -252,7 +256,7 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    public Enumeration<String> getParameterNames() {
       String meth = "getParameterNames";
       Object[] args = {};
-      String[] strs = {"val1", "val2"};
+      String[] strs = { "val1", "val2" };
       Enumeration<String> ret = Collections.enumeration(Arrays.asList(strs));
       retVal = ret;
       checkArgs(meth, args);
@@ -262,8 +266,8 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    @Override
    public String[] getParameterValues(String name) {
       String meth = "getParameterValues";
-      Object[] args = {name};
-      String[] ret = {"val1", "val2"};
+      Object[] args = { name };
+      String[] ret = { "val1", "val2" };
       retVal = ret;
       checkArgs(meth, args);
       return ret;
@@ -274,8 +278,8 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
       String meth = "getParameterMap";
       Object[] args = {};
       Map<String, String[]> parms = new HashMap<String, String[]>();
-      parms.put("parm1", new String[] {"val1", "val2"});
-      parms.put("parm2", new String[] {"val1", "val2"});
+      parms.put("parm1", new String[] { "val1", "val2" });
+      parms.put("parm2", new String[] { "val1", "val2" });
       Map<String, String[]> ret = parms;
       retVal = ret;
       checkArgs(meth, args);
@@ -295,7 +299,7 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    @Override
    public void setAttribute(String name, Object o) {
       String meth = "setAttribute";
-      Object[] args = {name, o};
+      Object[] args = { name, o };
       checkArgs(meth, args);
       return;
 
@@ -304,7 +308,7 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    @Override
    public void removeAttribute(String name) {
       String meth = "removeAttribute";
-      Object[] args = {name};
+      Object[] args = { name };
       checkArgs(meth, args);
       return;
 
@@ -344,7 +348,7 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    public Enumeration<String> getResponseContentTypes() {
       String meth = "getResponseContentTypes";
       Object[] args = {};
-      String[] strs = {"val1", "val2"};
+      String[] strs = { "val1", "val2" };
       Enumeration<String> ret = Collections.enumeration(Arrays.asList(strs));
       retVal = ret;
       checkArgs(meth, args);
@@ -365,7 +369,7 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    public Enumeration<Locale> getLocales() {
       String meth = "getLocales";
       Object[] args = {};
-      Locale[] la = {new Locale("en"), new Locale("de")};
+      Locale[] la = { new Locale("en"), new Locale("de") };
       Enumeration<Locale> ret = Collections.enumeration(Arrays.asList(la));
       retVal = ret;
       checkArgs(meth, args);
@@ -416,7 +420,7 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
    public Cookie[] getCookies() {
       String meth = "getCookies";
       Object[] args = {};
-      Cookie[] ret = {new Cookie("name", "Bob"), new Cookie("name", "Alice")};
+      Cookie[] ret = { new Cookie("name", "Bob"), new Cookie("name", "Alice") };
       retVal = ret;
       checkArgs(meth, args);
       return ret;
@@ -427,8 +431,8 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
       String meth = "getPrivateParameterMap";
       Object[] args = {};
       Map<String, String[]> parms = new HashMap<String, String[]>();
-      parms.put("parm1", new String[] {"val1", "val2"});
-      parms.put("parm2", new String[] {"val1", "val2"});
+      parms.put("parm1", new String[] { "val1", "val2" });
+      parms.put("parm2", new String[] { "val1", "val2" });
       Map<String, String[]> ret = parms;
       retVal = ret;
       checkArgs(meth, args);
@@ -440,13 +444,27 @@ public class PortletRequestWrapperChecker extends WrapperChecker implements Port
       String meth = "getPublicParameterMap";
       Object[] args = {};
       Map<String, String[]> parms = new HashMap<String, String[]>();
-      parms.put("parm1", new String[] {"val1", "val2"});
-      parms.put("parm2", new String[] {"val1", "val2"});
+      parms.put("parm1", new String[] { "val1", "val2" });
+      parms.put("parm2", new String[] { "val1", "val2" });
       Map<String, String[]> ret = parms;
       retVal = ret;
       checkArgs(meth, args);
       return ret;
    }
 
-}
+   @Override
+   public RenderParameters getRenderParameters() {
+      return null;
+   }
 
+   @Override
+   public PortletContext getPortletContext() {
+      return null;
+   }
+
+   @Override
+   public String getUserAgent() {
+      return null;
+   }
+
+}

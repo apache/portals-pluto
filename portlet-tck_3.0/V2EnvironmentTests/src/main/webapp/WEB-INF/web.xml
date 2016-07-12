@@ -21,17 +21,58 @@
    <display-name>javax.portlet-tck-EnvironmentTests</display-name>
    
    <servlet>
-      <servlet-name>EnvironmentTests_PortletContext_ApiRender_servlets</servlet-name>
-      <servlet-class>javax.portlet.tck.servlets.EnvironmentTests_PortletContext_ApiRender_servlets</servlet-class>
+      <servlet-name>V2EnvironmentTests_PortletRequestDispatcher_ApiRender_PortletRequest_Include</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.V2EnvironmentTests_PortletRequestDispatcher_ApiRender_PortletRequest_Include</servlet-class>
       <init-param>
          <param-name>iparm1</param-name>
          <param-value>value1</param-value>
       </init-param>
    </servlet>
    <servlet-mapping>
-      <servlet-name>EnvironmentTests_PortletContext_ApiRender_servlets</servlet-name>
-      <url-pattern>/EnvironmentTests_PortletContext_ApiRender_servlets</url-pattern>
+      <servlet-name>V2EnvironmentTests_PortletRequestDispatcher_ApiRender_PortletRequest_Include</servlet-name>
+      <url-pattern>/V2EnvironmentTests_PortletRequestDispatcher_ApiRender_PortletRequest_Include</url-pattern>
    </servlet-mapping>
    
+   <servlet>
+      <servlet-name>V2EnvironmentTests_PortletRequestDispatcher_ApiRender_RenderRequest_Include</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.V2EnvironmentTests_PortletRequestDispatcher_ApiRender_RenderRequest_Include</servlet-class>
+      <init-param>
+         <param-name>iparm1</param-name>
+         <param-value>value1</param-value>
+      </init-param>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>V2EnvironmentTests_PortletRequestDispatcher_ApiRender_RenderRequest_Include</servlet-name>
+      <url-pattern>/V2EnvironmentTests_PortletRequestDispatcher_ApiRender_RenderRequest_Include</url-pattern>
+   </servlet-mapping>
+   
+   <servlet>
+      <servlet-name>V2EnvironmentTests_PortletRequestDispatcher_ApiRender_PortletRequest_Forward</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.V2EnvironmentTests_PortletRequestDispatcher_ApiRender_PortletRequest_Forward</servlet-class>
+      <init-param>
+         <param-name>iparm1</param-name>
+         <param-value>value1</param-value>
+      </init-param>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>V2EnvironmentTests_PortletRequestDispatcher_ApiRender_PortletRequest_Forward</servlet-name>
+      <url-pattern>/V2EnvironmentTests_PortletRequestDispatcher_ApiRender_PortletRequest_Forward</url-pattern>
+   </servlet-mapping>
+   
+   <mime-mapping> 
+      <extension>html</extension>
+      <mime-type>text/html</mime-type> 
+   </mime-mapping>
+   
+   <mime-mapping> 
+      <extension>gif</extension>
+      <mime-type>image/gif</mime-type> 
+   </mime-mapping>
+   
+   <listener>
+	 <listener-class>
+	     javax.portlet.tck.attributes.V2EnvironmentTests_PortletSession_ApiRender_Attribute
+	 </listener-class>
+	</listener>
 
 </web-app>

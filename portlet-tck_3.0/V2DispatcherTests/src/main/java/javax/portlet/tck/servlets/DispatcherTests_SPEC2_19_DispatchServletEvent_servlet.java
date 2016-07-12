@@ -16,51 +16,41 @@
  *  under the License.
  */
 
-
 package javax.portlet.tck.servlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet for JSR 362 request dispatcher testing.
- * Used by portlet: DispatcherTests_SPEC2_19_DispatchServletEvent
- *
+ * Servlet for JSR 362 request dispatcher testing. Used by portlet: DispatcherTests_SPEC2_19_DispatchServletEvent
+ * 
  * @author nick
- *
+ * 
  */
 public class DispatcherTests_SPEC2_19_DispatchServletEvent_servlet extends HttpServlet {
-   private static final String LOG_CLASS = 
-         DispatcherTests_SPEC2_19_DispatchServletEvent_servlet.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
 
    @Override
-   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-         throws ServletException, IOException {
+   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       processTCKReq(req, resp);
    }
 
    @Override
-   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-         throws ServletException, IOException {
+   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       processTCKReq(req, resp);
    }
 
    // The tck uses only get & post requests
-   protected void processTCKReq(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      LOGGER.entering(LOG_CLASS, "servlet entry");
-
+   protected void processTCKReq(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+         IOException {
 
    }
 }

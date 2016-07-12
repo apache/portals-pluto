@@ -18,21 +18,73 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETWINDOWSTATE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETWINDOWSTATE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETWINDOWSTATE3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETPORTLETMODE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETPORTLETMODE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETPORTLETMODE3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS5;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS6;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS7;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS8;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS10;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS11;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS12;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA5;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA6;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA7;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA8;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB5;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB6;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA5;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB5;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETPORTLETMODE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETPORTLETMODE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETWINDOWSTATE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETWINDOWSTATE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_REMOVEPUBLICRENDERPARAMETER1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_REMOVEPUBLICRENDERPARAMETER2;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -45,16 +97,10 @@ import static javax.portlet.ResourceURL.*;
  * portlet ResponseTests_StateAwareResponse_ApiEvent_event
  *
  */
-public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         ResponseTests_StateAwareResponse_ApiEvent.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-   
-   private PortletConfig portletConfig = null;
+public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet {
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
    }
 
    @Override
@@ -64,13 +110,10 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
-
-      StringWriter writer = new StringWriter();
 
       QName eventQName = new QName(TCKNAMESPACE,
              "ResponseTests_StateAwareResponse_ApiEvent");
@@ -78,21 +121,8 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
    }
 
    @Override
-   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
-
-      long tid = Thread.currentThread().getId();
-      portletReq.setAttribute(THREADID_ATTR, tid);
-
-      PrintWriter writer = portletResp.getWriter();
-
-   }
-
-   @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -105,7 +135,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setWindowState1", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETWINDOWSTATE1, aurl);
          tb.writeTo(writer);
       }
 
@@ -116,7 +146,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setWindowState2", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETWINDOWSTATE2, aurl);
          tb.writeTo(writer);
       }
 
@@ -127,7 +157,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setWindowState3", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETWINDOWSTATE3, aurl);
          tb.writeTo(writer);
       }
 
@@ -137,7 +167,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setPortletMode1", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETPORTLETMODE1, aurl);
          tb.writeTo(writer);
       }
 
@@ -148,7 +178,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setPortletMode2", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETPORTLETMODE2, aurl);
          tb.writeTo(writer);
       }
 
@@ -159,7 +189,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setPortletMode3", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETPORTLETMODE3, aurl);
          tb.writeTo(writer);
       }
 
@@ -169,7 +199,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters1", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS1, aurl);
          tb.writeTo(writer);
       }
 
@@ -179,7 +209,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters2", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS2, aurl);
          tb.writeTo(writer);
       }
 
@@ -189,7 +219,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters3", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS3, aurl);
          tb.writeTo(writer);
       }
 
@@ -200,7 +230,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters4", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS4, aurl);
          tb.writeTo(writer);
       }
 
@@ -211,7 +241,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters5", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS5, aurl);
          tb.writeTo(writer);
       }
 
@@ -221,7 +251,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters6", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS6, aurl);
          tb.writeTo(writer);
       }
 
@@ -231,7 +261,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters7", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS7, aurl);
          tb.writeTo(writer);
       }
 
@@ -241,7 +271,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters8", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS8, aurl);
          tb.writeTo(writer);
       }
 
@@ -251,7 +281,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters10", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS10, aurl);
          tb.writeTo(writer);
       }
 
@@ -262,7 +292,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters11", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS11, aurl);
          tb.writeTo(writer);
       }
 
@@ -273,7 +303,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters12", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS12, aurl);
          tb.writeTo(writer);
       }
 
@@ -283,7 +313,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA1", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA1, aurl);
          tb.writeTo(writer);
       }
 
@@ -293,7 +323,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA2", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA2, aurl);
          tb.writeTo(writer);
       }
 
@@ -303,7 +333,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA3", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA3, aurl);
          tb.writeTo(writer);
       }
 
@@ -313,7 +343,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA4", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA4, aurl);
          tb.writeTo(writer);
       }
 
@@ -323,7 +353,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA5", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA5, aurl);
          tb.writeTo(writer);
       }
 
@@ -333,7 +363,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA6", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA6, aurl);
          tb.writeTo(writer);
       }
 
@@ -343,7 +373,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA7", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA7, aurl);
          tb.writeTo(writer);
       }
 
@@ -354,7 +384,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA8", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA8, aurl);
          tb.writeTo(writer);
       }
 
@@ -364,7 +394,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterB1", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB1, aurl);
          tb.writeTo(writer);
       }
 
@@ -374,7 +404,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterB2", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB2, aurl);
          tb.writeTo(writer);
       }
 
@@ -384,7 +414,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterB3", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB3, aurl);
          tb.writeTo(writer);
       }
 
@@ -394,7 +424,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterB4", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB4, aurl);
          tb.writeTo(writer);
       }
 
@@ -404,7 +434,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterB5", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB5, aurl);
          tb.writeTo(writer);
       }
 
@@ -415,7 +445,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterB6", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB6, aurl);
          tb.writeTo(writer);
       }
 
@@ -426,7 +456,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setEventA1", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA1, aurl);
          tb.writeTo(writer);
       }
 
@@ -437,7 +467,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setEventA2", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA2, aurl);
          tb.writeTo(writer);
       }
 
@@ -448,7 +478,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setEventA3", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA3, aurl);
          tb.writeTo(writer);
       }
 
@@ -459,7 +489,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setEventA4", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA4, aurl);
          tb.writeTo(writer);
       }
 
@@ -471,7 +501,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setEventA5", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA5, aurl);
          tb.writeTo(writer);
       }
 
@@ -481,7 +511,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setEventB1", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB1, aurl);
          tb.writeTo(writer);
       }
 
@@ -491,7 +521,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setEventB2", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB2, aurl);
          tb.writeTo(writer);
       }
 
@@ -501,7 +531,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setEventB3", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB3, aurl);
          tb.writeTo(writer);
       }
 
@@ -512,7 +542,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setEventB4", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB4, aurl);
          tb.writeTo(writer);
       }
 
@@ -523,7 +553,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_setEventB5", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB5, aurl);
          tb.writeTo(writer);
       }
 
@@ -533,7 +563,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_getRenderParameterMap1", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP1, aurl);
          tb.writeTo(writer);
       }
 
@@ -543,7 +573,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_getRenderParameterMap2", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP2, aurl);
          tb.writeTo(writer);
       }
 
@@ -553,7 +583,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_getRenderParameterMap3", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP3, aurl);
          tb.writeTo(writer);
       }
 
@@ -563,7 +593,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_getRenderParameterMap4", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP4, aurl);
          tb.writeTo(writer);
       }
 
@@ -573,7 +603,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_getPortletMode1", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETPORTLETMODE1, aurl);
          tb.writeTo(writer);
       }
 
@@ -583,7 +613,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_getPortletMode2", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETPORTLETMODE2, aurl);
          tb.writeTo(writer);
       }
 
@@ -593,7 +623,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_getWindowState1", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETWINDOWSTATE1, aurl);
          tb.writeTo(writer);
       }
 
@@ -603,7 +633,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_getWindowState2", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETWINDOWSTATE2, aurl);
          tb.writeTo(writer);
       }
 
@@ -613,7 +643,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_removePublicRenderParameter1", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_REMOVEPUBLICRENDERPARAMETER1, aurl);
          tb.writeTo(writer);
       }
 
@@ -623,7 +653,7 @@ public class ResponseTests_StateAwareResponse_ApiEvent implements Portlet, Resou
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2ResponseTests_StateAwareResponse_ApiEvent_removePublicRenderParameter2", aurl);
+         TestButton tb = new TestButton(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_REMOVEPUBLICRENDERPARAMETER2, aurl);
          tb.writeTo(writer);
       }
 

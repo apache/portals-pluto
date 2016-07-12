@@ -39,7 +39,6 @@
    <fl:file>tck-V2AddlPortletTests-pages.xml</fl:file>
    <fl:file>tck-V2AddlRequestTests-pages.xml</fl:file>
    <fl:file>tck-V2AddlResponseTests-pages.xml</fl:file>
-   <fl:file>tck-V2AddlUrlTests-pages.xml</fl:file>
    <fl:file>tck-V2PortletTagLibraryTests-pages.xml</fl:file>
    <fl:file>tck-V2PortletTagLibraryTests2-pages.xml</fl:file>
    <fl:file>tck-V2PortletTagLibraryTests3-pages.xml</fl:file>
@@ -63,4 +62,7 @@
    <fl:file>tck-V2SigTestsResource-pages.xml</fl:file>
    <fl:file>tck-V2SigTestsURL-pages.xml</fl:file>
    <fl:file>tck-V2SigTestsWrapper-pages.xml</fl:file>
+   <fl:file>tck-V3PortletContextTests-pages.xml</fl:file>
+   <fl:file>tck-V3PortletConfigTests-pages.xml</fl:file>
+   <fl:file>tck-V3URLTests-pages.xml</fl:file>
 </fl:filelist>

@@ -238,11 +238,11 @@ generate mailto links. -->
     </contributor>
   </contributors>
 
-  <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/portals/pluto/trunk</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/trunk</developerConnection>
-    <url>http://svn.apache.org/viewcvs.cgi/portals/pluto/trunk</url>
-  </scm>
+   <scm>
+      <connection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</connection>
+      <developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</developerConnection>
+      <url>https://github.com/apache/portals-pluto</url>
+   </scm>
 
   <!-- Dependency Version Properties ======================================= -->
 
@@ -253,6 +253,8 @@ generate mailto links. -->
   1)  maven-pluto-plugin/src/main/resources/versions.properties as well!
   -->
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
     <pluto.container.name>Pluto</pluto.container.name>
     <javax.portlet.version.major>3</javax.portlet.version.major>
     <javax.portlet.version.minor>0</javax.portlet.version.minor>
@@ -321,9 +323,10 @@ TODO: Check if we need all of them. -->
 
       <!-- Specification Libraries =========================================== -->
       <dependency>
-        <groupId>org.apache.portals</groupId>
-        <artifactId>portlet-api</artifactId>
-        <version>${portals.portlet-api.version}</version>
+         <groupId>org.apache.portals.pluto</groupId>
+         <artifactId>portlet-api</artifactId>
+         <version>${portals.portlet-api.version}</version>
+         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.tomcat</groupId>
@@ -531,6 +534,11 @@ TODO: Check if we need all of them. -->
           <version>${project.version}</version>
         </plugin>
         <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-jar-plugin</artifactId>
+           <version>2.4</version>
+        </plugin>
+        <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>
           <version>2.4</version>
@@ -651,6 +659,9 @@ TODO: Check if we need all of them. -->
         <module>maven-pluto-plugin</module>
         <module>pluto-ant-tasks</module>
         <module>pluto-site-skin</module>
+        
+        <!-- the Technology Compliance Kit -->
+        <module>portlet-tck_3.0</module>
       </modules>
     </profile>
     

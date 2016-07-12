@@ -200,11 +200,23 @@ public abstract class BaseURLImpl implements BaseURL {
     */
    public Map<String, String[]> getParameterMap() {
       Map<String, String[]> parameters = new HashMap<String, String[]>();
+      
       Set<String> names = urlProvider.getPrivateParameterNames(windowId);
       for (String name : names) {
          String[] vals = urlProvider.getParameterValues(windowId, name);
          parameters.put(name, vals);
       }
+
+      if (renderURL) {
+         names = urlProvider.getPublicParameterNames(windowId);
+         for (String name : names) {
+            String[] vals = urlProvider.getParameterValues(windowId, name);
+            if (vals != null) {
+               parameters.put(name, vals);
+            }
+         }
+      }
+
       return parameters;
    }
 
@@ -226,7 +238,6 @@ public abstract class BaseURLImpl implements BaseURL {
     */
    public void setParameter(String name, String... values) {
       ArgumentUtility.validateNotEmpty("name", name);
-      ArgumentUtility.validateNotNull("values", values);
       if (values == null) {
          urlProvider.removeParameter(windowId, name);
       } else {

@@ -15,21 +15,45 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.GenericPortlet;
+import javax.portlet.PortletException;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.ProcessAction;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
+import javax.portlet.WindowState;
+import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL1;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL4;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL22;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL23;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL24;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL25;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL26;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL27;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE1;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE5;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE6;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.tck.constants.Constants.JSP_PREFIX;
+import static javax.portlet.tck.constants.Constants.JSP_SUFFIX;
+import static javax.portlet.tck.constants.Constants.QUERY_STRING;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -40,17 +64,14 @@ import static javax.portlet.ResourceURL.*;
  * This is the main portlet for the test cases. If the test cases call for events, this portlet will
  * initiate the events, but not process them. The processing is done in the companion portlet
  * PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_event
+ * 
  * @author ahmed
  */
 public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPortlet {
-  private static final String LOG_CLASS =
-      PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-
+  
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
     String action = portletReq.getParameter("action");
     if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL1")) {
@@ -170,7 +191,7 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
        */
       portletResp.setRenderParameter("tr27", "true");
     } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL18")
-        && portletReq.getParameter("renderParamTr29")!=null
+        && portletReq.getParameter("renderParamTr29") != null
         && "true".equals(portletReq.getParameter("renderParamTr29"))) {
       /*
        * TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL18 Details: "If the
@@ -179,54 +200,35 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
        */
       portletResp.setRenderParameter("tr29", "true");
     } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL19")
-        && portletReq.getParameter("renderParamTr30")!=null
+        && portletReq.getParameter("renderParamTr30") != null
         && "true".equals(portletReq.getParameter("renderParamTr30"))
-        && portletReq.getParameter("actionURLTr30")!=null
+        && portletReq.getParameter("actionURLTr30") != null
         && "true".equals(portletReq.getParameter("actionURLTr30"))) {
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL19 */
-      /* Details: "If the optional actionURL                                  */
-      /* \"copyCurrentRenderParameters\" attribute is set to true,            */
-      /* additional parameters specified with the &lt;portlet:param&gt;       */
-      /* element are merged with the render parameters"                       */
+      /* Details: "If the optional actionURL */
+      /* \"copyCurrentRenderParameters\" attribute is set to true, */
+      /* additional parameters specified with the &lt;portlet:param&gt; */
+      /* element are merged with the render parameters" */
       portletResp.setRenderParameter("tr30", "true");
     } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL20")
-        && portletReq.getParameterValues("renderParamTr31")!=null
-        && portletReq.getParameterValues("renderParamTr31").length==2
+        && portletReq.getParameterValues("renderParamTr31") != null
+        && portletReq.getParameterValues("renderParamTr31").length == 2
         && "false".equals(portletReq.getParameterValues("renderParamTr31")[0])
         && "true".equals(portletReq.getParameterValues("renderParamTr31")[1])) {
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL20 */
-      /* Details: "If the optional actionURL                                  */
-      /* \"copyCurrentRenderParameters\" attribute is set to true,            */
-      /* additional parameters specified with the &lt;portlet:param&gt;       */
-      /* element appear in the values array before the render parameter       */
-      /* values if there is a name conflict"                                  */
+      /* Details: "If the optional actionURL */
+      /* \"copyCurrentRenderParameters\" attribute is set to true, */
+      /* additional parameters specified with the &lt;portlet:param&gt; */
+      /* element appear in the values array before the render parameter */
+      /* values if there is a name conflict" */
       portletResp.setRenderParameter("tr31", "true");
     } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL21")
-        && portletReq.getParameterValues("renderParamTr32")==null) {
+        && portletReq.getParameterValues("renderParamTr32") == null) {
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL21 */
-      /* Details: "If the optional actionURL                                  */
-      /* \"copyCurrentRenderParameters\" attribute is set to false, the       */
-      /* current render parameters are not attached to the URL"               */
+      /* Details: "If the optional actionURL */
+      /* \"copyCurrentRenderParameters\" attribute is set to false, the */
+      /* current render parameters are not attached to the URL" */
       portletResp.setRenderParameter("tr32", "true");
-    } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL25")
-        && portletReq.getParameter("specialCharsTr35") != null
-        && (portletReq.getParameter("specialCharsTr35")).equals("<>&'\"")) {
-
-      /*
-       * TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL25 Details:
-       * "If the optional actionURL \"escapeXML\" attribute is set to false, the characters \
-       * "&lt;&gt;&'\\\"\" are not converted to their entity codes"
-       */
-      portletResp.setRenderParameter("tr35", "true");
-    } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL26")
-        && portletReq.getParameter("specialCharsTr36") != null) {
-      if ((portletReq.getParameter("specialCharsTr36")).equals("&lt;&gt;&amp;&#39;&#34;")) {
-        /*
-         * TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL26 Details:
-         * "The \"escapeXML\" attribute default value is true"
-         */
-        portletResp.setRenderParameter("tr36", "true");
-      }
     } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL27")) {
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL27 */
       /* Details: "If the optional actionURL \"name\" attribute is set, the */
@@ -312,7 +314,6 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
     }
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
-    StringWriter writer = new StringWriter();
   }
 
   /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL27 */
@@ -322,17 +323,14 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
   @ProcessAction(name = "actionNameTr27")
   public void actionUrlViaName(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet actionUrlViaName entry");
     portletResp.setRenderParameter("tr37", "true");
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
-    StringWriter writer = new StringWriter();
   }
 
   @Override
   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
@@ -374,16 +372,15 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
             .getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL3);
         tr67.setTcSuccess(true);
         tr67.writeTo(writer);
-      } else if (action
-          .equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL4")
-          && portletReq.getParameterValues("renderParamTr68")!=null
-          && portletReq.getParameterValues("renderParamTr68").length==2
+      } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL4")
+          && portletReq.getParameterValues("renderParamTr68") != null
+          && portletReq.getParameterValues("renderParamTr68").length == 2
           && "false".equals(portletReq.getParameterValues("renderParamTr68")[0])
           && "true".equals(portletReq.getParameterValues("renderParamTr68")[1])) {
         /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL4 */
-        /* Details: "The resource parameters specified with the                 */
-        /* &lt;portlet:param&gt; element appear in the values array before      */
-        /* the render parameter values if there is a name conflict"             */
+        /* Details: "The resource parameters specified with the */
+        /* &lt;portlet:param&gt; element appear in the values array before */
+        /* the render parameter values if there is a name conflict" */
         TestResult tr68 = tcd
             .getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL4);
         tr68.setTcSuccess(true);
@@ -401,8 +398,10 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
           && portletReq.getResourceID() != null
           && "resourceURLTr84".equals(portletReq.getResourceID())) {
         /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL22 */
-        /* Details: "Setting the \"id\" attribute will add an ID to the resourceURL which can
-        /*  be retrieved by \"getResourceID()\" method of ResourceRequest" */
+        /*
+         * Details: "Setting the \"id\" attribute will add an ID to the resourceURL which can /* be
+         * retrieved by \"getResourceID()\" method of ResourceRequest"
+         */
         TestResult tr84 = tcd
             .getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL22);
         tr84.setTcSuccess(true);
@@ -416,14 +415,76 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
             .getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL23);
         tr85.setTcSuccess(true);
         tr85.writeTo(writer);
+      } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL24")
+          && (portletReq.getCacheability()).equals(ResourceURL.PAGE)) {
+        /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL24 */
+        /* Details: "If the optional resourceURL \"cacheability\" attribute     */
+        /* is not set, the current cacheability setting is retained"            */
+        TestResult tr86 = tcd
+            .getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL24);
+        tr86.setTcSuccess(true);
+        tr86.writeTo(writer);
+      } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL25")
+          && (portletReq.getCacheability()).equals(ResourceURL.FULL)) {
+        /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL25 */
+        /* Details: "If the cacheability is set to PAGE in a Resource phase     */
+        /* include with cacheability = FULL, a JspException with the            */
+        /* IllegalStateException that caused this error is thrown"              */
+        TestResult tr87 = tcd
+            .getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL25);
+        try {
+          String target = JSP_PREFIX + "PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_tr87" + JSP_SUFFIX
+              + "?" + QUERY_STRING;
+          PortletRequestDispatcher rd = getPortletContext().getRequestDispatcher(target);
+          rd.include(portletReq, portletResp);
+        } catch (Exception e) {
+          tr87.setTcSuccess(true);
+          tr87.appendTcDetail(e.getMessage());
+        }
+        tr87.writeTo(writer);
+      } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL26")
+          && (portletReq.getCacheability()).equals(ResourceURL.FULL)) {
+        /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL26 */
+        /* Details: "If the cacheability is set to PORTLET in a Resource        */
+        /* phase include with cacheability = FULL, a JspException with the      */
+        /* IllegalStateException that caused this error is thrown"              */
+        TestResult tr88 = tcd
+            .getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL26);
+        try {
+          String target = JSP_PREFIX + "PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_tr88" + JSP_SUFFIX
+              + "?" + QUERY_STRING;
+          PortletRequestDispatcher rd = getPortletContext().getRequestDispatcher(target);
+          rd.include(portletReq, portletResp);
+        } catch (Exception e) {
+          tr88.setTcSuccess(true);
+          tr88.appendTcDetail(e.getMessage());
+        }
+        tr88.writeTo(writer);
+      } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL27")
+          && (portletReq.getCacheability()).equals(ResourceURL.PORTLET)) {
+        /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL27 */
+        /* Details: "If the cacheability is set to PORTLET in a Resource        */
+        /* phase include with cacheability = FULL, a JspException with the      */
+        /* IllegalStateException that caused this error is thrown"              */
+        TestResult tr89 = tcd
+            .getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL27);
+        try {
+          String target = JSP_PREFIX + "PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_tr87" + JSP_SUFFIX
+              + "?" + QUERY_STRING;
+          PortletRequestDispatcher rd = getPortletContext().getRequestDispatcher(target);
+          rd.include(portletReq, portletResp);
+        } catch (Exception e) {
+          tr89.setTcSuccess(true);
+          tr89.appendTcDetail(e.getMessage());
+        }
+        tr89.writeTo(writer);
       } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramResource1")
           && portletReq.getParameter("tr102_value") != null
           && "true".equals(portletReq.getParameter("tr102_value"))) {
         /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramResource1 */
         /* Details: "The param tag can be used within the resourceURL tag to */
         /* add a parameter" */
-        TestResult tr102 = tcd.getTestResultFailed(
-            V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE1);
+        TestResult tr102 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE1);
         tr102.setTcSuccess(true);
         tr102.writeTo(writer);
       } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramResource2")
@@ -431,8 +492,7 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
         /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramResource2 */
         /* Details: "The param tag required attribute \"name\" defines the */
         /* parameter name" */
-        TestResult tr103 = tcd.getTestResultFailed(
-            V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE2);
+        TestResult tr103 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE2);
         tr103.setTcSuccess(true);
         tr103.writeTo(writer);
         portletReq.setAttribute("tr103", "true");
@@ -442,8 +502,7 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
         /* Details: "If more than one tags appear in the resourceURL tag, the */
         /* values must be stored as a multivalued array in order of */
         /* appearance within the resourceURL tag" */
-        TestResult tr104 = tcd.getTestResultFailed(
-            V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE3);
+        TestResult tr104 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE3);
         tr104.setTcSuccess(true);
         tr104.writeTo(writer);
       } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramResource5")
@@ -452,8 +511,7 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
         /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramResource5 */
         /* Details: "The param tag required attribute \"value\" defines the */
         /* parameter value" */
-        TestResult tr106 = tcd.getTestResultFailed(
-            V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE5);
+        TestResult tr106 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE5);
         tr106.setTcSuccess(true);
         tr106.writeTo(writer);
       } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramResource6")
@@ -461,8 +519,7 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
         /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramResource6 */
         /* Details: "If the \"value\" attribute is null or empty, no action */
         /* is performed" */
-        TestResult tr107 = tcd.getTestResultFailed(
-            V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE6);
+        TestResult tr107 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_PARAMRESOURCE6);
         tr107.setTcSuccess(true);
         tr107.writeTo(writer);
       }
@@ -472,7 +529,6 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
   @Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "main portlet render entry");
     if (portletReq.getParameter("action") != null) {
       String action = portletReq.getParameter("action");
       if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL1")) {
@@ -528,49 +584,49 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
         /* scoped variable for exporting the action URL" */
         portletReq.setAttribute("tr51", "true");
       } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL18")
-          && portletReq.getParameter("renderParamTr57")!=null
+          && portletReq.getParameter("renderParamTr57") != null
           && "true".equals(portletReq.getParameter("renderParamTr57"))) {
         /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL18 */
-        /* Details: "If the optional renderURL                                  */
-        /* \"copyCurrentRenderParameters\" attribute is set to true, the        */
-        /* current private render parameters are attached to the URL"           */
+        /* Details: "If the optional renderURL */
+        /* \"copyCurrentRenderParameters\" attribute is set to true, the */
+        /* current private render parameters are attached to the URL" */
         portletReq.setAttribute("tr57", "true");
       } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL19")
-          && portletReq.getParameter("renderParamTr58")!=null
+          && portletReq.getParameter("renderParamTr58") != null
           && "true".equals(portletReq.getParameter("renderParamTr58"))
-          && portletReq.getParameter("renderURLTr58")!=null
+          && portletReq.getParameter("renderURLTr58") != null
           && "true".equals(portletReq.getParameter("renderURLTr58"))) {
         /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL19 */
-        /* Details: "If the optional renderURL                                  */
-        /* \"copyCurrentRenderParameters\" attribute is set to true,            */
-        /* additional parameters specified with the &lt;portlet:param&gt;       */
-        /* element are merged with the render parameters"                       */
+        /* Details: "If the optional renderURL */
+        /* \"copyCurrentRenderParameters\" attribute is set to true, */
+        /* additional parameters specified with the &lt;portlet:param&gt; */
+        /* element are merged with the render parameters" */
         portletReq.setAttribute("tr58", "true");
       } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL20")
-          && portletReq.getParameterValues("renderParamTr59")!=null
-          && portletReq.getParameterValues("renderParamTr59").length==2
+          && portletReq.getParameterValues("renderParamTr59") != null
+          && portletReq.getParameterValues("renderParamTr59").length == 2
           && "false".equals(portletReq.getParameterValues("renderParamTr59")[0])
           && "true".equals(portletReq.getParameterValues("renderParamTr59")[1])) {
         /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL20 */
-        /* Details: "If the optional renderURL                                  */
-        /* \"copyCurrentRenderParameters\" attribute is set to true,            */
-        /* additional parameters specified with the &lt;portlet:param&gt;       */
-        /* element appear in the values array before the render parameter       */
-        /* values if there is a name conflict"                                  */
+        /* Details: "If the optional renderURL */
+        /* \"copyCurrentRenderParameters\" attribute is set to true, */
+        /* additional parameters specified with the &lt;portlet:param&gt; */
+        /* element appear in the values array before the render parameter */
+        /* values if there is a name conflict" */
         portletReq.setAttribute("tr59", "true");
       } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL21")
-          && portletReq.getParameterValues("renderParamTr60")==null) {
+          && portletReq.getParameterValues("renderParamTr60") == null) {
         /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL21 */
-        /* Details: "If the optional renderURL                                  */
-        /* \"copyCurrentRenderParameters\" attribute is set to false, the       */
-        /* current render parameters are not attached to the URL"               */
+        /* Details: "If the optional renderURL */
+        /* \"copyCurrentRenderParameters\" attribute is set to false, the */
+        /* current render parameters are not attached to the URL" */
         portletReq.setAttribute("tr60", "true");
       } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramRender1")
           && portletReq.getParameter("tr96_value") != null
           && "true".equals(portletReq.getParameter("tr96_value"))) {
         /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramRender1 */
-        /* Details: "The param tag can be used within the renderURL tag to      */
-        /* add a parameter"                                                     */
+        /* Details: "The param tag can be used within the renderURL tag to */
+        /* add a parameter" */
         portletReq.setAttribute("tr96", "true");
       } else if (action.equals("V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_paramRender2")
           && portletReq.getParameter("tr97_value") != null) {
@@ -600,34 +656,9 @@ public class PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender extends GenericPo
         portletReq.setAttribute("tr101", "true");
       }
     }
-    JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
-
-    PrintWriter writer = portletResp.getWriter();
-
-    /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL22 */
-    /* Details: "If the \"copyCurrentRenderParameters\" attribute */
-    /* specifies an invalid value, a JspException is thrown" */
-    // TODO: Might have to delete it. Ask Scott first
-    TestResult tr33 =
-        tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_ACTIONURL22);
-    try {
-      String target = JSP_PREFIX + "PortletTagLibraryTests2_SPEC2_26_IncludeJSPRenderActionTr33"
-          + JSP_SUFFIX + "?" + QUERY_STRING;
-      PortletRequestDispatcher rd = getPortletContext().getRequestDispatcher(target);
-      rd.include(portletReq, portletResp);
-    } catch (Exception e) {
-      tr33.setTcSuccess(true);
-      tr33.appendTcDetail(e.getMessage());
-    }
-    tr33.appendTcDetail(
-        "Test case is failing as no exception is thrown on invalid value of copyCurrentRenderParameters."
-            + " See for more details - \n1. PortletTagLibraryTests2_SPEC2_26_IncludeJSPRenderActionTr33.jsp"
-            + "\n2. Test case - V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL22 - which shows that"
-            + " invalid copyCurrentRenderParameters value is translated as false (See HTTP headers)");
-    tr33.writeTo(writer);
 
     // Now do the actual dispatch
     String target = JSP_PREFIX + "PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender" + JSP_SUFFIX

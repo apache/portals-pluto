@@ -18,21 +18,60 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDEXPIRATION_CACHE ;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDCACHE_SCOPE ;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDPUBLIC_SCOPE ;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDPRIVATE_SCOPE ;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDETAG ;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDUSE_CACHED_CONTENT ;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDNAMESPACED_RESPONSE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDMARKUP_HEAD_ELEMENT;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_GETCONTENTTYPE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_GETCONTENTTYPE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_SETCONTENTTYPE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_SETCONTENTTYPE4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_GETCHARACTERENCODING;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_GETWRITER1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_GETWRITER2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_GETLOCALE;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_SETBUFFERSIZE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_SETBUFFERSIZE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_GETBUFFERSIZE1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_GETBUFFERSIZE2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FLUSHBUFFER1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_RESETBUFFER1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_RESETBUFFER2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_ISCOMMITTED1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_ISCOMMITTED2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_RESET1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_RESET2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_GETPORTLETOUTPUTSTREAM1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_GETPORTLETOUTPUTSTREAM2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_CREATERENDERURL;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_CREATEACTIONURL;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_CREATERESOURCEURL;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_GETCACHECONTROL;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Locale;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.CacheControl;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.ResourceURL;
+import javax.portlet.tck.beans.ClassChecker;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -46,15 +85,9 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 public class ResponseTests_MimeResponse_ApiResource implements Portlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         ResponseTests_MimeResponse_ApiResource.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-   
-   private PortletConfig portletConfig = null;
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
    }
 
    @Override
@@ -64,20 +97,16 @@ public class ResponseTests_MimeResponse_ApiResource implements Portlet, Resource
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
-
-      StringWriter writer = new StringWriter();
 
    }
 
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -223,7 +252,7 @@ public class ResponseTests_MimeResponse_ApiResource implements Portlet, Resource
       TestResult tr14 = tcd.getTestResultFailed(V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_GETWRITER2);
       try {
           portletResp.getPortletOutputStream();
-    	  PrintWriter pw=portletResp.getWriter();
+    	    portletResp.getWriter();
           
       }catch (IllegalStateException ise) {
     	  tr14.setTcSuccess(true);
@@ -378,7 +407,6 @@ public class ResponseTests_MimeResponse_ApiResource implements Portlet, Resource
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -387,7 +415,7 @@ public class ResponseTests_MimeResponse_ApiResource implements Portlet, Resource
 
       writer.write("<div id=\"ResponseTests_MimeResponse_ApiResource\">no resource output.</div>\n");
       ResourceURL resurl = portletResp.createResourceURL();
-      resurl.setCacheability(PAGE);
+      resurl.setCacheability(ResourceURL.PAGE);
       writer.write("<script>\n");
       writer.write("(function () {\n");
       writer.write("   var xhr = new XMLHttpRequest();\n");

@@ -40,8 +40,7 @@ import javax.portlet.tck.constants.Constants;
 /**
  * Formats a link to set render parameters for a test case.
  * 
- * The test driver will look for setup links for a test case and click 
- * those before clicking the actual test case links.
+ * The test driver will look for setup links for a test case and click those before clicking the actual test case links.
  * 
  * @author nick
  */
@@ -57,13 +56,15 @@ public class TestSetupLink extends TestLink {
    /**
     * Creates a test link initialized according to the parameters.
     * 
-    * @param tcName     test case name
-    * @param url        url for the test case
+    * @param tcName
+    *           test case name
+    * @param url
+    *           url for the test case
     */
    public TestSetupLink(String tcName, PortletURL purl) {
       super(tcName, purl);
       actId = tcName + Constants.SETUP_ID;
       this.title = " Setup Link";
    }
-   
+
 }

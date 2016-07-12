@@ -16,15 +16,18 @@
  */
 package org.apache.pluto.driver.services.container;
 
+import static javax.portlet.PortletRequest.ACTION_SCOPE_ID;
 import static javax.portlet.PortletRequest.HEADER_PHASE;
 import static javax.portlet.PortletRequest.RENDER_PHASE;
 import static javax.portlet.PortletRequest.RESOURCE_PHASE;
+import static org.apache.pluto.driver.url.PortalURLParameter.PARAM_TYPE_RENDER;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.MimeResponse;
@@ -36,12 +39,14 @@ import org.apache.pluto.container.HeaderData;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletResponseContext;
+import org.apache.pluto.container.PortletStateAwareResponseContext;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletURLProvider.TYPE;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.ResourceURLProvider;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURLParameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMException;
@@ -81,7 +86,7 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
    private final static String VALID_HEADER_CHARS = "^[a-zA-Z0-9!#$%&'*+-.^_`|~]+$";
    
    // holder for the header data
-   protected HeaderData             headerData        = new HeaderData();
+   protected final HeaderData headerData = new HeaderData();
    
    private final PortletRequestContext requestContext;
 
@@ -156,7 +161,12 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
 
    public void addProperty(Cookie cookie) {
       if (!isClosed() && isSetPropsAllowed) {
-         headerData.addCookie(cookie);
+         if (lifecycle.matches(RESOURCE_PHASE)) {
+            // apply headers directly to response
+            containerResponse.addCookie(cookie);
+         } else {
+            headerData.addCookie(cookie);
+         }
       }
    }
 
@@ -198,7 +208,43 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
             LOG.warn(txt.toString());
          } else {
             if (!isClosed() && isSetPropsAllowed) {
-               headerData.addHttpHeader(key, value);
+               if (lifecycle.matches(RESOURCE_PHASE)) {
+                  // apply headers directly to response
+                  containerResponse.addHeader(key, value);
+               } else {
+                  headerData.addHttpHeader(key, value);
+               }
+            }
+         }
+      }
+   }
+
+   public void setProperty(String key, String value) {
+      if (value == null) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Ignoring attempt to add property with null value. Key: ").append(key);
+         LOG.warn(txt.toString());
+      } else if (!key.matches(VALID_HEADER_CHARS)) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Ignoring attempt to add key containing disallowed characters. Key: ").append(key);
+         txt.append(", value: ").append(value);
+         LOG.warn(txt.toString());
+      } else {
+         // header names are case insensitive. allow setting all headers 
+         // during the resource phase.
+         if (!lifecycle.matches(RESOURCE_PHASE) && disallowedHeaders.contains(key.toUpperCase())) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("Ignoring disallowed HTTP header: ").append(key);
+            txt.append(" with value: ").append(value);
+            LOG.warn(txt.toString());
+         } else {
+            if (!isClosed() && isSetPropsAllowed) {
+               if (lifecycle.matches(RESOURCE_PHASE)) {
+                  // apply headers directly to response
+                  containerResponse.addHeader(key, value);
+               } else {
+                  headerData.setHttpHeader(key, value);
+               }
             }
          }
       }
@@ -236,6 +282,28 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
          names.addAll(headerData.getHttpHeaders().keySet());
       }
       return names;
+   }
+   
+   /**
+    * to be called after request has been successfully processed and before 
+    * response has been committed.
+    */
+   @Override
+   public void processHttpHeaders() {
+      
+      // add the cookies to the response
+      for (Cookie c : headerData.getCookies()) {
+         containerResponse.addCookie(c);
+      }
+
+      // Add the HTTP headers to the response
+      Map<String, List<String>> headers = headerData.getHttpHeaders();
+      for (String name : headers.keySet()) {
+         for (String val : headers.get(name)) {
+            containerResponse.addHeader(name, val);
+         }
+      }
+
    }
 
    public void close() {
@@ -275,32 +343,6 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
       window = null;
    }
 
-   public void setProperty(String key, String value) {
-      if (value == null) {
-         StringBuilder txt = new StringBuilder(128);
-         txt.append("Ignoring attempt to add property with null value. Key: ").append(key);
-         LOG.warn(txt.toString());
-      } else if (!key.matches(VALID_HEADER_CHARS)) {
-         StringBuilder txt = new StringBuilder(128);
-         txt.append("Ignoring attempt to add key containing disallowed characters. Key: ").append(key);
-         txt.append(", value: ").append(value);
-         LOG.warn(txt.toString());
-      } else {
-         // header names are case insensitive. allow setting all headers 
-         // during the resource phase.
-         if (!lifecycle.matches(RESOURCE_PHASE) && disallowedHeaders.contains(key.toUpperCase())) {
-            StringBuilder txt = new StringBuilder(128);
-            txt.append("Ignoring disallowed HTTP header: ").append(key);
-            txt.append(" with value: ").append(value);
-            LOG.warn(txt.toString());
-         } else {
-            if (!isClosed() && isSetPropsAllowed) {
-               headerData.setHttpHeader(key, value);
-            }
-         }
-      }
-   }
-
    public ResourceURLProvider getResourceURLProvider() {
       return isReleased() ? null : new ResourceURLProviderImpl(servletRequest, window);
    }
@@ -308,5 +350,27 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
    public PortletURLProvider getPortletURLProvider(TYPE type) {
       return isClosed() ? null : 
          new PortletURLProviderImpl(getPortalURL(), type, getPortletWindow(), getRequestContext());
+   }
+   
+   /**
+    * Used when action scoped request attribute processing is active in order
+    * to set the scope ID render parameter on the response and generated URLs
+    * 
+    * @param values     The values array to set. If null, the parameter is removed.
+    */
+   @Override
+   public void setActionScopedId(String windowId, String[] values) {
+      if (this instanceof PortletStateAwareResponseContext) {
+         ((PortletStateAwareResponseContext)this).getRenderParameters(windowId).setValues(ACTION_SCOPE_ID, values);
+      }
+      else {
+         PortalURLParameter pup = new PortalURLParameter(windowId, ACTION_SCOPE_ID, values, PARAM_TYPE_RENDER);
+         if (values == null) {
+            this.getPortalURL().removeParameter(pup);
+         } else {
+            pup.setPersistent(true);
+            this.getPortalURL().setParameter(pup);
+         }
+      }
    }
 }

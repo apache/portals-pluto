@@ -17,7 +17,6 @@
  */
 package javax.portlet.tck.beans;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -30,22 +29,22 @@ import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
 /**
- * Tool for checking class properties such as implemented interfaces, 
- * superclass, methods with signatures, etc.
+ * Tool for checking class properties such as implemented interfaces, superclass, methods with signatures, etc.
  * 
  * @author nick
  */
 public class ClassChecker {
    private static final String LOG_CLASS = ClassChecker.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-  
-   private Class<?>  cut;
+   private final Logger        LOGGER    = Logger.getLogger(LOG_CLASS);
+
+   private Class<?>            cut;
    private ArrayList<Class<?>> ifList;
-   
+
    /**
     * Construct with the class to be checked.
     * 
-    * @param c       class under test
+    * @param c
+    *           class under test
     */
    public ClassChecker(Class<?> c) {
       cut = c;
@@ -55,152 +54,169 @@ public class ClassChecker {
    /**
     * Returns true if the class under test has a field by the specified name.
     * 
-    * @param fname   Field name
-    * @return        true if the class under test defines the field
+    * @param fname
+    *           Field name
+    * @return true if the class under test defines the field
     */
    public boolean hasField(String fname) {
       boolean result = false;
-      
+
       try {
-         @SuppressWarnings("unused")
-         Field f = cut.getField(fname);
+         cut.getField(fname);
          result = true;
-      } catch (Exception e) { }
-      
+      } catch (Exception e) {
+      }
+
       return result;
    }
 
    /**
     * Returns true if the class under test has a field by the specified name and value.
     * 
-    * @param fname   Field name
-    * @param value   Field value
-    * @return        true if the class under test defines the field with the specified value
+    * @param fname
+    *           Field name
+    * @param value
+    *           Field value
+    * @return true if the class under test defines the field with the specified value
     */
    public boolean hasField(String fname, String value) {
       boolean result = false;
-      
+
       try {
          Field f = cut.getField(fname);
          String fValue = (String) f.get(null);
          if (fValue.equals(value)) {
             result = true;
          }
-      } catch (Exception e) { }
-      
+      } catch (Exception e) {
+      }
+
       return result;
    }
 
    /**
     * Returns true if the class under test has a field by the specified name and value.
     * 
-    * @param fname   Field name
-    * @param value   Field value
-    * @return        true if the class under test defines the field with the specified value
+    * @param fname
+    *           Field name
+    * @param value
+    *           Field value
+    * @return true if the class under test defines the field with the specified value
     */
    public boolean hasField(String fname, int value) {
       boolean result = false;
-      
+
       try {
          Field f = cut.getField(fname);
-         int fValue = (int) f.getInt(null);
+         int fValue = f.getInt(null);
          if (fValue == value) {
             result = true;
          }
-      } catch (Exception e) { }
-      
+      } catch (Exception e) {
+      }
+
       return result;
    }
 
    /**
     * Returns true if the class under test has a field by the specified name and value.
     * 
-    * @param fname   Field name
-    * @param value   Field value
-    * @return        true if the class under test defines the field with the specified value
+    * @param fname
+    *           Field name
+    * @param value
+    *           Field value
+    * @return true if the class under test defines the field with the specified value
     */
    public boolean hasField(String fname, PortletMode value) {
       boolean result = false;
-      
+
       try {
          Field f = cut.getField(fname);
          PortletMode fValue = (PortletMode) f.get(null);
          if (fValue.equals(value)) {
             result = true;
          }
-      } catch (Exception e) { }
-      
+      } catch (Exception e) {
+      }
+
       return result;
    }
 
    /**
     * Returns true if the class under test has a field by the specified name and value.
     * 
-    * @param fname   Field name
-    * @param value   Field value
-    * @return        true if the class under test defines the field with the specified value
+    * @param fname
+    *           Field name
+    * @param value
+    *           Field value
+    * @return true if the class under test defines the field with the specified value
     */
    public boolean hasField(String fname, WindowState value) {
       boolean result = false;
-      
+
       try {
          Field f = cut.getField(fname);
          WindowState fValue = (WindowState) f.get(null);
          if (fValue.equals(value)) {
             result = true;
          }
-      } catch (Exception e) { }
-      
+      } catch (Exception e) {
+      }
+
       return result;
    }
-   
+
    /**
     * Tests whether class under test implements given interface
     * 
-    * @param   ifType   class of interface to be checked for
-    * @return  true     if the cut implements the interface
+    * @param ifType
+    *           class of interface to be checked for
+    * @return true if the cut implements the interface
     */
    public boolean implementsInterface(Class<?> ifType) {
       boolean result = false;
-      
+
       if (ifList.contains(ifType)) {
          result = true;
       }
       return result;
    }
-   
-   
+
    /**
     * Tests whether class under test has the designated constructor
     * 
-    * @param   parmTypes   argument types for constructor. 
-    * @return  true if the cut implements the interface
+    * @param parmTypes
+    *           argument types for constructor.
+    * @return true if the cut implements the interface
     */
    public boolean hasConstructor(Class<?>... parmTypes) {
       boolean result = false;
-      
+
       try {
-         @SuppressWarnings("unused")
-         Constructor<?> c = cut.getConstructor(parmTypes);
+         cut.getConstructor(parmTypes);
          result = true;
-      } catch (Exception e) { }
-      
+      } catch (Exception e) {
+      }
+
       return result;
    }
-   
+
    /**
     * Tests whether class under test implements given interface
     * 
-    * @param name          Method name
-    * @param parms         list of parameter types
-    * @param exceptions    list of exception types
-    * @return              true, if there exists such a method
+    * @param name
+    *           Method name
+    * @param parms
+    *           list of parameter types
+    * @param exceptions
+    *           list of exception types
+    * @return true, if there exists such a method
     */
    public boolean hasMethod(String name, Class<?>[] parms, Class<?>[] exceptions) {
       boolean result = false;
-      
+
       try {
-         
+
          HashSet<Class<?>> exParm = new HashSet<Class<?>>();
          if (exceptions != null) {
             exParm.addAll(Arrays.asList(exceptions));
@@ -213,15 +229,15 @@ public class ClassChecker {
          } catch (Exception e) {
             m = cut.getDeclaredMethod(name, parms);
          }
-         
+
          HashSet<Class<?>> mexs = new HashSet<Class<?>>();
          mexs.addAll(Arrays.asList(m.getExceptionTypes()));
-         
+
          if (LOGGER.isLoggable(Level.FINEST)) {
             LOGGER.logp(Level.FINE, LOG_CLASS, "hasMethod", "added exception types");
          }
 
-         if (exParm.isEmpty() && mexs.isEmpty() ) {
+         if (exParm.isEmpty() && mexs.isEmpty()) {
             if (LOGGER.isLoggable(Level.FINEST)) {
                LOGGER.logp(Level.FINE, LOG_CLASS, "hasMethod", "no exceptions to check");
             }
@@ -237,27 +253,30 @@ public class ClassChecker {
                LOGGER.logp(Level.WARNING, LOG_CLASS, "hasMethod", sb.toString());
             }
          }
-         
-      } catch (Exception e) { 
+
+      } catch (Exception e) {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Could not get method: ").append(name);
          LOGGER.log(Level.WARNING, txt.toString(), e);
       }
-      
+
       return result;
    }
-   
+
    /**
     * Tests whether the class method has specified return type.
     * 
-    * @param name          Method name
-    * @param retType       return type
-    * @param parms         list of parameter types
-    * @return              true, if the method has the return type
+    * @param name
+    *           Method name
+    * @param retType
+    *           return type
+    * @param parms
+    *           list of parameter types
+    * @return true, if the method has the return type
     */
-   public boolean methodHasReturnType(String name, Class<?> retType,  Class<?>[] parms) {
+   public boolean methodHasReturnType(String name, Class<?> retType, Class<?>[] parms) {
       boolean result = false;
-      
+
       try {
 
          // if it isn't public, it might be protected
@@ -273,53 +292,54 @@ public class ClassChecker {
          if (result == false) {
             result = retType.isAssignableFrom(cutRT);
          }
-      } catch (Exception e) { }
-      
+      } catch (Exception e) {
+      }
+
       return result;
    }
-   
+
    /**
     * Tests whether class under test implements given interface
     * 
-    * @param   scType
-    * @return  true if the cut implements the interface
+    * @param scType
+    * @return true if the cut implements the interface
     */
    public boolean hasSuperclass(Class<?> scType) {
       boolean result = false;
-      
+
       Class<?> c = cut.getSuperclass();
       result = c.equals(scType);
-      
+
       return result;
    }
-   
+
    /**
     * Tests whether the class under test is an annotation
     * 
-    * @return     true if the class under test is an annotation
+    * @return true if the class under test is an annotation
     */
    public boolean isAnnotation() {
       return cut.isAnnotation();
    }
-   
+
    /**
     * Tests whether the class under test is an Enum
     * 
-    * @return     true if the class under test is an Enum
+    * @return true if the class under test is an Enum
     */
    public boolean isEnum() {
       return cut.isEnum();
    }
-   
-   private ArrayList<Class<?>> getAllInterfaces (Class<?> c) {
+
+   private ArrayList<Class<?>> getAllInterfaces(Class<?> c) {
       ArrayList<Class<?>> ifs = new ArrayList<Class<?>>();
-      
+
       Class<?>[] cs = c.getInterfaces();
       for (Class<?> cls : cs) {
          ifs.add(cls);
          ifs.addAll(getAllInterfaces(cls));
       }
-      
+
       return ifs;
    }
 

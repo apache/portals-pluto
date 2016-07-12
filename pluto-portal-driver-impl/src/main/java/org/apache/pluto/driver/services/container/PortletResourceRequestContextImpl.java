@@ -22,6 +22,7 @@ import java.util.Map;
 
 import javax.enterprise.inject.spi.BeanManager;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -67,7 +68,7 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
       // if pageState != null, we're dealing with a Partial Action request, so
       // the servlet parameters are not to be used. Otherwise, resource params could be
       // passed as servlet parameters.
-      super(container, containerRequest, containerResponse, window, (pageState == null));
+      super(container, containerRequest, containerResponse, window, (pageState == null), PortletRequest.RESOURCE_PHASE);
       this.pageState = pageState;
    }
    

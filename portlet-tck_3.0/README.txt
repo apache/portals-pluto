@@ -8,7 +8,7 @@ Overview:
 =========
 
 The TCK contains portlets and a test driver that are used to perform the
-compatibility test. The portlets contain the code that actually excercises the
+compatibility test. The portlets contain the code that actually exercises the
 portlet API. The driver uses Selenium 2 driven by Junit to access the system
 under test through a browser.
 
@@ -111,7 +111,7 @@ Deploying TCK artifacts:
 
 Deploy the portlet war files contained in the deploy/target/deploy-files
 directory on your system under test. Use the page file which has the default
-name of deploy/target/deploy-files/pluto-portlet-driver-config.xml to create
+name of deploy/target/deploy-files/pluto-portal-driver-config.xml to create
 pages for your system. If you are testing with Apache Pluto, you can simply copy
 this file into the Pluto webapps/pluto/WEB-INF directory in order to set up the
 pages. The WAR files contain the test portlet code. Deploy these files on your 

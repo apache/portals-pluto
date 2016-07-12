@@ -56,7 +56,7 @@ public class RenderURLTag362 extends RenderURLTag286 {
 
       MimeResponse resp = (MimeResponse) obj;
       RenderURL rurl = null;
-      if (getCopyCurrentRenderParameters() == true) {
+      if (isCopyCurrentRenderParameters() == true) {
          rurl = resp.createRenderURL(Copy.ALL);
       } else {
          rurl = resp.createRenderURL(Copy.NONE);

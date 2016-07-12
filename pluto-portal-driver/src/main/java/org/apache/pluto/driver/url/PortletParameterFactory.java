@@ -394,10 +394,13 @@ public class PortletParameterFactory {
          LOGGER.debug(txt.toString());
       }
       
-      if (isPublicRenderParameter(windowId, name)) {
+      if (url.getType() == URLType.Render && isPublicRenderParameter(windowId, name)) {
          int index = prpMapper.getIndex(windowId, name);
          if (index >= 0) {
-            vals = prpMapper.getValues(index).clone();
+            vals = prpMapper.getValues(index);
+            if (vals != null) {
+               vals = vals.clone();
+            }
          } else {
             LOGGER.debug("Public render parameter name not found in index.");
          }

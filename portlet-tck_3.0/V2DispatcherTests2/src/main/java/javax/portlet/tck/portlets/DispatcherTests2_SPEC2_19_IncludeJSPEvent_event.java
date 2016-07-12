@@ -18,30 +18,42 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
-import static javax.portlet.PortletSession.*;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_DISPATCH2;
+import static javax.portlet.tck.constants.Constants.JSP_PREFIX;
+import static javax.portlet.tck.constants.Constants.JSP_SUFFIX;
+import static javax.portlet.tck.constants.Constants.QUERY_STRING;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.EventPortlet;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.MimeResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.tck.beans.TestSetupLink;
 
 /**
- * This is the event processing portlet for the test cases. This portlet processes events, 
- * but does not publish them. Events are published in the main portlet for the test cases. 
+ * This is the event processing portlet for the test cases. This portlet processes events, but does not publish them.
+ * Events are published in the main portlet for the test cases.
  */
 public class DispatcherTests2_SPEC2_19_IncludeJSPEvent_event implements Portlet, EventPortlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         DispatcherTests2_SPEC2_19_IncludeJSPEvent_event.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-   
+
    private PortletConfig portletConfig = null;
 
    @Override
@@ -54,53 +66,53 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPEvent_event implements Portlet,
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
+   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+
    }
 
    @Override
-   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion serveResource - ERROR!!");
+   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp) throws PortletException,
+         IOException {
+
    }
 
    @Override
-   public void processEvent(EventRequest portletReq, EventResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion processEvent");
-
+   public void processEvent(EventRequest portletReq, EventResponse portletResp) throws PortletException, IOException {
 
       portletResp.setRenderParameters(portletReq);
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      StringWriter writer = new StringWriter();
+      new StringWriter();
 
       // Now do the actual dispatch
       String target = JSP_PREFIX + "DispatcherTests2_SPEC2_19_IncludeJSPEvent" + JSP_SUFFIX + "?" + QUERY_STRING;
-      PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher(target);
+      PortletRequestDispatcher rd = portletConfig.getPortletContext().getRequestDispatcher(target);
       rd.include(portletReq, portletResp);
 
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp)
-         throws PortletException, IOException {
-      
-      LOGGER.entering(LOG_CLASS, "event companion render");
+   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
 
       portletResp.setContentType("text/html");
       PrintWriter writer = portletResp.getWriter();
       writer.write("<h3>Event Companion Portlet </h3>\n");
       writer.write("<p>DispatcherTests2_SPEC2_19_IncludeJSPEvent_event</p>\n");
 
-      String msg = (String) portletReq.getPortletSession()
-            .getAttribute(RESULT_ATTR_PREFIX + "DispatcherTests2_SPEC2_19_IncludeJSPEvent", APPLICATION_SCOPE);
-      msg = (msg==null) ? "Not ready. click test case link." : msg;
+      String msg = (String) portletReq.getPortletSession().getAttribute(
+            RESULT_ATTR_PREFIX + "DispatcherTests2_SPEC2_19_IncludeJSPEvent", APPLICATION_SCOPE);
+      msg = (msg == null) ? "Not ready. click test case link." : msg;
       writer.write("<p>" + msg + "</p>\n");
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_dispatch2 */
+      /* Details: "Parameters specified in the query strings must be */
+      /* aggregated with the portlet render parameters" */
+      PortletURL urlEvent = ((MimeResponse) portletResp).createRenderURL();
+      urlEvent.setParameter("qparm2", "renderVal2");
+      TestSetupLink tlEvent = new TestSetupLink(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_DISPATCH2, urlEvent);
+      tlEvent.writeTo(writer);
 
    }
 

@@ -18,21 +18,32 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.ResourceURL;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.ResourceLink;
+import javax.portlet.tck.beans.TestResult;
+
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL2;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL3;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL4;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL5;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL7;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -46,15 +57,9 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Portlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         URLTests_PortletURLGenerationListener_ApiRenderResurl.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-   
-   private PortletConfig portletConfig = null;
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
    }
 
    @Override
@@ -64,20 +69,18 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
+
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
-
-      StringWriter writer = new StringWriter();
 
    }
 
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
+
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -90,7 +93,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          TestResult tr0 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL1);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL1")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL1")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Resource");
@@ -108,7 +111,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          TestResult tr1 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL2);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL2")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL2")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Resource");
@@ -126,7 +129,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          TestResult tr2 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL3);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL3")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL3")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Resource");
@@ -144,7 +147,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          TestResult tr3 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL4);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL4")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL4")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Resource");
@@ -162,7 +165,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          TestResult tr4 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL5);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL5")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL5")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Resource");
@@ -180,7 +183,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          TestResult tr5 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL7);
          String tcval = portletReq.getParameter("tc");
          // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL7")) {
+         if (tcval !=  null &&  tcval.equals("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL7")) {
             // Verify that the listener set the parameter as expected
             String val = portletReq.getParameter("PUGL");
             boolean ok = (val != null) && val.equals("Resource");
@@ -197,7 +200,7 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
+
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -207,8 +210,6 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
       JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
       // Create result objects for the tests
-
-      ClassChecker cc = new ClassChecker(PortletURLGenerationListener.class);
 
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL1 */
       /* Details: "Method filterResourceURL(ResourceURL): The                 */
@@ -221,10 +222,10 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          String urlstr = turl.toString();
          
          // add the resource results fetcher to the output stream
-         ResourceLink rl = new ResourceLink("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL1", urlstr);
+         ResourceLink rl = new ResourceLink(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL1, urlstr);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr0.appendTcDetail(e.toString());
+         tr0.appendTcDetail(e);
          tr0.writeTo(writer);
       }
 
@@ -241,10 +242,10 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          String urlstr = tsw.toString();
          
          // add the resource results fetcher to the output stream
-         ResourceLink rl = new ResourceLink("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL2", urlstr);
+         ResourceLink rl = new ResourceLink(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL2, urlstr);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr1.appendTcDetail(e.toString());
+         tr1.appendTcDetail(e);
          tr1.writeTo(writer);
       }
 
@@ -261,10 +262,10 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          String urlstr = tsw.toString();
          
          // add the resource results fetcher to the output stream
-         ResourceLink rl = new ResourceLink("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL3", urlstr);
+         ResourceLink rl = new ResourceLink(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL3, urlstr);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr2.appendTcDetail(e.toString());
+         tr2.appendTcDetail(e);
          tr2.writeTo(writer);
       }
 
@@ -279,10 +280,10 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          String urlstr = turl.toString();
          
          // add the resource results fetcher to the output stream
-         ResourceLink rl = new ResourceLink("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL4", urlstr);
+         ResourceLink rl = new ResourceLink(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL4, urlstr);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr3.appendTcDetail(e.toString());
+         tr3.appendTcDetail(e);
          tr3.writeTo(writer);
       }
 
@@ -297,10 +298,10 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          String urlstr = turl.toString();
          
          // add the resource results fetcher to the output stream
-         ResourceLink rl = new ResourceLink("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL5", urlstr);
+         ResourceLink rl = new ResourceLink(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL5, urlstr);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr4.appendTcDetail(e.toString());
+         tr4.appendTcDetail(e);
          tr4.writeTo(writer);
       }
 
@@ -316,10 +317,10 @@ public class URLTests_PortletURLGenerationListener_ApiRenderResurl implements Po
          String urlstr = turl.toString();
          
          // add the resource results fetcher to the output stream
-         ResourceLink rl = new ResourceLink("V2URLTests_PortletURLGenerationListener_ApiRenderResurl_filterResourceURL7", urlstr);
+         ResourceLink rl = new ResourceLink(V2URLTESTS_PORTLETURLGENERATIONLISTENER_APIRENDERRESURL_FILTERRESOURCEURL7, urlstr);
          rl.writeResourceFetcher(writer);
       } catch(Exception e) {
-         tr5.appendTcDetail(e.toString());
+         tr5.appendTcDetail(e);
          tr5.writeTo(writer);
       }
 

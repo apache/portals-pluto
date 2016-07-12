@@ -17,8 +17,38 @@
     specific language governing permissions and limitations
     under the License.     
 -->
-<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	
 	<display-name>javax.portlet-tck-AddlEnvironmentTests</display-name>
+	<servlet>
+		<servlet-name>AddlEnvironmentTests_SPEC2_18_Sessions_servlet</servlet-name>
+		<servlet-class>javax.portlet.tck.servlets.AddlEnvironmentTests_SPEC2_18_Sessions_servlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddlEnvironmentTests_SPEC2_18_Sessions_servlet</servlet-name>
+		<url-pattern>/AddlEnvironmentTests_SPEC2_18_Sessions_servlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AddlEnvironmentTests_SPEC2_18_Sessions_invalidate1</servlet-name>
+		<servlet-class>javax.portlet.tck.servlets.AddlEnvironmentTests_SPEC2_18_Sessions_invalidate1</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddlEnvironmentTests_SPEC2_18_Sessions_invalidate1</servlet-name>
+		<url-pattern>/AddlEnvironmentTests_SPEC2_18_Sessions_invalidate1</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AddlEnvironmentTests_SPEC2_18_Sessions_invalidate2</servlet-name>
+		<servlet-class>javax.portlet.tck.servlets.AddlEnvironmentTests_SPEC2_18_Sessions_invalidate2</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddlEnvironmentTests_SPEC2_18_Sessions_invalidate2</servlet-name>
+		<url-pattern>/AddlEnvironmentTests_SPEC2_18_Sessions_invalidate2</url-pattern>
+	</servlet-mapping>
+	
 	<context-param>
 		<param-name>testParam1</param-name>
 		<param-value>testValue1</param-value>

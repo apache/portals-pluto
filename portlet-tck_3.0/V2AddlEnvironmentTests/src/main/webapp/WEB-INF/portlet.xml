@@ -1,159 +1,334 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.     
--->
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
-   version="2.0" id="V2AddlEnvironmentTests">
-   <portlet>
-      <portlet-name>AddlEnvironmentTests_SPEC2_10_Context</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_10_Context</portlet-class>
-      <expiration-cache>0</expiration-cache>
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-      <supported-locale>en_US</supported-locale>
-      <portlet-info>
-         <title>AddlEnvironmentTests_SPEC2_10_Context</title>
-      </portlet-info>
-   </portlet>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+	version="2.0" id="V2AddlEnvironmentTests">
+	<portlet>
+		<portlet-name>AddlEnvironmentTests_SPEC2_10_Context</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_10_Context</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlEnvironmentTests_SPEC2_10_Context</title>
+		</portlet-info>
+	</portlet>
 
-   <portlet>
-      <portlet-name>AddlEnvironmentTests_SPEC2_10_ContextOptions</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_10_ContextOptions</portlet-class>
-      <expiration-cache>0</expiration-cache>
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-      <supported-locale>en_US</supported-locale>
-      <portlet-info>
-         <title>AddlEnvironmentTests_SPEC2_10_ContextOptions</title>
-      </portlet-info>
-   </portlet>
+	<portlet>
+		<portlet-name>AddlEnvironmentTests_SPEC2_10_ContextOptions</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_10_ContextOptions</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlEnvironmentTests_SPEC2_10_ContextOptions</title>
+		</portlet-info>
 
-   <portlet>
-      <portlet-name>AddlEnvironmentTests_SPEC2_17_ActionPreferences</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_ActionPreferences</portlet-class>
-      <expiration-cache>0</expiration-cache>
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-      <supported-locale>en_US</supported-locale>
-      <portlet-info>
-         <title>AddlEnvironmentTests_SPEC2_17_ActionPreferences</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>AddlEnvironmentTests_SPEC2_17_EventPreferences</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_EventPreferences</portlet-class>
-      <expiration-cache>0</expiration-cache>
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-      <supported-locale>en_US</supported-locale>
-      <portlet-info>
-         <title>AddlEnvironmentTests_SPEC2_17_EventPreferences</title>
-      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:AddlEnvironmentTests_SPEC2_10_ContextOptions</qname>
+      </supported-processing-event>
       <supported-publishing-event>
-         <qname>tck:AddlEnvironmentTests_SPEC2_17_EventPreferences</qname>
+         <qname>tck:AddlEnvironmentTests_SPEC2_10_ContextOptions</qname>
+      </supported-publishing-event>
+      <supported-publishing-event>
+         <qname>tck:AddlEnvironmentTests_SPEC2_10_ContextOptions_event</qname>
+      </supported-publishing-event>
+
+		<container-runtime-option>
+			<name>javax.portlet.actionScopedRequestAttributes</name>
+			<value>true</value>
+			<value>numberOfCachedScopes</value>
+			<value>10</value>
+		</container-runtime-option>
+		<container-runtime-option>
+			<name>javax.portlet.escapeXml</name>
+			<value>false</value>
+		</container-runtime-option>
+		<container-runtime-option>
+			<name>javax.portlet.servletDefaultSessionScope</name>
+			<value>PORTLET_SCOPE</value>
+		</container-runtime-option>
+	</portlet>
+
+   <portlet>
+      <portlet-name>AddlEnvironmentTests_SPEC2_10_ContextOptions_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_10_ContextOptions_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlEnvironmentTests_SPEC2_10_ContextOptions_event</title>
+      </portlet-info>
+
+      <supported-processing-event>
+         <qname>tck:AddlEnvironmentTests_SPEC2_10_ContextOptions_event</qname>
+      </supported-processing-event>
+      <supported-publishing-event>
+         <qname>tck:AddlEnvironmentTests_SPEC2_10_ContextOptions</qname>
       </supported-publishing-event>
    </portlet>
 
-   <portlet>
-      <portlet-name>AddlEnvironmentTests_SPEC2_17_EventPreferences_event</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_EventPreferences_event</portlet-class>
-      <expiration-cache>0</expiration-cache>
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-      <supported-locale>en_US</supported-locale>
-      <portlet-info>
-         <title>AddlEnvironmentTests_SPEC2_17_EventPreferences_event</title>
-      </portlet-info>
-      <supported-processing-event>
-         <qname>tck:AddlEnvironmentTests_SPEC2_17_EventPreferences</qname>
-      </supported-processing-event>
-   </portlet>
+	<portlet>
+		<portlet-name>AddlEnvironmentTests_SPEC2_17_ActionPreferences</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_ActionPreferences</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlEnvironmentTests_SPEC2_17_ActionPreferences</title>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>tr0</name>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>tr1</name>
+				<value>true</value>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>tr2</name>
+				<value>false</value>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>tr3</name>
+				<value>false</value>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>tr4</name>
+				<value>false</value>
+				<read-only>true</read-only>
+			</preference>
+			<preference>
+				<name>tr5</name>
+				<value>false</value>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>tr6</name>
+				<value>false</value>
+				<read-only>true</read-only>
+			</preference>
+		</portlet-preferences>
+	</portlet>
 
-   <portlet>
-      <portlet-name>AddlEnvironmentTests_SPEC2_17_ResourcePreferences</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_ResourcePreferences</portlet-class>
-      <expiration-cache>0</expiration-cache>
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-      <supported-locale>en_US</supported-locale>
-      <portlet-info>
-         <title>AddlEnvironmentTests_SPEC2_17_ResourcePreferences</title>
-      </portlet-info>
-   </portlet>
+	<portlet>
+		<portlet-name>AddlEnvironmentTests_SPEC2_17_EventPreferences</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_EventPreferences</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlEnvironmentTests_SPEC2_17_EventPreferences</title>
+		</portlet-info>
+		<supported-publishing-event>
+			<qname>tck:AddlEnvironmentTests_SPEC2_17_EventPreferences</qname>
+		</supported-publishing-event>
+	</portlet>
 
-   <portlet>
-      <portlet-name>AddlEnvironmentTests_SPEC2_17_RenderPreferences</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_RenderPreferences</portlet-class>
-      <expiration-cache>0</expiration-cache>
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-      <supported-locale>en_US</supported-locale>
-      <portlet-info>
-         <title>AddlEnvironmentTests_SPEC2_17_RenderPreferences</title>
-      </portlet-info>
-   </portlet>
+	<portlet>
+		<portlet-name>AddlEnvironmentTests_SPEC2_17_EventPreferences_event</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_EventPreferences_event</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlEnvironmentTests_SPEC2_17_EventPreferences_event</title>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>tr0</name>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>tr1</name>
+				<value>true</value>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>tr2</name>
+				<value>false</value>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>tr3</name>
+				<value>false</value>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>tr4</name>
+				<value>false</value>
+				<read-only>true</read-only>
+			</preference>
+			<preference>
+				<name>tr5</name>
+				<value>false</value>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>tr6</name>
+				<value>false</value>
+				<read-only>true</read-only>
+			</preference>
+		</portlet-preferences>
+		<supported-processing-event>
+			<qname>tck:AddlEnvironmentTests_SPEC2_17_EventPreferences</qname>
+		</supported-processing-event>
+	</portlet>
 
-   <portlet>
-      <portlet-name>AddlEnvironmentTests_SPEC2_18_Sessions</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_18_Sessions</portlet-class>
-      <expiration-cache>0</expiration-cache>
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-      <supported-locale>en_US</supported-locale>
-      <portlet-info>
-         <title>AddlEnvironmentTests_SPEC2_18_Sessions</title>
-      </portlet-info>
-   </portlet>
+	<portlet>
+		<portlet-name>AddlEnvironmentTests_SPEC2_17_ResourcePreferences</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_ResourcePreferences</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlEnvironmentTests_SPEC2_17_ResourcePreferences</title>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>tr0</name>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>tr1</name>
+				<value>true</value>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>tr2</name>
+				<value>false</value>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>tr3</name>
+				<value>false</value>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>tr4</name>
+				<value>false</value>
+				<read-only>true</read-only>
+			</preference>
+			<preference>
+				<name>tr5</name>
+				<value>false</value>
+				<read-only>false</read-only>
+			</preference>
+			<preference>
+				<name>tr6</name>
+				<value>false</value>
+				<read-only>true</read-only>
+			</preference>
+		</portlet-preferences>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlEnvironmentTests_SPEC2_17_RenderPreferences</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_RenderPreferences</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlEnvironmentTests_SPEC2_17_RenderPreferences</title>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>tr1</name>
+				<value>true</value>
+				<read-only>true</read-only>
+			</preference>
+		</portlet-preferences>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlEnvironmentTests_SPEC2_18_Sessions</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_18_Sessions</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlEnvironmentTests_SPEC2_18_Sessions</title>
+		</portlet-info>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>AddlEnvironmentTests_SPEC2_18_Sessions2</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_18_Sessions2</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlEnvironmentTests_SPEC2_18_Sessions2</title>
+		</portlet-info>
+	</portlet>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_5_EventHandling</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_15_Event</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlEnvironmentTests_SPEC2_17_EventPreferences</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
 
    <event-definition>
-      <qname>tck:AddlPortletTests_SPEC2_5_EventHandling</qname>
+      <qname>tck:AddlEnvironmentTests_SPEC2_10_ContextOptions</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:AddlPortletTests_SPEC2_15_Event</qname>
+      <qname>tck:AddlEnvironmentTests_SPEC2_10_ContextOptions_event</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
-   <event-definition>
-      <qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <event-definition>
-      <qname>tck:AddlEnvironmentTests_SPEC2_17_EventPreferences</qname>
-      <value-type>java.lang.String</value-type>
-   </event-definition>
-
-   <public-render-parameter>
-      <identifier>tckPRP1</identifier>
-      <qname>tck:tckPRP1</qname>
-   </public-render-parameter>
+	<public-render-parameter>
+		<identifier>tckPRP1</identifier>
+		<qname>tck:tckPRP1</qname>
+	</public-render-parameter>
 </portlet-app>

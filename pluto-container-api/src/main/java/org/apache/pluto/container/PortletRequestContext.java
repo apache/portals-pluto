@@ -23,10 +23,10 @@ import java.util.Map;
 
 import javax.portlet.ActionParameters;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderParameters;
 import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,7 +38,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface PortletRequestContext
 {
-    void init(PortletConfig portletConfig, ServletContext servletContext, HttpServletRequest servletRequest, HttpServletResponse servletResponse);
+    void init(PortletConfig portletConfig, ServletContext servletContext, HttpServletRequest servletRequest,
+          HttpServletResponse servletResponse, PortletResponseContext responseContext);
     PortletContainer getContainer();
     PortletConfig getPortletConfig();
     ServletContext getServletContext();
@@ -50,19 +51,12 @@ public interface PortletRequestContext
     
     Enumeration<String> getAttributeNames();
     Object getAttribute(String name);
-    /**
-     * Get the attribute from the request. Generally only called by servlet code that has been dispatched
-     * to by a portlet (such as rendering a JSP).
-     * 
-     * @param name attribute name
-     * @param servletRequest The current servlet request
-     */
-    Object getAttribute(String name, ServletRequest servletRequest);
     void setAttribute(String name, Object value);
 
     Locale getPreferredLocale();
     Cookie[] getCookies();
     Map<String, String[]> getProperties();
+    PortletSession getPortletSession(boolean create);
     
     // V2 compatibility parameter methods
     

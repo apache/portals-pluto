@@ -17,6 +17,13 @@
 package org.apache.pluto.tags;
 
 
+import static javax.portlet.ResourceURL.FULL;
+import static javax.portlet.ResourceURL.PAGE;
+import static javax.portlet.ResourceURL.PORTLET;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.BaseURL;
@@ -42,14 +49,20 @@ public class ResourceURLTag286 extends BaseURLTag {
 	
 	private String id = null;
 	
-	private String cachability = null;
+	private String cacheability = null;
+	private static final Map<String, String> cacheabilityMap = new HashMap<String, String>();
+	static {
+	   cacheabilityMap.put("FULL", FULL);
+	   cacheabilityMap.put("PORTLET", PORTLET);
+	   cacheabilityMap.put("PAGE", PAGE);
+	}
 	
 	private ResourceURL resourceURL = null;
 	
 
 	public ResourceURLTag286() {
 		super();
-		this.escapeXml = true;
+		setEscapeXml(Boolean.TRUE.toString());
 	}
 	
 
@@ -66,7 +79,7 @@ public class ResourceURLTag286 extends BaseURLTag {
            String[] result = containerRuntimeOptions.get(Constants.ESCAPE_XML_RUNTIME_OPTION);
            if (result != null){
                if (result.length > 0){
-                   escapeXml = Boolean.parseBoolean(result[0]);
+                   setEscapeXml(result[0]);
                }
            }
        }
@@ -82,9 +95,16 @@ public class ResourceURLTag286 extends BaseURLTag {
             	resourceURL.setResourceID(id);
             }
 
-            if(cachability != null){
+            if(cacheability != null){
+               List<String> caAttribs = new ArrayList<String>(cacheabilityMap.keySet()); 
+               if (!caAttribs.contains(cacheability.toUpperCase())) {
+                  StringBuilder txt = new StringBuilder(128);
+                  txt.append("Invalid cacheability option: ").append(cacheability);
+                  txt.append(", valid options: ").append(caAttribs.toString());
+                  throw new JspException(txt.toString());
+               }
             	try{
-            		resourceURL.setCacheability(cachability);
+            		resourceURL.setCacheability(cacheabilityMap.get(cacheability));
             	}
             	catch(IllegalArgumentException e){
             		throw new JspException(e);
@@ -118,18 +138,19 @@ public class ResourceURLTag286 extends BaseURLTag {
 
 
 	/**
-	 * @return the cachability
+	 * @return the cacheability
 	 */
-	public String getCachability() {
-		return cachability;
+	public String getCacheability() {
+		return cacheability;
 	}
 
 
 	/**
-	 * @param cachability the cachability to set
+	 * @param cacheability the cacheability to set
+	 * @throws JspException 
 	 */
-	public void setCachability(String cachability) {
-		this.cachability = cachability;
+	public void setCacheability(String cacheability) throws JspException {
+		this.cacheability = cacheability;
 	}
 	
 

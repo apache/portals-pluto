@@ -43,210 +43,226 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @version $Id$
- *
+ * 
  */
 public abstract class PortletStateAwareResponseContextImpl extends PortletResponseContextImpl implements
-                PortletStateAwareResponseContext
-{
-    private final Logger LOGGER = LoggerFactory.getLogger(PortletStateAwareResponseContextImpl.class);
-    private final boolean isDebug = LOGGER.isDebugEnabled();
+      PortletStateAwareResponseContext {
+   private final Logger           LOGGER  = LoggerFactory.getLogger(PortletStateAwareResponseContextImpl.class);
+   private final boolean          isDebug = LOGGER.isDebugEnabled();
 
-    private List<Event> events;
-    private PortletURLProviderImpl portletURLProvider;
-    
-    public PortletStateAwareResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
-                                                HttpServletResponse containerResponse, PortletWindow window, PortletRequestContext requestContext)
-    {
-        super(container, containerRequest, containerResponse, window, requestContext);
-        this.portletURLProvider = new PortletURLProviderImpl(getPortalURL(), 
-              PortletURLProvider.TYPE.RENDER, window, getRequestContext());
-        
-        if (isDebug) {
-           LOGGER.debug("Initialized.");
-        }
-    }
-    
-    protected PortletURLProvider getPortletURLProvider()
-    {
-        return portletURLProvider;
-    }
-    
-    @Override
-    public void close()
-    {
-        if (!isClosed())
-        {
-           super.close();
+   private List<Event>            events;
+   private PortletURLProviderImpl portletURLProvider;
+   private EventProviderImpl      eventProviderImpl;
 
-           if (isDebug) {
-              LOGGER.debug("Applying the changes.");
-           }
+   public PortletStateAwareResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
+         HttpServletResponse containerResponse, PortletWindow window, PortletRequestContext requestContext) {
+      super(container, containerRequest, containerResponse, window, requestContext);
+      this.portletURLProvider = new PortletURLProviderImpl(getPortalURL(), PortletURLProvider.TYPE.RENDER, window,
+            getRequestContext());
+      this.eventProviderImpl = new EventProviderImpl(getPortletWindow(), PlutoServices.getServices()
+            .getPortletRegistryService());
 
-           PortalURL url = portletURLProvider.apply();
-           
-           if (isDebug) {
-              LOGGER.debug("Merging.");
-           }
-           
-           PortalRequestContext.getContext(getServletRequest()).mergePortalURL(url, getPortletWindow().getId().getStringId());
-           
-           if (isDebug) {
-              LOGGER.debug("exiting.");
-           }
-       }
-    }
-    
-    @Override
-    public void release()
-    {
-        events = null;
-        portletURLProvider = null;
-        super.release();
-    }
-    
-    public List<Event> getEvents()
-    {
-        if (isReleased())
-        {
-            return null;
-        }
-        if (events == null)
-        {
-            events = new ArrayList<Event>();
-        }
-        return events;
-    }
+      if (isDebug) {
+         LOGGER.debug("Initialized.");
+      }
+   }
 
-    public PortletMode getPortletMode()
-    {
-        return isClosed() ? null : portletURLProvider.getPortletMode();
-    }
+   protected PortletURLProvider getPortletURLProvider() {
+      return portletURLProvider;
+   }
 
-    public WindowState getWindowState()
-    {
-        return isClosed() ? null : portletURLProvider.getWindowState();
-    }
+   @Override
+   public void close() {
+      if (!isClosed()) {
+         super.close();
 
-    public void setPortletMode(PortletMode portletMode)
-    {
-        if (!isClosed())
-        {
-            portletURLProvider.setPortletMode(portletMode);
-        }
-    }
+         if (isDebug) {
+            LOGGER.debug("Applying the changes.");
+         }
 
-    public void setWindowState(WindowState windowState)
-    {
-        if (!isClosed())
-        {
-            portletURLProvider.setWindowState(windowState);
-        }
-    }
+         PortalURL url = portletURLProvider.apply();
 
-    public EventProvider getEventProvider()
-    {
-        return isClosed() ? null : new EventProviderImpl(getPortletWindow(), PlutoServices.getServices().getPortletRegistryService());
-    }
+         if (isDebug) {
+            LOGGER.debug("Merging.");
+         }
 
-    
-    /**
-     * Add a public render parameter for given window ID and parameter name
-     *  
-     * @param qn           QName
-     * @param identifier   Identifier for PRP
-     * @param values       values array
-     */
-    public void addPublicRenderParameter(String windowId, String name, String[] values) {
-       if (!isClosed()) {
-          portletURLProvider.addPublicRenderParameter(windowId, name, values);
-       }
-    }
-    
-    /**
-     * Remove the PRP for the given window ID and parameter name
-     * 
-     * @param windowId
-     * @param name
-     */
-    public void removePublicRenderParameter(String windowId, String name) {
-       if (!isClosed()) {
-          portletURLProvider.removePublicRenderParameter(windowId, name);
-       }
-    }
-    
-    /**
-     * Returns <code>true</code> if the given name representa a public render
-     * parameter for the given window.
-     * 
-     * @param windowId
-     * @param name
-     * @return
-     */
-    public boolean isPublicRenderParameter(String windowId, String name) {
-       boolean ret = false;
-       if (!isClosed()) {
-          ret = portletURLProvider.isPublicRenderParameter(windowId, name);
-       }
-       return ret;
-    }
-    
-    /**
-     * Retrieves the available private parameter names for the given window ID
-     * @param windowId
-     * @return
-     */
-    public Set<String> getPrivateParameterNames(String windowId) {
-       Set<String> pns = new HashSet<String>();
-       if (!isClosed()) {
-          pns = portletURLProvider.getPrivateParameterNames(windowId);
-       }
-       return pns;
-    }
-    
-    /**
-     * Gets the values array for the given window ID and private parameter name
-     * @param windowId
-     * @param name
-     * @return
-     */
-    public String[] getParameterValues(String windowId, String name) {
-       String[] vals = new String[0];
-       if (!isClosed()) {
-          vals = portletURLProvider.getParameterValues(windowId, name);
-       }
-       return vals;
-    }
+         PortalRequestContext.getContext(getServletRequest()).mergePortalURL(url,
+               getPortletWindow().getId().getStringId());
 
-    /**
-     * Adds the specified private parameter if not already present, or updates the
-     * values for the parameter if it is already present.
-     * @param windowId
-     * @param name
-     * @param values
-     */
-    public void setParameter(String windowId, String name, String[] values) {
-       if (!isClosed()) {
-          portletURLProvider.setParameter(windowId, name, values);
-       }
-    }
-    
-    /** 
-     * Removes the private parameter for the given window and name. Does nothing if the
-     * given parameter is not present.
-     * @param windowId
-     * @param name
-     */
-    public void removeParameter(String windowId, String name) {
-       if (!isClosed()) {
-          portletURLProvider.removeParameter(windowId, name);
-       }
-    }
+         if (isDebug) {
+            LOGGER.debug("exiting.");
+         }
+      }
+   }
 
-    /**
-     * Gets the mutable render parameters. V3 method.
-     */
-    public MutableRenderParameters getRenderParameters(String windowId) {
-       return new MutableRenderParametersImpl(portletURLProvider, windowId);
-    }
+   @Override
+   public void release() {
+      events = null;
+      portletURLProvider = null;
+      super.release();
+   }
+
+   /**
+    * called to discard any set events or render parameters
+    */
+   @Override
+   public void reset() {
+      events = null;
+      portletURLProvider = new PortletURLProviderImpl(getPortalURL(), PortletURLProvider.TYPE.RENDER,
+            getPortletWindow(), getRequestContext());
+   }
+
+   @Override
+   public List<Event> getEvents() {
+      if (isReleased()) {
+         return null;
+      }
+      if (events == null) {
+         events = new ArrayList<Event>();
+      }
+      return events;
+   }
+
+   @Override
+   public PortletMode getPortletMode() {
+      return isClosed() ? null : portletURLProvider.getPortletMode();
+   }
+
+   @Override
+   public WindowState getWindowState() {
+      return isClosed() ? null : portletURLProvider.getWindowState();
+   }
+
+   @Override
+   public void setPortletMode(PortletMode portletMode) {
+      if (!isClosed()) {
+         portletURLProvider.setPortletMode(portletMode);
+      }
+   }
+
+   @Override
+   public void setWindowState(WindowState windowState) {
+      if (!isClosed()) {
+         portletURLProvider.setWindowState(windowState);
+      }
+   }
+
+   @Override
+   public EventProvider getEventProvider() {
+      return isClosed() ? null : eventProviderImpl;
+   }
+
+   /**
+    * Add a public render parameter for given window ID and parameter name
+    * 
+    * @param qn
+    *           QName
+    * @param identifier
+    *           Identifier for PRP
+    * @param values
+    *           values array
+    */
+   @Override
+   public void addPublicRenderParameter(String windowId, String name, String[] values) {
+      if (!isClosed()) {
+         portletURLProvider.addPublicRenderParameter(windowId, name, values);
+      }
+   }
+
+   /**
+    * Remove the PRP for the given window ID and parameter name
+    * 
+    * @param windowId
+    * @param name
+    */
+   @Override
+   public void removePublicRenderParameter(String windowId, String name) {
+      if (!isClosed()) {
+         portletURLProvider.removePublicRenderParameter(windowId, name);
+      }
+   }
+
+   /**
+    * Returns <code>true</code> if the given name representa a public render parameter for the given window.
+    * 
+    * @param windowId
+    * @param name
+    * @return
+    */
+   @Override
+   public boolean isPublicRenderParameter(String windowId, String name) {
+      boolean ret = false;
+      if (!isClosed()) {
+         ret = portletURLProvider.isPublicRenderParameter(windowId, name);
+      }
+      return ret;
+   }
+
+   /**
+    * Retrieves the available private parameter names for the given window ID
+    * 
+    * @param windowId
+    * @return
+    */
+   @Override
+   public Set<String> getPrivateParameterNames(String windowId) {
+      Set<String> pns = new HashSet<String>();
+      if (!isClosed()) {
+         pns = portletURLProvider.getPrivateParameterNames(windowId);
+      }
+      return pns;
+   }
+
+   /**
+    * Gets the values array for the given window ID and private parameter name
+    * 
+    * @param windowId
+    * @param name
+    * @return
+    */
+   @Override
+   public String[] getParameterValues(String windowId, String name) {
+      String[] vals = new String[0];
+      if (!isClosed()) {
+         vals = portletURLProvider.getParameterValues(windowId, name);
+      }
+      return vals;
+   }
+
+   /**
+    * Adds the specified private parameter if not already present, or updates the values for the parameter if it is
+    * already present.
+    * 
+    * @param windowId
+    * @param name
+    * @param values
+    */
+   @Override
+   public void setParameter(String windowId, String name, String[] values) {
+      if (!isClosed()) {
+         portletURLProvider.setParameter(windowId, name, values);
+      }
+   }
+
+   /**
+    * Removes the private parameter for the given window and name. Does nothing if the given parameter is not present.
+    * 
+    * @param windowId
+    * @param name
+    */
+   @Override
+   public void removeParameter(String windowId, String name) {
+      if (!isClosed()) {
+         portletURLProvider.removeParameter(windowId, name);
+      }
+   }
+
+   /**
+    * Gets the mutable render parameters. V3 method.
+    */
+   @Override
+   public MutableRenderParameters getRenderParameters(String windowId) {
+      return new MutableRenderParametersImpl(portletURLProvider, windowId);
+   }
 
 }

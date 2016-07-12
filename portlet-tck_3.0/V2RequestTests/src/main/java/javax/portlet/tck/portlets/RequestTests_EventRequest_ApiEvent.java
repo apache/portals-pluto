@@ -18,6 +18,8 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_EVENTREQUEST_APIEVENT_GETEVENT;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2REQUESTTESTS_EVENTREQUEST_APIEVENT_GETMETHOD;
 import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
@@ -110,7 +112,7 @@ public class RequestTests_EventRequest_ApiEvent implements Portlet, ResourceServ
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2RequestTests_EventRequest_ApiEvent_getEvent", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_EVENTREQUEST_APIEVENT_GETEVENT, aurl);
          tb.writeTo(writer);
       }
 
@@ -120,7 +122,7 @@ public class RequestTests_EventRequest_ApiEvent implements Portlet, ResourceServ
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2RequestTests_EventRequest_ApiEvent_getMethod", aurl);
+         TestButton tb = new TestButton(V2REQUESTTESTS_EVENTREQUEST_APIEVENT_GETMETHOD, aurl);
          tb.writeTo(writer);
       }
 

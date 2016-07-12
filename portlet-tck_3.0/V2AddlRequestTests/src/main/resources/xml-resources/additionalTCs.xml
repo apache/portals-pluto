@@ -20,7 +20,6 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <!-- JSR 286 API AddlRequestTests test case names and page mappings -->
-<entry key="V2AddlRequestTests_SPEC2_11_Action_parameters1">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Action_parameters2">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Action_parameters6">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Action_parameters8">V2AddlRequestTests</entry>
@@ -29,7 +28,6 @@
 <entry key="V2AddlRequestTests_SPEC2_11_Action_publicRenderParameters16">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Action_publicRenderParameters4">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Action_publicRenderParameters11">V2AddlRequestTests</entry>
-<entry key="V2AddlRequestTests_SPEC2_11_Event_parameters1">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Event_parameters2">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Event_parameters6">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Event_parameters12">V2AddlRequestTests</entry>
@@ -40,17 +38,11 @@
 <entry key="V2AddlRequestTests_SPEC2_11_Render_parameters11">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Render_parameters13">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Render_parameters15">V2AddlRequestTests</entry>
-<entry key="V2AddlRequestTests_SPEC2_11_Render_parameters1">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Render_parameters2">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Render_parameters6">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters15">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters16">V2AddlRequestTests</entry>
-<entry key="V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters1">V2AddlRequestTests</entry>
-<entry key="V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters2">V2AddlRequestTests</entry>
-<entry key="V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters6">V2AddlRequestTests</entry>
-<entry key="V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters13">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters13a">V2AddlRequestTests</entry>
-<entry key="V2AddlRequestTests_SPEC2_11_Resource_parameters1">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Resource_parameters2">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Resource_parameters6">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Resource_parameters17">V2AddlRequestTests</entry>
@@ -58,9 +50,6 @@
 <entry key="V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters16">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters7">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters12">V2AddlRequestTests</entry>
-<entry key="V2AddlRequestTests_SPEC2_11_RenderPRP_publicRenderParameters8">V2AddlRequestTests</entry>
-<entry key="V2AddlRequestTests_SPEC2_11_RenderPRP_publicRenderParameters9">V2AddlRequestTests</entry>
-<entry key="V2AddlRequestTests_SPEC2_11_RenderPRP_publicRenderParameters10">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_RenderAttr_attributes1">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_RenderAttr_attributes2">V2AddlRequestTests</entry>
 <entry key="V2AddlRequestTests_SPEC2_11_RenderAttr_attributes3">V2AddlRequestTests</entry>

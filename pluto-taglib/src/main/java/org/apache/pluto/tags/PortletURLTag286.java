@@ -33,12 +33,12 @@ import javax.servlet.jsp.JspException;
 public abstract class PortletURLTag286 extends PortletURLTag168 {
    private static final long serialVersionUID = -4853187908316856275L;
 
-   protected Boolean copyCurrentRenderParameters = false;
+   protected String copyCurrentRenderParameters = null;
 	
 	
 	public PortletURLTag286() {
 		super();
-		this.escapeXml = true;
+		setEscapeXml(Boolean.TRUE.toString());
 	}
 	
 	protected void handleDefaultEscapeXML() {
@@ -49,7 +49,7 @@ public abstract class PortletURLTag286 extends PortletURLTag168 {
          String[] result = containerRuntimeOptions.get(Constants.ESCAPE_XML_RUNTIME_OPTION);
          if (result != null) {
             if (result.length > 0) {
-               escapeXml = Boolean.parseBoolean(result[0]);
+               setEscapeXml(result[0]);
             }
          }
       }
@@ -63,6 +63,16 @@ public abstract class PortletURLTag286 extends PortletURLTag168 {
 	@Override
     public int doStartTag() throws JspException {    	    	  
         handleDefaultEscapeXML();
+        
+        if (copyCurrentRenderParameters != null && 
+              !copyCurrentRenderParameters.equalsIgnoreCase("true") && 
+              !copyCurrentRenderParameters.equalsIgnoreCase("false")) {
+           StringBuilder txt = new StringBuilder(128);
+           txt.append("Invalid cacheability option: ").append(copyCurrentRenderParameters);
+           txt.append(", valid options: true, false");
+           throw new JspException(txt.toString());
+        }
+        
         return super.doStartTag();
     }
 	
@@ -73,7 +83,7 @@ public abstract class PortletURLTag286 extends PortletURLTag168 {
 	@Override
 	public int doEndTag() throws JspException{
 				
-		if(copyCurrentRenderParameters){
+		if(Boolean.parseBoolean(copyCurrentRenderParameters)){
 			/*prepend current render parameters*/
 			doCopyCurrentRenderParameters();
 		}
@@ -86,7 +96,16 @@ public abstract class PortletURLTag286 extends PortletURLTag168 {
      * Returns the copyCurrentRenderParameters property.
      * @return Boolean
      */
-    public Boolean getCopyCurrentRenderParameters() {
+    public Boolean isCopyCurrentRenderParameters() {
+        return new Boolean(copyCurrentRenderParameters);
+    }
+    
+    
+    /**
+     * Returns the copyCurrentRenderParameters property.
+     * @return Boolean
+     */
+    public String getCopyCurrentRenderParameters() {
         return copyCurrentRenderParameters;
     }
          
@@ -96,7 +115,7 @@ public abstract class PortletURLTag286 extends PortletURLTag168 {
      * @param copyCurrentRenderParameters
      * @return void
      */
-    public void setCopyCurrentRenderParameters(Boolean copyCurrentRenderParameters) {
+    public void setCopyCurrentRenderParameters(String copyCurrentRenderParameters) {
         this.copyCurrentRenderParameters = copyCurrentRenderParameters;
     }
         

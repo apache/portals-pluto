@@ -94,9 +94,7 @@
 <entry key="V2EnvironmentTests_PortletContext_ApiRender_getMimeType2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletContext_ApiRender_getMimeType3">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletContext_ApiRender_getMimeType4">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PortletContext_ApiRender_getMimeType5">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletContext_ApiRender_getRealPath1">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PortletContext_ApiRender_getRealPath2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletContext_ApiRender_getRealPath3">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletContext_ApiRender_getResourcePaths1">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletContext_ApiRender_getResourcePaths2">V2EnvironmentTests</entry>
@@ -178,15 +176,9 @@
 <entry key="V2EnvironmentTests_PortletPreferences_ApiAction_reset1">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiAction_reset2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiAction_reset3">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PortletPreferences_ApiAction_store1">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PortletPreferences_ApiAction_store2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiAction_store3">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiAction_store4">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PortletPreferences_ApiAction_store5">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiAction_store6">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PreferencesValidator_ApiAction_canBeConfigured">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PreferencesValidator_ApiAction_validate1">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PreferencesValidator_ApiAction_validate2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiEvent_isReadOnly1">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiEvent_isReadOnly2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiEvent_isReadOnly3">V2EnvironmentTests</entry>
@@ -217,15 +209,9 @@
 <entry key="V2EnvironmentTests_PortletPreferences_ApiEvent_reset1">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiEvent_reset2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiEvent_reset3">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PortletPreferences_ApiEvent_store1">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PortletPreferences_ApiEvent_store2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiEvent_store3">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiEvent_store4">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PortletPreferences_ApiEvent_store5">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiEvent_store6">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PreferencesValidator_ApiEvent_canBeConfigured">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PreferencesValidator_ApiEvent_validate1">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PreferencesValidator_ApiEvent_validate2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiResource_isReadOnly1">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiResource_isReadOnly2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiResource_isReadOnly3">V2EnvironmentTests</entry>
@@ -256,15 +242,9 @@
 <entry key="V2EnvironmentTests_PortletPreferences_ApiResource_reset1">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiResource_reset2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiResource_reset3">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PortletPreferences_ApiResource_store1">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PortletPreferences_ApiResource_store2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiResource_store3">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiResource_store4">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PortletPreferences_ApiResource_store5">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletPreferences_ApiResource_store6">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PreferencesValidator_ApiResource_canBeConfigured">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PreferencesValidator_ApiResource_validate1">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PreferencesValidator_ApiResource_validate2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeA1">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeA2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeA3">V2EnvironmentTests</entry>
@@ -286,7 +266,6 @@
 <entry key="V2EnvironmentTests_PortletSession_ApiRender_getAttributeB1">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletSession_ApiRender_getAttributeB2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletSession_ApiRender_getAttributeB3">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PortletSession_ApiRender_getAttributeB4">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletSession_ApiRender_getAttributeNamesA1">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletSession_ApiRender_getAttributeNamesA2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletSession_ApiRender_getAttributeNamesB1">V2EnvironmentTests</entry>
@@ -297,7 +276,6 @@
 <entry key="V2EnvironmentTests_PortletSession_ApiRender_getLastAccessedTime">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletSession_ApiRender_getMaxInactiveInterval">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletSession_ApiRender_invalidate1">V2EnvironmentTests</entry>
-<entry key="V2EnvironmentTests_PortletSession_ApiRender_invalidate2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletSession_ApiRender_isNew1">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletSession_ApiRender_isNew2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletSession_ApiRender_removeAttributeA1">V2EnvironmentTests</entry>
@@ -336,4 +314,5 @@
 <entry key="V2EnvironmentTests_PortletSessionUtil_ApiRender_decodeScope1">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletSessionUtil_ApiRender_decodeScope2">V2EnvironmentTests</entry>
 <entry key="V2EnvironmentTests_PortletSessionUtil_ApiRender_decodeScope3">V2EnvironmentTests</entry>
+<entry key="V2AddlPortletTests_SPEC2_6_RenderConfig_getContainerRuntimeOptions4">V2EnvironmentTests</entry>
 </properties>

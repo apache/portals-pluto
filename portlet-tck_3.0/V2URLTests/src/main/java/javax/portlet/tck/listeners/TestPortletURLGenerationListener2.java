@@ -19,18 +19,10 @@
 
 package javax.portlet.tck.listeners;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import javax.portlet.BaseURL;
+import javax.portlet.PortletURL;
+import javax.portlet.PortletURLGenerationListener;
+import javax.portlet.ResourceURL;
 
 /**
  *Test PortletURLGenerationListener
@@ -40,9 +32,6 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 public class TestPortletURLGenerationListener2 implements PortletURLGenerationListener {
-   private static final String LOG_CLASS = 
-         TestPortletURLGenerationListener2.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
       // set parameters on URLs to indicate test success
 

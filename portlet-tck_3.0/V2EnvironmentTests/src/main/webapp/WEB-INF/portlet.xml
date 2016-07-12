@@ -37,17 +37,44 @@
       </portlet-info>
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
+   
+   <portlet>
+      <portlet-name>EnvironmentTests_CacheControl_ApiRender2</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_CacheControl_ApiRender2</portlet-class>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>EnvironmentTests_CacheControl_ApiRender2</title>
+      </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   </portlet>
 
    <portlet>
       <portlet-name>EnvironmentTests_CacheControl_ApiResource</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_CacheControl_ApiResource</portlet-class>
       <expiration-cache>0</expiration-cache>
+      <cache-scope>public</cache-scope>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
          <title>EnvironmentTests_CacheControl_ApiResource</title>
+      </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   </portlet>
+   
+   <portlet>
+      <portlet-name>EnvironmentTests_CacheControl_ApiResource2</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_CacheControl_ApiResource2</portlet-class>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>EnvironmentTests_CacheControl_ApiResource2</title>
       </portlet-info>
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
@@ -76,6 +103,24 @@
       <supported-locale>en_US</supported-locale>
       <portlet-info>
          <title>EnvironmentTests_PortletContext_ApiRender</title>
+      </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   </portlet>
+   
+   <portlet>
+      <portlet-name>EnvironmentTests_PortletContext_ApiRender2</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PortletContext_ApiRender2</portlet-class>
+      <init-param>
+         <name>initParam1</name>
+         <value>true</value>
+      </init-param>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>EnvironmentTests_PortletContext_ApiRender2</title>
       </portlet-info>
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
@@ -108,11 +153,8 @@
 			<preference>
 				<name>TestPreference3</name>
 			</preference>
-		</portlet-preferences>
-      
-      
-   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
-   
+	  </portlet-preferences>
+      <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -142,21 +184,12 @@
 			<preference>
 				<name>TestPreference3</name>
 			</preference>
+			<preference>
+				<name>tr33</name>
+				<value>true</value>
+			</preference>
+			<preferences-validator>javax.portlet.tck.validator.V2EnvironmentTests_PortletPreferences_Validator</preferences-validator>
 		</portlet-preferences>
-   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
-   </portlet>
-
-   <portlet>
-      <portlet-name>EnvironmentTests_PreferencesValidator_ApiAction</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PreferencesValidator_ApiAction</portlet-class>
-      <expiration-cache>0</expiration-cache>
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-      <supported-locale>en_US</supported-locale>
-      <portlet-info>
-         <title>EnvironmentTests_PreferencesValidator_ApiAction</title>
-      </portlet-info>
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
@@ -204,42 +237,14 @@
 			<preference>
 				<name>TestPreference3</name>
 			</preference>
+			<preference>
+				<name>tr33</name>
+				<value>true</value>
+			</preference>
+			<preferences-validator>javax.portlet.tck.validator.V2EnvironmentTests_PortletPreferences_Validator</preferences-validator>
 		</portlet-preferences>
       <supported-processing-event>
          <qname>tck:EnvironmentTests_PortletPreferences_ApiEvent</qname>
-      </supported-processing-event>
-   </portlet>
-
-   <portlet>
-      <portlet-name>EnvironmentTests_PreferencesValidator_ApiEvent</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PreferencesValidator_ApiEvent</portlet-class>
-      <expiration-cache>0</expiration-cache>
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-      <supported-locale>en_US</supported-locale>
-      <portlet-info>
-         <title>EnvironmentTests_PreferencesValidator_ApiEvent</title>
-      </portlet-info>
-      <supported-publishing-event>
-         <qname>tck:EnvironmentTests_PreferencesValidator_ApiEvent</qname>
-      </supported-publishing-event>
-   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
-   </portlet>
-
-   <portlet>
-      <portlet-name>EnvironmentTests_PreferencesValidator_ApiEvent_event</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PreferencesValidator_ApiEvent_event</portlet-class>
-      <expiration-cache>0</expiration-cache>
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-      <supported-locale>en_US</supported-locale>
-      <portlet-info>
-         <title>EnvironmentTests_PreferencesValidator_ApiEvent_event</title>
-      </portlet-info>
-      <supported-processing-event>
-         <qname>tck:EnvironmentTests_PreferencesValidator_ApiEvent</qname>
       </supported-processing-event>
    </portlet>
 
@@ -272,24 +277,15 @@
 			<preference>
 				<name>TestPreference3</name>
 			</preference>
+			<preference>
+				<name>tr33</name>
+				<value>true</value>
+			</preference>
+			<preferences-validator>javax.portlet.tck.validator.V2EnvironmentTests_PortletPreferences_Validator</preferences-validator>
 		</portlet-preferences>
       
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
     
-   </portlet>
-
-   <portlet>
-      <portlet-name>EnvironmentTests_PreferencesValidator_ApiResource</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PreferencesValidator_ApiResource</portlet-class>
-      <expiration-cache>0</expiration-cache>
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-      <supported-locale>en_US</supported-locale>
-      <portlet-info>
-         <title>EnvironmentTests_PreferencesValidator_ApiResource</title>
-      </portlet-info>
-   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
    <portlet>
@@ -302,6 +298,20 @@
       <supported-locale>en_US</supported-locale>
       <portlet-info>
          <title>EnvironmentTests_PortletRequestDispatcher_ApiRender</title>
+      </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   </portlet>
+   
+   <portlet>
+      <portlet-name>EnvironmentTests_PortletRequestDispatcher_ApiRender2</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PortletRequestDispatcher_ApiRender2</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>EnvironmentTests_PortletRequestDispatcher_ApiRender2</title>
       </portlet-info>
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>

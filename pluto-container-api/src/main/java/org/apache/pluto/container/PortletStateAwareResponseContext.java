@@ -102,5 +102,11 @@ public interface PortletStateAwareResponseContext extends PortletResponseContext
      * @return
      */
     MutableRenderParameters getRenderParameters(String windowId);
+    
+    /**
+     * Called when exception occurs during action or event processing to throw away
+     * any events or render parameters that have been set.
+     */
+    void reset();
 
 }

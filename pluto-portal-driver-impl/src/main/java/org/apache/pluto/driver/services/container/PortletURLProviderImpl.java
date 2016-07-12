@@ -233,7 +233,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
    }
 
    public void setSecure(boolean secure) throws PortletSecurityException {
-      // ignore: not supported
+      throw new PortletSecurityException("setSecure is not supported.");
    }
 
    public boolean isSecure() {

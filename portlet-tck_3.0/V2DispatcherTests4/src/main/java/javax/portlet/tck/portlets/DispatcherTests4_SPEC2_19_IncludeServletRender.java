@@ -18,38 +18,40 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import static javax.portlet.tck.constants.Constants.QUERY_STRING;
+import static javax.portlet.tck.constants.Constants.SERVLET_PREFIX;
+import static javax.portlet.tck.constants.Constants.SERVLET_SUFFIX;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+import java.io.StringWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.filter.RenderRequestWrapper;
+import javax.portlet.filter.RenderResponseWrapper;
 
 /**
- * This portlet implements several test cases for the JSR 362 TCK. The test case names
- * are defined in the /src/main/resources/xml-resources/additionalTCs.xml
- * file. The build process will integrate the test case names defined in the 
- * additionalTCs.xml file into the complete list of test case names for execution by the driver.
- *
- * This is the main portlet for the test cases. If the test cases call for events, this portlet
- * will initiate the events, but not process them. The processing is done in the companion 
- * portlet DispatcherTests4_SPEC2_19_IncludeServletRender_event
- *
+ * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined in the
+ * /src/main/resources/xml-resources/additionalTCs.xml file. The build process will integrate the test case names
+ * defined in the additionalTCs.xml file into the complete list of test case names for execution by the driver.
+ * 
+ * This is the main portlet for the test cases. If the test cases call for events, this portlet will initiate the
+ * events, but not process them. The processing is done in the companion portlet
+ * DispatcherTests4_SPEC2_19_IncludeServletRender_event
+ * 
  */
 public class DispatcherTests4_SPEC2_19_IncludeServletRender implements Portlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         DispatcherTests4_SPEC2_19_IncludeServletRender.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-   
+
    private PortletConfig portletConfig = null;
 
    @Override
@@ -62,57 +64,51 @@ public class DispatcherTests4_SPEC2_19_IncludeServletRender implements Portlet, 
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
+   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      StringWriter writer = new StringWriter();
+      new StringWriter();
 
    }
 
    @Override
-   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
+   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp) throws PortletException,
+         IOException {
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
+      portletResp.getWriter();
 
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
+   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
+      portletResp.getWriter();
 
       // Prereq for: V2DispatcherTests4_SPEC2_19_IncludeServletRender_invoke3
-      portletReq = new RenderRequestWrapper((RenderRequest)portletReq);
-      portletResp = new RenderResponseWrapper((RenderResponse)portletResp);
+      portletReq = new RenderRequestWrapper(portletReq);
+      portletResp = new RenderResponseWrapper(portletResp);
 
       {
          // Prereq for: V2DispatcherTests4_SPEC2_19_IncludeServletRender_invoke8
          // include the multiple include portlet
          String target = "/MultipleIncludeServlet?" + QUERY_STRING;
-         PortletRequestDispatcher rd = portletConfig.getPortletContext()
-               .getRequestDispatcher(target);
+         PortletRequestDispatcher rd = portletConfig.getPortletContext().getRequestDispatcher(target);
          rd.include(portletReq, portletResp);
       }
 
       // Now do the actual dispatch
-      String target = SERVLET_PREFIX + "DispatcherTests4_SPEC2_19_IncludeServletRender_servlet" + SERVLET_SUFFIX + "?" + QUERY_STRING;
-      PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher(target);
+      String target = SERVLET_PREFIX + "DispatcherTests4_SPEC2_19_IncludeServletRender_servlet" + SERVLET_SUFFIX + "?"
+            + QUERY_STRING;
+      PortletRequestDispatcher rd = portletConfig.getPortletContext().getRequestDispatcher(target);
       rd.include(portletReq, portletResp);
    }
 

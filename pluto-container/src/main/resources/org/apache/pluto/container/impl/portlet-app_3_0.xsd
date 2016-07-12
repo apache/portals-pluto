@@ -270,7 +270,7 @@
 			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="portlet-name" type="portlet:portlet-nameType"/>
 			<element name="display-name" type="portlet:display-nameType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="portlet-class" type="portlet:portlet-classType"/>
+			<element name="portlet-class" type="portlet:portlet-classType" minOccurs="0" maxOccurs="1"/>
 			<element name="init-param" type="portlet:init-paramType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="expiration-cache" type="portlet:expiration-cacheType" minOccurs="0"/>
 			<element name="cache-scope" type="portlet:cache-scopeType" minOccurs="0"/>

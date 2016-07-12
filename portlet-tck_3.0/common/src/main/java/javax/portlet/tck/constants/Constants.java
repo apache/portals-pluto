@@ -34,15 +34,21 @@ public class Constants {
    public static final String FAILURE = "Failed";
    public static final String BUTTON_PARAM_NAME="inputval";
    
+   // Render parameter name for redirect testing
+   public static final String TCKPAGE = "tckPage";
+   
    // for session attributes passing info between phases
    public static final String RESULT_ATTR_PREFIX = "attr.result.";
    
    // For generating the target for the getRequestDispatcher call
    // target = <prefix> + <servlet/jsp name> + <suffix> + ? + <query string> 
+   public static final String SERVLET_INCFWD = "/IncluderForwarderServlet";
    public static final String SERVLET_PREFIX = "/";
    public static final String SERVLET_SUFFIX = "";
    public static final String JSP_PREFIX = "/WEB-INF/jsp/";
    public static final String JSP_SUFFIX = ".jsp";
+   public static final String EXTRA_PATH = "/extra/path";
+   public static final String EXTRA_QUERY_STRING = "eqparm1=eqvalue1";
    public static final String QUERY_STRING = "qparm1=qvalue1&qparm2=qvalue2";
    
    // for several tests to servlet / jsp for comparison

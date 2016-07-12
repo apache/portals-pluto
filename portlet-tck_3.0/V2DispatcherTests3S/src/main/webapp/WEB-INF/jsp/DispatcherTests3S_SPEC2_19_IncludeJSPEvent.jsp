@@ -21,17 +21,5 @@
 
       JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();
 
-      // Create result objects for the tests
 
-      /* TestCase: V2DispatcherTests3S_SPEC2_19_IncludeJSPEvent_dispatch4     */
-      /* Details: "The parameters associated with a request dispatcher are    */
-      /* scoped only for the duration of the include or forward call"         */
-      TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERTESTS3S_SPEC2_19_INCLUDEJSPEVENT_DISPATCH4);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
-
-      request.getSession().setAttribute(
-                   Constants.RESULT_ATTR_PREFIX + "DispatcherTests3S_SPEC2_19_IncludeJSPEvent",
-                   writer.toString());
 %>

@@ -18,38 +18,50 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.ResourceURL.PAGE;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRESOURCE_DISPATCH4;
+import static javax.portlet.tck.constants.Constants.QUERY_STRING;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.tck.constants.Constants.SERVLET_PREFIX;
+import static javax.portlet.tck.constants.Constants.SERVLET_SUFFIX;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.ResourceURL;
+import javax.portlet.tck.beans.CompareUtils;
+import javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.constants.Constants;
 
 /**
- * This portlet implements several test cases for the JSR 362 TCK. The test case names
- * are defined in the /src/main/resources/xml-resources/additionalTCs.xml
- * file. The build process will integrate the test case names defined in the 
- * additionalTCs.xml file into the complete list of test case names for execution by the driver.
- *
- * This is the main portlet for the test cases. If the test cases call for events, this portlet
- * will initiate the events, but not process them. The processing is done in the companion 
- * portlet DispatcherTests3S_SPEC2_19_ForwardServletResource_event
- *
+ * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined in the
+ * /src/main/resources/xml-resources/additionalTCs.xml file. The build process will integrate the test case names
+ * defined in the additionalTCs.xml file into the complete list of test case names for execution by the driver.
+ * 
+ * This is the main portlet for the test cases. If the test cases call for events, this portlet will initiate the
+ * events, but not process them. The processing is done in the companion portlet
+ * DispatcherTests3S_SPEC2_19_ForwardServletResource_event
+ * 
  */
 public class DispatcherTests3S_SPEC2_19_ForwardServletResource implements Portlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         DispatcherTests3S_SPEC2_19_ForwardServletResource.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
-   
+
    private PortletConfig portletConfig = null;
 
    @Override
@@ -62,60 +74,88 @@ public class DispatcherTests3S_SPEC2_19_ForwardServletResource implements Portle
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
+   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
+   }
+
+   @Override
+   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp) throws PortletException,
+         IOException {
+
       StringWriter writer = new StringWriter();
 
-   }
-
-   @Override
-   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
-
-      long tid = Thread.currentThread().getId();
-      portletReq.setAttribute(THREADID_ATTR, tid);
-
-      PrintWriter writer = portletResp.getWriter();
+      Map<String, String[]> oldmap = new HashMap<String, String[]>();
+      for (String name : portletReq.getParameterMap().keySet()) {
+         String[] vals = portletReq.getParameterValues(name);
+         vals = (vals == null) ? null : vals.clone();
+         oldmap.put(name, vals);
+      }
 
       // Now do the actual dispatch
-      String target = SERVLET_PREFIX + "DispatcherTests3S_SPEC2_19_ForwardServletResource_servlet" + SERVLET_SUFFIX + "?" + QUERY_STRING;
-      PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher(target);
+      String target = SERVLET_PREFIX + "DispatcherTests3S_SPEC2_19_ForwardServletResource_servlet" + SERVLET_SUFFIX
+            + "?" + QUERY_STRING;
+      PortletRequestDispatcher rd = portletConfig.getPortletContext().getRequestDispatcher(target);
       rd.forward(portletReq, portletResp);
+
+      Map<String, String[]> newmap = new HashMap<String, String[]>();
+      for (String name : portletReq.getParameterMap().keySet()) {
+         String[] vals = portletReq.getParameterValues(name);
+         vals = (vals == null) ? null : vals.clone();
+         newmap.put(name, vals);
+      }
+
+      JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();
+
+      /* TestCase: DispatcherTests3S_SPEC2_19_ForwardServletResource_dispatch4 */
+      /* Details: "The parameters associated with a request dispatcher are */
+      /* scoped only for the duration of the include or forward call" */
+      TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRESOURCE_DISPATCH4);
+      CompareUtils.mapsEqual("Before dispatch", oldmap, "After dispatch", newmap, tr0);
+      tr0.writeTo(writer);
+
+      portletReq.getPortletSession().setAttribute(
+            Constants.RESULT_ATTR_PREFIX + V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRESOURCE_DISPATCH4,
+            writer.toString(), APPLICATION_SCOPE);
+
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
-
-      long tid = Thread.currentThread().getId();
-      portletReq.setAttribute(THREADID_ATTR, tid);
+   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
 
       PrintWriter writer = portletResp.getWriter();
 
-      writer.write("<div id=\"DispatcherTests3S_SPEC2_19_ForwardServletResource\">no resource output.</div>\n");
-      ResourceURL resurl = portletResp.createResourceURL();
-      resurl.setCacheability(PAGE);
-      writer.write("<script>\n");
-      writer.write("(function () {\n");
-      writer.write("   var xhr = new XMLHttpRequest();\n");
-      writer.write("   xhr.onreadystatechange=function() {\n");
-      writer.write("      if (xhr.readyState==4 && xhr.status==200) {\n");
-      writer.write("         document.getElementById(\"DispatcherTests3S_SPEC2_19_ForwardServletResource\").innerHTML=xhr.responseText;\n");
-      writer.write("      }\n");
-      writer.write("   };\n");
-      writer.write("   xhr.open(\"GET\",\"" + resurl.toString() + "\",true);\n");
-      writer.write("   xhr.send();\n");
-      writer.write("})();\n");
-      writer.write("</script>\n");
+      String msg = (String) portletReq.getPortletSession().getAttribute(
+            RESULT_ATTR_PREFIX + V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRESOURCE_DISPATCH4, APPLICATION_SCOPE);
+
+      if (msg == null) {
+         writer.write("<p>Not ready. click test case link.</p>\n");
+
+         writer.write("<div id=\"DispatcherTests3S_SPEC2_19_ForwardServletResource\">no resource output.</div>\n");
+         ResourceURL resurl = portletResp.createResourceURL();
+         resurl.setCacheability(PAGE);
+         writer.write("<script>\n");
+         writer.write("(function () {\n");
+         writer.write("   var xhr = new XMLHttpRequest();\n");
+         writer.write("   xhr.onreadystatechange=function() {\n");
+         writer.write("      if (xhr.readyState==4 && xhr.status==200) {\n");
+         writer.write("         document.getElementById(\"DispatcherTests3S_SPEC2_19_ForwardServletResource\").innerHTML=xhr.responseText;\n");
+         writer.write("      }\n");
+         writer.write("   };\n");
+         writer.write("   xhr.open(\"GET\",\"" + resurl.toString() + "\",true);\n");
+         writer.write("   xhr.send();\n");
+         writer.write("})();\n");
+         writer.write("</script>\n");
+
+      } else {
+         portletReq.getPortletSession().removeAttribute(
+               RESULT_ATTR_PREFIX + V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRESOURCE_DISPATCH4, APPLICATION_SCOPE);
+         writer.write("<p>" + msg + "</p>\n");
+      }
+
    }
 
 }

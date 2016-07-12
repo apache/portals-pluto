@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.driver.url;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 import org.slf4j.Logger;
@@ -47,6 +48,16 @@ public class PortalURLParameter {
    protected final String name;
    protected String[] values;
    protected String type;
+   protected boolean persistent = false;
+   
+   // Copy constructor
+   public PortalURLParameter(PortalURLParameter pup) {
+      window = pup.window;
+      name = pup.name;
+      values = (pup.values == null) ? null : pup.values.clone();
+      type = pup.type;
+      persistent = pup.persistent;
+   }
 
    // Constructors for use by extending classes
    protected PortalURLParameter(String window, String name) {
@@ -99,11 +110,36 @@ public class PortalURLParameter {
    public String getWindowId() {
       return window;
    }
+   
+   /**
+    * @return <code>true</code> if the parameter is flagged as persistent
+    */
+   public boolean isPersistent() {
+      return persistent;
+   }
+
+   /**
+    * Sets the persistent flag
+    * @param persistent the persistent to set
+    */
+   public void setPersistent(boolean persistent) {
+      this.persistent = persistent;
+   }
+
+   @Override
+   public String toString() {
+      StringBuilder txt = new StringBuilder(128);
+      txt.append("Type: ").append(type);
+      txt.append(", persistent: ").append(persistent);
+      txt.append(", name: ").append(name);
+      txt.append(", values: ").append((values == null) ? "null" : Arrays.toString(values));
+      txt.append(", window ID: ").append(window);
+      return txt.toString();
+   }
 
    @Override
    public PortalURLParameter clone() {
-      // shallow clone works because strings are immutable
-      return new PortalURLParameter(window, name, (values == null ? values : values.clone()), type);
+      return new PortalURLParameter(this);
    }
 
    /**

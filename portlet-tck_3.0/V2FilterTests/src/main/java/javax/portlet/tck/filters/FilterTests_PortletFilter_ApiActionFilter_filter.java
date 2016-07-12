@@ -1,109 +1,96 @@
-/*  Licensed to the Apache Software Foundation (ASF) under one
- *  or more contributor license agreements.  See the NOTICE file
- *  distributed with this work for additional information
- *  regarding copyright ownership.  The ASF licenses this file
- *  to you under the Apache License, Version 2.0 (the
- *  "License"); you may not use this file except in compliance
- *  with the License.  You may obtain a copy of the License at
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more contributor license
+ * agreements. See the NOTICE file distributed with this work for additional information regarding
+ * copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance with the License. You may obtain a
+ * copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing,
- *  software distributed under the License is distributed on an
- *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- *  KIND, either express or implied.  See the License for the
- *  specific language governing permissions and limitations
- *  under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 
 package javax.portlet.tck.filters;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.portlet.*;
-import javax.portlet.filter.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import java.io.IOException;
+import java.io.StringWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.filter.ActionFilter;
+import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.FilterConfig;
+import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.constants.Constants;
+
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION1;
+import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION2;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 
 /**
- * Filter for JSR 362 request dispatcher testing.
- * Used by portlet: FilterTests_PortletFilter_ApiActionFilter
+ * Filter for JSR 362 request dispatcher testing. Used by portlet:
+ * FilterTests_PortletFilter_ApiActionFilter
  *
  * @author nick
  *
  */
 public class FilterTests_PortletFilter_ApiActionFilter_filter implements ActionFilter {
-   private static final String LOG_CLASS = 
-         FilterTests_PortletFilter_ApiActionFilter_filter.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
 
-   private FilterConfig filterConfig;
-   private boolean initCalled = false;
+  private FilterConfig filterConfig = null;
+  private boolean initCalled = false;
 
-   @Override
-   public void init(FilterConfig filterConfig) throws PortletException {
-      this.filterConfig = filterConfig;
-      initCalled=true;
-   }
+  @Override
+  public void init(FilterConfig filterConfig) throws PortletException {
+    this.filterConfig = filterConfig;
+    initCalled = true;
+  }
 
-   @Override
-   public void destroy() {
-   }
+  @Override
+  public void destroy() {}
 
-   @Override
-   public void doFilter(ActionRequest portletReq, ActionResponse portletResp,
-         FilterChain chain) throws IOException, PortletException {
-      LOGGER.entering(LOG_CLASS, "doFilter");
+  @Override
+  public void doFilter(ActionRequest portletReq, ActionResponse portletResp, FilterChain chain)
+      throws IOException, PortletException {
 
-      StringWriter writer = new StringWriter();
+    StringWriter writer = new StringWriter();
 
-      // first execute the chain
+    // now do the tests and write output
 
-      chain.doFilter(portletReq, portletResp);
+    JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
-      // now do the tests and write output
+    // Create result objects for the tests
 
-      JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+    /* TestCase: V2FilterTests_PortletFilter_ApiActionFilter_initAction1 */
+    /* Details: "The init(FilterConfig): method is called when an */
+    /* ActionFilter is configured" */
+    TestResult tr0 =
+        tcd.getTestResultFailed(V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION1);
+    if (initCalled == true) {
+      tr0.setTcSuccess(true);
+    }
+    tr0.writeTo(writer);
 
-      // Create result objects for the tests
+    /* TestCase: V2FilterTests_PortletFilter_ApiActionFilter_initAction2 */
+    /* Details: "The init(FilterConfig): method for an ActionFilter is */
+    /* passed a FilterConfig object" */
+    TestResult tr1 =
+        tcd.getTestResultFailed(V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION2);
+    if (this.filterConfig != null) {
+      tr1.setTcSuccess(true);
+    }
+    tr1.writeTo(writer);
 
-      ClassChecker cc = new ClassChecker(PortletFilter.class);
+    portletReq.getPortletSession().setAttribute(
+        Constants.RESULT_ATTR_PREFIX + "FilterTests_PortletFilter_ApiActionFilter",
+        writer.toString(), APPLICATION_SCOPE);
 
-      /* TestCase: V2FilterTests_PortletFilter_ApiActionFilter_initAction1    */
-      /* Details: "The init(FilterConfig): method is called when an           */
-      /* ActionFilter is configured"                                          */
-      TestResult tr0 = tcd.getTestResultFailed(V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION1);
-      if(initCalled==true) {
-    	  tr0.setTcSuccess(true);
-      }
-      tr0.writeTo(writer);
+    chain.doFilter(portletReq, portletResp);
 
-      /* TestCase: V2FilterTests_PortletFilter_ApiActionFilter_initAction2    */
-      /* Details: "The init(FilterConfig): method for an ActionFilter is      */
-      /* passed a FilterConfig object"                                        */
-      TestResult tr1 = tcd.getTestResultFailed(V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION2);
-      if(this.filterConfig==filterConfig) {
-    	  tr1.setTcSuccess(true);
-      }
-      tr1.writeTo(writer);
-
-      /* TestCase: V2FilterTests_PortletFilter_ApiActionFilter_initAction3    */
-      /* Details: "If the init(FilterConfig): method for an ActionFilter      */
-      /* throws a PortletException, the filter is not placed in service"      */
-      TestResult tr2 = tcd.getTestResultSucceeded(V2FILTERTESTS_PORTLETFILTER_APIACTIONFILTER_INITACTION3);
-      tr2.appendTcDetail("This Method could not be Tested for Filter Portlet which is already placed in service");
-      tr2.writeTo(writer);
-
-      portletReq.getPortletSession().setAttribute(
-                   Constants.RESULT_ATTR_PREFIX + "FilterTests_PortletFilter_ApiActionFilter",
-                   writer.toString(), APPLICATION_SCOPE);
-
-   }
+  }
 }

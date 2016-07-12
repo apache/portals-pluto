@@ -16,6 +16,11 @@
  */
 package org.apache.pluto.driver.services.container;
 
+import static javax.portlet.PortletRequest.ACTION_PHASE;
+import static javax.portlet.PortletRequest.EVENT_PHASE;
+import static javax.portlet.PortletRequest.HEADER_PHASE;
+import static javax.portlet.PortletRequest.RENDER_PHASE;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -39,7 +44,7 @@ public class PortletRequestContextServiceImpl implements PortletRequestContextSe
     public PortletRequestContext getPortletActionRequestContext(PortletContainer container, HttpServletRequest containerRequest,
                                                                 HttpServletResponse containerResponse, PortletWindow window)
     {
-        return new PortletRequestContextImpl(container, containerRequest, containerResponse, window, true);
+        return new PortletRequestContextImpl(container, containerRequest, containerResponse, window, true, ACTION_PHASE);
     }
 
     public PortletActionResponseContext getPortletActionResponseContext(PortletContainer container,
@@ -53,7 +58,7 @@ public class PortletRequestContextServiceImpl implements PortletRequestContextSe
     public PortletRequestContext getPortletEventRequestContext(PortletContainer container, HttpServletRequest containerRequest,
                                                                HttpServletResponse containerResponse, PortletWindow window)
     {
-        return new PortletRequestContextImpl(container, containerRequest, containerResponse, window, false);
+        return new PortletRequestContextImpl(container, containerRequest, containerResponse, window, false, EVENT_PHASE);
     }
 
     public PortletEventResponseContext getPortletEventResponseContext(PortletContainer container,
@@ -66,7 +71,7 @@ public class PortletRequestContextServiceImpl implements PortletRequestContextSe
     public PortletRequestContext getPortletRenderRequestContext(PortletContainer container, HttpServletRequest containerRequest,
                                                                 HttpServletResponse containerResponse, PortletWindow window)
     {
-        return new PortletRequestContextImpl(container, containerRequest, containerResponse, window, false);
+        return new PortletRequestContextImpl(container, containerRequest, containerResponse, window, false, RENDER_PHASE);
     }
 
     public PortletRenderResponseContext getPortletRenderResponseContext(PortletContainer container,
@@ -80,7 +85,7 @@ public class PortletRequestContextServiceImpl implements PortletRequestContextSe
     public PortletRequestContext getPortletHeaderRequestContext(PortletContainer container, HttpServletRequest containerRequest,
                                                                 HttpServletResponse containerResponse, PortletWindow window)
     {
-        return new PortletRequestContextImpl(container, containerRequest, containerResponse, window, false);
+        return new PortletRequestContextImpl(container, containerRequest, containerResponse, window, false, HEADER_PHASE);
     }
 
     public PortletHeaderResponseContext getPortletHeaderResponseContext(PortletContainer container,

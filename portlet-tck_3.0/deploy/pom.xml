@@ -22,7 +22,7 @@
 
 	<parent>
 		<groupId>javax.portlet</groupId>
-		<artifactId>tck</artifactId>
+		<artifactId>portlet-tck</artifactId>
 		<version>3.0-SNAPSHOT</version>
 	</parent>
 
@@ -144,12 +144,6 @@
       <dependency>
          <groupId>${project.groupId}</groupId>
          <artifactId>tck-V2AddlResponseTests</artifactId>
-         <version>${project.version}</version>
-         <type>war</type>
-      </dependency>
-      <dependency>
-         <groupId>${project.groupId}</groupId>
-         <artifactId>tck-V2AddlUrlTests</artifactId>
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
@@ -291,6 +285,26 @@
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
+
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V3PortletContextTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+	  <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V3URLTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>tck-V3PortletConfigTests</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
+
       <dependency>
          <groupId>${project.groupId}</groupId>
          <artifactId>tck-driver</artifactId>
@@ -304,15 +318,11 @@
 
       <resources>
          <resource>
-            <directory>${project.build.directory}/generated-resources/xml/final</directory>
-            <targetPath>${project.build.directory}/deploy-files</targetPath>
+            <directory>target/generated-resources/xml/final</directory>
+            <targetPath>../deploy-files</targetPath>
             <includes>
                <include>*.xml</include>
             </includes>
-         </resource>
-         <resource>
-            <directory>src/main/resources/css</directory>
-            <targetPath>${project.build.directory}/deploy-files</targetPath>
          </resource>
       </resources>
 

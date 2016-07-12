@@ -43,10 +43,10 @@ import java.io.Writer;
  * @author nick
  */
 public class TestMessage {
-   
+
    private String tcName;
    private String msg;
-   
+
    /**
     * Creates an empty test result.
     */
@@ -58,8 +58,10 @@ public class TestMessage {
    /**
     * Creates a test message initialized according to the parameters.
     * 
-    * @param tcName     test case name
-    * @param msg        message to be displayed
+    * @param tcName
+    *           test case name
+    * @param msg
+    *           message to be displayed
     */
    public TestMessage(String tcName, String msg) {
       this.tcName = tcName;
@@ -69,11 +71,11 @@ public class TestMessage {
    /**
     * Generates HTML markup representing the test message.
     * 
-    * @return  HTML markup representing the test message
+    * @return HTML markup representing the test message
     */
    @Override
    public String toString() {
-      
+
       StringBuilder sb = new StringBuilder();
       sb.append("<div class='portletTCKTestcase'>");
       sb.append("<h4>");
@@ -87,15 +89,15 @@ public class TestMessage {
 
       return sb.toString();
    }
-   
+
    /**
-    * Generates HTML markup representing the test link and
-    * writes them to the writer provided.
+    * Generates HTML markup representing the test link and writes them to the writer provided.
     * 
-    * @param writer  Writer to which the string is written
+    * @param writer
+    *           Writer to which the string is written
     */
-   public void writeTo(Writer writer)throws IOException {
+   public void writeTo(Writer writer) throws IOException {
       writer.write(this.toString());
    }
-   
+
 }

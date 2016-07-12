@@ -17,31 +17,39 @@
  */
 package javax.portlet.tck.beans;
 
-import java.security.*;
-import java.util.*;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.Locale;
 
-import javax.portlet.*;
+import javax.portlet.ActionURL;
+import javax.portlet.CacheControl;
+import javax.portlet.MimeResponse;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderURL;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
 import javax.servlet.http.Cookie;
-import javax.xml.namespace.QName;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 
 /**
- * This class tests a wrapper class by simulating the class to be wrapped.The test code
- * verifies that the arguments passed to the wrapping method are correctly passed to
- * the wrapped class. Simulated return data is passed back to the caller.  
+ * This class tests a wrapper class by simulating the class to be wrapped.The test code verifies that the arguments
+ * passed to the wrapping method are correctly passed to the wrapped class. Simulated return data is passed back to the
+ * caller.
  * 
  * @author nick
  */
 
-public class ResourceResponseWrapperChecker extends WrapperChecker implements
-      ResourceResponse {
+public class ResourceResponseWrapperChecker extends WrapperChecker implements ResourceResponse {
 
    PortletResponse resp;
-   Element element;
-   
+   Element         element;
+
    public ResourceResponseWrapperChecker(PortletResponse portletResp) {
       resp = portletResp;
       element = resp.createElement("p");
@@ -50,7 +58,7 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements
    @Override
    public void addProperty(String key, String value) {
       String meth = "addProperty";
-      Object[] args = {key, value};
+      Object[] args = { key, value };
       checkArgs(meth, args);
       return;
 
@@ -59,7 +67,7 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements
    @Override
    public void setProperty(String key, String value) {
       String meth = "setProperty";
-      Object[] args = {key, value};
+      Object[] args = { key, value };
       checkArgs(meth, args);
       return;
 
@@ -68,7 +76,7 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements
    @Override
    public String encodeURL(String path) {
       String meth = "encodeURL";
-      Object[] args = {path};
+      Object[] args = { path };
       String ret = "value";
       retVal = ret;
       checkArgs(meth, args);
@@ -88,7 +96,7 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements
    @Override
    public void addProperty(Cookie cookie) {
       String meth = "addProperty";
-      Object[] args = {cookie};
+      Object[] args = { cookie };
       checkArgs(meth, args);
       return;
 
@@ -97,7 +105,7 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements
    @Override
    public void addProperty(String key, Element element) {
       String meth = "addProperty";
-      Object[] args = {key, element};
+      Object[] args = { key, element };
       checkArgs(meth, args);
       return;
 
@@ -106,7 +114,7 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements
    @Override
    public Element createElement(String tagName) throws DOMException {
       String meth = "createElement";
-      Object[] args = {tagName};
+      Object[] args = { tagName };
       Element ret = element;
       retVal = ret;
       checkArgs(meth, args);
@@ -126,10 +134,10 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements
    @Override
    public void setContentType(String type) {
       String meth = "setContentType";
-      Object[] args = {type};
+      Object[] args = { type };
       checkArgs(meth, args);
       return;
-      
+
    }
 
    @Override
@@ -167,10 +175,10 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements
    @Override
    public void setBufferSize(int size) {
       String meth = "setBufferSize";
-      Object[] args = {size};
+      Object[] args = { size };
       checkArgs(meth, args);
       return;
-      
+
    }
 
    @Override
@@ -189,7 +197,7 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements
       Object[] args = {};
       checkArgs(meth, args);
       return;
-      
+
    }
 
    @Override
@@ -198,7 +206,7 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements
       Object[] args = {};
       checkArgs(meth, args);
       return;
-      
+
    }
 
    @Override
@@ -217,7 +225,7 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements
       Object[] args = {};
       checkArgs(meth, args);
       return;
-      
+
    }
 
    @Override
@@ -235,7 +243,7 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements
    public CacheControl getCacheControl() {
       String meth = "getCacheControl";
       Object[] args = {};
-      CacheControl ret = ((MimeResponse)resp).getCacheControl();
+      CacheControl ret = ((MimeResponse) resp).getCacheControl();
       retVal = ret;
       checkArgs(meth, args);
       return ret;
@@ -244,45 +252,47 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements
    @Override
    public void setLocale(Locale loc) {
       String meth = "setLocale";
-      Object[] args = {loc};
+      Object[] args = { loc };
       checkArgs(meth, args);
       return;
-      
+
    }
 
    @Override
    public void setCharacterEncoding(String charset) {
       String meth = "setCharacterEncoding";
-      Object[] args = {charset};
+      Object[] args = { charset };
       checkArgs(meth, args);
       return;
-      
+
    }
 
    @Override
    public void setContentLength(int len) {
       String meth = "setContentLength";
-      Object[] args = {len};
+      Object[] args = { len };
       checkArgs(meth, args);
       return;
-      
+
    }
 
+   @SuppressWarnings("unchecked")
    @Override
    public PortletURL createRenderURL() {
       String meth = "createRenderURL";
       Object[] args = {};
-      PortletURL ret = ((MimeResponse)resp).createRenderURL();
+      PortletURL ret = ((MimeResponse) resp).createRenderURL();
       retVal = ret;
       checkArgs(meth, args);
       return ret;
    }
 
+   @SuppressWarnings("unchecked")
    @Override
    public PortletURL createActionURL() {
       String meth = "createActionURL";
       Object[] args = {};
-      PortletURL ret = ((MimeResponse)resp).createActionURL();
+      PortletURL ret = ((MimeResponse) resp).createActionURL();
       retVal = ret;
       checkArgs(meth, args);
       return ret;
@@ -292,11 +302,48 @@ public class ResourceResponseWrapperChecker extends WrapperChecker implements
    public ResourceURL createResourceURL() {
       String meth = "createResourceURL";
       Object[] args = {};
-      ResourceURL ret = ((MimeResponse)resp).createResourceURL();
+      ResourceURL ret = ((MimeResponse) resp).createResourceURL();
       retVal = ret;
       checkArgs(meth, args);
       return ret;
    }
 
-}
+   @Override
+   public String getProperty(String arg0) {
+      return null;
+   }
 
+   @Override
+   public Collection<String> getPropertyNames() {
+      return null;
+   }
+
+   @Override
+   public Collection<String> getPropertyValues(String arg0) {
+      return null;
+   }
+
+   @Override
+   public ActionURL createActionURL(Copy arg0) {
+      return null;
+   }
+
+   @Override
+   public RenderURL createRenderURL(Copy arg0) {
+      return null;
+   }
+
+   @Override
+   public int getStatus() {
+      return 0;
+   }
+
+   @Override
+   public void setContentLengthLong(long arg0) {
+   }
+
+   @Override
+   public void setStatus(int arg0) {
+   }
+
+}

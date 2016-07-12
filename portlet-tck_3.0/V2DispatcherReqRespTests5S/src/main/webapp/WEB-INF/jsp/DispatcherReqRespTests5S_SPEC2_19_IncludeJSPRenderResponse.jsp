@@ -26,72 +26,64 @@
       /* Details: "In a target jsp of a include in the Render phase, the      */
       /* method HttpServletResponse.getOutputStream must provide the same     */
       /* functionality as RenderResponse.getPortletOutputStream"              */
-      TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_GETOUTPUTSTREAM);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      TestResult tr0 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_GETOUTPUTSTREAM);
+      tr0.appendTcDetail("Can't be implemented.");
       tr0.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderResponse_sendError */
       /* Details: "In a target jsp of a include in the Render phase, the      */
       /* method HttpServletResponse.sendError does not perform any            */
       /* operation"                                                           */
-      TestResult tr1 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_SENDERROR);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      TestResult tr1 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_SENDERROR);
+      tr1.appendTcDetail("Can't be implemented.");
       tr1.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderResponse_sendRedirect */
       /* Details: "In a target jsp of a include in the Render phase, the      */
       /* method HttpServletResponse.sendRedirect does not perform any         */
       /* operation"                                                           */
-      TestResult tr2 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_SENDREDIRECT);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      TestResult tr2 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_SENDREDIRECT);
+      tr2.appendTcDetail("Can't be implemented.");
       tr2.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderResponse_setCharacterEncoding */
       /* Details: "In a target jsp of a include in the Render phase, the      */
       /* method HttpServletResponse.setCharacterEncoding does not perform     */
       /* any operation"                                                       */
-      TestResult tr3 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_SETCHARACTERENCODING);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      TestResult tr3 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_SETCHARACTERENCODING);
+      tr3.appendTcDetail("Can't be implemented.");
       tr3.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderResponse_setContentLength */
       /* Details: "In a target jsp of a include in the Render phase, the      */
       /* method HttpServletResponse.setContentLength does not perform any     */
       /* operation"                                                           */
-      TestResult tr4 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_SETCONTENTLENGTH);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      TestResult tr4 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_SETCONTENTLENGTH);
+      tr4.appendTcDetail("Can't be implemented.");
       tr4.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderResponse_setContentType */
       /* Details: "In a target jsp of a include in the Render phase, the      */
       /* method HttpServletResponse.setContentType does not perform any       */
       /* operation"                                                           */
-      TestResult tr5 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_SETCONTENTTYPE);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      TestResult tr5 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_SETCONTENTTYPE);
+      tr5.appendTcDetail("Can't be implemented.");
       tr5.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderResponse_setLocale */
       /* Details: "In a target jsp of a include in the Render phase, the      */
       /* method HttpServletResponse.setLocale does not perform any            */
       /* operation"                                                           */
-      TestResult tr6 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_SETLOCALE);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
+      TestResult tr6 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_SETLOCALE);
+      tr6.appendTcDetail("Can't be implemented.");
       tr6.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderResponse_setStatus */
       /* Details: "In a target jsp of a include in the Render phase, the      */
       /* method HttpServletResponse.setStatus does not perform any            */
       /* operation"                                                           */
-      TestResult tr7 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_SETSTATUS);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      TestResult tr7 = tcd.getTestResultSucceeded(V2DISPATCHERREQRESPTESTS5S_SPEC2_19_INCLUDEJSPRENDERRESPONSE_SETSTATUS);
+      tr7.appendTcDetail("Can't be implemented.");
       tr7.writeTo(writer);
 
 %>

@@ -41,17 +41,20 @@ import javax.portlet.PortletURL;
 import javax.portlet.tck.constants.Constants;
 
 /**
- * Formats a submit button in a form for a test case. When clicked, an 
- * HTTP POST request is sent.
+ * Formats a submit button in a form for a test case. When clicked, an HTTP POST request is sent.
  * 
  * @author nick
  */
 public class TestButton {
-   
-   private String tcName;
-   private String urlstr;
-   private PortletURL purl;
-   
+
+   protected String     tcName;
+   protected String     urlstr;
+   protected PortletURL purl;
+   protected String     actId;
+   protected String     title = " Execute Button:";
+   protected String     paramName;
+
+
    /**
     * Creates an empty test result.
     */
@@ -59,57 +62,66 @@ public class TestButton {
       tcName = "";
       purl = null;
       urlstr = null;
+      actId = "";
+      paramName = "";
    }
 
    /**
     * Creates a test link initialized according to the parameters.
     * 
-    * @param tcName     test case name
-    * @param url        url for the test case
+    * @param tcName
+    *           test case name
+    * @param url
+    *           url for the test case
     */
    public TestButton(String tcName, PortletURL purl) {
       this.tcName = tcName;
       this.purl = purl;
       this.urlstr = null;
+      this.paramName = tcName;
+      this.actId = tcName + Constants.CLICK_ID;
    }
 
    /**
-    * Creates a test link initialized with a URL in string form.
-    * This enables certain URL test cases such as "*URL.toString()"
+    * Creates a test link initialized with a URL in string form. This enables certain URL test cases such as
+    * "*URL.toString()"
     * 
-    * @param tcName     test case name
-    * @param urlstr     url for the test case in string form
+    * @param tcName
+    *           test case name
+    * @param urlstr
+    *           url for the test case in string form
     */
    public TestButton(String tcName, String urlstr) {
       this.tcName = tcName;
       this.urlstr = urlstr;
       this.purl = null;
+      this.paramName = tcName;
+      this.actId = tcName + Constants.CLICK_ID;
    }
 
    /**
-    * Generates HTML markup representing the test link. 
+    * Generates HTML markup representing the test link.
     * 
-    * Note that the div element containing the item that is to be acted upon
-    * by the client must have an id equal to the test case name.
+    * Note that the div element containing the item that is to be acted upon by the client must have an id equal to the
+    * test case name.
     * 
-    * @return  HTML markup representing the test link
+    * @return HTML markup representing the test link
     */
    @Override
    public String toString() {
-      final String actId = tcName + Constants.CLICK_ID ;
-      
-      if (urlstr == null) urlstr = purl.toString();
+
+      if (urlstr == null)
+         urlstr = purl.toString();
       StringBuilder sb = new StringBuilder();
       sb.append("<div class='portletTCKTestcase' name='");
       sb.append(tcName);
       sb.append("'>");
       sb.append("<h4>");
       sb.append(tcName);
-      sb.append(" button (POST):");
+      sb.append(title);
       sb.append("</h4>");
-      sb.append("<form  class='portletTCKButton'" +
-                " action='" + urlstr + "' method='post'>");
-      sb.append("<input type='submit' value='").append(tcName);
+      sb.append("<form  class='portletTCKButton'" + " action='" + urlstr + "' method='post'>");
+      sb.append("<input type='submit' value='").append(paramName);
       sb.append("'  name='").append(Constants.BUTTON_PARAM_NAME);
       sb.append("'  id='").append(actId);
       sb.append("'/>");
@@ -118,15 +130,15 @@ public class TestButton {
 
       return sb.toString();
    }
-   
+
    /**
-    * Generates HTML markup representing the test link and
-    * writes them to the writer provided.
+    * Generates HTML markup representing the test link and writes them to the writer provided.
     * 
-    * @param writer  Writer to which the string is written
+    * @param writer
+    *           Writer to which the string is written
     */
-   public void writeTo(Writer writer)throws IOException {
+   public void writeTo(Writer writer) throws IOException {
       writer.write(this.toString());
    }
-   
+
 }
