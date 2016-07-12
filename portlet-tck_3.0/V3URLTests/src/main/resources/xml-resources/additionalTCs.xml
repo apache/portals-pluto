@@ -20,5 +20,21 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <!-- JSR 286 API URLTests test case names and page mappings -->
-<entry key="V3URLTests_BaseURL_	append">V3URLTests</entry>
+<entry key="V3URLTests_BaseURL_append">V3URLTests</entry>
+<entry key="V3URLTests_BaseURL_append2">V3URLTests</entry>
+<entry key="V3URLTests_BaseURL_append3">V3URLTests</entry>
+<entry key="V3URLTests_BaseURL_append4">V3URLTests</entry>
+<entry key="V3URLTests_ActionURL_getActionParameters">V3URLTests</entry>
+<entry key="V3URLTests_ActionURL_getActionParameters2">V3URLTests</entry>
+<entry key="V3URLTests_ActionURL_getActionParameters3">V3URLTests</entry>
+<entry key="V3URLTests_ResourceURL_getResourceParameters">V3URLTests</entry>
+<entry key="V3URLTests_ResourceURL_getResourceParameters2">V3URLTests</entry>
+<entry key="V3URLTests_ResourceURL_getResourceParameters3">V3URLTests</entry>
+<entry key="V3URLTests_RenderURL_setFragmentIdentifier">V3URLTests</entry>
+<entry key="V3URLTests_RenderURL_setFragmentIdentifier2">V3URLTests</entry>
+<entry key="V3URLTests_RenderURL_setFragmentIdentifier3">V3URLTests</entry>
+<entry key="V3URLTests_RenderURL_setFragmentIdentifier4">V3URLTests</entry>
+<entry key="V3URLTests_RenderURL_setFragmentIdentifier5">V3URLTests</entry>
+<entry key="V3URLTests_RenderURL_getFragmentIdentifier">V3URLTests</entry>
+<entry key="V3URLTests_RenderURL_getFragmentIdentifier2">V3URLTests</entry>
 </properties>

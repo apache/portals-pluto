@@ -330,6 +330,12 @@
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
+	  <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V3RenderStateTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
    </dependencies>
 
    <properties>
@@ -408,7 +414,8 @@
                         
                         tck-V3PortletContextTests,
                         tck-V3PortletConfigTests,
-						tck-V3URLTests
+						tck-V3URLTests,
+						tck-V3RenderStateTests
                      </includeArtifactIds>
                      <includes>${test.file.dir}/*.xml</includes>
                      <outputDirectory>${project.build.directory}</outputDirectory>

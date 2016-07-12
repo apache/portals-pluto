@@ -1,0 +1,8 @@
+Class / Section;Keywords;Name;Testable;Description
+RenderStateTests;;;;
+SPEC1_12;RenderState;getRenderParameters;TRUE;Returns an RenderParameters object representing the private and public render parameters.
+SPEC1_12;RenderState;getRenderParameters2;TRUE;The RenderParameters object return by this method is immutable.
+SPEC1_12;RenderState;getPortletMode;TRUE;Returns the current portlet mode of the portlet.
+SPEC1_12;RenderState;getPortletMode2;TRUE;If the portlet mode is not available, PortletMode.UNDEFINED is returned.
+SPEC1_12;RenderState;getWindowState;TRUE;Returns the current window state of the portlet.
+SPEC1_12;RenderState;getWindowState2;TRUE;If the window state is not available, WindowState.UNDEFINED is returned.
