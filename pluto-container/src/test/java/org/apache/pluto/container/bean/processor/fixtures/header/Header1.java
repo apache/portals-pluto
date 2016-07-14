@@ -19,7 +19,6 @@
 
 package org.apache.pluto.container.bean.processor.fixtures.header;
 
-import javax.inject.Inject;
 import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
 import javax.portlet.annotations.HeaderMethod;
@@ -32,8 +31,7 @@ import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
  */
 public class Header1 {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    @HeaderMethod(portletNames="portlet1")
    public void header1a(HeaderRequest req, HeaderResponse resp) {

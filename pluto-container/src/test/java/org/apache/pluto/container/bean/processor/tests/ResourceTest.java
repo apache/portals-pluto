@@ -19,34 +19,34 @@
 package org.apache.pluto.container.bean.processor.tests;
 
 import static org.apache.pluto.container.bean.processor.MethodType.RESOURCE;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
 import org.apache.pluto.container.bean.processor.AnnotatedMethod;
 import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
 import org.apache.pluto.container.bean.processor.ConfigSummary;
 import org.apache.pluto.container.bean.processor.MethodIdentifier;
-import org.apache.pluto.container.bean.processor.PortletCDIExtension;
 import org.apache.pluto.container.bean.processor.fixtures.resource.Resource1;
 import org.apache.pluto.container.bean.processor.fixtures.resource.Resource2;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
-import org.jglue.cdiunit.AdditionalClasses;
-import org.jglue.cdiunit.AdditionalPackages;
-import org.jglue.cdiunit.CdiRunner;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Test class for RenderStateScoped beans
@@ -54,30 +54,27 @@ import org.junit.runner.RunWith;
  * @author Scott Nicklous
  *
  */
-@RunWith(CdiRunner.class)
-@AdditionalClasses(PortletCDIExtension.class)
-@AdditionalPackages(Resource1.class)
 public class ResourceTest {
-
-   @Inject
-   AnnotatedConfigBean          acb;
-
-   private AnnotatedMethodStore ams     = null;
-   private ConfigSummary        summary = null;
-   private PortletApplicationDefinition pad = null;
-
-   @Before
-   public void setUp() {
-      assertNotNull(acb);
-      ams = acb.getMethodStore();
-      summary = acb.getSummary();
-
+   
+   private static final String pkg = "org.apache.pluto.container.bean.processor.fixtures.resource";
+   
+   private static AnnotatedMethodStore ams = null;
+   private static ConfigSummary summary = null;
+   private static ConfigurationHolder holder =  new ConfigurationHolder();
+   private static PortletApplicationDefinition pad = null;
+   
+   @BeforeClass
+   public static void setUpClass() throws URISyntaxException, IOException {
+      Set<File> classes = FileHelper.getClasses(pkg);
+      holder.scanMethodAnnotations(classes);
+      holder.reconcileBeanConfig();
+      holder.instantiatePortlets(null);
+      ams = holder.getMethodStore();
+      summary = holder.getConfigSummary();
+      pad = holder.getPad();
+      
       assertNotNull(ams);
       assertNotNull(summary);
-      
-      ConfigurationHolder ch = new ConfigurationHolder();
-      ch.reconcileBeanConfig(ams);
-      pad = ch.getPad();
       assertNotNull(pad);
    }
 

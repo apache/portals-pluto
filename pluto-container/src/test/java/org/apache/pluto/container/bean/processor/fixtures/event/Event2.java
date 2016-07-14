@@ -19,11 +19,11 @@
 
 package org.apache.pluto.container.bean.processor.fixtures.event;
 
-import javax.inject.Inject;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.annotations.EventMethod;
 import javax.portlet.annotations.PortletQName;
+import javax.portlet.annotations.RenderMethod;
 
 import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
 
@@ -33,8 +33,7 @@ import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
  */
 public class Event2 {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    @EventMethod(portletName="portlet3",
          processingEvents= {
@@ -115,6 +114,11 @@ public class Event2 {
    public void event7(EventRequest req, EventResponse resp) {
       meths.addMethod(this.getClass().getSimpleName() + "#event7");
    }
+   
+   // dummy render method to keep config processor happy
+   
+   @RenderMethod(portletNames= {"portlet3", "portlet6"})
+   public void render1() {}
 
 
 }

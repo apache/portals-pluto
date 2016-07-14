@@ -18,6 +18,7 @@
 
 package org.apache.pluto.container.om.portlet.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Set;
@@ -333,6 +334,19 @@ public class ConfigurationHolder {
    public void scanMethodAnnotations(ServletContext ctx) {
       MethodAnnotationRecognizer mar = new MethodAnnotationRecognizer(methodStore, configSummary);
       mar.scanContext(ctx);
+      LOG.debug("Scan complete: \n" + methodStore.getMethodsAsString());
+   }
+   
+   /**
+    * Scans list of files for method annotations.
+    * (unit test execution path)
+    * 
+    * @param files   the set of files to scan
+    */
+   public void scanMethodAnnotations(Set<File> files) {
+      MethodAnnotationRecognizer mar = new MethodAnnotationRecognizer(methodStore, configSummary);
+      mar.scanFiles(files);
+      mar.activateAnnotatedMethods(null);
       LOG.debug("Scan complete: \n" + methodStore.getMethodsAsString());
    }
 

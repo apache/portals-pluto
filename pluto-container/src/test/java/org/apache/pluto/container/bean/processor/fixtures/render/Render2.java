@@ -20,7 +20,6 @@
 package org.apache.pluto.container.bean.processor.fixtures.render;
 
 import javax.activity.InvalidActivityException;
-import javax.inject.Inject;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.annotations.RenderMethod;
@@ -33,8 +32,7 @@ import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
  */
 public class Render2 {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    @RenderMethod(portletNames="portlet2", portletMode="edit", ordinal=-100)
    public void render2c(RenderRequest req, RenderResponse resp) {

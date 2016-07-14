@@ -19,11 +19,13 @@
 
 package org.apache.pluto.container.bean.processor.fixtures.action;
 
-import javax.inject.Inject;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.annotations.ActionMethod;
+import javax.portlet.annotations.EventDefinition;
+import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletQName;
+import javax.portlet.annotations.RenderMethod;
 
 import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
 
@@ -31,10 +33,19 @@ import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
  * @author Scott Nicklous
  *
  */
+@PortletApplication(
+      defaultNamespaceURI="https://www.java.net/",
+      events = {
+            @EventDefinition(qname=@PortletQName(namespaceURI="http://www.apache.org", localPart="pub1")),
+            @EventDefinition(qname=@PortletQName(namespaceURI="http://www.apache.org", localPart="pub2")),
+            @EventDefinition(qname=@PortletQName(namespaceURI="http://www.apache.org", localPart="pub3")),
+            @EventDefinition(qname=@PortletQName(namespaceURI="http://www.apache.org", localPart="pub4")),
+            @EventDefinition(qname=@PortletQName(namespaceURI="", localPart="event4"))
+      }
+      )
 public class Action1 {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    @ActionMethod(portletName="portlet1", 
          publishingEvents= {
@@ -49,5 +60,9 @@ public class Action1 {
       meths.addMethod(this.getClass().getSimpleName() + "#action2");
    }
    
+   // dummy render method to keep config processor happy
+   
+   @RenderMethod(portletNames= {"portlet1", "portlet2", "portlet3", "portlet6"})
+   public void render1() {}
 
 }

@@ -54,8 +54,7 @@ import org.junit.runner.RunWith;
 @AdditionalClasses({PortletCDIExtension.class, InvokeHelper.class, TestPortlet5.class})
 public class AnnotatedGenericPortletInvokeTest {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    @Inject
    private InvokeHelper helper;

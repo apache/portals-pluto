@@ -62,8 +62,7 @@ import org.junit.runner.RunWith;
    TestPortlet2.class, TestPortlet3.class, TestPortlet4.class})
 public class PortletInvokeTest {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    @Inject
    private InvokeHelper helper;

@@ -33,6 +33,21 @@ public class InvocationResults {
 
    private List<String> methods = new ArrayList<String>();
    boolean configExists = false;
+   
+   private static InvocationResults results;
+
+   /**
+    * singleton
+    */
+   private InvocationResults() {
+   }
+   
+   public static InvocationResults getInvocationResults() {
+      if (results == null) {
+         results = new InvocationResults();
+      }
+      return results;
+   }
 
    /**
     * @return the methods

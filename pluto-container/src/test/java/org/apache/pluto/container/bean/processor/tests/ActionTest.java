@@ -16,36 +16,34 @@
  *  under the License.
  */
 
-
 package org.apache.pluto.container.bean.processor.tests;
 
 import static org.apache.pluto.container.bean.processor.MethodType.ACTION;
+import static org.apache.pluto.container.bean.processor.MethodType.RENDER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
 import org.apache.pluto.container.bean.processor.AnnotatedMethod;
 import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
 import org.apache.pluto.container.bean.processor.ConfigSummary;
 import org.apache.pluto.container.bean.processor.MethodIdentifier;
-import org.apache.pluto.container.bean.processor.PortletCDIExtension;
+import org.apache.pluto.container.bean.processor.MethodType;
 import org.apache.pluto.container.bean.processor.fixtures.action.Action1;
 import org.apache.pluto.container.bean.processor.fixtures.action.Action2;
-import org.jglue.cdiunit.AdditionalClasses;
-import org.jglue.cdiunit.AdditionalPackages;
-import org.jglue.cdiunit.CdiRunner;
-import org.junit.Before;
+import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Test class for action method annotations.
@@ -53,27 +51,25 @@ import org.junit.runner.RunWith;
  * @author Scott Nicklous
  *
  */
-@RunWith(CdiRunner.class)
-@AdditionalClasses(PortletCDIExtension.class)
-@AdditionalPackages(Action1.class)
 public class ActionTest {
-   
-   @Inject
-   AnnotatedConfigBean acb;
-   
-   private AnnotatedMethodStore ams = null;
-   private ConfigSummary summary = null;
-   
-   @Before
-   public void setUp() {
-      assertNotNull(acb);
-      ams = acb.getMethodStore();
-      summary = acb.getSummary();
-      
+
+   private static final String         pkg     = "org.apache.pluto.container.bean.processor.fixtures.action";
+
+   private static AnnotatedMethodStore ams     = null;
+   private static ConfigSummary        summary = null;
+   private static ConfigurationHolder  holder  = new ConfigurationHolder();
+
+   @BeforeClass
+   public static void setUpClass() throws URISyntaxException, IOException {
+      Set<File> classes = FileHelper.getClasses(pkg);
+      holder.scanMethodAnnotations(classes);
+      ams = holder.getMethodStore();
+      summary = holder.getConfigSummary();
+
       assertNotNull(ams);
       assertNotNull(summary);
    }
-   
+
    @Test
    public void portletNamesTest() throws Exception {
       Set<String> names = ams.getPortletNames();
@@ -84,7 +80,7 @@ public class ActionTest {
       assertTrue(names.contains("portlet3"));
       assertTrue(names.contains("portlet6"));
    }
-   
+
    @Test
    public void errorDuplicateMethod() throws Exception {
       List<String> names = summary.getPortletsWithErrors();
@@ -92,7 +88,7 @@ public class ActionTest {
       assertEquals(4, names.size());
       assertTrue(names.contains("portlet2"));
    }
-   
+
    @Test
    public void errorDuplicateMethod2() throws Exception {
       List<String> names = summary.getPortletsWithErrors();
@@ -100,7 +96,7 @@ public class ActionTest {
       assertEquals(4, names.size());
       assertTrue(names.contains("portlet6"));
    }
-   
+
    @Test
    public void errorBadReturnType() throws Exception {
       List<String> names = summary.getPortletsWithErrors();
@@ -108,7 +104,7 @@ public class ActionTest {
       assertEquals(4, names.size());
       assertTrue(names.contains("portlet5"));
    }
-   
+
    @Test
    public void errorBadParameters() throws Exception {
       List<String> names = summary.getPortletsWithErrors();
@@ -116,42 +112,49 @@ public class ActionTest {
       assertEquals(4, names.size());
       assertTrue(names.contains("portlet4"));
    }
-   
+
    @Test
    public void methods1Test() throws Exception {
       Set<MethodIdentifier> portlets = ams.getMethodIDsForPortlet("portlet1");
       assertNotNull(portlets);
-      assertEquals(1, portlets.size());
+      assertEquals(2, portlets.size());
       MethodIdentifier mi = (MethodIdentifier) portlets.toArray()[0];
-      assertEquals(ACTION, mi.getType());
+      if (!mi.getType().equals(ACTION)) {
+         mi = (MethodIdentifier) portlets.toArray()[1];
+      }
       assertEquals("", mi.getId());
       assertEquals("portlet1", mi.getName());
    }
-   
+
    @Test
    public void methods2Test() throws Exception {
       Set<MethodIdentifier> portlets = ams.getMethodIDsForPortlet("portlet2");
       assertNotNull(portlets);
-      assertEquals(1, portlets.size());
+      assertEquals(2, portlets.size());
       MethodIdentifier mi = (MethodIdentifier) portlets.toArray()[0];
-      assertEquals(ACTION, mi.getType());
+      List<MethodType> types = Arrays.asList(ACTION, RENDER);
+      assertTrue(types.contains(mi.getType()));
+      if (!mi.getType().equals(ACTION)) {
+         mi = (MethodIdentifier) portlets.toArray()[1];
+      }
       assertEquals("", mi.getId());
       assertEquals("portlet2", mi.getName());
    }
-   
+
    @Test
    public void methods3Test() throws Exception {
       Set<MethodIdentifier> portlets = ams.getMethodIDsForPortlet("portlet3");
       assertNotNull(portlets);
-      assertEquals(3, portlets.size());
-      List<String> ids = Arrays.asList(new String[] {"", "Fred", "Barney"});
+      assertEquals(4, portlets.size());
+      List<String> ids = Arrays.asList(new String[] { "", "Fred", "Barney" });
       for (MethodIdentifier mi : portlets) {
-         assertEquals(ACTION, mi.getType());
-         assertTrue(ids.contains(mi.getId()));
-         assertEquals("portlet3", mi.getName());
+         if (mi.getType().equals(ACTION)) {
+            assertTrue(ids.contains(mi.getId()));
+            assertEquals("portlet3", mi.getName());
+         }
       }
    }
-   
+
    @Test
    public void class1Test() throws Exception {
       MethodIdentifier mi = new MethodIdentifier("portlet1", "", ACTION);
@@ -162,7 +165,7 @@ public class ActionTest {
       assertEquals("action1", m.getName());
       assertEquals(Action1.class, m.getDeclaringClass());
    }
-   
+
    @Test
    public void class2Test() throws Exception {
       MethodIdentifier mi = new MethodIdentifier("portlet2", "", ACTION);
@@ -172,10 +175,10 @@ public class ActionTest {
       assertNotNull(m);
       assertEquals("action2", m.getName());
       // don't know which one the scanner will find first
-      List<Class<?>> list = Arrays.asList(new Class<?>[] {Action1.class, Action2.class});
+      List<Class<?>> list = Arrays.asList(new Class<?>[] { Action1.class, Action2.class });
       assertTrue(list.contains(m.getDeclaringClass()));
    }
-   
+
    @Test
    public void class3Test() throws Exception {
       MethodIdentifier mi = new MethodIdentifier("portlet3", "", ACTION);
@@ -186,7 +189,7 @@ public class ActionTest {
       assertEquals("action1a", m.getName());
       assertEquals(Action2.class, m.getDeclaringClass());
    }
-   
+
    @Test
    public void class4Test() throws Exception {
       MethodIdentifier mi = new MethodIdentifier("portlet3", "Fred", ACTION);
@@ -197,7 +200,7 @@ public class ActionTest {
       assertEquals("action1b", m.getName());
       assertEquals(Action2.class, m.getDeclaringClass());
    }
-   
+
    @Test
    public void class5Test() throws Exception {
       MethodIdentifier mi = new MethodIdentifier("portlet3", "Barney", ACTION);
@@ -208,7 +211,7 @@ public class ActionTest {
       assertEquals("action1c", m.getName());
       assertEquals(Action2.class, m.getDeclaringClass());
    }
-   
+
    @Test
    public void class6Test() throws Exception {
       MethodIdentifier mi = new MethodIdentifier("portlet6", "Wilma", ACTION);
@@ -216,10 +219,11 @@ public class ActionTest {
       assertNotNull(am);
       Method m = am.getJavaMethod();
       assertNotNull(m);
-      assertEquals("action6", m.getName());
+      List<String> names = Arrays.asList("action6", "action7");
+      assertTrue(names.contains(m.getName()));
       assertEquals(Action2.class, m.getDeclaringClass());
    }
-   
+
    @Test
    public void pubEvent1Test() throws Exception {
       List<QName> qns = ams.getPublishingEventRefs("portlet1");
@@ -227,7 +231,7 @@ public class ActionTest {
       assertEquals(1, qns.size());
       assertTrue(qns.contains(new QName("http://www.apache.org", "pub1")));
    }
-   
+
    @Test
    public void pubEvent2Test() throws Exception {
       List<QName> qns = ams.getPublishingEventRefs("portlet3");
@@ -238,5 +242,5 @@ public class ActionTest {
       assertTrue(qns.contains(new QName("http://www.apache.org", "pub3")));
       assertTrue(qns.contains(new QName("http://www.apache.org", "pub4")));
    }
-   
+
 }

@@ -53,8 +53,7 @@ import org.apache.pluto.container.bean.processor.fixtures.mocks.MockResourceResp
  */
 public class InvokeHelper {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    @Inject
    AnnotatedConfigBean acb;

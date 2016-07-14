@@ -40,6 +40,13 @@
          <scope>provided</scope>
       </dependency>
 
+      <!-- For method annotation scanning ==================================== -->
+      <dependency>
+         <groupId>eu.infomas</groupId>
+         <artifactId>annotation-detector</artifactId>
+         <version>3.0.5</version>
+      </dependency>
+
       <!-- Specification Libraries =========================================== -->
       <dependency>
          <groupId>org.apache.portals.pluto</groupId>

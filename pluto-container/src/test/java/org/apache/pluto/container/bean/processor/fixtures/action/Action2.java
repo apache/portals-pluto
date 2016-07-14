@@ -19,7 +19,6 @@
 
 package org.apache.pluto.container.bean.processor.fixtures.action;
 
-import javax.inject.Inject;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.annotations.ActionMethod;
@@ -33,8 +32,7 @@ import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
  */
 public class Action2 {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    @ActionMethod(portletName="portlet3",
          publishingEvents= {

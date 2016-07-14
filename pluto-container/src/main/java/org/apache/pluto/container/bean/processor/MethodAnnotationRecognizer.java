@@ -172,7 +172,7 @@ public class MethodAnnotationRecognizer extends PortletAnnotationRecognizer impl
     * 
     * @return        a set of class files
     */
-   public Set<File> getClassFilesForPath(ServletContext ctx, String path) {
+   private Set<File> getClassFilesForPath(ServletContext ctx, String path) {
       Set<File> files = new HashSet<File>();
       Set<String> paths = ctx.getResourcePaths(path);
       if (paths != null) {
@@ -212,7 +212,7 @@ public class MethodAnnotationRecognizer extends PortletAnnotationRecognizer impl
     * 
     * @return        a set of class files
     */
-   public Set<File> getLibFilesForPath(ServletContext ctx, String path) {
+   private Set<File> getLibFilesForPath(ServletContext ctx, String path) {
       Set<File> files = new HashSet<File>();
       Set<String> libs = ctx.getResourcePaths(path);
       if (libs != null) {

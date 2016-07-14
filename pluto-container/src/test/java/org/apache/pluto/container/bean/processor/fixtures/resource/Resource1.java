@@ -19,7 +19,6 @@
 
 package org.apache.pluto.container.bean.processor.fixtures.resource;
 
-import javax.inject.Inject;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.annotations.ServeResourceMethod;
@@ -32,8 +31,7 @@ import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
  */
 public class Resource1 {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    @ServeResourceMethod(portletNames="portlet1")
    public void resource1a(ResourceRequest req, ResourceResponse resp) {
