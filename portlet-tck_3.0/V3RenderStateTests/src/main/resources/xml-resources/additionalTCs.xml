@@ -20,10 +20,27 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <!-- JSR 362 API RenderStateTests test case names and page mappings -->
+<entry key="V3RenderStateTests_SPEC1_12_RenderState_general">V3RenderStateTests</entry>
 <entry key="V3RenderStateTests_SPEC1_12_RenderState_getRenderParameters">V3RenderStateTests</entry>
 <entry key="V3RenderStateTests_SPEC1_12_RenderState_getRenderParameters2">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC1_12_RenderState_getRenderParameters3">V3RenderStateTests</entry>
 <entry key="V3RenderStateTests_SPEC1_12_RenderState_getPortletMode">V3RenderStateTests</entry>
 <entry key="V3RenderStateTests_SPEC1_12_RenderState_getPortletMode2">V3RenderStateTests</entry>
 <entry key="V3RenderStateTests_SPEC1_12_RenderState_getWindowState">V3RenderStateTests</entry>
 <entry key="V3RenderStateTests_SPEC1_12_RenderState_getWindowState2">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_getRenderParameters">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_getRenderParameters2">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_getRenderParameters3">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_setPortletMode">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_setPortletMode2">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_setPortletMode3">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_setPortletMode4">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_setPortletMode5">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_setPortletMode6">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_setWindowState">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_setWindowState2">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_setWindowState3">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_setWindowState4">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_setWindowState5">V3RenderStateTests</entry>
+<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_setWindowState6">V3RenderStateTests</entry>
 </properties>

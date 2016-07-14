@@ -33,6 +33,9 @@
 <render-config default="About Apache Pluto">
 <page xmlns="" name="V3RenderStateTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
 <portlet context="/tck-V3RenderStateTests-3.0-SNAPSHOT" name="RenderStateTests_SPEC1_12_RenderState"/>
+<portlet context="/tck-V3RenderStateTests-3.0-SNAPSHOT" name="RenderStateTests_SPEC1_12_RenderState2"/>
+<portlet context="/tck-V3RenderStateTests-3.0-SNAPSHOT" name="RenderStateTests_SPEC2_12_MutableRenderState"/>
+<portlet context="/tck-V3RenderStateTests-3.0-SNAPSHOT" name="RenderStateTests_SPEC2_12_MutableRenderState2"/>
 </page>
 </render-config>
 </pluto-portal-driver>

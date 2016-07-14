@@ -78,6 +78,22 @@ public class RenderStateTests_SPEC1_12_RenderState implements Portlet {
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
       /*
+       * TestCase: V3RenderStateTests_SPEC1_12_RenderState_general
+       */
+      /*
+       * Details:
+       * "RenderState interface provides read-only access to the render state."
+       */
+      {
+         TestResult result = tcd.getTestResultFailed(
+               V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GENERAL);
+         result.setTcSuccess(true);
+         result.appendTcDetail(
+               "There are no setter methods in RenderState interface.");
+         result.writeTo(writer);
+      }
+
+      /*
        * TestCase: V3RenderStateTests_SPEC1_12_RenderState_getRenderParameters
        */
       /*
@@ -101,7 +117,7 @@ public class RenderStateTests_SPEC1_12_RenderState implements Portlet {
          mutableRenderParams.setValue("tr0_private", "true");
          mutableRenderParams.setValue("tr0_public", "true");
          TestLink tb = new TestLink(
-               "V3RenderStateTests_SPEC1_12_RenderState_getRenderParameters",
+               V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETRENDERPARAMETERS,
                renderURL);
          tb.writeTo(writer);
       }
@@ -152,7 +168,7 @@ public class RenderStateTests_SPEC1_12_RenderState implements Portlet {
          RenderURL renderURL = portletResp.createRenderURL();
          // renderURL.setPortletMode(PortletMode.UNDEFINED);
          TestLink tb = new TestLink(
-               "V3RenderStateTests_SPEC1_12_RenderState_getPortletMode2",
+               V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETPORTLETMODE2,
                renderURL);
          tb.writeTo(writer);
       }
@@ -187,7 +203,7 @@ public class RenderStateTests_SPEC1_12_RenderState implements Portlet {
          RenderURL renderURL = portletResp.createRenderURL();
          // renderURL.setWindowState(WindowState.UNDEFINED);
          TestLink tb = new TestLink(
-               "V3RenderStateTests_SPEC1_12_RenderState_getWindowState2",
+               V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETWINDOWSTATE2,
                renderURL);
          tb.writeTo(writer);
       }
