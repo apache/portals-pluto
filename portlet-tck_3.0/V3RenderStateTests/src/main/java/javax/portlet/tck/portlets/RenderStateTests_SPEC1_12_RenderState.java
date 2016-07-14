@@ -33,7 +33,10 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
 import javax.portlet.WindowState;
+import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.PortletQName;
+import javax.portlet.annotations.PublicRenderParameterDefinition;
 import javax.portlet.tck.beans.TestLink;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
@@ -48,7 +51,8 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
  * execution by the driver.
  *
  */
-
+@PortletApplication(publicParams = {
+      @PublicRenderParameterDefinition(identifier = "tr0_public", qname = @PortletQName(localPart = "tr0_public", namespaceURI = "")) })
 @PortletConfiguration(portletName = "RenderStateTests_SPEC1_12_RenderState", publicParams = {
       "tr0_public" })
 public class RenderStateTests_SPEC1_12_RenderState implements Portlet {
@@ -80,13 +84,6 @@ public class RenderStateTests_SPEC1_12_RenderState implements Portlet {
        * Details: "Returns an RenderParameters object representing the private
        * and public render parameters."
        */
-      // TODO: How to declare public render parameters?
-      // @PortletConfiguration(publicParams = {"tr0_public" }) is not working.
-      // The problem is in renderParams.isPublic("tr0_public") check!!
-      // Alternate code to test public render params -
-      // portletReq.getPublicParameterMap()!=null &&
-      // portletReq.getPublicParameterMap().containsKey("tr0_public") &&
-      // portletReq.getPublicParameterMap().get("tr0_public").equals("true")
       RenderParameters renderParams = portletReq.getRenderParameters();
       if (!renderParams.isEmpty() && renderParams.isPublic("tr0_public")
             && renderParams.getValue("tr0_public") != null
@@ -153,7 +150,7 @@ public class RenderStateTests_SPEC1_12_RenderState implements Portlet {
          result.writeTo(writer);
       } else {
          RenderURL renderURL = portletResp.createRenderURL();
-         //renderURL.setPortletMode(PortletMode.UNDEFINED);
+         // renderURL.setPortletMode(PortletMode.UNDEFINED);
          TestLink tb = new TestLink(
                "V3RenderStateTests_SPEC1_12_RenderState_getPortletMode2",
                renderURL);
@@ -188,7 +185,7 @@ public class RenderStateTests_SPEC1_12_RenderState implements Portlet {
          result.writeTo(writer);
       } else {
          RenderURL renderURL = portletResp.createRenderURL();
-         //renderURL.setWindowState(WindowState.UNDEFINED);
+         // renderURL.setWindowState(WindowState.UNDEFINED);
          TestLink tb = new TestLink(
                "V3RenderStateTests_SPEC1_12_RenderState_getWindowState2",
                renderURL);
