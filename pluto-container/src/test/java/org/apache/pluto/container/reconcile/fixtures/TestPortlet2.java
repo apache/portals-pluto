@@ -19,7 +19,6 @@
 
 package org.apache.pluto.container.reconcile.fixtures;
 
-import javax.inject.Inject;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
@@ -58,8 +57,7 @@ initParams = {
 )
 public class TestPortlet2 {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    @RenderMethod(portletNames="Portlet2")
    public String myView() {

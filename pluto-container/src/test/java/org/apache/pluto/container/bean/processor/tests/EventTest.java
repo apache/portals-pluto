@@ -220,7 +220,9 @@ public class EventTest {
 
       List<String> methNames = Arrays.asList(new String[] {"event1a", "event1b", "event1c", "render1"});
       for (MethodIdentifier mi : portlets) {
-         AnnotatedMethod am = ams.getMethod(mi);
+         List<AnnotatedMethod> meths = ams.getMethods(mi); 
+         assertEquals(1, meths.size());
+         AnnotatedMethod am = meths.get(0);
          Method m = am.getJavaMethod();
          assertNotNull(m);
          assertTrue(methNames.contains(m.getName()));

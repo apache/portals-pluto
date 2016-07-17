@@ -23,33 +23,27 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.portlet.PortletMode;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
 import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
-import org.apache.pluto.container.bean.processor.PortletCDIExtension;
+import org.apache.pluto.container.bean.processor.ConfigSummary;
 import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
-import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.bean.processor.tests.FileHelper;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
-import org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl;
-import org.apache.pluto.container.om.portlet.impl.jsr362.MergePortletAppTest;
 import org.apache.pluto.container.reconcile.fixtures.TestPortlet1;
 import org.apache.pluto.container.reconcile.fixtures.TestPortlet1a;
 import org.apache.pluto.container.reconcile.fixtures.TestPortlet2;
 import org.apache.pluto.container.reconcile.fixtures.TestPortlet3;
 import org.apache.pluto.container.reconcile.fixtures.TestPortlet4;
-import org.jglue.cdiunit.AdditionalClasses;
-import org.jglue.cdiunit.CdiRunner;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Tests that the expected portlet methods are present for a portlet app with several
@@ -57,65 +51,58 @@ import org.junit.runner.RunWith;
  * 
  * @author Scott Nicklous
  */
-@RunWith(CdiRunner.class)
-@AdditionalClasses({PortletCDIExtension.class, InvokeHelper.class, TestPortlet1.class, TestPortlet1a.class, 
-   TestPortlet2.class, TestPortlet3.class, TestPortlet4.class})
 public class PortletInvokeTest {
    
    private InvocationResults meths = InvocationResults.getInvocationResults();
-   
-   @Inject
-   private InvokeHelper helper;
+   private static InvokeHelper helper;
 
    private static final Class<?> TEST_ANNOTATED_CLASS1 = TestPortlet1.class;
    private static final Class<?> TEST_ANNOTATED_CLASS2 = TestPortlet2.class;
    private static final String XML_FILE = 
          "org/apache/pluto/container/om/portlet/portlet362Reconcile.xml";
 
-   private static PortletApplicationDefinition pad;
-   
-   @Inject
-   AnnotatedConfigBean acb;
-   
-   // Classes under test
-   private AnnotatedMethodStore ams = null;
-   private PortletApplicationDefinition app;
+   private static final String pkg = "org.apache.pluto.container.reconcile.fixtures";
+
+   private static AnnotatedMethodStore ams = null;
+   private static ConfigSummary summary = null;
+   private static ConfigurationHolder holder =  new ConfigurationHolder();
 
    @BeforeClass
    public static void setUpBeforeClass() throws Exception {
+      Set<File> portletMethodClasses = FileHelper.getClasses(pkg);
       
-      InputStream in = MergePortletAppTest.class
+      InputStream in = PortletInvokeTest.class
             .getClassLoader().getResourceAsStream(XML_FILE);
 
-      Set<Class<?>> classes = new HashSet<Class<?>>();
-      classes.add(TEST_ANNOTATED_CLASS1);
-      classes.add(TEST_ANNOTATED_CLASS2);
 
-      ConfigurationHolder ch = new ConfigurationHolder();
+      Set<Class<?>> configClasses = new HashSet<Class<?>>();
+      configClasses.add(TEST_ANNOTATED_CLASS1);
+      configClasses.add(TEST_ANNOTATED_CLASS2);
+
       try {
-         ch.processConfigAnnotations(classes);
-         ch.processPortletDD(in);     // process portlet xml after annotations
+         holder.scanMethodAnnotations(portletMethodClasses);
+         holder.processConfigAnnotations(configClasses);
+         holder.processPortletDD(in);     // process portlet xml after annotations
+         holder.reconcileBeanConfig();
+         holder.instantiatePortlets(null);
          try {
-            ch.validate();         // validate and ignore any validation problems.
+            holder.validate();         // validate and ignore any validation problems.
          } catch (Exception e) {}   
-         pad = ch.getPad();
       } catch (Exception e) {
          e.printStackTrace();
          throw e;
       }
+      ams = holder.getMethodStore();
+      summary = holder.getConfigSummary();
+      
+      assertNotNull(ams);
+      assertNotNull(summary);
+      
+      helper = new InvokeHelper(ams);
    }
 
    @Before
    public void setUpBefore() throws Exception {
-      assertNotNull(acb);
-      ams = acb.getMethodStore();
-      assertNotNull(ams);
-      assertNotNull(helper);
-
-      app = new PortletApplicationDefinitionImpl(pad);
-      ConfigurationHolder coho = new ConfigurationHolder(app);
-      coho.reconcileBeanConfig(ams);
-      
       helper.init("Portlet1", null);
       helper.init("Portlet2", null);
       helper.init("Portlet3", null);

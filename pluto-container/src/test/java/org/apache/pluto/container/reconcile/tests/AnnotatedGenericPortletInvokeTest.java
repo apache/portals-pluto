@@ -25,50 +25,32 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.portlet.PortletMode;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
 import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
-import org.apache.pluto.container.bean.processor.PortletCDIExtension;
+import org.apache.pluto.container.bean.processor.ConfigSummary;
 import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
-import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
-import org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl;
 import org.apache.pluto.container.reconcile.fixtures.TestPortlet5;
-import org.jglue.cdiunit.AdditionalClasses;
-import org.jglue.cdiunit.CdiRunner;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Tests that if a generic portlet event method is annotated to provide the processing
- * event reference QNames, the methods are part of te same portlet instance.
+ * event reference QNames, the methods are part of the same portlet instance.
  * 
  * @author Scott Nicklous
  */
-@RunWith(CdiRunner.class)
-@AdditionalClasses({PortletCDIExtension.class, InvokeHelper.class, TestPortlet5.class})
 public class AnnotatedGenericPortletInvokeTest {
    
    private InvocationResults meths = InvocationResults.getInvocationResults();
-   
-   @Inject
-   private InvokeHelper helper;
-
+   private static InvokeHelper helper;
    private static final Class<?> TEST_ANNOTATED_CLASS1 = TestPortlet5.class;
-
-   private static PortletApplicationDefinition pad;
-   
-   @Inject
-   AnnotatedConfigBean acb;
-   
-   // Classes under test
-   private AnnotatedMethodStore ams = null;
-   private PortletApplicationDefinition app;
+   private static AnnotatedMethodStore ams = null;
+   private static ConfigSummary summary = null;
+   private static ConfigurationHolder holder =  new ConfigurationHolder();
 
    @BeforeClass
    public static void setUpBeforeClass() throws Exception {
@@ -76,30 +58,28 @@ public class AnnotatedGenericPortletInvokeTest {
       Set<Class<?>> classes = new HashSet<Class<?>>();
       classes.add(TEST_ANNOTATED_CLASS1);
 
-      ConfigurationHolder ch = new ConfigurationHolder();
       try {
-         ch.processConfigAnnotations(classes);
+         holder.processConfigAnnotations(classes);
+         holder.reconcileBeanConfig();
+         holder.instantiatePortlets(null);
          try {
-            ch.validate();         // validate and ignore any validation problems.
+            holder.validate();         // validate and ignore any validation problems.
          } catch (Exception e) {}   
-         pad = ch.getPad();
       } catch (Exception e) {
          e.printStackTrace();
          throw e;
       }
+      ams = holder.getMethodStore();
+      summary = holder.getConfigSummary();
+      
+      assertNotNull(ams);
+      assertNotNull(summary);
+      
+      helper = new InvokeHelper(ams);
    }
 
    @Before
    public void setUpBefore() throws Exception {
-      assertNotNull(acb);
-      ams = acb.getMethodStore();
-      assertNotNull(ams);
-      assertNotNull(helper);
-
-      app = new PortletApplicationDefinitionImpl(pad);
-      ConfigurationHolder coho = new ConfigurationHolder(app);
-      coho.reconcileBeanConfig(ams);
-      
       helper.init("Portlet5", null);
    }
   

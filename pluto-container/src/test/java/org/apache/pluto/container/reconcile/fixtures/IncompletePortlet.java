@@ -42,8 +42,7 @@ import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
 @ApplicationScoped
 public class IncompletePortlet {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    private PortletConfig config;
    

@@ -21,7 +21,6 @@ package org.apache.pluto.container.reconcile.fixtures;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
@@ -76,8 +75,7 @@ import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
 })
 public class TestPortlet1 extends GenericPortlet {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
 
    @Override
    public void destroy() {
