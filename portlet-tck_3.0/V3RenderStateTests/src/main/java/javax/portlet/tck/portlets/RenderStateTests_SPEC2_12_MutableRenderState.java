@@ -177,11 +177,11 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
              * Details:
              * "Throws IllegalStateException if the method is invoked after sendRedirect has been called."
              */
-             // TODO: Fix it.
             TestResult result = tcd.getTestResultFailed(
                   V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETPORTLETMODE5);
             try {
-               portletResp.sendRedirect("");
+               String referer = portletReq.getProperty("Referer");
+               portletResp.sendRedirect(referer);
                portletResp.setPortletMode(PortletMode.UNDEFINED);
             } catch (IllegalStateException e) {
                result.setTcSuccess(true);
@@ -273,11 +273,11 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
              * Details:
              * "Throws IllegalStateException if the method is invoked after sendRedirect has been called."
              */
-             // TODO: Fix it.
             TestResult result = tcd.getTestResultFailed(
                   V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETWINDOWSTATE5);
             try {
-               portletResp.sendRedirect("");
+               String referer = portletReq.getProperty("Referer");
+               portletResp.sendRedirect(referer);
                portletResp.setWindowState(WindowState.UNDEFINED);
             } catch (IllegalStateException e) {
                result.setTcSuccess(true);
@@ -514,15 +514,20 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
        * Details:
        * "A custom window state declared in deployment descriptor could be set."
        */
-      if (renderParams.getValue("tr_setWindow2") == null) {
+      // TODO: Fix test case
+      if (renderParams.getValue("tr_setWindow2") != null
+            && renderParams.getValue("tr_setWindow2").equals("true")
+            && portletReq.getWindowState().equals(new WindowState("custom1"))) {
+         TestResult result = tcd.getTestResultFailed(
+               V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETWINDOWSTATE2);
+         result.setTcSuccess(true);
+         result.writeTo(writer);
+      } else {
          ActionURL actionURL = portletResp.createActionURL();
          TestButton tb = new TestButton(
                V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETWINDOWSTATE2,
                actionURL);
          tb.writeTo(writer);
-      } else {
-         //TODO: Implement test case
-         //super.render(portletReq, portletResp);
       }
 
       /*
