@@ -94,10 +94,8 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETCONFIGTESTS_
 
         publicParams = {"public1", "public2", "public3"},
         supports = {
-                @Supports(mimeType = "text/html", portletModes = {"view", "help", "edit"}),
-                @Supports(mimeType = "text/xml", portletModes = {"view", "help"}),
-                @Supports(mimeType = "text/html", windowStates = {"normal", "maximized", "minimized"}),
-                @Supports(mimeType = "text/xml", windowStates = {"normal"})
+                @Supports(mimeType = "text/html", portletModes = {"view", "help", "edit"}, windowStates = {"normal", "maximized", "minimized"}),
+                @Supports(mimeType = "text/xml", portletModes = {"view", "help"}, windowStates = {"normal"})
         }
 )
 public class PortletConfigTests_Config {
