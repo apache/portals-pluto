@@ -54,6 +54,10 @@ class InstallationDependency {
         new InstallationDependency("org.jboss.weld.servlet", "weld-servlet", 
                 VERSION_PROPERTIES.getProperty("cdi.version"));
 
+    public static final InstallationDependency ANNOTATION_DETECTOR =
+        new InstallationDependency("eu.infomas", "annotation-detector", 
+                VERSION_PROPERTIES.getProperty("annotation-detector.version"));
+
     public static final InstallationDependency SLF4J_API =
         new InstallationDependency("org.slf4j", "slf4j-api", 
                 VERSION_PROPERTIES.getProperty("slf4j.version"));
@@ -150,6 +154,7 @@ class InstallationDependency {
         SHARED.add(TAGLIB);
         SHARED.add(CCPP_API);
         SHARED.add(CDI_IMPL);
+        SHARED.add(ANNOTATION_DETECTOR);
         SHARED.add(SLF4J_API);
         SHARED.add(SLF4J_IMPL);
     }

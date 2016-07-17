@@ -280,6 +280,7 @@ generate mailto links. -->
     <jmock.version>1.2.0</jmock.version>
     <xmlunit.version>1.1</xmlunit.version>
     <cdi.version>2.3.1.Final</cdi.version>
+    <annotation-detector.version>3.0.5</annotation-detector.version>
 
     <!-- The following properties are not directly used as maven
 dependencies, they're used by the maven pluto plugin for
@@ -368,6 +369,13 @@ TODO: Check if we need all of them. -->
           <artifactId>weld-servlet</artifactId>
           <version>${cdi.version}</version>
       </dependency>      
+
+      <!-- For method annotation scanning ==================================== -->
+      <dependency>
+         <groupId>eu.infomas</groupId>
+         <artifactId>annotation-detector</artifactId>
+         <version>${annotation-detector.version}</version>
+      </dependency>
 
       <!--  CCPP Libraries -->
       <dependency>
