@@ -18,23 +18,38 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.HeaderPortlet;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
+import javax.portlet.MutableRenderParameters;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletMode;
+import javax.portlet.RenderParameters;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.RenderURL;
+import javax.portlet.WindowState;
+import javax.portlet.annotations.PortletApplication;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.PortletQName;
+import javax.portlet.annotations.PublicRenderParameterDefinition;
+import javax.portlet.tck.beans.TestLink;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_RENDERSTATE_APIHEADER_GETRENDERPARAMETERS;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_RENDERSTATE_APIHEADER_GETPORTLETMODE;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_RENDERSTATE_APIHEADER_GETWINDOWSTATE;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -43,15 +58,14 @@ import static javax.portlet.ResourceURL.*;
  * additionalTCs.xml file into the complete list of test case names for execution by the driver.
  *
  */
-
-@PortletConfiguration(portletName = "HeaderPortletTests_SPEC14_RenderState_ApiHeader")
-public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet {
-   
-   private PortletConfig portletConfig = null;
+@PortletApplication(publicParams = {
+      @PublicRenderParameterDefinition(identifier = "tr3_public", qname = @PortletQName(localPart = "tr3_public", namespaceURI = "")) })
+@PortletConfiguration(portletName = "HeaderPortletTests_SPEC14_RenderState_ApiHeader", publicParams = {
+"tr3_public" })
+public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet, HeaderPortlet {
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
    }
 
    @Override
@@ -66,14 +80,31 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet 
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
 
       PrintWriter writer = portletResp.getWriter();
+      String msg = (String) portletReq.getPortletSession().getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",
+            APPLICATION_SCOPE);
+      msg = (msg.equals("nullnull")) ? "Not ready. click test case link." : msg;
+      writer.write("<p>" + msg + "</p>\n");
+      portletReq.getPortletSession().removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",
+            APPLICATION_SCOPE);
+
+   }
+
+   @Override
+   public void renderHeaders(HeaderRequest portletReq, HeaderResponse portletResp)
+         throws PortletException, IOException {
+      StringWriter writer = new StringWriter();
+      
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
       /* TestCase: V3HeaderPortletTests_SPEC14_RenderState_ApiHeader_getPortletMode */
       /* Details: "Method getPortletMode(): Returns current PortletMode "           */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_RENDERSTATE_APIHEADER_GETPORTLETMODE);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(portletReq.getPortletMode().equals(PortletMode.VIEW)){
+            result.setTcSuccess(true);
+         }
          result.writeTo(writer);
       }
 
@@ -81,8 +112,9 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet 
       /* Details: "Method getWindowState(): Returns current WindowState"            */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_RENDERSTATE_APIHEADER_GETWINDOWSTATE);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(portletReq.getWindowState().equals(WindowState.NORMAL)){
+            result.setTcSuccess(true);
+         }
          result.writeTo(writer);
       }
 
@@ -90,13 +122,32 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet 
       /* Details: "Method getRenderParameters(): Returns an immutable               */
       /* RenderParameters object representing the private and public render         */
       /* parameters"                                                                */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_RENDERSTATE_APIHEADER_GETRENDERPARAMETERS);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+      RenderParameters renderParams = portletReq.getRenderParameters();
+      if (!renderParams.isEmpty() && renderParams.isPublic("tr3_public")
+            && renderParams.getValue("tr3_public") != null
+            && renderParams.getValue("tr3_public").equals("true")
+            && renderParams.getValue("tr3_private") != null
+            && renderParams.getValue("tr3_private").equals("true")) {
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC14_RENDERSTATE_APIHEADER_GETRENDERPARAMETERS);
+         result.setTcSuccess(true);
          result.writeTo(writer);
+      } else {
+         RenderURL renderURL = portletResp.createRenderURL();
+         MutableRenderParameters mutableRenderParams = renderURL
+               .getRenderParameters();
+         mutableRenderParams.setValue("tr3_private", "true");
+         mutableRenderParams.setValue("tr3_public", "true");
+         TestLink tb = new TestLink(
+               V3HEADERPORTLETTESTS_SPEC14_RENDERSTATE_APIHEADER_GETRENDERPARAMETERS,
+               renderURL);
+         tb.writeTo(writer);
       }
-
+      
+      portletReq.getPortletSession().setAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",
+            writer.toString(), APPLICATION_SCOPE);
+      
    }
 
 }
