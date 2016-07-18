@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- JSR 362 API HeaderPortletTests test case names and page mappings -->
+<entry key="V3HeaderPortletTests_SPEC3_6_4_HeaderPortlet_renderHeaders">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC3_6_4_HeaderPortlet_renderHeaders2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC3_6_4_HeaderPortlet_renderHeaders3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC7_14_RenderRequest_getETag">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_HeaderAttr_attributes1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_HeaderAttr_attributes2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_HeaderAttr_attributes3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_HeaderReq_contentType1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_HeaderReq_contentType2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_HeaderReq_contentType3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_HeaderReq_contentType4">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_HeaderReq_contentType5">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_HeaderReq_windowId1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_HeaderReq_windowId4">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_HeaderReq_contentType10">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_HeaderReq_contentType11">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_HeaderReq_contentType13">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_RenderState_ApiHeader_getPortletMode">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_RenderState_ApiHeader_getWindowState">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_RenderState_ApiHeader_getRenderParameters">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldUSER_INFO">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldCCPP_PROFILE">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldBASIC_AUTH">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldFORM_AUTH">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldCLIENT_CERT_AUTH">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldDIGEST_AUTH">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldACTION_PHASE">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldEVENT_PHASE">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldRENDER_PHASE">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldRESOURCE_PHASE">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldHEADER_PHASE">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldLIFECYCLE_PHASE">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldRENDER_PART">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldRENDER_HEADERS">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldRENDER_MARKUP">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldACTION_SCOPE_ID">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isWindowStateAllowed1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isWindowStateAllowed2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isPortletModeAllowed1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isPortletModeAllowed2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPreferences">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionA1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionA2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionB1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionB2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionB3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionB4">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getProperty1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getProperty2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getProperty3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getProperties1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getProperties2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getProperties3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPropertyNames1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPropertyNames2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortalContext">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getAuthType1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getAuthType2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getContextPath1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getContextPath2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getContextPath3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getRemoteUser1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getRemoteUser2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getUserPrincipal1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getUserPrincipal2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isUserInRole1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isUserInRole2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isUserInRole3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getAttribute1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getAttribute2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getAttribute3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getAttributeNames1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getAttributeNames2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameter1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameter2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameter3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameter4">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameter5">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameterNames1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameterNames2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameterValues1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameterValues2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameterValues3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameterValues4">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameterMap1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameterMap2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameterMap3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isSecure1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isSecure2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_setAttribute1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_setAttribute2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_setAttribute3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_removeAttribute1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_removeAttribute2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getRequestedSessionId1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getRequestedSessionId2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isRequestedSessionIdValid1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isRequestedSessionIdValid2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getResponseContentType1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getResponseContentType2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getResponseContentTypes1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getResponseContentTypes2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getLocale">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getLocales">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getScheme">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getServerName">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getServerPort">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getWindowID">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getCookies1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getCookies2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPrivateParameterMap1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPrivateParameterMap2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPrivateParameterMap3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPublicParameterMap1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPublicParameterMap2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPublicParameterMap3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_exists">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyA1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyA2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB4">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyC1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyC2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_setProperty1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_setProperty2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_setProperty3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_encodeURL1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_encodeURL2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_getNamespace1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_createElement1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_createElement2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_createElement3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_createElement4">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_createElement5">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_createElement6">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_fieldEXPIRATION_CACHE ">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_fieldCACHE_SCOPE ">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_fieldPUBLIC_SCOPE ">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_fieldPRIVATE_SCOPE ">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_fieldETAG ">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_fieldUSE_CACHED_CONTENT ">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_fieldNAMESPACED_RESPONSE">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_fieldMARKUP_HEAD_ELEMENT">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getContentType1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getContentType2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setContentType1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setContentType2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setContentType3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setContentType4">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getCharacterEncoding">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getWriter1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getWriter2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getLocale">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setBufferSize1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setBufferSize2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getBufferSize1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getBufferSize2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_flushBuffer1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_resetBuffer1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_resetBuffer2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_isCommitted1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_isCommitted2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_reset1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_reset2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getPortletOutputStream1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getPortletOutputStream2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_createRenderURL">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_createActionURL">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_createResourceURL">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getCacheControl">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_parameters10">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_parameters11">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_parameters13">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_parameters15">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_properties1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_properties2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_properties3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_properties4">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_parameters1">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_parameters2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_parameters3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_parameters4">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_parameters6">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_parameters7">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_publicRenderParameters14">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_publicRenderParameters15">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_publicRenderParameters16">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_publicRenderParameters6">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_publicRenderParameters13a">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_cookie8">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_cookie9">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_cookie10">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_cookie11">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_cookie12">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_contentType5">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_characterEncoding2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_characterEncoding3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_Header_characterEncoding4">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_setTitle">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_setTitle2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_setTitle3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_setContentType">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_getWriter">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_getPortletOutputStream">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency3">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency4">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency5">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency6">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency7">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency8">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency9">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency10">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency11">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency12">V3HeaderPortletTests</entry>
+</properties>

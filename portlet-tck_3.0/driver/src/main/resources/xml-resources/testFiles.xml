@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
     Licensed to the Apache Software Foundation (ASF) under one
     or more contributor license agreements.  See the NOTICE file
     distributed with this work for additional information
@@ -16,12 +15,10 @@
     KIND, either express or implied.  See the License for the
     specific language governing permissions and limitations
     under the License.     
--->
-<!--
+--><!--
    Lists the test files from the individual modules that will be combined
    together to form the final list file containing all test cases for the TCK. 
- -->
-<fl:filelist xmlns:fl="http://www.apache.org/2014/javax/portlet/tck/filelist">
+ --><fl:filelist xmlns:fl="http://www.apache.org/2014/javax/portlet/tck/filelist">
    <fl:file>tck-TestModule1-tests.xml</fl:file>
    <fl:file>tck-TestModule2-tests.xml</fl:file>
    <fl:file>tck-TestModule3-tests.xml</fl:file>
@@ -66,4 +63,5 @@
    <fl:file>tck-V3PortletConfigTests-tests.xml</fl:file>
    <fl:file>tck-V3URLTests-tests.xml</fl:file>
    <fl:file>tck-V3RenderStateTests-tests.xml</fl:file>
+<fl:file>tck-V3HeaderPortletTests-tests.xml</fl:file>
 </fl:filelist>
