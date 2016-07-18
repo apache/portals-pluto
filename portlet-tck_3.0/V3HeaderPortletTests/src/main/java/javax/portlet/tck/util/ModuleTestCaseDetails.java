@@ -36,7 +36,6 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
 
    public final static String V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS = "V3HeaderPortletTests_SPEC3_6_4_HeaderPortlet_renderHeaders";
    public final static String V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS2 = "V3HeaderPortletTests_SPEC3_6_4_HeaderPortlet_renderHeaders2";
-   public final static String V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS3 = "V3HeaderPortletTests_SPEC3_6_4_HeaderPortlet_renderHeaders3";
    public final static String V3HEADERPORTLETTESTS_SPEC7_14_RENDERREQUEST_GETETAG = "V3HeaderPortletTests_SPEC7_14_RenderRequest_getETag";
    public final static String V3HEADERPORTLETTESTS_SPEC14_HEADERATTR_ATTRIBUTES1 = "V3HeaderPortletTests_SPEC14_HeaderAttr_attributes1";
    public final static String V3HEADERPORTLETTESTS_SPEC14_HEADERATTR_ATTRIBUTES2 = "V3HeaderPortletTests_SPEC14_HeaderAttr_attributes2";
@@ -258,8 +257,7 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
    static {
 
       tcd.put(V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS, "renderHeaders() method is called before render() method if the portlet implements HeaderPortlet interface.");
-      tcd.put(V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS2, "If the portlet container runtime option javax.portlet.renderHeaders is set to TRUE and the portlet also implements HeaderPortlet interface, then renderHeaders() method is called first followed by render() method with the RENDER_PART attribute set to \"RENDER_HEADERS\".");
-      tcd.put(V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS3, "If the portlet container runtime option javax.portlet.renderHeaders is set to TRUE, then header written by renderHeaders() method could be overwritten by render() method.");
+      tcd.put(V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS2, "The container runtime option javax.portlet.renderHeaders is disregarded for version 3.0 or later.");
       tcd.put(V3HEADERPORTLETTESTS_SPEC7_14_RENDERREQUEST_GETETAG, "Method getETag(): Returns null if there is no cached response.");
       tcd.put(V3HEADERPORTLETTESTS_SPEC14_HEADERATTR_ATTRIBUTES1, "The portlet can access a map with user information attributes via the request attribute PortletRequest.USER_INFO");
       tcd.put(V3HEADERPORTLETTESTS_SPEC14_HEADERATTR_ATTRIBUTES2, "The PortletRequest.CCPP_PROFILE request attribute must return a javax.ccpp.Profile based on the current portlet request");

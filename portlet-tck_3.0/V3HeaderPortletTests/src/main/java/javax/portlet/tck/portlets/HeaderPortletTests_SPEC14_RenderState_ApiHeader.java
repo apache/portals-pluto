@@ -83,7 +83,6 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet,
       String msg = (String) portletReq.getPortletSession().getAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",
             APPLICATION_SCOPE);
-      msg = (msg.equals("nullnull")) ? "Not ready. click test case link." : msg;
       writer.write("<p>" + msg + "</p>\n");
       portletReq.getPortletSession().removeAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",

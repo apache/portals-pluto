@@ -18,40 +18,46 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.HeaderPortlet;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS2;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 
 /**
- * This portlet implements several test cases for the JSR 362 TCK. The test case names
- * are defined in the /src/main/resources/xml-resources/additionalTCs.xml
- * file. The build process will integrate the test case names defined in the 
- * additionalTCs.xml file into the complete list of test case names for execution by the driver.
+ * This portlet implements several test cases for the JSR 362 TCK. The test case
+ * names are defined in the /src/main/resources/xml-resources/additionalTCs.xml
+ * file. The build process will integrate the test case names defined in the
+ * additionalTCs.xml file into the complete list of test case names for
+ * execution by the driver.
  *
  */
 
-@PortletConfiguration(portletName = "HeaderPortletTests_SPEC3_6_4_HeaderPortlet")
-public class HeaderPortletTests_SPEC3_6_4_HeaderPortlet implements Portlet {
-   
+public class HeaderPortletTests_SPEC3_6_4_HeaderPortlet
+      implements Portlet, HeaderPortlet {
+   private boolean       tr0_success   = false;
    private PortletConfig portletConfig = null;
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
+      // this.portletConfig = config;
    }
 
    @Override
@@ -59,49 +65,77 @@ public class HeaderPortletTests_SPEC3_6_4_HeaderPortlet implements Portlet {
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+   public void processAction(ActionRequest portletReq,
+         ActionResponse portletResp) throws PortletException, IOException {
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
+   public void render(RenderRequest portletReq, RenderResponse portletResp)
+         throws PortletException, IOException {
 
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
-      /* TestCase: V3HeaderPortletTests_SPEC3_6_4_HeaderPortlet_renderHeaders       */
-      /* Details: "renderHeaders() method is called before render() method if the   */
-      /* portlet implements HeaderPortlet interface."                               */
+      /* TestCase: V3HeaderPortletTests_SPEC3_6_4_HeaderPortlet_renderHeaders */
+      /*
+       * Details: "renderHeaders() method is called before render() method if
+       * the portlet implements HeaderPortlet interface."
+       */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS);
+         result.setTcSuccess(tr0_success);
+         result.writeTo(writer);
+         tr0_success = false;
+      }
+
+      String msg = (String) portletReq.getPortletSession().getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC3_6_4_HeaderPortlet",
+            APPLICATION_SCOPE);
+      writer.write("<p>" + msg + "</p>\n");
+      portletReq.getPortletSession().removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC3_6_4_HeaderPortlet",
+            APPLICATION_SCOPE);
+
+   }
+
+   @Override
+   public void renderHeaders(HeaderRequest portletReq,
+         HeaderResponse portletResp) throws PortletException, IOException {
+
+      StringWriter writer = new StringWriter();
+
+      ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
+
+      tr0_success = true;
+
+      /*
+       * TestCase: V3HeaderPortletTests_SPEC3_6_4_HeaderPortlet_renderHeaders2
+       */
+      /*
+       * Details: "The container runtime option javax.portlet.renderHeaders is
+       * disregarded for version 3.0 or later."
+       */
+      {
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS2);
+         Map<String, String[]> runtimeOptions = portletConfig
+               .getContainerRuntimeOptions();
+         String[] renderHeaders = runtimeOptions
+               .get("javax.portlet.renderHeaders");
+         if (renderHeaders == null || renderHeaders.length == 0) {
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail(
+                  "Failed because javax.portlet.renderHeaders is found equal to "
+                        + renderHeaders[0]);
+         }
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC3_6_4_HeaderPortlet_renderHeaders2      */
-      /* Details: "If the portlet container runtime option                          */
-      /* javax.portlet.renderHeaders is set to TRUE and the portlet also implements */
-      /* HeaderPortlet interface, then renderHeaders() method is called first       */
-      /* followed by render() method with the RENDER_PART attribute set to          */
-      /* \"RENDER_HEADERS\"."                                                       */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC3_6_4_HeaderPortlet_renderHeaders3      */
-      /* Details: "If the portlet container runtime option                          */
-      /* javax.portlet.renderHeaders is set to TRUE, then header written by         */
-      /* renderHeaders() method could be overwritten by render() method."           */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS3);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
+      portletReq.getPortletSession().setAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC3_6_4_HeaderPortlet",
+            writer.toString(), APPLICATION_SCOPE);
    }
 
 }

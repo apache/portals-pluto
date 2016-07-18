@@ -22,7 +22,6 @@
 <!-- JSR 362 API HeaderPortletTests test case names and page mappings -->
 <entry key="V3HeaderPortletTests_SPEC3_6_4_HeaderPortlet_renderHeaders">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC3_6_4_HeaderPortlet_renderHeaders2">V3HeaderPortletTests</entry>
-<entry key="V3HeaderPortletTests_SPEC3_6_4_HeaderPortlet_renderHeaders3">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC7_14_RenderRequest_getETag">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC14_HeaderAttr_attributes1">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC14_HeaderAttr_attributes2">V3HeaderPortletTests</entry>

@@ -2,8 +2,7 @@ PARMS outputPath=C:\Users\IBM_ADMIN\Downloads\TCKTool
 Class / Section;Keywords;Name;Testable;Description
 HeaderPortletTests;;;;
 SPEC3_6_4;HeaderPortlet;renderHeaders;TRUE;renderHeaders() method is called before render() method if the portlet implements HeaderPortlet interface.
-SPEC3_6_4;HeaderPortlet;renderHeaders2;TRUE;If the portlet container runtime option javax.portlet.renderHeaders is set to TRUE and the portlet also implements HeaderPortlet interface, then renderHeaders() method is called first followed by render() method with the RENDER_PART attribute set to "RENDER_HEADERS".
-SPEC3_6_4;HeaderPortlet;renderHeaders3;TRUE;If the portlet container runtime option javax.portlet.renderHeaders is set to TRUE, then header written by renderHeaders() method could be overwritten by render() method.
+SPEC3_6_4;HeaderPortlet;renderHeaders2;TRUE;The container runtime option javax.portlet.renderHeaders is disregarded for version 3.0 or later.
 SPEC7_14;RenderRequest;getETag;TRUE;Method getETag(): Returns null if there is no cached response.
 SPEC14;Header Attr;attributes1;TRUE;The portlet can access a map with user information attributes via the request attribute PortletRequest.USER_INFO
 SPEC14;Header Attr;attributes2;TRUE;The PortletRequest.CCPP_PROFILE request attribute must return a javax.ccpp.Profile based on the current portlet request
