@@ -18,40 +18,58 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Enumeration;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.HeaderPortlet;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.Supports;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+
+import org.apache.commons.lang3.StringUtils;
+
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE1;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE2;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE3;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE4;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE5;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE10;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE11;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE13;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_WINDOWID1;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_WINDOWID4;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
- * This portlet implements several test cases for the JSR 362 TCK. The test case names
- * are defined in the /src/main/resources/xml-resources/additionalTCs.xml
- * file. The build process will integrate the test case names defined in the 
- * additionalTCs.xml file into the complete list of test case names for execution by the driver.
+ * This portlet implements several test cases for the JSR 362 TCK. The test case
+ * names are defined in the /src/main/resources/xml-resources/additionalTCs.xml
+ * file. The build process will integrate the test case names defined in the
+ * additionalTCs.xml file into the complete list of test case names for
+ * execution by the driver.
  *
  */
 
-@PortletConfiguration(portletName = "HeaderPortletTests_SPEC14_HeaderReq")
-public class HeaderPortletTests_SPEC14_HeaderReq implements Portlet {
-   
-   private PortletConfig portletConfig = null;
+@PortletConfiguration(portletName = "HeaderPortletTests_SPEC14_HeaderReq", supports = {
+      @Supports(mimeType = "*/*") })
+public class HeaderPortletTests_SPEC14_HeaderReq
+      implements Portlet, HeaderPortlet {
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
    }
 
    @Override
@@ -59,119 +77,202 @@ public class HeaderPortletTests_SPEC14_HeaderReq implements Portlet {
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+   public void processAction(ActionRequest portletReq,
+         ActionResponse portletResp) throws PortletException, IOException {
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
+   public void render(RenderRequest portletReq, RenderResponse portletResp)
+         throws PortletException, IOException {
 
       PrintWriter writer = portletResp.getWriter();
+      String msg = (String) portletReq.getPortletSession().getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_HeaderReq",
+            APPLICATION_SCOPE);
+      writer.write("<p>" + msg + "</p>\n");
+      portletReq.getPortletSession().removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_HeaderReq",
+            APPLICATION_SCOPE);
+
+   }
+
+   @Override
+   public void renderHeaders(HeaderRequest portletReq,
+         HeaderResponse portletResp) throws PortletException, IOException {
+
+      StringWriter writer = new StringWriter();
+
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
-      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType1               */
-      /* Details: "The getResponseContentType method returns a String representing  */
-      /* the default content type the portlet container assumes for the output"     */
+      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType1 */
+      /*
+       * Details: "The getResponseContentType method returns a String
+       * representing the default content type the portlet container assumes for
+       * the output"
+       */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE1);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE1);
+         if (portletReq.getResponseContentType() != null
+               && !portletReq.getResponseContentType().isEmpty())
+            result.setTcSuccess(true);
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType2               */
-      /* Details: "The getResponseContentTypes method returns an Enumeration of     */
-      /* String elements representing the acceptable content types for the output   */
-      /* in order of preference"                                                    */
+      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType2 */
+      /*
+       * Details: "The getResponseContentTypes method returns an Enumeration of
+       * String elements representing the acceptable content types for the
+       * output
+       */
+      /* in order of preference" */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE2);
+         Enumeration<String> contentTypesTr1 = portletReq
+               .getResponseContentTypes();
+         if (contentTypesTr1 != null && contentTypesTr1.hasMoreElements()
+               && !contentTypesTr1.nextElement().isEmpty())
+            result.setTcSuccess(true);
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType3               */
-      /* Details: "The first element of the Enumeration returned by the             */
-      /* getResponseContentTypes method must equal the value returned by the        */
-      /* getResponseContentType method"                                             */
+      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType3 */
+      /* Details: "The first element of the Enumeration returned by the */
+      /* getResponseContentTypes method must equal the value returned by the */
+      /* getResponseContentType method" */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE3);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE3);
+         if (portletReq.getResponseContentTypes().nextElement()
+               .equals(portletReq.getResponseContentType()))
+            result.setTcSuccess(true);
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType4               */
-      /* Details: "If a portlet defines support for all content types using a       */
-      /* wildcard and the portlet container supports all content types, the         */
-      /* getResponseContentType may return the wildcard"                            */
+      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType4 */
+      /* Details: "If a portlet defines support for all content types using a */
+      /* wildcard and the portlet container supports all content types, the */
+      /* getResponseContentType may return the wildcard" */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE4);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE4);
+         if (portletReq.getResponseContentType().equals("*/*")) {
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail(
+                  "Content type is " + portletReq.getResponseContentType());
+         }
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType5               */
-      /* Details: "If a portlet defines support for all content types using a       */
-      /* wildcard and the portlet container supports all content types, the         */
-      /* getResponseContentType may return the preferred content type"              */
+      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType5 */
+      /* Details: "If a portlet defines support for all content types using a */
+      /* wildcard and the portlet container supports all content types, the */
+      /* getResponseContentType may return the preferred content type" */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE5);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE5);
+         if (portletReq.getResponseContentType().equals("*/*")) {
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail(
+                  "Content type is " + portletReq.getResponseContentType());
+         }
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_windowId1                  */
-      /* Details: "The getWindowID method returns a String representing the current */
-      /* window ID"                                                                 */
+      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_windowId1 */
+      /*
+       * Details: "The getWindowID method returns a String representing the
+       * current window ID"
+       */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_WINDOWID1);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_WINDOWID1);
+         String windowId = portletReq.getWindowID();
+         if (windowId != null) {
+            result.setTcSuccess(true);
+            result.appendTcDetail("Window ID is " + windowId);
+         } else {
+            result.appendTcDetail("Failed because windowID is null");
+         }
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_windowId4                  */
-      /* Details: "The string returned by getWindowID method must be the same ID    */
-      /* used for scoping portlet-scope session attributes"                         */
+      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_windowId4 */
+      /*
+       * Details: "The string returned by getWindowID method must be the same ID
+       * used for scoping portlet-scope session attributes"
+       */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_WINDOWID4);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_WINDOWID4);
+         portletReq.getPortletSession().setAttribute("tr5",
+               portletReq.getWindowID(), PORTLET_SCOPE);
+         String tr5SessionAttribute = (String) portletReq.getPortletSession()
+               .getAttribute(
+                     "javax.portlet.p." + portletReq.getWindowID() + "?tr5",
+                     APPLICATION_SCOPE);
+         if (tr5SessionAttribute != null
+               && tr5SessionAttribute.equals(portletReq.getWindowID())) {
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Couldn't find javax.portlet.p."
+                  + portletReq.getWindowID() + ".tr5 attribute");
+         }
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType10              */
-      /* Details: "Within the header method, the content type must include only the */
-      /* MIME type, not the character set"                                          */
+      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType10 */
+      /*
+       * Details: "Within the header method, the content type must include only
+       * the MIME type, not the character set"
+       */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE10);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE10);
+         if (!StringUtils.containsIgnoreCase(
+               portletReq.getResponseContentType(),
+               portletResp.getCharacterEncoding()))
+            result.setTcSuccess(true);
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType11              */
-      /* Details: "Within the header method, the getResponseContentTypes method     */
-      /* must return only the content types supported by the current portlet mode"  */
+      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType11 */
+      /*
+       * Details: "Within the header method, the getResponseContentTypes method
+       * must return only the content types supported by the current portlet
+       * mode"
+       */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE11);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE11);
+         Enumeration<String> contentTypesTr7 = portletReq
+               .getResponseContentTypes();
+         if (contentTypesTr7.nextElement().equals("*/*")
+               && !contentTypesTr7.hasMoreElements())
+            result.setTcSuccess(true);
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType13              */
-      /* Details: "The character set of the response can be retrieved via the       */
-      /* HeaderResponse.getCharacterEncoding method"                                */
+      /* TestCase: V3HeaderPortletTests_SPEC14_HeaderReq_contentType13 */
+      /* Details: "The character set of the response can be retrieved via the */
+      /* HeaderResponse.getCharacterEncoding method" */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE13);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE13);
+         if (portletResp.getCharacterEncoding() != null) {
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Character Encoding is null");
+         }
          result.writeTo(writer);
       }
 
+      portletReq.getPortletSession().setAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_HeaderReq",
+            writer.toString(), APPLICATION_SCOPE);
    }
 
 }
