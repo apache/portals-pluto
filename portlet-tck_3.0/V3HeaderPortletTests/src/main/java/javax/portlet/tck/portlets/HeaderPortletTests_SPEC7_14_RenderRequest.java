@@ -18,23 +18,27 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.HeaderPortlet;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC7_14_RENDERREQUEST_GETETAG;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -45,13 +49,10 @@ import static javax.portlet.ResourceURL.*;
  */
 
 @PortletConfiguration(portletName = "HeaderPortletTests_SPEC7_14_RenderRequest")
-public class HeaderPortletTests_SPEC7_14_RenderRequest implements Portlet {
-   
-   private PortletConfig portletConfig = null;
+public class HeaderPortletTests_SPEC7_14_RenderRequest implements Portlet, HeaderPortlet {
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
    }
 
    @Override
@@ -66,17 +67,37 @@ public class HeaderPortletTests_SPEC7_14_RenderRequest implements Portlet {
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
 
       PrintWriter writer = portletResp.getWriter();
-      ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
+      String msg = (String) portletReq.getPortletSession().getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC7_14_RenderRequest",
+            APPLICATION_SCOPE);
+      msg = (msg.equals("nullnull")) ? "Not ready. click test case link." : msg;
+      writer.write("<p>" + msg + "</p>\n");
+      portletReq.getPortletSession().removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC7_14_RenderRequest",
+            APPLICATION_SCOPE);
+   }
+   
+   @Override
+   public void renderHeaders(HeaderRequest portletReq,
+         HeaderResponse PortletResp) throws PortletException, IOException {
+      
+      StringWriter writer = new StringWriter();
 
+      ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
+      
       /* TestCase: V3HeaderPortletTests_SPEC7_14_RenderRequest_getETag              */
       /* Details: "Method getETag(): Returns null if there is no cached response."  */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC7_14_RENDERREQUEST_GETETAG);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(portletReq.getETag()==null){
+            result.setTcSuccess(true);
+         }
          result.writeTo(writer);
       }
-
+      
+      portletReq.getPortletSession().setAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC7_14_RenderRequest",
+            writer.toString(), APPLICATION_SCOPE);
    }
 
 }
