@@ -57,7 +57,7 @@ public class HeaderPortletTests_SPEC3_6_4_HeaderPortlet
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      // this.portletConfig = config;
+      this.portletConfig = config;
    }
 
    @Override
