@@ -39,7 +39,8 @@
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC14_RenderState_ApiHeader"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC14_PortletRequest_ApiHeader"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_PortletResponse_ApiHeader"/>
-<portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_MimeResponse_ApiHeader"/>
+<portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1"/>
+<portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_Header"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_HeaderResponse"/>
 </page>
