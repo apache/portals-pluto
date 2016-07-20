@@ -31,11 +31,15 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_BASEURL_APPEND;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_BASEURL_APPEND2;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_BASEURL_APPEND3;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_BASEURL_APPEND4;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case
@@ -75,20 +79,100 @@ public class URLTests_BaseURL {
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
       /* TestCase: V3URLTests_BaseURL_append */
-      /* Details: "BaseURL.append(Appendable out) method appends the portlet URL to the appendable object. */
+      /*
+       * Details: "BaseURL.append(Appendable out) method appends the portlet URL
+       * to the appendable object."
+       */
       {
-         TestResult tr1 = tcd.getTestResultFailed(V3URLTESTS_BASEURL_APPEND);
+         TestResult tr0 = tcd.getTestResultFailed(V3URLTESTS_BASEURL_APPEND);
          BaseURL baseURL = portletResp.createRenderURL();
          StringBuilder sb = new StringBuilder();
          baseURL.append(sb);
          String resultingString = sb.toString();
-         if (resultingString!=null && !resultingString.equals("")) {
-            tr1.setTcSuccess(true);
-            tr1.appendTcDetail("<br>Successfully appended BaseURL object to StringBuilder. <br>Resulting StringBuilder object is: "+resultingString);
+         if (resultingString != null && !resultingString.equals("")) {
+            tr0.setTcSuccess(true);
+            tr0.appendTcDetail(
+                  "<br>Successfully appended BaseURL object to StringBuilder. <br>Resulting StringBuilder object is: "
+                        + resultingString);
          } else {
-            tr1.appendTcDetail("<br>Failed because couldn't append BaseURL to StringBuilder object. <br>Resulting StringBuilder object is: "+resultingString);
+            tr0.appendTcDetail(
+                  "<br>Failed because couldn't append BaseURL to StringBuilder object. <br>Resulting StringBuilder object is: "
+                        + resultingString);
+         }
+         tr0.writeTo(writer);
+      }
+
+      /* TestCase: V3URLTests_BaseURL_append2 */
+      /*
+       * Details:
+       * "BaseURL.append(Appendable out) - The appended URL is always XML escaped."
+       */
+      {
+         TestResult tr1 = tcd.getTestResultFailed(V3URLTESTS_BASEURL_APPEND2);
+         BaseURL baseURL = portletResp.createRenderURL();
+         baseURL.setParameter("tr1", ">&'\"");
+         StringBuilder sb = new StringBuilder();
+         baseURL.append(sb, true);
+         String resultingString = sb.toString();
+         if (resultingString != null && !resultingString.equals("")
+               && !resultingString.contains(">")
+               && !resultingString.contains("&")
+               && !resultingString.contains("'")
+               && !resultingString.contains("\"")) {
+            tr1.setTcSuccess(true);
+            tr1.appendTcDetail(
+                  "<br>Successfully appended XMLescaped BaseURL object to StringBuilder. <br>Resulting StringBuilder object is: "
+                        + resultingString);
+         } else {
+            tr1.appendTcDetail(
+                  "<br>Failed because couldn't append XMLescaped BaseURL to StringBuilder object. <br>Resulting StringBuilder object is: "
+                        + resultingString);
          }
          tr1.writeTo(writer);
+      }
+
+      /* TestCase: V3URLTests_BaseURL_append3 */
+      /*
+       * Details: "BaseURL.append(Appendable out, boolean escapeXML) - If the
+       * parameter escapeXML is set to true, the URL will be escaped to be valid
+       * XML characters. The manner in which escaping is performed is
+       * implementation specific."
+       */
+      {
+         TestResult tr2 = tcd.getTestResultFailed(V3URLTESTS_BASEURL_APPEND3);
+         BaseURL baseURL = portletResp.createRenderURL();
+         baseURL.setParameter("tr2", ">&'\"");
+         StringBuilder sb = new StringBuilder();
+         baseURL.append(sb, true);
+         String resultingString = sb.toString();
+         if (resultingString != null && !resultingString.equals("")
+               && !resultingString.contains(">")
+               && !resultingString.contains("&")
+               && !resultingString.contains("'")
+               && !resultingString.contains("\"")) {
+            tr2.setTcSuccess(true);
+            tr2.appendTcDetail(
+                  "<br>Successfully appended XMLescaped BaseURL object to StringBuilder. <br>Resulting StringBuilder object is: "
+                        + resultingString);
+         } else {
+            tr2.appendTcDetail(
+                  "<br>Failed because couldn't append XMLescaped BaseURL to StringBuilder object. <br>Resulting StringBuilder object is: "
+                        + resultingString);
+         }
+         tr2.writeTo(writer);
+      }
+
+      /* TestCase: V3URLTests_BaseURL_append4 */
+      /*
+       * Details: "BaseURL.append(Appendable out, boolean escapeXML) - If
+       * escapeXML is set to false, escaping the URL is left to the
+       * implementation."
+       */
+      {
+         TestResult tr3 = tcd.getTestResultFailed(V3URLTESTS_BASEURL_APPEND4);
+         tr3.setTcSuccess(true);
+         tr3.appendTcDetail("Can't be tested as escaping is left to implementation.");
+         tr3.writeTo(writer);
       }
 
    }

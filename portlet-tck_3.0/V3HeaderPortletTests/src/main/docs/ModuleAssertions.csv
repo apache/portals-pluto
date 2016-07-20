@@ -1,0 +1,228 @@
+PARMS outputPath=C:\Users\IBM_ADMIN\Downloads\TCKTool
+Class / Section;Keywords;Name;Testable;Description
+HeaderPortletTests;;;;
+SPEC3_6_4;HeaderPortlet;renderHeaders;TRUE;renderHeaders() method is called before render() method if the portlet implements HeaderPortlet interface.
+SPEC3_6_4;HeaderPortlet;renderHeaders2;TRUE;The container runtime option javax.portlet.renderHeaders is disregarded for version 3.0 or later.
+SPEC7_14;RenderRequest;getETag;TRUE;Method getETag(): Returns null if there is no cached response.
+SPEC14;Header Attr;attributes1;TRUE;The portlet can access a map with user information attributes via the request attribute PortletRequest.USER_INFO
+SPEC14;Header Attr;attributes2;TRUE;The PortletRequest.CCPP_PROFILE request attribute must return a javax.ccpp.Profile based on the current portlet request
+SPEC14;Header Attr;attributes3;TRUE;During header processing, the LIFECYCLE_PHASE ("javax.portlet.lifecycle_phase") attribute will contain the string "HEADER_PHASE"
+SPEC14;Header Req;contentType1;TRUE;The getResponseContentType method returns a String representing the default content type the portlet container assumes for the output
+SPEC14;Header Req;contentType2;TRUE;The getResponseContentTypes method returns an Enumeration of String elements representing the acceptable content types for the output in order of preference
+SPEC14;Header Req;contentType3;TRUE;The first element of the Enumeration returned by the getResponseContentTypes method must equal the value returned by the getResponseContentType method
+SPEC14;Header Req;contentType4;TRUE;If a portlet defines support for all content types using a wildcard and the portlet container supports all content types, the getResponseContentType may return the wildcard
+SPEC14;Header Req;contentType5;TRUE;If a portlet defines support for all content types using a wildcard and the portlet container supports all content types, the getResponseContentType may return the preferred content type
+SPEC14;Header Req;windowId1;TRUE;The getWindowID method returns a String representing the current window ID
+SPEC14;Header Req;windowId2;FALSE;The string returned by getWindowID method is unique for this portlet window
+SPEC14;Header Req;windowId3;FALSE;The string returned by getWindowID method is constant over the lifetime of the portlet window
+SPEC14;Header Req;windowId4;TRUE;The string returned by getWindowID method must be the same ID used for scoping portlet-scope session attributes
+SPEC14;Header Req;contentType10;TRUE;Within the header method, the content type must include only the MIME type, not the character set
+SPEC14;Header Req;contentType11;TRUE;Within the header method, the getResponseContentTypes method must return only the content types supported by the current portlet mode
+SPEC14;Header Req;contentType13;TRUE;The character set of the response can be retrieved via the HeaderResponse.getCharacterEncoding method
+SPEC14;RenderState_ApiHeader;getPortletMode;TRUE;Method getPortletMode(): Returns current PortletMode 
+SPEC14;RenderState_ApiHeader;getWindowState;TRUE;Method getWindowState(): Returns current WindowState
+SPEC14;RenderState_ApiHeader;getRenderParameters;TRUE;Method getRenderParameters(): Returns an immutable RenderParameters object representing the private and public render parameters
+SPEC14;PortletRequest_ApiHeader;fieldUSER_INFO;TRUE;Has String field USER_INFO with value of "javax.portlet.userinfo" 
+SPEC14;PortletRequest_ApiHeader;fieldCCPP_PROFILE;TRUE;Has String field CCPP_PROFILE with value of "javax.portlet.ccpp" 
+SPEC14;PortletRequest_ApiHeader;fieldBASIC_AUTH;TRUE;Has String field BASIC_AUTH with value of "BASIC" 
+SPEC14;PortletRequest_ApiHeader;fieldFORM_AUTH;TRUE;Has String field FORM_AUTH with value of "FORM" 
+SPEC14;PortletRequest_ApiHeader;fieldCLIENT_CERT_AUTH;TRUE;Has String field CLIENT_CERT_AUTH with value of "CLIENT_CERT" 
+SPEC14;PortletRequest_ApiHeader;fieldDIGEST_AUTH;TRUE;Has String field DIGEST_AUTH with value of "DIGEST" 
+SPEC14;PortletRequest_ApiHeader;fieldACTION_PHASE;TRUE;Has String field ACTION_PHASE with value of "ACTION_PHASE" 
+SPEC14;PortletRequest_ApiHeader;fieldEVENT_PHASE;TRUE;Has String field EVENT_PHASE with value of "EVENT_PHASE" 
+SPEC14;PortletRequest_ApiHeader;fieldRENDER_PHASE;TRUE;Has String field RENDER_PHASE with value of "RENDER_PHASE" 
+SPEC14;PortletRequest_ApiHeader;fieldRESOURCE_PHASE;TRUE;Has String field RESOURCE_PHASE with value of "RESOURCE_PHASE" 
+SPEC14;PortletRequest_ApiHeader;fieldHEADER_PHASE;TRUE;Has String field HEADER_PHASE with value of "HEADER_PHASE" 
+SPEC14;PortletRequest_ApiHeader;fieldLIFECYCLE_PHASE;TRUE;Has String field LIFECYCLE_PHASE with value of "javax.portlet.lifecycle_phase" 
+SPEC14;PortletRequest_ApiHeader;fieldRENDER_PART;TRUE;Has String field RENDER_PART with value of "javax.portlet.render_part" 
+SPEC14;PortletRequest_ApiHeader;fieldRENDER_HEADERS;TRUE;Has String field RENDER_HEADERS with value of "RENDER_HEADERS" 
+SPEC14;PortletRequest_ApiHeader;fieldRENDER_MARKUP;TRUE;Has String field RENDER_MARKUP with value of "RENDER_MARKUP" 
+SPEC14;PortletRequest_ApiHeader;fieldACTION_SCOPE_ID;TRUE;Has String field ACTION_SCOPE_ID with value of "javax.portlet.as" 
+SPEC14;PortletRequest_ApiHeader;isWindowStateAllowed1;TRUE;Method isWindowStateAllowed(WindowState): Returns true if the specified WindowState is allowed
+SPEC14;PortletRequest_ApiHeader;isWindowStateAllowed2;TRUE;Method isWindowStateAllowed(WindowState): Returns false if the specified WindowState is not allowed
+SPEC14;PortletRequest_ApiHeader;isPortletModeAllowed1;TRUE;Method isPortletModeAllowed(PortletMode): Returns true if the specified PortletMode is allowed
+SPEC14;PortletRequest_ApiHeader;isPortletModeAllowed2;TRUE;Method isPortletModeAllowed(PortletMode): Returns false if the specified PortletMode is not allowed
+SPEC14;PortletRequest_ApiHeader;getPreferences;TRUE;Method getPreferences(): Returns the PortletPreferences object associated with the portlet
+SPEC14;PortletRequest_ApiHeader;getPortletSessionA1;TRUE;Method getPortletSession(): Returns current PortletSession if one already exists
+SPEC14;PortletRequest_ApiHeader;getPortletSessionA2;TRUE;Method getPortletSession(): Returns new PortletSession if one does not already exist
+SPEC14;PortletRequest_ApiHeader;getPortletSessionB1;TRUE;Method getPortletSession(boolean): If input flag is true, returns current PortletSession if one already exists
+SPEC14;PortletRequest_ApiHeader;getPortletSessionB2;TRUE;Method getPortletSession(boolean): If input flag is true, returns new PortletSession if one does not already exist
+SPEC14;PortletRequest_ApiHeader;getPortletSessionB3;TRUE;Method getPortletSession(boolean): If input flag is false, returns current PortletSession if one already exists
+SPEC14;PortletRequest_ApiHeader;getPortletSessionB4;TRUE;Method getPortletSession(boolean): If input flag is false, returns null if one does not already exist
+SPEC14;PortletRequest_ApiHeader;getProperty1;TRUE;Method getProperty(String): If specified request property exists, returns its value 
+SPEC14;PortletRequest_ApiHeader;getProperty2;TRUE;Method getProperty(String): If specified request property does not exist, returns null
+SPEC14;PortletRequest_ApiHeader;getProperty3;TRUE;Method getProperty(String): Throws IllegalArgumentException if the name is null
+SPEC14;PortletRequest_ApiHeader;getProperties1;TRUE;Method getProperties(String): If specified request property exists, returns its values as an Enumeration 
+SPEC14;PortletRequest_ApiHeader;getProperties2;TRUE;Method getProperties(String): If specified request property does not exist, returns an empty Enumeration
+SPEC14;PortletRequest_ApiHeader;getProperties3;TRUE;Method getProperties(String): Throws IllegalArgumentException if the name is null
+SPEC14;PortletRequest_ApiHeader;getPropertyNames1;TRUE;Method getPropertyNames(): Returns an Enumeration of all request property names
+SPEC14;PortletRequest_ApiHeader;getPropertyNames2;TRUE;Method getPropertyNames(): Returns an empty Enumeration if there are no request properties defined
+SPEC14;PortletRequest_ApiHeader;getPortalContext;TRUE;Method getPortalContext(): Returns the context of the portal
+SPEC14;PortletRequest_ApiHeader;getAuthType1;TRUE;Method getAuthType(): Returns a String indicating the authentication type if the request was authenticated
+SPEC14;PortletRequest_ApiHeader;getAuthType2;TRUE;Method getAuthType(): Returns null if the request was not authenticated
+SPEC14;PortletRequest_ApiHeader;getContextPath1;TRUE;Method getContextPath(): Returns a String representing the context path associated with the portlet
+SPEC14;PortletRequest_ApiHeader;getContextPath2;TRUE;Method getContextPath(): Returns an empty String if the portlet is deployed in the default context
+SPEC14;PortletRequest_ApiHeader;getContextPath3;TRUE;Method getContextPath(): If the context path is not empty, it must start with "/" and may not end with "/"
+SPEC14;PortletRequest_ApiHeader;getRemoteUser1;TRUE;Method getRemoteUser(): Returns a String representing the login of the user if the request is authenticated
+SPEC14;PortletRequest_ApiHeader;getRemoteUser2;TRUE;Method getRemoteUser(): Returns null if the request has not been authenticated
+SPEC14;PortletRequest_ApiHeader;getUserPrincipal1;TRUE;Method getUserPrincipal(): Returns a java.security.Principal object representing the user if the request has been authenticated
+SPEC14;PortletRequest_ApiHeader;getUserPrincipal2;TRUE;Method getUserPrincipal(): Returns null if the request has not been authenticated
+SPEC14;PortletRequest_ApiHeader;isUserInRole1;TRUE;Method isUserInRole(): Returns true if the authenticated user is in the specified role
+SPEC14;PortletRequest_ApiHeader;isUserInRole2;TRUE;Method isUserInRole(): Returns false if the authenticated user is not in the specified role
+SPEC14;PortletRequest_ApiHeader;isUserInRole3;TRUE;Method isUserInRole(): Returns false if the user is not authenticated
+SPEC14;PortletRequest_ApiHeader;getAttribute1;TRUE;Method getAttribute(String): Returns a java.lang.Object for the specified attribute name
+SPEC14;PortletRequest_ApiHeader;getAttribute2;TRUE;Method getAttribute(String): Returns null if no attribute with the specified name exists
+SPEC14;PortletRequest_ApiHeader;getAttribute3;TRUE;Method getAttribute(String): Throws IllegalArgumentException if the name is null
+SPEC14;PortletRequest_ApiHeader;getAttributeNames1;TRUE;Method getAttributeNames(): Returns a java.util.Enumeration<java.lang.String> of the available attribute names
+SPEC14;PortletRequest_ApiHeader;getAttributeNames2;TRUE;Method getAttributeNames(): Returns an empty Enumeration if there are no attributes available
+SPEC14;PortletRequest_ApiHeader;getParameter1;TRUE;Method getParameter(String): Returns String value of parameter specified by the name
+SPEC14;PortletRequest_ApiHeader;getParameter2;TRUE;Method getParameter(String): Returns String value of a public render parameter specified by the name
+SPEC14;PortletRequest_ApiHeader;getParameter3;TRUE;Method getParameter(String): Returns null if no parameter exists for the specified name
+SPEC14;PortletRequest_ApiHeader;getParameter4;TRUE;Method getParameter(String): Returns first String value from values array if use with a multivalued parameter
+SPEC14;PortletRequest_ApiHeader;getParameter5;TRUE;Method getParameter(String): Throws IllegalArgumentException if the name is null
+SPEC14;PortletRequest_ApiHeader;getParameterNames1;TRUE;Method getParameterNames(): Returns a java.util.Enumeration<java.lang.String> of the available parameter names
+SPEC14;PortletRequest_ApiHeader;getParameterNames2;TRUE;Method getParameterNames(): Returns an empty Enumeration if there are no parameters available
+SPEC14;PortletRequest_ApiHeader;getParameterValues1;TRUE;Method getParameterValues(String): Returns String[] value of parameter specified by the name
+SPEC14;PortletRequest_ApiHeader;getParameterValues2;TRUE;Method getParameterValues(String): Returns String[] value of a public render parameter specified by the name
+SPEC14;PortletRequest_ApiHeader;getParameterValues3;TRUE;Method getParameterValues(String): Returns null if no parameter exists for the specified name
+SPEC14;PortletRequest_ApiHeader;getParameterValues4;TRUE;Method getParameterValues(String): Throws IllegalArgumentException if the name is null
+SPEC14;PortletRequest_ApiHeader;getParameterMap1;TRUE;Method getParameterMap(): Returns an java.util.Map<java.lang.String,java.lang.String[]> object for the parameter names and values if parameters are available
+SPEC14;PortletRequest_ApiHeader;getParameterMap2;TRUE;Method getParameterMap(): The returned map contains all public and private parameters for the request
+SPEC14;PortletRequest_ApiHeader;getParameterMap3;TRUE;Method getParameterMap(): Returns an empty map if no parameters exist
+SPEC14;PortletRequest_ApiHeader;isSecure1;TRUE;Method isSecure(): Returns true if the request was made through a secure channel
+SPEC14;PortletRequest_ApiHeader;isSecure2;TRUE;Method isSecure(): Returns false if the request was not made through a secure channel
+SPEC14;PortletRequest_ApiHeader;setAttribute1;TRUE;Method setAttribute(String, Object): Stores an attribute object under the specified name in the request
+SPEC14;PortletRequest_ApiHeader;setAttribute2;TRUE;Method setAttribute(String, Object): Removes the attribute by the specified name if the object is null
+SPEC14;PortletRequest_ApiHeader;setAttribute3;TRUE;Method setAttribute(String, Object): Throws IllegalArgumentException if the name is null
+SPEC14;PortletRequest_ApiHeader;removeAttribute1;TRUE;Method removeAttribute(String): Removes the attribute specified by the name from the request
+SPEC14;PortletRequest_ApiHeader;removeAttribute2;TRUE;Method removeAttribute(String): Throws IllegalArgumentException if the name is null
+SPEC14;PortletRequest_ApiHeader;getRequestedSessionId1;TRUE;Method getRequestedSessionId(): Returns the session ID indicated in the client request
+SPEC14;PortletRequest_ApiHeader;getRequestedSessionId2;TRUE;Method getRequestedSessionId(): Returns null if no session ID was indicated in the client request
+SPEC14;PortletRequest_ApiHeader;isRequestedSessionIdValid1;TRUE;Method isRequestedSessionIdValid(): Returns true if the session ID is valid
+SPEC14;PortletRequest_ApiHeader;isRequestedSessionIdValid2;TRUE;Method isRequestedSessionIdValid(): Returns false if the session ID is not valid
+SPEC14;PortletRequest_ApiHeader;getResponseContentType1;TRUE;Method getResponseContentType(): Returns a String representing the portal preferred content type for the response if the content type is defined in the portlet descriptor  
+SPEC14;PortletRequest_ApiHeader;getResponseContentType2;TRUE;Method getResponseContentType(): Returns an empty Enumeration if the content type is not defined in the portlet descriptor
+SPEC14;PortletRequest_ApiHeader;getResponseContentTypes1;TRUE;Method getResponseContentTypes(): Returns an java.util.Enumeration<java.lang.String> object representing the portal preferred content types for the response if the content types are defined in the portlet descriptor
+SPEC14;PortletRequest_ApiHeader;getResponseContentTypes2;TRUE;Method getResponseContentTypes(): Returns an empty Enumeration if the content types are not defined in the portlet descriptor
+SPEC14;PortletRequest_ApiHeader;getLocale;TRUE;Method getLocale(): Returns an java.util.Locale object representing the preferred Locale for the response
+SPEC14;PortletRequest_ApiHeader;getLocales;TRUE;Method getLocales(): Returns an java.util.Enumeration<java.util.Locale> of the Locales in which the portal will accept content
+SPEC14;PortletRequest_ApiHeader;getScheme;TRUE;Method getScheme(): Returns a String value representing the scheme name for the request
+SPEC14;PortletRequest_ApiHeader;getServerName;TRUE;Method getServerName(): Returns a String value representing the host name for the request
+SPEC14;PortletRequest_ApiHeader;getServerPort;TRUE;Method getServerPort(): Returns an int value representing the port number for the request
+SPEC14;PortletRequest_ApiHeader;getWindowID;TRUE;Method getWindowID(): Returns a String value representing the portlet window ID
+SPEC14;PortletRequest_ApiHeader;getCookies1;TRUE;Method getCookies(): Returns a javax.servlet.http.Cookie[] array containing the cookies for this request
+SPEC14;PortletRequest_ApiHeader;getCookies2;TRUE;Method getCookies(): Returns null if no cookies are present
+SPEC14;PortletRequest_ApiHeader;getPrivateParameterMap1;TRUE;Method getPrivateParameterMap(): Returns an java.util.Map<java.lang.String,java.lang.String[]> object for the private parameter names and values if available
+SPEC14;PortletRequest_ApiHeader;getPrivateParameterMap2;TRUE;Method getPrivateParameterMap(): The returned map is immutable
+SPEC14;PortletRequest_ApiHeader;getPrivateParameterMap3;TRUE;Method getPrivateParameterMap(): Returns an empty map if no private parameters exist
+SPEC14;PortletRequest_ApiHeader;getPublicParameterMap1;TRUE;Method getPublicParameterMap(): Returns an java.util.Map<java.lang.String,java.lang.String[]> object for the public parameter names and values if available
+SPEC14;PortletRequest_ApiHeader;getPublicParameterMap2;TRUE;Method getPublicParameterMap(): The returned map is immutable
+SPEC14;PortletRequest_ApiHeader;getPublicParameterMap3;TRUE;Method getPublicParameterMap(): Returns an empty map if no public parameters exist
+SPEC14;PortletRequest_ApiHeader;exists;TRUE;The P3PUserInfos exists as a public static enum
+SPEC15;PortletResponse_ApiHeader;addPropertyA1;TRUE;Method addProperty(javax.servlet.http.Cookie): Adds the specified cookie property to the response
+SPEC15;PortletResponse_ApiHeader;addPropertyA2;TRUE;Method addProperty(javax.servlet.http.Cookie): Throws IllegalArgumentException if the specified cookie is null
+SPEC15;PortletResponse_ApiHeader;addPropertyB1;TRUE;Method addProperty(String, org.w3c.dom.Element): Adds an XML DOM Element to the response for the specified key
+SPEC15;PortletResponse_ApiHeader;addPropertyB2;TRUE;Method addProperty(String, org.w3c.dom.Element): If a DOM Element for the specified key already exists, the new element is added in addition to the existing element
+SPEC15;PortletResponse_ApiHeader;addPropertyB3;TRUE;Method addProperty(String, org.w3c.dom.Element): If the specified DOM Element value is null, the key is removed from the response
+SPEC15;PortletResponse_ApiHeader;addPropertyB4;TRUE;Method addProperty(String, org.w3c.dom.Element): Throws IllegalArgumentException if the specified key is null
+SPEC15;PortletResponse_ApiHeader;addPropertyC1;TRUE;Method addProperty(String, String): Adds a property value to an existing key to allow the key to have multiple values
+SPEC15;PortletResponse_ApiHeader;addPropertyC2;TRUE;Method addProperty(String, String): Throws IllegalArgumentException if the specified key is null
+SPEC15;PortletResponse_ApiHeader;setProperty1;TRUE;Method setProperty(String, String): Sets a property value for the specified key
+SPEC15;PortletResponse_ApiHeader;setProperty2;TRUE;Method setProperty(String, String): Resets any existing property values for the specified key
+SPEC15;PortletResponse_ApiHeader;setProperty3;TRUE;Method setProperty(String, String): Throws IllegalArgumentException if the specified key is null
+SPEC15;PortletResponse_ApiHeader;encodeURL1;TRUE;Method encodeURL(String): Returns a String representing the encoded URL
+SPEC15;PortletResponse_ApiHeader;encodeURL2;TRUE;Method encodeURL(String): Throws IllegalArgumentException if the input string is not an absolute URL and does not start with at "/" character
+SPEC15;PortletResponse_ApiHeader;getNamespace1;TRUE;Method getNamespace(): Returns a String containing the namespace value
+SPEC15;PortletResponse_ApiHeader;getNamespace2;FALSE;Method getNamespace(): The returned namespace is constant for the lifetime of the portlet window
+SPEC15;PortletResponse_ApiHeader;createElement1;TRUE;Method createElement(String): Returns an org.w3c.dom.Element object for the specified tag name
+SPEC15;PortletResponse_ApiHeader;createElement2;TRUE;Method createElement(String): The returned Element has nodeName set to the the specified tag name 
+SPEC15;PortletResponse_ApiHeader;createElement3;TRUE;Method createElement(String): The returned Element has localName set to null
+SPEC15;PortletResponse_ApiHeader;createElement4;TRUE;Method createElement(String): The returned Element has prefix set to null
+SPEC15;PortletResponse_ApiHeader;createElement5;TRUE;Method createElement(String): The returned Element has namespaceURI set to null
+SPEC15;PortletResponse_ApiHeader;createElement6;TRUE;Method createElement(String): Throws org.w3c.dom.DOMException - INVALID_CHARACTER_ERR if the specified name contains an illegal character. 
+SPEC15;MimeResponse_ApiHeader;fieldEXPIRATION_CACHE ;TRUE;Has String field EXPIRATION_CACHE with value of "portlet.expiration-cache"
+SPEC15;MimeResponse_ApiHeader;fieldCACHE_SCOPE ;TRUE;Has String field CACHE_SCOPE with value of "portlet.cache-scope"
+SPEC15;MimeResponse_ApiHeader;fieldPUBLIC_SCOPE ;TRUE;Has String field PUBLIC_SCOPE with value of "portlet.public-scope"
+SPEC15;MimeResponse_ApiHeader;fieldPRIVATE_SCOPE ;TRUE;Has String field PRIVATE_SCOPE with value of "portlet.private-scope"
+SPEC15;MimeResponse_ApiHeader;fieldETAG ;TRUE;Has String field ETAG with value of "portlet.ETag"
+SPEC15;MimeResponse_ApiHeader;fieldUSE_CACHED_CONTENT ;TRUE;Has String field USE_CACHED_CONTENT with value of "portlet.use-cached-content"
+SPEC15;MimeResponse_ApiHeader;fieldNAMESPACED_RESPONSE;TRUE;Has String field NAMESPACED_RESPONSE with value of "X-JAVAX-PORTLET-NAMESPACED-RESPONSE"
+SPEC15;MimeResponse_ApiHeader;fieldMARKUP_HEAD_ELEMENT;TRUE;Has String field MARKUP_HEAD_ELEMENT with value of "javax.portlet.markup.head.element"
+SPEC15;MimeResponse_ApiHeader;getContentType1;TRUE;Method getContentType(): Returns a String containing the MIME type that can be used with the response
+SPEC15;MimeResponse_ApiHeader;getContentType2;TRUE;Method getContentType(): Returns null if no content type is set
+SPEC15;MimeResponse_ApiHeader;setContentType1;TRUE;Method setContentType(String): Sets the MIME type for the response
+SPEC15;MimeResponse_ApiHeader;setContentType2;TRUE;Method setContentType(String): Has no effect if called after the getWriter method has been called
+SPEC15;MimeResponse_ApiHeader;setContentType3;TRUE;Method setContentType(String): Has no effect if called after the getPortletOutputStream method has been called
+SPEC15;MimeResponse_ApiHeader;setContentType4;TRUE;Method setContentType(String): Throws IllegalArgumentException if the specified MIME type is invalid
+SPEC15;MimeResponse_ApiHeader;getCharacterEncoding;TRUE;Method getCharacterEncoding(): Returns a String containing the name of the charset used for the response body
+SPEC15;MimeResponse_ApiHeader;getWriter1;TRUE;Method getWriter(): Returns a PrintWriter object
+SPEC15;MimeResponse_ApiHeader;getWriter2;TRUE;Method getWriter(): Throws IllegalStateException if called after the getPortletOutputStream method has been called
+SPEC15;MimeResponse_ApiHeader;getWriter3;FALSE;Method getWriter(): Throws IOException if an I/O error occurs
+SPEC15;MimeResponse_ApiHeader;getLocale;TRUE;Method getLocale(): Returns an java.util.Locale representing the locale assigned to the response
+SPEC15;MimeResponse_ApiHeader;setBufferSize1;TRUE;Method setBufferSize(int): Sets the preferred buffer size for the response body
+SPEC15;MimeResponse_ApiHeader;setBufferSize2;TRUE;Method setBufferSize(int): Throws IllegalStateException if called after content has been written
+SPEC15;MimeResponse_ApiHeader;getBufferSize1;TRUE;Method getBufferSize(): Returns an int designating the actual buffer size used for the response
+SPEC15;MimeResponse_ApiHeader;getBufferSize2;TRUE;Method getBufferSize(): Returns null if buffering is not used
+SPEC15;MimeResponse_ApiHeader;flushBuffer1;TRUE;Method flushBuffer(): Returns void and flushes buffer to OutputStream
+SPEC15;MimeResponse_ApiHeader;flushBuffer2;FALSE;Method flushBuffer(): Throws IOException if an I/O error occurs
+SPEC15;MimeResponse_ApiHeader;resetBuffer1;TRUE;Method resetBuffer(): Returns void and clears and data and properties from the buffer
+SPEC15;MimeResponse_ApiHeader;resetBuffer2;TRUE;Method resetBuffer(): Throws IllegalStateException if called after the response has been committed
+SPEC15;MimeResponse_ApiHeader;isCommitted1;TRUE;Method isCommitted(): Returns true if the response has been committed
+SPEC15;MimeResponse_ApiHeader;isCommitted2;TRUE;Method isCommitted(): Returns false if the response has not been committed
+SPEC15;MimeResponse_ApiHeader;reset1;TRUE;Method reset(): Returns void and clears and data and properties from the buffer
+SPEC15;MimeResponse_ApiHeader;reset2;TRUE;Method reset(): Throws IllegalStateException if called after the response has been committed
+SPEC15;MimeResponse_ApiHeader;getPortletOutputStream1;TRUE;Method getPortletOutputStream(): Returns a PortletOutputStream object
+SPEC15;MimeResponse_ApiHeader;getPortletOutputStream2;TRUE;Method getPortletOutputStream(): Throws IllegalStateException if called after the getWriter method has been called
+SPEC15;MimeResponse_ApiHeader;getPortletOutputStream3;FALSE;Method getPortletOutputStream(): Throws IOException if an I/O error occurs
+SPEC15;MimeResponse_ApiHeader;createRenderURL;TRUE;Method createRenderURL(): Returns a PortletURL object representing a render URL targeting the portlet
+SPEC15;MimeResponse_ApiHeader;createActionURL;TRUE;Method createActionURL(): Returns a PortletURL object representing an action URL targeting the portlet
+SPEC15;MimeResponse_ApiHeader;createResourceURL;TRUE;Method createResourceURL(): Returns a ResourceURL object targeting the portlet
+SPEC15;MimeResponse_ApiHeader;getCacheControl;TRUE;Method getCacheControl(): Returns a CacheControl object
+SPEC15;Header;parameters10;TRUE;The portlet-container must not propagate parameters received in an action or event request to subsequent header requests of the portlet
+SPEC15;Header;parameters11;TRUE;If a portlet receives a render request that is the result of a client request targeted to another portlet in the portal page, the parameters should be the same parameters as of the previous render request from this client
+SPEC15;Header;parameters13;TRUE;If a portlet receives a render request that is the result of invoking a render URL targeting this portlet the render parameters received with the render request must be the parameters set on the render URL
+SPEC15;Header;parameters14;FALSE;Client requests triggered by portal-generated URLs for changing portlet mode or window state must be treated as render URLs and the existing render parameters must be preserved
+SPEC15;Header;parameters15;TRUE;Render parameters get automatically cleared if the portlet receives a processAction or processEvent call
+SPEC15;Header;properties1;TRUE;The portlet can use the getProperty method to access single portal property and optionally-available HTTP header values
+SPEC15;Header;properties2;TRUE;The portlet can use the getProperties method to access multiple portal property and optionally-available HTTP header values by the same property name
+SPEC15;Header;properties3;TRUE;The portlet can use the getPropertyNames method to obtain an Enumeration of all available property names
+SPEC15;Header;properties4;TRUE;The portlet can access cookies provided by the current request using the getCookies method
+SPEC15;Header;parameters1;TRUE;If a portlet receives a request from a client request targeted to the portlet itself, the parameters must be the string parameters encoded in the URL (added when creating the PortletURL) and the string parameters sent by the client to the portlet as part of the client request
+SPEC15;Header;parameters2;TRUE;The parameters the header object returns must be "x-www-form-urlencoded" decoded
+SPEC15;Header;parameters3;TRUE;The getParameterValues method returns an array of String objects containing all the parameter values associated with a parameter name
+SPEC15;Header;parameters4;TRUE;The value returned from the getParameter method must be the first value in the array of String objects returned by getParameterValues
+SPEC15;Header;parameters6;TRUE;The getParameterMap method must return an unmodifiable Map object
+SPEC15;Header;parameters7;TRUE;If the request does not have any parameters, the getParameterMap must return an empty Map object
+SPEC15;Header;publicRenderParameters14;TRUE;Portlets can access a merged set of public and private parameters via the getParameter methods
+SPEC15;Header;publicRenderParameters15;TRUE;A map of private parameters can be obtained through the getPrivateParameterMap method
+SPEC15;Header;publicRenderParameters16;TRUE;A map of public parameters can be obtained through the getPublicParameterMap method
+SPEC15;Header;publicRenderParameters17;FALSE;Extra request parameters added to a portlet URL by the portal/portlet-container must be invisible to the portlets receiving the request
+SPEC15;Header;publicRenderParameters6;TRUE;Public render parameters are available in the header method
+SPEC15;Header;publicRenderParameters13a;TRUE;A public render parameter can be deleted using the removePublicRenderParameter method on the PortletURL
+SPEC15;Header;cookie8;TRUE;Cookies set during the Header phase should be available to the portlet during the Resource phase
+SPEC15;Header;cookie9;TRUE;Cookies set during the Header phase should be available to the portlet during a subsequent Action phase
+SPEC15;Header;cookie10;TRUE;Cookies set during the Header phase should be available to the portlet during a subsequent Render phase
+SPEC15;Header;cookie11;TRUE;Cookies set during the Header phase should be available to the portlet during a subsequent request triggered by a URL
+SPEC15;Header;cookie12;TRUE;Cookies set during the Header phase after the response has been committed are ignored
+SPEC15;Header;contentType5;TRUE;If the setContentType method is not called before the getWriter or getPortletOutputStream method is used, the portlet container uses the content type returned by getResponseContentType
+SPEC15;Header;characterEncoding2;TRUE;The character encoding can be set via the setLocale method and a locale-encoding-mapping-list mapping in the web.xml deployment descriptor
+SPEC15;Header;characterEncoding3;TRUE;The character encoding can be set via the setContentType method if the given content type string provides a value for the charset attribute
+SPEC15;Header;characterEncoding4;TRUE;If the portlet does not set the character encoding, the portlet container uses UTF-8 as the default character encoding
+SPEC15;HeaderResponse;setTitle;TRUE;This method sets the title of the portlet.
+SPEC15;HeaderResponse;setTitle2;TRUE;Test for empty string.
+SPEC15;HeaderResponse;setTitle3;TRUE;Test for null string.
+SPEC15;HeaderResponse;setContentType;TRUE;The portlet container will ignore any character encoding specified as part of the content type for render calls.
+SPEC15;HeaderResponse;getWriter;TRUE;Data written to the HeaderResponse writer is added to the aggregated portal document HEAD section.
+SPEC15;HeaderResponse;getPortletOutputStream;TRUE;Data written to the HeaderResponse writer is added to the aggregated portal document HEAD section.
+SPEC15;HeaderResponse;addDependency;TRUE;Method addDependency(String name, String scope, String version) - Adds a dependency on a page-level resource that is managed by the portal.
+SPEC15;HeaderResponse;addDependency2;TRUE;Method addDependency(String name, String scope, String version) - The dependency added by this method can be shared with other portlets.
+SPEC15;HeaderResponse;addDependency3;TRUE;Method addDependency(String name, String scope, String version) - The dependency added dynamically through this method is added to the statically declared dependencies for the portlet for the current rendering cycle only.
+SPEC15;HeaderResponse;addDependency4;TRUE;Method addDependency(String name, String scope, String version) - Conflicting case when the dependency is added with this method and also with addProperty method?
+SPEC15;HeaderResponse;addDependency5;TRUE;Method addDependency(String name, String scope, String version) - Throws IllegalArgumentException - if name is null.
+SPEC15;HeaderResponse;addDependency6;TRUE;Method addDependency(String name, String scope, String version) - Throws IllegalArgumentException - if name is empty.
+SPEC15;HeaderResponse;addDependency7;TRUE;Method addDependency(String name, String scope, String version, String markup) - Adds a dependency on a page-level resource that is managed by the portal and adds a resource for addition to the page for the dependency.
+SPEC15;HeaderResponse;addDependency8;TRUE;Method addDependency(String name, String scope, String version, String markup) - The portal may choose to include the later version of the resource on the page if 2 same dependencies with different version are declared.
+SPEC15;HeaderResponse;addDependency9;TRUE;Method addDependency(String name, String scope, String version, String markup) - Conflicting case when the dependency is added with this method and also with addProperty method?
+SPEC15;HeaderResponse;addDependency10;TRUE;Method addDependency(String name, String scope, String version, String markup) - Throws IllegalArgumentException - if name is null.
+SPEC15;HeaderResponse;addDependency11;TRUE;Method addDependency(String name, String scope, String version, String markup) - Throws IllegalArgumentException - if name is empty.
+SPEC15;HeaderResponse;addDependency12;TRUE;Method addDependency(String name, String scope, String version, String markup) - Throws IllegalArgumentException - if markup does not contain valid tags for the document HEAD section.

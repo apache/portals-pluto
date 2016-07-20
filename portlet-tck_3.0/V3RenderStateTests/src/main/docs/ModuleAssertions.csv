@@ -1,0 +1,25 @@
+Class / Section;Keywords;Name;Testable;Description
+RenderStateTests;;;;
+SPEC1_12;RenderState;general;TRUE;RenderState interface provides read-only access to the render state.
+SPEC1_12;RenderState;getRenderParameters;TRUE;Returns an RenderParameters object representing the private and public render parameters.
+SPEC1_12;RenderState;getRenderParameters2;TRUE;The RenderParameters object return by this method is immutable.
+SPEC1_12;RenderState;getRenderParameters3;TRUE;If no render parameters are available, the object will be empty.
+SPEC1_12;RenderState;getPortletMode;TRUE;Returns the current portlet mode of the portlet.
+SPEC1_12;RenderState;getPortletMode2;TRUE;If the portlet mode is not available, PortletMode.UNDEFINED is returned.
+SPEC1_12;RenderState;getWindowState;TRUE;Returns the current window state of the portlet.
+SPEC2_12;RenderState;getWindowState2;TRUE;If the window state is not available, WindowState.UNDEFINED is returned.
+SPEC2_12;MutableRenderState;getRenderParameters;TRUE;Returns an MutableRenderParameters object representing the private and public render parameters.
+SPEC2_12;MutableRenderState;getRenderParameters2;TRUE;The MutableRenderParameters object return by this method is mutable.
+SPEC2_12;MutableRenderState;getRenderParameters3;TRUE;If no render parameters are available, the object will be empty.
+SPEC2_12;MutableRenderState;getPortletMode;TRUE;Sets the portlet mode of a portlet to the given portlet mode.
+SPEC2_12;MutableRenderState;getPortletMode2;TRUE;A custom portlet mode declared in deployment descriptor could be set.
+SPEC2_12;MutableRenderState;getPortletMode3;TRUE;Not more than one portlet mode can be set. If more than one portlet mode is set, only the last one set is valid.
+SPEC2_12;MutableRenderState;getPortletMode4;TRUE;Throws PortletModeException if the portlet cannot switch to this mode.
+SPEC2_12;MutableRenderState;getPortletMode5;TRUE;Throws IllegalStateException if the method is invoked after sendRedirect has been called.
+SPEC2_12;MutableRenderState;getPortletMode6;TRUE;Throws IllegalArgumentException if the input parameter is null.
+SPEC2_12;MutableRenderState;getWindowState;TRUE;Sets the window state of a portlet to the given window state.
+SPEC2_12;MutableRenderState;getWindowState2;TRUE;A custom window state declared in deployment descriptor could be set.
+SPEC2_12;MutableRenderState;getWindowState3;TRUE;Not more than one window state can be set. If more than one window state is set, only the last one set is valid.
+SPEC2_12;MutableRenderState;getWindowState4;TRUE;Throws WindowStateException if the portlet cannot switch to this state.
+SPEC2_12;MutableRenderState;getWindowState5;TRUE;Throws IllegalStateException if the method is invoked after sendRedirect has been called.
+SPEC2_12;MutableRenderState;getWindowState6;TRUE;Throws IllegalArgumentException if the input parameter is null.

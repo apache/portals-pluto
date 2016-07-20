@@ -1,0 +1,20 @@
+PARMS genManual=true tcDetailsClassName=ModuleTestCaseDetails singlePage=true;;;;
+Class / Section;Keywords;Name;Testable;Description
+BaseURLTests;;;;
+SPEC1_13;BaseURL;append;TRUE;BaseURL.append(Appendable out) method appends the portlet URL to the appendable object.
+SPEC1_13;BaseURL;append2;TRUE;BaseURL.append(Appendable out) - The appended URL is always XML escaped.
+SPEC1_13;BaseURL;append3;TRUE;BaseURL.append(Appendable out, boolean escapeXML) - If the parameter escapeXML is set to true, the URL will be escaped to be valid XML characters. The manner in which escaping is performed is implementation specific.
+SPEC1_13;BaseURL;append4;FALSE;BaseURL.append(Appendable out, boolean escapeXML) - If escapeXML is set to false, escaping the URL is left to the implementation.
+SPEC5_13;ActionURL;getActionParameters;TRUE;Initially the returned object is empty.
+SPEC5_13;ActionURL;getActionParameters2;TRUE;Modifying the parameter values encapsulated by the returned object directly modifies the action parameters applied to the URL.
+SPEC5_13;ActionURL;getActionParameters3;TRUE;Gets the action parameter values set for this URL.
+SPEC2_13;ResourceURL;getResourceParameters;TRUE;Initially the returned object is empty.
+SPEC2_13;ResourceURL;getResourceParameters2;TRUE;Modifying the parameter values encapsulated by the returned object directly modifies the resource parameters applied to the URL.
+SPEC2_13;ResourceURL;getResourceParameters3;TRUE;Gets the resource parameter values set for this URL.
+SPEC4_13;RenderURL;setFragmentIdentifier;TRUE;Sets a fragment identifier on the URL.
+SPEC4_13;RenderURL;setFragmentIdentifier2;TRUE;A URL can have only a single fragment identifier. Any previously set fragment identifier will be replaced.
+SPEC4_13;RenderURL;setFragmentIdentifier3;TRUE;The fragment identifier consists of additional information appended to the URL after a '#' character.
+SPEC4_13;RenderURL;setFragmentIdentifier4;TRUE;Setting the fragment identifier to null will remove a fragment identifier previously set through this method.
+SPEC4_13;RenderURL;setFragmentIdentifier5;TRUE;Setting the empty string as the fragment identifier will create an empty fragment identifier.
+SPEC4_13;RenderURL;getFragmentIdentifier;TRUE;Gets the fragment identifier previously set on the URL.
+SPEC4_13;RenderURL;getFragmentIdentifier2;TRUE;Returns null if no fragment identifier has been set.
