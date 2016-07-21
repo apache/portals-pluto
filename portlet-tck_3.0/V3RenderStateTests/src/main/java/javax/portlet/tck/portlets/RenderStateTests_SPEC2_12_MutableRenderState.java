@@ -38,11 +38,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
-import javax.portlet.annotations.CustomPortletMode;
-import javax.portlet.annotations.CustomWindowState;
-import javax.portlet.annotations.PortletApplication;
-import javax.portlet.annotations.PortletConfiguration;
-import javax.portlet.annotations.Supports;
 import javax.portlet.tck.beans.TestButton;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.constants.Constants;
@@ -59,14 +54,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
  *
  */
 
-@PortletApplication(customPortletModes = {
-      @CustomPortletMode(name = "custom1", portalManaged = false) }, customWindowStates = {
-            @CustomWindowState(name = "custom1") })
-@PortletConfiguration(portletName = "RenderStateTests_SPEC2_12_MutableRenderState", publicParams = {
-      "tr0_public" }, supports = {
-            @Supports(mimeType = "text/html", portletModes = { "view", "help",
-                  "edit", "custom1" }, windowStates = {
-                        "maximized, minimized, normal, custom1" }) })
 public class RenderStateTests_SPEC2_12_MutableRenderState
       extends GenericPortlet {
 
@@ -411,7 +398,6 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
                actionURL);
          tb.writeTo(writer);
       } else {
-         // TODO: Weird exception here.. Fix it.
          super.render(portletReq, portletResp);
       }
 
@@ -514,20 +500,14 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
        * Details:
        * "A custom window state declared in deployment descriptor could be set."
        */
-      // TODO: Fix test case
-      if (renderParams.getValue("tr_setWindow2") != null
-            && renderParams.getValue("tr_setWindow2").equals("true")
-            && portletReq.getWindowState().equals(new WindowState("custom1"))) {
-         TestResult result = tcd.getTestResultFailed(
-               V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETWINDOWSTATE2);
-         result.setTcSuccess(true);
-         result.writeTo(writer);
-      } else {
+      if (renderParams.getValue("tr_setWindow2") == null) {
          ActionURL actionURL = portletResp.createActionURL();
          TestButton tb = new TestButton(
                V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETWINDOWSTATE2,
                actionURL);
          tb.writeTo(writer);
+      } else {
+         super.render(portletReq, portletResp);
       }
 
       /*
@@ -633,6 +613,29 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
          }
          result.writeTo(writer);
       }
+      
+      /*
+       * TestCase:
+       * V3RenderStateTests_SPEC2_12_MutableRenderState_setWindowState2
+       */
+      /*
+       * Details:
+       * "A custom window state declared in deployment descriptor could be set."
+       */
+      // TODO: Fix test case. How do we really set custom1 window state?
+      if (renderParams.getValue("tr_setWindow2") != null
+            && renderParams.getValue("tr_setWindow2").equals("true")) {
+         TestResult result = tcd.getTestResultFailed(
+               V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETWINDOWSTATE2);
+         if(portletReq.getWindowState().equals(new WindowState("custom1"))){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail(
+                  "Failed because window state is not CUSTOM1 but "
+                        + portletReq.getWindowState().toString());
+         }
+         result.writeTo(writer);
+      } 
    }
 
 }
