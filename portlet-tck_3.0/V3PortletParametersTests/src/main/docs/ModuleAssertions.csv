@@ -1,0 +1,24 @@
+PARMS outputPath=./portlet-tck_3.0
+//
+// The tool is used with the command: java -jar TestFileGenerator.jar <filespec>
+// Example:                           java -jar target\TestFileGenerator.jar ModuleAssertions.csv
+//
+// The format of this file is as follows:
+// * lines beginning with '//', blank lines, and the header line beginning with
+//   'Class / Section' are ignored.
+// * If the first line begins with 'PARMS', the rest of the line contains parameters for the run.
+//   The output path can be specified as parameter.
+// * A line containing a single word followed by ';;;;' starts a new module.
+// * The tool can generate multiple modules from one input file.
+// * The class name is generated from the module name and the contents of the first and 
+//   second columns. When this combination changes, you get a new portlet.
+//
+// The tool recognizes duplicate test case names. You should make sure that there are none.
+//
+Class / Section;Keywords;Name;Testable;Description
+PortletParametersTests;;;;
+SPEC11;1;getNames;TRUE;Returns a set of strings representing the portlet parameter names
+SPEC11;1;getValue;TRUE;Returns a single portlet parameter value as a string for a given name
+SPEC11;1;getValues;TRUE;Returns all portlet parameter value as a string array for a given name
+SPEC11;1;size;TRUE;Returns the number of portlet parameters available
+SPEC11;1;clone;TRUE;Clones the given portlet parameters returning a mutable copy of the parameters

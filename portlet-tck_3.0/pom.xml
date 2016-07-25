@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
     Licensed to the Apache Software Foundation (ASF) under one
     or more contributor license agreements.  See the NOTICE file
     distributed with this work for additional information
@@ -170,6 +171,7 @@
 	  <module>V3URLTests</module>
 	  <module>V3RenderStateTests</module>
       <module>V3HeaderPortletTests</module>
+      <module>V3PortletParametersTests</module>
       <module>deploy</module>
       <module>driver</module>
    </modules>
