@@ -79,10 +79,9 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
     } else if (V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS15.equals(action)
         && portletReq.getParameter("tr3a") != null
         && portletReq.getParameter("tr3a").equals("true")) {
-      /* TestCase: V2AddlRequestTests_SPEC2_11_Render_parameters10 */
-      /* Details: "The portlet-container must not propagate parameters */
-      /* received in an action or event request to subsequent render */
-      /* requests of the portlet" */
+       /* TestCase: V2AddlRequestTests_SPEC2_11_Render_parameters15 */
+       /* Details: "Render parameters get automatically cleared if the */
+       /* portlet receives a processAction or processEvent call" */
       portletResp.setRenderParameter("tr3b", "true");
     } else {
       portletResp.setRenderParameters(portletReq.getParameterMap());
@@ -123,19 +122,6 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
       aurl.setParameters(portletReq.getPrivateParameterMap());
       aurl.setParameter("actionURLTr0", "true");
       TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS10, aurl);
-      tb.writeTo(writer);
-    }
-
-    /* TestCase: V2AddlRequestTests_SPEC2_11_Render_parameters11 */
-    /* Details: "If a portlet receives a render request that is the */
-    /* result of a client request targeted to another portlet in the */
-    /* portal page, the parameters should be the same parameters as of */
-    /* the previous render request from this client" */
-    {
-      PortletURL rurl = portletResp.createRenderURL();
-      rurl.setParameters(portletReq.getPrivateParameterMap());
-      rurl.setParameter("tr1_ready", "true");
-      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS11, rurl);
       tb.writeTo(writer);
     }
 
@@ -213,6 +199,9 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
         }
         tr8.writeTo(writer);
       } else if (action.equals("V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters13a")) {
+         /* TestCase: V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters13a */
+         /* Details: "A public render parameter can be deleted using the */
+         /* removePublicRenderParameter method on the PortletURL" */
         TestResult tr13 =
             tcd.getTestResultFailed("V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters13a");
         if (portletReq.getPublicParameterMap() != null
@@ -225,6 +214,7 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
         tr13.writeTo(writer);
       }
     }
+    
     if (!successTr2) {
       /* TestCase: V2AddlRequestTests_SPEC2_11_Render_parameters13 */
       /* Details: "If a portlet receives a render request that is the */
