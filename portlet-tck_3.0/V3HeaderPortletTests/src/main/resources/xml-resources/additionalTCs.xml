@@ -92,6 +92,7 @@
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getAttribute3">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getAttributeNames1">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getAttributeNames2">V3HeaderPortletTests</entry>
+<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameter1">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameter2">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameter3">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getParameter4">V3HeaderPortletTests</entry>
@@ -196,7 +197,6 @@
 <entry key="V3HeaderPortletTests_SPEC15_Header_properties2">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_Header_properties3">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_Header_properties4">V3HeaderPortletTests</entry>
-<entry key="V3HeaderPortletTests_SPEC15_Header_parameters1">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_Header_parameters2">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_Header_parameters6">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_Header_publicRenderParameters15">V3HeaderPortletTests</entry>
