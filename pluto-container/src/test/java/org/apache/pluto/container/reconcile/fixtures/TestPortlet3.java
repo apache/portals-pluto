@@ -21,7 +21,6 @@ package org.apache.pluto.container.reconcile.fixtures;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
@@ -38,8 +37,7 @@ import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
  */
 public class TestPortlet3 implements Portlet {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    private PortletConfig config;
 

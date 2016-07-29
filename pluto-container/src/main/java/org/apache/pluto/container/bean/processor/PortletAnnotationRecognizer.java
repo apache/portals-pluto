@@ -375,7 +375,7 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
     * verify that the stored methods are consistent.
     */
    @Override
-   protected void activateAnnotatedMethods(BeanManager bm) {
+   public void activateAnnotatedMethods(BeanManager bm) {
       
       // Verify the portlet names in the proxied method store. It is an error if:
       // 1) There is no method for a given name, but configuration data exists
@@ -414,9 +414,6 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
             }
          }
       }
-      
-      //TODO: remove ams initialization
-      ams.activateMethods(bm);
       
    }
 

@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
@@ -30,13 +31,15 @@ import java.util.Set;
 
 import javax.xml.namespace.QName;
 
+import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
+import org.apache.pluto.container.bean.processor.ConfigSummary;
+import org.apache.pluto.container.bean.processor.tests.FileHelper;
 import org.apache.pluto.container.om.portlet.EventDefinitionReference;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
 import org.apache.pluto.container.om.portlet.impl.PortletApplicationDefinitionImpl;
 import org.apache.pluto.container.om.portlet.impl.PortletDefinitionImpl;
-import org.apache.pluto.container.om.portlet.impl.jsr362.MergePortletAppTest;
 import org.apache.pluto.container.reconcile.fixtures.TestPortlet1;
 import org.apache.pluto.container.reconcile.fixtures.TestPortlet2;
 import org.apache.pluto.container.reconcile.fixtures.TestPortlet3;
@@ -56,6 +59,12 @@ public class MergeEventDefsTest {
    private static final Class<?> TEST_ANNOTATED_CLASS2 = TestPortlet2.class;
    private static final String XML_FILE = 
          "org/apache/pluto/container/om/portlet/portlet362Reconcile.xml";
+   
+   private static final String pkg = "org.apache.pluto.container.reconcile.fixtures";
+
+   private static AnnotatedMethodStore ams = null;
+   private static ConfigSummary summary = null;
+   private static ConfigurationHolder holder =  new ConfigurationHolder();
 
    private static PortletApplicationDefinition pad, app;
 
@@ -66,31 +75,39 @@ public class MergeEventDefsTest {
 
    @BeforeClass
    public static void setUpBeforeClass() throws Exception {
+      Set<File> portletMethodClasses = FileHelper.getClasses(pkg);
       
-      InputStream in = MergePortletAppTest.class
+      InputStream in = MergeEventDefsTest.class
             .getClassLoader().getResourceAsStream(XML_FILE);
 
-      Set<Class<?>> classes = new HashSet<Class<?>>();
-      classes.add(TEST_ANNOTATED_CLASS1);
-      classes.add(TEST_ANNOTATED_CLASS2);
+      Set<Class<?>> configClasses = new HashSet<Class<?>>();
+      configClasses.add(TEST_ANNOTATED_CLASS1);
+      configClasses.add(TEST_ANNOTATED_CLASS2);
 
-      ConfigurationHolder ch = new ConfigurationHolder();
       try {
-         ch.processConfigAnnotations(classes);
-         ch.processPortletDD(in);     // process portlet xml after annotations
+         holder.scanMethodAnnotations(portletMethodClasses);
+         holder.processConfigAnnotations(configClasses);
+         holder.processPortletDD(in);     // process portlet xml after annotations
+         holder.reconcileBeanConfig();
+         holder.instantiatePortlets(null);
          try {
-            ch.validate();         // validate and ignore any validation problems.
+            holder.validate();         // validate and ignore any validation problems.
          } catch (Exception e) {}   
-         pad = ch.getPad();
       } catch (Exception e) {
          e.printStackTrace();
          throw e;
       }
+      ams = holder.getMethodStore();
+      summary = holder.getConfigSummary();
+      pad = holder.getPad();
+      
+      assertNotNull(ams);
+      assertNotNull(summary);
    }
 
    @Before
    public void setUpBefore() throws Exception {
-      assertEquals(3, pad.getPortlets().size());
+      assertEquals(4, pad.getPortlets().size());
       assertNotNull(pad.getPortlet("Portlet1"));
       assertNotNull(pad.getPortlet("Portlet2"));
       assertNotNull(pad.getPortlet("Portlet3"));
@@ -140,14 +157,14 @@ public class MergeEventDefsTest {
    public void test1processingEvent() throws Exception {
       List<EventDefinitionReference> events = portlet1.getSupportedProcessingEvents();
       assertNotNull(events);
-      assertEquals(0, events.size());
+      assertEquals(2, events.size());
    }
    
    @Test
    public void test1publishingEvent() throws Exception {
       List<EventDefinitionReference> events = portlet1.getSupportedPublishingEvents();
       assertNotNull(events);
-      assertEquals(0, events.size());
+      assertEquals(3, events.size());
    }
   
    // Begin portlet 2 tests ================================== 
@@ -167,14 +184,14 @@ public class MergeEventDefsTest {
    public void test2processingEvent() throws Exception {
       List<EventDefinitionReference> events = portlet2.getSupportedProcessingEvents();
       assertNotNull(events);
-      assertEquals(0, events.size());
+      assertEquals(2, events.size());
    }
    
    @Test
    public void test2publishingEvent() throws Exception {
       List<EventDefinitionReference> events = portlet2.getSupportedPublishingEvents();
       assertNotNull(events);
-      assertEquals(0, events.size());
+      assertEquals(3, events.size());
    }
    
    // Begin portlet 3 tests ================================== 

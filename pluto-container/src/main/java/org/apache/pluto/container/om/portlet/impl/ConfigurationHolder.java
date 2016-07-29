@@ -18,6 +18,7 @@
 
 package org.apache.pluto.container.om.portlet.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Set;
@@ -29,6 +30,7 @@ import javax.portlet.annotations.PortletConfigurations;
 import javax.portlet.annotations.PortletListener;
 import javax.portlet.annotations.PortletPreferencesValidator;
 import javax.portlet.annotations.PortletLifecycleFilter;
+import javax.servlet.ServletContext;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -38,6 +40,8 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
+import org.apache.pluto.container.bean.processor.ConfigSummary;
+import org.apache.pluto.container.bean.processor.MethodAnnotationRecognizer;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.slf4j.Logger;
@@ -64,7 +68,8 @@ public class ConfigurationHolder {
                                                            + "org.apache.pluto.container.om.portlet20.impl:"
                                                            + "org.apache.pluto.container.om.portlet30.impl";
 
-   private AnnotatedMethodStore methodStore;
+   private ConfigSummary configSummary = new ConfigSummary();
+   private AnnotatedMethodStore methodStore = new AnnotatedMethodStore(configSummary);
    private boolean portletsInstantiated = false;
    
    /**
@@ -103,6 +108,20 @@ public class ConfigurationHolder {
     */
    public void setMethodStore(AnnotatedMethodStore methodStore) {
       this.methodStore = methodStore;
+   }
+
+   /**
+    * @return the configSummary
+    */
+   public ConfigSummary getConfigSummary() {
+      return configSummary;
+   }
+
+   /**
+    * @param configSummary the configSummary to set
+    */
+   public void setConfigSummary(ConfigSummary configSummary) {
+      this.configSummary = configSummary;
    }
 
    /**
@@ -305,6 +324,30 @@ public class ConfigurationHolder {
       }
       jcp.reconcileBeanConfig(ams);
       jcp.instantiatePortlets(ams, ams.getBeanMgr());
+   }
+   
+   /**
+    * Scans servlet context for method annotations.
+    * 
+    * @param ctx  the servlet context
+    */
+   public void scanMethodAnnotations(ServletContext ctx) {
+      MethodAnnotationRecognizer mar = new MethodAnnotationRecognizer(methodStore, configSummary);
+      mar.scanContext(ctx);
+      LOG.debug("Scan complete: \n" + methodStore.getMethodsAsString());
+   }
+   
+   /**
+    * Scans list of files for method annotations.
+    * (unit test execution path)
+    * 
+    * @param files   the set of files to scan
+    */
+   public void scanMethodAnnotations(Set<File> files) {
+      MethodAnnotationRecognizer mar = new MethodAnnotationRecognizer(methodStore, configSummary);
+      mar.scanFiles(files);
+      mar.activateAnnotatedMethods(null);
+      LOG.debug("Scan complete: \n" + methodStore.getMethodsAsString());
    }
 
 }

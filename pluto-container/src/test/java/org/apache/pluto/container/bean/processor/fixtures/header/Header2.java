@@ -20,7 +20,6 @@
 package org.apache.pluto.container.bean.processor.fixtures.header;
 
 import javax.activity.InvalidActivityException;
-import javax.inject.Inject;
 import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
 import javax.portlet.annotations.HeaderMethod;
@@ -33,8 +32,7 @@ import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
  */
 public class Header2 {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    @HeaderMethod(portletNames="portlet2", portletMode="edit", ordinal=-100)
    public void header2c(HeaderRequest req, HeaderResponse resp) {

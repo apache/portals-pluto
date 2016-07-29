@@ -23,27 +23,25 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.inject.Inject;
-
-import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
 import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
 import org.apache.pluto.container.bean.processor.ConfigSummary;
-import org.apache.pluto.container.bean.processor.PortletCDIExtension;
 import org.apache.pluto.container.bean.processor.PortletInvoker;
 import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
 import org.apache.pluto.container.bean.processor.fixtures.action.Action1;
 import org.apache.pluto.container.bean.processor.fixtures.action.Action2;
 import org.apache.pluto.container.bean.processor.fixtures.mocks.MockActionRequest;
 import org.apache.pluto.container.bean.processor.fixtures.mocks.MockActionResponse;
-import org.jglue.cdiunit.AdditionalClasses;
-import org.jglue.cdiunit.AdditionalPackages;
-import org.jglue.cdiunit.CdiRunner;
-import org.junit.Before;
+import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Test class for invoking the annotated action methods.
@@ -51,28 +49,30 @@ import org.junit.runner.RunWith;
  * @author Scott Nicklous
  *
  */
-@RunWith(CdiRunner.class)
-@AdditionalClasses(PortletCDIExtension.class)
-@AdditionalPackages(Action1.class)
 public class InvokeActionTest {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    private static MockActionRequest req = new MockActionRequest();
    private static MockActionResponse resp = new MockActionResponse();
    
-   @Inject
-   AnnotatedConfigBean acb;
+   private static final Set<Class<?>> annotatedClasses =
+         new HashSet<Class<?>>(Arrays.asList(Action1.class)); 
+   private static final String pkg = "org.apache.pluto.container.bean.processor.fixtures.action";
    
-   private AnnotatedMethodStore ams = null;
-   private ConfigSummary summary = null;
+   private static AnnotatedMethodStore ams = null;
+   private static ConfigSummary summary = null;
+   private static ConfigurationHolder holder =  new ConfigurationHolder();
    
-   @Before
-   public void setUp() {
-      assertNotNull(acb);
-      ams = acb.getMethodStore();
-      summary = acb.getSummary();
+   @BeforeClass
+   public static void setUpClass() throws URISyntaxException, IOException {
+      Set<File> classes = FileHelper.getClasses(pkg);
+      holder.scanMethodAnnotations(classes);
+      holder.processConfigAnnotations(annotatedClasses);
+      holder.reconcileBeanConfig();
+      holder.instantiatePortlets(null);
+      ams = holder.getMethodStore();
+      summary = holder.getConfigSummary();
       
       assertNotNull(ams);
       assertNotNull(summary);
@@ -81,7 +81,7 @@ public class InvokeActionTest {
    @Test
    public void invoke1() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet1");
+      PortletInvoker i = new PortletInvoker(ams, "portlet1");
       req.setActionName(null);
       i.processAction(req, resp);
       List<String> names = meths.getMethods();
@@ -93,7 +93,7 @@ public class InvokeActionTest {
    @Test
    public void invoke2() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet2");
+      PortletInvoker i = new PortletInvoker(ams, "portlet2");
       req.setActionName(null);
       i.processAction(req, resp);
       List<String> names = meths.getMethods();
@@ -110,7 +110,7 @@ public class InvokeActionTest {
    @Test
    public void invoke3a() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet3");
+      PortletInvoker i = new PortletInvoker(ams, "portlet3");
       req.setActionName("");
       i.processAction(req, resp);
       List<String> names = meths.getMethods();
@@ -122,7 +122,7 @@ public class InvokeActionTest {
    @Test
    public void invoke3b() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet3");
+      PortletInvoker i = new PortletInvoker(ams, "portlet3");
       req.setActionName("Fred");
       i.processAction(req, resp);
       List<String> names = meths.getMethods();
@@ -134,7 +134,7 @@ public class InvokeActionTest {
    @Test
    public void invoke3c() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet3");
+      PortletInvoker i = new PortletInvoker(ams, "portlet3");
       req.setActionName("Barney");
       i.processAction(req, resp);
       List<String> names = meths.getMethods();
@@ -146,7 +146,7 @@ public class InvokeActionTest {
    @Test
    public void invoke6() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet6");
+      PortletInvoker i = new PortletInvoker(ams, "portlet6");
       req.setActionName("Wilma");
       i.processAction(req, resp);
       List<String> names = meths.getMethods();

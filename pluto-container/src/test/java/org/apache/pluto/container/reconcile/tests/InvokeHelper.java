@@ -26,11 +26,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.portlet.PortletMode;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
+import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
 import org.apache.pluto.container.bean.processor.PortletInvoker;
 import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
 import org.apache.pluto.container.bean.processor.fixtures.mocks.MockActionRequest;
@@ -53,11 +52,9 @@ import org.apache.pluto.container.bean.processor.fixtures.mocks.MockResourceResp
  */
 public class InvokeHelper {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
-   @Inject
-   AnnotatedConfigBean acb;
+   private final AnnotatedMethodStore ams;
    
    private static MockPortletConfig config = new MockPortletConfig();
    
@@ -76,24 +73,27 @@ public class InvokeHelper {
    private static MockResourceRequest  reqResource  = new MockResourceRequest();
    private static MockResourceResponse respResource = new MockResourceResponse();
 
+   public InvokeHelper(AnnotatedMethodStore ams) {
+      this.ams = ams;
+   }
    
    public void init(String portlet, String methName) throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, portlet);
+      PortletInvoker i = new PortletInvoker(ams, portlet);
       i.init(config);
       checkName(methName);
    }
    
    public void destroy(String portlet, String methName) throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, portlet);
+      PortletInvoker i = new PortletInvoker(ams, portlet);
       i.destroy();
       checkName(methName);
    }
    
    public void action(String portlet, String actName, String methName) throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, portlet);
+      PortletInvoker i = new PortletInvoker(ams, portlet);
       reqAction.setActionName(actName);
       i.processAction(reqAction, respAction);
       checkName(methName);
@@ -101,7 +101,7 @@ public class InvokeHelper {
    
    public void event(String portlet, QName qn, String methName) throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, portlet);
+      PortletInvoker i = new PortletInvoker(ams, portlet);
       reqEvent.setQn(qn);
       i.processEvent(reqEvent, respEvent);
       checkName(methName);
@@ -109,7 +109,7 @@ public class InvokeHelper {
    
    public void header(String portlet, PortletMode pm, String methName) throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, portlet);
+      PortletInvoker i = new PortletInvoker(ams, portlet);
       reqHeader.setMode(pm);
       i.renderHeaders(reqHeader, respHeader);
       checkName(methName);
@@ -117,7 +117,7 @@ public class InvokeHelper {
    
    public void render(String portlet, PortletMode pm, String methName) throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, portlet);
+      PortletInvoker i = new PortletInvoker(ams, portlet);
       reqRender.setMode(pm);
       i.render(reqRender, respRender);
       checkName(methName);
@@ -126,7 +126,7 @@ public class InvokeHelper {
    // used when a doHeaders call is expected (test portlet extends GenericPorlet)
    public void renderWithHeaders(String portlet, PortletMode pm, List<String> methNames) throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, portlet);
+      PortletInvoker i = new PortletInvoker(ams, portlet);
       reqRender.setMode(pm);
       i.render(reqRender, respRender);
       List<String> names = meths.getMethods();
@@ -142,7 +142,7 @@ public class InvokeHelper {
    
    public void resource(String portlet, String resid, String methName) throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, portlet);
+      PortletInvoker i = new PortletInvoker(ams, portlet);
       reqResource.setResourceId(resid);
       i.serveResource(reqResource, respResource);
       checkName(methName);

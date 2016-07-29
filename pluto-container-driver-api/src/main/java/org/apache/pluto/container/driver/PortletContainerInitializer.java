@@ -38,10 +38,6 @@ import javax.servlet.ServletRegistration;
 import javax.servlet.annotation.HandlesTypes;
 
 import org.apache.pluto.container.PortletInvokerService;
-import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
-import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
-import org.apache.pluto.container.bean.processor.ConfigSummary;
-import org.apache.pluto.container.bean.processor.PortletCDIExtension;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
 import org.slf4j.Logger;
@@ -79,20 +75,11 @@ public class PortletContainerInitializer implements ServletContainerInitializer 
 
       try {
 
-         // Get the bean configuration from the CDI extension
-
+         
+         // scan for method annotations
+         
          ConfigurationHolder holder = new ConfigurationHolder();
-         AnnotatedConfigBean acb = PortletCDIExtension.getConfig();
-         if (acb == null) {
-            holder.setMethodStore(new AnnotatedMethodStore(new ConfigSummary()));
-            if (isDebug) {
-               StringBuilder txt = new StringBuilder();
-               txt.append("CDI not available. Created new method store.");
-               LOG.debug(txt.toString());
-            }
-         } else {
-            holder.setMethodStore(acb.getMethodStore());
-         }
+         holder.scanMethodAnnotations(ctx);
 
          // Read the annotated configuration
 
@@ -171,14 +158,14 @@ public class PortletContainerInitializer implements ServletContainerInitializer 
             
             // Add the cross-context filter & terminal listener
             
-            FilterRegistration.Dynamic fr = ctx.addFilter("WeldCrossContextFilter", "org.jboss.weld.servlet.WeldCrossContextFilter");
-            EnumSet<DispatcherType> dt = EnumSet.noneOf(DispatcherType.class);
-            dt.add(DispatcherType.FORWARD);
-            dt.add(DispatcherType.INCLUDE);
-            dt.add(DispatcherType.ERROR);
-            fr.addMappingForUrlPatterns(dt, false, "/*");
-            
-            ctx.addListener("org.jboss.weld.servlet.WeldTerminalListener");
+//             FilterRegistration.Dynamic fr = ctx.addFilter("WeldCrossContextFilter", "org.jboss.weld.servlet.WeldCrossContextFilter");
+//             EnumSet<DispatcherType> dt = EnumSet.noneOf(DispatcherType.class);
+//             dt.add(DispatcherType.FORWARD);
+//             dt.add(DispatcherType.INCLUDE);
+//             dt.add(DispatcherType.ERROR);
+//             fr.addMappingForUrlPatterns(dt, false, "/*");
+//             
+//             ctx.addListener("org.jboss.weld.servlet.WeldTerminalListener");
 
             LOG.debug("Completed deployment of servlets & filters for context: " + ctx.getContextPath());
 

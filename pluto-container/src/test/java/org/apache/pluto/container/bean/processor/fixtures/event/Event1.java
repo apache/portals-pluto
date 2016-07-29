@@ -19,11 +19,13 @@
 
 package org.apache.pluto.container.bean.processor.fixtures.event;
 
-import javax.inject.Inject;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.annotations.EventDefinition;
 import javax.portlet.annotations.EventMethod;
+import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletQName;
+import javax.portlet.annotations.RenderMethod;
 
 import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
 
@@ -31,10 +33,25 @@ import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
  * @author Scott Nicklous
  *
  */
+@PortletApplication(
+      defaultNamespaceURI="https://www.java.net/",
+      events = {
+            @EventDefinition(qname=@PortletQName(namespaceURI="http://www.apache.org", localPart="pub1")),
+            @EventDefinition(qname=@PortletQName(namespaceURI="http://www.apache.org", localPart="pub2")),
+            @EventDefinition(qname=@PortletQName(namespaceURI="http://www.apache.org", localPart="pub3")),
+            @EventDefinition(qname=@PortletQName(namespaceURI="https://www.java.net/", localPart="pub4")),
+            @EventDefinition(qname=@PortletQName(namespaceURI="http://www.apache.org", localPart="proc1")),
+            @EventDefinition(qname=@PortletQName(namespaceURI="http://www.apache.org", localPart="proc2")),
+            @EventDefinition(qname=@PortletQName(namespaceURI="http://www.apache.org", localPart="proc3a")),
+            @EventDefinition(qname=@PortletQName(namespaceURI="http://www.apache.org", localPart="proc3c")),
+            @EventDefinition(qname=@PortletQName(namespaceURI="https://www.java.net/", localPart="proc3b")),
+            @EventDefinition(qname=@PortletQName(namespaceURI="http://www.apache.org", localPart="proc6")),
+            @EventDefinition(qname=@PortletQName(namespaceURI="", localPart="event4"))
+      }
+      )
 public class Event1 {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    @EventMethod(portletName="portlet1", 
          processingEvents= {
@@ -54,6 +71,11 @@ public class Event1 {
    public void event2(EventRequest req, EventResponse resp) {
       meths.addMethod(this.getClass().getSimpleName() + "#event2");
    }
+   
+   // dummy render method to keep config processor happy
+   
+   @RenderMethod(portletNames= {"portlet1", "portlet2"})
+   public void render1() {}
    
 
 }

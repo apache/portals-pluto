@@ -22,21 +22,21 @@ package org.apache.pluto.container.reconcile.tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import javax.inject.Inject;
+import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.portlet.PortletMode;
 
-import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
 import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
-import org.apache.pluto.container.bean.processor.PortletCDIExtension;
+import org.apache.pluto.container.bean.processor.ConfigSummary;
+import org.apache.pluto.container.bean.processor.tests.FileHelper;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
 import org.apache.pluto.container.reconcile.fixtures.TestPortlet4;
-import org.jglue.cdiunit.AdditionalClasses;
-import org.jglue.cdiunit.CdiRunner;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Tests that a bean portlet without accompanying configuration data can
@@ -44,35 +44,54 @@ import org.junit.runner.RunWith;
  * 
  * @author Scott Nicklous
  */
-@RunWith(CdiRunner.class)
-@AdditionalClasses({PortletCDIExtension.class, InvokeHelper.class, TestPortlet4.class})
 public class StandAloneBeanPortletInvokeTest {
    
-   @Inject
-   private InvokeHelper helper;
-   
-   @Inject
-   AnnotatedConfigBean acb;
-   
+   private static final String pkg = "org.apache.pluto.container.reconcile.fixtures";
+
+   private static InvokeHelper helper;
+   private static AnnotatedMethodStore ams = null;
+   private static ConfigSummary summary = null;
+   private static ConfigurationHolder holder =  new ConfigurationHolder();
+
    // Classes under test
-   private AnnotatedMethodStore ams = null;
-   private PortletApplicationDefinition app;
+   private static PortletApplicationDefinition app;
 
    @BeforeClass
    public static void setUpBeforeClass() throws Exception {
+      Set<File> portletMethodClasses = FileHelper.getClasses(pkg);
+      
+      // remve all files but the portlet 4 class
+      Set<File> delFiles = new HashSet<File>();
+      for (File file : portletMethodClasses) {
+         if (!file.getAbsolutePath().contains("Portlet4")) {
+            delFiles.add(file);
+         }
+      }
+      portletMethodClasses.removeAll(delFiles);
+
+      try {
+         holder.scanMethodAnnotations(portletMethodClasses);
+         holder.reconcileBeanConfig();
+         holder.instantiatePortlets(null);
+         try {
+            holder.validate();         // validate and ignore any validation problems.
+         } catch (Exception e) {}   
+      } catch (Exception e) {
+         e.printStackTrace();
+         throw e;
+      }
+      ams = holder.getMethodStore();
+      summary = holder.getConfigSummary();
+      app = holder.getPad();
+      
+      assertNotNull(ams);
+      assertNotNull(summary);
+      
+      helper = new InvokeHelper(ams);
    }
 
    @Before
    public void setUpBefore() throws Exception {
-      assertNotNull(acb);
-      ams = acb.getMethodStore();
-      assertNotNull(ams);
-      assertNotNull(helper);
-
-      ConfigurationHolder coho = new ConfigurationHolder();
-      coho.reconcileBeanConfig(ams);
-      app = coho.getPad();
-      
       helper.init("Portlet4", null);
    }
   

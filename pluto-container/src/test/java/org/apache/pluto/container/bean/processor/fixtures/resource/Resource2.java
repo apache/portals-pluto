@@ -20,7 +20,6 @@
 package org.apache.pluto.container.bean.processor.fixtures.resource;
 
 import javax.activity.InvalidActivityException;
-import javax.inject.Inject;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.annotations.ServeResourceMethod;
@@ -33,8 +32,7 @@ import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
  */
 public class Resource2 {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    @ServeResourceMethod(portletNames="portlet2", resourceID="edit", ordinal=-100)
    public void resource2c(ResourceRequest req, ResourceResponse resp) {

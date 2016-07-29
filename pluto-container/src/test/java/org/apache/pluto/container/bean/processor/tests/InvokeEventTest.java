@@ -23,28 +23,27 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.inject.Inject;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
 import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
 import org.apache.pluto.container.bean.processor.ConfigSummary;
-import org.apache.pluto.container.bean.processor.PortletCDIExtension;
 import org.apache.pluto.container.bean.processor.PortletInvoker;
 import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
 import org.apache.pluto.container.bean.processor.fixtures.event.Event1;
 import org.apache.pluto.container.bean.processor.fixtures.event.Event2;
 import org.apache.pluto.container.bean.processor.fixtures.mocks.MockEventRequest;
 import org.apache.pluto.container.bean.processor.fixtures.mocks.MockEventResponse;
-import org.jglue.cdiunit.AdditionalClasses;
-import org.jglue.cdiunit.AdditionalPackages;
-import org.jglue.cdiunit.CdiRunner;
-import org.junit.Before;
+import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Test class for invoking the annotated event methods.
@@ -52,40 +51,40 @@ import org.junit.runner.RunWith;
  * @author Scott Nicklous
  *
  */
-@RunWith(CdiRunner.class)
-@AdditionalClasses(PortletCDIExtension.class)
-@AdditionalPackages(Event1.class)
 public class InvokeEventTest {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    private static final MockEventRequest req = new MockEventRequest();
    private static final MockEventResponse resp = new MockEventResponse();
+   private static String DEFAULT_NS = "https://www.java.net/";
    
-   @Inject
-   AnnotatedConfigBean acb;
+   private static final Set<Class<?>> annotatedClasses =
+         new HashSet<Class<?>>(Arrays.asList(Event1.class)); 
+   private static final String pkg = "org.apache.pluto.container.bean.processor.fixtures.event";
    
-   private AnnotatedMethodStore ams = null;
-   private ConfigSummary summary = null;
+   private static AnnotatedMethodStore ams = null;
+   private static ConfigSummary summary = null;
+   private static ConfigurationHolder holder =  new ConfigurationHolder();
    
-   private static String DEFAULT_NS = "http://www.java.net/";
-   
-   @Before
-   public void setUp() {
-      assertNotNull(acb);
-      ams = acb.getMethodStore();
-      summary = acb.getSummary();
+   @BeforeClass
+   public static void setUpClass() throws URISyntaxException, IOException {
+      Set<File> classes = FileHelper.getClasses(pkg);
+      holder.scanMethodAnnotations(classes);
+      holder.processConfigAnnotations(annotatedClasses);
+      holder.reconcileBeanConfig();
+      holder.instantiatePortlets(null);
+      ams = holder.getMethodStore();
+      summary = holder.getConfigSummary();
       
       assertNotNull(ams);
       assertNotNull(summary);
-      ams.setDefaultNamespace(DEFAULT_NS);
    }
    
    @Test
    public void invoke1() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet1");
+      PortletInvoker i = new PortletInvoker(ams, "portlet1");
       QName qn = new QName("http://www.apache.org", "proc1");
       req.setQn(qn);
       i.processEvent(req, resp);
@@ -98,7 +97,7 @@ public class InvokeEventTest {
    @Test
    public void invoke2() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet2");
+      PortletInvoker i = new PortletInvoker(ams, "portlet2");
       QName qn = new QName("http://www.apache.org", "proc2");
       req.setQn(qn);
       i.processEvent(req, resp);
@@ -116,7 +115,7 @@ public class InvokeEventTest {
    @Test
    public void invoke3a() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet3");
+      PortletInvoker i = new PortletInvoker(ams, "portlet3");
       QName qn = new QName("http://www.apache.org", "proc3a");
       req.setQn(qn);
       i.processEvent(req, resp);
@@ -129,7 +128,7 @@ public class InvokeEventTest {
    @Test
    public void invoke3b() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet3");
+      PortletInvoker i = new PortletInvoker(ams, "portlet3");
       QName qn = new QName(DEFAULT_NS, "proc3b");
       req.setQn(qn);
       i.processEvent(req, resp);
@@ -142,7 +141,7 @@ public class InvokeEventTest {
    @Test
    public void invoke3c() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet3");
+      PortletInvoker i = new PortletInvoker(ams, "portlet3");
       QName qn = new QName("http://www.apache.org", "proc3c");
       req.setQn(qn);
       i.processEvent(req, resp);
@@ -155,7 +154,7 @@ public class InvokeEventTest {
    @Test
    public void invoke6() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet6");
+      PortletInvoker i = new PortletInvoker(ams, "portlet6");
       QName qn = new QName("http://www.apache.org", "proc6");
       req.setQn(qn);
       i.processEvent(req, resp);

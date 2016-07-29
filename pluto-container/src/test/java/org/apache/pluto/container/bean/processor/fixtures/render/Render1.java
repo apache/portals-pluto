@@ -19,7 +19,6 @@
 
 package org.apache.pluto.container.bean.processor.fixtures.render;
 
-import javax.inject.Inject;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.annotations.RenderMethod;
@@ -32,8 +31,7 @@ import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
  */
 public class Render1 {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    @RenderMethod(portletNames="portlet1")
    public void render1a(RenderRequest req, RenderResponse resp) {

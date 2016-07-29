@@ -19,7 +19,6 @@
 
 package org.apache.pluto.container.reconcile.fixtures;
 
-import javax.inject.Inject;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
@@ -38,8 +37,7 @@ import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
  */
 public class TestPortlet1a {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    @ActionMethod(portletName="Portlet1", actionName="Fred", publishingEvents = {
          @PortletQName(namespaceURI="http://www.apache.org/", localPart="event2"),

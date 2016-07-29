@@ -24,27 +24,25 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
-import javax.inject.Inject;
-
-import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
 import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
 import org.apache.pluto.container.bean.processor.ConfigSummary;
-import org.apache.pluto.container.bean.processor.PortletCDIExtension;
 import org.apache.pluto.container.bean.processor.PortletInvoker;
 import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
 import org.apache.pluto.container.bean.processor.fixtures.mocks.MockResourceRequest;
 import org.apache.pluto.container.bean.processor.fixtures.mocks.MockResourceResponse;
 import org.apache.pluto.container.bean.processor.fixtures.resource.Resource1;
 import org.apache.pluto.container.bean.processor.fixtures.resource.Resource2;
-import org.jglue.cdiunit.AdditionalClasses;
-import org.jglue.cdiunit.AdditionalPackages;
-import org.jglue.cdiunit.CdiRunner;
-import org.junit.Before;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Test class for invoking the annotated resource methods.
@@ -52,40 +50,39 @@ import org.junit.runner.RunWith;
  * @author Scott Nicklous
  *
  */
-@RunWith(CdiRunner.class)
-@AdditionalClasses(PortletCDIExtension.class)
-@AdditionalPackages(Resource1.class)
 public class InvokeResourceTest {
    
-   @Inject
-   private InvocationResults meths;
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    
    private static final MockResourceRequest req = new MockResourceRequest();
    private static final MockResourceResponse resp = new MockResourceResponse();
    
-   @Inject
-   AnnotatedConfigBean acb;
+   private static final String pkg = "org.apache.pluto.container.bean.processor.fixtures.resource";
    
-   private AnnotatedMethodStore ams = null;
-   private ConfigSummary summary = null;
+   private static AnnotatedMethodStore ams = null;
+   private static ConfigSummary summary = null;
+   private static ConfigurationHolder holder =  new ConfigurationHolder();
+   private static PortletApplicationDefinition pad = null;
    
-   private static String DEFAULT_NS = "http://www.java.net/";
-   
-   @Before
-   public void setUp() {
-      assertNotNull(acb);
-      ams = acb.getMethodStore();
-      summary = acb.getSummary();
+   @BeforeClass
+   public static void setUpClass() throws URISyntaxException, IOException {
+      Set<File> classes = FileHelper.getClasses(pkg);
+      holder.scanMethodAnnotations(classes);
+      holder.reconcileBeanConfig();
+      holder.instantiatePortlets(null);
+      ams = holder.getMethodStore();
+      summary = holder.getConfigSummary();
+      pad = holder.getPad();
       
       assertNotNull(ams);
       assertNotNull(summary);
-      ams.setDefaultNamespace(DEFAULT_NS);
+      assertNotNull(pad);
    }
    
    @Test
    public void invoke1() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet1");
+      PortletInvoker i = new PortletInvoker(ams, "portlet1");
       String resid = "VIEW";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -105,7 +102,7 @@ public class InvokeResourceTest {
    @Test
    public void invoke1a() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet1");
+      PortletInvoker i = new PortletInvoker(ams, "portlet1");
       String resid = "HELP";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -125,7 +122,7 @@ public class InvokeResourceTest {
    @Test
    public void invoke1b() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet1");
+      PortletInvoker i = new PortletInvoker(ams, "portlet1");
       String resid = "CustomMode";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -145,7 +142,7 @@ public class InvokeResourceTest {
    @Test
    public void invoke2() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet2");
+      PortletInvoker i = new PortletInvoker(ams, "portlet2");
       String resid = "VIEW";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -157,7 +154,7 @@ public class InvokeResourceTest {
    @Test
    public void invoke2a() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet2");
+      PortletInvoker i = new PortletInvoker(ams, "portlet2");
       String resid = "help";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -175,7 +172,7 @@ public class InvokeResourceTest {
    @Test
    public void invoke2b() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet2");
+      PortletInvoker i = new PortletInvoker(ams, "portlet2");
       String resid = "config";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -193,7 +190,7 @@ public class InvokeResourceTest {
    @Test
    public void invoke2c() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet2");
+      PortletInvoker i = new PortletInvoker(ams, "portlet2");
       String resid = "edit";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -211,7 +208,7 @@ public class InvokeResourceTest {
    @Test
    public void invoke2d() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet2");
+      PortletInvoker i = new PortletInvoker(ams, "portlet2");
       // resource ID match is case-sensitive
       String resid = "eDit";
       req.setResourceId(resid);
@@ -224,7 +221,7 @@ public class InvokeResourceTest {
    @Test
    public void invoke3a() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet3");
+      PortletInvoker i = new PortletInvoker(ams, "portlet3");
       String resid = "help";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -240,7 +237,7 @@ public class InvokeResourceTest {
    @Test
    public void invoke3b() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet3");
+      PortletInvoker i = new PortletInvoker(ams, "portlet3");
       String resid = "VIEW";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -258,7 +255,7 @@ public class InvokeResourceTest {
    @Test
    public void invoke6() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet6");
+      PortletInvoker i = new PortletInvoker(ams, "portlet6");
       String resid = "VIEW";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -274,7 +271,7 @@ public class InvokeResourceTest {
    @Test
    public void invoke6a() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet6");
+      PortletInvoker i = new PortletInvoker(ams, "portlet6");
       String resid = "HELP";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -290,7 +287,7 @@ public class InvokeResourceTest {
    @Test
    public void invoke7() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet7");
+      PortletInvoker i = new PortletInvoker(ams, "portlet7");
       String resid = "HELP";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -306,7 +303,7 @@ public class InvokeResourceTest {
    @Test
    public void invokeAdmin1() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet1");
+      PortletInvoker i = new PortletInvoker(ams, "portlet1");
       String resid = "admin";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -322,7 +319,7 @@ public class InvokeResourceTest {
    @Test
    public void invokeAdmin2() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet2");
+      PortletInvoker i = new PortletInvoker(ams, "portlet2");
       String resid = "admin";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -338,7 +335,7 @@ public class InvokeResourceTest {
    @Test
    public void invokeAdmin3() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet3");
+      PortletInvoker i = new PortletInvoker(ams, "portlet3");
       String resid = "admin";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -354,7 +351,7 @@ public class InvokeResourceTest {
    @Test
    public void invokeAdmin4() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet4");
+      PortletInvoker i = new PortletInvoker(ams, "portlet4");
       String resid = "admin";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -366,7 +363,7 @@ public class InvokeResourceTest {
    @Test
    public void invokeAdmin5() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet5");
+      PortletInvoker i = new PortletInvoker(ams, "portlet5");
       String resid = "admin";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -378,7 +375,7 @@ public class InvokeResourceTest {
    @Test
    public void invokeAdmin8() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet8");
+      PortletInvoker i = new PortletInvoker(ams, "portlet8");
       String resid = "admin";
       req.setResourceId(resid);
       i.serveResource(req, resp);
@@ -390,7 +387,7 @@ public class InvokeResourceTest {
    @Test
    public void invokeAdmin7() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(acb, "portlet7");
+      PortletInvoker i = new PortletInvoker(ams, "portlet7");
       String resid = "admin";
       req.setResourceId(resid);
       i.serveResource(req, resp);

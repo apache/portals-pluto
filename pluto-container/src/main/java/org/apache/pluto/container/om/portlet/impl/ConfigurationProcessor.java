@@ -16,6 +16,7 @@ import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -619,7 +620,7 @@ public abstract class ConfigurationProcessor {
       if (isDebug) {
          StringBuilder txt = new StringBuilder();
          txt.append("Instantiating the portlets.");
-         txt.append(" bean mgr = null: ").append(bm == null);
+         txt.append(" beanMgr: ").append((bm == null) ? "null" : "not null");
          txt.append(", portlet names: ").append(Arrays.toString(ams.getPortletNames().toArray()));
          LOG.debug(txt.toString());
       }
@@ -627,7 +628,9 @@ public abstract class ConfigurationProcessor {
       ams.activateMethods(bm);
     
       for (PortletDefinition pd : pad.getPortlets()) {
+         Set<Class<?>> processedClasses = new HashSet<Class<?>>();
          String clsName = pd.getPortletClass();
+         Object instance = null;
          
          if (clsName != null) {
             ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -636,7 +639,7 @@ public abstract class ConfigurationProcessor {
             }
             try {
                Class<?> cls = cl.loadClass(clsName);
-               Object instance = null;
+               processedClasses.add(cls);
                
                // Let CDI instantiate the portlet to allow for injection. 
                // Get the single bean instance for the portlet class.
@@ -707,6 +710,35 @@ public abstract class ConfigurationProcessor {
                
             } catch (ClassNotFoundException e) {
                LOG.debug("Could not instantiate portlet class: " + clsName);
+            }
+
+         }
+         
+         if (bm == null) {
+            
+            // Running in an environment without CDI support, the portlet classes
+            // need to be instantiated in such a way that all methods of a given portlet and
+            // a given class use the same instance of that class. Also, annotated portlet
+            // methods can appear in classes that do not implement the Portlet interface
+            // and those classes need to be instantiated as well.
+            
+            for (MethodIdentifier mi : ams.getMethodIDsForPortlet(pd.getPortletName())) {
+               for (AnnotatedMethod am : ams.getMethods(mi)) {
+                  Class<?> cls = am.getBeanClass();
+                  if (!processedClasses.contains(cls)) {
+                     processedClasses.add(cls);
+                     try {
+                        instance = cls.newInstance();
+                        ams.setPortletClassInstance(pd.getPortletName(), cls, instance);
+                     } catch (Exception e) {
+                        StringBuilder txt = new StringBuilder(128);
+                        txt.append("Exception creating instance of class: ").append(e.toString());
+                        txt.append(" Portlet name: ").append(pd.getPortletName());
+                        txt.append(", portlet class: ").append(cls);
+                        LOG.warn(txt.toString());
+                     }
+                  }
+               }
             }
 
          }

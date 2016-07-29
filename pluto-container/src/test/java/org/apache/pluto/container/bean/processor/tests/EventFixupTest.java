@@ -16,7 +16,6 @@
  *  under the License.
  */
 
-
 package org.apache.pluto.container.bean.processor.tests;
 
 import static org.apache.pluto.container.bean.processor.MethodType.EVENT;
@@ -24,28 +23,25 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
 import org.apache.pluto.container.bean.processor.AnnotatedMethod;
 import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
 import org.apache.pluto.container.bean.processor.ConfigSummary;
 import org.apache.pluto.container.bean.processor.MethodIdentifier;
-import org.apache.pluto.container.bean.processor.PortletCDIExtension;
 import org.apache.pluto.container.bean.processor.fixtures.event.Event1;
 import org.apache.pluto.container.bean.processor.fixtures.event.Event2;
-import org.jglue.cdiunit.AdditionalClasses;
-import org.jglue.cdiunit.AdditionalPackages;
-import org.jglue.cdiunit.CdiRunner;
-import org.junit.Before;
+import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Test class for RenderStateScoped beans
@@ -53,30 +49,29 @@ import org.junit.runner.RunWith;
  * @author Scott Nicklous
  *
  */
-@RunWith(CdiRunner.class)
-@AdditionalClasses(PortletCDIExtension.class)
-@AdditionalPackages(Event1.class)
 public class EventFixupTest {
-   
-   @Inject
-   AnnotatedConfigBean acb;
-   
-   private AnnotatedMethodStore ams = null;
-   private ConfigSummary summary = null;
-   
-   private static String DEFAULT_NS = "http://www.java.net/";
-   
-   @Before
-   public void setUp() {
-      assertNotNull(acb);
-      ams = acb.getMethodStore();
-      summary = acb.getSummary();
-      
+
+   private static String               DEFAULT_NS = "http://www.java.net/";
+
+   private static final String         pkg        = "org.apache.pluto.container.bean.processor.fixtures.event";
+
+   private static AnnotatedMethodStore ams        = null;
+   private static ConfigSummary        summary    = null;
+   private static ConfigurationHolder  holder     = new ConfigurationHolder();
+
+   @BeforeClass
+   public static void setUpClass() throws URISyntaxException, IOException {
+      Set<File> classes = FileHelper.getClasses(pkg);
+      holder.scanMethodAnnotations(classes);
+      ams = holder.getMethodStore();
+      summary = holder.getConfigSummary();
+
       assertNotNull(ams);
       assertNotNull(summary);
+
       ams.setDefaultNamespace(DEFAULT_NS);
    }
-   
+
    @Test
    public void portletNamesTest() throws Exception {
       Set<String> names = ams.getPortletNames();
@@ -87,7 +82,7 @@ public class EventFixupTest {
       assertTrue(names.contains("portlet3"));
       assertTrue(names.contains("portlet6"));
    }
-   
+
    @Test
    public void errorDuplicateMethod() throws Exception {
       List<String> names = summary.getPortletsWithErrors();
@@ -95,7 +90,7 @@ public class EventFixupTest {
       assertEquals(4, names.size());
       assertTrue(names.contains("portlet2"));
    }
-   
+
    @Test
    public void errorDuplicateMethod2() throws Exception {
       List<String> names = summary.getPortletsWithErrors();
@@ -103,7 +98,7 @@ public class EventFixupTest {
       assertEquals(4, names.size());
       assertTrue(names.contains("portlet6"));
    }
-   
+
    @Test
    public void errorBadReturnType() throws Exception {
       List<String> names = summary.getPortletsWithErrors();
@@ -111,7 +106,7 @@ public class EventFixupTest {
       assertEquals(4, names.size());
       assertTrue(names.contains("portlet5"));
    }
-   
+
    @Test
    public void errorBadParameters() throws Exception {
       List<String> names = summary.getPortletsWithErrors();
@@ -119,48 +114,51 @@ public class EventFixupTest {
       assertEquals(4, names.size());
       assertTrue(names.contains("portlet4"));
    }
-   
+
    @Test
    public void methods1Test() throws Exception {
       Set<MethodIdentifier> portlets = ams.getMethodIDsForPortlet("portlet1");
       assertNotNull(portlets);
-      assertEquals(1, portlets.size());
+      assertEquals(2, portlets.size());
       MethodIdentifier mi = (MethodIdentifier) portlets.toArray()[0];
-      assertEquals(EVENT, mi.getType());
+      if (!mi.getType().equals(EVENT)) {
+         mi = (MethodIdentifier) portlets.toArray()[1];
+      }
       QName qn = new QName("http://www.apache.org", "proc1");
       assertEquals(qn, mi.getId());
       assertEquals("portlet1", mi.getName());
    }
-   
+
    @Test
    public void methods2Test() throws Exception {
       Set<MethodIdentifier> portlets = ams.getMethodIDsForPortlet("portlet2");
       assertNotNull(portlets);
-      assertEquals(1, portlets.size());
+      assertEquals(2, portlets.size());
       MethodIdentifier mi = (MethodIdentifier) portlets.toArray()[0];
-      assertEquals(EVENT, mi.getType());
+      if (!mi.getType().equals(EVENT)) {
+         mi = (MethodIdentifier) portlets.toArray()[1];
+      }
       QName qn = new QName("http://www.apache.org", "proc2");
       assertEquals(qn, mi.getId());
       assertEquals("portlet2", mi.getName());
    }
-   
+
    @Test
    public void methods3Test() throws Exception {
       Set<MethodIdentifier> portlets = ams.getMethodIDsForPortlet("portlet3");
       assertNotNull(portlets);
-      assertEquals(3, portlets.size());
-      List<QName> ids = Arrays.asList(new QName[] {
-            new QName("http://www.apache.org", "proc3a"),
-            new QName(DEFAULT_NS, "proc3b"),
-            new QName("http://www.apache.org", "proc3c"),
-      });
+      assertEquals(4, portlets.size());
+      List<QName> ids = Arrays.asList(new QName[] { new QName("http://www.apache.org", "proc3a"),
+            new QName(DEFAULT_NS, "proc3b"), new QName("http://www.apache.org", "proc3c"), });
       for (MethodIdentifier mi : portlets) {
-         assertEquals(EVENT, mi.getType());
-         assertTrue(ids.contains(mi.getId()));
-         assertEquals("portlet3", mi.getName());
+         if (mi.getType().equals(EVENT)) {
+            assertEquals(EVENT, mi.getType());
+            assertTrue(ids.contains(mi.getId()));
+            assertEquals("portlet3", mi.getName());
+         }
       }
    }
-   
+
    @Test
    public void class1Test() throws Exception {
       QName qn = new QName("http://www.apache.org", "proc1");
@@ -175,7 +173,7 @@ public class EventFixupTest {
       assertEquals("event1", m.getName());
       assertEquals(Event1.class, m.getDeclaringClass());
    }
-   
+
    @Test
    public void class2Test() throws Exception {
       QName qn = new QName("http://www.apache.org", "proc2");
@@ -189,10 +187,10 @@ public class EventFixupTest {
       assertNotNull(m);
       assertEquals("event2", m.getName());
       // don't know which one the scanner will find first
-      List<Class<?>> clslst = Arrays.asList(new Class<?>[] {Event1.class, Event2.class});
+      List<Class<?>> clslst = Arrays.asList(new Class<?>[] { Event1.class, Event2.class });
       assertTrue(clslst.contains(m.getDeclaringClass()));
    }
-   
+
    @Test
    public void class6Test() throws Exception {
       QName qn = new QName("http://www.apache.org", "proc6");
@@ -205,27 +203,30 @@ public class EventFixupTest {
       Method m = am.getJavaMethod();
       assertNotNull(m);
       // order in which method found undefined
-      List<String> names = Arrays.asList(new String[] {"event6", "event7"});
+      List<String> names = Arrays.asList(new String[] { "event6", "event7" });
       assertTrue(names.contains(m.getName()));
       assertEquals(Event2.class, m.getDeclaringClass());
    }
-   
+
    @Test
    public void class4Test() throws Exception {
       Set<MethodIdentifier> portlets = ams.getMethodIDsForPortlet("portlet3");
       assertNotNull(portlets);
-      assertEquals(3, portlets.size());
+      assertEquals(4, portlets.size());
 
-      List<String> methNames = Arrays.asList(new String[] {"event1a", "event1b", "event1c"});
+      List<String> methNames = Arrays.asList(new String[] { "event1a", "event1b", "event1c", "render1" });
       for (MethodIdentifier mi : portlets) {
-         AnnotatedMethod am = ams.getMethod(mi);
+         List<AnnotatedMethod> meths = ams.getMethods(mi); 
+         assertEquals(1, meths.size());
+         AnnotatedMethod am = meths.get(0);
+         assertNotNull(am);
          Method m = am.getJavaMethod();
          assertNotNull(m);
          assertTrue(methNames.contains(m.getName()));
          assertEquals(Event2.class, m.getDeclaringClass());
       }
    }
-   
+
    @Test
    public void pubEvent1Test() throws Exception {
       List<QName> qns = ams.getPublishingEventRefs("portlet1");
@@ -233,7 +234,7 @@ public class EventFixupTest {
       assertEquals(1, qns.size());
       assertTrue(qns.contains(new QName("http://www.apache.org", "pub1")));
    }
-   
+
    @Test
    public void pubEvent2Test() throws Exception {
       List<QName> qns = ams.getPublishingEventRefs("portlet3");
@@ -244,7 +245,7 @@ public class EventFixupTest {
       assertTrue(qns.contains(new QName("http://www.apache.org", "pub3")));
       assertTrue(qns.contains(new QName(DEFAULT_NS, "pub4")));
    }
-   
+
    @Test
    public void procEvent1Test() throws Exception {
       List<QName> qns = ams.getProcessingEventRefs("portlet1");
@@ -252,7 +253,7 @@ public class EventFixupTest {
       assertEquals(1, qns.size());
       assertTrue(qns.contains(new QName("http://www.apache.org", "proc1")));
    }
-   
+
    @Test
    public void procEvent2Test() throws Exception {
       List<QName> qns = ams.getProcessingEventRefs("portlet2");
@@ -260,7 +261,7 @@ public class EventFixupTest {
       assertEquals(1, qns.size());
       assertTrue(qns.contains(new QName("http://www.apache.org", "proc2")));
    }
-   
+
    @Test
    public void procEvent3Test() throws Exception {
       List<QName> qns = ams.getProcessingEventRefs("portlet3");
@@ -270,7 +271,7 @@ public class EventFixupTest {
       assertTrue(qns.contains(new QName(DEFAULT_NS, "proc3b")));
       assertTrue(qns.contains(new QName("http://www.apache.org", "proc3c")));
    }
-   
+
    @Test
    public void procEvent6Test() throws Exception {
       List<QName> qns = ams.getProcessingEventRefs("portlet6");
@@ -278,5 +279,5 @@ public class EventFixupTest {
       assertEquals(1, qns.size());
       assertTrue(qns.contains(new QName("http://www.apache.org", "proc6")));
    }
-   
+
 }
