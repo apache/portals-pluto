@@ -19,34 +19,36 @@
 package javax.portlet.tck.portlets;
 
 import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
+import java.util.Map;
+
 import javax.portlet.*;
 import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
+import javax.servlet.http.Cookie;
+
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.ResourceURL.PAGE;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
 
 /**
- * This portlet implements several test cases for the JSR 362 TCK. The test case names
- * are defined in the /src/main/resources/xml-resources/additionalTCs.xml
- * file. The build process will integrate the test case names defined in the 
- * additionalTCs.xml file into the complete list of test case names for execution by the driver.
+ * This portlet implements several test cases for the JSR 362 TCK. The test case
+ * names are defined in the /src/main/resources/xml-resources/additionalTCs.xml
+ * file. The build process will integrate the test case names defined in the
+ * additionalTCs.xml file into the complete list of test case names for
+ * execution by the driver.
  *
  */
+@PortletApplication(publicParams = {
+      @PublicRenderParameterDefinition(identifier = "tckPRP3", qname = @PortletQName(localPart = "tckPRP3", namespaceURI = "")),
+      @PublicRenderParameterDefinition(identifier = "tr1_ready", qname = @PortletQName(localPart = "tr1_ready", namespaceURI = "")) })
+@PortletConfiguration(portletName = "HeaderPortletTests_SPEC15_Header", publicParams = {
+      "tckPRP3", "tr1_ready" })
+public class HeaderPortletTests_SPEC15_Header
+      implements Portlet, HeaderPortlet, ResourceServingPortlet {
 
-@PortletConfiguration(portletName = "HeaderPortletTests_SPEC15_Header")
-public class HeaderPortletTests_SPEC15_Header implements Portlet {
-   
    private PortletConfig portletConfig = null;
 
    @Override
@@ -59,303 +61,661 @@ public class HeaderPortletTests_SPEC15_Header implements Portlet {
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+   public void processAction(ActionRequest portletReq,
+         ActionResponse portletResp) throws PortletException, IOException {
+      String action = portletReq.getParameter("inputval");
+      if (action != null) {
+         if (V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS10.equals(action)
+               && portletReq.getParameter("actionURLTr0") != null
+               && portletReq.getParameter("actionURLTr0").equals("true")) {
+            /* TestCase: V2AddlRequestTests_SPEC2_11_Render_parameters10 */
+            /* Details: "The portlet-container must not propagate parameters */
+            /* received in an action or event request to subsequent render */
+            /* requests of the portlet" */
+            portletResp.setRenderParameter("tr0", "true");
+         } else if (V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS15
+               .equals(action) && portletReq.getParameter("tr3a") != null
+               && portletReq.getParameter("tr3a").equals("true")) {
+            /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters15 */
+            /*
+             * Details: "Render parameters get automatically cleared if the
+             * portlet receives a processAction or processEvent call"
+             */
+            portletResp.setRenderParameter("tr3b", "true");
+         } else if (V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE9.equals(action)) {
+            /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie9 */
+            /*
+             * Details: "Cookies set during the Header phase should be available
+             * to the portlet during a subsequent Action phase"
+             */
+            Cookie[] cookies = portletReq.getCookies();
+            for (Cookie c : cookies) {
+               if (c.getName().equals("header_tr1_cookie")
+                     && c.getValue().equals("true")) {
+                  c.setMaxAge(0);
+                  c.setValue("");
+                  portletResp.setRenderParameter("trCookie1", "true");
+               }
+            }
+         }
+      }
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
-
-      PrintWriter writer = portletResp.getWriter();
+   public void render(RenderRequest portletReq, RenderResponse portletResp)
+         throws PortletException, IOException {
+      
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters10                  */
-      /* Details: "The portlet-container must not propagate parameters received in  */
-      /* an action or event request to subsequent header requests of the portlet"   */
+      PrintWriter writer = portletResp.getWriter();
+
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie8 */
+      /*
+       * Details: "Cookies set during the Header phase should be available to
+       * the portlet during the Resource phase"
+       */
+      writer.write(
+            "<div id=\"V3HeaderPortletTests_SPEC15_Header\">no resource output.</div>\n");
+      ResourceURL resurl = portletResp.createResourceURL();
+      resurl.setCacheability(PAGE);
+      writer.write("<script>\n");
+      writer.write("(function () {\n");
+      writer.write("   var xhr = new XMLHttpRequest();\n");
+      writer.write("   xhr.onreadystatechange=function() {\n");
+      writer.write("      if (xhr.readyState==4 && xhr.status==200) {\n");
+      writer.write(
+            "         document.getElementById(\"V3HeaderPortletTests_SPEC15_Header\").innerHTML=xhr.responseText;\n");
+      writer.write("      }\n");
+      writer.write("   };\n");
+      writer.write(
+            "   xhr.open(\"GET\",\"" + resurl.toString() + "\",true);\n");
+      writer.write("   xhr.send();\n");
+      writer.write("})();\n");
+      writer.write("</script>\n");
+      
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie10 */
+      /*
+       * Details: "Cookies set during the Header phase should be available to
+       * the portlet during a subsequent Render phase"
+       */
+      Cookie[] cookies = portletReq.getCookies();
+      StringBuilder txt = new StringBuilder(128);
+      txt.append("<p>Debug info:");
+      txt.append("<br>");
+      txt.append("# Cookies: ").append(cookies.length).append("<br>");
+      TestResult tr2 = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE10);
+      for (Cookie c : cookies) {
+        txt.append("Name: ").append(c.getName());
+        txt.append(", Value: ").append(c.getValue()).append("<br>");
+        if (c.getName().equals("header_tr2_cookie") && c.getValue().equals("true")) {
+          txt.append("<br>").append("Found my cookie!").append("<br>");
+          c.setMaxAge(0);
+          c.setValue("");
+          tr2.setTcSuccess(true);
+        }
+      }
+      tr2.writeTo(writer);
+      txt.append("</p>");
+      writer.append(txt.toString());
+
+      String msg = ((String) portletReq.getPortletSession().getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_Header",
+            APPLICATION_SCOPE));
+      writer.write("<p>" + msg + "</p>");
+      portletReq.getPortletSession().removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_Header",
+            APPLICATION_SCOPE);
+
+   }
+
+   @Override
+   public void renderHeaders(HeaderRequest portletReq,
+         HeaderResponse portletResp) throws PortletException, IOException {
+      ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
+
+      StringWriter writer = new StringWriter();
+
+      RenderParameters renderParams = portletReq.getRenderParameters();
+      String action = portletReq.getParameter("inputval");
+      Boolean successTr2 = false, successTr5 = false, successTr6 = false;
+      Boolean successTr7 = false, successTr8 = false, successTr13 = false;
+
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters10 */
+      /*
+       * Details: "The portlet-container must not propagate parameters received
+       * in an action or event request to subsequent header requests of the
+       * portlet"
+       */
+      if (renderParams.getValue("actionURLTr0") == null
+            && renderParams.getValue("tr0") != null
+            && "true".equals(renderParams.getValue("tr0"))) {
+         TestResult tr0 = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS10);
+         tr0.setTcSuccess(true);
+         tr0.writeTo(writer);
+      } else {
+         ActionURL aurl = portletResp.createActionURL();
+         aurl.setParameter("actionURLTr0", "true");
+         TestButton tb = new TestButton(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS10, aurl);
+         tb.writeTo(writer);
+      }
+
+      if (action != null) {
+         if (action.equals(V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS13)) {
+            /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters13 */
+            /*
+             * Details: "If a portlet receives a render request that is the
+             * result of invoking a render URL targeting this portlet the render
+             * parameters received with the render request must be the
+             * parameters set on the render URL"
+             */
+            TestResult tr2 = tcd.getTestResultFailed(
+                  V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS13);
+            if (portletReq.getParameter("renderURLTr2") != null
+                  && portletReq.getParameter("tr2") != null
+                  && portletReq.getParameter("renderURLTr2")
+                        .contains("tr2:" + portletReq.getParameter("tr2"))) {
+               tr2.setTcSuccess(true);
+               successTr2 = true;
+            } else {
+               tr2.appendTcDetail(
+                     "Parameter renderURLTr2 is missing or does not contain tr2 parameter value.");
+            }
+            tr2.writeTo(writer);
+         } else if (action
+               .equals(V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS2)) {
+            /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters2 */
+            /* Details: "The parameters the request object returns must be */
+            /* \"x-www-form-urlencoded\" decoded" */
+            TestResult tr5 = tcd.getTestResultFailed(
+                  V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS2);
+            if (portletReq.getParameter("tr5") != null
+                  && portletReq.getParameter("tr5").equals("true&<>'")) {
+               tr5.setTcSuccess(true);
+               successTr5 = true;
+            }
+            tr5.writeTo(writer);
+         } else if (action
+               .equals(V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS6)) {
+            /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters6 */
+            /*
+             * Details: "The getParameterMap method must return an unmodifiable
+             * Map object"
+             */
+            TestResult tr6 = tcd.getTestResultFailed(
+                  V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS6);
+            if (portletReq.getParameterMap().containsKey("inputval")
+                  && V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS6.equals(
+                        portletReq.getParameterMap().get("inputval")[0])) {
+               String tr6TestStringArray[] = { "Modified Value" };
+               portletReq.getParameterMap().put("inputval", tr6TestStringArray);
+               if (V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS6
+                     .equals(portletReq.getParameterMap().get("inputval")[0])) {
+                  tr6.setTcSuccess(true);
+                  successTr6 = true;
+               }
+            }
+            tr6.writeTo(writer);
+         } else if (action.equals(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS15)) {
+            /*
+             * TestCase:
+             * V3HeaderPortletTests_SPEC15_Header_publicRenderParameters15
+             */
+            /*
+             * Details: "A map of private parameters can be obtained through the
+             * getPrivateParameterMap method"
+             */
+            TestResult tr7 = tcd.getTestResultFailed(
+                  V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS15);
+            Map<String, String[]> privateParamMap = portletReq
+                  .getPrivateParameterMap();
+            if (privateParamMap != null && privateParamMap.containsKey("tr7")
+                  && privateParamMap.get("tr7")[0].equals("true")) {
+               tr7.setTcSuccess(true);
+               successTr7 = true;
+            }
+            tr7.writeTo(writer);
+         } else if (action.equals(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS16)) {
+            /*
+             * TestCase:
+             * V3HeaderPortletTests_SPEC15_Header_publicRenderParameters16
+             */
+            /*
+             * Details: "A map of public parameters can be obtained through the
+             * getPublicParameterMap method"
+             */
+            TestResult tr8 = tcd.getTestResultFailed(
+                  V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS16);
+            if (portletReq.getPublicParameterMap() != null && portletReq
+                  .getPublicParameterMap().containsKey("tckPRP3")) {
+               tr8.setTcSuccess(true);
+               successTr8 = true;
+            } else {
+               tr8.appendTcDetail("No public render parameter found.");
+            }
+            tr8.writeTo(writer);
+         } else if (action.equals(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS13A)) {
+            /*
+             * TestCase:
+             * V3HeaderPortletTests_SPEC15_Header_publicRenderParameters13a
+             */
+            /* Details: "A public render parameter can be deleted using the */
+            /* removePublicRenderParameter method on the PortletURL" */
+            TestResult tr13 = tcd.getTestResultFailed(
+                  V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS13A);
+            if (portletReq.getPublicParameterMap() != null && !portletReq
+                  .getPublicParameterMap().containsKey("tckPRP3")) {
+               tr13.setTcSuccess(true);
+               successTr13 = true;
+            } else {
+               tr13.appendTcDetail("Render parameter tckPRP3 is not removed.");
+            }
+            tr13.writeTo(writer);
+         }
+      }
+
+      if (!successTr2) {
+         /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters13 */
+         /*
+          * Details: "If a portlet receives a render request that is the result
+          * of invoking a render URL targeting this portlet the render
+          * parameters received with the render request must be the parameters
+          * set on the render URL"
+          */
+         PortletURL rurl = portletResp.createRenderURL();
+         rurl.setParameters(portletReq.getPrivateParameterMap());
+         rurl.setParameter("tr2", "true");
+         rurl.setParameter("renderURLTr2", rurl.toString());
+         TestButton tb = new TestButton(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS13, rurl);
+         tb.writeTo(writer);
+      }
+
+      if (!successTr5) {
+         /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters2 */
+         /* Details: "The parameters the request object returns must be */
+         /* \"x-www-form-urlencoded\" decoded" */
+         PortletURL purl = portletResp.createRenderURL();
+         purl.setParameter("tr5", "true&<>'");
+         TestButton tb = new TestButton(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS2, purl);
+         tb.writeTo(writer);
+      }
+
+      if (!successTr6) {
+         /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters6 */
+         /*
+          * Details: "The getParameterMap method must return an unmodifiable Map
+          * object"
+          */
+         PortletURL purl = portletResp.createRenderURL();
+         TestButton tb = new TestButton(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS6, purl);
+         tb.writeTo(writer);
+      }
+
+      if (!successTr7) {
+         /*
+          * TestCase:
+          * V3HeaderPortletTests_SPEC15_Header_publicRenderParameters15
+          */
+         /* Details: "A map of private parameters can be obtained through the */
+         /* getPrivateParameterMap method" */
+         PortletURL purl = portletResp.createRenderURL();
+         purl.setParameter("tr7", "true");
+         TestButton tb = new TestButton(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS15,
+               purl);
+         tb.writeTo(writer);
+      }
+
+      if (!successTr8) {
+         /*
+          * TestCase:
+          * V3HeaderPortletTests_SPEC15_Header_publicRenderParameters16
+          */
+         /* Details: "A map of public parameters can be obtained through the */
+         /* getPublicParameterMap method" */
+         if (portletReq.getParameter("tckPRP3") == null) {
+            PortletURL purl = portletResp.createRenderURL();
+            purl.setParameter("tckPRP3", "true");
+            TestSetupLink tl = new TestSetupLink(
+                  V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS16,
+                  purl);
+            tl.writeTo(writer);
+         } else {
+            PortletURL aurl = portletResp.createRenderURL();
+            aurl.setParameters(portletReq.getPrivateParameterMap());
+            TestButton tb = new TestButton(
+                  V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS16,
+                  aurl);
+            tb.writeTo(writer);
+         }
+      }
+
+      if (!successTr13) {
+         /*
+          * TestCase:
+          * V3HeaderPortletTests_SPEC15_Header_publicRenderParameters13a
+          */
+         /* Details: "A public render parameter can be deleted using the */
+         /* removePublicRenderParameter method on the PortletURL" */
+         if (portletReq.getParameter("tckPRP3") == null) {
+            PortletURL purl = portletResp.createRenderURL();
+            purl.setParameter("tckPRP3", "true");
+            TestSetupLink tl = new TestSetupLink(
+                  V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS13A,
+                  purl);
+            tl.writeTo(writer);
+         } else {
+            PortletURL purl = portletResp.createRenderURL();
+            purl.setParameters(portletReq.getPrivateParameterMap());
+            purl.removePublicRenderParameter("tckPRP3");
+            TestButton tb = new TestButton(
+                  V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS13A,
+                  purl);
+            tb.writeTo(writer);
+         }
+      }
+
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters15 */
+      /* Details: "Render parameters get automatically cleared if the portlet */
+      /* receives a processAction or processEvent call" */
+      if (portletReq.getParameter("tr3a") != null) {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameter("tr3a", "true");
+         TestButton tb = new TestButton(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS15, aurl);
+         tb.writeTo(writer);
+      } else {
+         if (portletReq.getParameter("tr3b") != null
+               && portletReq.getParameter("tr3b").equals("true")) {
+            TestResult tr3 = tcd.getTestResultFailed(
+                  V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS15);
+            tr3.setTcSuccess(true);
+            tr3.writeTo(writer);
+         } else {
+            PortletURL purl = portletResp.createRenderURL();
+            purl.setParameter("tr3a", "true");
+            TestSetupLink tl = new TestSetupLink(
+                  V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS15, purl);
+            tl.writeTo(writer);
+         }
+      }
+
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_properties1 */
+      /*
+       * Details: "The portlet can use the getProperty method to access single
+       * portal property and optionally-available HTTP header values"
+       */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS10);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES1);
+         if (portletReq.getProperty("Accept") != null) {
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail(
+                  "Failed because Accept header is not found in request headers.");
+         }
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters11                  */
-      /* Details: "If a portlet receives a render request that is the result of a   */
-      /* client request targeted to another portlet in the portal page, the         */
-      /* parameters should be the same parameters as of the previous render request */
-      /* from this client"                                                          */
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_properties2 */
+      /*
+       * Details: "The portlet can use the getProperties method to access
+       * multiple portal property and optionally-available HTTP header values by
+       * the same property name"
+       */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS11);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES2);
+         if (portletReq.getProperties("Accept").hasMoreElements()) {
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail(
+                  "Failed because Accept header is not found in request headers.");
+         }
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters13                  */
-      /* Details: "If a portlet receives a render request that is the result of     */
-      /* invoking a render URL targeting this portlet the render parameters         */
-      /* received with the render request must be the parameters set on the render  */
-      /* URL"                                                                       */
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_properties3 */
+      /*
+       * Details: "The portlet can use the getPropertyNames method to obtain an
+       * Enumeration of all available property names"
+       */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS13);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES3);
+         if (portletReq.getPropertyNames().hasMoreElements()) {
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail(
+                  "Failed because no header is not found in request headers.");
+         }
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters15                  */
-      /* Details: "Render parameters get automatically cleared if the portlet       */
-      /* receives a processAction or processEvent call"                             */
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_properties4 */
+      /*
+       * Details: "The portlet can access cookies provided by the current
+       * request using the getCookies method"
+       */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS15);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES4);
+         if (portletReq.getCookies().length > 0) {
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail(
+                  "Failed because no cookies are found in HeaderRequest object");
+         }
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_properties1                   */
-      /* Details: "The portlet can use the getProperty method to access single      */
-      /* portal property and optionally-available HTTP header values"               */
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie8 */
+      /*
+       * Details: "Cookies set during the Header phase should be available to
+       * the portlet during the Resource phase"
+       */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES1);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         Cookie c = new Cookie("header_tr0_cookie", "true");
+         c.setMaxAge(100);
+         c.setPath("/");
+         portletResp.addProperty(c);
+      }
+
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie9 */
+      /*
+       * Details: "Cookies set during the Header phase should be available to
+       * the portlet during a subsequent Action phase"
+       */
+      if(portletReq.getParameter("trCookie1")!=null && portletReq.getParameter("trCookie1").equals("true")){
+         TestResult tr1 = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE9);
+         tr1.setTcSuccess(true);
+         tr1.writeTo(writer);
+      } else {
+         Cookie c = new Cookie("header_tr1_cookie", "true");
+         c.setMaxAge(100);
+         c.setPath("/");
+         portletResp.addProperty(c);
+         PortletURL aurl = portletResp.createActionURL();
+         TestButton tb = new TestButton(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE9, aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie10 */
+      /*
+       * Details: "Cookies set during the Header phase should be available to
+       * the portlet during a subsequent Render phase"
+       */
+      {
+         Cookie c = new Cookie("header_tr2_cookie", "true");
+         c.setMaxAge(100);
+         c.setPath("/");
+         portletResp.addProperty(c);
+         PortletURL rurl = portletResp.createRenderURL();
+         TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE10, rurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie11 */
+      /*
+       * Details: "Cookies set during the Header phase should be available to
+       * the portlet during a subsequent request triggered by a URL"
+       */
+      if(portletReq.getParameter("tr3")!=null && portletReq.getParameter("tr3").equals("true")){
+         Cookie[] cookies = portletReq.getCookies();
+
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("<p>Debug info:");
+         txt.append("<br>");
+         txt.append("# Cookies: ").append(cookies.length).append("<br>");
+         TestResult tr2 = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE11);
+         for (Cookie c : cookies) {
+           txt.append("Name: ").append(c.getName());
+           txt.append(", Value: ").append(c.getValue()).append("<br>");
+           if (c.getName().equals("header_tr3_cookie") && c.getValue().equals("true")) {
+             txt.append("<br>").append("Found my cookie!").append("<br>");
+             c.setMaxAge(0);
+             c.setValue("");
+             tr2.setTcSuccess(true);
+           }
+         }
+         tr2.writeTo(writer);
+         txt.append("</p>");
+         writer.append(txt.toString());
+      } else {
+         Cookie c = new Cookie("header_tr3_cookie", "true");
+         c.setMaxAge(100);
+         c.setPath("/");
+         portletResp.addProperty(c);
+         PortletURL rurl = portletResp.createRenderURL();
+         rurl.setParameter("tr3", "true");
+         TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE11, rurl);
+         tb.writeTo(writer);
+      }
+      
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie12 */
+      /*
+       * Details: "Cookies set during the Header phase after the response has
+       * been committed are ignored"
+       */
+      // TODO: HeaderResponse has flushBuffer() method which commits the response.
+      //       We are still able to set the cookie. Is this test case wrong?
+      {
+         portletResp.flushBuffer();
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE12);
+         Cookie c = new Cookie("header_tr4_cookie", "true");
+         c.setMaxAge(100);
+         c.setPath("/");
+         portletResp.addProperty(c);
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_properties2                   */
-      /* Details: "The portlet can use the getProperties method to access multiple  */
-      /* portal property and optionally-available HTTP header values by the same    */
-      /* property name"                                                             */
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_contentType5 */
+      /*
+       * Details: "If the setContentType method is not called before the
+       * getWriter or getPortletOutputStream method is used, the portlet
+       * container uses the content type returned by getResponseContentType"
+       */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_CONTENTTYPE5);
+         if(portletReq.getResponseContentType()!=null){
+            result.setTcSuccess(true);
+            result.appendTcDetail("Content type is - "+portletReq.getResponseContentType());
+         } else {
+            result.appendTcDetail("Failed because getResponseContentType() method returned null");
+         }
+         result.writeTo(writer);
+      }
+      
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_characterEncoding4 */
+      /*
+       * Details: "If the portlet does not set the character encoding, the
+       * portlet container uses UTF-8 as the default character encoding"
+       */
+      {
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING4);
+         if(portletResp.getCharacterEncoding().equals("UTF-8")){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because default character encoding is not UTF-8 but "+portletResp.getCharacterEncoding());
+         }
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_properties3                   */
-      /* Details: "The portlet can use the getPropertyNames method to obtain an     */
-      /* Enumeration of all available property names"                               */
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_characterEncoding3 */
+      /*
+       * Details: "The character encoding can be set via the setContentType
+       * method if the given content type string provides a value for the
+       * charset attribute" */
+      // TODO: fix test case
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES3);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING3);
+         portletResp.setContentType("text/html;charset=ANSI");
+         if(portletResp.getCharacterEncoding().equals("ANSI")){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because charset is not ANSI but "+portletResp.getCharacterEncoding());
+         }
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_properties4                   */
-      /* Details: "The portlet can access cookies provided by the current request   */
-      /* using the getCookies method"                                               */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES4);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
+      portletReq.getPortletSession().setAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_Header",
+            writer.toString(), APPLICATION_SCOPE);
 
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters1                   */
-      /* Details: "If a portlet receives a request from a client request targeted   */
-      /* to the portlet itself, the parameters must be the string parameters        */
-      /* encoded in the URL (added when creating the PortletURL) and the string     */
-      /* parameters sent by the client to the portlet as part of the client         */
-      /* request"                                                                   */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS1);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
+   }
 
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters2                   */
-      /* Details: "The parameters the header object returns must be                 */
-      /* \"x-www-form-urlencoded\" decoded"                                         */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
+   @Override
+   public void serveResource(ResourceRequest portletReq,
+         ResourceResponse portletResp) throws PortletException, IOException {
 
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters3                   */
-      /* Details: "The getParameterValues method returns an array of String objects */
-      /* containing all the parameter values associated with a parameter name"      */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS3);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
+      ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters4                   */
-      /* Details: "The value returned from the getParameter method must be the      */
-      /* first value in the array of String objects returned by getParameterValues" */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS4);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
+      long tid = Thread.currentThread().getId();
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters6                   */
-      /* Details: "The getParameterMap method must return an unmodifiable Map       */
-      /* object"                                                                    */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS6);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
+      PrintWriter writer = portletResp.getWriter();
 
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters7                   */
-      /* Details: "If the request does not have any parameters, the getParameterMap */
-      /* must return an empty Map object"                                           */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS7);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
+      /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie8 */
+      /*
+       * Details: "Cookies set during the Header phase should be available to
+       * the portlet during the Resource phase"
+       */
+      Cookie[] cookies = portletReq.getCookies();
 
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_publicRenderParameters14      */
-      /* Details: "Portlets can access a merged set of public and private           */
-      /* parameters via the getParameter methods"                                   */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS14);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
+      StringBuilder txt = new StringBuilder(128);
+      txt.append("<p>Debug info:");
+      txt.append("<br>");
+      txt.append("# Cookies: ").append(cookies.length).append("<br>");
+      TestResult tr1 = tcd
+            .getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE8);
+      for (Cookie c : cookies) {
+         txt.append("Name: ").append(c.getName());
+         txt.append(", Value: ").append(c.getValue()).append("<br>");
+         if (c.getName().equals("header_tr0_cookie")
+               && c.getValue().equals("true")) {
+            txt.append("<br>").append("Found my cookie!").append("<br>");
+            c.setMaxAge(0);
+            c.setValue("");
+            tr1.setTcSuccess(true);
+         }
       }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_publicRenderParameters15      */
-      /* Details: "A map of private parameters can be obtained through the          */
-      /* getPrivateParameterMap method"                                             */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS15);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_publicRenderParameters16      */
-      /* Details: "A map of public parameters can be obtained through the           */
-      /* getPublicParameterMap method"                                              */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS16);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_publicRenderParameters6       */
-      /* Details: "Public render parameters are available in the header method"     */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS6);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_publicRenderParameters13a     */
-      /* Details: "A public render parameter can be deleted using the               */
-      /* removePublicRenderParameter method on the PortletURL"                      */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS13A);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie8                       */
-      /* Details: "Cookies set during the Header phase should be available to the   */
-      /* portlet during the Resource phase"                                         */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE8);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie9                       */
-      /* Details: "Cookies set during the Header phase should be available to the   */
-      /* portlet during a subsequent Action phase"                                  */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE9);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie10                      */
-      /* Details: "Cookies set during the Header phase should be available to the   */
-      /* portlet during a subsequent Render phase"                                  */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE10);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie11                      */
-      /* Details: "Cookies set during the Header phase should be available to the   */
-      /* portlet during a subsequent request triggered by a URL"                    */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE11);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie12                      */
-      /* Details: "Cookies set during the Header phase after the response has been  */
-      /* committed are ignored"                                                     */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE12);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_contentType5                  */
-      /* Details: "If the setContentType method is not called before the getWriter  */
-      /* or getPortletOutputStream method is used, the portlet container uses the   */
-      /* content type returned by getResponseContentType"                           */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_CONTENTTYPE5);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_characterEncoding2            */
-      /* Details: "The character encoding can be set via the setLocale method and a */
-      /* locale-encoding-mapping-list mapping in the web.xml deployment descriptor" */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_characterEncoding3            */
-      /* Details: "The character encoding can be set via the setContentType method  */
-      /* if the given content type string provides a value for the charset          */
-      /* attribute"                                                                 */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING3);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_characterEncoding4            */
-      /* Details: "If the portlet does not set the character encoding, the portlet  */
-      /* container uses UTF-8 as the default character encoding"                    */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING4);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
+      tr1.writeTo(writer);
+      txt.append("</p>");
+      writer.append(txt.toString());
 
    }
 
