@@ -29,7 +29,7 @@ import javax.portlet.tck.util.ModuleTestCaseDetails;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 
-import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.PortletSession.PORTLET_SCOPE;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
 
@@ -65,11 +65,11 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       PrintWriter writer = portletResp.getWriter();
       String msg = ((String) portletReq.getPortletSession().getAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_PortletResponse_ApiHeader",
-            APPLICATION_SCOPE));
+            PORTLET_SCOPE));
       writer.write("<p>" + msg + "</p>");
       portletReq.getPortletSession().removeAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_PortletResponse_ApiHeader",
-            APPLICATION_SCOPE);
+            PORTLET_SCOPE);
 
    }
 
@@ -343,7 +343,7 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       
       portletReq.getPortletSession().setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_PortletResponse_ApiHeader",
-            writer.toString(), APPLICATION_SCOPE);
+            writer.toString(), PORTLET_SCOPE);
    }
 
 }

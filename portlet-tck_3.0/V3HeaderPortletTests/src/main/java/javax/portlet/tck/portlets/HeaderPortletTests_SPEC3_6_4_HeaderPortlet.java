@@ -33,13 +33,15 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.RuntimeOption;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
 
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS2;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case
@@ -50,8 +52,15 @@ import static javax.portlet.PortletSession.APPLICATION_SCOPE;
  *
  */
 
+/* TODO: Find a way to define javax.portlet.renderHeaders runtime option with annotation
+         Using portlet.xml to define this options is causing problems in working of other
+         portlets */
+@PortletConfiguration(portletName = "HeaderPortletTests_SPEC3_6_4_HeaderPortlet",
+   runtimeOptions = {@RuntimeOption(name = "javax.portlet.renderHeaders", values = { "true" })}
+)
 public class HeaderPortletTests_SPEC3_6_4_HeaderPortlet
       implements Portlet, HeaderPortlet {
+   
    private boolean       tr0_success   = false;
    private PortletConfig portletConfig = null;
 
@@ -91,11 +100,11 @@ public class HeaderPortletTests_SPEC3_6_4_HeaderPortlet
 
       String msg = (String) portletReq.getPortletSession().getAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC3_6_4_HeaderPortlet",
-            APPLICATION_SCOPE);
+            PORTLET_SCOPE);
       writer.write("<p>" + msg + "</p>\n");
       portletReq.getPortletSession().removeAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC3_6_4_HeaderPortlet",
-            APPLICATION_SCOPE);
+            PORTLET_SCOPE);
 
    }
 
@@ -135,7 +144,7 @@ public class HeaderPortletTests_SPEC3_6_4_HeaderPortlet
 
       portletReq.getPortletSession().setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC3_6_4_HeaderPortlet",
-            writer.toString(), APPLICATION_SCOPE);
+            writer.toString(), PORTLET_SCOPE);
    }
 
 }

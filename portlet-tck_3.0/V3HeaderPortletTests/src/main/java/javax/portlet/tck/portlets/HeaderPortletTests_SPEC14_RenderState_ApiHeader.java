@@ -49,7 +49,7 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_RENDERSTATE_APIHEADER_GETPORTLETMODE;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_RENDERSTATE_APIHEADER_GETWINDOWSTATE;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -79,14 +79,20 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet,
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
 
+      // TODO: Remove this when the bug is resolved
+      System.out.println("Control reaching to render method of HeaderPortletTests_SPEC14_RenderState_ApiHeader portlet!");
+     
       PrintWriter writer = portletResp.getWriter();
       String msg = (String) portletReq.getPortletSession().getAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",
-            APPLICATION_SCOPE);
+            PORTLET_SCOPE);
       writer.write("<p>" + msg + "</p>\n");
+      
+      // TODO: Remove this when the bug is resolved
+      System.out.println("Value of portlet session attribute is "+msg);
       portletReq.getPortletSession().removeAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",
-            APPLICATION_SCOPE);
+            PORTLET_SCOPE);
 
    }
 
@@ -94,6 +100,9 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet,
    public void renderHeaders(HeaderRequest portletReq, HeaderResponse portletResp)
          throws PortletException, IOException {
       StringWriter writer = new StringWriter();
+      
+      // TODO: Remove this when the bug is resolved
+      System.out.println("Control reaching to renderHeaders method of HeaderPortletTests_SPEC14_RenderState_ApiHeader portlet!");
       
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
@@ -145,8 +154,13 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet,
       
       portletReq.getPortletSession().setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",
-            writer.toString(), APPLICATION_SCOPE);
+            writer.toString(), PORTLET_SCOPE);
       
+      // TODO: Remove this when the bug is resolved
+      System.out.println(portletReq.getPortletSession().getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",
+            PORTLET_SCOPE));
+            
    }
 
 }

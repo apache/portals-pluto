@@ -41,7 +41,7 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPRIVATEPARAMETERMAP3;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPUBLICPARAMETERMAP3;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 
 /**
@@ -74,11 +74,11 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2 implements Port
       
       String msg = (String) portletReq.getPortletSession().getAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2",
-            APPLICATION_SCOPE);
+            PORTLET_SCOPE);
       writer.write("<p>" + msg + "</p>\n");
       portletReq.getPortletSession().removeAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2",
-            APPLICATION_SCOPE);
+            PORTLET_SCOPE);
 
    }
 
@@ -136,7 +136,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2 implements Port
       
       portletReq.getPortletSession().setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2",
-            writer.toString(), APPLICATION_SCOPE);
+            writer.toString(), PORTLET_SCOPE);
       
    }
 

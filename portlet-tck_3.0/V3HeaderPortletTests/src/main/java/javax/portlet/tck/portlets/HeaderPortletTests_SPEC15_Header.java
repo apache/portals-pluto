@@ -27,7 +27,7 @@ import javax.portlet.tck.beans.*;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
 import javax.servlet.http.Cookie;
 
-import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.PortletSession.PORTLET_SCOPE;
 import static javax.portlet.ResourceURL.PAGE;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
@@ -45,7 +45,7 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
       @PublicRenderParameterDefinition(identifier = "tckPRP3", qname = @PortletQName(localPart = "tckPRP3", namespaceURI = "")),
       @PublicRenderParameterDefinition(identifier = "tr1_ready", qname = @PortletQName(localPart = "tr1_ready", namespaceURI = "")) })
 @PortletConfiguration(portletName = "HeaderPortletTests_SPEC15_Header", publicParams = {
-      "tckPRP3", "tr1_ready" })
+      "tckPRP3", "tr1_ready" }, supports = { @Supports(mimeType = "text/html") })
 public class HeaderPortletTests_SPEC15_Header
       implements Portlet, HeaderPortlet, ResourceServingPortlet {
 
@@ -160,11 +160,11 @@ public class HeaderPortletTests_SPEC15_Header
 
       String msg = ((String) portletReq.getPortletSession().getAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_Header",
-            APPLICATION_SCOPE));
+            PORTLET_SCOPE));
       writer.write("<p>" + msg + "</p>");
       portletReq.getPortletSession().removeAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_Header",
-            APPLICATION_SCOPE);
+            PORTLET_SCOPE);
 
    }
 
@@ -674,7 +674,7 @@ public class HeaderPortletTests_SPEC15_Header
 
       portletReq.getPortletSession().setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_Header",
-            writer.toString(), APPLICATION_SCOPE);
+            writer.toString(), PORTLET_SCOPE);
 
    }
 

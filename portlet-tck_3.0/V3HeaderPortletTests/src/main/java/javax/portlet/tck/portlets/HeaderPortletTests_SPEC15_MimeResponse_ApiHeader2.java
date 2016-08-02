@@ -43,7 +43,7 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETWRITER2 ;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETBUFFERSIZE2 ;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -76,11 +76,11 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2 implements Portle
 
       String msg = (String) portletReq.getPortletSession().getAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2",
-            APPLICATION_SCOPE);
+            PORTLET_SCOPE);
       writer.write("<p>" + msg + "</p>\n");
       portletReq.getPortletSession().removeAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2",
-            APPLICATION_SCOPE);
+            PORTLET_SCOPE);
       
       
 
@@ -160,7 +160,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2 implements Portle
       
       portletReq.getPortletSession().setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2",
-            writer.toString(), APPLICATION_SCOPE);
+            writer.toString(), PORTLET_SCOPE);
    }
 
 }

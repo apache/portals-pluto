@@ -150,7 +150,7 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPUBLICPARAMETERMAP2;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_EXISTS;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -251,11 +251,11 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       
       String msg = (String) portletReq.getPortletSession().getAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1",
-            APPLICATION_SCOPE);
+            PORTLET_SCOPE);
       writer.write("<p>" + msg + "</p>\n");
       portletReq.getPortletSession().removeAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1",
-            APPLICATION_SCOPE);
+            PORTLET_SCOPE);
 
    }
 
@@ -558,6 +558,22 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
          result.writeTo(writer);
       }
       
+      /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getAuthType2 */
+      /* Details: "Method getAuthType(): Returns null if the request was not        */
+      /* authenticated"                                                             */
+      // TODO: Is there a way to send unauthenticated request?
+      //       I have already tried to invalidate the session 
+      //       after receiving request but it doesn't work 
+      {
+         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETAUTHTYPE2);
+         if(portletReq.getAuthType()==null){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because request is authenticated as getAuthType did not return null but "+portletReq.getAuthType());
+         }
+         result.writeTo(writer);
+      }
+      
       /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionB4 */
       /* Details: "Method getPortletSession(boolean): If input flag is false,       */
       /* returns null if one does not already exist"                                */
@@ -724,17 +740,6 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
             result.setTcSuccess(true);
             result.appendTcDetail("Auth type is - "+authType);
          }
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getAuthType2 */
-      /* Details: "Method getAuthType(): Returns null if the request was not        */
-      /* authenticated"                                                             */
-      // TODO: Is there a way to send unauthenticated request?
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETAUTHTYPE2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
          result.writeTo(writer);
       }
 
@@ -1490,7 +1495,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       
       portletReq.getPortletSession().setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1",
-            writer.toString(), APPLICATION_SCOPE);
+            writer.toString(), PORTLET_SCOPE);
       
    }
 

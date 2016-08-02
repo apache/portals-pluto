@@ -38,7 +38,7 @@ import javax.portlet.tck.util.ModuleTestCaseDetails;
 
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC7_14_RENDERREQUEST_GETETAG;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.APPLICATION_SCOPE;
+import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -69,11 +69,11 @@ public class HeaderPortletTests_SPEC7_14_RenderRequest implements Portlet, Heade
       PrintWriter writer = portletResp.getWriter();
       String msg = (String) portletReq.getPortletSession().getAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC7_14_RenderRequest",
-            APPLICATION_SCOPE);
+            PORTLET_SCOPE);
       writer.write("<p>" + msg + "</p>\n");
       portletReq.getPortletSession().removeAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC7_14_RenderRequest",
-            APPLICATION_SCOPE);
+            PORTLET_SCOPE);
    }
    
    @Override
@@ -96,7 +96,7 @@ public class HeaderPortletTests_SPEC7_14_RenderRequest implements Portlet, Heade
       
       portletReq.getPortletSession().setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC7_14_RenderRequest",
-            writer.toString(), APPLICATION_SCOPE);
+            writer.toString(), PORTLET_SCOPE);
    }
 
 }
