@@ -41,8 +41,8 @@
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_Header"/>
-<!-- Remove these 2 portlets below and all other portlets start to work fine?? -->
-<!-- portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_HeaderResponse1"/ -->
+<portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_HeaderResponse1"/>
+<!-- Adding HeaderPortletTests_SPEC15_HeaderResponse2 is causing problem in execution of other portlets, but why?? -->
 <!-- portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_HeaderResponse2"/ -->
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2"/>

@@ -19,22 +19,15 @@
 package javax.portlet.tck.portlets;
 
 import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
+
 import javax.portlet.*;
 import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
+
+import static javax.portlet.PortletSession.PORTLET_SCOPE;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -44,8 +37,9 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "HeaderPortletTests_SPEC15_HeaderResponse")
-public class HeaderPortletTests_SPEC15_HeaderResponse implements Portlet {
+@PortletConfiguration(portletName = "HeaderPortletTests_SPEC15_HeaderResponse1", supports = {
+      @Supports(mimeType = "text/html"), @Supports(mimeType = "*/*") })
+public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, HeaderPortlet {
    
    private PortletConfig portletConfig = null;
 
@@ -64,85 +58,135 @@ public class HeaderPortletTests_SPEC15_HeaderResponse implements Portlet {
 
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
-
+      
+      ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
+      
       PrintWriter writer = portletResp.getWriter();
+      
+      /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_setContentType        */
+      /* Details: "The portlet container will ignore any character encoding         */
+      /* specified as part of the content type for render calls."                   */
+      if(portletResp.getContentType().equals("*/*")){
+         portletResp.setContentType("text/html;charset=ANSI");
+         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETCONTENTTYPE);
+         String charEncoding = portletResp.getCharacterEncoding();
+         if(charEncoding.equals("UTF-8")){
+            result.setTcSuccess(true);
+            result.appendTcDetail("Character encoding is not changed in render method. "+charEncoding);
+         } else {
+            result.appendTcDetail("Failed because Character encoding is changed in render method. "+charEncoding);
+         }
+         result.writeTo(writer);
+      }
+      
+      String msg = (String) portletReq.getPortletSession().getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_HeaderResponse1",
+            PORTLET_SCOPE);
+      writer.write("<p>" + msg + "</p>\n");
+      portletReq.getPortletSession().removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_HeaderResponse1",
+            PORTLET_SCOPE);
+      
+      /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_getWriter             */
+      /* Details: "Data written to the HeaderResponse writer is added to the        */
+      /* aggregated portal document HEAD section."                                  */
+      writer.write("<script type='text/javascript'>");
+      writer.write("$( document ).ready(function() {");
+      writer.write("  var jQueryTag = $('#jquery-tag');");
+      writer.write("  if(jQueryTag.length){");
+      writer.write("    $('#V3HeaderPortletTests_SPEC15_HeaderResponse_getWriter-result').html('Test Succeeded');");
+      writer.write("  }");
+      writer.write("});");
+      writer.write("</script>");
+      
+      /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency7        */
+      /* Details: "Method addDependency(String name, String scope, String version,  */
+      /* String markup) - Adds a dependency on a page-level resource that is        */
+      /* managed by the portal and adds a resource for addition to the page for the */
+      /* dependency."                                                               */
+      writer.write("<script type='text/javascript'>");
+      writer.write("$( document ).ready(function() {");
+      writer.write("  var dependencyTag = $('#dependency-test');");
+      writer.write("  if(dependencyTag.length){");
+      writer.write("    $('#V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency7-result').html('Test Succeeded');");
+      writer.write("  }");
+      writer.write("});");
+      writer.write("</script>");
+      
+      /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency8        */
+      /* Details: "Method addDependency(String name, String scope, String version,  */
+      /* String markup) - The portal may choose to include the later version of the */
+      /* resource on the page if 2 same dependencies with different version are     */
+      /* declared."                                                                 */
+      writer.write("<script type='text/javascript'>");
+      writer.write("$( document ).ready(function() {");
+      writer.write("  var dependencyTag2_1 = $('#dependency-test2-1');");
+      writer.write("  var dependencyTag2_2 = $('#dependency-test2-2');");
+      writer.write("  if(dependencyTag2_1.length==0 && dependencyTag2_2.length>0){");
+      writer.write("    $('#V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency8-result').html('Test Succeeded');");
+      writer.write("  }");
+      writer.write("});");
+      writer.write("</script>");
+
+   }
+
+   @Override
+   public void renderHeaders(HeaderRequest portletReq, HeaderResponse portletResp)
+         throws PortletException, IOException {
+      
+      StringWriter writer = new StringWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
       /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_setTitle              */
       /* Details: "This method sets the title of the portlet."                      */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         // TODO: This method is setting title of all portlets. 
+         //       How to test this method, i.e., How to get changed title?
+         portletResp.setTitle("some title");
+         result.appendTcDetail("Portlet title is found to be ");
          result.writeTo(writer);
       }
 
       /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_setTitle2             */
-      /* Details: "Test for empty string."                                          */
+      /* Details: "An empty string can be set as title of portlet."                 */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         // TODO: This method is setting title of all portlets. 
+         //       How to test this method, i.e., How to get changed title?
+         //       Fix the description
+         portletResp.setTitle("");
          result.writeTo(writer);
       }
 
       /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_setTitle3             */
-      /* Details: "Test for null string."                                           */
+      /* Details: "Setting title as null restores the original title."              */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE3);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         // TODO: This method is setting title of all portlets. 
+         //       How to test this method, i.e., How to get changed title?
+         //       Fix the description
+         portletResp.setTitle(null);
          result.writeTo(writer);
       }
 
       /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_setContentType        */
       /* Details: "The portlet container will ignore any character encoding         */
       /* specified as part of the content type for render calls."                   */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETCONTENTTYPE);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
+      // TODO: Setting charset here not working anyway. Test case passes because 
+      //       default charset is utf-8
+      // To confirm see test case - V3HeaderPortletTests_SPEC15_Header_characterEncoding3
+      portletResp.setContentType("*/*;charset=utf-8");
+     
 
       /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_getWriter             */
       /* Details: "Data written to the HeaderResponse writer is added to the        */
       /* aggregated portal document HEAD section."                                  */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_GETWRITER);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_getPortletOutputStream */
-      /* Details: "Data written to the HeaderResponse writer is added to the        */
-      /* aggregated portal document HEAD section."                                  */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_GETPORTLETOUTPUTSTREAM);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency         */
-      /* Details: "Method addDependency(String name, String scope, String version)  */
-      /* - Adds a dependency on a page-level resource that is managed by the        */
-      /* portal."                                                                   */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency2        */
-      /* Details: "Method addDependency(String name, String scope, String version)  */
-      /* - The dependency added by this method can be shared with other portlets."  */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         PrintWriter pw = portletResp.getWriter();
+         pw.write("<script id='jquery-tag' src='https://code.jquery.com/jquery-3.1.0.min.js'></script>");
+         pw.close();
          result.writeTo(writer);
       }
 
@@ -151,6 +195,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse implements Portlet {
       /* - The dependency added dynamically through this method is added to the     */
       /* statically declared dependencies for the portlet for the current rendering */
       /* cycle only."                                                               */
+      // TODO: What is the meaning of this? How do I test this?
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY3);
          /* TODO: implement test */
@@ -162,9 +207,9 @@ public class HeaderPortletTests_SPEC15_HeaderResponse implements Portlet {
       /* Details: "Method addDependency(String name, String scope, String version)  */
       /* - Conflicting case when the dependency is added with this method and also  */
       /* with addProperty method?"                                                  */
+      // TODO: How do I add javascript by addProperty method? Reference - HeaderResponse.addDependency()
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY4);
-         /* TODO: implement test */
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);
       }
@@ -174,8 +219,13 @@ public class HeaderPortletTests_SPEC15_HeaderResponse implements Portlet {
       /* - Throws IllegalArgumentException - if name is null."                      */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY5);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         try{
+            portletResp.addDependency(null, "testDependency", "1.0");
+            result.appendTcDetail("Failed because no exception is raised.");
+         } catch (IllegalArgumentException e){
+           result.setTcSuccess(true);
+           result.appendTcDetail(e.toString());
+         }
          result.writeTo(writer);
       }
 
@@ -184,8 +234,13 @@ public class HeaderPortletTests_SPEC15_HeaderResponse implements Portlet {
       /* - Throws IllegalArgumentException - if name is empty."                     */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY6);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         try{
+            portletResp.addDependency("", "testDependency", "1.0");
+            result.appendTcDetail("Failed because no exception is raised.");
+         } catch (IllegalArgumentException e){
+           result.setTcSuccess(true);
+           result.appendTcDetail(e.toString());
+         }
          result.writeTo(writer);
       }
 
@@ -196,8 +251,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse implements Portlet {
       /* dependency."                                                               */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY7);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         portletResp.addDependency("testDependency", "testDependency", "1.0", "<script id='dependency-test'></script>");
          result.writeTo(writer);
       }
 
@@ -208,8 +262,8 @@ public class HeaderPortletTests_SPEC15_HeaderResponse implements Portlet {
       /* declared."                                                                 */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY8);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         portletResp.addDependency("testDependency2", "testDependency2", "1.0", "<script id='dependency-test2-1'></script>");
+         portletResp.addDependency("testDependency2", "testDependency2", "2.0", "<script id='dependency-test2-2'></script>");
          result.writeTo(writer);
       }
 
@@ -217,6 +271,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse implements Portlet {
       /* Details: "Method addDependency(String name, String scope, String version,  */
       /* String markup) - Conflicting case when the dependency is added with this   */
       /* method and also with addProperty method?"                                  */
+      // TODO: How to I add javascript by addProperty method? Reference - HeaderResponse.addDependendy()
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY9);
          /* TODO: implement test */
@@ -229,8 +284,13 @@ public class HeaderPortletTests_SPEC15_HeaderResponse implements Portlet {
       /* String markup) - Throws IllegalArgumentException - if name is null."       */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY10);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         try{
+            portletResp.addDependency(null, "testDependency", "1.0", "<script id='dependency-test'></script>");
+            result.appendTcDetail("Failed because no exception is raised.");
+         } catch (IllegalArgumentException e){
+           result.setTcSuccess(true);
+           result.appendTcDetail(e.toString());
+         }
          result.writeTo(writer);
       }
 
@@ -239,8 +299,13 @@ public class HeaderPortletTests_SPEC15_HeaderResponse implements Portlet {
       /* String markup) - Throws IllegalArgumentException - if name is empty."      */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY11);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         try{
+            portletResp.addDependency("", "testDependency", "1.0", "<script id='dependency-test'></script>");
+            result.appendTcDetail("Failed because no exception is raised.");
+         } catch (IllegalArgumentException e){
+           result.setTcSuccess(true);
+           result.appendTcDetail(e.toString());
+         }
          result.writeTo(writer);
       }
 
@@ -250,11 +315,19 @@ public class HeaderPortletTests_SPEC15_HeaderResponse implements Portlet {
       /* contain valid tags for the document HEAD section."                         */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY12);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         try{
+            portletResp.addDependency("testDependency", "testDependency", "1.0", "<invalid id='dependency-test'></invalid>");
+            result.appendTcDetail("Failed because no exception is raised.");
+         } catch (IllegalArgumentException e){
+           result.setTcSuccess(true);
+           result.appendTcDetail(e.toString());
+         }
          result.writeTo(writer);
       }
-
+      
+      portletReq.getPortletSession().setAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_HeaderResponse1",
+            writer.toString(), PORTLET_SCOPE);
    }
 
 }
