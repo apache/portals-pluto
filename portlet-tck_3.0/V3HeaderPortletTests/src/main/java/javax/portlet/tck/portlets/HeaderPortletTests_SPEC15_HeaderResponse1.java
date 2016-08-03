@@ -66,18 +66,16 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_setContentType        */
       /* Details: "The portlet container will ignore any character encoding         */
       /* specified as part of the content type for render calls."                   */
-      if(portletResp.getContentType().equals("*/*")){
-         portletResp.setContentType("text/html;charset=ANSI");
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETCONTENTTYPE);
-         String charEncoding = portletResp.getCharacterEncoding();
-         if(charEncoding.equals("UTF-8")){
-            result.setTcSuccess(true);
-            result.appendTcDetail("Character encoding is not changed in render method. "+charEncoding);
-         } else {
-            result.appendTcDetail("Failed because Character encoding is changed in render method. "+charEncoding);
-         }
-         result.writeTo(writer);
+      TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETCONTENTTYPE);
+      portletResp.setContentType("text/html;charset=ANSI");
+      String charEncoding = portletResp.getCharacterEncoding();
+      if(charEncoding.equals("UTF-8")){
+         result.setTcSuccess(true);
+         result.appendTcDetail("Character encoding is not changed in render method. "+charEncoding);
+      } else {
+         result.appendTcDetail("Failed because Character encoding is changed in render method. "+charEncoding);
       }
+      result.writeTo(writer);
       
       String msg = (String) portletReq.getPortletSession().getAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_HeaderResponse1",
@@ -176,7 +174,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       // TODO: Setting charset here not working anyway. Test case passes because 
       //       default charset is utf-8
       // To confirm see test case - V3HeaderPortletTests_SPEC15_Header_characterEncoding3
-      portletResp.setContentType("*/*;charset=utf-8");
+      portletResp.setContentType("text/html;charset=utf-8");
      
 
       /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_getWriter             */
@@ -199,17 +197,6 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY3);
          /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency4        */
-      /* Details: "Method addDependency(String name, String scope, String version)  */
-      /* - Conflicting case when the dependency is added with this method and also  */
-      /* with addProperty method?"                                                  */
-      // TODO: How do I add javascript by addProperty method? Reference - HeaderResponse.addDependency()
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY4);
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);
       }
@@ -264,18 +251,6 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY8);
          portletResp.addDependency("testDependency2", "testDependency2", "1.0", "<script id='dependency-test2-1'></script>");
          portletResp.addDependency("testDependency2", "testDependency2", "2.0", "<script id='dependency-test2-2'></script>");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency9        */
-      /* Details: "Method addDependency(String name, String scope, String version,  */
-      /* String markup) - Conflicting case when the dependency is added with this   */
-      /* method and also with addProperty method?"                                  */
-      // TODO: How to I add javascript by addProperty method? Reference - HeaderResponse.addDependendy()
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY9);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
          result.writeTo(writer);
       }
 
