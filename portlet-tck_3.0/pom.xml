@@ -94,6 +94,7 @@
       <test.server.port>8080</test.server.port>
 
       <!-- HTML field IDs and values for username & password to enable automatic  login -->
+	  <!-- User specified must be in 'tckuser' role. Please configure 'tckuser' role for the specified user in tomcat-users.xml -->
       <test.server.username.id>j_username</test.server.username.id>
       <test.server.username>pluto</test.server.username>
       <test.server.password.id>j_password</test.server.password.id>

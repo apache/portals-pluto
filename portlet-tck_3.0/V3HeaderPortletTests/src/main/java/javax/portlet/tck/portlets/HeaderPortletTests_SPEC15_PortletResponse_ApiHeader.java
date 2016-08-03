@@ -70,6 +70,31 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       portletReq.getPortletSession().removeAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_PortletResponse_ApiHeader",
             PORTLET_SCOPE);
+      
+      /* TestCase: V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB1 */
+      /* Details: "Method addProperty(String, org.w3c.dom.Element): Adds an XML DOM */
+      /* Element to the response for the specified key"                             */
+      writer.write("<script type='text/javascript'>");
+      writer.write("$( document ).ready(function() {");
+      writer.write("  var scriptTag = $('#testProperty1');");
+      writer.write("  if(scriptTag.length){");
+      writer.write("    $('#V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB1-result').html('Test Succeeded');");
+      writer.write("  }");
+      writer.write("});");
+      writer.write("</script>");
+      
+      /* TestCase: V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB2 */
+      /* Details: "Method addProperty(String, org.w3c.dom.Element): If a DOM        */
+      /* Element for the specified key already exists, the new element is added in  */
+      /* addition to the existing element"                                          */
+      writer.write("<script type='text/javascript'>");
+      writer.write("$( document ).ready(function() {");
+      writer.write("  var scriptTag = $('#testProperty2');");
+      writer.write("  if(scriptTag.length){");
+      writer.write("    $('#V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB2-result').html('Test Succeeded');");
+      writer.write("  }");
+      writer.write("});");
+      writer.write("</script>");
 
    }
 
@@ -99,16 +124,18 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* TestCase: V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB1 */
       /* Details: "Method addProperty(String, org.w3c.dom.Element): Adds an XML DOM */
       /* Element to the response for the specified key"                             */
+      // TODO: Still have to ask Scott. There is no guarantee that markup will be added to the head section
+      //       Read Java Doc of MimeResponse.MARKUP_HEAD_ELEMENT
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_ADDPROPERTYB1);
-         /* TODO: implement test */
-         /*
-         Element hello = portletResp.createElement("script");
-         hello.setAttribute("id", "checking");
-         portletResp.addProperty("justchecking", hello);
-         String letsee = portletResp.getProperty("justchecking");
-         result.appendTcDetail("Not implemented.");
-         */
+         if(portletReq.getPortalContext().getProperty(PortalContext.MARKUP_HEAD_ELEMENT_SUPPORT)==null){
+            result.setTcSuccess(true);
+            result.appendTcDetail("addProperty(String, org.w3c.dom.Element) is not supported by portlal");
+         } else {
+            Element element = portletResp.createElement("script");
+            element.setAttribute("id", "testProperty1");
+            portletResp.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, element);
+         } 
          result.writeTo(writer);
       }
 
@@ -116,20 +143,18 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* Details: "Method addProperty(String, org.w3c.dom.Element): If a DOM        */
       /* Element for the specified key already exists, the new element is added in  */
       /* addition to the existing element"                                          */
+      // TODO: Still have to ask Scott. There is no guarantee that markup will be added to the head section
+      //       Read Java Doc of MimeResponse.MARKUP_HEAD_ELEMENT
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_ADDPROPERTYB2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB3 */
-      /* Details: "Method addProperty(String, org.w3c.dom.Element): If the          */
-      /* specified DOM Element value is null, the key is removed from the response" */
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_ADDPROPERTYB3);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(portletReq.getPortalContext().getProperty(PortalContext.MARKUP_HEAD_ELEMENT_SUPPORT)==null){
+            result.setTcSuccess(true);
+            result.appendTcDetail("addProperty(String, org.w3c.dom.Element) is not supported by portlal");
+         } else {
+            Element element = portletResp.createElement("script");
+            element.setAttribute("id", "testProperty2");
+            portletResp.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, element);
+         } 
          result.writeTo(writer);
       }
 

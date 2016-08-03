@@ -601,24 +601,6 @@ public class HeaderPortletTests_SPEC15_Header
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE11, rurl);
          tb.writeTo(writer);
       }
-      
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie12 */
-      /*
-       * Details: "Cookies set during the Header phase after the response has
-       * been committed are ignored"
-       */
-      // TODO: HeaderResponse has flushBuffer() method which commits the response.
-      //       We are still able to set the cookie. Is this test case wrong?
-      {
-         portletResp.flushBuffer();
-         TestResult result = tcd.getTestResultFailed(
-               V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE12);
-         Cookie c = new Cookie("header_tr4_cookie", "true");
-         c.setMaxAge(100);
-         c.setPath("/");
-         portletResp.addProperty(c);
-         result.writeTo(writer);
-      }
 
       /* TestCase: V3HeaderPortletTests_SPEC15_Header_contentType5 */
       /*

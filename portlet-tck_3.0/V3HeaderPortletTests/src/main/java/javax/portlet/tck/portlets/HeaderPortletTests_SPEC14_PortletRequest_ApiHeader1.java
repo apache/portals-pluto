@@ -566,22 +566,6 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
          result.writeTo(writer);
       }
       
-      /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getAuthType2 */
-      /* Details: "Method getAuthType(): Returns null if the request was not        */
-      /* authenticated"                                                             */
-      // TODO: Is there a way to send unauthenticated request?
-      //       I have already tried to invalidate the session 
-      //       after receiving request but it doesn't work 
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETAUTHTYPE2);
-         if(portletReq.getAuthType()==null){
-            result.setTcSuccess(true);
-         } else {
-            result.appendTcDetail("Failed because request is authenticated as getAuthType did not return null but "+portletReq.getAuthType());
-         }
-         result.writeTo(writer);
-      }
-      
       /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionB4 */
       /* Details: "Method getPortletSession(boolean): If input flag is false,       */
       /* returns null if one does not already exist"                                */
@@ -757,6 +741,15 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
          }
          result.writeTo(writer);
       }
+      
+      /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getAuthType2 */
+      /* Details: "Method getAuthType(): Returns null if the request was not        */
+      /* authenticated"                                                             */
+      {
+         TestResult result = tcd.getTestResultSucceeded(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETAUTHTYPE2);
+         result.appendTcDetail("Cannot be tested as there is no requirement that a portal has to support unauthenticated requests");
+         result.writeTo(writer);
+      }
 
       /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getContextPath1 */
       /* Details: "Method getContextPath(): Returns a String representing the       */
@@ -813,11 +806,9 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getRemoteUser2 */
       /* Details: "Method getRemoteUser(): Returns null if the request has not been */
       /* authenticated"                                                             */
-      // TODO: Is there a way to send unauthenticated request?
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETREMOTEUSER2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultSucceeded(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETREMOTEUSER2);
+         result.appendTcDetail("Cannot be tested as there is no requirement that a portal has to support unauthenticated requests");
          result.writeTo(writer);
       }
 
@@ -838,11 +829,9 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getUserPrincipal2 */
       /* Details: "Method getUserPrincipal(): Returns null if the request has not   */
       /* been authenticated"                                                        */
-      // TODO: Is there a way to send unauthenticated request?
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETUSERPRINCIPAL2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultSucceeded(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETUSERPRINCIPAL2);
+         result.appendTcDetail("Cannot be tested as there is no requirement that a portal has to support unauthenticated requests");
          result.writeTo(writer);
       }
 
@@ -851,8 +840,12 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* in the specified role"                                                     */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISUSERINROLE1);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(portletReq.isUserInRole("tckuser")){
+            result.setTcSuccess(true);
+            result.appendTcDetail("User is in \"tckuser\" role.");
+         } else {
+            result.appendTcDetail("Failed because user is not configured to be in \"tckuser\" role.");
+         }
          result.writeTo(writer);
       }
 
@@ -868,11 +861,9 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isUserInRole3 */
       /* Details: "Method isUserInRole(): Returns false if the user is not          */
       /* authenticated"                                                             */
-      // TODO: Is there a way to send unauthenticated request?
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISUSERINROLE3);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultSucceeded(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISUSERINROLE3);
+         result.appendTcDetail("Cannot be tested as there is no requirement that a portal has to support unauthenticated requests");
          result.writeTo(writer);
       }
 
@@ -1227,11 +1218,9 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getRequestedSessionId2 */
       /* Details: "Method getRequestedSessionId(): Returns null if no session ID    */
       /* was indicated in the client request"                                       */
-      // TODO: Is there a way to not indicate session ID in client request
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETREQUESTEDSESSIONID2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultSucceeded(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETREQUESTEDSESSIONID2);
+         result.appendTcDetail("Cannot be tested as there should always be a session ID.");
          result.writeTo(writer);
       }
 

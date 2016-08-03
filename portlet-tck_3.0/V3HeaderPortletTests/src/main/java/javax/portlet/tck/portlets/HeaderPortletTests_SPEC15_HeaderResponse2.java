@@ -39,7 +39,9 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
  */
 
 @PortletConfiguration(portletName = "HeaderPortletTests_SPEC15_HeaderResponse2", supports = {
-      @Supports(mimeType = "text/html") })
+      @Supports(mimeType = "text/html") },
+      dependencies = @Dependency(name = "PortletHub", scope = "javax.portlet", version="3.0.0")
+)
 public class HeaderPortletTests_SPEC15_HeaderResponse2 implements Portlet, HeaderPortlet {
    
    private PortletConfig portletConfig = null;
@@ -82,6 +84,17 @@ public class HeaderPortletTests_SPEC15_HeaderResponse2 implements Portlet, Heade
       writer.write("});");
       writer.write("</script>");
 
+      /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency         */
+      /* Details: "Method addDependency(String name, String scope, String version)  */
+      /* - Adds a dependency on a page-level resource that is managed by the        */
+      /* portal."                                                                   */
+      writer.write("<script type='text/javascript'>");
+      writer.write("$( document ).ready(function() {");
+      writer.write("  if (typeof window.portlet != 'undefined') { ");
+      writer.write("    $('#V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency-result').html('Test Succeeded');");
+      writer.write("  }");
+      writer.write("});");
+      writer.write("</script>");
    }
 
    @Override
@@ -107,23 +120,26 @@ public class HeaderPortletTests_SPEC15_HeaderResponse2 implements Portlet, Heade
       /* Details: "Method addDependency(String name, String scope, String version)  */
       /* - Adds a dependency on a page-level resource that is managed by the        */
       /* portal."                                                                   */
-      /* TODO: Can this really be tested? Try moving in new portlet which renders after this one. */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         portletResp.addDependency("PortletHub", "javax.portlet", "3.0.0");
          result.writeTo(writer);
       }
 
       /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency2        */
       /* Details: "Method addDependency(String name, String scope, String version)  */
       /* - The dependency added by this method can be shared with other portlets."  */
-      // TODO: Can this really be tested?
-      //       Try moving in new portlet which renders after this one. Maybe its the same test as above one*/
+      portletResp.addDependency("PortletHub", "javax.portlet", "3.0.0");
+      
+      /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency3        */
+      /* Details: "Method addDependency(String name, String scope, String version)  */
+      /* - The dependency added dynamically through this method is added to the     */
+      /* statically declared dependencies for the portlet for the current rendering */
+      /* cycle only."                                                               */
       {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         TestResult result = tcd.getTestResultSucceeded(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY3);
+         result.appendTcDetail("Cannot be tested as the only dependency supported by portal"
+               + " is PortletHub which is already added by other tests.");
          result.writeTo(writer);
       }
       
