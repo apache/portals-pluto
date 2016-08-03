@@ -456,8 +456,8 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING3, "The character encoding can be set via the setContentType method if the given content type string provides a value for the charset attribute");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING4, "If the portlet does not set the character encoding, the portlet container uses UTF-8 as the default character encoding");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE, "This method sets the title of the portlet.");
-      tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE2, "Test for empty string.");
-      tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE3, "Test for null string.");
+      tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE2, "An empty string can be set as title of portlet.");
+      tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE3, "Setting title as null restores the original title.");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETCONTENTTYPE, "The portlet container will ignore any character encoding specified as part of the content type for render calls.");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_GETWRITER, "Data written to the HeaderResponse writer is added to the aggregated portal document HEAD section.");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_GETPORTLETOUTPUTSTREAM, "Data written to the HeaderResponse writer is added to the aggregated portal document HEAD section.");
