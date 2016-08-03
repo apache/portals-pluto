@@ -18,17 +18,33 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.charset.Charset;
 
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.tck.beans.*;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.HeaderPortlet;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.annotations.Dependency;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.Supports;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
 
-import static javax.portlet.PortletSession.PORTLET_SCOPE;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_GETPORTLETOUTPUTSTREAM;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY3;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
+import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -43,12 +59,9 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
       dependencies = @Dependency(name = "PortletHub", scope = "javax.portlet", version="3.0.0")
 )
 public class HeaderPortletTests_SPEC15_HeaderResponse2 implements Portlet, HeaderPortlet {
-   
-   private PortletConfig portletConfig = null;
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
    }
 
    @Override

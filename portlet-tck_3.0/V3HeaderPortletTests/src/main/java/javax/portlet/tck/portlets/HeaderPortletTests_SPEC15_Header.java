@@ -18,20 +18,62 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Map;
 
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.tck.beans.*;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.ActionURL;
+import javax.portlet.HeaderPortlet;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderParameters;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.ResourceURL;
+import javax.portlet.annotations.PortletApplication;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.PortletQName;
+import javax.portlet.annotations.PublicRenderParameterDefinition;
+import javax.portlet.annotations.Supports;
+import javax.portlet.tck.beans.TestButton;
+import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.beans.TestSetupLink;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
 import javax.servlet.http.Cookie;
 
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS10;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS15;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE9;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE10;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS13;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS2;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS6;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS15;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS16;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS13A;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES1;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES2;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES3;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES4;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE11;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING4;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_CONTENTTYPE5;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING3;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE8;
+import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
 import static javax.portlet.PortletSession.PORTLET_SCOPE;
 import static javax.portlet.ResourceURL.PAGE;
-import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case
@@ -45,15 +87,13 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
       @PublicRenderParameterDefinition(identifier = "tckPRP3", qname = @PortletQName(localPart = "tckPRP3", namespaceURI = "")),
       @PublicRenderParameterDefinition(identifier = "tr1_ready", qname = @PortletQName(localPart = "tr1_ready", namespaceURI = "")) })
 @PortletConfiguration(portletName = "HeaderPortletTests_SPEC15_Header", publicParams = {
-      "tckPRP3", "tr1_ready" }, supports = { @Supports(mimeType = "text/html") })
+      "tckPRP3",
+      "tr1_ready" }, supports = { @Supports(mimeType = "text/html") })
 public class HeaderPortletTests_SPEC15_Header
       implements Portlet, HeaderPortlet, ResourceServingPortlet {
 
-   private PortletConfig portletConfig = null;
-
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
    }
 
    @Override
@@ -104,7 +144,7 @@ public class HeaderPortletTests_SPEC15_Header
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
-      
+
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
       PrintWriter writer = portletResp.getWriter();
@@ -132,7 +172,7 @@ public class HeaderPortletTests_SPEC15_Header
       writer.write("   xhr.send();\n");
       writer.write("})();\n");
       writer.write("</script>\n");
-      
+
       /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie10 */
       /*
        * Details: "Cookies set during the Header phase should be available to
@@ -143,16 +183,18 @@ public class HeaderPortletTests_SPEC15_Header
       txt.append("<p>Debug info:");
       txt.append("<br>");
       txt.append("# Cookies: ").append(cookies.length).append("<br>");
-      TestResult tr2 = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE10);
+      TestResult tr2 = tcd
+            .getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE10);
       for (Cookie c : cookies) {
-        txt.append("Name: ").append(c.getName());
-        txt.append(", Value: ").append(c.getValue()).append("<br>");
-        if (c.getName().equals("header_tr2_cookie") && c.getValue().equals("true")) {
-          txt.append("<br>").append("Found my cookie!").append("<br>");
-          c.setMaxAge(0);
-          c.setValue("");
-          tr2.setTcSuccess(true);
-        }
+         txt.append("Name: ").append(c.getName());
+         txt.append(", Value: ").append(c.getValue()).append("<br>");
+         if (c.getName().equals("header_tr2_cookie")
+               && c.getValue().equals("true")) {
+            txt.append("<br>").append("Found my cookie!").append("<br>");
+            c.setMaxAge(0);
+            c.setValue("");
+            tr2.setTcSuccess(true);
+         }
       }
       tr2.writeTo(writer);
       txt.append("</p>");
@@ -534,9 +576,10 @@ public class HeaderPortletTests_SPEC15_Header
        * Details: "Cookies set during the Header phase should be available to
        * the portlet during a subsequent Action phase"
        */
-      if(portletReq.getParameter("trCookie1")!=null && portletReq.getParameter("trCookie1").equals("true")){
-         TestResult tr1 = tcd.getTestResultFailed(
-               V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE9);
+      if (portletReq.getParameter("trCookie1") != null
+            && portletReq.getParameter("trCookie1").equals("true")) {
+         TestResult tr1 = tcd
+               .getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE9);
          tr1.setTcSuccess(true);
          tr1.writeTo(writer);
       } else {
@@ -561,7 +604,8 @@ public class HeaderPortletTests_SPEC15_Header
          c.setPath("/");
          portletResp.addProperty(c);
          PortletURL rurl = portletResp.createRenderURL();
-         TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE10, rurl);
+         TestButton tb = new TestButton(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE10, rurl);
          tb.writeTo(writer);
       }
 
@@ -570,23 +614,26 @@ public class HeaderPortletTests_SPEC15_Header
        * Details: "Cookies set during the Header phase should be available to
        * the portlet during a subsequent request triggered by a URL"
        */
-      if(portletReq.getParameter("tr3")!=null && portletReq.getParameter("tr3").equals("true")){
+      if (portletReq.getParameter("tr3") != null
+            && portletReq.getParameter("tr3").equals("true")) {
          Cookie[] cookies = portletReq.getCookies();
 
          StringBuilder txt = new StringBuilder(128);
          txt.append("<p>Debug info:");
          txt.append("<br>");
          txt.append("# Cookies: ").append(cookies.length).append("<br>");
-         TestResult tr2 = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE11);
+         TestResult tr2 = tcd.getTestResultFailed(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE11);
          for (Cookie c : cookies) {
-           txt.append("Name: ").append(c.getName());
-           txt.append(", Value: ").append(c.getValue()).append("<br>");
-           if (c.getName().equals("header_tr3_cookie") && c.getValue().equals("true")) {
-             txt.append("<br>").append("Found my cookie!").append("<br>");
-             c.setMaxAge(0);
-             c.setValue("");
-             tr2.setTcSuccess(true);
-           }
+            txt.append("Name: ").append(c.getName());
+            txt.append(", Value: ").append(c.getValue()).append("<br>");
+            if (c.getName().equals("header_tr3_cookie")
+                  && c.getValue().equals("true")) {
+               txt.append("<br>").append("Found my cookie!").append("<br>");
+               c.setMaxAge(0);
+               c.setValue("");
+               tr2.setTcSuccess(true);
+            }
          }
          tr2.writeTo(writer);
          txt.append("</p>");
@@ -598,7 +645,8 @@ public class HeaderPortletTests_SPEC15_Header
          portletResp.addProperty(c);
          PortletURL rurl = portletResp.createRenderURL();
          rurl.setParameter("tr3", "true");
-         TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE11, rurl);
+         TestButton tb = new TestButton(
+               V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE11, rurl);
          tb.writeTo(writer);
       }
 
@@ -611,15 +659,17 @@ public class HeaderPortletTests_SPEC15_Header
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_CONTENTTYPE5);
-         if(portletReq.getResponseContentType()!=null){
+         if (portletReq.getResponseContentType() != null) {
             result.setTcSuccess(true);
-            result.appendTcDetail("Content type is - "+portletReq.getResponseContentType());
+            result.appendTcDetail(
+                  "Content type is - " + portletReq.getResponseContentType());
          } else {
-            result.appendTcDetail("Failed because getResponseContentType() method returned null");
+            result.appendTcDetail(
+                  "Failed because getResponseContentType() method returned null");
          }
          result.writeTo(writer);
       }
-      
+
       /* TestCase: V3HeaderPortletTests_SPEC15_Header_characterEncoding4 */
       /*
        * Details: "If the portlet does not set the character encoding, the
@@ -628,10 +678,12 @@ public class HeaderPortletTests_SPEC15_Header
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING4);
-         if(portletResp.getCharacterEncoding().equals("UTF-8")){
+         if (portletResp.getCharacterEncoding().equals("UTF-8")) {
             result.setTcSuccess(true);
          } else {
-            result.appendTcDetail("Failed because default character encoding is not UTF-8 but "+portletResp.getCharacterEncoding());
+            result.appendTcDetail(
+                  "Failed because default character encoding is not UTF-8 but "
+                        + portletResp.getCharacterEncoding());
          }
          result.writeTo(writer);
       }
@@ -640,16 +692,18 @@ public class HeaderPortletTests_SPEC15_Header
       /*
        * Details: "The character encoding can be set via the setContentType
        * method if the given content type string provides a value for the
-       * charset attribute" */
+       * charset attribute"
+       */
       // TODO: fix test case
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING3);
          portletResp.setContentType("text/html;charset=ANSI");
-         if(portletResp.getCharacterEncoding().equals("ANSI")){
+         if (portletResp.getCharacterEncoding().equals("ANSI")) {
             result.setTcSuccess(true);
          } else {
-            result.appendTcDetail("Failed because charset is not ANSI but "+portletResp.getCharacterEncoding());
+            result.appendTcDetail("Failed because charset is not ANSI but "
+                  + portletResp.getCharacterEncoding());
          }
          result.writeTo(writer);
       }
