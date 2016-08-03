@@ -52,9 +52,6 @@ import static javax.portlet.PortletSession.PORTLET_SCOPE;
  *
  */
 
-/* TODO: Find a way to define javax.portlet.renderHeaders runtime option with annotation
-         Using portlet.xml to define this options is causing problems in working of other
-         portlets */
 @PortletConfiguration(portletName = "HeaderPortletTests_SPEC3_6_4_HeaderPortlet",
    runtimeOptions = {@RuntimeOption(name = "javax.portlet.renderHeaders", values = { "true" })}
 )

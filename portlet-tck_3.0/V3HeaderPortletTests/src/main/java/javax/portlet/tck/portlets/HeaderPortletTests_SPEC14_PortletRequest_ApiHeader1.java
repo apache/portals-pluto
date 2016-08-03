@@ -151,6 +151,7 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_EXISTS;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
 import static javax.portlet.PortletSession.PORTLET_SCOPE;
+import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -264,6 +265,8 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
          throws PortletException, IOException {
       
       StringWriter writer = new StringWriter();
+      
+      Map<String, Object> sessionAttributes;
       
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
       
@@ -549,6 +552,11 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISREQUESTEDSESSIONIDVALID2);
          PortletSession ps = portletReq.getPortletSession();
+         
+         // Take backup of attributes set in APPLICATION_SCOPE by other portlets. 
+         // We will restore them as soon as we initialize a new session
+         // in test case V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionB2.
+         sessionAttributes = ps.getAttributeMap(APPLICATION_SCOPE);
          ps.invalidate();
          if(!portletReq.isRequestedSessionIdValid()){
             result.setTcSuccess(true);
@@ -595,6 +603,13 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPORTLETSESSIONB2);
          PortletSession ps = portletReq.getPortletSession(true);
+         
+         // Since session is restored now, we now restore all APPLICATION_SCOPED attributes 
+         // set by other portlets in header phase.
+         for (Map.Entry<String, Object> attribute : sessionAttributes.entrySet())
+         {
+             ps.setAttribute(attribute.getKey(), attribute.getValue(), APPLICATION_SCOPE);
+         }
          if(ps.isNew()){
             result.setTcSuccess(true);
          } else {

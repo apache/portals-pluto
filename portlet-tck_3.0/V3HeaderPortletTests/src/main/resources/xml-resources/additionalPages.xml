@@ -32,23 +32,16 @@
 </supports>
 <render-config default="About Apache Pluto">
 <page xmlns="" name="V3HeaderPortletTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-
-<!-- HeaderPortletTests_SPEC3_6_4_HeaderPortlet is in conflict with HeaderPortletTests_SPEC15_HeaderResponse2 -->
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC3_6_4_HeaderPortlet"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC7_14_RenderRequest"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC14_HeaderAttr"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC14_HeaderReq"/>
-
-<!-- Check out log for this portlet when HeaderPortletTests_SPEC15_HeaderResponse2 
-     and HeaderPortletTests_SPEC3_6_4_HeaderPortlet both are present -->
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC14_RenderState_ApiHeader"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_Header"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_HeaderResponse1"/>
-
-<!-- HeaderPortletTests_SPEC15_HeaderResponse2 portlet is in conflict with HeaderPortletTests_SPEC3_6_4_HeaderPortlet -->
-<!--  portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_HeaderResponse2"/ -->
+<portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_HeaderResponse2"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2"/>
 <portlet context="/tck-V3HeaderPortletTests-3.0-SNAPSHOT" name="HeaderPortletTests_SPEC15_PortletResponse_ApiHeader"/>

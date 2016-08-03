@@ -78,18 +78,12 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet,
 
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
-
-      // TODO: Remove this when the bug is resolved
-      System.out.println("Control reaching to render method of HeaderPortletTests_SPEC14_RenderState_ApiHeader portlet!");
      
       PrintWriter writer = portletResp.getWriter();
       String msg = (String) portletReq.getPortletSession().getAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",
             PORTLET_SCOPE);
       writer.write("<p>" + msg + "</p>\n");
-      
-      // TODO: Remove this when the bug is resolved
-      System.out.println("Value of portlet session attribute is "+msg);
       portletReq.getPortletSession().removeAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",
             PORTLET_SCOPE);
@@ -100,9 +94,6 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet,
    public void renderHeaders(HeaderRequest portletReq, HeaderResponse portletResp)
          throws PortletException, IOException {
       StringWriter writer = new StringWriter();
-      
-      // TODO: Remove this when the bug is resolved
-      System.out.println("Control reaching to renderHeaders method of HeaderPortletTests_SPEC14_RenderState_ApiHeader portlet!");
       
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
@@ -155,11 +146,6 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet,
       portletReq.getPortletSession().setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",
             writer.toString(), PORTLET_SCOPE);
-      
-      // TODO: Remove this when the bug is resolved
-      System.out.println(portletReq.getPortletSession().getAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",
-            PORTLET_SCOPE));
             
    }
 
