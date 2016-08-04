@@ -1,0 +1,35 @@
+PARMS outputPath=C:\Users\IBM_ADMIN\Downloads\TCKTool
+Class / Section;Keywords;Name;Testable;Description
+AnnotationPortletArtifactValidityTests;;;;
+SPEC3_20;RequestArtifacts;portletRequest;TRUE;PortletRequest artifact is valid during all phases.
+SPEC3_20;RequestArtifacts;actionRequest;TRUE;ActionRequest artifact is only valid during action phase.
+SPEC3_20;RequestArtifacts;headerRequest;TRUE;HeaderRequest artifact is only valid during header phase.
+SPEC3_20;RequestArtifacts;renderRequest;TRUE;RenderRequest artifact is only valid during render phase.
+SPEC3_20;RequestArtifacts;eventRequest;TRUE;EventRequest artifact is only valid during event phase.
+SPEC3_20;RequestArtifacts;resourceRequest;TRUE;ResourceRequest artifact is only valid during resource phase.
+SPEC3_20;RequestArtifacts;clientDataRequest;TRUE;ClientDataRequest artifact is only valid during action and resource phase.
+SPEC3_20;ResponseArtifacts;portletResponse;TRUE;PortletResponse artifact is valid during all phases.
+SPEC3_20;ResponseArtifacts;actionResponse;TRUE;ActionResponse artifact is only valid during action phase.
+SPEC3_20;ResponseArtifacts;headerResponse;TRUE;HeaderResponse artifact is only valid during header phase.
+SPEC3_20;ResponseArtifacts;renderResponse;TRUE;RenderResponse artifact is only valid during render phase.
+SPEC3_20;ResponseArtifacts;eventResponse;TRUE;EventResponse artifact is only valid during event phase.
+SPEC3_20;ResponseArtifacts;resourceResponse;TRUE;ResourceResponse artifact is only valid during resource phase.
+SPEC3_20;ResponseArtifacts;stateAwareReponse;TRUE;StateAwareResponse artifact is only valid during action and event phase.
+SPEC3_20;ResponseArtifacts;mimeResponse;TRUE;MimeResponse artifact is only valid during header, render and resource phase.
+SPEC3_20;ParameterArtifacts;renderParameters;TRUE;RenderParameters artifact is only valid during render phase.
+SPEC3_20;ParameterArtifacts;mutableRenderParameters;TRUE;MutableRenderParameters artifact is only valid during action and event phase.
+SPEC3_20;ParameterArtifacts;actionParameters;TRUE;ActionParameters artifact is only valid during action phase.
+SPEC3_20;ParameterArtifacts;resourceParameters;TRUE;ResourceParameters artifact is only valid during resource phase.
+SPEC3_20;PortletArtifacts;portletConfig;TRUE;PortletConfig artifact is valid during all phases.
+SPEC3_20;PortletArtifacts;portletContext;TRUE;PortletContext artifact is valid during all phases.
+SPEC3_20;PortletArtifacts;portletMode;TRUE;PortletMode artifact is valid during all phases.
+SPEC3_20;PortletArtifacts;windowState;TRUE;WindowState artifact is valid during all phases.
+SPEC3_20;PortletArtifacts;portletPreferences;TRUE;PortletPreferences artifact is valid during all phases.
+SPEC3_20;PortletArtifacts;cookies;TRUE;Cookies artifact is valid during all phases.
+SPEC3_20;PortletArtifacts;portletSession;TRUE;PortletSession artifact is valid during all phases.
+SPEC3_20;PortletArtifacts;locale;TRUE;Locale artifact is only valid during render and resource phase.
+SPEC3_20;PortletArtifacts;locales;TRUE;Locales artifact is valid during all phases.
+SPEC3_20;PortletArtifacts;namespace;TRUE;Namespace artifact is valid during all phases.
+SPEC3_20;PortletArtifacts;contextPath;TRUE;ContextPath artifact is valid during all phases.
+SPEC3_20;PortletArtifacts;windowID;TRUE;WindowID artifact is valid during all phases.
+SPEC3_20;PortletArtifacts;portletName;TRUE;PortletName artifact is valid during all phases.

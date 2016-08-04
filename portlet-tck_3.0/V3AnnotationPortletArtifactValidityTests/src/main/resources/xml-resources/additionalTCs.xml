@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- JSR 362 API AnnotationPortletArtifactValidityTests test case names and page mappings -->
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts_portletRequest">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts_actionRequest">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts_headerRequest">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts_renderRequest">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts_eventRequest">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts_resourceRequest">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts_clientDataRequest">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts_portletResponse">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts_actionResponse">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts_headerResponse">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts_renderResponse">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts_eventResponse">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts_resourceResponse">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts_stateAwareReponse">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts_mimeResponse">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts_renderParameters">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts_mutableRenderParameters">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts_actionParameters">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts_resourceParameters">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_portletConfig">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_portletContext">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_portletMode">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_windowState">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_portletPreferences">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_cookies">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_portletSession">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_locale">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_locales">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_namespace">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_contextPath">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_windowID">V3AnnotationPortletArtifactValidityTests</entry>
+<entry key="V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_portletName">V3AnnotationPortletArtifactValidityTests</entry>
+</properties>
