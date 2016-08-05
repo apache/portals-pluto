@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.inject.Inject;
 import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -100,11 +101,12 @@ public class AuthSCPortlet extends GenericPortlet {
       writer.write(txt.toString());
    }
 
+   @Inject private ActionParameters ap;
+   @Inject private MutableRenderParameters mrp;
+
    public void processAction(ActionRequest req, ActionResponse resp)
          throws PortletException, IOException {
       
-      ActionParameters ap = req.getActionParameters();
-      MutableRenderParameters mrp = resp.getRenderParameters();
       mrp.set(ap);
 
       if (isDebug) {
