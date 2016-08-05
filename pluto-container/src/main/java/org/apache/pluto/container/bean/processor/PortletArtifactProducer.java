@@ -500,7 +500,7 @@ public class PortletArtifactProducer {
    /**
     * Producer method for the render paramters.
     */
-   @Produces @PortletRequestScoped @Named("renderParams")
+   @Produces @PortletRequestScoped @Named("renderParams") @Typed(RenderParameters.class)
    public static RenderParameters getRenderParameters() {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
@@ -510,7 +510,7 @@ public class PortletArtifactProducer {
    /**
     * Producer method for the mutable render parameters.
     */
-   @Produces @PortletRequestScoped @Named("mutableRenderParams")
+   @Produces @PortletRequestScoped @Named("mutableRenderParams") @Typed(MutableRenderParameters.class)
    public static MutableRenderParameters getMutableRenderParameters() {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
@@ -524,7 +524,7 @@ public class PortletArtifactProducer {
    /**
     * Producer method for the action parameters.
     */
-   @Produces @PortletRequestScoped @Named("actionParams")
+   @Produces @PortletRequestScoped @Named("actionParams") @Typed(ActionParameters.class)
    public static ActionParameters getActionParameters() {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
@@ -538,7 +538,7 @@ public class PortletArtifactProducer {
    /**
     * Producer method for the resource parameters.
     */
-   @Produces @PortletRequestScoped @Named("resourceParams")
+   @Produces @PortletRequestScoped @Named("resourceParams") @Typed(ResourceParameters.class)
    public static ResourceParameters getResourceParameters() {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
