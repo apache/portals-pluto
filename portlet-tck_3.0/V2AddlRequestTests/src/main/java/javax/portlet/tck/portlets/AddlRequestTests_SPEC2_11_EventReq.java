@@ -15,6 +15,14 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE1;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE2;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE3;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE8;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_WINDOWID4;
+import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
+import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -29,144 +37,101 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
 
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE1;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE2;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE3;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE4;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE5;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_WINDOWID4;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE8;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE9;
-import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
-import static javax.portlet.tck.constants.Constants.TCKNAMESPACE;
-
 /**
- * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
- * in the /src/main/resources/xml-resources/additionalTCs.xml file. The build process will integrate
- * the test case names defined in the additionalTCs.xml file into the complete list of test case
- * names for execution by the driver.
- *
- * This is the main portlet for the test cases. If the test cases call for events, this portlet will
- * initiate the events, but not process them. The processing is done in the companion portlet
+ * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined in the
+ * /src/main/resources/xml-resources/additionalTCs.xml file. The build process will integrate the test case names
+ * defined in the additionalTCs.xml file into the complete list of test case names for execution by the driver.
+ * 
+ * This is the main portlet for the test cases. If the test cases call for events, this portlet will initiate the
+ * events, but not process them. The processing is done in the companion portlet
  * AddlRequestTests_SPEC2_11_EventReq_event
  * 
  * @author ahmed
  */
 public class AddlRequestTests_SPEC2_11_EventReq implements Portlet {
 
-  @Override
-  public void init(PortletConfig config) throws PortletException {}
+   @Override
+   public void init(PortletConfig config) throws PortletException {
+   }
 
-  @Override
-  public void destroy() {}
+   @Override
+   public void destroy() {
+   }
 
-  @Override
-  public void processAction(ActionRequest portletReq, ActionResponse portletResp)
-      throws PortletException, IOException {
+   @SuppressWarnings("deprecation")
+   @Override
+   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
 
-    portletResp.setRenderParameters(portletReq.getParameterMap());
-    long tid = Thread.currentThread().getId();
-    portletReq.setAttribute(THREADID_ATTR, tid);
+      portletResp.setRenderParameters(portletReq.getParameterMap());
+      long tid = Thread.currentThread().getId();
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
-    QName eventQName = new QName(TCKNAMESPACE, "AddlRequestTests_SPEC2_11_EventReq");
-    portletResp.setEvent(eventQName, "Hi!");
-  }
+      QName eventQName = new QName(TCKNAMESPACE, "AddlRequestTests_SPEC2_11_EventReq");
+      portletResp.setEvent(eventQName, "Hi!");
+   }
 
-  @Override
-  public void render(RenderRequest portletReq, RenderResponse portletResp)
-      throws PortletException, IOException {
+   @SuppressWarnings("deprecation")
+   @Override
+   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
 
-    long tid = Thread.currentThread().getId();
-    portletReq.setAttribute(THREADID_ATTR, tid);
+      long tid = Thread.currentThread().getId();
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
-    PrintWriter writer = portletResp.getWriter();
+      PrintWriter writer = portletResp.getWriter();
 
-    /* TestCase: V2AddlRequestTests_SPEC2_11_EventReq_contentType1 */
-    /* Details: "The getResponseContentType method returns a String */
-    /* representing the default content type the portlet container */
-    /* assumes for the output" */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE1, aurl);
-      tb.writeTo(writer);
-    }
+      /* TestCase: V2AddlRequestTests_SPEC2_11_EventReq_contentType1 */
+      /* Details: "The getResponseContentType method returns a String */
+      /* representing the default content type the portlet container */
+      /* assumes for the output" */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE1, aurl);
+         tb.writeTo(writer);
+      }
 
-    /* TestCase: V2AddlRequestTests_SPEC2_11_EventReq_contentType2 */
-    /* Details: "The getResponseContentTypes method returns an */
-    /* Enumeration of String elements representing the acceptable content */
-    /* types for the output in order of preference" */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE2, aurl);
-      tb.writeTo(writer);
-    }
+      /* TestCase: V2AddlRequestTests_SPEC2_11_EventReq_contentType2 */
+      /* Details: "The getResponseContentTypes method returns an */
+      /* Enumeration of String elements representing the acceptable content */
+      /* types for the output in order of preference" */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE2, aurl);
+         tb.writeTo(writer);
+      }
 
-    /* TestCase: V2AddlRequestTests_SPEC2_11_EventReq_contentType3 */
-    /* Details: "The first element of the Enumeration returned by the */
-    /* getResponseContentTypes method must equal the value returned by */
-    /* the getResponseContentType method" */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE3, aurl);
-      tb.writeTo(writer);
-    }
+      /* TestCase: V2AddlRequestTests_SPEC2_11_EventReq_contentType3 */
+      /* Details: "The first element of the Enumeration returned by the */
+      /* getResponseContentTypes method must equal the value returned by */
+      /* the getResponseContentType method" */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE3, aurl);
+         tb.writeTo(writer);
+      }
 
-    /* TestCase: V2AddlRequestTests_SPEC2_11_EventReq_contentType4 */
-    /* Details: "If a portlet defines support for all content types using */
-    /* a wildcard and the portlet container supports all content types, */
-    /* the getResponseContentType may return the wildcard" */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE4, aurl);
-      tb.writeTo(writer);
-    }
+      /* TestCase: V2AddlRequestTests_SPEC2_11_EventReq_windowId4 */
+      /* Details: "The string returned by getWindowID method must be the */
+      /* same ID used for scoping portlet-scope session attributes" */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_WINDOWID4, aurl);
+         tb.writeTo(writer);
+      }
 
-    /* TestCase: V2AddlRequestTests_SPEC2_11_EventReq_contentType5 */
-    /* Details: "If a portlet defines support for all content types using */
-    /* a wildcard and the portlet container supports all content types, */
-    /* the getResponseContentType may return the preferred content type" */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE5, aurl);
-      tb.writeTo(writer);
-    }
+      /* TestCase: V2AddlRequestTests_SPEC2_11_EventReq_contentType8 */
+      /* Details: "Within the processEvent method, the content type must */
+      /* include only the MIME type, not the character set" */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE8, aurl);
+         tb.writeTo(writer);
+      }
 
-    /* TestCase: V2AddlRequestTests_SPEC2_11_EventReq_windowId4 */
-    /* Details: "The string returned by getWindowID method must be the */
-    /* same ID used for scoping portlet-scope session attributes" */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_WINDOWID4, aurl);
-      tb.writeTo(writer);
-    }
-
-    /* TestCase: V2AddlRequestTests_SPEC2_11_EventReq_contentType8 */
-    /* Details: "Within the processEvent method, the content type must */
-    /* include only the MIME type, not the character set" */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE8, aurl);
-      tb.writeTo(writer);
-    }
-
-    /* TestCase: V2AddlRequestTests_SPEC2_11_EventReq_contentType9 */
-    /* Details: "Within the processEvent method, the */
-    /* getResponseContentTypes method must return only the content types */
-    /* supported by the current portlet mode" */
-    {
-      PortletURL aurl = portletResp.createActionURL();
-      aurl.setParameters(portletReq.getPrivateParameterMap());
-      TestButton tb = new TestButton(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE9, aurl);
-      tb.writeTo(writer);
-    }
-
-  }
+   }
 
 }

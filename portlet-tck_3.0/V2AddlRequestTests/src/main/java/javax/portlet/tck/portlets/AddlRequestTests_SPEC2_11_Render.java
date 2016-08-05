@@ -29,6 +29,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.TestButton;
+import javax.portlet.tck.beans.TestLink;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.beans.TestSetupLink;
 
@@ -63,7 +64,8 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
   @Override
   public void destroy() {}
 
-  @Override
+  @SuppressWarnings("deprecation")
+@Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
 
@@ -92,7 +94,8 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
 
   }
 
-  @Override
+  @SuppressWarnings("deprecation")
+@Override
   public void render(RenderRequest portletReq, RenderResponse portletResp)
       throws PortletException, IOException {
 
@@ -321,5 +324,19 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
         tl.writeTo(writer);
       }
     }
+    
+    /* TestCase: V2AddlRequestTests_SPEC2_11_Render_parameters11 */
+    /* Details: "If a portlet receives a render request that is the */
+    /* result of a client request targeted to another portlet in the */
+    /* portal page, the parameters should be the same parameters as of */
+    /* the previous render request from this client" */
+    {
+       PortletURL rurl = portletResp.createRenderURL();
+       rurl.setParameters(portletReq.getPrivateParameterMap());
+       rurl.setParameter("tr1_ready", "true");
+       TestLink tb = new TestLink(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS11, rurl);
+       tb.writeTo(writer);
+    }
+    
   }
 }

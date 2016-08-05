@@ -304,33 +304,22 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE1                             = "V2AddlRequestTests_SPEC2_11_ActionReq_contentType1";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE2                             = "V2AddlRequestTests_SPEC2_11_ActionReq_contentType2";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE3                             = "V2AddlRequestTests_SPEC2_11_ActionReq_contentType3";
-   public final static String               V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE4                             = "V2AddlRequestTests_SPEC2_11_ActionReq_contentType4";
-   public final static String               V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE5                             = "V2AddlRequestTests_SPEC2_11_ActionReq_contentType5";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_WINDOWID4                                = "V2AddlRequestTests_SPEC2_11_ActionReq_windowId4";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE6                             = "V2AddlRequestTests_SPEC2_11_ActionReq_contentType6";
-   public final static String               V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE7                             = "V2AddlRequestTests_SPEC2_11_ActionReq_contentType7";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE1                              = "V2AddlRequestTests_SPEC2_11_EventReq_contentType1";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE2                              = "V2AddlRequestTests_SPEC2_11_EventReq_contentType2";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE3                              = "V2AddlRequestTests_SPEC2_11_EventReq_contentType3";
-   public final static String               V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE4                              = "V2AddlRequestTests_SPEC2_11_EventReq_contentType4";
-   public final static String               V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE5                              = "V2AddlRequestTests_SPEC2_11_EventReq_contentType5";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_WINDOWID4                                 = "V2AddlRequestTests_SPEC2_11_EventReq_windowId4";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE8                              = "V2AddlRequestTests_SPEC2_11_EventReq_contentType8";
-   public final static String               V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE9                              = "V2AddlRequestTests_SPEC2_11_EventReq_contentType9";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_CONTENTTYPE1                             = "V2AddlRequestTests_SPEC2_11_RenderReq_contentType1";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_CONTENTTYPE2                             = "V2AddlRequestTests_SPEC2_11_RenderReq_contentType2";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_CONTENTTYPE3                             = "V2AddlRequestTests_SPEC2_11_RenderReq_contentType3";
-   public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_CONTENTTYPE4                             = "V2AddlRequestTests_SPEC2_11_RenderReq_contentType4";
-   public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_CONTENTTYPE5                             = "V2AddlRequestTests_SPEC2_11_RenderReq_contentType5";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_WINDOWID4                                = "V2AddlRequestTests_SPEC2_11_RenderReq_windowId4";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_CONTENTTYPE10                            = "V2AddlRequestTests_SPEC2_11_RenderReq_contentType10";
-   public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_CONTENTTYPE11                            = "V2AddlRequestTests_SPEC2_11_RenderReq_contentType11";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_CONTENTTYPE13                            = "V2AddlRequestTests_SPEC2_11_RenderReq_contentType13";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE1                           = "V2AddlRequestTests_SPEC2_11_ResourceReq_contentType1";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE2                           = "V2AddlRequestTests_SPEC2_11_ResourceReq_contentType2";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE3                           = "V2AddlRequestTests_SPEC2_11_ResourceReq_contentType3";
-   public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE4                           = "V2AddlRequestTests_SPEC2_11_ResourceReq_contentType4";
-   public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE5                           = "V2AddlRequestTests_SPEC2_11_ResourceReq_contentType5";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_WINDOWID4                              = "V2AddlRequestTests_SPEC2_11_ResourceReq_windowId4";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE12                          = "V2AddlRequestTests_SPEC2_11_ResourceReq_contentType12";
    public final static String               V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE13                          = "V2AddlRequestTests_SPEC2_11_ResourceReq_contentType13";
@@ -1411,19 +1400,10 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
       tcd.put(
             V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE3,
             "The first element of the Enumeration returned by the getResponseContentTypes method must equal the value returned by the getResponseContentType method");
-      tcd.put(
-            V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE4,
-            "If a portlet defines support for all content types using a wildcard and the portlet container supports all content types, the getResponseContentType may return the wildcard");
-      tcd.put(
-            V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE5,
-            "If a portlet defines support for all content types using a wildcard and the portlet container supports all content types, the getResponseContentType may return the preferred content type");
       tcd.put(V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_WINDOWID4,
             "The string returned by getWindowID method must be the same ID used for scoping portlet-scope session attributes");
       tcd.put(V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE6,
             "Within the processAction method, the content type must include only the MIME type, not the character set");
-      tcd.put(
-            V2ADDLREQUESTTESTS_SPEC2_11_ACTIONREQ_CONTENTTYPE7,
-            "Within the processAction method, the getResponseContentTypes method must return only the content types supported by the current portlet mode");
       tcd.put(
             V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE1,
             "The getResponseContentType method returns a String representing the default content type the portlet container assumes for the output");
@@ -1433,19 +1413,10 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
       tcd.put(
             V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE3,
             "The first element of the Enumeration returned by the getResponseContentTypes method must equal the value returned by the getResponseContentType method");
-      tcd.put(
-            V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE4,
-            "If a portlet defines support for all content types using a wildcard and the portlet container supports all content types, the getResponseContentType may return the wildcard");
-      tcd.put(
-            V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE5,
-            "If a portlet defines support for all content types using a wildcard and the portlet container supports all content types, the getResponseContentType may return the preferred content type");
       tcd.put(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_WINDOWID4,
             "The string returned by getWindowID method must be the same ID used for scoping portlet-scope session attributes");
       tcd.put(V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE8,
             "Within the processEvent method, the content type must include only the MIME type, not the character set");
-      tcd.put(
-            V2ADDLREQUESTTESTS_SPEC2_11_EVENTREQ_CONTENTTYPE9,
-            "Within the processEvent method, the getResponseContentTypes method must return only the content types supported by the current portlet mode");
       tcd.put(
             V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_CONTENTTYPE1,
             "The getResponseContentType method returns a String representing the default content type the portlet container assumes for the output");
@@ -1455,19 +1426,10 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
       tcd.put(
             V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_CONTENTTYPE3,
             "The first element of the Enumeration returned by the getResponseContentTypes method must equal the value returned by the getResponseContentType method");
-      tcd.put(
-            V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_CONTENTTYPE4,
-            "If a portlet defines support for all content types using a wildcard and the portlet container supports all content types, the getResponseContentType may return the wildcard");
-      tcd.put(
-            V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_CONTENTTYPE5,
-            "If a portlet defines support for all content types using a wildcard and the portlet container supports all content types, the getResponseContentType may return the preferred content type");
       tcd.put(V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_WINDOWID4,
             "The string returned by getWindowID method must be the same ID used for scoping portlet-scope session attributes");
       tcd.put(V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_CONTENTTYPE10,
             "Within the render method, the content type must include only the MIME type, not the character set");
-      tcd.put(
-            V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_CONTENTTYPE11,
-            "Within the render method, the getResponseContentTypes method must return only the content types supported by the current portlet mode");
       tcd.put(V2ADDLREQUESTTESTS_SPEC2_11_RENDERREQ_CONTENTTYPE13,
             "The character set of the response can be retrieved via the RenderResponse.getCharacterEncoding method");
       tcd.put(
@@ -1479,12 +1441,6 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
       tcd.put(
             V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE3,
             "The first element of the Enumeration returned by the getResponseContentTypes method must equal the value returned by the getResponseContentType method");
-      tcd.put(
-            V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE4,
-            "If a portlet defines support for all content types using a wildcard and the portlet container supports all content types, the getResponseContentType may return the wildcard");
-      tcd.put(
-            V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE5,
-            "If a portlet defines support for all content types using a wildcard and the portlet container supports all content types, the getResponseContentType may return the preferred content type");
       tcd.put(V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_WINDOWID4,
             "The string returned by getWindowID method must be the same ID used for scoping portlet-scope session attributes");
       tcd.put(V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE12,

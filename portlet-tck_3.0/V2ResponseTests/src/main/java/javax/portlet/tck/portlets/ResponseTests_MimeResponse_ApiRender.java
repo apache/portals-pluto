@@ -256,7 +256,7 @@ public class ResponseTests_MimeResponse_ApiRender implements Portlet {
             V2RESPONSETESTS_MIMERESPONSE_APIRENDER_SETCONTENTTYPE1);
       try {
          portletResp.setContentType("text/html");
-         String type = portletReq.getResponseContentType();
+         String type = portletResp.getContentType();
          if (type.equals("text/html")) {
             tr10.setTcSuccess(true);
          }

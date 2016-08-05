@@ -42,11 +42,12 @@ public class RenderURLImpl extends PortletURLImpl implements RenderURL {
             responseContext.getPortletURLProvider(PortletURLProvider.TYPE.RENDER), copy);
    }
 
+   @Override
    public void setFragmentIdentifier(String fragment) {
-      ArgumentUtility.validateNotNull("fragment identifier", fragment);
       urlProvider.setFragmentIdentifier(fragment);
    }
 
+   @Override
    public String getFragmentIdentifier() {
       return urlProvider.getFragmentIdentifier();
    }
