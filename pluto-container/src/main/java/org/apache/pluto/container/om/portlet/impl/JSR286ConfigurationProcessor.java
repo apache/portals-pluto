@@ -487,8 +487,8 @@ public class JSR286ConfigurationProcessor extends JSR168ConfigurationProcessor {
             LOG.trace(info);
          }
 
-         // set up Supports
-         Supports sup = new SupportsImpl(mtt.getValue());
+         // set up Supports, discarding MIME type parameters
+         Supports sup = new SupportsImpl(mtt.getValue().replaceAll("([^;]*).*", "$1"));
          for (PortletModeType item : pmlist) {
             sup.addPortletMode(item.getValue());
          }

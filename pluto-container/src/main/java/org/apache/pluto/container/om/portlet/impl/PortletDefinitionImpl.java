@@ -20,8 +20,10 @@
 package org.apache.pluto.container.om.portlet.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
 import org.apache.pluto.container.om.portlet.Dependency;
@@ -403,9 +405,21 @@ public class PortletDefinitionImpl implements PortletDefinition {
    @Override
    public void addSupports(Supports supp) {
       if (supps.remove(supp)) {
-         LOG.debug("Removed duplicate supports block for: " + supp.getMimeType());
+         LOG.warn("Overwriting duplicate supports block for: " + supp.getMimeType());
       }
      supps.add(supp);
+   }
+
+   /* (non-Javadoc)
+    * @see org.apache.pluto.container.om.portlet.PortletDefinition#getConfiguredMimeTypes()
+    */
+   @Override
+   public Set<String> getConfiguredMimeTypes() {
+      Set<String> types = new HashSet<String>();
+      for (Supports supp : supps) {
+         types.add(supp.getMimeType());
+      }
+      return types;
    }
 
    /* (non-Javadoc)

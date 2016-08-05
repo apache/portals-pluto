@@ -19,7 +19,6 @@
 package org.apache.pluto.container.driver;
 
 import java.io.InputStream;
-import java.util.EnumSet;
 import java.util.Set;
 
 import javax.portlet.annotations.PortletApplication;
@@ -28,8 +27,6 @@ import javax.portlet.annotations.PortletConfigurations;
 import javax.portlet.annotations.PortletLifecycleFilter;
 import javax.portlet.annotations.PortletListener;
 import javax.portlet.annotations.PortletPreferencesValidator;
-import javax.servlet.DispatcherType;
-import javax.servlet.FilterRegistration;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;

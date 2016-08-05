@@ -834,9 +834,14 @@ public interface PortletRequest extends RenderState
    * <li>The content type only includes the MIME type, not the
    * character set. The character set of the response
    * can be retrieved via the {@link RenderResponse#getCharacterEncoding}.</li>
-   * <li>Only content types that the portlet has defined in its
-   * deployment descriptor are valid return values for
-   * this method call. If the portlet has defined
+   * <li>
+   * <div class="changed_modified_3_0">
+   * Only content types defined in the portlet configuration
+   * are valid return values for this method call.
+   * If no supported content types are configured for the portlet, 
+   * <code>text/html</code> will be assumed as default.
+   * </div>
+   * If the portlet has defined
    * <code>'*'</code> or <code>'* / *'</code> as supported content
    * types, these may also be valid return values.</li>
    * </ul>
@@ -855,9 +860,14 @@ public interface PortletRequest extends RenderState
    * <ul>
    * <li>The content type only includes the MIME type, not the
    * character set.</li>
-   * <li>Only content types that the portlet has defined in its
-   * deployment descriptor are valid return values for
-   * this method call. If the portlet has defined
+   * <li>
+   * <div class="changed_modified_3_0">
+   * Only content types defined in the portlet configuration
+   * are valid return values for this method call.
+   * If no supported content types are configured for the portlet, 
+   * <code>text/html</code> will be assumed as default.
+   * </div>
+   * If the portlet has defined
    * <code>'*'</code> or <code>'* / *'</code> as supported content
    * types, these may also be valid return values.</li>
    * </ul>

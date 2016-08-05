@@ -22,6 +22,7 @@ import java.io.PrintWriter;
 import java.util.Locale;
 
 import javax.portlet.CacheControl;
+import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,8 +36,7 @@ import org.apache.pluto.container.util.PrintWriterServletOutputStream;
  * @version $Id$
  * 
  */
-public abstract class PortletMimeResponseContextImpl extends PortletResponseContextImpl implements
-      PortletMimeResponseContext {
+public abstract class PortletMimeResponseContextImpl extends PortletResponseContextImpl implements PortletMimeResponseContext {
    private static class CacheControlImpl implements CacheControl {
       private String  eTag;
       private int     expirationTime;
@@ -46,34 +46,42 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
       public CacheControlImpl() {
       }
 
+      @Override
       public boolean useCachedContent() {
          return cachedContent;
       }
 
+      @Override
       public String getETag() {
          return this.eTag;
       }
 
+      @Override
       public int getExpirationTime() {
          return expirationTime;
       }
 
+      @Override
       public boolean isPublicScope() {
          return publicScope;
       }
 
+      @Override
       public void setETag(String eTag) {
          this.eTag = eTag;
       }
 
+      @Override
       public void setExpirationTime(int expirationTime) {
          this.expirationTime = expirationTime;
       }
 
+      @Override
       public void setPublicScope(boolean publicScope) {
          this.publicScope = publicScope;
       }
 
+      @Override
       public void setUseCachedContent(boolean cachedContent) {
          this.cachedContent = cachedContent;
       }
@@ -82,23 +90,26 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
    private CacheControl cacheControl;
    private OutputStream outputStream;
 
-   public PortletMimeResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
-         HttpServletResponse containerResponse, PortletWindow window, PortletRequestContext requestContext) {
+   public PortletMimeResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest, HttpServletResponse containerResponse,
+         PortletWindow window, PortletRequestContext requestContext) {
       super(container, containerRequest, containerResponse, window, requestContext);
    }
 
+   @Override
    public void close() {
       cacheControl = null;
       outputStream = null;
       super.close();
    }
 
+   @Override
    public void flushBuffer() throws IOException {
       if (!isClosed() && !isHeaderBufferActive()) {
          getServletResponse().flushBuffer();
       }
    }
 
+   @Override
    public int getBufferSize() {
       if (isHeaderBufferActive()) {
          // header request
@@ -109,6 +120,7 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
       }
    }
 
+   @Override
    public CacheControl getCacheControl() {
       if (isClosed()) {
          return null;
@@ -119,18 +131,35 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
       return cacheControl;
    }
 
+   @Override
    public String getCharacterEncoding() {
       return isClosed() ? null : getServletResponse().getCharacterEncoding();
    }
 
+   @Override
    public String getContentType() {
-      return isClosed() ? null : getServletResponse().getContentType();
+      String type = null;
+      if (!isClosed()) {
+         type = getServletResponse().getContentType();
+         if (type == null) {
+            if (!getLifecycle().equals(PortletRequest.RESOURCE_PHASE)) {
+               // default MIME type for Pluto
+               type = "text/html";
+            }
+         } else {
+            // ignore charset parameter
+            type = type.replaceAll("([^;]*).*", "$1");
+         }
+      }
+      return type;
    }
 
+   @Override
    public Locale getLocale() {
       return isClosed() ? null : getServletResponse().getLocale();
    }
 
+   @Override
    public OutputStream getOutputStream() throws IOException, IllegalStateException {
       if (isClosed()) {
          return null;
@@ -146,14 +175,14 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
             } catch (IllegalStateException e) {
                // handle situation where underlying ServletResponse its getWriter()
                // has been called already anyway: return a wrapped PrintWriter in that case
-               outputStream = new PrintWriterServletOutputStream(getServletResponse().getWriter(), getServletResponse()
-                     .getCharacterEncoding());
+               outputStream = new PrintWriterServletOutputStream(getServletResponse().getWriter(), getServletResponse().getCharacterEncoding());
             }
          }
          return outputStream;
       }
    }
 
+   @Override
    public PrintWriter getWriter() throws IOException, IllegalStateException {
       if (isClosed()) {
          return null;
@@ -167,6 +196,7 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
       }
    }
 
+   @Override
    public boolean isCommitted() {
       if (isHeaderBufferActive()) {
          // header request
@@ -176,6 +206,7 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
       }
    }
 
+   @Override
    public void reset() {
       if (!isClosed()) {
          if (isHeaderBufferActive()) {
@@ -187,6 +218,7 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
       }
    }
 
+   @Override
    public void resetBuffer() {
       if (!isClosed()) {
          if (isHeaderBufferActive()) {
@@ -198,6 +230,7 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
       }
    }
 
+   @Override
    public void setBufferSize(int size) {
       if (!isClosed()) {
          if (isHeaderBufferActive()) {
@@ -210,9 +243,25 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
       }
    }
 
+   @Override
    public void setContentType(String contentType) {
-      if (!isClosed()) {
-         getServletResponse().setContentType(contentType);
+      // The content type is set by Pluto for the render & header phases
+      if (!isClosed()) { 
+         if (getLifecycle().equals(PortletRequest.RESOURCE_PHASE)) {
+            getServletResponse().setContentType(contentType);
+         } else {
+            String type = getServletResponse().getContentType();
+            if (type == null) {
+               // default MIME type for Pluto
+               type = "text/html";
+            } else {
+               // ignore charset parameter
+               type = type.replaceAll("([^;]*).*", "$1");
+            }
+            if (!type.equals(contentType) && !contentType.matches("\\s*(?:\\*|\\*/\\s*\\*)\\s*")) {
+               throw new IllegalArgumentException("Invalid content type: " + contentType);
+            }
+         }
       }
    }
 }

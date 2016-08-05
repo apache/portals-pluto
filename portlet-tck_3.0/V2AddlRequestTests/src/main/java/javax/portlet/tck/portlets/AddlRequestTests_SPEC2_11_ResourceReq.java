@@ -38,8 +38,6 @@ import org.apache.commons.lang3.StringUtils;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE1;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE2;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE3;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE4;
-import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE5;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_WINDOWID4;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE12;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE13;
@@ -68,7 +66,8 @@ public class AddlRequestTests_SPEC2_11_ResourceReq implements Portlet, ResourceS
   @Override
   public void destroy() {}
 
-  @Override
+  @SuppressWarnings("deprecation")
+@Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
 
@@ -120,24 +119,6 @@ public class AddlRequestTests_SPEC2_11_ResourceReq implements Portlet, ResourceS
         .equals(portletReq.getResponseContentType()))
       tr2.setTcSuccess(true);
     tr2.writeTo(writer);
-
-    /* TestCase: V2AddlRequestTests_SPEC2_11_ResourceReq_contentType4 */
-    /* Details: "If a portlet defines support for all content types using */
-    /* a wildcard and the portlet container supports all content types, */
-    /* the getResponseContentType may return the wildcard" */
-    TestResult tr3 = tcd.getTestResultSucceeded(V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE4);
-    tr3.appendTcDetail("Can't be tested, since the implementation defines the supported content types.");
-    tr3.appendTcDetail("Content type is " + portletReq.getResponseContentType());
-    tr3.writeTo(writer);
-
-    /* TestCase: V2AddlRequestTests_SPEC2_11_ResourceReq_contentType5 */
-    /* Details: "If a portlet defines support for all content types using */
-    /* a wildcard and the portlet container supports all content types, */
-    /* the getResponseContentType may return the preferred content type" */
-    TestResult tr4 = tcd.getTestResultSucceeded(V2ADDLREQUESTTESTS_SPEC2_11_RESOURCEREQ_CONTENTTYPE5);
-    tr4.appendTcDetail("Can't be tested, since the implementation defines the supported content types.");
-    tr4.appendTcDetail("Content type is " + portletReq.getResponseContentType());
-    tr4.writeTo(writer);
 
     /* TestCase: V2AddlRequestTests_SPEC2_11_ResourceReq_windowId4 */
     /* Details: "The string returned by getWindowID method must be the */

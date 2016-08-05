@@ -18,6 +18,7 @@ package org.apache.pluto.container.om.portlet;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public interface PortletDefinition {
     
@@ -101,5 +102,7 @@ public interface PortletDefinition {
    void setMaxRequestSize(Long maxRequestSize);
    Long getMaxFileSize();
    void setMaxFileSize(Long maxFileSize);
+
+   Set<String> getConfiguredMimeTypes();
 
 }
