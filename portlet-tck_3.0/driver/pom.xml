@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
     Licensed to the Apache Software Foundation (ASF) under one
     or more contributor license agreements.  See the NOTICE file
     distributed with this work for additional information
@@ -347,6 +346,12 @@
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
+   <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V3AnnotationPortletArtifactValidityTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
    </dependencies>
 
    <properties>
@@ -429,6 +434,7 @@
 						tck-V3RenderStateTests
                         ,tck-V3HeaderPortletTests
                         ,tck-V3PortletParametersTests
+                        ,tck-V3AnnotationPortletArtifactValidityTests
                      </includeArtifactIds>
                      <includes>${test.file.dir}/*.xml</includes>
                      <outputDirectory>${project.build.directory}</outputDirectory>
