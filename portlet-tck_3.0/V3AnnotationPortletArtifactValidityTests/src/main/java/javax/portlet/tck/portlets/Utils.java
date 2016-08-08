@@ -18,9 +18,22 @@
 
 package javax.portlet.tck.portlets;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
+import javax.portlet.MimeResponse;
+import javax.portlet.MutableRenderParameters;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletParameters;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.RenderParameters;
+import javax.portlet.StateAwareResponse;
+import javax.portlet.WindowState;
 
 /**
  * Utils hold all common constants and test functions
@@ -29,10 +42,25 @@ import javax.portlet.PortletParameters;
 
 public class Utils {
 
-   public static final String ACTIONPARAMETERSARTIFACTKEY        = "_actionParametersArtifact_";
-   public static final String MUTABLERENDERPARAMETERSARTIFACTKEY = "_mutableRenderParametersArtifact_";
-   public static final String RENDERPARAMETERSARTIFACTKEY        = "_renderParametersArtifact_";
-   public static final String RESOURCEPARAMETERSARTIFACTKEY      = "_resourceParametersArtifact_";
+   public static final String ACTIONPARAMETERSARTIFACTKEY        = "_actionParamsArtifact_";
+   public static final String MUTABLERENDERPARAMETERSARTIFACTKEY = "_mutableRenderParamsArtifact_";
+   public static final String RENDERPARAMETERSARTIFACTKEY        = "_renderParamsArtifact_";
+   public static final String RESOURCEPARAMETERSARTIFACTKEY      = "_resourceParamsArtifact_";
+   public static final String PORTLETREQUESTARTIFACTKEY        = "_portletRequestArtifact_";
+   public static final String ACTIONREQUESTARTIFACTKEY = "_actionRequestArtifact_";
+   public static final String HEADERREQUESTARTIFACTKEY        = "_headerRequestArtifact_";
+   public static final String RENDERREQUESTARTIFACTKEY      = "_renderRequestArtifact_";
+   public static final String EVENTREQUESTARTIFACTKEY      = "_eventRequestArtifact_";
+   public static final String RESOURCEREQUESTARTIFACTKEY      = "_resourceRequestArtifact_";
+   public static final String CLIENTDATAREQUESTARTIFACTKEY      = "_clientDataRequestArtifact_";
+   public static final String PORTLETRESPONSEARTIFACTKEY        = "_portletResponseArtifact_";
+   public static final String ACTIONRESPONSEARTIFACTKEY        = "_actionResponseArtifact_";
+   public static final String HEADERRESPONSEARTIFACTKEY        = "_headerResponseArtifact_";
+   public static final String RENDERRESPONSEARTIFACTKEY        = "_renderResponseArtifact_";
+   public static final String EVENTRESPONSEARTIFACTKEY        = "_eventResponseArtifact_";
+   public static final String RESOURCERESPONSEARTIFACTKEY        = "_resourceResponseArtifact_";
+   public static final String MIMERESPONSEARTIFACTKEY        = "_mimeResponseArtifact_";
+   public static final String STATEAWARERESPONSEARTIFACTKEY        = "_stateAwareportletResponseArtifact_";
    public static final String ACTIONPHASE                        = "action";
    public static final String RENDERPHASE                        = "render";
    public static final String HEADERPHASE                        = "header";
@@ -54,6 +82,9 @@ public class Utils {
       if (injectedPortletArtifact == null) {
          return false;
       }
+      if(injectedPortletArtifact.equals(requestParameters)){
+         return true;
+      }
       if (injectedPortletArtifact.size() == requestParameters.size()) {
          Set<? extends String> parameters = injectedPortletArtifact.getNames();
          for (String paramName : parameters) {
@@ -67,6 +98,159 @@ public class Utils {
          return false;
       }
       return true;
+   }
+   
+   private boolean checkEqualEnumeration(
+         Enumeration<?> injectedArtifactEnumeration,
+         Enumeration<?> portletEnumeration) {
+      if(injectedArtifactEnumeration.equals(portletEnumeration)){
+         return true;
+      }
+      List<?> injectedEnumerationList = Collections.list(injectedArtifactEnumeration);
+      List<?> portletEnumerationList = Collections.list(portletEnumeration);
+      return checkEqualCollection(injectedEnumerationList, portletEnumerationList);
+   }
+   
+   private boolean checkEqualAttributes(
+         PortletRequest injectedPortletArtifact,
+         PortletRequest portletRequest) {
+      Enumeration<String> injectedRequestAttributes = injectedPortletArtifact.getAttributeNames();
+      Enumeration<String> portletRequestAttributes = portletRequest.getAttributeNames();
+      if(checkEqualEnumeration(injectedRequestAttributes, portletRequestAttributes)){
+         List<String> injectedEnumerationList = Collections.list(injectedRequestAttributes);
+         List<String> portletEnumerationList = Collections.list(portletRequestAttributes);
+         for(String attributeName : injectedEnumerationList){
+            if(!injectedPortletArtifact.getAttribute(attributeName).equals(portletRequest.getAttribute(attributeName))){
+               return false;
+            }
+         }
+         for(String attributeName : portletEnumerationList){
+            if(!injectedPortletArtifact.getAttribute(attributeName).equals(portletRequest.getAttribute(attributeName))){
+               return false;
+            }
+         }
+         return true;
+      } else {
+         return false;
+      }
+   }
+   
+   public boolean checkEqualRequests(
+         PortletRequest injectedPortletArtifact,
+         PortletRequest portletRequest) {
+      
+      if(injectedPortletArtifact.equals(portletRequest)){
+         return true;
+      }
+      RenderParameters injectedRequestRenderParams = injectedPortletArtifact.getRenderParameters();
+      RenderParameters portletRequestRenderParams = portletRequest.getRenderParameters();
+      Enumeration<String> injectedRequestProperties = injectedPortletArtifact.getPropertyNames();
+      Enumeration<String> portletRequestProperties = portletRequest.getPropertyNames();
+      Enumeration<String> injectedRequestContentTypes = injectedPortletArtifact.getResponseContentTypes();
+      Enumeration<String> portletRequestContentTypes = portletRequest.getResponseContentTypes();
+      Enumeration<Locale> injectedRequestLocales = injectedPortletArtifact.getLocales();
+      Enumeration<Locale> portletRequestLocales = portletRequest.getLocales();   
+      if(checkEqualParameters(injectedRequestRenderParams, portletRequestRenderParams)
+            && checkEqualAttributes(injectedPortletArtifact, portletRequest)
+            && checkEqualEnumeration(injectedRequestProperties, portletRequestProperties)
+            && checkEqualEnumeration(injectedRequestContentTypes, portletRequestContentTypes)
+            && checkEqualEnumeration(injectedRequestLocales, portletRequestLocales)){
+         return true;
+      } else {
+         return false;
+      }
+   }
+   
+   public boolean checkEqualStateAwareResponse(
+         StateAwareResponse injectedPortletArtifact,
+         StateAwareResponse stateAwareResponse) {
+      if(injectedPortletArtifact.equals(stateAwareResponse)){
+         return true;
+      }
+      PortletMode injectedPortletMode = injectedPortletArtifact.getPortletMode();
+      PortletMode portletPortletMode = stateAwareResponse.getPortletMode();
+      WindowState injectedWindowState = injectedPortletArtifact.getWindowState();
+      WindowState portletWindowState = stateAwareResponse.getWindowState();
+      MutableRenderParameters injectedMutableRenderParams = injectedPortletArtifact.getRenderParameters();
+      MutableRenderParameters portletMutableRenderParams = stateAwareResponse.getRenderParameters();
+      if(checkEqualResponses(injectedPortletArtifact, stateAwareResponse)
+            && injectedPortletMode.equals(portletPortletMode)
+            && injectedWindowState.equals(portletWindowState)
+            && checkEqualParameters(injectedMutableRenderParams, portletMutableRenderParams)){
+         return true;
+      } else {
+         return false;
+      }
+   }
+   
+   public boolean checkEqualMimeResponse(
+         MimeResponse injectedPortletArtifact,
+         MimeResponse mimeResponse) {
+      if(injectedPortletArtifact.equals(mimeResponse)){
+         return true;
+      }
+      int injectedBufferSize = injectedPortletArtifact.getBufferSize();
+      int portletBufferSize = mimeResponse.getBufferSize();
+      String injectedCharacterEncoding = injectedPortletArtifact.getCharacterEncoding();
+      String portletCharacterEncoding = mimeResponse.getCharacterEncoding();
+      String injectedContentType = injectedPortletArtifact.getContentType();
+      String portletContentType = mimeResponse.getContentType();
+      if(checkEqualResponses(injectedPortletArtifact, mimeResponse)
+            && injectedBufferSize == portletBufferSize
+            && injectedCharacterEncoding.equals(portletCharacterEncoding)
+            && injectedContentType.equals(portletContentType)){
+         return true;
+      } else {
+         return false;
+      }
+   }
+   
+   public boolean checkEqualResponses(
+         PortletResponse injectedPortletArtifact,
+         PortletResponse portletResponse) {
+      if(injectedPortletArtifact.equals(portletResponse)){
+         return true;
+      }
+      String injectedNamespace = injectedPortletArtifact.getNamespace();
+      String portletResponseNamespace = portletResponse.getNamespace();
+      if(injectedNamespace.equals(portletResponseNamespace)
+            && checkEqualProperties(injectedPortletArtifact, portletResponse)){
+         return true;
+      } else {
+         return false;
+      }
+   }
+
+   private boolean checkEqualCollection(Collection<?> injectedProperties,
+         Collection<?> portletResponseProperties) {
+      if(injectedProperties.equals(portletResponseProperties)){
+         return true;
+      } 
+      if(injectedProperties.containsAll(portletResponseProperties) && 
+            portletResponseProperties.containsAll(injectedProperties)){
+         return true;
+      }
+      return false;
+   }
+   
+   private boolean checkEqualProperties(PortletResponse injectedPortletArtifact,
+         PortletResponse portletResponse){
+      Collection<String> injectedProperties = injectedPortletArtifact.getPropertyNames();
+      Collection<String> portletResponseProperties = portletResponse.getPropertyNames();
+      Collection<String> injectedPropertyNames;
+      Collection<String> portletPropertyNames;
+      if(checkEqualCollection(injectedProperties, portletResponseProperties)){
+         for(String propertyName : injectedProperties){
+            injectedPropertyNames = injectedPortletArtifact.getPropertyValues(propertyName);
+            portletPropertyNames = injectedPortletArtifact.getPropertyValues(propertyName);
+            if(!checkEqualCollection(injectedPropertyNames, portletPropertyNames)){
+               return false;
+            }
+         }
+         return true;
+      } else {
+         return false;
+      }
    }
 
    public String createTestDebug(ArtifactValidationResult validationResult) {
