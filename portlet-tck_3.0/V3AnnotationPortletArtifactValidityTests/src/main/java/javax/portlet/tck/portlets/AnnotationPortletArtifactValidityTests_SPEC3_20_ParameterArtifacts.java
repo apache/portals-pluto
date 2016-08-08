@@ -78,7 +78,14 @@ import static javax.portlet.tck.portlets.Utils.RESOURCEPARAMETERSARTIFACTKEY;
  *
  */
 
-@PortletApplication(events = @EventDefinition(qname = @PortletQName(localPart = "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts", namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"), payloadType = java.lang.String.class))
+@PortletApplication(
+   events = @EventDefinition(
+      qname = @PortletQName(
+         localPart = "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts", 
+         namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
+      ), payloadType = java.lang.String.class
+   )
+)
 public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts {
 
    private Utils                   utils = new Utils();
@@ -86,87 +93,97 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
    @Inject
    @PortletName
    private String                  portletName;
-
-   @Inject
-   private RenderParameters        renderParameters;
-
-   @Inject
-   private MutableRenderParameters mutableRenderParameters;
-
-   @Inject
-   private ActionParameters        actionParameters;
-
-   @Inject
-   private ResourceParameters      resourceParameters;
-
+   
    @Inject
    private PortletSession          portletSession;
 
-   @HeaderMethod(portletNames = {
-         "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts" })
+   // Test artifacts
+   @Inject
+   private RenderParameters        renderParams;
+
+   @Inject
+   private MutableRenderParameters mutableRenderParams;
+
+   @Inject
+   private ActionParameters        actionParams;
+
+   @Inject
+   private ResourceParameters      resourceParams;
+
+   @HeaderMethod(
+       portletNames = { "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts" }
+   )
    public void renderHeaders(HeaderRequest portletReq,
          HeaderResponse portletResp) {
 
       try {
          setAttribute(ACTIONPARAMETERSARTIFACTKEY, HEADERPHASE,
-               utils.isValid(actionParameters));
+               utils.isValid(actionParams));
       } catch (RuntimeException e) {
          setAttribute(ACTIONPARAMETERSARTIFACTKEY, HEADERPHASE, false);
       }
 
+      RenderParameters renderParameters = portletReq.getRenderParameters();
       try {
          setAttribute(RENDERPARAMETERSARTIFACTKEY, HEADERPHASE,
-               utils.isValid(renderParameters));
+               utils.checkEqualParameters(renderParams, renderParameters));
       } catch (RuntimeException e) {
          setAttribute(RENDERPARAMETERSARTIFACTKEY, HEADERPHASE, false);
       }
 
       try {
          setAttribute(MUTABLERENDERPARAMETERSARTIFACTKEY, HEADERPHASE,
-               utils.isValid(mutableRenderParameters));
+               utils.isValid(mutableRenderParams));
       } catch (RuntimeException e) {
          setAttribute(MUTABLERENDERPARAMETERSARTIFACTKEY, HEADERPHASE, false);
       }
 
       try {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, HEADERPHASE,
-               utils.isValid(resourceParameters));
+               utils.isValid(resourceParams));
       } catch (RuntimeException e) {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, HEADERPHASE, false);
       }
 
    }
 
-   @ActionMethod(portletName = "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts", publishingEvents = @PortletQName(localPart = "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts", namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"))
+   @ActionMethod(
+      portletName = "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts", 
+      publishingEvents = @PortletQName(
+         localPart = "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts", 
+         namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
+      )
+   )
    public void processAction(ActionRequest portletReq,
          ActionResponse portletResp) throws PortletException, IOException {
 
-      ActionParameters actionParams = portletReq.getActionParameters();
+      ActionParameters actionParameters = portletReq.getActionParameters();
       try {
          setAttribute(ACTIONPARAMETERSARTIFACTKEY, ACTIONPHASE,
-               utils.checkEqualParameters(actionParameters, actionParams));
+               utils.checkEqualParameters(actionParams, actionParameters));
       } catch (RuntimeException e) {
          setAttribute(ACTIONPARAMETERSARTIFACTKEY, ACTIONPHASE, false);
       }
 
+      RenderParameters renderParameters = portletReq.getRenderParameters();
       try {
          setAttribute(RENDERPARAMETERSARTIFACTKEY, ACTIONPHASE,
-               utils.isValid(renderParameters));
+               utils.checkEqualParameters(renderParams, renderParameters));
       } catch (RuntimeException e) {
          setAttribute(RENDERPARAMETERSARTIFACTKEY, ACTIONPHASE, false);
       }
 
-      MutableRenderParameters renderParams = portletResp.getRenderParameters();
+      MutableRenderParameters mutableRenderParameters = portletResp.getRenderParameters();
       try {
          setAttribute(MUTABLERENDERPARAMETERSARTIFACTKEY, ACTIONPHASE, utils
-               .checkEqualParameters(mutableRenderParameters, renderParams));
+               .checkEqualParameters(mutableRenderParams, mutableRenderParameters));
       } catch (RuntimeException e) {
          setAttribute(MUTABLERENDERPARAMETERSARTIFACTKEY, ACTIONPHASE, false);
       }
 
       try {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, ACTIONPHASE,
-               utils.isValid(resourceParameters));
+               utils.isValid(resourceParams));
       } catch (RuntimeException e) {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, ACTIONPHASE, false);
       }
@@ -178,8 +195,9 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
 
    }
 
-   @RenderMethod(portletNames = {
-         "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts" })
+   @RenderMethod(
+       portletNames = { "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts" }
+   )
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
 
@@ -187,29 +205,29 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
 
       try {
          setAttribute(ACTIONPARAMETERSARTIFACTKEY, RENDERPHASE,
-               utils.isValid(actionParameters));
+               utils.isValid(actionParams));
       } catch (RuntimeException e) {
          setAttribute(ACTIONPARAMETERSARTIFACTKEY, RENDERPHASE, false);
       }
 
-      RenderParameters renderParams = portletReq.getRenderParameters();
+      RenderParameters renderParameters = portletReq.getRenderParameters();
       try {
          setAttribute(RENDERPARAMETERSARTIFACTKEY, RENDERPHASE,
-               utils.checkEqualParameters(renderParameters, renderParams));
+               utils.checkEqualParameters(renderParams, renderParameters));
       } catch (RuntimeException e) {
          setAttribute(RENDERPARAMETERSARTIFACTKEY, RENDERPHASE, false);
       }
 
       try {
          setAttribute(MUTABLERENDERPARAMETERSARTIFACTKEY, RENDERPHASE,
-               utils.isValid(mutableRenderParameters));
+               utils.isValid(mutableRenderParams));
       } catch (RuntimeException e) {
          setAttribute(MUTABLERENDERPARAMETERSARTIFACTKEY, RENDERPHASE, false);
       }
 
       try {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, RENDERPHASE,
-               utils.isValid(resourceParameters));
+               utils.isValid(resourceParams));
       } catch (RuntimeException e) {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, RENDERPHASE, false);
       }
@@ -235,29 +253,30 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
 
    }
 
-   @ServeResourceMethod(portletNames = {
-         "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts" })
+   @ServeResourceMethod(
+       portletNames = { "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts" }
+   )
    public void serveResource(ResourceRequest portletReq,
          ResourceResponse portletResp) throws PortletException, IOException {
 
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
-      RenderParameters renderParams = portletReq.getRenderParameters();
+      RenderParameters renderParameters = portletReq.getRenderParameters();
 
       /*
        * TestCase:
        * V3AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts_actionParameters
        * Details: "ActionParameters artifact is only valid during action phase."
        */
-      if (renderParams.getValue("tr0") != null
-            && renderParams.getValue("tr0").equals("true")) {
+      if (renderParameters.getValue("tr0") != null
+            && renderParameters.getValue("tr0").equals("true")) {
          TestResult result = tcd.getTestResultFailed(
                V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PARAMETERARTIFACTS_ACTIONPARAMETERS);
          ArtifactValidationResult validationResult = getValidationTestResult(
                ACTIONPARAMETERSARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  utils.isValid(actionParameters));
+                  utils.isValid(actionParams));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -279,15 +298,15 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
        * Details: "MutableRenderParameters artifact is only valid during action
        * and event phase."
        */
-      if (renderParams.getValue("tr1") != null
-            && renderParams.getValue("tr1").equals("true")) {
+      if (renderParameters.getValue("tr1") != null
+            && renderParameters.getValue("tr1").equals("true")) {
          TestResult result = tcd.getTestResultFailed(
                V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PARAMETERARTIFACTS_MUTABLERENDERPARAMETERS);
          ArtifactValidationResult validationResult = getValidationTestResult(
                RENDERPARAMETERSARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  utils.isValid(mutableRenderParameters));
+                  utils.isValid(mutableRenderParams));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -313,20 +332,20 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
        * V3AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts_renderParameters
        * Details: "RenderParameters artifact is only valid during render phase."
        */
-      if (renderParams.getValue("tr2") != null
-            && renderParams.getValue("tr2").equals("true")) {
+      if (renderParameters.getValue("tr2") != null
+            && renderParameters.getValue("tr2").equals("true")) {
          TestResult result = tcd.getTestResultFailed(
                V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PARAMETERARTIFACTS_RENDERPARAMETERS);
          ArtifactValidationResult validationResult = getValidationTestResult(
                RENDERPARAMETERSARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  utils.isValid(renderParameters));
+                  utils.checkEqualParameters(renderParams, renderParameters));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
          result.setTcSuccess(
-               validationResult.isArtifactValidInOnlyRenderPhase());
+               validationResult.isArtifactValidInAllPhase());
          result.appendTcDetail(utils.createTestDebug(validationResult));
          result.writeTo(writer);
       } else {
@@ -343,16 +362,16 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
        * Details: "ResourceParameters artifact is only valid during resource
        * phase."
        */
-      if (renderParams.getValue("tr3") != null
-            && renderParams.getValue("tr3").equals("true")) {
+      if (renderParameters.getValue("tr3") != null
+            && renderParameters.getValue("tr3").equals("true")) {
          TestResult result = tcd.getTestResultFailed(
                V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PARAMETERARTIFACTS_RESOURCEPARAMETERS);
          ArtifactValidationResult validationResult = getValidationTestResult(
                ACTIONPARAMETERSARTIFACTKEY);
-         ResourceParameters resourceParams = portletReq.getResourceParameters();
+         ResourceParameters resourceParameters = portletReq.getResourceParameters();
          try {
             validationResult.setArtifactValidInResourcePhase(utils
-                  .checkEqualParameters(resourceParameters, resourceParams));
+                  .checkEqualParameters(resourceParams, resourceParameters));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -370,43 +389,50 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
 
    }
 
-   @EventMethod(portletName = "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts", processingEvents = @PortletQName(localPart = "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts", namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"))
+   @EventMethod(
+      portletName = "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts", 
+      processingEvents = @PortletQName(
+         localPart = "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts", 
+         namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
+      )
+   )
    public void processEvent(EventRequest portletReq, EventResponse portletResp)
          throws PortletException, IOException {
 
-      MutableRenderParameters renderParams = portletResp.getRenderParameters();
+      MutableRenderParameters mutableRenderParameters = portletResp.getRenderParameters();
 
       try {
          setAttribute(ACTIONPARAMETERSARTIFACTKEY, EVENTPHASE,
-               utils.isValid(actionParameters));
+               utils.isValid(actionParams));
       } catch (RuntimeException e) {
          setAttribute(ACTIONPARAMETERSARTIFACTKEY, EVENTPHASE, false);
       }
-      renderParams.setValue("tr0", "true");
+      mutableRenderParameters.setValue("tr0", "true");
 
       try {
          setAttribute(MUTABLERENDERPARAMETERSARTIFACTKEY, EVENTPHASE, utils
-               .checkEqualParameters(mutableRenderParameters, renderParams));
+               .checkEqualParameters(mutableRenderParams, mutableRenderParameters));
       } catch (RuntimeException e) {
          setAttribute(MUTABLERENDERPARAMETERSARTIFACTKEY, EVENTPHASE, false);
       }
-      renderParams.setValue("tr1", "true");
+      mutableRenderParameters.setValue("tr1", "true");
 
+      RenderParameters renderParameters = portletReq.getRenderParameters();
       try {
          setAttribute(RENDERPARAMETERSARTIFACTKEY, EVENTPHASE,
-               utils.isValid(renderParameters));
+               utils.checkEqualParameters(renderParams, renderParameters));
       } catch (RuntimeException e) {
          setAttribute(RENDERPARAMETERSARTIFACTKEY, EVENTPHASE, false);
       }
-      renderParams.setValue("tr2", "true");
+      mutableRenderParameters.setValue("tr2", "true");
 
       try {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, EVENTPHASE,
-               utils.isValid(resourceParameters));
+               utils.isValid(resourceParams));
       } catch (RuntimeException e) {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, EVENTPHASE, false);
       }
-      renderParams.setValue("tr3", "true");
+      mutableRenderParameters.setValue("tr3", "true");
 
    }
 
