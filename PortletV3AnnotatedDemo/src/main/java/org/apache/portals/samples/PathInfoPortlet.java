@@ -35,6 +35,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 import javax.portlet.annotations.Namespace;
+import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
 import javax.portlet.MimeResponse;
@@ -42,6 +43,7 @@ import javax.portlet.MimeResponse;
 /**
  * Resource portlet for viewing path information.
  */
+@PortletConfiguration(portletName="PathInfoPortlet") // not necessary; test for title handling
 public class PathInfoPortlet {
 
    public static final String RESPARAM_DISPLAY = "display";

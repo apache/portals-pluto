@@ -267,9 +267,17 @@ public class PortalDriverServlet extends HttpServlet {
 
       for (String pid : purl.getPortletIds()) {
 
-         PortletWindowConfig wcfg = PortletWindowConfig.fromId(pid);
-         PortletWindowImpl pwin = new PortletWindowImpl(container, wcfg, purl);
          HeaderData hd = null;
+         PortletWindowConfig wcfg = null;
+         PortletWindowImpl pwin = null;
+         try {
+            wcfg = PortletWindowConfig.fromId(pid);
+            pwin = new PortletWindowImpl(container, wcfg, purl);
+         } catch (Throwable e) {
+            LOG.warn("Could not retrieve configuration for portlet ID: " + pid);
+            continue;
+         }
+         
 
          try {
 

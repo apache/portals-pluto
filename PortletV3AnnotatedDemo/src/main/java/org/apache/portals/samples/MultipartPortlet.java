@@ -42,6 +42,8 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.annotations.ActionMethod;
+import javax.portlet.annotations.LocaleString;
+import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
 import javax.servlet.http.Part;
@@ -52,6 +54,8 @@ import javax.servlet.http.Part;
  * @author Scott Nicklous
  * 
  */
+@PortletConfiguration(portletName="MultipartPortlet", cacheExpirationTime=5,
+      title=@LocaleString("Multipart Form Test"))
 public class MultipartPortlet {
    private static final Logger LOGGER = Logger.getLogger(MultipartPortlet.class.getName());
 

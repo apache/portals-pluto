@@ -64,8 +64,7 @@ public class PortletWindowImpl implements PortletWindow {
         catch (PortletContainerException ex)
         {
             String message = "Unable to load Portlet App Deployment Descriptor:"+ ex.getMessage();
-            ex.printStackTrace();
-            LOG.error(message, ex);
+            LOG.warn(message);
             throw new RuntimeException(message);
         }
     }

@@ -16,6 +16,9 @@
  */
 package org.apache.pluto.driver.tags;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -28,8 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
@@ -42,6 +43,8 @@ import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.tags.el.ExpressionEvaluatorProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The portlet tag is used to render a portlet specified by the portlet ID.
@@ -69,6 +72,9 @@ public class PortletTag extends BodyTagSupport {
 
    /** The evaluated value of the portlet ID attribute. */
    private String                evaluatedPortletId;
+   
+   /** The portlet window being processed */
+   private PortletWindow window;
 
    /** The cached portal servlet response holding rendering result. */
    private PortalServletResponse response;
@@ -76,8 +82,8 @@ public class PortletTag extends BodyTagSupport {
    /** The cached rendering status: SUCCESS or FAILED. */
    private int                   status;
 
-   /** The cached Throwable instance when fail to render the portlet. */
-   private Throwable             throwable;
+   // Error messages to display if something goes wrong
+   private List<String>          messages;
 
    // Tag Attribute Accessors -------------------------------------------------
 
@@ -108,7 +114,10 @@ public class PortletTag extends BodyTagSupport {
     * @throws JspException
     *            if an error occurs.
     */
+   @Override
    public int doStartTag() throws JspException {
+      
+      messages = new ArrayList<String>();
 
       // Evaluate portlet ID attribute.
       evaluatePortletId();
@@ -130,59 +139,82 @@ public class PortletTag extends BodyTagSupport {
       PortletContainer container = (PortletContainer) servletContext.getAttribute(AttributeKeys.PORTLET_CONTAINER);
 
       // Create the portlet window to render.
-      PortletWindow window = null;
+      window = null;
 
       try {
          window = new PortletWindowImpl(container, windowConfig, portalURL);
-      } catch (RuntimeException e) // FIXME: Prose a change to anything else, handle it.
-      {
-         if (LOG.isDebugEnabled()) {
-            LOG.debug("The portlet " + windowConfig.getPortletName() + " is not available. Is already deployed?");
-         }
+      } catch (Throwable e) {
+
+         status = FAILED;
+
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("The portlet '");
+         txt.append(windowConfig.getPortletName());
+         txt.append("' is not available.");
+         txt.append(" Configuration could not be found.");
+
+         messages.add(txt.toString());
+
+         StringWriter sw = new StringWriter();
+         PrintWriter pw = new PrintWriter(sw);
+         e.printStackTrace(pw);
+         pw.flush();
+         txt.append("\n");
+         txt.append(sw.toString());
+         LOG.warn(txt.toString());
       }
 
-      // Create portal servlet response to wrap the original
-      // HTTP servlet response.
+      // Create portal servlet response to wrap the original HTTP servlet response.
+
       PortalServletResponse portalResponse = new PortalServletResponse((HttpServletResponse) pageContext.getResponse());
 
       if (window != null) {
+
          // Check if someone else is maximized. If yes, don't show content.
+
          Map<String, WindowState> windowStates = portalURL.getWindowStates();
          for (Iterator<String> it = windowStates.keySet().iterator(); it.hasNext();) {
-            String windowId = (String) it.next();
-            WindowState windowState = (WindowState) windowStates.get(windowId);
+            String windowId = it.next();
+            WindowState windowState = windowStates.get(windowId);
             if (WindowState.MAXIMIZED.equals(windowState) && !window.getId().getStringId().equals(windowId)) {
                return SKIP_BODY;
             }
          }
+         
+         DriverConfiguration driverConfig = (DriverConfiguration)
+               servletContext.getAttribute(AttributeKeys.DRIVER_CONFIG);
+         PortletDefinition pd = window.getPortletDefinition();
 
-      }
+         String mode = window.getPortletMode().toString();
+         boolean supported = driverConfig.isPortletModeSupported(evaluatedPortletId, mode);
+                  
+         if (supported) {
 
-      // Render the portlet and cache the response.
-      try {
-         String renderHeaders = null;
-         if (portalURL.getVersion(evaluatedPortletId).equalsIgnoreCase("2.0")) {
+            // Render the portlet and cache the response.
+            try {
+               String renderHeaders = null;
+               if (portalURL.getVersion(evaluatedPortletId).equalsIgnoreCase("2.0")) {
 
-            DriverConfiguration dc = (DriverConfiguration) servletContext.getAttribute(AttributeKeys.DRIVER_CONFIG);
-            String appName = windowConfig.getContextPath();
-            String portletName = PortletWindowConfig.parsePortletName(evaluatedPortletId);
-            PortletDefinition pd = dc.getPortletRegistryService().getPortletApplication(appName)
-                  .getPortlet(portletName);
-            ContainerRuntimeOption crt = pd.getContainerRuntimeOption("javax.portlet.renderHeaders");
-            if (crt != null) {
-               List<String> headers = crt.getValues();
-               if (headers.size() == 1 && headers.get(0).equalsIgnoreCase("true")) {
-                  renderHeaders = PortletRequest.RENDER_MARKUP;
+                  ContainerRuntimeOption crt = pd.getContainerRuntimeOption("javax.portlet.renderHeaders");
+                  if (crt != null) {
+                     List<String> headers = crt.getValues();
+                     if (headers.size() == 1 && headers.get(0).equalsIgnoreCase("true")) {
+                        renderHeaders = PortletRequest.RENDER_MARKUP;
+                     }
+                  }
                }
-            }
-         }
 
-         container.doRender(window, (HttpServletRequest) pageContext.getRequest(), portalResponse, renderHeaders);
-         response = portalResponse;
-         status = SUCCESS;
-      } catch (Throwable th) {
-         status = FAILED;
-         throwable = th;
+               container.doRender(window, (HttpServletRequest) pageContext.getRequest(), portalResponse, renderHeaders);
+               response = portalResponse;
+               status = SUCCESS;
+            } catch (Throwable th) {
+               status = FAILED;
+               messages.add("Portlet not available. Exception: " + th.getMessage());
+            }
+         } else {
+            status = FAILED;
+            messages.add("Portlet not available. Portlet mode not supported: " + mode);
+         }
       }
 
       // Continue to evaluate the tag body.
@@ -214,8 +246,8 @@ public class PortletTag extends BodyTagSupport {
     * 
     * @return the error that has occurred when rendering portlet.
     */
-   Throwable getThrowable() {
-      return throwable;
+   List<String> getMessages() {
+      return messages;
    }
 
    /**
@@ -228,6 +260,13 @@ public class PortletTag extends BodyTagSupport {
    }
 
    // Private Methods ---------------------------------------------------------
+
+   /**
+    * @return the window
+    */
+   public PortletWindow getWindow() {
+      return window;
+   }
 
    /**
     * Evaluates the portlet ID attribute passed into this tag. This method evaluates the member variable

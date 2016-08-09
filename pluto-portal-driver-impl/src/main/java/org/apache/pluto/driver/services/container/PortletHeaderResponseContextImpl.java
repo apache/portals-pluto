@@ -17,6 +17,8 @@
 package org.apache.pluto.driver.services.container;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -31,40 +33,41 @@ import org.apache.pluto.driver.AttributeKeys;
 
 /**
  * @version $Id$
- *
+ * 
  */
-public class PortletHeaderResponseContextImpl extends PortletMimeResponseContextImpl implements
-                PortletHeaderResponseContext
-{
-    public PortletHeaderResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
-          HttpServletResponse containerResponse, PortletWindow window, PortletRequestContext requestContext)
-    {
-        super(container, containerRequest, containerResponse, window, requestContext);
-        setLifecycle(PortletRequest.HEADER_PHASE);
-    }
+public class PortletHeaderResponseContextImpl extends PortletMimeResponseContextImpl implements PortletHeaderResponseContext {
+   public PortletHeaderResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest, HttpServletResponse containerResponse,
+         PortletWindow window, PortletRequestContext requestContext) {
+      super(container, containerRequest, containerResponse, window, requestContext);
+      setLifecycle(PortletRequest.HEADER_PHASE);
+   }
 
-    @Override
-    public void setNextPossiblePortletModes(Collection<PortletMode> portletModes)
-    {
-        // not supported
-    }
+   @Override
+   public void setNextPossiblePortletModes(Collection<PortletMode> portletModes) {
+      // not supported
+   }
 
-    @Override
-    public void setTitle(String title)
-    {
-        if (!isClosed())
-        {
-            getServletRequest().setAttribute(AttributeKeys.PORTLET_TITLE, title);
-        }
-    }
+   @SuppressWarnings("unchecked")
+   @Override
+   public void setTitle(String title) {
+      if (!isClosed()) {
+         Map<String, String> titles = (Map<String, String>) getServletRequest().getAttribute(AttributeKeys.PORTLET_TITLE);
+         if (titles == null) {
+            titles = new HashMap<String, String>();
+            getServletRequest().setAttribute(AttributeKeys.PORTLET_TITLE, titles);
+         }
+         String key = getPortletWindow().getId().getStringId();
+         titles.put(key, title);
+      }
+   }
 
-    @Override
-    public void addDependency(String name, String scope, String version) {
-       headerData.addDependency(name, scope, version);
-    }
+   @Override
+   public void addDependency(String name, String scope, String version) {
+      headerData.addDependency(name, scope, version);
+   }
 
-    @Override
-    public void addDependency(String name, String scope, String version, String markup) {
-       headerData.addDependency(name, scope, version, markup);
-    }
+   @Override
+   public void addDependency(String name, String scope, String version, String markup) {
+      headerData.addDependency(name, scope, version, markup);
+   }
 }
