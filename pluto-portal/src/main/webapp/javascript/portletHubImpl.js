@@ -448,9 +448,11 @@ var portlet = portlet || {};
     *                Additional parameters. May be <code>null</code>
     * @param   {string}    cache    Cacheability. Must be present if 
     *                type = "RESOURCE". May be <code>null</code> 
+    * @param   {string}    resid    Resource ID. May be present if 
+    *                type = "RESOURCE". May be <code>null</code> 
     * @private 
     */
-   getUrl = function (type, pid, parms, cache) {
+   getUrl = function (type, pid, parms, cache, resid) {
    
       var url = portlet.impl.getUrlBase(), ca = 'cacheLevelPage', parm, isAction = false,
           name, names, ii, str, id, ids, tpid, prpstrings, group, ptype;
@@ -472,6 +474,9 @@ var portlet = portlet || {};
             ca = cache;
          }
          url += TOKEN_DELIM + PREFIX + CACHE_LEVEL + encodeURIComponent(ca);
+         if (resid) {
+        	 url += TOKEN_DELIM + PREFIX + RESOURCE_ID + encodeURIComponent(resid);
+         }
       } else if (type === "RENDER" && pid !== null) {
          // Add Render window
          url += TOKEN_DELIM + PREFIX + RENDER + pidMap[pid];
@@ -940,7 +945,7 @@ var portlet = portlet || {};
          /**
           * Get a URL of the specified type - resource or partial action
           */
-         getUrl : function (type, parms, cache) {return getUrl(type, pid, parms, cache);},
+         getUrl : function (type, parms, cache, resid) {return getUrl(type, pid, parms, cache, resid);},
    
          /**
           * Decode the update string returned by the partial action request.
