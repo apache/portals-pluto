@@ -518,9 +518,10 @@ var portlet = portlet || {};
 
          }
 
-         // add the state for the target portlet for on-action urls.
-         // (for a render URL, pid can be null)
-         if (!isAction && pid !== null) {
+         // add the state for the target portlet, if there is one.
+         // (for a render URL, pid can be null, and the state will have
+         // been added previously)
+         if (pid !== null) {
             url += genPMWSString(pid);  // portlet mode & window state
             str = "";
             names = pageState.portlets[pid].state.parameters;
