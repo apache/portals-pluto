@@ -120,7 +120,7 @@ import static javax.portlet.tck.portlets.Utils.WINDOWIDARTIFACTKEY;
    portletName = "AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts",
    supportedLocales = {"en_US", "de"}
 )
-public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts  {
+public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts implements Portlet {
    
    private Utils                   utils = new Utils();
 
@@ -878,8 +878,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts  {
       return new ArtifactValidationResult(artifactInHeaderPhase,
             artifactInRenderPhase, artifactInActionPhase, artifactInEventPhase);
    }
-/*
- * TODO: Fix the problem here
+   
    @Override
    public void init(PortletConfig config) throws PortletException {
       initPortletConfig = config;
@@ -889,5 +888,5 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts  {
    public void destroy() {
       
    }
-*/
+   
 }
