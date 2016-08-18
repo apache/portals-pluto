@@ -200,20 +200,20 @@ a.tooltip:hover span.tooltip {
 
 /** Login page styles **/
 
-fieldset {
+#login fieldset {
   margin: 0.5em;
   border-width: 1px;
   border-style: solid;
   border-color: #2E6794;
 }
 
-legend {
+#login legend {
   color: #2E6794;
   font-family: "Trebuchet MS", Trebuchet, Arial, Helvetica, Sans-serif;
   font-weight: bold;
 }
 
-label {
+#login label {
   clear: both;
   width: 40%;
   float: left;
@@ -221,7 +221,7 @@ label {
   margin: 0px 5px 10px 0px;
 }
 
-input {
+#login input {
   color: #2E6794;
   background-color: #8DB7DF;
   margin: 0px 0px 10px 5px;

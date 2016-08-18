@@ -17,68 +17,63 @@
 package org.apache.pluto.driver.tags;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.pluto.driver.services.portal.PortletWindowConfig;
-
 /**
- * The portlet render tag is used to print portlet rendering result (or error
- * details) to the page.
- *
+ * The portlet render tag is used to print portlet rendering result (or error details) to the page.
+ * 
  * @version 1.0
  * @since Oct 4, 2004
  */
 public class PortletRenderTag extends TagSupport {
-	
-	// TagSupport Impl ---------------------------------------------------------
-	
-	/**
-	 * 
-	 * @see PortletTag
-	 */
-    public int doEndTag() throws JspException {
-    	
-    	// Ensure that the portlet render tag resides within a portlet tag.
-        PortletTag parentTag = (PortletTag) TagSupport.findAncestorWithClass(
-        		this, PortletTag.class);
-        if (parentTag == null) {
-            throw new JspException("Portlet render tag may only reside "
-            		+ "within a pluto:portlet tag.");
-        }
-        
-        // If the portlet is rendered successfully, print the rendering result.
-        if (parentTag.getStatus() == PortletTag.SUCCESS) {
-            try {
-                StringBuffer buffer = parentTag.getPortalServletResponse()
-                		.getInternalBuffer().getBuffer();
-                pageContext.getOut().print(buffer.toString());
-            } catch (IOException ex) {
-                throw new JspException(ex);
-            }
-        }
-        // Otherwise, print the error stack trace.
-        else {
-            try {
-            	PortletWindowConfig windowConfig =
-                    PortletWindowConfig.fromId(parentTag.getEvaluatedPortletId());
-            	
-                pageContext.getOut().print("Error rendering portlet " + windowConfig.getPortletName() + ".");
-                pageContext.getOut().print("<pre>");
-                parentTag.getThrowable().printStackTrace(
-                		new PrintWriter(pageContext.getOut()));
-                pageContext.getOut().print("</pre>");
-            } catch (IOException ex) {
-                throw new JspException(ex);
-            }
-        }
-        
-        // Return.
-        return SKIP_BODY;
-    }
+   private static final long serialVersionUID = 1L;
 
+   // TagSupport Impl ---------------------------------------------------------
+
+   /**
+    * 
+    * @see PortletTag
+    */
+   public int doEndTag() throws JspException {
+
+      // Ensure that the portlet render tag resides within a portlet tag.
+      PortletTag parentTag = (PortletTag) TagSupport.findAncestorWithClass(this, PortletTag.class);
+      if (parentTag == null) {
+         throw new JspException("Portlet render tag may only reside " + "within a pluto:portlet tag.");
+      }
+
+      // If the portlet is rendered successfully, print the rendering result.
+
+      try {
+         if (parentTag.getStatus() == PortletTag.SUCCESS) {
+            StringBuffer buffer = parentTag.getPortalServletResponse().getInternalBuffer().getBuffer();
+            pageContext.getOut().print(buffer.toString());
+         } else {
+
+            // Otherwise, print the error messages
+
+            List<String> msgs = parentTag.getMessages();
+
+            if (msgs.isEmpty()) {
+               pageContext.getOut().print(" Unknown error rendering portlet.");
+            } else {
+
+               for (String msg : msgs) {
+                  pageContext.getOut().print("<p>");
+                  pageContext.getOut().print(msg);
+                  pageContext.getOut().print("</p>");
+               }
+            }
+         }
+      } catch (IOException ex) {
+         throw new JspException(ex);
+      }
+
+      // Return.
+      return SKIP_BODY;
+   }
 
 }
-

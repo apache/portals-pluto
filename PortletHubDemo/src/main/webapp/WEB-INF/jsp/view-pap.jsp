@@ -44,16 +44,15 @@ limitations under the License.
        paButton = '<portlet:namespace/>-doPA',
    
        state,
-       actparms,
        hub,
    
    // Handler for onStateChange event
    update = function (type, s) {
-      var nc = s.p.getValue('color', '#E0E0E0');
+      var nc = s.getValue('color', '#E0E0E0');
       console.log("PAP: state updated. Event type = " + type);
       
       // change background color for message box
-      if (state.p.getValue('color') !== nc) {
+      if (state.getValue('color') !== nc) {
          document.getElementById(resdiv).style.background = nc;
       }
       state = s;
@@ -61,11 +60,15 @@ limitations under the License.
    
    // Handler for "partial action" button. Perform partial action sequence.
    document.getElementById(paButton).onclick = function () {
-      var xhr = new XMLHttpRequest(), vals, pagestate = null, markup; 
+      var xhr = new XMLHttpRequest(), vals, pagestate = null, markup, actparms, actvals; 
       console.log("PAP: Partial action button clicked.");
       
       // Add the render parameter counter as action parameter
-      actparms.setValue('numActions', state.p.getValue('numActions'));
+      actparms = hub.newParameters();
+      actvals = state.getValues('numActions');       
+      if (actvals) {
+         actparms['numActions'] = actvals;
+      }
       
       hub.startPartialAction(actparms).then(function (pai) {
          
@@ -100,7 +103,6 @@ limitations under the License.
       console.log("PAP: registered: " + pid);
       hub = pi;
       state = hub.newState();
-      actparms = hub.newParameters();
       hub.addEventListener("portlet.onStateChange", update);
    });
    

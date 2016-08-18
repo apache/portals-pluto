@@ -47,6 +47,7 @@ import org.apache.pluto.container.om.portlet.EventDefinition;
 import org.apache.pluto.container.om.portlet.EventDefinitionReference;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.apache.pluto.container.om.portlet.Supports;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -408,7 +409,17 @@ public abstract class ConfigurationProcessor {
          
          PortletDefinition pd = pad.getPortlet(pn);
          if (pd == null) {
+            
+            // Implied configuration; no portlet.xml or @PortletConfiguration data
+            
             pd = new PortletDefinitionImpl(pn, pad);
+         }
+         
+         if (pd.getSupports().isEmpty()) {
+            // add default values
+            Supports supp = new SupportsImpl("*/*");
+            supp.addPortletMode("view");
+            pd.addSupports(supp);
          }
          
          // if one of the @serveResourceMethod annotations has its ayncSupported

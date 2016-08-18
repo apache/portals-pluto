@@ -103,14 +103,14 @@ limitations under the License.
        
    // Handler for onStateChange event
    update = function (type, state) {
-      var oldColor = currState.p.getValue('<%=PARAM_COLOR%>'),
+      var oldColor = currState.getValue('<%=PARAM_COLOR%>'),
       
           // use getValue with default value that is used if the parameter is not set
-          newColor = state.p.getValue('<%=PARAM_COLOR%>', '#FFFFFF'),
-          subtype = state.p.getValue('<%=PARAM_SUBTYPE%>', '<%=PARAM_SUBTYPE_FORM%>'),
-          msg = state.p.getValue('<%=PARAM_MSG_INPUT%>', ''),
+          newColor = state.getValue('<%=PARAM_COLOR%>', '#FFFFFF'),
+          subtype = state.getValue('<%=PARAM_SUBTYPE%>', '<%=PARAM_SUBTYPE_FORM%>'),
+          msg = state.getValue('<%=PARAM_MSG_INPUT%>', ''),
           
-          fgcolor = state.p.getValues('<%=PARAM_FG_COLOR%>'),
+          fgcolor = state.getValues('<%=PARAM_FG_COLOR%>'),
           clr = {red: false, green: false, blue: false}, ii;
       
       console.log("CSP: state updated. Type=" + type + ", color=" + newColor);
@@ -160,7 +160,7 @@ limitations under the License.
          document.getElementById(msgdiv).innerHTML = 'Bad color. Enter #xxxxxx or #xxx.';
       } else {
          newState = currState.clone();
-         newState.p.setValue('color', newColor);
+         newState.setValue('color', newColor);
          hub.setRenderState(newState);
       }
    };

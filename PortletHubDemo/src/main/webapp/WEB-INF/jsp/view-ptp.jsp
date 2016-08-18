@@ -100,7 +100,7 @@ Leaving the value field empty will set the parameter to an array containing a si
       
       nstate = currState.clone();
       if (pValue === 'null') {
-         nstate.p.remove(pName);
+         nstate.remove(pName);
       } else {
          if (pValue === 'empty') {
             nstate.parameters[pName] = [];
@@ -111,7 +111,7 @@ Leaving the value field empty will set the parameter to an array containing a si
                   vals[ii] = null;
                }
             }
-            nstate.p.setValues(pName, vals);
+            nstate.setValues(pName, vals);
          }
       }
       

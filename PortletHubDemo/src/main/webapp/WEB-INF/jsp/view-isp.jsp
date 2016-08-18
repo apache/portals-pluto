@@ -60,7 +60,7 @@ limitations under the License.
       
       if (currState.parameters.imgName !== this.value) {
          var newState = currState.clone();
-         newState.p.setValue('imgName', this.value);
+         newState.setValue('imgName', this.value);
          hub.setRenderState(newState);
       }
    },
@@ -71,7 +71,7 @@ limitations under the License.
       
       if (currState.parameters.imgName !== this.value) {
          var newState = currState.clone();
-         newState.p.setValue('imgName', this.value);
+         newState.setValue('imgName', this.value);
          hub.setRenderState(newState);
       }
    },
@@ -105,10 +105,10 @@ limitations under the License.
    
    // Handler for onStateChange event
    update = function (type, state) {
-      var oldST = currState.p.getValue('selType'),
-          newST = state.p.getValue('selType', 'radio'),
-          oldImg = currState.p.getValue('imgName'),
-          newImg = state.p.getValue('imgName');
+      var oldST = currState.getValue('selType'),
+          newST = state.getValue('selType', 'radio'),
+          oldImg = currState.getValue('imgName'),
+          newImg = state.getValue('imgName');
           
       console.log("ISP: state updated. type=" + type + ", selType=" + newST + ", imgName=" + newImg);
       
@@ -156,7 +156,7 @@ limitations under the License.
       console.log("ISP: select display type clicked: " + this.value);
       if (currState.parameters.selType !==  this.value) {
          var newState = currState.clone();
-         newState.p.setValue('selType', this.value);
+         newState.setValue('selType', this.value);
          hub.setRenderState(newState);
       }
    };

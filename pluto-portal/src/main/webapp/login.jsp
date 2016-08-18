@@ -38,28 +38,30 @@
         <p>A Apache Portals Project</p>
       </div>
       <div id="content">
-        <c:if test='${param.error == "1"}'>
-          <p style="color:red;text-align:center">
-            Invalid credentials. Please try again
-          </p>
-        </c:if>
-        <form method="POST" action="j_security_check">
-          <fieldset>
-            <legend>Login to Pluto</legend>
-            <div>
-              <label for="j_username">User Name</label>
-              <input type="text" name="j_username" id="j_username"/>
-            </div>
-            <div>
-              <label for="j_password">Password</label>
-              <input type="password" name="j_password" id="j_password"/>
-            </div>
-            <div>
-              <label for="j_login"></label>
-              <input type="submit" value="Login" name="login" id="j_login"/>
-            </div>
-          </fieldset>
-        </form>
+        <div id="login">
+          <c:if test='${param.error == "1"}'>
+            <p style="color:red;text-align:center">
+              Invalid credentials. Please try again
+            </p>
+          </c:if>
+          <form method="POST" action="j_security_check">
+            <fieldset>
+              <legend>Login to Pluto</legend>
+              <div>
+                <label for="j_username">User Name</label>
+                <input type="text" name="j_username" id="j_username"/>
+              </div>
+              <div>
+                <label for="j_password">Password</label>
+                <input type="password" name="j_password" id="j_password"/>
+              </div>
+              <div>
+                <label for="j_login"></label>
+                <input type="submit" value="Login" name="login" id="j_login"/>
+              </div>
+            </fieldset>
+          </form>
+        </div>
       </div>
       
       <div id="footer">

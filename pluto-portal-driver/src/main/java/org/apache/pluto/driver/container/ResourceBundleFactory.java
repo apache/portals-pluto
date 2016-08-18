@@ -30,86 +30,92 @@ import org.apache.pluto.container.util.StringManager;
 
 /**
  * Factory object used to create Portlet Resource Bundles.
- *
- *
+ * 
+ * 
  */
 class ResourceBundleFactory {
 
-    private static final Logger LOG =
-        LoggerFactory.getLogger(ResourceBundleFactory.class);
+   private static final Logger         LOG        = LoggerFactory.getLogger(ResourceBundleFactory.class);
 
-    private static final StringManager EXCEPTIONS =
-        StringManager.getManager(ResourceBundleFactory.class.getPackage().getName());
+   private static final StringManager  EXCEPTIONS = StringManager.getManager(ResourceBundleFactory.class.getPackage().getName());
 
-    /**
-     * The default (no local) resources bundle for
-     * this bundle.
-     */
-    private InlinePortletResourceBundle defaultBundle;
+   /**
+    * The default (no local) resources bundle for this bundle.
+    */
+   private InlinePortletResourceBundle defaultBundle;
 
-    /**
-     * All of the previously loaded bundles.
-     */
-    private Map<Locale, ResourceBundle> bundles = new HashMap<Locale, ResourceBundle>();
+   /**
+    * All of the previously loaded bundles.
+    */
+   private Map<Locale, ResourceBundle> bundles    = new HashMap<Locale, ResourceBundle>();
 
-    /**
-     * The name of the bundle.
-     */
-    private String bundleName;
+   /**
+    * The name of the bundle.
+    */
+   private String                      bundleName;
 
-    public ResourceBundleFactory(PortletDefinition dd, PortletInfo windowInfo) {
-        bundleName = dd.getResourceBundle();
-        if(LOG.isDebugEnabled()) {
-            LOG.debug("Resource Bundle Created: "+bundleName);
-        }
+   public ResourceBundleFactory(PortletDefinition dd, PortletInfo windowInfo) {
+      bundleName = dd.getResourceBundle();
 
-        PortletInfo info = dd.getPortletInfo();
+      PortletInfo info = dd.getPortletInfo();
 
+      String defaultTitle = "[ " + dd.getPortletName() + " ]";
 
-        if(info != null) {
-            String title = windowInfo == null ? info.getTitle() : windowInfo.getTitle();
-            String shortTitle = windowInfo == null ? info.getShortTitle() : windowInfo.getShortTitle();
-            String keywords = windowInfo == null ? info.getKeywords() : windowInfo.getKeywords();
+      if (info != null) {
+         String title = windowInfo == null ? info.getTitle() : windowInfo.getTitle();
+         String shortTitle = windowInfo == null ? info.getShortTitle() : windowInfo.getShortTitle();
+         String keywords = windowInfo == null ? info.getKeywords() : windowInfo.getKeywords();
 
-            defaultBundle = new InlinePortletResourceBundle(
-                    title, shortTitle, keywords
-            );
-        }
-        else {
-            defaultBundle = new InlinePortletResourceBundle(new Object[][] { {"a", "b"} });
-        }
-    }
+         // Set default values
 
-    public ResourceBundle getResourceBundle(Locale locale) {
-        if(LOG.isDebugEnabled()) {
-            LOG.debug("Resource Bundle: "+bundleName+" : "+locale+" requested. ");
-        }
+         if (title == null) {
+            title = defaultTitle;
+         }
+         if (shortTitle == null) {
+            shortTitle = defaultTitle;
+         }
 
-        // If allready loaded for this local, return immediately!
-        if (bundles.containsKey(locale)) {
-            return bundles.get(locale);
-        }
+         defaultBundle = new InlinePortletResourceBundle(title, shortTitle, keywords);
+      } else {
+         defaultBundle = new InlinePortletResourceBundle(defaultTitle, defaultTitle, "");
+      }
 
-        try {
-            ResourceBundle bundle = null;
-            if(bundleName != null) {
-                ClassLoader loader =
-                    Thread.currentThread().getContextClassLoader();
-                bundle = ResourceBundle.getBundle(bundleName, locale, loader);
-                bundles.put(locale, new CombinedPortletResourceBundle(defaultBundle, bundle));
-            }
-            else {
-                bundles.put(locale, defaultBundle);
-            }
-        } catch (MissingResourceException mre) {
-            if(bundleName != null && LOG.isWarnEnabled()) {
-                LOG.warn(EXCEPTIONS.getString("warning.resourcebundle.notfound",bundleName, mre.getMessage()));
-            }
-            if(LOG.isDebugEnabled()) {
-                LOG.debug("Using default bundle for locale ("+locale+").");
-            }
+      if (LOG.isDebugEnabled()) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("Bundle name: ").append(bundleName);
+         txt.append(", default ").append(defaultBundle.toString());
+         LOG.debug(txt.toString());
+      }
+   }
+
+   public ResourceBundle getResourceBundle(Locale locale) {
+      if (LOG.isDebugEnabled()) {
+         LOG.debug("Resource Bundle: " + bundleName + " : " + locale + " requested. ");
+      }
+
+      // If allready loaded for this local, return immediately!
+      if (bundles.containsKey(locale)) {
+         return bundles.get(locale);
+      }
+
+      try {
+         ResourceBundle bundle = null;
+         if (bundleName != null && bundleName.length() > 0) {
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            bundle = ResourceBundle.getBundle(bundleName, locale, loader);
+            bundles.put(locale, new CombinedPortletResourceBundle(defaultBundle, bundle));
+         } else {
             bundles.put(locale, defaultBundle);
-        }
-        return bundles.get(locale);
-    }
+         }
+      } catch (MissingResourceException mre) {
+         if (bundleName != null && LOG.isWarnEnabled()) {
+            LOG.warn(EXCEPTIONS.getString("warning.resourcebundle.notfound", bundleName, mre.getMessage()));
+         }
+         if (LOG.isDebugEnabled()) {
+            LOG.debug("Using default bundle for locale (" + locale + ").");
+         }
+         bundles.put(locale, defaultBundle);
+      }
+      return bundles.get(locale);
+   }
 }

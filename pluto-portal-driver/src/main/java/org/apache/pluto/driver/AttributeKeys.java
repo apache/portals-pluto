@@ -46,7 +46,10 @@ public class AttributeKeys {
     /** Attribute key used to bind the current page to servlet request. */
     public static final String CURRENT_PAGE = "currentPage";
 
-    /** Attribute key used to bind the portlet title to servlet request. */
+    /** 
+     * Attribute key used to bind the portlet title to servlet request. 
+     * The attribute object maps the portlet window ID to the title. 
+     */
     public static final String PORTLET_TITLE =
     		"org.apache.pluto.driver.DynamicPortletTitle";
 

@@ -17,6 +17,8 @@
 package org.apache.pluto.driver.services.container;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -48,11 +50,18 @@ public class PortletRenderResponseContextImpl extends PortletMimeResponseContext
         // not supported
     }
 
-    public void setTitle(String title)
+    @SuppressWarnings("unchecked")
+   public void setTitle(String title)
     {
         if (!isClosed())
         {
-            getServletRequest().setAttribute(AttributeKeys.PORTLET_TITLE, title);
+           Map<String, String> titles = (Map<String, String>) getServletRequest().getAttribute(AttributeKeys.PORTLET_TITLE);
+           if (titles == null) {
+              titles = new HashMap<String, String>();
+              getServletRequest().setAttribute(AttributeKeys.PORTLET_TITLE, titles);
+           }
+           String key = getPortletWindow().getId().getStringId();
+           titles.put(key, title);
         }
     }
 }
