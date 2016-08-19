@@ -163,20 +163,6 @@ limitations under the License.
       <portlet context="/pluto" name="AboutPortlet"/>
     </page>
     ${includeDemosBegin}
-    <page name="V2.0 Parameter Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/ResourcePortlet-PRP" name="ParamTestPortlet"/>
-      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
-    </page>
-    <page name="V2.0 Public Render Parameter tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/tck-TestModule3-Portlet1" name="TestModule3_Portlet1"/>
-      <portlet context="/tck-TestModule3-Portlet2" name="TestModule3_Portlet2"/>
-    </page>
-    <page name="V2.0 Parameter Demo" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/ResourcePortlet-PRP" name="ImageSelPortlet"/>
-      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
-      <portlet context="/ResourcePortlet-PRP" name="ColorSelPortlet"/>
-      <portlet context="/ResourcePortlet-PRP" name="MessageBoxPortlet"/>
-    </page>
     <page name="V3.0 Portlet Hub Demo" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <dependency>
          <name>pluto.css</name>
@@ -195,19 +181,13 @@ limitations under the License.
     </page>
     <page name="V3.0 Parameter Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/PortletV3Demo" name="ParamTestPortlet"/>
-      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
     </page>
     <page name="V3.0 URL Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/PortletV3Demo" name="UrlTestPortlet"/>
-      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
     </page>
     <page name="V3.0 Render URL Parameter Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/PortletV3Demo" name="UrlRPTestPortlet"/>
-      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
-    </page>
-    <page name="V3.0 Action URL Parameter Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/PortletV3Demo" name="UrlAPTestPortlet"/>
-      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
     </page>
     <page name="V3.0 Misc Tests - HTTP SC, fragment id" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/PortletV3Demo" name="LongPortlet"/>
@@ -238,6 +218,10 @@ limitations under the License.
     <page name="Tag Library" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/PortletV3Demo" name="TagLibPortlet"/>
       <portlet context="/PortletV3Demo" name="TagLibTagsPortlet"/>
+    </page>
+    <page name="Chat Room Demo" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/chatRoomDemo" name="BeanPortletDemo"/>
+      <portlet context="/chatRoomDemo" name="BeanPortletDemo"/>
     </page>
     ${includeDemosEnd}
   </render-config>

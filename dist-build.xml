@@ -26,6 +26,9 @@
 	Or if you want to include the demo portlet WARs:
 		ant -f dist-build.xml -DincludeDemos=true
 
+	If you want to retain the intermediate products (tomcat directory), add the noClean flag:
+		ant -f dist-build.xml -DincludeDemos=true -DnoClean=true
+
 	The bundled distribution is done in the following way:
 	1. Downloads Tomcat from Apache and unzips it into a working directory. To this distribution, the
 		build:
@@ -87,6 +90,7 @@
 	</target>
 
 	<target name="include-demos" if="includeDemos">
+		<copy file="ChatRoomDemo/target/chatRoomDemo.war" todir="${dist.dir}/webapps" />
 		<copy file="PortletHubDemo/target/PortletHubDemo.war" todir="${dist.dir}/webapps" />
 		<copy file="PortletV3Demo/target/PortletV3Demo.war" todir="${dist.dir}/webapps" />
 		<copy file="PortletV3AnnotatedDemo/target/PortletV3AnnotatedDemo.war" todir="${dist.dir}/webapps" />
@@ -179,7 +183,7 @@
 		</exec>
 	</target>
 		
-	<target name="clean">
+	<target name="clean" unless="noClean">
 		<delete dir="${dist.dir}"/>
 		<delete file="${tar.file}"/>	
 	</target>

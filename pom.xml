@@ -658,6 +658,7 @@ TODO: Check if we need all of them. -->
         <module>pluto-testsuite</module>
         
         <!-- PortletHub demo portlets -->
+        <module>ChatRoomDemo</module>
         <module>PortletHubDemo</module>
         <module>PortletV3Demo</module>
         <module>PortletV3AnnotatedDemo</module>
