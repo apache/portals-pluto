@@ -358,6 +358,12 @@
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
+   <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V3AnnotationPortletAppConfigOverrideTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
    </dependencies>
 
    <properties>
@@ -442,6 +448,7 @@
                         ,tck-V3PortletParametersTests
                         ,tck-V3AnnotationPortletArtifactValidityTests
                         ,tck-V3AnnotationPortletApplicationConfigTests
+                        ,tck-V3AnnotationPortletAppConfigOverrideTests
                      </includeArtifactIds>
                      <includes>${test.file.dir}/*.xml</includes>
                      <outputDirectory>${project.build.directory}</outputDirectory>
