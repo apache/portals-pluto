@@ -66,4 +66,5 @@
 <fl:file>tck-V3HeaderPortletTests-pages.xml</fl:file>
 <fl:file>tck-V3PortletParametersTests-pages.xml</fl:file>
 <fl:file>tck-V3AnnotationPortletArtifactValidityTests-pages.xml</fl:file>
+<fl:file>tck-V3AnnotationPortletApplicationConfigTests-pages.xml</fl:file>
 </fl:filelist>

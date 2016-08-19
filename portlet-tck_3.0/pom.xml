@@ -173,6 +173,7 @@
       <module>V3HeaderPortletTests</module>
       <module>V3PortletParametersTests</module>
       <module>V3AnnotationPortletArtifactValidityTests</module>
+      <module>V3AnnotationPortletApplicationConfigTests</module>
       <module>deploy</module>
       <module>driver</module>
    </modules>
