@@ -1,0 +1,19 @@
+PARMS outputPath=C:\Users\IBM_ADMIN\Downloads\TCKTool
+Class / Section;Keywords;Name;Testable;Description
+AnnotationPortletAppConfigOverrideTests;;;;
+SPEC1_28;PortletModes;declaringPortletModes7;TRUE;A custom portlet mode declared in the @PortletApplication annotation could be overridden by deployment descriptor portlet.xml
+SPEC1_28;PortletModes;declaringPortletModes8;TRUE;The portlet container merges the portlet modes declared in the @PortletApplication annotation and deployment descriptor portlet.xml
+SPEC1_28;WindowStates;declaringWindowStates5;TRUE;A custom window state declared in the @PortletApplication annotation could be overridden by deployment descriptor portlet.xml
+SPEC1_28;WindowStates;declaringWindowStates6;TRUE;The portlet container merges the window states declared in the @PortletApplication annotation and deployment descriptor portlet.xml
+SPEC1_28;UserAttributes;declaringUserAttributes2;TRUE;A user attribute declared in the @PortletApplication annotation could be overridden by deployment descriptor portlet.xml
+SPEC1_28;UserAttributes;declaringUserAttributes3;TRUE;The portlet container merges the user attributes declared in the @PortletApplication annotation and deployment descriptor portlet.xml
+SPEC1_28;ResourceBundle;declaringResourceBundle2;TRUE;The resource bundle defined in the @PortletApplication annotation could be overridden by deployment descriptor portlet.xml
+SPEC1_28;ResourceBundle;declaringResourceBundle3;TRUE;The portlet container merges the resource bundles declared in the @PortletApplication annotation and deployment descriptor portlet.xml
+SPEC1_28;DefaultNamespaceURI;declaringDefaultNamespaceURI2;TRUE;DefaultNamespaceURI defined in the @PortletApplication annotation could be overridden by deployment descriptor portlet.xml
+SPEC1_28;EventConfiguration1;declaringEvents3;TRUE;An event with cannot be declared two times - once in @PortletApplication then again in deployment descriptor portlet.xml
+SPEC1_28;EventConfiguration2;declaringEvents4;TRUE;The portlet container merges the events declared in the @PortletApplication annotation and deployment descriptor portlet.xml
+SPEC1_28;PublicRenderParameters1;declaringPRP2;TRUE;A public render parameters cannot be declared two times - once in @PortletApplication then again in deployment descriptor portlet.xml
+SPEC1_28;PublicRenderParameters2;declaringPRP3;TRUE;A public render parameters declared using @PortletApplication annotation in one portlet and deployment descriptor portlet.xml in another portlet can be shared with each other.
+SPEC1_28;PublicRenderParameters3;declaringPRP4;TRUE;The portlet container merges the public render parameters declared in the @PortletApplication annotation and deployment descriptor portlet.xml
+SPEC1_28;PortletContainerRuntimeOptions;declaringPCRO2;TRUE;A portlet container runtime option declared in the @PortletApplication annotation could be overridden by deployment descriptor portlet.xml
+SPEC1_28;PortletContainerRuntimeOptions;declaringPCRO3;TRUE;The portlet container merges the portlet container runtime options declared in the @PortletApplication annotation and deployment descriptor portlet.xml
