@@ -44,8 +44,8 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes1")
-public class AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes1 implements Portlet {
+@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes")
+public class AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes implements Portlet {
    
    private PortletConfig portletConfig = null;
 
@@ -68,63 +68,63 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes1 impl
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes1_declaringPortletModes1 */
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes_declaringPortletModes1 */
       /* Details: "Support for the VIEW mode does not need to be declared in the    */
       /* @PortletApplication annotation."                                           */
       {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES1_DECLARINGPORTLETMODES1);
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES1);
          /* TODO: implement test */
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);
       }
 
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes1_declaringPortletModes2 */
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes_declaringPortletModes2 */
       /* Details: "Support for the HELP mode must be declared in the                */
       /* @PortletApplication annotation."                                           */
       {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES1_DECLARINGPORTLETMODES2);
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES2);
          /* TODO: implement test */
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);
       }
 
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes1_declaringPortletModes3 */
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes_declaringPortletModes3 */
       /* Details: "A custom portlet mode may be declared in the @PortletApplication */
       /* annotation."                                                               */
       {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES1_DECLARINGPORTLETMODES3);
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES3);
          /* TODO: implement test */
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);
       }
 
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes1_declaringPortletModes4 */
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes_declaringPortletModes4 */
       /* Details: "A custom portlet mode with portalManaged=true may be declared in */
       /* the @PortletApplication annotation."                                       */
       {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES1_DECLARINGPORTLETMODES4);
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES4);
          /* TODO: implement test */
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);
       }
 
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes1_declaringPortletModes5 */
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes_declaringPortletModes5 */
       /* Details: "The PortletRequest.isPortletModeAllowed method must return FALSE */
       /* for a custom portlet mode with portalManaged=true that is not supported by */
       /* the portlet container"                                                     */
       {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES1_DECLARINGPORTLETMODES5);
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES5);
          /* TODO: implement test */
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);
       }
 
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes1_declaringPortletModes6 */
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes_declaringPortletModes6 */
       /* Details: "A custom portlet mode can have a localized decoration name in    */
       /* the resource bundle with the name of                                       */
       /* javax.portlet.app.custom-portlet-mode.&lt;name&gt;.decoration-name"        */
       {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES1_DECLARINGPORTLETMODES6);
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES6);
          /* TODO: implement test */
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);

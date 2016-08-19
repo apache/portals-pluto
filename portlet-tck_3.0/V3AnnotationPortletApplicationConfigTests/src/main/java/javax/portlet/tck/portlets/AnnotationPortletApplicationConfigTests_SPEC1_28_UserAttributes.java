@@ -44,8 +44,8 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI2")
-public class AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI2 implements Portlet {
+@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_UserAttributes")
+public class AnnotationPortletApplicationConfigTests_SPEC1_28_UserAttributes implements Portlet {
    
    private PortletConfig portletConfig = null;
 
@@ -68,11 +68,11 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceUR
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI2_declaringDefaultNamespaceURI2 */
-      /* Details: "DefaultNamespaceURI defined in the @PortletApplication           */
-      /* annotation could be overridden by deployment descriptor portlet.xml"       */
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_UserAttributes_declaringUserAttributes1 */
+      /* Details: "A user attribute may be declared in the @PortletApplication      */
+      /* annotation."                                                               */
       {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_DEFAULTNAMESPACEURI2_DECLARINGDEFAULTNAMESPACEURI2);
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_USERATTRIBUTES_DECLARINGUSERATTRIBUTES1);
          /* TODO: implement test */
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);

@@ -44,8 +44,8 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters2")
-public class AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters2 implements Portlet {
+@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration")
+public class AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration implements Portlet {
    
    private PortletConfig portletConfig = null;
 
@@ -68,11 +68,22 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParame
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters2_declaringPRP2 */
-      /* Details: "A public render parameters cannot be declared two times - once   */
-      /* in @PortletApplication then again in deployment descriptor portlet.xml"    */
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration_declaringEvents1 */
+      /* Details: "An event with Qname may be declared in the @PortletApplication   */
+      /* annotation using @EventDefinition annotation."                             */
       {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PUBLICRENDERPARAMETERS2_DECLARINGPRP2);
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION_DECLARINGEVENTS1);
+         /* TODO: implement test */
+         result.appendTcDetail("Not implemented.");
+         result.writeTo(writer);
+      }
+
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration_declaringEvents2 */
+      /* Details: "An event with name may be declared in the @PortletApplication    */
+      /* annotation using @EventDefinition and leaving namespaceURI empty           */
+      /* annotation."                                                               */
+      {
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION_DECLARINGEVENTS2);
          /* TODO: implement test */
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);

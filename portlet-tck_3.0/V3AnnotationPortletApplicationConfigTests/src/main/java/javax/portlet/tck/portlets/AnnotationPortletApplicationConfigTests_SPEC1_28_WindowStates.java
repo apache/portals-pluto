@@ -44,8 +44,8 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_ResourceBundle2")
-public class AnnotationPortletApplicationConfigTests_SPEC1_28_ResourceBundle2 implements Portlet {
+@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates")
+public class AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates implements Portlet {
    
    private PortletConfig portletConfig = null;
 
@@ -68,21 +68,41 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_ResourceBundle2 im
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_ResourceBundle2_declaringResourceBundle2 */
-      /* Details: "The resource bundle defined in the @PortletApplication           */
-      /* annotation could be overridden by deployment descriptor portlet.xml"       */
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates_declaringWindowStates1 */
+      /* Details: "Support for the NORMAL window state does not need to be declared */
+      /* in the @PortletApplication annotation."                                    */
       {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_RESOURCEBUNDLE2_DECLARINGRESOURCEBUNDLE2);
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES1);
          /* TODO: implement test */
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);
       }
 
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_ResourceBundle2_declaringResourceBundle3 */
-      /* Details: "The portlet container merges the resource bundles declared in    */
-      /* the @PortletApplication annotation and deployment descriptor portlet.xml"  */
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates_declaringWindowStates2 */
+      /* Details: "Support for the MINIMIZED window state does not need to be       */
+      /* declared in the @PortletApplication annotation."                           */
       {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_RESOURCEBUNDLE2_DECLARINGRESOURCEBUNDLE3);
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES2);
+         /* TODO: implement test */
+         result.appendTcDetail("Not implemented.");
+         result.writeTo(writer);
+      }
+
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates_declaringWindowStates3 */
+      /* Details: "Support for the MAXIMIZED window state does not need to be       */
+      /* declared in the @PortletApplication annotation."                           */
+      {
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES3);
+         /* TODO: implement test */
+         result.appendTcDetail("Not implemented.");
+         result.writeTo(writer);
+      }
+
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates_declaringWindowStates4 */
+      /* Details: "The PortletRequest.isWindowStateAllowed method must return FALSE */
+      /* for a custom window state that is not supported by the portlet container." */
+      {
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES4);
          /* TODO: implement test */
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);

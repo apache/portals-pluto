@@ -32,25 +32,14 @@
 </supports>
 <render-config default="About Apache Pluto">
 <page xmlns="" name="V3AnnotationPortletApplicationConfigTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes1"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes2"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates1"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates2"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_UserAttributes1"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_UserAttributes2"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_ResourceBundle1"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_ResourceBundle2"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI1"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI2"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration1"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration2"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration3"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters1"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters2"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters3"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters4"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_PortletContainerRuntimeOptions1"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_PortletContainerRuntimeOptions2"/>
+<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes"/>
+<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates"/>
+<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_UserAttributes"/>
+<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_ResourceBundle"/>
+<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI"/>
+<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration"/>
+<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters"/>
+<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_PortletContainerRuntimeOptions"/>
 </page>
 </render-config>
 </pluto-portal-driver>

@@ -44,8 +44,8 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration2")
-public class AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration2 implements Portlet {
+@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI")
+public class AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI implements Portlet {
    
    private PortletConfig portletConfig = null;
 
@@ -68,11 +68,11 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration2_declaringEvents3 */
-      /* Details: "An event with cannot be declared two times - once in             */
-      /* @PortletApplication then again in deployment descriptor portlet.xml"       */
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI_declaringDefaultNamespaceURI1 */
+      /* Details: "DefaultNamespaceURI may be declared in the @PortletApplication   */
+      /* annotation."                                                               */
       {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION2_DECLARINGEVENTS3);
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_DEFAULTNAMESPACEURI_DECLARINGDEFAULTNAMESPACEURI1);
          /* TODO: implement test */
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);

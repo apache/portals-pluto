@@ -44,8 +44,8 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters3")
-public class AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters3 implements Portlet {
+@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_ResourceBundle")
+public class AnnotationPortletApplicationConfigTests_SPEC1_28_ResourceBundle implements Portlet {
    
    private PortletConfig portletConfig = null;
 
@@ -68,12 +68,12 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParame
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters3_declaringPRP3 */
-      /* Details: "A public render parameters declared using @PortletApplication    */
-      /* annotation in one portlet and deployment descriptor portlet.xml in another */
-      /* portlet can be shared with each other."                                    */
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_ResourceBundle_declaringResourceBundle1 */
+      /* Details: "The resource bundle defined in the @PortletApplication           */
+      /* annotation resourceBundle element can be obtained through the              */
+      /* PortletConfig object"                                                      */
       {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PUBLICRENDERPARAMETERS3_DECLARINGPRP3);
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_RESOURCEBUNDLE_DECLARINGRESOURCEBUNDLE1);
          /* TODO: implement test */
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);

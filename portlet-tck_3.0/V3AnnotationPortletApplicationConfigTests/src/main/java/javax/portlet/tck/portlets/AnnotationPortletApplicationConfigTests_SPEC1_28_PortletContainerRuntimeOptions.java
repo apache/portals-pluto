@@ -44,8 +44,8 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration3")
-public class AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration3 implements Portlet {
+@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_PortletContainerRuntimeOptions")
+public class AnnotationPortletApplicationConfigTests_SPEC1_28_PortletContainerRuntimeOptions implements Portlet {
    
    private PortletConfig portletConfig = null;
 
@@ -68,11 +68,11 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration3_declaringEvents4 */
-      /* Details: "The portlet container merges the events declared in the          */
-      /* @PortletApplication annotation and deployment descriptor portlet.xml"      */
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletContainerRuntimeOptions_declaringPCRO1 */
+      /* Details: "Portlet container runtime options may be declared in the         */
+      /* @PortletApplication annotation using @RuntimeOption annotation."           */
       {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION3_DECLARINGEVENTS4);
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETCONTAINERRUNTIMEOPTIONS_DECLARINGPCRO1);
          /* TODO: implement test */
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);

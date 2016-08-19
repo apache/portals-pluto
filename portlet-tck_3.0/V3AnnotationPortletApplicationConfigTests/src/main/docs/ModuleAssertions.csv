@@ -1,36 +1,20 @@
 PARMS outputPath=C:\Users\IBM_ADMIN\Downloads\TCKTool
 Class / Section;Keywords;Name;Testable;Description
 AnnotationPortletApplicationConfigTests;;;;
-SPEC1_28;PortletModes1;declaringPortletModes1;TRUE;Support for the VIEW mode does not need to be declared in the @PortletApplication annotation.
-SPEC1_28;PortletModes1;declaringPortletModes2;TRUE;Support for the HELP mode must be declared in the @PortletApplication annotation.
-SPEC1_28;PortletModes1;declaringPortletModes3;TRUE;A custom portlet mode may be declared in the @PortletApplication annotation.
-SPEC1_28;PortletModes1;declaringPortletModes4;TRUE;A custom portlet mode with portalManaged=true may be declared in the @PortletApplication annotation.
-SPEC1_28;PortletModes1;declaringPortletModes5;TRUE;The PortletRequest.isPortletModeAllowed method must return FALSE for a custom portlet mode with portalManaged=true that is not supported by the portlet container
-SPEC1_28;PortletModes1;declaringPortletModes6;TRUE;A custom portlet mode can have a localized decoration name in the resource bundle with the name of javax.portlet.app.custom-portlet-mode.<name>.decoration-name
-SPEC1_28;PortletModes2;declaringPortletModes7;TRUE;A custom portlet mode declared in the @PortletApplication annotation could be overridden by deployment descriptor portlet.xml
-SPEC1_28;PortletModes2;declaringPortletModes8;TRUE;The portlet container merges the portlet modes declared in the @PortletApplication annotation and deployment descriptor portlet.xml
-SPEC1_28;WindowStates1;declaringWindowStates1;TRUE;Support for the NORMAL window state does not need to be declared in the @PortletApplication annotation.
-SPEC1_28;WindowStates1;declaringWindowStates2;TRUE;Support for the MINIMIZED window state does not need to be declared in the @PortletApplication annotation.
-SPEC1_28;WindowStates1;declaringWindowStates3;TRUE;Support for the MAXIMIZED window state does not need to be declared in the @PortletApplication annotation.
-SPEC1_28;WindowStates1;declaringWindowStates4;TRUE;The PortletRequest.isWindowStateAllowed method must return FALSE for a custom window state that is not supported by the portlet container.
-SPEC1_28;WindowStates2;declaringWindowStates5;TRUE;A custom window state declared in the @PortletApplication annotation could be overridden by deployment descriptor portlet.xml
-SPEC1_28;WindowStates2;declaringWindowStates6;TRUE;The portlet container merges the window states declared in the @PortletApplication annotation and deployment descriptor portlet.xml
-SPEC1_28;UserAttributes1;declaringUserAttributes1;TRUE;A user attribute may be declared in the @PortletApplication annotation.
-SPEC1_28;UserAttributes2;declaringUserAttributes2;TRUE;A user attribute declared in the @PortletApplication annotation could be overridden by deployment descriptor portlet.xml
-SPEC1_28;UserAttributes2;declaringUserAttributes3;TRUE;The portlet container merges the user attributes declared in the @PortletApplication annotation and deployment descriptor portlet.xml
-SPEC1_28;ResourceBundle1;declaringResourceBundle1;TRUE;The resource bundle defined in the @PortletApplication annotation resourceBundle element can be obtained through the PortletConfig object
-SPEC1_28;ResourceBundle2;declaringResourceBundle2;TRUE;The resource bundle defined in the @PortletApplication annotation could be overridden by deployment descriptor portlet.xml
-SPEC1_28;ResourceBundle2;declaringResourceBundle3;TRUE;The portlet container merges the resource bundles declared in the @PortletApplication annotation and deployment descriptor portlet.xml
-SPEC1_28;DefaultNamespaceURI1;declaringDefaultNamespaceURI1;TRUE;DefaultNamespaceURI may be declared in the @PortletApplication annotation.
-SPEC1_28;DefaultNamespaceURI2;declaringDefaultNamespaceURI2;TRUE;DefaultNamespaceURI defined in the @PortletApplication annotation could be overridden by deployment descriptor portlet.xml
-SPEC1_28;EventConfiguration1;declaringEvents1;TRUE;An event with Qname may be declared in the @PortletApplication annotation using @EventDefinition annotation.
-SPEC1_28;EventConfiguration1;declaringEvents2;TRUE;An event with name may be declared in the @PortletApplication annotation using @EventDefinition and leaving namespaceURI empty annotation.
-SPEC1_28;EventConfiguration2;declaringEvents3;TRUE;An event with cannot be declared two times - once in @PortletApplication then again in deployment descriptor portlet.xml
-SPEC1_28;EventConfiguration3;declaringEvents4;TRUE;The portlet container merges the events declared in the @PortletApplication annotation and deployment descriptor portlet.xml
-SPEC1_28;PublicRenderParameters1;declaringPRP1;TRUE;A public render parameters may be declared in the @PortletApplication annotation using @PublicRenderParameterDefinition annotation.
-SPEC1_28;PublicRenderParameters2;declaringPRP2;TRUE;A public render parameters cannot be declared two times - once in @PortletApplication then again in deployment descriptor portlet.xml
-SPEC1_28;PublicRenderParameters3;declaringPRP3;TRUE;A public render parameters declared using @PortletApplication annotation in one portlet and deployment descriptor portlet.xml in another portlet can be shared with each other.
-SPEC1_28;PublicRenderParameters4;declaringPRP4;TRUE;The portlet container merges the public render parameters declared in the @PortletApplication annotation and deployment descriptor portlet.xml
-SPEC1_28;PortletContainerRuntimeOptions1;declaringPCRO1;TRUE;Portlet container runtime options may be declared in the @PortletApplication annotation using @RuntimeOption annotation.
-SPEC1_28;PortletContainerRuntimeOptions2;declaringPCRO2;TRUE;A portlet container runtime option declared in the @PortletApplication annotation could be overridden by deployment descriptor portlet.xml
-SPEC1_28;PortletContainerRuntimeOptions2;declaringPCRO3;TRUE;The portlet container merges the portlet container runtime options declared in the @PortletApplication annotation and deployment descriptor portlet.xml
+SPEC1_28;PortletModes;declaringPortletModes1;TRUE;Support for the VIEW mode does not need to be declared in the @PortletApplication annotation.
+SPEC1_28;PortletModes;declaringPortletModes2;TRUE;Support for the HELP mode must be declared in the @PortletApplication annotation.
+SPEC1_28;PortletModes;declaringPortletModes3;TRUE;A custom portlet mode may be declared in the @PortletApplication annotation.
+SPEC1_28;PortletModes;declaringPortletModes4;TRUE;A custom portlet mode with portalManaged=true may be declared in the @PortletApplication annotation.
+SPEC1_28;PortletModes;declaringPortletModes5;TRUE;The PortletRequest.isPortletModeAllowed method must return FALSE for a custom portlet mode with portalManaged=true that is not supported by the portlet container
+SPEC1_28;PortletModes;declaringPortletModes6;TRUE;A custom portlet mode can have a localized decoration name in the resource bundle with the name of javax.portlet.app.custom-portlet-mode.<name>.decoration-name
+SPEC1_28;WindowStates;declaringWindowStates1;TRUE;Support for the NORMAL window state does not need to be declared in the @PortletApplication annotation.
+SPEC1_28;WindowStates;declaringWindowStates2;TRUE;Support for the MINIMIZED window state does not need to be declared in the @PortletApplication annotation.
+SPEC1_28;WindowStates;declaringWindowStates3;TRUE;Support for the MAXIMIZED window state does not need to be declared in the @PortletApplication annotation.
+SPEC1_28;WindowStates;declaringWindowStates4;TRUE;The PortletRequest.isWindowStateAllowed method must return FALSE for a custom window state that is not supported by the portlet container.
+SPEC1_28;UserAttributes;declaringUserAttributes1;TRUE;A user attribute may be declared in the @PortletApplication annotation.
+SPEC1_28;ResourceBundle;declaringResourceBundle1;TRUE;The resource bundle defined in the @PortletApplication annotation resourceBundle element can be obtained through the PortletConfig object
+SPEC1_28;DefaultNamespaceURI;declaringDefaultNamespaceURI1;TRUE;DefaultNamespaceURI may be declared in the @PortletApplication annotation.
+SPEC1_28;EventConfiguration;declaringEvents1;TRUE;An event with Qname may be declared in the @PortletApplication annotation using @EventDefinition annotation.
+SPEC1_28;EventConfiguration;declaringEvents2;TRUE;An event with name may be declared in the @PortletApplication annotation using @EventDefinition and leaving namespaceURI empty annotation.
+SPEC1_28;PublicRenderParameters;declaringPRP1;TRUE;A public render parameters may be declared in the @PortletApplication annotation using @PublicRenderParameterDefinition annotation.
+SPEC1_28;PortletContainerRuntimeOptions;declaringPCRO1;TRUE;Portlet container runtime options may be declared in the @PortletApplication annotation using @RuntimeOption annotation.

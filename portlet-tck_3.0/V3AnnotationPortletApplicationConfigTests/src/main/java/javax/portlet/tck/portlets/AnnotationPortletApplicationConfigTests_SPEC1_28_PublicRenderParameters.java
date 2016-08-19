@@ -44,8 +44,8 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters4")
-public class AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters4 implements Portlet {
+@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters")
+public class AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters implements Portlet {
    
    private PortletConfig portletConfig = null;
 
@@ -68,12 +68,12 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParame
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters4_declaringPRP4 */
-      /* Details: "The portlet container merges the public render parameters        */
-      /* declared in the @PortletApplication annotation and deployment descriptor   */
-      /* portlet.xml"                                                               */
+      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters_declaringPRP1 */
+      /* Details: "A public render parameters may be declared in the                */
+      /* @PortletApplication annotation using @PublicRenderParameterDefinition      */
+      /* annotation."                                                               */
       {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PUBLICRENDERPARAMETERS4_DECLARINGPRP4);
+         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PUBLICRENDERPARAMETERS_DECLARINGPRP1);
          /* TODO: implement test */
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);
