@@ -28,10 +28,7 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
-import javax.portlet.annotations.PortletQName;
-import javax.portlet.annotations.PublicRenderParameterDefinition;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
 
@@ -45,17 +42,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAP
  *
  */
 
-@PortletApplication(
-   publicParams = {
-      @PublicRenderParameterDefinition(
-         identifier = "tr0_public", 
-         qname = @PortletQName(
-            localPart = "tr0_public", 
-            namespaceURI = ""
-         )
-      ) 
-   }
-)
 @PortletConfiguration(
    portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters",
    publicParams = {"tr0_public" }

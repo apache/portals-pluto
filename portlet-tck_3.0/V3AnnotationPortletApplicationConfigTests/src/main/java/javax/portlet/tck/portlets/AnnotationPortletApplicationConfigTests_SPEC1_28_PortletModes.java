@@ -31,8 +31,6 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.annotations.CustomPortletMode;
-import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.Supports;
 import javax.portlet.tck.beans.TestResult;
@@ -52,18 +50,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAP
  *
  */
 
-@PortletApplication(
-   customPortletModes={
-      @CustomPortletMode(
-         name = "custom1",
-         portalManaged=false
-      ),
-      @CustomPortletMode(
-         name = "custom2",
-         portalManaged=true
-      )
-   }
-)
 @PortletConfiguration(
    resourceBundle = "javax.portlet.tck.portlets.portlet-mode-resource",
    portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes",

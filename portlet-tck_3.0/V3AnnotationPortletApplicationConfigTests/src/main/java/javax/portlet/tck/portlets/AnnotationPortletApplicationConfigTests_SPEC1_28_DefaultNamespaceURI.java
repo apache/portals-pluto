@@ -28,7 +28,6 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
@@ -42,10 +41,14 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAP
  * additionalTCs.xml file into the complete list of test case names for execution by the driver.
  *
  */
-
+/* 
+ * TODO: Shift this test in a new module because it is conflicting with 
+ * V3AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration_declaringEvents2
+ * which requires defaultNamespaceURI to be default
+ * 
 @PortletApplication(
    defaultNamespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
-)
+)*/
 @PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI")
 public class AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI implements Portlet {
    

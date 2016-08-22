@@ -34,11 +34,15 @@ import javax.portlet.RenderParameters;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.annotations.ActionMethod;
+import javax.portlet.annotations.CustomPortletMode;
+import javax.portlet.annotations.CustomWindowState;
 import javax.portlet.annotations.EventDefinition;
 import javax.portlet.annotations.EventMethod;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletQName;
+import javax.portlet.annotations.PublicRenderParameterDefinition;
+import javax.portlet.annotations.RuntimeOption;
 import javax.portlet.tck.beans.TestButton;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
@@ -55,6 +59,32 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAP
  *
  */
 @PortletApplication(
+   runtimeOptions = {
+      @RuntimeOption(name = "javax.portlet.escapeXml", values = { "true" }),
+      @RuntimeOption(name = "javax.portlet.actionScopedRequestAttributes", values = { "true" })
+   },
+   customPortletModes={
+      @CustomPortletMode(
+         name = "custom1",
+         portalManaged=false
+      ),
+      @CustomPortletMode(
+         name = "custom2",
+         portalManaged=true
+      )
+   },
+   customWindowStates = {
+      @CustomWindowState(name = "custom1")   
+   },
+   publicParams = {
+      @PublicRenderParameterDefinition(
+         identifier = "tr0_public", 
+         qname = @PortletQName(
+            localPart = "tr0_public", 
+            namespaceURI = ""
+         )
+      ) 
+   },
    events = {
       @EventDefinition(
          qname = @PortletQName(

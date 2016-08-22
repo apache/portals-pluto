@@ -29,8 +29,6 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
-import javax.portlet.annotations.CustomWindowState;
-import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.Supports;
 import javax.portlet.tck.beans.TestResult;
@@ -50,11 +48,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAP
  *
  */
 
-@PortletApplication(
-   customWindowStates = {
-      @CustomWindowState(name = "custom1")   
-   }
-)
 @PortletConfiguration(
    portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates",
    supports={

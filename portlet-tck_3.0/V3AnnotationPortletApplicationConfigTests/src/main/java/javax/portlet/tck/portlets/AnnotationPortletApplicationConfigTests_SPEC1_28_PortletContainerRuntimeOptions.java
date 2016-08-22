@@ -29,9 +29,7 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
-import javax.portlet.annotations.RuntimeOption;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
 
@@ -45,12 +43,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAP
  *
  */
 
-@PortletApplication(
-   runtimeOptions = {
-      @RuntimeOption(name = "javax.portlet.escapeXml", values = { "true" }),
-      @RuntimeOption(name = "javax.portlet.actionScopedRequestAttributes", values = { "true" })
-   }
-)
 @PortletConfiguration(
    portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_PortletContainerRuntimeOptions"
 )

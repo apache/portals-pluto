@@ -42,7 +42,6 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
    public final static String V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES2 = "V3AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates_declaringWindowStates2";
    public final static String V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES3 = "V3AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates_declaringWindowStates3";
    public final static String V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES4 = "V3AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates_declaringWindowStates4";
-   public final static String V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_USERATTRIBUTES_DECLARINGUSERATTRIBUTES1 = "V3AnnotationPortletApplicationConfigTests_SPEC1_28_UserAttributes_declaringUserAttributes1";
    public final static String V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_RESOURCEBUNDLE_DECLARINGRESOURCEBUNDLE1 = "V3AnnotationPortletApplicationConfigTests_SPEC1_28_ResourceBundle_declaringResourceBundle1";
    public final static String V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_DEFAULTNAMESPACEURI_DECLARINGDEFAULTNAMESPACEURI1 = "V3AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI_declaringDefaultNamespaceURI1";
    public final static String V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION_DECLARINGEVENTS1 = "V3AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration_declaringEvents1";
@@ -62,7 +61,6 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES2, "Support for the MINIMIZED window state does not need to be declared in the @PortletApplication annotation.");
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES3, "Support for the MAXIMIZED window state does not need to be declared in the @PortletApplication annotation.");
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES4, "The PortletRequest.isWindowStateAllowed method must return FALSE for a custom window state that is not supported by the portlet container.");
-      tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_USERATTRIBUTES_DECLARINGUSERATTRIBUTES1, "A user attribute may be declared in the @PortletApplication annotation.");
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_RESOURCEBUNDLE_DECLARINGRESOURCEBUNDLE1, "The resource bundle defined in the @PortletApplication annotation - resourceBundle element can be obtained through the PortletConfig object");
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_DEFAULTNAMESPACEURI_DECLARINGDEFAULTNAMESPACEURI1, "DefaultNamespaceURI may be declared in the @PortletApplication annotation.");
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION_DECLARINGEVENTS1, "An event with Qname may be declared in the @PortletApplication annotation using @EventDefinition annotation.");
