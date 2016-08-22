@@ -34,8 +34,6 @@ import javax.portlet.tck.beans.TestCaseDetails;
  */
 public class ModuleTestCaseDetails extends TestCaseDetails {
 
-   public final static String V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES1 = "V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes_declaringPortletModes1";
-   public final static String V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES2 = "V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes_declaringPortletModes2";
    public final static String V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES3 = "V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes_declaringPortletModes3";
    public final static String V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES4 = "V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes_declaringPortletModes4";
    public final static String V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES5 = "V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes_declaringPortletModes5";
@@ -55,11 +53,9 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
    
    private final static Map<String, String> tcd = new HashMap<String, String>();
    static {
-
-      tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES1, "Support for the VIEW mode does not need to be declared in the @PortletApplication annotation.");
-      tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES2, "Support for the HELP mode must be declared in the @PortletApplication annotation.");
+      
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES3, "A custom portlet mode may be declared in the @PortletApplication annotation.");
-      tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES4, "A custom portlet mode with portalManaged=true may be declared in the @PortletApplication annotation.");
+      tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES4, "A custom portlet mode with portalManaged=false may be declared in the @PortletApplication annotation.");
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES5, "The PortletRequest.isPortletModeAllowed method must return FALSE for a custom portlet mode with portalManaged=true that is not supported by the portlet container");
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES6, "A custom portlet mode can have a localized decoration name in the resource bundle with the name of javax.portlet.app.custom-portlet-mode.&lt;name&gt;.decoration-name");
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES1, "Support for the NORMAL window state does not need to be declared in the @PortletApplication annotation.");
@@ -67,10 +63,10 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES3, "Support for the MAXIMIZED window state does not need to be declared in the @PortletApplication annotation.");
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES4, "The PortletRequest.isWindowStateAllowed method must return FALSE for a custom window state that is not supported by the portlet container.");
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_USERATTRIBUTES_DECLARINGUSERATTRIBUTES1, "A user attribute may be declared in the @PortletApplication annotation.");
-      tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_RESOURCEBUNDLE_DECLARINGRESOURCEBUNDLE1, "The resource bundle defined in the @PortletApplication annotation resourceBundle element can be obtained through the PortletConfig object");
+      tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_RESOURCEBUNDLE_DECLARINGRESOURCEBUNDLE1, "The resource bundle defined in the @PortletApplication annotation - resourceBundle element can be obtained through the PortletConfig object");
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_DEFAULTNAMESPACEURI_DECLARINGDEFAULTNAMESPACEURI1, "DefaultNamespaceURI may be declared in the @PortletApplication annotation.");
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION_DECLARINGEVENTS1, "An event with Qname may be declared in the @PortletApplication annotation using @EventDefinition annotation.");
-      tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION_DECLARINGEVENTS2, "An event with name may be declared in the @PortletApplication annotation using @EventDefinition and leaving namespaceURI empty annotation.");
+      tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION_DECLARINGEVENTS2, "An event with name may be declared in the @PortletApplication annotation using @EventDefinition annotation and leaving namespaceURI empty.");
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PUBLICRENDERPARAMETERS_DECLARINGPRP1, "A public render parameters may be declared in the @PortletApplication annotation using @PublicRenderParameterDefinition annotation.");
       tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETCONTAINERRUNTIMEOPTIONS_DECLARINGPCRO1, "Portlet container runtime options may be declared in the @PortletApplication annotation using @RuntimeOption annotation.");
 

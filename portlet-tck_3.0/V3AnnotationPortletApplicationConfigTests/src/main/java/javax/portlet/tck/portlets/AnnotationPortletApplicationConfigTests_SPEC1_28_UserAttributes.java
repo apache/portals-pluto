@@ -44,6 +44,11 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
+@PortletApplication(
+   userAttributes = {
+      @UserAttribute(name = "user.name.given", description = @LocaleString("User Given Name"))         
+   }
+)
 @PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_UserAttributes")
 public class AnnotationPortletApplicationConfigTests_SPEC1_28_UserAttributes implements Portlet {
    
@@ -71,10 +76,19 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_UserAttributes imp
       /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_UserAttributes_declaringUserAttributes1 */
       /* Details: "A user attribute may be declared in the @PortletApplication      */
       /* annotation."                                                               */
+      // TODO: How to get user attribute?
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_USERATTRIBUTES_DECLARINGUSERATTRIBUTES1);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         Enumeration<String> portletAttributes = portletConfig.getPortletContext().getAttributeNames();
+         while(portletAttributes.hasMoreElements()){
+            result.appendTcDetail("<br>"+portletAttributes.nextElement());
+         }
+         List<String> portletAttributesList = Collections.list(portletAttributes);
+         if(portletAttributesList.contains("user.name.given")){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because user.name.given attribute is not found in portlet context attributes");
+         }
          result.writeTo(writer);
       }
 

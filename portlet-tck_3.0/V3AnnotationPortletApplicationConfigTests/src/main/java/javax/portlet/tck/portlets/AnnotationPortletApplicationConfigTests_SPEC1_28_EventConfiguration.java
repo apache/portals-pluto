@@ -18,23 +18,34 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.ActionURL;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.MutableRenderParameters;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderParameters;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.annotations.ActionMethod;
+import javax.portlet.annotations.EventDefinition;
+import javax.portlet.annotations.EventMethod;
+import javax.portlet.annotations.PortletApplication;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.PortletQName;
+import javax.portlet.tck.beans.TestButton;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import javax.xml.namespace.QName;
+
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION_DECLARINGEVENTS1;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION_DECLARINGEVENTS2;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -43,23 +54,55 @@ import static javax.portlet.ResourceURL.*;
  * additionalTCs.xml file into the complete list of test case names for execution by the driver.
  *
  */
-
+@PortletApplication(
+   events = {
+      @EventDefinition(
+         qname = @PortletQName(
+         localPart = "AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfigurationTr0", 
+         namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"), 
+      payloadType = java.lang.String.class
+      ), @EventDefinition(
+         qname = @PortletQName(
+         localPart = "AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfigurationTr1", 
+         namespaceURI = ""), 
+      payloadType = java.lang.String.class
+      )
+   }
+)
 @PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration")
 public class AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration implements Portlet {
-   
-   private PortletConfig portletConfig = null;
 
    @Override
-   public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
-   }
+   public void init(PortletConfig config) throws PortletException {}
 
    @Override
-   public void destroy() {
-   }
+   public void destroy() {}
 
-   @Override
+   @ActionMethod(
+      portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration", 
+      publishingEvents = {
+            @PortletQName(
+            localPart = "AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfigurationTr0", 
+            namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
+         ),
+         @PortletQName(
+            localPart = "AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfigurationTr1", 
+            namespaceURI = ""
+         )
+      }
+   )
    public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+      String action = portletReq.getActionParameters().getValue("inputval");
+      if(action!=null){
+         if(action.equals(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION_DECLARINGEVENTS1)){
+            QName eventQName = new QName(
+                  "http://www.apache.org/portals/pluto/portlet-tck_3.0",
+                  "AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfigurationTr0");
+            portletResp.setEvent(eventQName, "Hi!");
+         } else if (action.equals(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION_DECLARINGEVENTS2)){
+            portletResp.setEvent("AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfigurationTr1", "Hi!");
+         }
+      }
    }
 
    @Override
@@ -67,27 +110,66 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration
 
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
-
+      RenderParameters renderParams = portletReq.getRenderParameters();
+      
       /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration_declaringEvents1 */
       /* Details: "An event with Qname may be declared in the @PortletApplication   */
       /* annotation using @EventDefinition annotation."                             */
-      {
+      if(renderParams.getValue("tr0")!=null && renderParams.getValue("tr0").equals("true")){
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION_DECLARINGEVENTS1);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         result.setTcSuccess(true);
          result.writeTo(writer);
+      } else {
+         ActionURL aurl = portletResp.createActionURL();
+         TestButton tb = new TestButton(
+               V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION_DECLARINGEVENTS1,
+               aurl);
+         tb.writeTo(writer);
       }
-
+      
       /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration_declaringEvents2 */
       /* Details: "An event with name may be declared in the @PortletApplication    */
-      /* annotation using @EventDefinition and leaving namespaceURI empty           */
-      /* annotation."                                                               */
-      {
+      /* annotation using @EventDefinition annotation and leaving namespaceURI      */
+      /* empty."                                                               */
+      if(renderParams.getValue("tr1")!=null && renderParams.getValue("tr1").equals("true")){
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION_DECLARINGEVENTS2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         result.setTcSuccess(true);
          result.writeTo(writer);
+      } else {
+         ActionURL aurl = portletResp.createActionURL();
+         TestButton tb = new TestButton(
+               V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_EVENTCONFIGURATION_DECLARINGEVENTS2,
+               aurl);
+         tb.writeTo(writer);
       }
+
+   }
+   
+   @EventMethod(
+      portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration", 
+      processingEvents = @PortletQName(
+         localPart = "AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfigurationTr0", 
+         namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
+      )
+   )
+   public void processEventTr0(EventRequest portletReq, EventResponse portletResp)
+            throws PortletException, IOException {
+      
+      MutableRenderParameters mutableRenderParameters = portletResp.getRenderParameters();
+      mutableRenderParameters.setValue("tr0", "true");
+   }
+   
+   @EventMethod(
+      portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration", 
+      processingEvents = @PortletQName(
+         localPart = "AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfigurationTr1", 
+         namespaceURI = ""
+      )
+   )
+   public void processEventTr1(EventRequest portletReq, EventResponse portletResp)
+         throws PortletException, IOException {
+      MutableRenderParameters mutableRenderParameters = portletResp.getRenderParameters();
+      mutableRenderParameters.setValue("tr1", "true");
 
    }
 

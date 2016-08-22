@@ -18,23 +18,29 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
+import javax.portlet.annotations.CustomWindowState;
+import javax.portlet.annotations.PortletApplication;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.Supports;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES1;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES2;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES3;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES4;
+
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -44,23 +50,28 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates")
+@PortletApplication(
+   customWindowStates = {
+      @CustomWindowState(name = "custom1")   
+   }
+)
+@PortletConfiguration(
+   portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates",
+   supports={
+      @Supports(windowStates={"custom1"})   
+   },
+   supportedLocales = {"en_US"}
+)
 public class AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates implements Portlet {
-   
-   private PortletConfig portletConfig = null;
 
    @Override
-   public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
-   }
+   public void init(PortletConfig config) throws PortletException {}
 
    @Override
-   public void destroy() {
-   }
+   public void destroy() {}
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
-   }
+   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {}
 
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
@@ -73,8 +84,11 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates imple
       /* in the @PortletApplication annotation."                                    */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES1);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(portletReq.isWindowStateAllowed(WindowState.NORMAL)){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because Normal window state is not allowed.");
+         }
          result.writeTo(writer);
       }
 
@@ -83,8 +97,11 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates imple
       /* declared in the @PortletApplication annotation."                           */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(portletReq.isWindowStateAllowed(WindowState.MINIMIZED)){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because Minimized window state is not allowed.");
+         }
          result.writeTo(writer);
       }
 
@@ -93,8 +110,11 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates imple
       /* declared in the @PortletApplication annotation."                           */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES3);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(portletReq.isWindowStateAllowed(WindowState.MAXIMIZED)){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because Maximized window state is not allowed.");
+         }
          result.writeTo(writer);
       }
 
@@ -103,8 +123,11 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates imple
       /* for a custom window state that is not supported by the portlet container." */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES4);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(!portletReq.isWindowStateAllowed(new WindowState("custom1"))){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because custom1 window state is allowed.");
+         }
          result.writeTo(writer);
       }
 

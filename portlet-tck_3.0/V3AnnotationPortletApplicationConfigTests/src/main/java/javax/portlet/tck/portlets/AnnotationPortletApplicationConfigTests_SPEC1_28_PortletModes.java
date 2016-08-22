@@ -18,23 +18,31 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletMode;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.annotations.CustomPortletMode;
+import javax.portlet.annotations.PortletApplication;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.Supports;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES3;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES4;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES5;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES6;
+
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -44,23 +52,40 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes")
+@PortletApplication(
+   customPortletModes={
+      @CustomPortletMode(
+         name = "custom1",
+         portalManaged=false
+      ),
+      @CustomPortletMode(
+         name = "custom2",
+         portalManaged=true
+      )
+   }
+)
+@PortletConfiguration(
+   resourceBundle = "javax.portlet.tck.portlets.portlet-mode-resource",
+   portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes",
+   supports={
+      @Supports(portletModes={"view", "custom1", "custom2"})   
+   }, 
+   supportedLocales = {"en_US"}
+)
 public class AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes implements Portlet {
-   
-   private PortletConfig portletConfig = null;
 
+   PortletConfig portletConfig = null;
+   
    @Override
    public void init(PortletConfig config) throws PortletException {
       this.portletConfig = config;
    }
 
    @Override
-   public void destroy() {
-   }
+   public void destroy() {}
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
-   }
+   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {}
 
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
@@ -68,43 +93,29 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes imple
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes_declaringPortletModes1 */
-      /* Details: "Support for the VIEW mode does not need to be declared in the    */
-      /* @PortletApplication annotation."                                           */
-      {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES1);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes_declaringPortletModes2 */
-      /* Details: "Support for the HELP mode must be declared in the                */
-      /* @PortletApplication annotation."                                           */
-      {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
       /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes_declaringPortletModes3 */
       /* Details: "A custom portlet mode may be declared in the @PortletApplication */
       /* annotation."                                                               */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES3);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(portletReq.isPortletModeAllowed(new PortletMode("custom1"))){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because custom1 portlet mode is not allowed");
+         }
          result.writeTo(writer);
       }
 
       /* TestCase: V3AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes_declaringPortletModes4 */
-      /* Details: "A custom portlet mode with portalManaged=true may be declared in */
+      /* Details: "A custom portlet mode with portalManaged=false may be declared in */
       /* the @PortletApplication annotation."                                       */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES4);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(portletReq.isPortletModeAllowed(new PortletMode("custom1"))){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because custom1 portlet mode is not allowed");
+         }
          result.writeTo(writer);
       }
 
@@ -114,8 +125,11 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes imple
       /* the portlet container"                                                     */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES5);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(!portletReq.isPortletModeAllowed(new PortletMode("custom2"))){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because custom2 portlet mode is allowed");
+         }
          result.writeTo(writer);
       }
 
@@ -125,8 +139,15 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes imple
       /* javax.portlet.app.custom-portlet-mode.&lt;name&gt;.decoration-name"        */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETMODES_DECLARINGPORTLETMODES6);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         Locale locale = portletReq.getLocale();
+         ResourceBundle res = portletConfig.getResourceBundle(locale);
+         if (res.containsKey("javax.portlet.app.custom-portlet-mode.custom1.decoration-name")
+               && res.getString("javax.portlet.app.custom-portlet-mode.custom1.decoration-name")
+             .equals("decoration")) {
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because javax.portlet.app.custom-portlet-mode.custom1.decoration-name is not found");
+         }
          result.writeTo(writer);
       }
 
