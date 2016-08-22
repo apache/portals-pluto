@@ -18,23 +18,27 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.Supports;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAPPCONFIGOVERRIDETESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES5;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAPPCONFIGOVERRIDETESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES6;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -44,23 +48,27 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletAppConfigOverrideTests_SPEC1_28_WindowStates")
+@PortletConfiguration(
+   portletName = "AnnotationPortletAppConfigOverrideTests_SPEC1_28_WindowStates",
+   supports={
+      @Supports(windowStates={"custom1", "custom2"})   
+   },
+   supportedLocales = {"en_US"}
+)
 public class AnnotationPortletAppConfigOverrideTests_SPEC1_28_WindowStates implements Portlet {
    
    private PortletConfig portletConfig = null;
-
+   
    @Override
    public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
+      portletConfig = config;
    }
 
    @Override
-   public void destroy() {
-   }
+   public void destroy() {}
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
-   }
+   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {}
 
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
@@ -68,13 +76,19 @@ public class AnnotationPortletAppConfigOverrideTests_SPEC1_28_WindowStates imple
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
+      Enumeration<WindowState> windowStates = portletConfig.getWindowStates("text/html");
+      List<WindowState> windowStatesList = Collections.list(windowStates);
+      
       /* TestCase: V3AnnotationPortletAppConfigOverrideTests_SPEC1_28_WindowStates_declaringWindowStates5 */
       /* Details: "A custom window state declared in the @PortletApplication        */
       /* annotation could be overridden by deployment descriptor portlet.xml"       */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPCONFIGOVERRIDETESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES5);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(windowStatesList.contains(new WindowState("custom1"))){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because custom1 window state is not overriden/declared.");
+         }
          result.writeTo(writer);
       }
 
@@ -83,8 +97,12 @@ public class AnnotationPortletAppConfigOverrideTests_SPEC1_28_WindowStates imple
       /* @PortletApplication annotation and deployment descriptor portlet.xml"      */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPCONFIGOVERRIDETESTS_SPEC1_28_WINDOWSTATES_DECLARINGWINDOWSTATES6);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(windowStatesList.contains(new WindowState("custom1")) 
+               && windowStatesList.contains(new WindowState("custom2"))){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because custom1 or custom2 window state is not overriden/declared.");
+         }
          result.writeTo(writer);
       }
 

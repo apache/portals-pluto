@@ -18,23 +18,26 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.ActionURL;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderParameters;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.annotations.ActionMethod;
+import javax.portlet.annotations.PortletQName;
+import javax.portlet.tck.beans.TestButton;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+import javax.xml.namespace.QName;
+
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAPPCONFIGOVERRIDETESTS_SPEC1_28_PUBLICRENDERPARAMETERS2_DECLARINGPRP3;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -44,22 +47,28 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters2")
 public class AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters2 implements Portlet {
-   
-   private PortletConfig portletConfig = null;
 
    @Override
-   public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
-   }
+   public void init(PortletConfig config) throws PortletException {}
 
    @Override
-   public void destroy() {
-   }
+   public void destroy() {}
 
-   @Override
+   @ActionMethod(
+      portletName = "AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters2", 
+      publishingEvents = {
+            @PortletQName(
+            localPart = "AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters2", 
+            namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
+         )
+      }
+   )
    public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+      QName eventQNamea = new QName(
+            "http://www.apache.org/portals/pluto/portlet-tck_3.0",
+            "AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters2");
+      portletResp.setEvent(eventQNamea, "Hi!");
    }
 
    @Override
@@ -67,16 +76,25 @@ public class AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParame
 
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
+      
+      RenderParameters renderParams = portletReq.getRenderParameters();
 
       /* TestCase: V3AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters2_declaringPRP3 */
       /* Details: "A public render parameters declared using @PortletApplication    */
       /* annotation in one portlet and deployment descriptor portlet.xml in another */
       /* portlet can be shared with each other."                                    */
-      {
+      if(renderParams.isPublic("tr2_public") 
+            && renderParams.getValue("tr2_public")!=null 
+            && renderParams.getValue("tr2_public").equals("true")){
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPCONFIGOVERRIDETESTS_SPEC1_28_PUBLICRENDERPARAMETERS2_DECLARINGPRP3);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         result.setTcSuccess(true);
          result.writeTo(writer);
+      } else {
+         ActionURL aurl = portletResp.createActionURL();
+         TestButton tb = new TestButton(
+               V3ANNOTATIONPORTLETAPPCONFIGOVERRIDETESTS_SPEC1_28_PUBLICRENDERPARAMETERS2_DECLARINGPRP3,
+               aurl);
+         tb.writeTo(writer);
       }
 
    }

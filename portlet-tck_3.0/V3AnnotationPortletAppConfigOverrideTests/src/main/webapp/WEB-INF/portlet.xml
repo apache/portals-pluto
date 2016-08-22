@@ -1,0 +1,119 @@
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+
+<portlet-app xmlns="http://xmlns.jcp.org/xml/ns/portlet" 
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+           xmlns:rp="http://www.apache.org/portals/pluto/pub-render-params/ResourcePortlet" 
+           xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0" 
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/portlet http://xmlns.jcp.org/xml/ns/portlet/portlet-app_3_0.xsd" 
+             version="3.0"
+    		id="V3AnnotationPortletAppConfigOverrideTests">
+   
+    <portlet>
+      <portlet-name>AnnotationPortletAppConfigOverrideTests_SPEC1_28_DefaultNamespaceURI</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AnnotationPortletAppConfigOverrideTests_SPEC1_28_DefaultNamespaceURI</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>view</portlet-mode>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AnnotationPortletAppConfigOverrideTests_SPEC1_28_DefaultNamespaceURI</title>
+      </portlet-info>
+   </portlet>
+   
+   <portlet>
+      <portlet-name>AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters2</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters2</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>view</portlet-mode>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters2</title>
+      </portlet-info>
+      <supported-public-render-parameter>tr2_public</supported-public-render-parameter>
+   </portlet>
+   
+   <portlet>
+      <portlet-name>AnnotationPortletAppConfigOverrideTests_SPEC1_28_ResourceBundle</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AnnotationPortletAppConfigOverrideTests_SPEC1_28_ResourceBundle</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>view</portlet-mode>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <resource-bundle>javax.portlet.tck.portlets.resource-bundle2</resource-bundle>
+      <portlet-info>
+         <title>AnnotationPortletAppConfigOverrideTests_SPEC1_28_ResourceBundle</title>
+      </portlet-info>
+   </portlet>
+   
+   <event-definition>
+      <qname>tck:AnnotationPortletAppConfigOverrideTests_SPEC1_28_EventConfiguration1</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+   
+   <event-definition>
+      <qname>tck:AnnotationPortletAppConfigOverrideTests_SPEC1_28_EventConfiguration2a</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+   
+   <public-render-parameter>
+		<identifier>tr0_public</identifier>
+		<qname>tck:tr0_public</qname>
+	</public-render-parameter>
+	
+	<public-render-parameter>
+		<identifier>tr2_public</identifier>
+		<qname>tck:tr2_public</qname>
+	</public-render-parameter>
+   
+   <default-namespace>http://www.apache.org/portals/pluto/portlet-tck_3.0/overridden</default-namespace>
+   
+   <container-runtime-option>
+		<name>javax.portlet.escapeXml</name>
+		<value>true</value>
+	</container-runtime-option>
+	
+	<custom-portlet-mode>
+		<description>For testing custom portlet mode</description>
+		<portlet-mode>custom1</portlet-mode>
+		<portal-managed>false</portal-managed>
+	</custom-portlet-mode>
+	<custom-portlet-mode>
+		<description>For testing custom portlet mode</description>
+		<portlet-mode>custom2</portlet-mode>
+		<portal-managed>false</portal-managed>
+	</custom-portlet-mode> 
+	
+	<custom-window-state>
+		<description>For testing custom window state</description>
+		<window-state>custom1</window-state>
+	</custom-window-state>
+	<custom-window-state>
+		<description>For testing custom window state</description>
+		<window-state>custom2</window-state>
+	</custom-window-state>
+   
+</portlet-app>

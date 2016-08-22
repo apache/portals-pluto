@@ -18,23 +18,20 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAPPCONFIGOVERRIDETESTS_SPEC1_28_DEFAULTNAMESPACEURI_DECLARINGDEFAULTNAMESPACEURI2;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -44,7 +41,6 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletAppConfigOverrideTests_SPEC1_28_DefaultNamespaceURI")
 public class AnnotationPortletAppConfigOverrideTests_SPEC1_28_DefaultNamespaceURI implements Portlet {
    
    private PortletConfig portletConfig = null;
@@ -73,8 +69,11 @@ public class AnnotationPortletAppConfigOverrideTests_SPEC1_28_DefaultNamespaceUR
       /* annotation could be overridden by deployment descriptor portlet.xml"       */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPCONFIGOVERRIDETESTS_SPEC1_28_DEFAULTNAMESPACEURI_DECLARINGDEFAULTNAMESPACEURI2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(portletConfig.getDefaultNamespace().equals("http://www.apache.org/portals/pluto/portlet-tck_3.0/overridden")){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because default namespace URI is not http://www.apache.org/portals/pluto/portlet-tck_3.0/overridden but "+portletConfig.getDefaultNamespace());
+         }
          result.writeTo(writer);
       }
 

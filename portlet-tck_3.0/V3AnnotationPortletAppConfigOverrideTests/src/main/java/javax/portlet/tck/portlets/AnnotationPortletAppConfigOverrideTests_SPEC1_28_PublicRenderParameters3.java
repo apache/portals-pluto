@@ -18,23 +18,28 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Event;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.MutableRenderParameters;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderParameters;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.annotations.EventMethod;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.PortletQName;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAPPCONFIGOVERRIDETESTS_SPEC1_28_PUBLICRENDERPARAMETERS3_DECLARINGPRP4;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -44,23 +49,20 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters3")
+@PortletConfiguration(
+   portletName = "AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters3",
+   publicParams = {"tr0_public", "tr1_public", "tr2_public" }
+)
 public class AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters3 implements Portlet {
-   
-   private PortletConfig portletConfig = null;
 
    @Override
-   public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
-   }
+   public void init(PortletConfig config) throws PortletException {}
 
    @Override
-   public void destroy() {
-   }
+   public void destroy() {}
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
-   }
+   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {}
 
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
@@ -68,17 +70,39 @@ public class AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParame
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
+      RenderParameters renderParams = portletReq.getRenderParameters();
+      
       /* TestCase: V3AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters3_declaringPRP4 */
       /* Details: "The portlet container merges the public render parameters        */
       /* declared in the @PortletApplication annotation and deployment descriptor   */
       /* portlet.xml"                                                               */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPCONFIGOVERRIDETESTS_SPEC1_28_PUBLICRENDERPARAMETERS3_DECLARINGPRP4);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(renderParams.isPublic("tr0_public") 
+               && renderParams.isPublic("tr1_public")
+               && renderParams.isPublic("tr2_public")){
+            result.setTcSuccess(true);
+         }
          result.writeTo(writer);
       }
 
+   }
+   
+   @EventMethod(
+      portletName = "AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters3", 
+      processingEvents = @PortletQName(
+         localPart = "AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters2", 
+         namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
+      )
+   )
+   public void processEventb(EventRequest portletReq, EventResponse portletResp)
+            throws PortletException, IOException {
+      Event e = portletReq.getEvent();
+      String eventPayload = (String) e.getValue();
+      if(eventPayload!=null && eventPayload.equals("Hi!")){
+         MutableRenderParameters mutableRenderParameters = portletResp.getRenderParameters();
+         mutableRenderParameters.setValue("tr2_public", "true");
+      }
    }
 
 }
