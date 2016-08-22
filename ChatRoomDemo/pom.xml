@@ -18,7 +18,7 @@
 
    <dependencies>
       <dependency>
-         <groupId>javax.portlet</groupId>
+         <groupId>org.apache.portals.pluto</groupId>
          <artifactId>portlet-api</artifactId>
          <version>3.0-SNAPSHOT</version>
          <scope>provided</scope>
