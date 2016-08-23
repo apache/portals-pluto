@@ -54,21 +54,6 @@
       <supported-public-render-parameter>tr2_public</supported-public-render-parameter>
    </portlet>
    
-   <portlet>
-      <portlet-name>AnnotationPortletAppConfigOverrideTests_SPEC1_28_ResourceBundle</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AnnotationPortletAppConfigOverrideTests_SPEC1_28_ResourceBundle</portlet-class>
-      <expiration-cache>0</expiration-cache>
-      <supports>
-         <mime-type>text/html</mime-type>
-         <portlet-mode>view</portlet-mode>
-      </supports>
-      <supported-locale>en_US</supported-locale>
-      <resource-bundle>javax.portlet.tck.portlets.resource-bundle2</resource-bundle>
-      <portlet-info>
-         <title>AnnotationPortletAppConfigOverrideTests_SPEC1_28_ResourceBundle</title>
-      </portlet-info>
-   </portlet>
-   
    <event-definition>
       <qname>tck:AnnotationPortletAppConfigOverrideTests_SPEC1_28_EventConfiguration1</qname>
       <value-type>java.lang.String</value-type>

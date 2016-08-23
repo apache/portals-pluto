@@ -60,7 +60,7 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAP
  */
 
 @PortletApplication(
-   defaultNamespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0",    
+   defaultNamespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0",
    events = {
       @EventDefinition(
          qname = @PortletQName(

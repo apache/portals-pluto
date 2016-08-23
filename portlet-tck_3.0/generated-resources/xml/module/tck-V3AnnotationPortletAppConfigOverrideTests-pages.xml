@@ -34,6 +34,7 @@
 <page xmlns="" name="V3AnnotationPortletAppConfigOverrideTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
 <portlet context="/tck-V3AnnotationPortletAppConfigOverrideTests-3.0-SNAPSHOT" name="AnnotationPortletAppConfigOverrideTests_SPEC1_28_PortletModes"/>
 <portlet context="/tck-V3AnnotationPortletAppConfigOverrideTests-3.0-SNAPSHOT" name="AnnotationPortletAppConfigOverrideTests_SPEC1_28_WindowStates"/>
+<portlet context="/tck-V3AnnotationPortletAppConfigOverrideTests-3.0-SNAPSHOT" name="AnnotationPortletAppConfigOverrideTests_SPEC1_28_ResourceBundle"/>
 <portlet context="/tck-V3AnnotationPortletAppConfigOverrideTests-3.0-SNAPSHOT" name="AnnotationPortletAppConfigOverrideTests_SPEC1_28_DefaultNamespaceURI"/>
 <portlet context="/tck-V3AnnotationPortletAppConfigOverrideTests-3.0-SNAPSHOT" name="AnnotationPortletAppConfigOverrideTests_SPEC1_28_EventConfiguration1"/>
 <portlet context="/tck-V3AnnotationPortletAppConfigOverrideTests-3.0-SNAPSHOT" name="AnnotationPortletAppConfigOverrideTests_SPEC1_28_EventConfiguration2"/>
