@@ -40,6 +40,7 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.RenderMode;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -55,6 +56,26 @@ public class PortletConfigPortlet extends GenericPortlet {
    // Set up logging
    private static final String LOG_CLASS = PortletConfigPortlet.class.getName();
    private final Logger logger = Logger.getLogger(LOG_CLASS);
+   
+   @Override
+   protected void doHelp(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+      doView(request, response);
+   }
+   
+   @Override
+   protected void doEdit(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+      doView(request, response);
+   }
+   
+   @RenderMode(name="MyMode_nonPortalManaged_1")
+   public void doMyMode_nonPortalManaged_1(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+      doView(request, response);
+   }
+   
+   @RenderMode(name="MyMode_nonPortalManaged_2")
+   public void doMyMode_nonPortalManaged_2(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+      doView(request, response);
+   }
 
    protected void doView(RenderRequest req, RenderResponse resp)
          throws PortletException, IOException {
