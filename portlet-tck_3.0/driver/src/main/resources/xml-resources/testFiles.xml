@@ -68,4 +68,5 @@
 <fl:file>tck-V3AnnotationPortletArtifactValidityTests-tests.xml</fl:file>
 <fl:file>tck-V3AnnotationPortletApplicationConfigTests-tests.xml</fl:file>
 <fl:file>tck-V3AnnotationPortletAppConfigOverrideTests-tests.xml</fl:file>
+<fl:file>tck-V3AnnotationPortletConfigTests-tests.xml</fl:file>
 </fl:filelist>

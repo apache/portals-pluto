@@ -1,0 +1,26 @@
+PARMS outputPath=C:\Users\IBM_ADMIN\Downloads\TCKTool
+Class / Section;Keywords;Name;Testable;Description
+AnnotationPortletConfigTests;;;;
+SPEC2_28;PortletContainerRuntimeOptions;declaringPCRO1;TRUE;Portlet container runtime options may be declared in the @PortletConfiguration annotation using @RuntimeOption annotation.
+SPEC2_28;PortletContainerRuntimeOptions;declaringPCRO2;TRUE;Portlet container runtime options declared using @PortletAnnotation are overridden by runtime options decalred using @PortletConfiguration annotation.
+SPEC2_28;PortletInitParameters;declaringInitParams1;TRUE;Portlet initialization parameters may be declared in the @PortletConfiguration annotation using @InitParameter annotation.
+SPEC2_28;PortletInitParameters;declaringInitParams2;TRUE;The name cannot be null while declaring portlet init parametes using @InitParameter annotation.
+SPEC2_28;PortletInitParameters;declaringInitParams3;TRUE;If the name is empty while declaring portlet init parametes using @InitParameter annotation, then that parameter is removed.
+SPEC2_28;PortletInitParameters;declaringInitParams4;TRUE;If the name is empty while declaring portlet init parametes using @InitParameter annotation, then that parameter is removed.
+SPEC2_28;PortletIdentification;declaringPortletName;TRUE;Portlet name may be set using "portletName" attribute of @PortletConfiguration annotation. 
+SPEC2_28;PortletIdentification;declaringPortletDescription;TRUE;Portlet description may be set using "description" attribute of @PortletConfiguration annotation.
+SPEC2_28;PortletIdentification;declaringPortletDisplayName;TRUE;Portlet display name may be set using "displayName" attribute of @PortletConfiguration annotation.
+SPEC2_28;PortletIdentification;declaringPortletTitle;TRUE;Portlet title may be set using "title" attribute of @PortletConfiguration annotation.
+SPEC2_28;PortletIdentification;declaringPortletShortTitle;TRUE;Portlet short title may be set using "shortTitle" attribute of @PortletConfiguration annotation.
+SPEC2_28;PortletIdentification;declaringPortletKeywords;TRUE;Portlet keywords may be set using "keywords" attribute of @PortletConfiguration annotation.
+SPEC2_28;ResourceBundle;declaringResourceBundle1;TRUE;The resource bundle defined in the @PortletConfiguration annotation - resourceBundle attribute, can be obtained through the PortletConfig object.
+SPEC2_28;ResourceBundle;declaringResourceBundle2;TRUE;The resource bundle overrides the identification information set in @PortletConfiguration annotation.
+SPEC2_28;CacheSettings;declaringCache1;TRUE;The cache expiration time can be set through "cacheExpirationTime" attribute of @PortletConfiguration annotation.
+SPEC2_28;CacheSettings;declaringCache2;TRUE;The cache scope can be set through "cacheScopePublic" attribute of @PortletConfiguration annotation.
+SPEC2_28;SecurityRole;declaringSecurityRole1;TRUE;Security roles options may be declared in the @PortletConfiguration annotation using @SecurityRoleRef annotation.
+SPEC2_28;PortletDependency;declaringDependency1;TRUE;Portlet dependency may be declared using @Dependency annotation in @PortletConfiguration annotation.
+SPEC2_28;EventDeclaration;eventEventDeclaration1;TRUE;An event can be fired from another event method configured with @EventMethod annotation - publishingEvents attribute.
+SPEC2_28;SupportedLocales;declaringSupportedLocales1;TRUE;Support for locales can be defined using "supportedLocales" attribute of @PortletConfiguration annotation.
+SPEC2_28;PortletPreferences;declaringPortletPreferences1;TRUE;Portlet preferences can be declared using @Preference annotation in @PortletConfiguration annotation.
+SPEC2_28;PortletPreferences;declaringPortletPreferences2;TRUE;Preference value can be set to read only by specifying "isReadOnly" attribute of @PortletAnnotation to be true.
+SPEC2_28;AsynchronousSupport;declaringAsyncSupport1;TRUE;Support for asynchronous resource request can be configured using "asyncSupported" attribute of @PortletConfiguration annotation.

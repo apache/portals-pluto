@@ -175,6 +175,7 @@
       <module>V3AnnotationPortletArtifactValidityTests</module>
       <module>V3AnnotationPortletApplicationConfigTests</module>
       <module>V3AnnotationPortletAppConfigOverrideTests</module>
+      <module>V3AnnotationPortletConfigTests</module>
       <module>deploy</module>
       <module>driver</module>
    </modules>
