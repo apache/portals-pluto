@@ -178,8 +178,6 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
    public final static String V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETCONTENTTYPE1 = "V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getContentType1";
    public final static String V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETCONTENTTYPE2 = "V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getContentType2";
    public final static String V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETCONTENTTYPE1 = "V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setContentType1";
-   public final static String V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETCONTENTTYPE2 = "V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setContentType2";
-   public final static String V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETCONTENTTYPE3 = "V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setContentType3";
    public final static String V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETCONTENTTYPE4 = "V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setContentType4";
    public final static String V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETCHARACTERENCODING = "V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getCharacterEncoding";
    public final static String V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETWRITER1 = "V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getWriter1";
@@ -219,12 +217,10 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
    public final static String V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE10 = "V3HeaderPortletTests_SPEC15_Header_cookie10";
    public final static String V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE11 = "V3HeaderPortletTests_SPEC15_Header_cookie11";
    public final static String V3HEADERPORTLETTESTS_SPEC15_HEADER_CONTENTTYPE5 = "V3HeaderPortletTests_SPEC15_Header_contentType5";
-   public final static String V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING3 = "V3HeaderPortletTests_SPEC15_Header_characterEncoding3";
    public final static String V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING4 = "V3HeaderPortletTests_SPEC15_Header_characterEncoding4";
    public final static String V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE = "V3HeaderPortletTests_SPEC15_HeaderResponse_setTitle";
    public final static String V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE2 = "V3HeaderPortletTests_SPEC15_HeaderResponse_setTitle2";
    public final static String V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE3 = "V3HeaderPortletTests_SPEC15_HeaderResponse_setTitle3";
-   public final static String V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETCONTENTTYPE = "V3HeaderPortletTests_SPEC15_HeaderResponse_setContentType";
    public final static String V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_GETWRITER = "V3HeaderPortletTests_SPEC15_HeaderResponse_getWriter";
    public final static String V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_GETPORTLETOUTPUTSTREAM = "V3HeaderPortletTests_SPEC15_HeaderResponse_getPortletOutputStream";
    public final static String V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY = "V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency";
@@ -386,8 +382,6 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETCONTENTTYPE1, "Method getContentType(): Returns a String containing the MIME type that can be used with the response");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETCONTENTTYPE2, "Method getContentType(): Returns null if no content type is set");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETCONTENTTYPE1, "Method setContentType(String): Sets the MIME type for the response");
-      tcd.put(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETCONTENTTYPE2, "Method setContentType(String): Has no effect if called after the getWriter method has been called");
-      tcd.put(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETCONTENTTYPE3, "Method setContentType(String): Has no effect if called after the getPortletOutputStream method has been called");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETCONTENTTYPE4, "Method setContentType(String): Throws IllegalArgumentException if the specified MIME type is invalid");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETCHARACTERENCODING, "Method getCharacterEncoding(): Returns a String containing the name of the charset used for the response body");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETWRITER1, "Method getWriter(): Returns a PrintWriter object");
@@ -427,12 +421,10 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE10, "Cookies set during the Header phase should be available to the portlet during a subsequent Render phase");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE11, "Cookies set during the Header phase should be available to the portlet during a subsequent request triggered by a URL");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADER_CONTENTTYPE5, "If the setContentType method is not called before the getWriter or getPortletOutputStream method is used, the portlet container uses the content type returned by getResponseContentType");
-      tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING3, "The character encoding can be set via the setContentType method if the given content type string provides a value for the charset attribute");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING4, "If the portlet does not set the character encoding, the portlet container uses UTF-8 as the default character encoding");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE, "This method sets the title of the portlet.");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE2, "An empty string can be set as title of portlet.");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE3, "Setting title as null restores the original title.");
-      tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETCONTENTTYPE, "The portlet container will ignore any character encoding specified as part of the content type for render calls.");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_GETWRITER, "Data written to the HeaderResponse writer is added to the aggregated portal document HEAD section.");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_GETPORTLETOUTPUTSTREAM, "Data written to the HeaderResponse writer is added to the aggregated portal document HEAD section.");
       tcd.put(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY, "Method addDependency(String name, String scope, String version) - Adds a dependency on a page-level resource that is managed by the portal.");

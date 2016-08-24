@@ -164,8 +164,6 @@
 <entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getContentType1">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getContentType2">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setContentType1">V3HeaderPortletTests</entry>
-<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setContentType2">V3HeaderPortletTests</entry>
-<entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setContentType3">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setContentType4">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getCharacterEncoding">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getWriter1">V3HeaderPortletTests</entry>
@@ -204,12 +202,10 @@
 <entry key="V3HeaderPortletTests_SPEC15_Header_cookie10">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_Header_cookie11">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_Header_contentType5">V3HeaderPortletTests</entry>
-<entry key="V3HeaderPortletTests_SPEC15_Header_characterEncoding3">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_Header_characterEncoding4">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_setTitle">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_setTitle2">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_setTitle3">V3HeaderPortletTests</entry>
-<entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_setContentType">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_getWriter">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_getPortletOutputStream">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency">V3HeaderPortletTests</entry>

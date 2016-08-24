@@ -68,7 +68,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE11;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING4;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_CONTENTTYPE5;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING3;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE8;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
 import static javax.portlet.PortletSession.PORTLET_SCOPE;
@@ -684,26 +683,6 @@ public class HeaderPortletTests_SPEC15_Header
             result.appendTcDetail(
                   "Failed because default character encoding is not UTF-8 but "
                         + portletResp.getCharacterEncoding());
-         }
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_Header_characterEncoding3 */
-      /*
-       * Details: "The character encoding can be set via the setContentType
-       * method if the given content type string provides a value for the
-       * charset attribute"
-       */
-      // TODO: fix test case
-      {
-         TestResult result = tcd.getTestResultFailed(
-               V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING3);
-         portletResp.setContentType("text/html;charset=ANSI");
-         if (portletResp.getCharacterEncoding().equals("ANSI")) {
-            result.setTcSuccess(true);
-         } else {
-            result.appendTcDetail("Failed because charset is not ANSI but "
-                  + portletResp.getCharacterEncoding());
          }
          result.writeTo(writer);
       }

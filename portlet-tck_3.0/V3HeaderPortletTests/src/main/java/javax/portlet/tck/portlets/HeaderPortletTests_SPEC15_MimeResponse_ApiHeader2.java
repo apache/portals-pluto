@@ -39,7 +39,6 @@ import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
 
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETPORTLETOUTPUTSTREAM1 ;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETCONTENTTYPE3 ;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETWRITER2 ;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETBUFFERSIZE2 ;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
@@ -107,28 +106,6 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2 implements Portle
                result.setTcSuccess(true);
             }
          } catch(Exception e){
-            result.appendTcDetail(e.toString());
-         }
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setContentType3 */
-      /* Details: "Method setContentType(String): Has no effect if called after the */
-      /* getPortletOutputStream method has been called"                             */
-      // TODO: Fix this test case. Is it testable? How can I check for "no effect"?
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETCONTENTTYPE3);
-         try {
-            portletResp.setContentType("*/*");
-            if(portletResp.getContentType().equals("text/html")){
-               result.setTcSuccess(true);
-            } else {
-               result.appendTcDetail("Failed because content type still "
-                     + "changed after getPortletOutputStream() method. "
-                     + "Expected content type was text/html "
-                     + "but found to be "+portletResp.getContentType());
-            }
-         } catch (Exception e) {
             result.appendTcDetail(e.toString());
          }
          result.writeTo(writer);

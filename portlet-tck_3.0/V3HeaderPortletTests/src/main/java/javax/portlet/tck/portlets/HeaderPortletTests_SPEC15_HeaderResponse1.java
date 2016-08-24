@@ -37,7 +37,6 @@ import javax.portlet.annotations.Supports;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
 
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETCONTENTTYPE;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE2;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE3;
@@ -83,20 +82,6 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
       
       PrintWriter writer = portletResp.getWriter();
-      
-      /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_setContentType        */
-      /* Details: "The portlet container will ignore any character encoding         */
-      /* specified as part of the content type for render calls."                   */
-      TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETCONTENTTYPE);
-      portletResp.setContentType("text/html;charset=ANSI");
-      String charEncoding = portletResp.getCharacterEncoding();
-      if(charEncoding.equals("UTF-8")){
-         result.setTcSuccess(true);
-         result.appendTcDetail("Character encoding is not changed in render method. "+charEncoding);
-      } else {
-         result.appendTcDetail("Failed because Character encoding is changed in render method. "+charEncoding);
-      }
-      result.writeTo(writer);
       
       String msg = (String) portletReq.getPortletSession().getAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_HeaderResponse1",
@@ -196,15 +181,6 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
                + " Also there is no method to get the changed title.");
          result.writeTo(writer);
       }
-
-      /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_setContentType        */
-      /* Details: "The portlet container will ignore any character encoding         */
-      /* specified as part of the content type for render calls."                   */
-      // TODO: Setting charset here not working anyway. Test case passes because 
-      //       default charset is utf-8
-      // To confirm see test case - V3HeaderPortletTests_SPEC15_Header_characterEncoding3
-      portletResp.setContentType("text/html;charset=utf-8");
-     
 
       /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_getWriter             */
       /* Details: "Data written to the HeaderResponse writer is added to the        */

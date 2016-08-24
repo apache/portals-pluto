@@ -62,7 +62,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETBUFFERSIZE1;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_RESETBUFFER1;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_RESET1;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETCONTENTTYPE2;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETBUFFERSIZE2;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETBUFFERSIZE1;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_FLUSHBUFFER1;
@@ -393,28 +392,6 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
             portletResp.reset();
             result.setTcSuccess(true);
          } catch(Exception e) {
-            result.appendTcDetail(e.toString());
-         }
-         result.writeTo(writer);
-      }
-      
-      /* TestCase: V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setContentType2 */
-      /* Details: "Method setContentType(String): Has no effect if called after the */
-      /* getWriter method has been called"                                          */
-      // TODO: Fix this test case. Is it testable? How can I check for "no effect"?
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETCONTENTTYPE2);
-         try {
-            portletResp.setContentType("*/*");
-            if(portletResp.getContentType().equals("text/html")){
-               result.setTcSuccess(true);
-            } else {
-               result.appendTcDetail("Failed because content type still "
-                     + "changed after getWriter() method. "
-                     + "Expected content type was text/html "
-                     + "but found to be "+portletResp.getContentType());
-            }
-         } catch (Exception e) {
             result.appendTcDetail(e.toString());
          }
          result.writeTo(writer);

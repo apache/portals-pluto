@@ -150,8 +150,6 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* TestCase: V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB1 */
       /* Details: "Method addProperty(String, org.w3c.dom.Element): Adds an XML DOM */
       /* Element to the response for the specified key"                             */
-      // TODO: Still have to ask Scott. There is no guarantee that markup will be added to the head section
-      //       Read Java Doc of MimeResponse.MARKUP_HEAD_ELEMENT
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_ADDPROPERTYB1);
          if(portletReq.getPortalContext().getProperty(PortalContext.MARKUP_HEAD_ELEMENT_SUPPORT)==null){
@@ -169,8 +167,6 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* Details: "Method addProperty(String, org.w3c.dom.Element): If a DOM        */
       /* Element for the specified key already exists, the new element is added in  */
       /* addition to the existing element"                                          */
-      // TODO: Still have to ask Scott. There is no guarantee that markup will be added to the head section
-      //       Read Java Doc of MimeResponse.MARKUP_HEAD_ELEMENT
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_ADDPROPERTYB2);
          if(portletReq.getPortalContext().getProperty(PortalContext.MARKUP_HEAD_ELEMENT_SUPPORT)==null){

@@ -64,7 +64,7 @@ import static javax.portlet.PortletSession.PORTLET_SCOPE;
  */
 
 @PortletConfiguration(portletName = "HeaderPortletTests_SPEC14_HeaderReq", supports = {
-      @Supports(mimeType = "*/*") })
+      @Supports(mimeType = "text/html") })
 public class HeaderPortletTests_SPEC14_HeaderReq
       implements Portlet, HeaderPortlet {
 
@@ -157,7 +157,8 @@ public class HeaderPortletTests_SPEC14_HeaderReq
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE4);
-         if (portletReq.getResponseContentType().equals("*/*")) {
+         result.appendTcDetail("Cannot really test this. ");
+         if (portletReq.getResponseContentType().equals("text/html")) {
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail(
@@ -173,7 +174,7 @@ public class HeaderPortletTests_SPEC14_HeaderReq
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE5);
-         if (portletReq.getResponseContentType().equals("*/*")) {
+         if (portletReq.getResponseContentType().equals("text/html")) {
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail(
@@ -250,7 +251,7 @@ public class HeaderPortletTests_SPEC14_HeaderReq
                V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE11);
          Enumeration<String> contentTypesTr7 = portletReq
                .getResponseContentTypes();
-         if (contentTypesTr7.nextElement().equals("*/*")
+         if (contentTypesTr7.nextElement().equals("text/html")
                && !contentTypesTr7.hasMoreElements())
             result.setTcSuccess(true);
          result.writeTo(writer);
