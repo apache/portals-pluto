@@ -147,6 +147,15 @@ public class ActionScopedRequestAttributeHandler {
     */
    public void init(PortletResponseContext responseContext) {
       this.windowId = requestContext.getPortletWindow().getId().getStringId();
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("requestContext null: ").append(requestContext == null);
+         if (requestContext != null) {
+            txt.append(", portletConfig null: ").append(requestContext.getPortletConfig() == null);
+         }
+         LOG.debug(txt.toString());
+      }
 
       Map<String, String[]> options = requestContext.getPortletConfig().getContainerRuntimeOptions();
       String[] vals = null;

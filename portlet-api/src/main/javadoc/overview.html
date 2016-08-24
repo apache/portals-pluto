@@ -21,12 +21,22 @@
     <div class="indexContainer-not">
     <ul>
     <li>
+    20160824:
+    Deleted the annotations
+    <code>{@literal @}RenderParam</code>,
+    <code>{@literal @}ActionParam</code>, and
+    <code>{@literal @}ResourceParam</code> since they can't be made to be request scoped beans, 
+    so that their use could be error-prone. Also, since the corresponding parameter
+    objects are injectable, these annotations provide little additional value.
+    </li>
+    <li>
     20160804:
     Modified descriptions for 
     {@link javax.portlet.PortletRequest#getResponseContentType() PortletRequest#getResponseContentType()} and
     {@link javax.portlet.PortletRequest#getResponseContentTypes() PortletRequest#getResponseContentTypes()}
     to add default content type.
     </li>
+    <li>
     20160530:
     Added 
     {@link javax.portlet.filter.PortletAsyncContextWrapper PortletAsyncContextWrapper}.

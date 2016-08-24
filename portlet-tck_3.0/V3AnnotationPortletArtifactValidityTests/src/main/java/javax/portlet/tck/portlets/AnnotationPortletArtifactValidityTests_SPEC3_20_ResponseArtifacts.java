@@ -20,7 +20,9 @@ package javax.portlet.tck.portlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -94,6 +96,7 @@ import static javax.portlet.tck.portlets.Utils.STATEAWARERESPONSEARTIFACTKEY;;
       ), payloadType = java.lang.String.class
    )
 )
+@RequestScoped
 public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
    
    private Utils                   utils = new Utils();
@@ -274,6 +277,23 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
            throws PortletException, IOException {
 
       PrintWriter writer = portletResp.getWriter();
+      
+      StringBuilder txt = new StringBuilder(128);
+      txt.append("<div>");
+      txt.append("<p>Directly testing actionResponse ... </p>");
+      try {
+         String n = actionResponse.getNamespace();
+         txt.append("<p>got namespace from action response:").append(n).append("</p>");
+      } catch (Throwable t) {
+         txt.append("<p>there was an exception:<br>");
+         StringWriter sw = new StringWriter();
+         PrintWriter pw = new PrintWriter(sw);
+         t.printStackTrace(pw);
+         pw.flush();
+         txt.append(sw.toString().replaceAll("\\n", "<br>"));
+      }
+      txt.append("</div>");
+      writer.write(txt.toString());
       
       try {
          setAttribute(PORTLETRESPONSEARTIFACTKEY, RENDERPHASE,

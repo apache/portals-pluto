@@ -21,11 +21,11 @@ package org.apache.pluto.container.bean.processor;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.Typed;
-import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Named;
 import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
@@ -52,13 +52,10 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.WindowState;
-import javax.portlet.annotations.ActionParam;
 import javax.portlet.annotations.ContextPath;
 import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.PortletName;
 import javax.portlet.annotations.PortletRequestScoped;
-import javax.portlet.annotations.RenderParam;
-import javax.portlet.annotations.ResourceParam;
 import javax.portlet.annotations.WindowId;
 import javax.servlet.http.Cookie;
 
@@ -342,7 +339,6 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the EventResponse. 
-    * Dependent scoped because it sometimes returns <code>null</code>. 
     * @return
     */
    @Produces @PortletRequestScoped @Named("eventResponse") @Typed(EventResponse.class)
@@ -358,7 +354,6 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the ResourceRequest.
-    * Dependent scoped because it sometimes returns <code>null</code>. 
     * @return
     */
    @Produces @PortletRequestScoped @Named("resourceRequest") @Typed(ResourceRequest.class)
@@ -374,7 +369,6 @@ public class PortletArtifactProducer {
 
    /**
     * Producer method for the ResourceResponse. 
-    * Dependent scoped because it sometimes returns <code>null</code>. 
     */
    @Produces @PortletRequestScoped @Named("resourceResponse") @Typed(ResourceResponse.class)
    public static ResourceResponse produceResourceResponse() {
@@ -390,7 +384,7 @@ public class PortletArtifactProducer {
    /**
     * Producer method for the portlet mode. 
     */
-   @Produces @Named("portletMode")
+   @Produces @PortletRequestScoped @Named("portletMode")
    public static PortletMode producePortletMode() {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
@@ -400,7 +394,7 @@ public class PortletArtifactProducer {
    /**
     * Producer method for the window state. 
     */
-   @Produces @Named("windowState")
+   @Produces @PortletRequestScoped @Named("windowState")
    public static WindowState produceWindowState() {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
@@ -421,10 +415,10 @@ public class PortletArtifactProducer {
     * Producer method for the cookies. 
     */
    @Produces @PortletRequestScoped @Named("cookies")
-   public static Cookie[] produceCookies() {
+   public static List<Cookie> produceCookies() {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
-      return pap.req.getCookies();
+      return Arrays.asList(pap.req.getCookies());
    }
 
    /**
@@ -438,16 +432,6 @@ public class PortletArtifactProducer {
    }
 
    /**
-    * Producer method for the window ID. 
-    */
-   @Produces @WindowId @Named("windowId")
-   public static String produceWindowID() {
-      PortletArtifactProducer pap = producers.get();
-      assert pap != null;
-      return pap.req.getWindowID();
-   }
-
-   /**
     * Producer method for the Locale. 
     */
    @Produces @PortletRequestScoped @Named("locale")
@@ -458,43 +442,13 @@ public class PortletArtifactProducer {
    }
 
    /**
-    * Producer method for the window ID. 
+    * Producer method for the Locales
     */
    @Produces @PortletRequestScoped @Named("locales") 
-   public static Locale[] produceLocales() {
+   public static List<Locale> produceLocales() {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
-      return Collections.list(pap.req.getLocales()).toArray(new Locale[0]);
-   }
-
-   /**
-    * Producer method for the window ID. 
-    */
-   @Produces @Namespace @Named("namespace")
-   public static String produceNamespace() {
-      PortletArtifactProducer pap = producers.get();
-      assert pap != null;
-      return pap.resp.getNamespace();
-   }
-
-   /**
-    * Producer method for the portlet name. 
-    */
-   @Produces @PortletName @Named("portletName")
-   public static String producePortletName() {
-      PortletArtifactProducer pap = producers.get();
-      assert pap != null;
-      return pap.config.getPortletName();
-   }
-
-   /**
-    * Producer method for the context root. 
-    */
-   @Produces @ContextPath @Named("contextPath")
-   public static String produceContextPath() {
-      PortletArtifactProducer pap = producers.get();
-      assert pap != null;
-      return pap.req.getContextPath();
+      return Collections.list(pap.req.getLocales());
    }
    
    /**
@@ -548,134 +502,50 @@ public class PortletArtifactProducer {
       }
       return obj;
    }
-   
-   /**
-    * Producer method for the parameter as String.
-    * Note that this method must be dependent scoped.
-    *  
-    * @param ip      The injection point
-    */
-   @Produces @ActionParam("")
-   public static String getActionParameter(InjectionPoint ip) {
-      PortletArtifactProducer pap = producers.get();
-      assert pap != null;
-      String val = null;
-      if (pap.req instanceof ActionRequest) {
-         ActionRequest areq = (ActionRequest) pap.req;
-         ActionParam ap = (ActionParam) ip.getAnnotated().getAnnotation(ActionParam.class);
-         val = areq.getActionParameters().getValue(ap.value());
-         trace("@ActionParam", "String", ap.value(), val);
-      }
-      return val;
-   }
-   
-   /**
-    * Producer method for the parameter as String[].
-    *  
-    * @param ip      The injection point
-    */
-   @Produces @ActionParam("")
-   public static String[] getActionParameterValues(InjectionPoint ip) {
-      PortletArtifactProducer pap = producers.get();
-      assert pap != null;
-      String[] vals = null;
-      if (pap.req instanceof ActionRequest) {
-         ActionRequest areq = (ActionRequest) pap.req;
-         ActionParam ap = (ActionParam) ip.getAnnotated().getAnnotation(ActionParam.class);
-         vals = areq.getActionParameters().getValues(ap.value());
-         trace("ActionParam", "String[]", ap.value(), Arrays.toString(vals));
-      }
-      return vals;
-   }
-   
-   /**
-    * Producer method for the parameter as String.
-    *  
-    * @param ip      The injection point
-    */
-   @Produces @RenderParam("")
-   public static String getRenderParameter(InjectionPoint ip) {
-      PortletArtifactProducer pap = producers.get();
-      assert pap != null;
-      String val = null;
-      RenderParam rp = (RenderParam) ip.getAnnotated().getAnnotation(RenderParam.class);
-      val = pap.req.getRenderParameters().getValue(rp.value());
-      trace("@RenderParam", "String", rp.value(), val);
-      return val;
-   }
-   
-   /**
-    * Producer method for the parameter as String[].
-    *  
-    * @param ip      The injection point
-    */
-   @Produces @RenderParam("")
-   public static String[] getRenderParameterValues(InjectionPoint ip) {
-      PortletArtifactProducer pap = producers.get();
-      assert pap != null;
-      String[] vals = null;
-      RenderParam rp = (RenderParam) ip.getAnnotated().getAnnotation(RenderParam.class);
-      vals = pap.req.getRenderParameters().getValues(rp.value());
-      trace("@RenderParam", "String[]", rp.value(), Arrays.toString(vals));
-      return vals;
-   }
-   
-   /**
-    * Producer method for the parameter as String.
-    *  
-    * @param ip      The injection point
-    */
-   @Produces @ResourceParam("")
-   public static String getResourceParameter(InjectionPoint ip) {
-      PortletArtifactProducer pap = producers.get();
-      assert pap != null;
-      String val = null;
-      if (pap.req instanceof ResourceRequest) {
-         ResourceRequest rreq = (ResourceRequest) pap.req;
-         ResourceParam rp = (ResourceParam) ip.getAnnotated().getAnnotation(ResourceParam.class);
-         val = rreq.getResourceParameters().getValue(rp.value());
-         trace("@ResourceParam", "String", rp.value(), val);
-      }
-      return val;
-   }
-   
-   /**
-    * Producer method for the parameter as String[].
-    *  
-    * @param ip      The injection point
-    */
-   @Produces @ResourceParam("")
-   public static String[] getResourceParameterValues(InjectionPoint ip) {
-      PortletArtifactProducer pap = producers.get();
-      assert pap != null;
-      String[] vals = null;
-      if (pap.req instanceof ResourceRequest) {
-         ResourceRequest rreq = (ResourceRequest) pap.req;
-         ResourceParam rp = (ResourceParam) ip.getAnnotated().getAnnotation(ResourceParam.class);
-         vals = rreq.getResourceParameters().getValues(rp.value());
-         trace("@ResourceParam", "String[]", rp.value(), Arrays.toString(vals));
-      }
-      return vals;
-   }
 
    
+   // ==================================
+   // Dependent-Scoped producer methods
+   // ==================================
+   
    /**
-    * Private helper method to trace parameter injection
-    * 
-    * @param anno
-    * @param sig
-    * @param pname
-    * @param pval
+    * Producer method for the window ID. 
     */
-   private static void trace(String anno, String sig, String pname, String pval) {
-      if (isTrace) {
-         StringBuilder txt = new StringBuilder(128);
-         txt.append("Parameter injection trace.");
-         txt.append(" Annotation: ").append(anno);
-         txt.append(" Signature: ").append(sig);
-         txt.append(" Param name: ").append(pname);
-         txt.append(" Param value(s): ").append(pval);
-         LOG.trace(txt.toString());
-      }
+   @Produces @WindowId @Named("windowId")
+   public static String produceWindowID() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      return pap.req.getWindowID();
    }
+
+   /**
+    * Producer method for the namespace. 
+    */
+   @Produces @Namespace @Named("namespace")
+   public static String produceNamespace() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      return pap.resp.getNamespace();
+   }
+
+   /**
+    * Producer method for the portlet name. 
+    */
+   @Produces @PortletName @Named("portletName")
+   public static String producePortletName() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      return pap.config.getPortletName();
+   }
+
+   /**
+    * Producer method for the context root. 
+    */
+   @Produces @ContextPath @Named("contextPath")
+   public static String produceContextPath() {
+      PortletArtifactProducer pap = producers.get();
+      assert pap != null;
+      return pap.req.getContextPath();
+   }
+   
 }
