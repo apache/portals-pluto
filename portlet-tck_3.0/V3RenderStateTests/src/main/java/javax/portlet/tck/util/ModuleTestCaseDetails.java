@@ -66,9 +66,9 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETRENDERPARAMETERS2, "The RenderParameters object return by this method is immutable.");
       tcd.put(V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETRENDERPARAMETERS3, "If no render parameters are available, the object will be empty.");
       tcd.put(V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETPORTLETMODE, "Returns the current portlet mode of the portlet.");
-      tcd.put(V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETPORTLETMODE2, "If the portlet mode is not available, PortletMode.UNDEFINED is returned.");
+      tcd.put(V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETPORTLETMODE2, "If the portlet mode is not available, PortletMode.UNDEFINED is returned. The portlet mode would not be available in a resource request invoked with a resource URL having FULL cacheability.");
       tcd.put(V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETWINDOWSTATE, "Returns the current window state of the portlet.");
-      tcd.put(V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETWINDOWSTATE2, "If the window state is not available, WindowState.UNDEFINED is returned.");
+      tcd.put(V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETWINDOWSTATE2, "If the window state is not available, WindowState.UNDEFINED is returned. The window state would not be available in a resource request invoked with a resource URL having FULL cacheability.");
       tcd.put(V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_GETRENDERPARAMETERS, "Returns an MutableRenderParameters object representing the private and public render parameters.");
       tcd.put(V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_GETRENDERPARAMETERS2, "The MutableRenderParameters object return by this method is mutable.");
       tcd.put(V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_GETRENDERPARAMETERS3, "If no render parameters are available, the object will be empty.");

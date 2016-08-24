@@ -204,9 +204,9 @@ public class RenderStateTests_SPEC1_12_RenderState implements Portlet, ResourceS
       /* TestCase: V3RenderStateTests_SPEC1_12_RenderState_getPortletMode2 */
       /*
        * Details: "If the portlet mode is not available, PortletMode.UNDEFINED
-       * is returned."
+       * is returned. The portlet mode would not be available in a resource
+       * request invoked with a resource URL having FULL cacheability."
        */
-      // TODO: Add the condition to get UNDEFINED in the test description
       // TODO: Fix test case. Not working with FULL cacheability
       {
          TestResult result = tcd.getTestResultFailed(
@@ -224,9 +224,9 @@ public class RenderStateTests_SPEC1_12_RenderState implements Portlet, ResourceS
       /* TestCase: V3RenderStateTests_SPEC1_12_RenderState_getWindowState2 */
       /*
        * Details: "If the window state is not available, WindowState.UNDEFINED
-       * is returned."
+       * is returned. The window state would not be available in a resource
+       * request invoked with a resource URL having FULL cacheability."
        */
-       // TODO: Add the condition to get UNDEFINED in the test description
        // TODO: Fix test case. Not working with FULL cacheability
       {
          TestResult result = tcd.getTestResultFailed(
