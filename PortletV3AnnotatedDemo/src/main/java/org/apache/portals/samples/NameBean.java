@@ -22,13 +22,12 @@ package org.apache.portals.samples;
 import java.io.IOException;
 
 import javax.inject.Inject;
+import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
-
 import javax.portlet.annotations.ActionMethod;
-import javax.portlet.annotations.ActionParam;
 import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.PortletSerializable;
 import javax.portlet.annotations.RenderStateScoped;
@@ -55,8 +54,8 @@ public class NameBean implements PortletSerializable {
    private String name;
    //===========================================================
 
-   @Inject @ActionParam(PARAM_NAME)
-   private String apName;
+   @Inject 
+   private ActionParameters actparams;
 
    // getters & setters
    //================
@@ -112,7 +111,7 @@ public class NameBean implements PortletSerializable {
       // The action parameter is injected, so just need to check it or
       // in this case, copy it to the state. Note that you can't inject directly 
       // into the state, since the injection is performed before the deserialization.
-      name = apName;
+      name = actparams.getValue(PARAM_NAME);
    }
 
    /**

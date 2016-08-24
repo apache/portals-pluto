@@ -18,15 +18,46 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.PortletSession.PORTLET_SCOPE;
+import static javax.portlet.ResourceURL.PAGE;
+import static javax.portlet.tck.portlets.Utils.ACTIONPHASE;
+import static javax.portlet.tck.portlets.Utils.CONTEXTPATHARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.EVENTPHASE;
+import static javax.portlet.tck.portlets.Utils.HEADERPHASE;
+import static javax.portlet.tck.portlets.Utils.NAMESPACEARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.PORTLETCONFIGARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.PORTLETCONTEXTARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.PORTLETMODEARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.PORTLETNAMEARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.PORTLETPREFERENCESARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.PORTLETSESSIONARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.RENDERPHASE;
+import static javax.portlet.tck.portlets.Utils.WINDOWIDARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.WINDOWSTATEARTIFACTKEY;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_CONTEXTPATH;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_COOKIES;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALE;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALES;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_NAMESPACE;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETCONFIG;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETCONTEXT;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETMODE;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETNAME;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETPREFERENCES;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETSESSION;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_WINDOWID;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_WINDOWSTATE;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Locale;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.ActionURL;
-import javax.portlet.ClientDataRequest;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.HeaderRequest;
@@ -38,7 +69,6 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderParameters;
 import javax.portlet.RenderRequest;
@@ -58,7 +88,6 @@ import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletName;
 import javax.portlet.annotations.PortletQName;
 import javax.portlet.annotations.RenderMethod;
-import javax.portlet.annotations.RenderParam;
 import javax.portlet.annotations.ServeResourceMethod;
 import javax.portlet.annotations.WindowId;
 import javax.portlet.tck.beans.TestButton;
@@ -66,39 +95,6 @@ import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
 import javax.servlet.http.Cookie;
 import javax.xml.namespace.QName;
-
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETCONFIG;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETCONTEXT;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETMODE;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_WINDOWSTATE;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETPREFERENCES;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_COOKIES;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETSESSION;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALE;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALES;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_NAMESPACE;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_CONTEXTPATH;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_WINDOWID;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETNAME;
-import static javax.portlet.PortletSession.PORTLET_SCOPE;
-import static javax.portlet.ResourceURL.PAGE;
-import static javax.portlet.tck.portlets.Utils.PORTLETCONFIGARTIFACTKEY;
-import static javax.portlet.tck.portlets.Utils.ACTIONPHASE;
-import static javax.portlet.tck.portlets.Utils.EVENTPHASE;
-import static javax.portlet.tck.portlets.Utils.HEADERPHASE;
-import static javax.portlet.tck.portlets.Utils.RENDERPHASE;
-import static javax.portlet.tck.portlets.Utils.PORTLETCONTEXTARTIFACTKEY;
-import static javax.portlet.tck.portlets.Utils.WINDOWSTATEARTIFACTKEY;
-import static javax.portlet.tck.portlets.Utils.PORTLETPREFERENCESARTIFACTKEY;
-import static javax.portlet.tck.portlets.Utils.PORTLETMODEARTIFACTKEY;
-import static javax.portlet.tck.portlets.Utils.COOKIESARTIFACTKEY;
-import static javax.portlet.tck.portlets.Utils.PORTLETSESSIONARTIFACTKEY;
-import static javax.portlet.tck.portlets.Utils.LOCALEARTIFACTKEY;
-import static javax.portlet.tck.portlets.Utils.NAMESPACEARTIFACTKEY;
-import static javax.portlet.tck.portlets.Utils.LOCALESARTIFACTKEY;
-import static javax.portlet.tck.portlets.Utils.CONTEXTPATHARTIFACTKEY;
-import static javax.portlet.tck.portlets.Utils.PORTLETNAMEARTIFACTKEY;
-import static javax.portlet.tck.portlets.Utils.WINDOWIDARTIFACTKEY;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -142,39 +138,36 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
    
    @Inject
    private PortletPreferences portletPreferences;
-   /*
-   @Inject
-   private Cookie[] cookies;
-   */
    
    @Inject
-   @RenderParam("value1")
-   String renderParams1[];
+   private List<Cookie> cookies;
+   
    
    @Inject
    private PortletSession          portletSession;
    /*
    @Inject
    private Locale locale;
-   
-   @Inject
-   private Locale[] locales;
    */
    @Inject
-   @Namespace
-   private String                  namespace;
+   private List<Locale> locales;
    
-   @Inject
-   @ContextPath
-   private String                  contextPath;
    
-   @Inject
-   @WindowId
-   private String                  windowId;
+   // @Inject
+   // @Namespace
+   private String                  namespace = "";
    
-   @Inject
-   @PortletName
-   private String                  portletName;
+   // @Inject
+   // @ContextPath
+   private String                  contextPath = "";
+   
+   // @Inject
+   // @WindowId
+   private String                  windowId = "";
+   
+   // @Inject
+   // @PortletName
+   private String                  portletName = "";
    
    @HeaderMethod(
       portletNames = { "AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts" }

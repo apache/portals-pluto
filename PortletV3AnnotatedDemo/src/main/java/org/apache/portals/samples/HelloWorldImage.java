@@ -21,12 +21,11 @@ package org.apache.portals.samples;
 
 import javax.inject.Inject;
 import javax.portlet.PortletRequest;
+import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceURL;
-
 import javax.portlet.annotations.ContextPath;
 import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.RenderMethod;
-import javax.portlet.annotations.ResourceParam;
 import javax.portlet.annotations.ServeResourceMethod;
 import javax.portlet.MimeResponse;
 
@@ -86,8 +85,8 @@ public class HelloWorldImage {
    }
 
    // Inject the resource parameter to see if image should be displayed.
-   @Inject @ResourceParam(RESPARAM_DISPLAY)
-   String   display;
+   @Inject  
+   private ResourceParameters resparams;
    
    /**
     *  This resource method generates some output directly, then includes output
@@ -98,6 +97,7 @@ public class HelloWorldImage {
    @ServeResourceMethod(portletNames={"BeanPortlet"}, include="/WEB-INF/jsp/res-simple.jsp")
    public String getImage() {
       String result = "";
+      String display = resparams.getValue(RESPARAM_DISPLAY);
       
       // illustrate use of the injected display resource parameter
       if (display != null) {

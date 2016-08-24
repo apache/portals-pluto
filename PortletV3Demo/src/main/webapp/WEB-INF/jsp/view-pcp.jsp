@@ -35,6 +35,7 @@ limitations under the License.
 <hr/>
 <p>This portlet displays information from the new V3.0 PortletConfig APIs
 getPortletModes(String), getWindowStates(String), and getPublicRenderParameterDefinitions()</p>
+<h5>Current Portlet Mode: <%=renderRequest.getPortletMode().toString() %></h5>
 <h5>Portlet Modes:</h5>
 <ul>
 <c:forEach items="<%=renderRequest.getAttribute(ATTRIB_PMS) %>" var="pm">

@@ -76,7 +76,8 @@ public class PortletModeDropDownTag extends BodyTagSupport {
      * Method invoked when the start tag is encountered.
      * @throws JspException  if an error occurs.
      */
-    public int doStartTag() throws JspException {
+    @SuppressWarnings("deprecation")
+   public int doStartTag() throws JspException {
         
         // Ensure that the modeAnchor tag resides within a portlet tag.
         PortletTag parentTag = (PortletTag) TagSupport.findAncestorWithClass(
@@ -148,7 +149,7 @@ public class PortletModeDropDownTag extends BodyTagSupport {
         		while (i.hasNext()) {
         			PortletMode mode = i.next();
 
-        			PortalURL portalUrl =  portalEnv.createPortalURL();
+        			PortalURL portalUrl =  requestedPortalUrl.clone();
         			portalUrl.setPortletMode(evaluatedPortletId, mode);
 
         			// Build a string buffer containing the anchor tag
@@ -224,11 +225,6 @@ public class PortletModeDropDownTag extends BodyTagSupport {
      */
     public void setPortletMode(String portletMode) {
         this.portletMode = portletMode;
-    }
-    
-    private boolean isPortletModeAllowed(DriverConfiguration config, String mode) {
-        LOG.debug("Testing if PortletWindowConfig [" + getEvaluatedPortletId() + "] supports mode [" + mode + "]");
-        return config.isPortletModeSupported(getEvaluatedPortletId(), mode);
     }
 
     /**

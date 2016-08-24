@@ -170,6 +170,12 @@ public class PortletServlet3 extends HttpServlet {
          txt.append(sw.toString());
          
          LOG.error(txt.toString());
+
+         // take out of service
+         
+         invoker = null;
+         portletConfig = null;
+         isOutOfService = true;
          return;
       }
 
@@ -200,6 +206,12 @@ public class PortletServlet3 extends HttpServlet {
             if (sConfig == null) {
                String msg = "Problem obtaining servlet configuration(getServletConfig() returns null).";
                context.log(msg);
+
+               // take out of service
+               
+               invoker = null;
+               portletConfig = null;
+               isOutOfService = true;
                return true;
             }
 
@@ -210,6 +222,12 @@ public class PortletServlet3 extends HttpServlet {
 
          } catch (PortletContainerException ex) {
             context.log(ex.getMessage(), ex);
+
+            // take out of service
+            
+            invoker = null;
+            portletConfig = null;
+            isOutOfService = true;
             return true;
          }
 
