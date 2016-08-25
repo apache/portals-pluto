@@ -25,103 +25,82 @@ import javax.portlet.PortletMode;
 import org.apache.pluto.container.PortletHeaderResponseContext;
 import org.apache.pluto.container.util.ArgumentUtility;
 
-
 /**
  * Implementation of the <code>javax.portlet.RenderResponse</code> interface.
  * 
  */
 @SuppressWarnings("unchecked")
-public class HeaderResponseImpl extends MimeResponseImpl implements HeaderResponse
-{	
-    
-    public HeaderResponseImpl(PortletHeaderResponseContext responseContext)
-    {
-        super(responseContext);
-    }
-    
-    /**
-     * Checks if the specified content type is valid (supported by the portlet).
-     * The specified content type should be a tripped mime type without any
-     * character encoding suffix.
-     * @param contentType  the content type to check.
-     * @return true if the content type is valid, false otherwise.
-     */
-    protected boolean isValidContentType(String contentType)
-    {
-        boolean valid = false;
-        for (String supportedType : getResponseContentTypes())
-        {
-            // Content type is supported by an exact match.
-            if (supportedType.equals(contentType))
-            {
-                valid = true;
+public class HeaderResponseImpl extends MimeResponseImpl implements HeaderResponse {
+
+   public HeaderResponseImpl(PortletHeaderResponseContext responseContext) {
+      super(responseContext);
+   }
+
+   /**
+    * Checks if the specified content type is valid (supported by the portlet). The specified content type should be a
+    * tripped mime type without any character encoding suffix.
+    * 
+    * @param contentType
+    *           the content type to check.
+    * @return true if the content type is valid, false otherwise.
+    */
+   protected boolean isValidContentType(String contentType) {
+
+      String[] parts = contentType.split("/");
+      if (parts.length != 2) {
+         return false;
+      }      
+
+      for (String supportedType : getResponseContentTypes()) {
+         
+         // Content type is supported by an exact or wildcard match.
+         if (supportedType.matches("(?:\\*|\\*/\\*)") || supportedType.equals(contentType)) {
+            return true;
+         }
+         
+         String[] sp = supportedType.split("/");
+         assert sp.length == 2;
+         
+         if (sp[0].equals("*") || sp[0].equals(parts[0])) {
+            if (sp[1].equals("*") || sp[1].equals(parts[1])) {
+               return true;
             }
-            // The supported type contains a wildcard.
-            else if (supportedType.indexOf("*") >= 0)
-            {
-                int index = supportedType.indexOf("/");
-                String supportedPrefix = supportedType.substring(0, index);
-                String supportedSuffix = supportedType.substring(index + 1);
-                index = contentType.indexOf("/");
-                String typePrefix = contentType.substring(0, index);
-                String typeSuffix = contentType.substring(index + 1);
-                // Check if the prefixes match AND the suffixes match.
-                if (supportedPrefix.equals("*") || supportedPrefix.equals(typePrefix))
-                {
-                    if (supportedSuffix.equals("*") || supportedSuffix.equals(typeSuffix))
-                    {
-                        valid = true;
-                    }
-                }
-            }
-        }
-        // Return the check result.
-        return valid;
-    }
-    
-    @Override
-    public void setContentType(String contentType)
-    {
-        ArgumentUtility.validateNotNull("contentType", contentType);
-        int index =contentType.indexOf(';');
-        if (index != -1)
-        {
-            contentType = contentType.substring(0, index);
-        }
-        contentType = contentType.trim();
-        if (!isValidContentType(contentType))
-        {
-            throw new IllegalArgumentException("Specified content type '" + contentType + "' is not supported.");
-        }
-        super.setContentType(contentType);
-    }
-    
-    public void setNextPossiblePortletModes(Collection<? extends PortletMode> portletModes)
-    {
-        ArgumentUtility.validateNotNull("portletModes", portletModes);
-        if (portletModes.isEmpty())
-        {
-            throw new IllegalArgumentException("At least one possible PortletMode should be specified.");            
-        }
-        ArrayList<PortletMode> modes = new ArrayList<PortletMode>();
-        for (PortletMode mode : portletModes)
-        {
-            if (isPortletModeAllowed(mode))
-            {
-                modes.add(mode);
-            }
-        }
-        if (modes.isEmpty())
-        {
-            modes.add(getPortletWindow().getPortletMode());
-        }
-        ((PortletHeaderResponseContext) responseContext).setNextPossiblePortletModes(modes);
-    }
-    
-    public void setTitle(String title)
-    {
-       ((PortletHeaderResponseContext) responseContext).setTitle(title);
-    }
+         }
+      }
+      
+      return false;
+   }
+
+   @Override
+   public void setContentType(String contentType) {
+      ArgumentUtility.validateNotNull("contentType", contentType);
+      contentType = contentType.replaceAll("([^;]*).*", "$1").replaceAll(" ", "");
+      if (!isValidContentType(contentType)) {
+         throw new IllegalArgumentException("Specified content type '" + contentType + "' is not supported.");
+      }
+      super.setContentType(contentType);
+   }
+
+   public void setNextPossiblePortletModes(Collection<? extends PortletMode> portletModes) {
+      ArgumentUtility.validateNotNull("portletModes", portletModes);
+      if (portletModes.isEmpty()) {
+         throw new IllegalArgumentException("At least one possible PortletMode should be specified.");
+      }
+      ArrayList<PortletMode> modes = new ArrayList<PortletMode>();
+      for (PortletMode mode : portletModes) {
+         if (isPortletModeAllowed(mode)) {
+            modes.add(mode);
+         }
+      }
+      if (modes.isEmpty()) {
+         modes.add(getPortletWindow().getPortletMode());
+      }
+      ((PortletHeaderResponseContext) responseContext).setNextPossiblePortletModes(modes);
+   }
+
+   public void setTitle(String title) {
+      ((PortletHeaderResponseContext) responseContext).setTitle(title);
+   }
 
    @Override
    public void addDependency(String name, String scope, String version) {

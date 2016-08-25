@@ -16,7 +16,6 @@
  *  under the License.
  */
 
-
 package org.apache.pluto.container.om.portlet.impl;
 
 import java.util.ArrayList;
@@ -24,6 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+
+import javax.portlet.PortletMode;
 
 import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
 import org.apache.pluto.container.om.portlet.Dependency;
@@ -42,70 +43,71 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Scott Nicklous
- *
+ * 
  */
 public class PortletDefinitionImpl implements PortletDefinition {
-   
+
    /** Logger. */
-   private static final Logger LOG = LoggerFactory.getLogger(PortletDefinitionImpl.class);
-   
-   private PortletApplicationDefinition pad;
-   
-   private String portletName;
-   private String portletClass;
-   private String resourceBundle;
-   private String cacheScope;
-   
-   private int expirationCache;
-   
-   private PortletInfo info;
-   private Preferences prefs = new PreferencesImpl();
-   
-   private final List<String> supportedLocales = new ArrayList<String>();
-   private final List<String> pubParms = new ArrayList<String>();
-   
-   private final List<Description> descs = new ArrayList<Description>();
-   private final List<DisplayName> dispNames = new ArrayList<DisplayName>();
+   private static final Logger                  LOG                = LoggerFactory.getLogger(PortletDefinitionImpl.class);
 
-   private final List<EventDefinitionReference> proEvtRefs = new ArrayList<EventDefinitionReference>();
-   private final List<EventDefinitionReference> pubEvtRefs =  new ArrayList<EventDefinitionReference>();
+   private PortletApplicationDefinition         pad;
 
-   private final List<ContainerRuntimeOption> crtOptions = new ArrayList<ContainerRuntimeOption>();
-   
-   private final List<InitParam> iparms = new ArrayList<InitParam>(); 
-   private final List<SecurityRoleRef> secRefs = new ArrayList<SecurityRoleRef>(); 
-   private final List<Supports> supps = new ArrayList<Supports>();
-   private final List<Dependency> dependencies = new ArrayList<Dependency>(); 
-   private boolean asyncSupported = false;
-   
-   private boolean multipartSupported = false;
-   private String location = "";
-   private Long maxFileSize = -1L;
-   private Long maxRequestSize = -1L;
-   private Integer fileSizeThreshold = 0;
+   private String                               portletName;
+   private String                               portletClass;
+   private String                               resourceBundle;
+   private String                               cacheScope;
 
+   private int                                  expirationCache;
+
+   private PortletInfo                          info;
+   private Preferences                          prefs              = new PreferencesImpl();
+
+   private final List<String>                   supportedLocales   = new ArrayList<String>();
+   private final List<String>                   pubParms           = new ArrayList<String>();
+
+   private final List<Description>              descs              = new ArrayList<Description>();
+   private final List<DisplayName>              dispNames          = new ArrayList<DisplayName>();
+
+   private final List<EventDefinitionReference> proEvtRefs         = new ArrayList<EventDefinitionReference>();
+   private final List<EventDefinitionReference> pubEvtRefs         = new ArrayList<EventDefinitionReference>();
+
+   private final List<ContainerRuntimeOption>   crtOptions         = new ArrayList<ContainerRuntimeOption>();
+
+   private final List<InitParam>                iparms             = new ArrayList<InitParam>();
+   private final List<SecurityRoleRef>          secRefs            = new ArrayList<SecurityRoleRef>();
+   private final List<Supports>                 supps              = new ArrayList<Supports>();
+   private final List<Dependency>               dependencies       = new ArrayList<Dependency>();
+   private boolean                              asyncSupported     = false;
+
+   private boolean                              multipartSupported = false;
+   private String                               location           = "";
+   private Long                                 maxFileSize        = -1L;
+   private Long                                 maxRequestSize     = -1L;
+   private Integer                              fileSizeThreshold  = 0;
 
    /**
     * Copy constructor
-    * @param pd   The portlet definition
+    * 
+    * @param pd
+    *           The portlet definition
     */
    public PortletDefinitionImpl(PortletDefinition pd) {
-      this.pad = pd.getApplication();        // intentionally not copied
+      this.pad = pd.getApplication(); // intentionally not copied
       this.portletName = pd.getPortletName();
       this.portletClass = pd.getPortletClass();
       this.resourceBundle = pd.getResourceBundle();
       this.cacheScope = pd.getCacheScope();
       this.expirationCache = pd.getExpirationCache();
-      
+
       PortletInfo pi = pd.getPortletInfo();
       this.info = (pi == null) ? null : new PortletInfoImpl(pi);
-      
+
       Preferences prefs = pd.getPortletPreferences();
       this.prefs = (prefs == null) ? null : new PreferencesImpl(prefs);
-      
+
       this.supportedLocales.addAll(pd.getSupportedLocales());
       this.pubParms.addAll(pd.getSupportedPublicRenderParameters());
-      
+
       for (Description d : pd.getDescriptions()) {
          this.descs.add(new DescriptionImpl(d));
       }
@@ -113,12 +115,10 @@ public class PortletDefinitionImpl implements PortletDefinition {
          this.dispNames.add(new DisplayNameImpl(dn));
       }
       for (EventDefinitionReference edr : pd.getSupportedProcessingEvents()) {
-         this.proEvtRefs.add(
-               new EventDefinitionReferenceImpl(edr));
+         this.proEvtRefs.add(new EventDefinitionReferenceImpl(edr));
       }
       for (EventDefinitionReference edr : pd.getSupportedPublishingEvents()) {
-         this.pubEvtRefs.add(
-               new EventDefinitionReferenceImpl(edr));
+         this.pubEvtRefs.add(new EventDefinitionReferenceImpl(edr));
       }
       for (ContainerRuntimeOption crt : pd.getContainerRuntimeOptions()) {
          this.crtOptions.add(new ContainerRuntimeOptionImpl(crt));
@@ -142,18 +142,23 @@ public class PortletDefinitionImpl implements PortletDefinition {
       this.maxRequestSize = pd.getMaxRequestSize();
       this.fileSizeThreshold = pd.getFileSizeThreshold();
    }
-   
+
    /**
     * Constructor
-    * @param pn      portlet name
-    * @param pad     portlet application
+    * 
+    * @param pn
+    *           portlet name
+    * @param pad
+    *           portlet application
     */
    public PortletDefinitionImpl(String pn, PortletApplicationDefinition pad) {
       this.portletName = pn;
       this.pad = pad;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getPortletName()
     */
    @Override
@@ -161,7 +166,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return portletName;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getApplication()
     */
    @Override
@@ -169,7 +176,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return pad;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getInitParam(java.lang.String)
     */
    @Override
@@ -183,7 +192,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return ret;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getInitParams()
     */
    @Override
@@ -195,17 +206,19 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return ips;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#addInitParam(java.lang.String)
     */
    @Override
    public void addInitParam(InitParam ip) {
       int ii = iparms.indexOf(ip);
       if (ii >= 0) {
-         
+
          InitParam x = iparms.get(ii);
          iparms.remove(ii);
-         
+
          StringBuilder txt = new StringBuilder(128);
          txt.append("Removed duplicate init parameter. name: ").append(x.getParamName());
          txt.append(", value: ").append(x.getParamValue());
@@ -214,7 +227,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       iparms.add(ip);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getPortletClass()
     */
    @Override
@@ -222,7 +237,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return portletClass;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#setPortletClass(java.lang.String)
     */
    @Override
@@ -230,7 +247,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       this.portletClass = portletClass;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getPortletInfo()
     */
    @Override
@@ -243,7 +262,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       this.info = info;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getPortletPreferences()
     */
    @Override
@@ -256,7 +277,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       this.prefs = prefs;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getSupportedProcessingEvents()
     */
    @Override
@@ -264,7 +287,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return new ArrayList<EventDefinitionReference>(proEvtRefs);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#addSupportedProcessingEvent(EventDefinitionReference)
     */
    @Override
@@ -274,13 +299,15 @@ public class PortletDefinitionImpl implements PortletDefinition {
       }
       proEvtRefs.add(edr);
    }
-   
+
    @Override
    public boolean removeSupportedProcessingEvent(EventDefinitionReference edr) {
       return proEvtRefs.remove(edr);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getSupportedPublishingEvents()
     */
    @Override
@@ -288,8 +315,11 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return new ArrayList<EventDefinitionReference>(pubEvtRefs);
    }
 
-   /* (non-Javadoc)
-    * @see org.apache.pluto.container.om.portlet.PortletDefinition#addSupportedPublishingEvent(javax.xml.namespace.QName)
+   /*
+    * (non-Javadoc)
+    * 
+    * @see
+    * org.apache.pluto.container.om.portlet.PortletDefinition#addSupportedPublishingEvent(javax.xml.namespace.QName)
     */
    @Override
    public void addSupportedPublishingEvent(EventDefinitionReference edr) {
@@ -298,13 +328,15 @@ public class PortletDefinitionImpl implements PortletDefinition {
       }
       pubEvtRefs.add(edr);
    }
-   
+
    @Override
    public boolean removeSupportedPublishingEvent(EventDefinitionReference edr) {
       return pubEvtRefs.remove(edr);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getSupportedPublicRenderParameters()
     */
    @Override
@@ -312,7 +344,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return new ArrayList<String>(pubParms);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#addSupportedPublicRenderParameter(java.lang.String)
     */
    @Override
@@ -322,13 +356,15 @@ public class PortletDefinitionImpl implements PortletDefinition {
       }
       pubParms.add(identifier);
    }
-   
+
    @Override
    public boolean removeSupportedPublicRenderParameter(String identifier) {
       return pubParms.remove(identifier);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getResourceBundle()
     */
    @Override
@@ -336,7 +372,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return resourceBundle;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#setResourceBundle(java.lang.String)
     */
    @Override
@@ -344,7 +382,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       this.resourceBundle = resourceBundle;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getSecurityRoleRef(java.lang.String)
     */
    @Override
@@ -358,7 +398,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return ret;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getSecurityRoleRefs()
     */
    @Override
@@ -366,7 +408,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return new ArrayList<SecurityRoleRef>(secRefs);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#addSecurityRoleRef(SecurityRoleRef)
     */
    @Override
@@ -377,7 +421,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       secRefs.add(srr);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getSupports(java.lang.String)
     */
    @Override
@@ -391,7 +437,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return ret;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getSupports()
     */
    @Override
@@ -399,7 +447,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return new ArrayList<Supports>(supps);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#addSupports(java.lang.String)
     */
    @Override
@@ -407,10 +457,12 @@ public class PortletDefinitionImpl implements PortletDefinition {
       if (supps.remove(supp)) {
          LOG.warn("Overwriting duplicate supports block for: " + supp.getMimeType());
       }
-     supps.add(supp);
+      supps.add(supp);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getConfiguredMimeTypes()
     */
    @Override
@@ -422,7 +474,66 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return types;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
+    * @see org.apache.pluto.container.om.portlet.PortletDefinition#isPortletModeSupported(String, PrtletMode)
+    */
+   @Override
+   public boolean isPortletModeSupported(String mimeType, PortletMode pm) {
+      boolean supported = false;
+      if (supps.isEmpty()) {
+         // No supports blocks configured for portlet; assume view is always supported
+         if (pm.equals(PortletMode.VIEW)) {
+            supported = true;
+         }
+      } else {
+         if (getSupports(mimeType) != null) {
+            if (pm.equals(PortletMode.VIEW)) {
+               supported = true;
+            } else {
+               for (String strpm : getSupports(mimeType).getPortletModes()) {
+                  if ((new PortletMode(strpm)).equals(pm)) {
+                     supported = true;
+                     break;
+                  }
+               }
+            }
+         } else {
+            for (Supports supp : supps) {
+               if (supp.getMimeType().matches("(?:\\*/\\*|\\*|text/\\*)")) {
+                  if (pm.equals(PortletMode.VIEW)) {
+                     supported = true;
+                  } else {
+                     for (String strpm : supp.getPortletModes()) {
+                        if ((new PortletMode(strpm)).equals(pm)) {
+                           supported = true;
+                           break;
+                        }
+                     }
+                  }
+                  if (supported == true) {
+                     break;
+                  }
+               }
+            }
+         }
+      }
+      
+      if (LOG.isDebugEnabled()) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Portlet mode: ").append(pm.toString());
+         txt.append(", MIME type: ").append(mimeType);
+         txt.append(", is supported: ").append(supported);
+         LOG.debug(txt.toString());
+      }
+      
+      return supported;
+   }
+
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getDependency(java.lang.String)
     */
    @Override
@@ -436,7 +547,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return ret;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getDependency()
     */
    @Override
@@ -444,7 +557,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return new ArrayList<Dependency>(dependencies);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#addDependency(java.lang.String)
     */
    @Override
@@ -452,10 +567,12 @@ public class PortletDefinitionImpl implements PortletDefinition {
       if (dependencies.remove(dep)) {
          LOG.debug("Removed duplicate dependencies block for: " + dep.getName());
       }
-     dependencies.add(dep);
+      dependencies.add(dep);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getDescription(java.util.Locale)
     */
    @Override
@@ -469,7 +586,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return ret;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getDescriptions()
     */
    @Override
@@ -477,8 +596,11 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return new ArrayList<Description>(descs);
    }
 
-   /* (non-Javadoc)
-    * @see org.apache.pluto.container.om.portlet.PortletDefinition#addDescription(org.apache.pluto.container.om.portlet.Description)
+   /*
+    * (non-Javadoc)
+    * 
+    * @see org.apache.pluto.container.om.portlet.PortletDefinition#addDescription(org.apache.pluto.container.om.portlet.
+    * Description)
     */
    @Override
    public void addDescription(Description desc) {
@@ -491,7 +613,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       descs.add(desc);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getDisplayName(java.util.Locale)
     */
    @Override
@@ -505,7 +629,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return ret;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getDisplayNames()
     */
    @Override
@@ -513,8 +639,11 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return new ArrayList<DisplayName>(dispNames);
    }
 
-   /* (non-Javadoc)
-    * @see org.apache.pluto.container.om.portlet.PortletDefinition#addDisplayName(org.apache.pluto.container.om.portlet.DisplayName)
+   /*
+    * (non-Javadoc)
+    * 
+    * @see org.apache.pluto.container.om.portlet.PortletDefinition#addDisplayName(org.apache.pluto.container.om.portlet.
+    * DisplayName)
     */
    @Override
    public void addDisplayName(DisplayName dispName) {
@@ -527,7 +656,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       dispNames.add(dispName);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getSupportedLocales()
     */
    @Override
@@ -535,7 +666,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return new ArrayList<String>(supportedLocales);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#addSupportedLocale(java.lang.String)
     */
    @Override
@@ -546,7 +679,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       supportedLocales.add(lang);
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getExpirationCache()
     */
    @Override
@@ -554,7 +689,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return expirationCache;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#setExpirationCache(int)
     */
    @Override
@@ -562,7 +699,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       this.expirationCache = expirationCache;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getCacheScope()
     */
    @Override
@@ -570,7 +709,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return cacheScope;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#setCacheScope(java.lang.String)
     */
    @Override
@@ -578,7 +719,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       this.cacheScope = cacheScope;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getContainerRuntimeOption(java.lang.String)
     */
    @Override
@@ -592,7 +735,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return ret;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#getContainerRuntimeOptions()
     */
    @Override
@@ -604,17 +749,19 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return crtos;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see org.apache.pluto.container.om.portlet.PortletDefinition#addContainerRuntimeOption(java.lang.String)
     */
    @Override
    public void addContainerRuntimeOption(ContainerRuntimeOption cro) {
       int ii = crtOptions.indexOf(cro);
       if (ii >= 0) {
-         
+
          ContainerRuntimeOption x = crtOptions.get(ii);
          crtOptions.remove(ii);
-         
+
          StringBuilder txt = new StringBuilder(128);
          txt.append("Removed duplicate portlet container runtime option: ").append(x.getName());
          txt.append(", vals: ").append(x.getValues().toString());
@@ -632,7 +779,8 @@ public class PortletDefinitionImpl implements PortletDefinition {
    }
 
    /**
-    * @param asyncSupported the asyncSupported to set
+    * @param asyncSupported
+    *           the asyncSupported to set
     */
    @Override
    public void setAsyncSupported(boolean asyncSupported) {
@@ -648,7 +796,8 @@ public class PortletDefinitionImpl implements PortletDefinition {
    }
 
    /**
-    * @param multipartSupported the multipartSupported to set
+    * @param multipartSupported
+    *           the multipartSupported to set
     */
    @Override
    public void setMultipartSupported(boolean multipartSupported) {
@@ -664,7 +813,8 @@ public class PortletDefinitionImpl implements PortletDefinition {
    }
 
    /**
-    * @param location the location to set
+    * @param location
+    *           the location to set
     */
    @Override
    public void setLocation(String location) {
@@ -680,7 +830,8 @@ public class PortletDefinitionImpl implements PortletDefinition {
    }
 
    /**
-    * @param maxFileSize the maxFileSize to set
+    * @param maxFileSize
+    *           the maxFileSize to set
     */
    @Override
    public void setMaxFileSize(Long maxFileSize) {
@@ -696,7 +847,8 @@ public class PortletDefinitionImpl implements PortletDefinition {
    }
 
    /**
-    * @param maxRequestSize the maxRequestSize to set
+    * @param maxRequestSize
+    *           the maxRequestSize to set
     */
    @Override
    public void setMaxRequestSize(Long maxRequestSize) {
@@ -712,14 +864,17 @@ public class PortletDefinitionImpl implements PortletDefinition {
    }
 
    /**
-    * @param fileSizeThreshold the fileSizeThreshold to set
+    * @param fileSizeThreshold
+    *           the fileSizeThreshold to set
     */
    @Override
    public void setFileSizeThreshold(Integer fileSizeThreshold) {
       this.fileSizeThreshold = fileSizeThreshold;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see java.lang.Object#hashCode()
     */
    @Override
@@ -730,7 +885,9 @@ public class PortletDefinitionImpl implements PortletDefinition {
       return result;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see java.lang.Object#equals(java.lang.Object)
     */
    @Override
