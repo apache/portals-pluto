@@ -216,7 +216,6 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
              * Details:
              * "A custom window state declared in deployment descriptor could be set."
              */
-            portletResp.setWindowState(new WindowState("custom1"));
             renderParams.setValue("tr_setWindow2", "true");
          } else if (action.equals(
                V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETWINDOWSTATE3)) {
@@ -308,16 +307,6 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
       portletResp.setContentType("text/html");
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
-
-      PortletSession ps = portletReq.getPortletSession();
-      String msg = (String) ps.getAttribute(Constants.RESULT_ATTR_PREFIX
-            + "RenderStateTests_SPEC2_12_MutableRenderState");
-      ps.removeAttribute(Constants.RESULT_ATTR_PREFIX
-            + "RenderStateTests_SPEC2_12_MutableRenderState");
-
-      if (msg != null && msg.length() > 0) {
-         writer.write("<p>" + msg + "</p>\n");
-      }
 
       RenderParameters renderParams = portletReq.getRenderParameters();
 
@@ -507,7 +496,11 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
                actionURL);
          tb.writeTo(writer);
       } else {
-         super.render(portletReq, portletResp);
+         TestResult result = tcd.getTestResultFailed(
+               V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETWINDOWSTATE2);
+         result.setTcSuccess(true);
+         result.appendTcDetail("Cannot be tested as it is implementation specific");
+         result.writeTo(writer);
       }
 
       /*
@@ -580,6 +573,17 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
                actionURL);
          tb.writeTo(writer);
       }
+      
+      PortletSession ps = portletReq.getPortletSession();
+      String msg = (String) ps.getAttribute(Constants.RESULT_ATTR_PREFIX
+            + "RenderStateTests_SPEC2_12_MutableRenderState");
+      
+      if (msg != null && msg.length() > 0) {
+         writer.write("<p>" + msg + "</p>\n");
+      }
+      
+      ps.removeAttribute(Constants.RESULT_ATTR_PREFIX
+            + "RenderStateTests_SPEC2_12_MutableRenderState");
 
    }
 
@@ -613,29 +617,7 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
          }
          result.writeTo(writer);
       }
-      
-      /*
-       * TestCase:
-       * V3RenderStateTests_SPEC2_12_MutableRenderState_setWindowState2
-       */
-      /*
-       * Details:
-       * "A custom window state declared in deployment descriptor could be set."
-       */
-      // TODO: Fix test case. How do we really set custom1 window state?
-      if (renderParams.getValue("tr_setWindow2") != null
-            && renderParams.getValue("tr_setWindow2").equals("true")) {
-         TestResult result = tcd.getTestResultFailed(
-               V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETWINDOWSTATE2);
-         if(portletReq.getWindowState().equals(new WindowState("custom1"))){
-            result.setTcSuccess(true);
-         } else {
-            result.appendTcDetail(
-                  "Failed because window state is not CUSTOM1 but "
-                        + portletReq.getWindowState().toString());
-         }
-         result.writeTo(writer);
-      } 
+ 
    }
 
 }

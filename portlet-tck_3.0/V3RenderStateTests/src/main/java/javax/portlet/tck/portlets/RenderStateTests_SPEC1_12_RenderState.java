@@ -32,6 +32,10 @@ import javax.portlet.RenderParameters;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
@@ -41,6 +45,7 @@ import javax.portlet.tck.beans.TestLink;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
 
+import static javax.portlet.ResourceURL.FULL;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
 
 /**
@@ -51,11 +56,12 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
  * execution by the driver.
  *
  */
+
 @PortletApplication(publicParams = {
       @PublicRenderParameterDefinition(identifier = "tr0_public", qname = @PortletQName(localPart = "tr0_public", namespaceURI = "")) })
 @PortletConfiguration(portletName = "RenderStateTests_SPEC1_12_RenderState", publicParams = {
       "tr0_public" })
-public class RenderStateTests_SPEC1_12_RenderState implements Portlet {
+public class RenderStateTests_SPEC1_12_RenderState implements Portlet, ResourceServingPortlet {
 
    @Override
    public void init(PortletConfig config) throws PortletException {
@@ -153,26 +159,6 @@ public class RenderStateTests_SPEC1_12_RenderState implements Portlet {
          result.writeTo(writer);
       }
 
-      /* TestCase: V3RenderStateTests_SPEC1_12_RenderState_getPortletMode2 */
-      /*
-       * Details: "If the portlet mode is not available, PortletMode.UNDEFINED
-       * is returned."
-       */
-      // TODO: How to make portlet mode unavailable?
-      if (portletReq.getPortletMode().equals(PortletMode.UNDEFINED)) {
-         TestResult result = tcd.getTestResultFailed(
-               V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETPORTLETMODE2);
-         result.setTcSuccess(true);
-         result.writeTo(writer);
-      } else {
-         RenderURL renderURL = portletResp.createRenderURL();
-         // renderURL.setPortletMode(PortletMode.UNDEFINED);
-         TestLink tb = new TestLink(
-               V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETPORTLETMODE2,
-               renderURL);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V3RenderStateTests_SPEC1_12_RenderState_getWindowState */
       /* Details: "Returns the current window state of the portlet." */
       {
@@ -188,24 +174,71 @@ public class RenderStateTests_SPEC1_12_RenderState implements Portlet {
          result.writeTo(writer);
       }
 
+      writer.write(
+            "<div id=\"RenderStateTests_SPEC1_12_RenderState\">no resource output.</div>\n");
+      ResourceURL resurl = portletResp.createResourceURL();
+      resurl.setCacheability(FULL);
+      writer.write("<script>\n");
+      writer.write("(function () {\n");
+      writer.write("   var xhr = new XMLHttpRequest();\n");
+      writer.write("   xhr.onreadystatechange=function() {\n");
+      writer.write("      if (xhr.readyState==4 && xhr.status==200) {\n");
+      writer.write(
+            "         document.getElementById(\"RenderStateTests_SPEC1_12_RenderState\").innerHTML=xhr.responseText;\n");
+      writer.write("      }\n");
+      writer.write("   };\n");
+      writer.write(
+            "   xhr.open(\"GET\",\"" + resurl.toString() + "\",true);\n");
+      writer.write("   xhr.send();\n");
+      writer.write("})();\n");
+      writer.write("</script>\n");
+
+   }
+
+   public void serveResource(ResourceRequest portletReq,
+         ResourceResponse portletResp) throws PortletException, IOException {
+
+      PrintWriter writer = portletResp.getWriter();
+      ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
+
+      /* TestCase: V3RenderStateTests_SPEC1_12_RenderState_getPortletMode2 */
+      /*
+       * Details: "If the portlet mode is not available, PortletMode.UNDEFINED
+       * is returned. The portlet mode would not be available in a resource
+       * request invoked with a resource URL having FULL cacheability."
+       */
+      // TODO: Fix test case. Not working with FULL cacheability
+      {
+         TestResult result = tcd.getTestResultFailed(
+               V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETPORTLETMODE2);
+         if (portletReq.getPortletMode().equals(PortletMode.UNDEFINED)) {
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail(
+                  "Failed because portlet mode is not UNDEFINED but "
+                        + portletReq.getPortletMode());
+         }
+         result.writeTo(writer);
+      }
+
       /* TestCase: V3RenderStateTests_SPEC1_12_RenderState_getWindowState2 */
       /*
        * Details: "If the window state is not available, WindowState.UNDEFINED
-       * is returned."
+       * is returned. The window state would not be available in a resource
+       * request invoked with a resource URL having FULL cacheability."
        */
-      // TODO: How to make window state unavailable?
-      if (portletReq.getPortletMode().equals(WindowState.UNDEFINED)) {
+       // TODO: Fix test case. Not working with FULL cacheability
+      {
          TestResult result = tcd.getTestResultFailed(
                V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETWINDOWSTATE2);
-         result.setTcSuccess(true);
+         if (portletReq.getPortletMode().equals(WindowState.UNDEFINED)) {
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail(
+                  "Failed because window state is not UNDEFINED but "
+                        + portletReq.getWindowState());
+         }
          result.writeTo(writer);
-      } else {
-         RenderURL renderURL = portletResp.createRenderURL();
-         // renderURL.setWindowState(WindowState.UNDEFINED);
-         TestLink tb = new TestLink(
-               V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETWINDOWSTATE2,
-               renderURL);
-         tb.writeTo(writer);
       }
 
    }
