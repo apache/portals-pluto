@@ -289,7 +289,7 @@ public abstract class PortletRequestImpl implements PortletRequest {
     */
    @Override
    public PortletSession getPortletSession(boolean create) {
-      return requestContext.getPortletSession(true);
+      return requestContext.getPortletSession(create);
    }
 
    @Override

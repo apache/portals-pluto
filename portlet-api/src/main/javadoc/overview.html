@@ -34,7 +34,8 @@
     Modified descriptions for 
     {@link javax.portlet.PortletRequest#getResponseContentType() PortletRequest#getResponseContentType()} and
     {@link javax.portlet.PortletRequest#getResponseContentTypes() PortletRequest#getResponseContentTypes()}
-    to add default content type.
+    to remove redundant clause on the content types being declared in the portlet configuration,
+    since the portlet won't be invoked for a content type that hasn't been configured.
     </li>
     <li>
     20160530:
