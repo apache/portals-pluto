@@ -34,6 +34,8 @@ import static javax.portlet.tck.portlets.Utils.PORTLETSESSIONARTIFACTKEY;
 import static javax.portlet.tck.portlets.Utils.RENDERPHASE;
 import static javax.portlet.tck.portlets.Utils.WINDOWIDARTIFACTKEY;
 import static javax.portlet.tck.portlets.Utils.WINDOWSTATEARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.COOKIESARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.LOCALESARTIFACTKEY;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_CONTEXTPATH;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_COOKIES;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALE;
@@ -50,10 +52,11 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAR
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -78,18 +81,14 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 import javax.portlet.annotations.ActionMethod;
-import javax.portlet.annotations.ContextPath;
 import javax.portlet.annotations.EventDefinition;
 import javax.portlet.annotations.EventMethod;
 import javax.portlet.annotations.HeaderMethod;
-import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
-import javax.portlet.annotations.PortletName;
 import javax.portlet.annotations.PortletQName;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
-import javax.portlet.annotations.WindowId;
 import javax.portlet.tck.beans.TestButton;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
@@ -142,32 +141,19 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
    @Inject
    private List<Cookie> cookies;
    
-   
    @Inject
    private PortletSession          portletSession;
+   
    /*
    @Inject
    private Locale locale;
    */
+   
    @Inject
    private List<Locale> locales;
    
-   
-   // @Inject
-   // @Namespace
-   private String                  namespace = "";
-   
-   // @Inject
-   // @ContextPath
-   private String                  contextPath = "";
-   
-   // @Inject
-   // @WindowId
-   private String                  windowId = "";
-   
-   // @Inject
-   // @PortletName
-   private String                  portletName = "";
+   @Inject
+   private PortletRequestScopedArtifacts portletRequestScopedArtifacts;
    
    @HeaderMethod(
       portletNames = { "AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts" }
@@ -191,14 +177,14 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
 
       try {
          setAttribute(PORTLETMODEARTIFACTKEY, HEADERPHASE,
-               portletMode.equals(portletReq.getPortletMode()));
+               portletMode.toString().equals(portletReq.getPortletMode().toString()));
       } catch (RuntimeException e) {
          setAttribute(PORTLETMODEARTIFACTKEY, HEADERPHASE, false);
       }
 
       try {
          setAttribute(WINDOWSTATEARTIFACTKEY, HEADERPHASE,
-               windowState.equals(portletReq.getWindowState()));
+               windowState.toString().equals(portletReq.getWindowState().toString()));
       } catch (RuntimeException e) {
          setAttribute(WINDOWSTATEARTIFACTKEY, HEADERPHASE, false);
       }
@@ -219,40 +205,48 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
       
       try {
          setAttribute(NAMESPACEARTIFACTKEY, HEADERPHASE,
-               portletResp.getNamespace().equals(namespace));
+               portletResp.getNamespace().equals(portletRequestScopedArtifacts.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(NAMESPACEARTIFACTKEY, HEADERPHASE, false);
       }
       
       try {
          setAttribute(CONTEXTPATHARTIFACTKEY, HEADERPHASE,
-               portletContext.getContextPath().equals(contextPath));
+               portletContext.getContextPath().equals(portletRequestScopedArtifacts.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(CONTEXTPATHARTIFACTKEY, HEADERPHASE, false);
       }
       
       try {
          setAttribute(WINDOWIDARTIFACTKEY, HEADERPHASE,
-               portletReq.getWindowID().equals(windowId));
+               portletReq.getWindowID().equals(portletRequestScopedArtifacts.getWindowId()));
       } catch (RuntimeException e) {
          setAttribute(WINDOWIDARTIFACTKEY, HEADERPHASE, false);
       }
       
       try {
          setAttribute(PORTLETNAMEARTIFACTKEY, HEADERPHASE,
-               portletConfig.getPortletName().equals(portletName));
+               portletConfig.getPortletName().equals(portletRequestScopedArtifacts.getPortletName()));
       } catch (RuntimeException e) {
          setAttribute(PORTLETNAMEARTIFACTKEY, HEADERPHASE, false);
       }
       
-      /*
-       * TODO: Uncomment, implement, and copy paste after fixing
       try {
          setAttribute(COOKIESARTIFACTKEY, HEADERPHASE,
-               utils.isValid(cookies));
+               utils.checkEqualCollection(cookies, Arrays.asList(portletReq.getCookies())));
       } catch (RuntimeException e) {
          setAttribute(COOKIESARTIFACTKEY, HEADERPHASE, false);
       }
+      
+      try {
+         setAttribute(LOCALESARTIFACTKEY, HEADERPHASE,
+               utils.checkEqualCollection(locales, Collections.list(portletReq.getLocales())));
+      } catch (RuntimeException e) {
+         setAttribute(LOCALESARTIFACTKEY, HEADERPHASE, false);
+      }
+      
+      /*
+       * TODO: Uncomment, implement, and copy paste after fixing
       
       try {
          setAttribute(LOCALEARTIFACTKEY, HEADERPHASE,
@@ -261,12 +255,6 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
          setAttribute(LOCALEARTIFACTKEY, HEADERPHASE, false);
       }
       
-      try {
-         setAttribute(LOCALESARTIFACTKEY, HEADERPHASE,
-               utils.isValid(locales));
-      } catch (RuntimeException e) {
-         setAttribute(LOCALESARTIFACTKEY, HEADERPHASE, false);
-      }
       */
       
    }
@@ -297,14 +285,14 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
 
       try {
          setAttribute(PORTLETMODEARTIFACTKEY, ACTIONPHASE,
-               portletMode.equals(portletReq.getPortletMode()));
+               portletMode.toString().equals(portletReq.getPortletMode().toString()));
       } catch (RuntimeException e) {
          setAttribute(PORTLETMODEARTIFACTKEY, ACTIONPHASE, false);
       }
 
       try {
          setAttribute(WINDOWSTATEARTIFACTKEY, ACTIONPHASE,
-               windowState.equals(portletReq.getWindowState()));
+               windowState.toString().equals(portletReq.getWindowState().toString()));
       } catch (RuntimeException e) {
          setAttribute(WINDOWSTATEARTIFACTKEY, ACTIONPHASE, false);
       }
@@ -325,30 +313,44 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
       
       try {
          setAttribute(NAMESPACEARTIFACTKEY, ACTIONPHASE,
-               portletResp.getNamespace().equals(namespace));
+               portletResp.getNamespace().equals(portletRequestScopedArtifacts.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(NAMESPACEARTIFACTKEY, ACTIONPHASE, false);
       }
       
       try {
          setAttribute(CONTEXTPATHARTIFACTKEY, ACTIONPHASE,
-               portletContext.getContextPath().equals(contextPath));
+               portletContext.getContextPath().equals(portletRequestScopedArtifacts.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(CONTEXTPATHARTIFACTKEY, ACTIONPHASE, false);
       }
       
       try {
          setAttribute(WINDOWIDARTIFACTKEY, ACTIONPHASE,
-               portletReq.getWindowID().equals(windowId));
+               portletReq.getWindowID().equals(portletRequestScopedArtifacts.getWindowId()));
       } catch (RuntimeException e) {
          setAttribute(WINDOWIDARTIFACTKEY, ACTIONPHASE, false);
       }
       
       try {
          setAttribute(PORTLETNAMEARTIFACTKEY, ACTIONPHASE,
-               portletConfig.getPortletName().equals(portletName));
+               portletConfig.getPortletName().equals(portletRequestScopedArtifacts.getPortletName()));
       } catch (RuntimeException e) {
          setAttribute(PORTLETNAMEARTIFACTKEY, ACTIONPHASE, false);
+      }
+      
+      try {
+         setAttribute(COOKIESARTIFACTKEY, ACTIONPHASE,
+               utils.checkEqualCollection(cookies, Arrays.asList(portletReq.getCookies())));
+      } catch (RuntimeException e) {
+         setAttribute(COOKIESARTIFACTKEY, ACTIONPHASE, false);
+      }
+      
+      try {
+         setAttribute(LOCALESARTIFACTKEY, ACTIONPHASE,
+               utils.checkEqualCollection(locales, Collections.list(portletReq.getLocales())));
+      } catch (RuntimeException e) {
+         setAttribute(LOCALESARTIFACTKEY, ACTIONPHASE, false);
       }
       
       QName eventQName = new QName(
@@ -382,14 +384,14 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
 
       try {
          setAttribute(PORTLETMODEARTIFACTKEY, RENDERPHASE,
-               portletMode.equals(portletReq.getPortletMode()));
+               portletMode.toString().equals(portletReq.getPortletMode().toString()));
       } catch (RuntimeException e) {
          setAttribute(PORTLETMODEARTIFACTKEY, RENDERPHASE, false);
       }
 
       try {
          setAttribute(WINDOWSTATEARTIFACTKEY, RENDERPHASE,
-               windowState.equals(portletReq.getWindowState()));
+               windowState.toString().equals(portletReq.getWindowState().toString()));
       } catch (RuntimeException e) {
          setAttribute(WINDOWSTATEARTIFACTKEY, RENDERPHASE, false);
       }
@@ -410,30 +412,44 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
       
       try {
          setAttribute(NAMESPACEARTIFACTKEY, RENDERPHASE,
-               portletResp.getNamespace().equals(namespace));
+               portletResp.getNamespace().equals(portletRequestScopedArtifacts.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(NAMESPACEARTIFACTKEY, RENDERPHASE, false);
       }
       
       try {
          setAttribute(CONTEXTPATHARTIFACTKEY, RENDERPHASE,
-               portletContext.getContextPath().equals(contextPath));
+               portletContext.getContextPath().equals(portletRequestScopedArtifacts.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(CONTEXTPATHARTIFACTKEY, RENDERPHASE, false);
       }
       
       try {
          setAttribute(WINDOWIDARTIFACTKEY, RENDERPHASE,
-               portletReq.getWindowID().equals(windowId));
+               portletReq.getWindowID().equals(portletRequestScopedArtifacts.getWindowId()));
       } catch (RuntimeException e) {
          setAttribute(WINDOWIDARTIFACTKEY, RENDERPHASE, false);
       }
       
       try {
          setAttribute(PORTLETNAMEARTIFACTKEY, RENDERPHASE,
-               portletConfig.getPortletName().equals(portletName));
+               portletConfig.getPortletName().equals(portletRequestScopedArtifacts.getPortletName()));
       } catch (RuntimeException e) {
          setAttribute(PORTLETNAMEARTIFACTKEY, RENDERPHASE, false);
+      }
+      
+      try {
+         setAttribute(COOKIESARTIFACTKEY, RENDERPHASE,
+               utils.checkEqualCollection(cookies, Arrays.asList(portletReq.getCookies())));
+      } catch (RuntimeException e) {
+         setAttribute(COOKIESARTIFACTKEY, RENDERPHASE, false);
+      }
+      
+      try {
+         setAttribute(LOCALESARTIFACTKEY, RENDERPHASE,
+               utils.checkEqualCollection(locales, Collections.list(portletReq.getLocales())));
+      } catch (RuntimeException e) {
+         setAttribute(LOCALESARTIFACTKEY, RENDERPHASE, false);
       }
       
       writer.write(
@@ -529,7 +545,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
                PORTLETMODEARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  portletMode.equals(portletReq.getPortletMode()));
+                  portletMode.toString().equals(portletReq.getPortletMode().toString()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -555,7 +571,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
                WINDOWSTATEARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  windowState.equals(portletReq.getWindowState()));
+                  windowState.toString().equals(portletReq.getWindowState().toString()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -633,7 +649,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
                NAMESPACEARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  portletResp.getNamespace().equals(namespace));
+                  portletResp.getNamespace().equals(portletRequestScopedArtifacts.getNamespace()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -659,7 +675,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
                CONTEXTPATHARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  portletContext.getContextPath().equals(contextPath));
+                  portletContext.getContextPath().equals(portletRequestScopedArtifacts.getContextPath()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -685,7 +701,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
                WINDOWIDARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  portletReq.getWindowID().equals(windowId));
+                  portletReq.getWindowID().equals(portletRequestScopedArtifacts.getWindowId()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -711,7 +727,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
                PORTLETNAMEARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  portletConfig.getPortletName().equals(portletName));
+                  portletConfig.getPortletName().equals(portletRequestScopedArtifacts.getPortletName()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -729,11 +745,28 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
       
       /* TestCase: V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_cookies */
       /* Details: "Cookies artifact is valid during all phases."                    */
-      {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_COOKIES);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+      if (renderParameters.getValue("tr10") != null
+            && renderParameters.getValue("tr10").equals("true")) {
+         TestResult result = tcd.getTestResultFailed(
+               V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_COOKIES);
+         ArtifactValidationResult validationResult = getValidationTestResult(
+               COOKIESARTIFACTKEY);
+         try {
+            validationResult.setArtifactValidInResourcePhase(
+                  utils.checkEqualCollection(cookies, Arrays.asList(portletReq.getCookies())));
+         } catch (RuntimeException e) {
+            validationResult.setArtifactValidInResourcePhase(false);
+         }
+         result.setTcSuccess(
+               validationResult.isArtifactValidInAllPhase());
+         result.appendTcDetail(utils.createTestDebug(validationResult));
          result.writeTo(writer);
+      } else {
+         ActionURL aurl = portletResp.createActionURL();
+         TestButton tb = new TestButton(
+               V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_COOKIES,
+               aurl);
+         tb.writeTo(writer);
       }
 
       /* TestCase: V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_locale */
@@ -747,11 +780,28 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
 
       /* TestCase: V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_locales */
       /* Details: "Locales artifact is valid during all phases."                    */
-      {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALES);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+      if (renderParameters.getValue("tr12") != null
+            && renderParameters.getValue("tr12").equals("true")) {
+         TestResult result = tcd.getTestResultFailed(
+               V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALES);
+         ArtifactValidationResult validationResult = getValidationTestResult(
+               LOCALESARTIFACTKEY);
+         try {
+            validationResult.setArtifactValidInResourcePhase(
+                  utils.checkEqualCollection(locales, Collections.list(portletReq.getLocales())));
+         } catch (RuntimeException e) {
+            validationResult.setArtifactValidInResourcePhase(false);
+         }
+         result.setTcSuccess(
+               validationResult.isArtifactValidInAllPhase());
+         result.appendTcDetail(utils.createTestDebug(validationResult));
          result.writeTo(writer);
+      } else {
+         ActionURL aurl = portletResp.createActionURL();
+         TestButton tb = new TestButton(
+               V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALES,
+               aurl);
+         tb.writeTo(writer);
       }
       
    }
@@ -786,7 +836,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
 
       try {
          setAttribute(PORTLETMODEARTIFACTKEY, EVENTPHASE,
-               portletMode.equals(portletReq.getPortletMode()));
+               portletMode.toString().equals(portletReq.getPortletMode().toString()));
       } catch (RuntimeException e) {
          setAttribute(PORTLETMODEARTIFACTKEY, EVENTPHASE, false);
       }
@@ -794,7 +844,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
 
       try {
          setAttribute(WINDOWSTATEARTIFACTKEY, EVENTPHASE,
-               windowState.equals(portletReq.getWindowState()));
+               windowState.toString().equals(portletReq.getWindowState().toString()));
       } catch (RuntimeException e) {
          setAttribute(WINDOWSTATEARTIFACTKEY, EVENTPHASE, false);
       }
@@ -818,7 +868,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
       
       try {
          setAttribute(NAMESPACEARTIFACTKEY, EVENTPHASE,
-               portletResp.getNamespace().equals(namespace));
+               portletResp.getNamespace().equals(portletRequestScopedArtifacts.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(NAMESPACEARTIFACTKEY, EVENTPHASE, false);
       }
@@ -826,7 +876,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
       
       try {
          setAttribute(CONTEXTPATHARTIFACTKEY, EVENTPHASE,
-               portletContext.getContextPath().equals(contextPath));
+               portletContext.getContextPath().equals(portletRequestScopedArtifacts.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(CONTEXTPATHARTIFACTKEY, EVENTPHASE, false);
       }
@@ -834,7 +884,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
       
       try {
          setAttribute(WINDOWIDARTIFACTKEY, EVENTPHASE,
-               portletReq.getWindowID().equals(windowId));
+               portletReq.getWindowID().equals(portletRequestScopedArtifacts.getWindowId()));
       } catch (RuntimeException e) {
          setAttribute(WINDOWIDARTIFACTKEY, EVENTPHASE, false);
       }
@@ -842,18 +892,34 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
       
       try {
          setAttribute(PORTLETNAMEARTIFACTKEY, EVENTPHASE,
-               portletConfig.getPortletName().equals(portletName));
+               portletConfig.getPortletName().equals(portletRequestScopedArtifacts.getPortletName()));
       } catch (RuntimeException e) {
          setAttribute(PORTLETNAMEARTIFACTKEY, EVENTPHASE, false);
       }
       mutableRenderParameters.setValue("tr9", "true");
+      
+      try {
+         setAttribute(COOKIESARTIFACTKEY, EVENTPHASE,
+               utils.checkEqualCollection(cookies, Arrays.asList(portletReq.getCookies())));
+      } catch (RuntimeException e) {
+         setAttribute(COOKIESARTIFACTKEY, EVENTPHASE, false);
+      }
+      mutableRenderParameters.setValue("tr10", "true");
+      
+      try {
+         setAttribute(LOCALESARTIFACTKEY, EVENTPHASE,
+               utils.checkEqualCollection(locales, Collections.list(portletReq.getLocales())));
+      } catch (RuntimeException e) {
+         setAttribute(LOCALESARTIFACTKEY, EVENTPHASE, false);
+      }
+      mutableRenderParameters.setValue("tr12", "true");
   
    }
    
    public void setAttribute(String artifactKey, String phase,
          boolean validity) {
 
-      portletSession.setAttribute(portletName + artifactKey + phase, validity,
+      portletSession.setAttribute(portletRequestScopedArtifacts.getPortletName() + artifactKey + phase, validity,
             PORTLET_SCOPE);
 
    }
@@ -861,13 +927,13 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
    private ArtifactValidationResult getValidationTestResult(
          String artifactKey) {
       boolean artifactInActionPhase = (boolean) portletSession.getAttribute(
-            portletName + artifactKey + ACTIONPHASE, PORTLET_SCOPE);
+            portletRequestScopedArtifacts.getPortletName() + artifactKey + ACTIONPHASE, PORTLET_SCOPE);
       boolean artifactInRenderPhase = (boolean) portletSession.getAttribute(
-            portletName + artifactKey + RENDERPHASE, PORTLET_SCOPE);
+            portletRequestScopedArtifacts.getPortletName() + artifactKey + RENDERPHASE, PORTLET_SCOPE);
       boolean artifactInHeaderPhase = (boolean) portletSession.getAttribute(
-            portletName + artifactKey + HEADERPHASE, PORTLET_SCOPE);
+            portletRequestScopedArtifacts.getPortletName() + artifactKey + HEADERPHASE, PORTLET_SCOPE);
       boolean artifactInEventPhase = (boolean) portletSession.getAttribute(
-            portletName + artifactKey + EVENTPHASE, PORTLET_SCOPE);
+            portletRequestScopedArtifacts.getPortletName() + artifactKey + EVENTPHASE, PORTLET_SCOPE);
       return new ArtifactValidationResult(artifactInHeaderPhase,
             artifactInRenderPhase, artifactInActionPhase, artifactInEventPhase);
    }

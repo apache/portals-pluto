@@ -118,7 +118,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
 
       try {
          setAttribute(ACTIONPARAMETERSARTIFACTKEY, HEADERPHASE,
-               utils.isValid(actionParams));
+               utils.isValid(actionParams.getNames()));
       } catch (RuntimeException e) {
          setAttribute(ACTIONPARAMETERSARTIFACTKEY, HEADERPHASE, false);
       }
@@ -133,14 +133,14 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
 
       try {
          setAttribute(MUTABLERENDERPARAMETERSARTIFACTKEY, HEADERPHASE,
-               utils.isValid(mutableRenderParams));
+               utils.isValid(mutableRenderParams.getNames()));
       } catch (RuntimeException e) {
          setAttribute(MUTABLERENDERPARAMETERSARTIFACTKEY, HEADERPHASE, false);
       }
 
       try {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, HEADERPHASE,
-               utils.isValid(resourceParams));
+               utils.isValid(resourceParams.getNames()));
       } catch (RuntimeException e) {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, HEADERPHASE, false);
       }
@@ -183,7 +183,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
 
       try {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, ACTIONPHASE,
-               utils.isValid(resourceParams));
+               utils.isValid(resourceParams.getNames()));
       } catch (RuntimeException e) {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, ACTIONPHASE, false);
       }
@@ -205,7 +205,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
 
       try {
          setAttribute(ACTIONPARAMETERSARTIFACTKEY, RENDERPHASE,
-               utils.isValid(actionParams));
+               utils.isValid(actionParams.getNames()));
       } catch (RuntimeException e) {
          setAttribute(ACTIONPARAMETERSARTIFACTKEY, RENDERPHASE, false);
       }
@@ -220,14 +220,14 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
 
       try {
          setAttribute(MUTABLERENDERPARAMETERSARTIFACTKEY, RENDERPHASE,
-               utils.isValid(mutableRenderParams));
+               utils.isValid(mutableRenderParams.getNames()));
       } catch (RuntimeException e) {
          setAttribute(MUTABLERENDERPARAMETERSARTIFACTKEY, RENDERPHASE, false);
       }
 
       try {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, RENDERPHASE,
-               utils.isValid(resourceParams));
+               utils.isValid(resourceParams.getNames()));
       } catch (RuntimeException e) {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, RENDERPHASE, false);
       }
@@ -276,7 +276,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
                ACTIONPARAMETERSARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  utils.isValid(actionParams));
+                  utils.isValid(actionParams.getNames()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -303,10 +303,10 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
          TestResult result = tcd.getTestResultFailed(
                V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PARAMETERARTIFACTS_MUTABLERENDERPARAMETERS);
          ArtifactValidationResult validationResult = getValidationTestResult(
-               RENDERPARAMETERSARTIFACTKEY);
+               MUTABLERENDERPARAMETERSARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  utils.isValid(mutableRenderParams));
+                  utils.isValid(mutableRenderParams.getNames()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -367,7 +367,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
          TestResult result = tcd.getTestResultFailed(
                V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PARAMETERARTIFACTS_RESOURCEPARAMETERS);
          ArtifactValidationResult validationResult = getValidationTestResult(
-               ACTIONPARAMETERSARTIFACTKEY);
+               RESOURCEPARAMETERSARTIFACTKEY);
          ResourceParameters resourceParameters = portletReq.getResourceParameters();
          try {
             validationResult.setArtifactValidInResourcePhase(utils
@@ -403,7 +403,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
 
       try {
          setAttribute(ACTIONPARAMETERSARTIFACTKEY, EVENTPHASE,
-               utils.isValid(actionParams));
+               utils.isValid(actionParams.getNames()));
       } catch (RuntimeException e) {
          setAttribute(ACTIONPARAMETERSARTIFACTKEY, EVENTPHASE, false);
       }
@@ -428,7 +428,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
 
       try {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, EVENTPHASE,
-               utils.isValid(resourceParams));
+               utils.isValid(resourceParams.getNames()));
       } catch (RuntimeException e) {
          setAttribute(RESOURCEPARAMETERSARTIFACTKEY, EVENTPHASE, false);
       }

@@ -35,7 +35,6 @@ import javax.portlet.tck.beans.TestCaseDetails;
 public class ModuleTestCaseDetails extends TestCaseDetails {
 
    public final static String V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETCONTAINERRUNTIMEOPTIONS_DECLARINGPCRO1 = "V3AnnotationPortletConfigTests_SPEC2_28_PortletContainerRuntimeOptions_declaringPCRO1";
-   public final static String V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETCONTAINERRUNTIMEOPTIONS_DECLARINGPCRO2 = "V3AnnotationPortletConfigTests_SPEC2_28_PortletContainerRuntimeOptions_declaringPCRO2";
    public final static String V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS1 = "V3AnnotationPortletConfigTests_SPEC2_28_PortletInitParameters_declaringInitParams1";
    public final static String V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS2 = "V3AnnotationPortletConfigTests_SPEC2_28_PortletInitParameters_declaringInitParams2";
    public final static String V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS3 = "V3AnnotationPortletConfigTests_SPEC2_28_PortletInitParameters_declaringInitParams3";
@@ -63,7 +62,6 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
    static {
 
       tcd.put(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETCONTAINERRUNTIMEOPTIONS_DECLARINGPCRO1, "Portlet container runtime options may be declared in the @PortletConfiguration annotation using @RuntimeOption annotation.");
-      tcd.put(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETCONTAINERRUNTIMEOPTIONS_DECLARINGPCRO2, "Portlet container runtime options declared using @PortletAnnotation are overridden by runtime options decalred using @PortletConfiguration annotation.");
       tcd.put(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS1, "Portlet initialization parameters may be declared in the @PortletConfiguration annotation using @InitParameter annotation.");
       tcd.put(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS2, "The name cannot be null while declaring portlet init parametes using @InitParameter annotation.");
       tcd.put(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS3, "If the name is empty while declaring portlet init parametes using @InitParameter annotation, then that parameter is removed.");
