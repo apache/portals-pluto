@@ -86,10 +86,10 @@ public abstract class PortletParametersImpl implements PortletParameters {
    /**
     * Throws exception if argument is null.
     * @param msg
-    * @param vals
+    * @param val
     */
-   protected void checkNull(String msg, Object... vals) {
-      if (vals == null) {
+   protected void checkNull(String msg, Object val) {
+      if (val == null) {
          throw new IllegalArgumentException("Argument " + msg + " cannot be null.");
       }
    }

@@ -160,6 +160,9 @@ public class ParamTestPortlet extends GenericPortlet {
       String[] parsedVals = null;
       StringBuilder txt = new StringBuilder("Setting values to ");
       if (pn != null && pn.length() > 0 && pv != null) {
+         if (pn.equals("null")) {
+            pn = null;
+         }
          parsedVals = pv.split(",", -1);
          if (pv.length() == 0) {
             txt.append("array containing single empty string");
