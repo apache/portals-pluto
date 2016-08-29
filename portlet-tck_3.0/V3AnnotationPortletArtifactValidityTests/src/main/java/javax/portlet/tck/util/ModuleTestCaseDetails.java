@@ -60,7 +60,6 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
    public final static String V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETPREFERENCES = "V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_portletPreferences";
    public final static String V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_COOKIES = "V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_cookies";
    public final static String V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETSESSION = "V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_portletSession";
-   public final static String V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALE = "V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_locale";
    public final static String V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALES = "V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_locales";
    public final static String V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_NAMESPACE = "V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_namespace";
    public final static String V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_CONTEXTPATH = "V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_contextPath";
@@ -97,7 +96,6 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETPREFERENCES, "PortletPreferences artifact is valid during all phases.");
       tcd.put(V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_COOKIES, "Cookies artifact is valid during all phases.");
       tcd.put(V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETSESSION, "PortletSession artifact is valid during all phases.");
-      tcd.put(V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALE, "Locale artifact is only valid during render and resource phase.");
       tcd.put(V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALES, "Locales artifact is valid during all phases.");
       tcd.put(V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_NAMESPACE, "Namespace artifact is valid during all phases.");
       tcd.put(V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_CONTEXTPATH, "ContextPath artifact is valid during all phases.");

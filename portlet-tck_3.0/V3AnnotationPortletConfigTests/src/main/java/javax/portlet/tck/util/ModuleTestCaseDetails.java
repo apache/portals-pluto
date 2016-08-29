@@ -34,6 +34,7 @@ import javax.portlet.tck.beans.TestCaseDetails;
  */
 public class ModuleTestCaseDetails extends TestCaseDetails {
 
+   public final static String V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_DEFAULTNAMESPACEURI_DECLARINGDEFAULTNAMESPACEURI1 = "V3AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI_declaringDefaultNamespaceURI1";
    public final static String V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETCONTAINERRUNTIMEOPTIONS_DECLARINGPCRO1 = "V3AnnotationPortletConfigTests_SPEC2_28_PortletContainerRuntimeOptions_declaringPCRO1";
    public final static String V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS1 = "V3AnnotationPortletConfigTests_SPEC2_28_PortletInitParameters_declaringInitParams1";
    public final static String V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS2 = "V3AnnotationPortletConfigTests_SPEC2_28_PortletInitParameters_declaringInitParams2";
@@ -61,6 +62,7 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
    private final static Map<String, String> tcd = new HashMap<String, String>();
    static {
 
+      tcd.put(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_DEFAULTNAMESPACEURI_DECLARINGDEFAULTNAMESPACEURI1, "DefaultNamespaceURI may be declared in the @PortletApplication annotation.");
       tcd.put(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETCONTAINERRUNTIMEOPTIONS_DECLARINGPCRO1, "Portlet container runtime options may be declared in the @PortletConfiguration annotation using @RuntimeOption annotation.");
       tcd.put(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS1, "Portlet initialization parameters may be declared in the @PortletConfiguration annotation using @InitParameter annotation.");
       tcd.put(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS2, "The name cannot be null while declaring portlet init parametes using @InitParameter annotation.");

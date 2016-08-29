@@ -133,9 +133,7 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETREQUESTEDSESSIONID2;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISREQUESTEDSESSIONIDVALID1;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPE1;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPE2;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPES1;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPES2;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETLOCALE;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETLOCALES;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETSCHEME;
@@ -1252,22 +1250,6 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
          result.writeTo(writer);
       }
 
-      /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getResponseContentType2 */
-      /* Details: "Method getResponseContentType(): Returns an empty Enumeration if */
-      /* the content type is not defined in the portlet descriptor"                 */
-      // TODO: Wrong details, but wait...
-      //       This might be wrong test case as even without specifying content type in deployment
-      //       descriptor or by any method - default content type remains text/html
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPE2);
-         if(portletReq.getResponseContentType()==null || portletReq.getResponseContentType().isEmpty()) {
-            result.setTcSuccess(true);
-         } else {
-            result.appendTcDetail("Failed because response content type is not null or empty but "+portletReq.getResponseContentType());
-         }
-         result.writeTo(writer);
-      }
-
       /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getResponseContentTypes1 */
       /* Details: "Method getResponseContentTypes(): Returns an                     */
       /* java.util.Enumeration&lt;java.lang.String&gt; object representing the      */
@@ -1279,21 +1261,6 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail("Failed because empty enumeration is returned");
-         }
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getResponseContentTypes2 */
-      /* Details: "Method getResponseContentTypes(): Returns an empty Enumeration   */
-      /* if the content types are not defined in the portlet descriptor"            */
-      // TODO: This might be wrong test case as even without specifying content type in deployment
-      //       descriptor or by any method - default content type remains text/html
-      {
-         TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPES2);
-         if(!portletReq.getResponseContentTypes().hasMoreElements()){
-            result.setTcSuccess(true);
-         } else {
-            result.appendTcDetail("Failed because returned enumeration is not empty");
          }
          result.writeTo(writer);
       }

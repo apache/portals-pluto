@@ -38,7 +38,6 @@ import static javax.portlet.tck.portlets.Utils.COOKIESARTIFACTKEY;
 import static javax.portlet.tck.portlets.Utils.LOCALESARTIFACTKEY;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_CONTEXTPATH;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_COOKIES;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALE;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALES;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_NAMESPACE;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETCONFIG;
@@ -143,11 +142,6 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
    
    @Inject
    private PortletSession          portletSession;
-   
-   /*
-   @Inject
-   private Locale locale;
-   */
    
    @Inject
    private List<Locale> locales;
@@ -767,15 +761,6 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts im
                V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_COOKIES,
                aurl);
          tb.writeTo(writer);
-      }
-
-      /* TestCase: V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_locale */
-      /* Details: "Locale artifact is only valid during render and resource phase." */
-      {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALE);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
       }
 
       /* TestCase: V3AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts_locales */

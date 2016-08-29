@@ -34,7 +34,6 @@
 <page xmlns="" name="V3AnnotationPortletApplicationConfigTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
 <portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_PortletModes"/>
 <portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_WindowStates"/>
-<portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI"/>
 <portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_EventConfiguration"/>
 <portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_PublicRenderParameters"/>
 <portlet context="/tck-V3AnnotationPortletApplicationConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_PortletContainerRuntimeOptions"/>

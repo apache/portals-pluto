@@ -32,6 +32,7 @@
 </supports>
 <render-config default="About Apache Pluto">
 <page xmlns="" name="V3AnnotationPortletConfigTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+<portlet context="/tck-V3AnnotationPortletConfigTests-3.0-SNAPSHOT" name="AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI"/>
 <portlet context="/tck-V3AnnotationPortletConfigTests-3.0-SNAPSHOT" name="AnnotationPortletConfigTests_SPEC2_28_PortletContainerRuntimeOptions"/>
 <portlet context="/tck-V3AnnotationPortletConfigTests-3.0-SNAPSHOT" name="AnnotationPortletConfigTests_SPEC2_28_PortletInitParameters"/>
 <portlet context="/tck-V3AnnotationPortletConfigTests-3.0-SNAPSHOT" name="AnnotationPortletConfigTests_SPEC2_28_PortletIdentification"/>

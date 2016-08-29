@@ -118,9 +118,7 @@
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isRequestedSessionIdValid1">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isRequestedSessionIdValid2">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getResponseContentType1">V3HeaderPortletTests</entry>
-<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getResponseContentType2">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getResponseContentTypes1">V3HeaderPortletTests</entry>
-<entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getResponseContentTypes2">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getLocale">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getLocales">V3HeaderPortletTests</entry>
 <entry key="V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getScheme">V3HeaderPortletTests</entry>

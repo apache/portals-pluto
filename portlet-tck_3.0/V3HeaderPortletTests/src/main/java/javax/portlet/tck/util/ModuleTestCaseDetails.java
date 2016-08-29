@@ -132,9 +132,7 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
    public final static String V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISREQUESTEDSESSIONIDVALID1 = "V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isRequestedSessionIdValid1";
    public final static String V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISREQUESTEDSESSIONIDVALID2 = "V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_isRequestedSessionIdValid2";
    public final static String V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPE1 = "V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getResponseContentType1";
-   public final static String V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPE2 = "V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getResponseContentType2";
    public final static String V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPES1 = "V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getResponseContentTypes1";
-   public final static String V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPES2 = "V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getResponseContentTypes2";
    public final static String V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETLOCALE = "V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getLocale";
    public final static String V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETLOCALES = "V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getLocales";
    public final static String V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETSCHEME = "V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getScheme";
@@ -336,9 +334,7 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISREQUESTEDSESSIONIDVALID1, "Method isRequestedSessionIdValid(): Returns true if the session ID is valid");
       tcd.put(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISREQUESTEDSESSIONIDVALID2, "Method isRequestedSessionIdValid(): Returns false if the session ID is not valid");
       tcd.put(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPE1, "Method getResponseContentType(): Returns a String representing the portal preferred content type for the response if the content type is defined in the portlet descriptor  ");
-      tcd.put(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPE2, "Method getResponseContentType(): Returns an empty Enumeration if the content type is not defined in the portlet descriptor");
       tcd.put(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPES1, "Method getResponseContentTypes(): Returns an java.util.Enumeration&lt;java.lang.String&gt; object representing the portal preferred content types for the response if the content types are defined in the portlet descriptor");
-      tcd.put(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPES2, "Method getResponseContentTypes(): Returns an empty Enumeration if the content types are not defined in the portlet descriptor");
       tcd.put(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETLOCALE, "Method getLocale(): Returns an java.util.Locale object representing the preferred Locale for the response");
       tcd.put(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETLOCALES, "Method getLocales(): Returns an java.util.Enumeration&lt;java.util.Locale&gt; of the Locales in which the portal will accept content");
       tcd.put(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETSCHEME, "Method getScheme(): Returns a String value representing the scheme name for the request");

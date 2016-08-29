@@ -20,6 +20,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <!-- JSR 362 API AnnotationPortletConfigTests test case names and page mappings -->
+<entry key="V3AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI_declaringDefaultNamespaceURI1">V3AnnotationPortletConfigTests</entry>
 <entry key="V3AnnotationPortletConfigTests_SPEC2_28_PortletContainerRuntimeOptions_declaringPCRO1">V3AnnotationPortletConfigTests</entry>
 <entry key="V3AnnotationPortletConfigTests_SPEC2_28_PortletContainerRuntimeOptions_declaringPCRO2">V3AnnotationPortletConfigTests</entry>
 <entry key="V3AnnotationPortletConfigTests_SPEC2_28_PortletInitParameters_declaringInitParams1">V3AnnotationPortletConfigTests</entry>
