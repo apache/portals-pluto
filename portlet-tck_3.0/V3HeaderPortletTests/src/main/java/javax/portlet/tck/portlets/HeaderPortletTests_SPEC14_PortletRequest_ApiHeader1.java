@@ -569,7 +569,6 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionB4 */
       /* Details: "Method getPortletSession(boolean): If input flag is false,       */
       /* returns null if one does not already exist"                                */
-      // TODO: Fix test case. Failing for some reason
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPORTLETSESSIONB4);
          PortletSession ps = portletReq.getPortletSession(false);

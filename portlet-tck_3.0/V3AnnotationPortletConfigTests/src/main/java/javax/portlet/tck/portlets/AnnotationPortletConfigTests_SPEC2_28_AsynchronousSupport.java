@@ -18,23 +18,26 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.ResourceURL;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+
+import static javax.portlet.ResourceURL.PAGE;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_ASYNCHRONOUSSUPPORT_DECLARINGASYNCSUPPORT1;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -44,40 +47,68 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletConfigTests_SPEC2_28_AsynchronousSupport")
-public class AnnotationPortletConfigTests_SPEC2_28_AsynchronousSupport implements Portlet {
-   
-   private PortletConfig portletConfig = null;
+@PortletConfiguration(
+   portletName = "AnnotationPortletConfigTests_SPEC2_28_AsynchronousSupport",
+   asyncSupported = false
+)
+public class AnnotationPortletConfigTests_SPEC2_28_AsynchronousSupport implements Portlet, ResourceServingPortlet {
 
    @Override
-   public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
-   }
+   public void init(PortletConfig config) throws PortletException {}
 
    @Override
-   public void destroy() {
-   }
+   public void destroy() {}
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
-   }
+   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {}
 
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
 
-      PrintWriter writer = portletResp.getWriter();
-      ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
+      PrintWriter writer = portletResp.getWriter();    
+      
+      writer.write(
+            "<div id=\"AnnotationPortletConfigTests_SPEC2_28_AsynchronousSupport\">no resource output.</div>\n");
+      ResourceURL resurl = portletResp.createResourceURL();
+      resurl.setCacheability(PAGE);
+      writer.write("<script>\n");
+      writer.write("(function () {\n");
+      writer.write("   var xhr = new XMLHttpRequest();\n");
+      writer.write("   xhr.onreadystatechange=function() {\n");
+      writer.write("      if (xhr.readyState==4 && xhr.status==200) {\n");
+      writer.write(
+            "         document.getElementById(\"AnnotationPortletConfigTests_SPEC2_28_AsynchronousSupport\").innerHTML=xhr.responseText;\n");
+      writer.write("      }\n");
+      writer.write("   };\n");
+      writer.write(
+            "   xhr.open(\"GET\",\"" + resurl.toString() + "\",true);\n");
+      writer.write("   xhr.send();\n");
+      writer.write("})();\n");
+      writer.write("</script>\n");
 
+   }
+
+   @Override
+   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
+         throws PortletException, IOException {
+      
+      ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
+      PrintWriter writer = portletResp.getWriter();
+      
       /* TestCase: V3AnnotationPortletConfigTests_SPEC2_28_AsynchronousSupport_declaringAsyncSupport1 */
       /* Details: "Support for asynchronous resource request can be configured      */
       /* using \"asyncSupported\" attribute of @PortletConfiguration annotation."   */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_ASYNCHRONOUSSUPPORT_DECLARINGASYNCSUPPORT1);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         try{
+            portletReq.startPortletAsync();
+            result.appendTcDetail("Failed because async is supported even when it is disabled in @PortletConfiguration annotation");
+         } catch (Exception e){
+            result.setTcSuccess(true);
+            result.appendTcDetail("Passed as async support is disabled, thats why using startPortletAsync() throws exception - "+e.toString());
+         }
          result.writeTo(writer);
-      }
-
+      }    
    }
 
 }

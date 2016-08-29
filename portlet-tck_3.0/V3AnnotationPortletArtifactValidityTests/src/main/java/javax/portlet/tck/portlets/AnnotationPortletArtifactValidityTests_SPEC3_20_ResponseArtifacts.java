@@ -20,7 +20,6 @@ package javax.portlet.tck.portlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -148,21 +147,21 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
       
       try {
          setAttribute(ACTIONRESPONSEARTIFACTKEY, HEADERPHASE,
-               utils.isValid(actionResponse));
+               utils.isValid(actionResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(ACTIONRESPONSEARTIFACTKEY, HEADERPHASE, false);
       }
       
       try {
          setAttribute(RENDERRESPONSEARTIFACTKEY, HEADERPHASE,
-               utils.isValid(renderResponse));
+               utils.isValid(renderResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(RENDERRESPONSEARTIFACTKEY, HEADERPHASE, false);
       }
       
       try {
          setAttribute(EVENTRESPONSEARTIFACTKEY, HEADERPHASE,
-               utils.isValid(eventResponse));
+               utils.isValid(eventResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(EVENTRESPONSEARTIFACTKEY, HEADERPHASE, false);
       }
@@ -176,7 +175,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
       
       try {
          setAttribute(RESOURCERESPONSEARTIFACTKEY, HEADERPHASE,
-               utils.isValid(resourceResponse));
+               utils.isValid(resourceResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(RESOURCERESPONSEARTIFACTKEY, HEADERPHASE, false);
       }
@@ -190,7 +189,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
       
       try {
          setAttribute(STATEAWARERESPONSEARTIFACTKEY, HEADERPHASE,
-               utils.isValid(stateAwareResponse));
+               utils.isValid(stateAwareResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(STATEAWARERESPONSEARTIFACTKEY, HEADERPHASE, false);
       }
@@ -223,35 +222,35 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
       
       try {
          setAttribute(RENDERRESPONSEARTIFACTKEY, ACTIONPHASE,
-               utils.isValid(renderResponse));
+               utils.isValid(renderResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(RENDERRESPONSEARTIFACTKEY, ACTIONPHASE, false);
       }
       
       try {
          setAttribute(EVENTRESPONSEARTIFACTKEY, ACTIONPHASE,
-               utils.isValid(eventResponse));
+               utils.isValid(eventResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(EVENTRESPONSEARTIFACTKEY, ACTIONPHASE, false);
       }
       
       try {
          setAttribute(HEADERRESPONSEARTIFACTKEY, ACTIONPHASE,
-               utils.isValid(headerResponse));
+               utils.isValid(headerResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(HEADERRESPONSEARTIFACTKEY, ACTIONPHASE, false);
       }
       
       try {
          setAttribute(RESOURCERESPONSEARTIFACTKEY, ACTIONPHASE,
-               utils.isValid(resourceResponse));
+               utils.isValid(resourceResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(RESOURCERESPONSEARTIFACTKEY, ACTIONPHASE, false);
       }
       
       try {
          setAttribute(MIMERESPONSEARTIFACTKEY, ACTIONPHASE,
-               utils.isValid(mimeResponse));
+               utils.isValid(mimeResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(MIMERESPONSEARTIFACTKEY, ACTIONPHASE, false);
       }
@@ -278,23 +277,6 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
 
       PrintWriter writer = portletResp.getWriter();
       
-      StringBuilder txt = new StringBuilder(128);
-      txt.append("<div>");
-      txt.append("<p>Directly testing actionResponse ... </p>");
-      try {
-         String n = actionResponse.getNamespace();
-         txt.append("<p>got namespace from action response:").append(n).append("</p>");
-      } catch (Throwable t) {
-         txt.append("<p>there was an exception:<br>");
-         StringWriter sw = new StringWriter();
-         PrintWriter pw = new PrintWriter(sw);
-         t.printStackTrace(pw);
-         pw.flush();
-         txt.append(sw.toString().replaceAll("\\n", "<br>"));
-      }
-      txt.append("</div>");
-      writer.write(txt.toString());
-      
       try {
          setAttribute(PORTLETRESPONSEARTIFACTKEY, RENDERPHASE,
                utils.checkEqualResponses(portletResponse, portletResp));
@@ -304,7 +286,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
       
       try {
          setAttribute(ACTIONRESPONSEARTIFACTKEY, RENDERPHASE,
-               utils.isValid(actionResponse));
+               utils.isValid(actionResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(ACTIONRESPONSEARTIFACTKEY, RENDERPHASE, false);
       }
@@ -318,21 +300,21 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
       
       try {
          setAttribute(EVENTRESPONSEARTIFACTKEY, RENDERPHASE,
-               utils.isValid(eventResponse));
+               utils.isValid(eventResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(EVENTRESPONSEARTIFACTKEY, RENDERPHASE, false);
       }
       
       try {
          setAttribute(HEADERRESPONSEARTIFACTKEY, RENDERPHASE,
-               utils.isValid(headerResponse));
+               utils.isValid(headerResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(HEADERRESPONSEARTIFACTKEY, RENDERPHASE, false);
       }
       
       try {
          setAttribute(RESOURCERESPONSEARTIFACTKEY, RENDERPHASE,
-               utils.isValid(resourceResponse));
+               utils.isValid(resourceResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(RESOURCERESPONSEARTIFACTKEY, RENDERPHASE, false);
       }
@@ -346,7 +328,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
       
       try {
          setAttribute(STATEAWARERESPONSEARTIFACTKEY, RENDERPHASE,
-               utils.isValid(stateAwareResponse));
+               utils.isValid(stateAwareResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(STATEAWARERESPONSEARTIFACTKEY, RENDERPHASE, false);
       }
@@ -418,7 +400,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
                ACTIONRESPONSEARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  utils.isValid(actionResponse));
+                  utils.isValid(actionResponse.getNamespace()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -444,7 +426,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
                HEADERRESPONSEARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  utils.isValid(headerResponse));
+                  utils.isValid(headerResponse.getNamespace()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -470,7 +452,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
                RENDERRESPONSEARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  utils.isValid(renderResponse));
+                  utils.isValid(renderResponse.getNamespace()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -496,7 +478,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
                EVENTRESPONSEARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  utils.isValid(eventResponse));
+                  utils.isValid(eventResponse.getNamespace()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -549,7 +531,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
                STATEAWARERESPONSEARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  utils.isValid(stateAwareResponse));
+                  utils.isValid(stateAwareResponse.getNamespace()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -626,7 +608,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
       
       try {
          setAttribute(ACTIONRESPONSEARTIFACTKEY, EVENTPHASE,
-               utils.isValid(actionResponse));
+               utils.isValid(actionResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(ACTIONRESPONSEARTIFACTKEY, EVENTPHASE, false);
       }
@@ -634,7 +616,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
       
       try {
          setAttribute(RENDERRESPONSEARTIFACTKEY, EVENTPHASE,
-               utils.isValid(renderResponse));
+               utils.isValid(renderResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(RENDERRESPONSEARTIFACTKEY, EVENTPHASE, false);
       }
@@ -650,7 +632,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
       
       try {
          setAttribute(HEADERRESPONSEARTIFACTKEY, EVENTPHASE,
-               utils.isValid(headerResponse));
+               utils.isValid(headerResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(HEADERRESPONSEARTIFACTKEY, EVENTPHASE, false);
       }
@@ -658,7 +640,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
       
       try {
          setAttribute(RESOURCERESPONSEARTIFACTKEY, EVENTPHASE,
-               utils.isValid(resourceResponse));
+               utils.isValid(resourceResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(RESOURCERESPONSEARTIFACTKEY, EVENTPHASE, false);
       }
@@ -666,7 +648,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
       
       try {
          setAttribute(MIMERESPONSEARTIFACTKEY, EVENTPHASE,
-               utils.isValid(mimeResponse));
+               utils.isValid(mimeResponse.getNamespace()));
       } catch (RuntimeException e) {
          setAttribute(MIMERESPONSEARTIFACTKEY, EVENTPHASE, false);
       }

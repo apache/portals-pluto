@@ -176,10 +176,6 @@ public class URLTests_RenderURL {
       {
          TestResult tr3 = tcd.getTestResultFailed(
                V3URLTESTS_RENDERURL_SETFRAGMENTIDENTIFIER4);
-         // TODO: Getting java.lang.IllegalArgumentException: Illegal Argument:
-         // fragment identifier (argument should not be null) here which
-         // is wrong behaviour according to the specification
-
          try {
             renderURL.setFragmentIdentifier(null);
             if (renderURL.getFragmentIdentifier() == null) {
@@ -206,10 +202,6 @@ public class URLTests_RenderURL {
       {
          TestResult tr6 = tcd.getTestResultFailed(
                V3URLTESTS_RENDERURL_GETFRAGMENTIDENTIFIER2);
-         // TODO: Getting java.lang.IllegalArgumentException: Illegal Argument:
-         // fragment identifier (argument should not be null) here which
-         // is wrong behaviour according to the specification
-
          try {
             renderURL.setFragmentIdentifier(null);
             if (renderURL.getFragmentIdentifier() == null) {

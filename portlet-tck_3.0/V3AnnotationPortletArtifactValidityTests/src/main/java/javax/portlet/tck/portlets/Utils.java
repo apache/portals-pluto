@@ -324,7 +324,7 @@ public class Utils {
       }
    }
 
-   private boolean checkEqualCollection(Collection<?> injectedProperties,
+   public boolean checkEqualCollection(Collection<?> injectedProperties,
          Collection<?> portletResponseProperties) {
       if (injectedProperties.equals(portletResponseProperties)) {
          return true;

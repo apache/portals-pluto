@@ -282,7 +282,6 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       /* TestCase: V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_setContentType4 */
       /* Details: "Method setContentType(String): Throws IllegalArgumentException   */
       /* if the specified MIME type is invalid"                                     */
-      // TODO: Bug in pluto. We get StringIndexOutOfBoundsException which is not thrown by setContentType()
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETCONTENTTYPE4);
          try {
@@ -291,9 +290,6 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
          } catch (IllegalArgumentException iae) {
             result.appendTcDetail(iae.toString());
             result.setTcSuccess(true);
-         } // TODO: Remove this later as this is unexpected 
-         catch(StringIndexOutOfBoundsException e){
-            result.appendTcDetail(e.toString());
          }
          result.writeTo(writer);
       }

@@ -44,7 +44,9 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletConfigTests_SPEC2_28_PortletDependency")
+@PortletConfiguration(
+   portletName = "AnnotationPortletConfigTests_SPEC2_28_PortletDependency"
+)
 public class AnnotationPortletConfigTests_SPEC2_28_PortletDependency implements Portlet {
    
    private PortletConfig portletConfig = null;

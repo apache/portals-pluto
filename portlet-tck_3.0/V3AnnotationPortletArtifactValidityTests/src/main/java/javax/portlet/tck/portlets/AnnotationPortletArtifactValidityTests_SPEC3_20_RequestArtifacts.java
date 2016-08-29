@@ -139,21 +139,25 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts {
       
       try {
          setAttribute(ACTIONREQUESTARTIFACTKEY, HEADERPHASE,
-               utils.isValid(actionRequest));
+               utils.isValid(actionRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(ACTIONREQUESTARTIFACTKEY, HEADERPHASE, false);
       }
       
+      // TODO: Here is the problem. RenderRequest artifact is valid in header phase
+      // TODO: Remove print statements after fix
       try {
          setAttribute(RENDERREQUESTARTIFACTKEY, HEADERPHASE,
-               utils.isValid(renderRequest));
+               utils.isValid(renderRequest.getContextPath()));
+         System.out.println(renderRequest.getContextPath());
       } catch (RuntimeException e) {
+         System.out.println(e.toString());
          setAttribute(RENDERREQUESTARTIFACTKEY, HEADERPHASE, false);
       }
       
       try {
          setAttribute(EVENTREQUESTARTIFACTKEY, HEADERPHASE,
-               utils.isValid(eventRequest));
+               utils.isValid(eventRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(EVENTREQUESTARTIFACTKEY, HEADERPHASE, false);
       }
@@ -167,14 +171,14 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts {
       
       try {
          setAttribute(RESOURCEREQUESTARTIFACTKEY, HEADERPHASE,
-               utils.isValid(resourceRequest));
+               utils.isValid(resourceRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(RESOURCEREQUESTARTIFACTKEY, HEADERPHASE, false);
       }
       
       try {
          setAttribute(CLIENTDATAREQUESTARTIFACTKEY, HEADERPHASE,
-               utils.isValid(clientDataRequest));
+               utils.isValid(clientDataRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(CLIENTDATAREQUESTARTIFACTKEY, HEADERPHASE, false);
       }
@@ -207,28 +211,28 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts {
       
       try {
          setAttribute(RENDERREQUESTARTIFACTKEY, ACTIONPHASE,
-               utils.isValid(renderRequest));
+               utils.isValid(renderRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(RENDERREQUESTARTIFACTKEY, ACTIONPHASE, false);
       }
       
       try {
          setAttribute(EVENTREQUESTARTIFACTKEY, ACTIONPHASE,
-               utils.isValid(eventRequest));
+               utils.isValid(eventRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(EVENTREQUESTARTIFACTKEY, ACTIONPHASE, false);
       }
       
       try {
          setAttribute(HEADERREQUESTARTIFACTKEY, ACTIONPHASE,
-               utils.isValid(headerRequest));
+               utils.isValid(headerRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(HEADERREQUESTARTIFACTKEY, ACTIONPHASE, false);
       }
       
       try {
          setAttribute(RESOURCEREQUESTARTIFACTKEY, ACTIONPHASE,
-               utils.isValid(resourceRequest));
+               utils.isValid(resourceRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(RESOURCEREQUESTARTIFACTKEY, ACTIONPHASE, false);
       }
@@ -264,7 +268,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts {
       
       try {
          setAttribute(ACTIONREQUESTARTIFACTKEY, RENDERPHASE,
-               utils.isValid(actionRequest));
+               utils.isValid(actionRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(ACTIONREQUESTARTIFACTKEY, RENDERPHASE, false);
       }
@@ -278,28 +282,28 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts {
       
       try {
          setAttribute(EVENTREQUESTARTIFACTKEY, RENDERPHASE,
-               utils.isValid(eventRequest));
+               utils.isValid(eventRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(EVENTREQUESTARTIFACTKEY, RENDERPHASE, false);
       }
       
       try {
          setAttribute(HEADERREQUESTARTIFACTKEY, RENDERPHASE,
-               utils.isValid(headerRequest));
+               utils.isValid(headerRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(HEADERREQUESTARTIFACTKEY, RENDERPHASE, false);
       }
       
       try {
          setAttribute(RESOURCEREQUESTARTIFACTKEY, RENDERPHASE,
-               utils.isValid(resourceRequest));
+               utils.isValid(resourceRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(RESOURCEREQUESTARTIFACTKEY, RENDERPHASE, false);
       }
       
       try {
          setAttribute(CLIENTDATAREQUESTARTIFACTKEY, RENDERPHASE,
-               utils.isValid(clientDataRequest));
+               utils.isValid(clientDataRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(CLIENTDATAREQUESTARTIFACTKEY, RENDERPHASE, false);
       }
@@ -371,7 +375,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts {
                ACTIONREQUESTARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  utils.isValid(actionRequest));
+                  utils.isValid(actionRequest.getContextPath()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -397,7 +401,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts {
                HEADERREQUESTARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  utils.isValid(headerRequest));
+                  utils.isValid(headerRequest.getContextPath()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -423,7 +427,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts {
                RENDERREQUESTARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  utils.isValid(renderRequest));
+                  utils.isValid(renderRequest.getContextPath()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -449,7 +453,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts {
                EVENTREQUESTARTIFACTKEY);
          try {
             validationResult.setArtifactValidInResourcePhase(
-                  utils.isValid(eventRequest));
+                  utils.isValid(eventRequest.getContextPath()));
          } catch (RuntimeException e) {
             validationResult.setArtifactValidInResourcePhase(false);
          }
@@ -547,7 +551,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts {
       
       try {
          setAttribute(ACTIONREQUESTARTIFACTKEY, EVENTPHASE,
-               utils.isValid(actionRequest));
+               utils.isValid(actionRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(ACTIONREQUESTARTIFACTKEY, EVENTPHASE, false);
       }
@@ -555,7 +559,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts {
       
       try {
          setAttribute(RENDERREQUESTARTIFACTKEY, EVENTPHASE,
-               utils.isValid(renderRequest));
+               utils.isValid(renderRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(RENDERREQUESTARTIFACTKEY, EVENTPHASE, false);
       }
@@ -571,7 +575,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts {
       
       try {
          setAttribute(HEADERREQUESTARTIFACTKEY, EVENTPHASE,
-               utils.isValid(headerRequest));
+               utils.isValid(headerRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(HEADERREQUESTARTIFACTKEY, EVENTPHASE, false);
       }
@@ -579,7 +583,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts {
       
       try {
          setAttribute(RESOURCEREQUESTARTIFACTKEY, EVENTPHASE,
-               utils.isValid(resourceRequest));
+               utils.isValid(resourceRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(RESOURCEREQUESTARTIFACTKEY, EVENTPHASE, false);
       }
@@ -587,7 +591,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts {
       
       try {
          setAttribute(CLIENTDATAREQUESTARTIFACTKEY, EVENTPHASE,
-               utils.isValid(clientDataRequest));
+               utils.isValid(clientDataRequest.getContextPath()));
       } catch (RuntimeException e) {
          setAttribute(CLIENTDATAREQUESTARTIFACTKEY, EVENTPHASE, false);
       }

@@ -44,7 +44,14 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletConfigTests_SPEC2_28_PortletIdentification")
+@PortletConfiguration(
+   portletName = "AnnotationPortletConfigTests_SPEC2_28_PortletIdentification",
+   description = @LocaleString(value = "Test portlet description"),
+   displayName = @LocaleString(value = "Test portlet display name"),
+   title = @LocaleString(value = "test portlet title"),
+   shortTitle = @LocaleString(value = "test portlet short title"),
+   keywords = @LocaleString(value = "test, portlet, keywords")
+)
 public class AnnotationPortletConfigTests_SPEC2_28_PortletIdentification implements Portlet {
    
    private PortletConfig portletConfig = null;
@@ -73,7 +80,9 @@ public class AnnotationPortletConfigTests_SPEC2_28_PortletIdentification impleme
       /* @PortletConfiguration annotation. "                                        */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETIDENTIFICATION_DECLARINGPORTLETNAME);
-         /* TODO: implement test */
+         Locale locale = portletReq.getLocale();
+         ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
+         if(resourceBundle.containsKey(""))
          result.appendTcDetail("Not implemented.");
          result.writeTo(writer);
       }
