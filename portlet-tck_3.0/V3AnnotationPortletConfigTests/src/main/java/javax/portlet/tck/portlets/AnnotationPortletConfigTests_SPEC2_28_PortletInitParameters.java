@@ -18,23 +18,24 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.InitParameter;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS1;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS3;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS4;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -44,7 +45,14 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletConfigTests_SPEC2_28_PortletInitParameters")
+@PortletConfiguration(
+   portletName = "AnnotationPortletConfigTests_SPEC2_28_PortletInitParameters",
+   initParams = {
+      @InitParameter(name = "test1", value = "true"),
+      @InitParameter(name = "test2", value = ""),
+      @InitParameter(name = "", value = "true"),
+   }
+)
 public class AnnotationPortletConfigTests_SPEC2_28_PortletInitParameters implements Portlet {
    
    private PortletConfig portletConfig = null;
@@ -73,38 +81,39 @@ public class AnnotationPortletConfigTests_SPEC2_28_PortletInitParameters impleme
       /* @PortletConfiguration annotation using @InitParameter annotation."         */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS1);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3AnnotationPortletConfigTests_SPEC2_28_PortletInitParameters_declaringInitParams2 */
-      /* Details: "The name cannot be null while declaring portlet init parametes   */
-      /* using @InitParameter annotation."                                          */
-      {
-         TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(portletConfig.getInitParameter("test1")!=null
+               && portletConfig.getInitParameter("test1").equals("true")){
+           result.setTcSuccess(true);
+         }
          result.writeTo(writer);
       }
 
       /* TestCase: V3AnnotationPortletConfigTests_SPEC2_28_PortletInitParameters_declaringInitParams3 */
-      /* Details: "If the name is empty while declaring portlet init parametes      */
-      /* using @InitParameter annotation, then that parameter is removed."          */
+      /* Details: "An initialization parameter with empty value can be 
+       * declared in @InitParameter annotation."          */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS3);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(portletConfig.getInitParameter("test2")!=null
+               && portletConfig.getInitParameter("test2").equals("")){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because test2 init parameter does not exist.");
+         }
          result.writeTo(writer);
       }
 
       /* TestCase: V3AnnotationPortletConfigTests_SPEC2_28_PortletInitParameters_declaringInitParams4 */
-      /* Details: "If the name is empty while declaring portlet init parametes      */
-      /* using @InitParameter annotation, then that parameter is removed."          */
+      /* Details: "An initialization parameter with empty name
+       * can be declared in @InitParameter annotation."          */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETINITPARAMETERS_DECLARINGINITPARAMS4);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+
+         if(portletConfig.getInitParameter("")!=null
+               && portletConfig.getInitParameter("").equals("true")){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because init parameter with empty name doesn't exist");  
+         }
          result.writeTo(writer);
       }
 

@@ -18,23 +18,25 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.annotations.LocaleString;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_RESOURCEBUNDLE_DECLARINGRESOURCEBUNDLE1;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_RESOURCEBUNDLE_DECLARINGRESOURCEBUNDLE2;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -44,7 +46,12 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletConfigTests_SPEC2_28_ResourceBundle")
+@PortletConfiguration(
+   portletName = "AnnotationPortletConfigTests_SPEC2_28_ResourceBundle",
+   title = @LocaleString(value = "AnnotationPortletConfigTests_SPEC2_28_ResourceBundle"),
+   resourceBundle = "javax.portlet.tck.portlets.resource",
+   supportedLocales = {"en_US"}
+)
 public class AnnotationPortletConfigTests_SPEC2_28_ResourceBundle implements Portlet {
    
    private PortletConfig portletConfig = null;
@@ -68,14 +75,22 @@ public class AnnotationPortletConfigTests_SPEC2_28_ResourceBundle implements Por
       PrintWriter writer = portletResp.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
+      Locale locale = portletReq.getLocale();
+      ResourceBundle res = portletConfig.getResourceBundle(locale);
+      
       /* TestCase: V3AnnotationPortletConfigTests_SPEC2_28_ResourceBundle_declaringResourceBundle1 */
       /* Details: "The resource bundle defined in the @PortletConfiguration         */
       /* annotation - resourceBundle attribute, can be obtained through the         */
       /* PortletConfig object."                                                     */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_RESOURCEBUNDLE_DECLARINGRESOURCEBUNDLE1);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(res.containsKey("javax.portlet.title")
+               && res.getString("javax.portlet.title")
+             .equals("AnnotationPortletConfigTests_SPEC2_28_ResourceBundle2")){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because portlet title is not AnnotationPortletConfigTests_SPEC2_28_ResourceBundle2 but "+res.getString("javax.portlet.title"));
+         }
          result.writeTo(writer);
       }
 
@@ -84,8 +99,13 @@ public class AnnotationPortletConfigTests_SPEC2_28_ResourceBundle implements Por
       /* in @PortletConfiguration annotation."                                      */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_RESOURCEBUNDLE_DECLARINGRESOURCEBUNDLE2);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         if(res.containsKey("javax.portlet.title")
+               && res.getString("javax.portlet.title")
+             .equals("AnnotationPortletConfigTests_SPEC2_28_ResourceBundle2")){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because portlet title is not AnnotationPortletConfigTests_SPEC2_28_ResourceBundle2 but "+res.getString("javax.portlet.title"));
+         }
          result.writeTo(writer);
       }
 

@@ -47,7 +47,7 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETCO
 @PortletConfiguration(
    portletName = "AnnotationPortletConfigTests_SPEC2_28_CacheSettings",
    cacheExpirationTime = 300,
-   cacheScopePublic = true
+   cacheScopePublic = false
 )
 public class AnnotationPortletConfigTests_SPEC2_28_CacheSettings implements Portlet {
 
@@ -85,7 +85,7 @@ public class AnnotationPortletConfigTests_SPEC2_28_CacheSettings implements Port
       /* attribute of @PortletConfiguration annotation."                            */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_CACHESETTINGS_DECLARINGCACHE2);
-         if(cacheControl.isPublicScope()){
+         if(!cacheControl.isPublicScope()){
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail("Failed because cache is not public scoped as declared");

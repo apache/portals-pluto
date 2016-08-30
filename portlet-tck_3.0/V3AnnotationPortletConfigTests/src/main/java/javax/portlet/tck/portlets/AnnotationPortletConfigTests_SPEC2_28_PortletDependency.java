@@ -18,23 +18,22 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.annotations.Dependency;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETDEPENDENCY_DECLARINGDEPENDENCY1;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -45,24 +44,19 @@ import static javax.portlet.ResourceURL.*;
  */
 
 @PortletConfiguration(
-   portletName = "AnnotationPortletConfigTests_SPEC2_28_PortletDependency"
+   portletName = "AnnotationPortletConfigTests_SPEC2_28_PortletDependency",
+   dependencies = @Dependency(name = "PortletHub", scope = "javax.portlet", version="3.0.0")
 )
 public class AnnotationPortletConfigTests_SPEC2_28_PortletDependency implements Portlet {
-   
-   private PortletConfig portletConfig = null;
 
    @Override
-   public void init(PortletConfig config) throws PortletException {
-      this.portletConfig = config;
-   }
+   public void init(PortletConfig config) throws PortletException {}
 
    @Override
-   public void destroy() {
-   }
+   public void destroy() {}
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
-   }
+   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {}
 
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
@@ -75,10 +69,15 @@ public class AnnotationPortletConfigTests_SPEC2_28_PortletDependency implements 
       /* in @PortletConfiguration annotation."                                      */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_PORTLETDEPENDENCY_DECLARINGDEPENDENCY1);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
          result.writeTo(writer);
       }
+      writer.write("<script type='text/javascript'>");
+      writer.write("document.addEventListener('DOMContentLoaded', function(event) {");
+      writer.write("  if (typeof window.portlet != 'undefined') { ");
+      writer.write("    document.getElementById('V3AnnotationPortletConfigTests_SPEC2_28_PortletDependency_declaringDependency1-result').innerHTML = 'Test Succeeded';");
+      writer.write("  }");
+      writer.write("});");
+      writer.write("</script>");
 
    }
 

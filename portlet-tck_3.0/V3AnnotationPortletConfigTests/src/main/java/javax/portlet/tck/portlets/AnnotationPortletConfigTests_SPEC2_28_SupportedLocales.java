@@ -18,23 +18,25 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Locale;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
+
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_SUPPORTEDLOCALES_DECLARINGSUPPORTEDLOCALES1;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -44,7 +46,10 @@ import static javax.portlet.ResourceURL.*;
  *
  */
 
-@PortletConfiguration(portletName = "AnnotationPortletConfigTests_SPEC2_28_SupportedLocales")
+@PortletConfiguration(
+   portletName = "AnnotationPortletConfigTests_SPEC2_28_SupportedLocales",
+   supportedLocales = {"en_US", "de"}
+)
 public class AnnotationPortletConfigTests_SPEC2_28_SupportedLocales implements Portlet {
    
    private PortletConfig portletConfig = null;
@@ -73,8 +78,16 @@ public class AnnotationPortletConfigTests_SPEC2_28_SupportedLocales implements P
       /* attribute of @PortletConfiguration annotation."                            */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_SUPPORTEDLOCALES_DECLARINGSUPPORTEDLOCALES1);
-         /* TODO: implement test */
-         result.appendTcDetail("Not implemented.");
+         Enumeration<Locale> supportedLocales = portletConfig.getSupportedLocales();
+         List<Locale> supportedLocalesList = Collections.list(supportedLocales);
+         if(supportedLocalesList.size()==2
+               && supportedLocalesList.get(0).toString().equals("en_us")
+               && supportedLocalesList.get(1).toString().equals("de")){
+            result.setTcSuccess(true);
+         } else {
+            result.appendTcDetail("Failed because more than 2 supported locales are found - "+supportedLocalesList.size()
+            +" or supported locales are not de and en_US");
+         }
          result.writeTo(writer);
       }
 
