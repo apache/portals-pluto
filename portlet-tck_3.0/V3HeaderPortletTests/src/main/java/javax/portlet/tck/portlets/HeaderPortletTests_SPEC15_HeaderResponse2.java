@@ -89,10 +89,10 @@ public class HeaderPortletTests_SPEC15_HeaderResponse2 implements Portlet, Heade
       /* Details: "Data written to the HeaderResponse writer is added to the        */
       /* aggregated portal document HEAD section."                                  */
       writer.write("<script type='text/javascript'>");
-      writer.write("$( document ).ready(function() {");
-      writer.write("  var outputStreamTag = $('#output-stream-tag');");
+      writer.write("document.addEventListener('DOMContentLoaded', function(event) {");
+      writer.write("  var outputStreamTag = document.getElementsByClassName('output-stream-tag');");
       writer.write("  if(outputStreamTag.length){");
-      writer.write("    $('#V3HeaderPortletTests_SPEC15_HeaderResponse_getPortletOutputStream-result').html('Test Succeeded');");
+      writer.write("    document.getElementById('V3HeaderPortletTests_SPEC15_HeaderResponse_getPortletOutputStream-result').innerHTML = 'Test Succeeded';");
       writer.write("  }");
       writer.write("});");
       writer.write("</script>");
@@ -102,9 +102,9 @@ public class HeaderPortletTests_SPEC15_HeaderResponse2 implements Portlet, Heade
       /* - Adds a dependency on a page-level resource that is managed by the        */
       /* portal."                                                                   */
       writer.write("<script type='text/javascript'>");
-      writer.write("$( document ).ready(function() {");
+      writer.write("document.addEventListener('DOMContentLoaded', function(event) {");
       writer.write("  if (typeof window.portlet != 'undefined') { ");
-      writer.write("    $('#V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency-result').html('Test Succeeded');");
+      writer.write("    document.getElementById('V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency-result').innerHTML = 'Test Succeeded';");
       writer.write("  }");
       writer.write("});");
       writer.write("</script>");
@@ -123,7 +123,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse2 implements Portlet, Heade
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_GETPORTLETOUTPUTSTREAM);
          OutputStream os = portletResp.getPortletOutputStream();
-         String script = "<script id='output-stream-tag'></script>";
+         String script = "<script class='output-stream-tag'></script>";
          os.write(script.getBytes(Charset.forName("UTF-8")));
          os.close();
          result.writeTo(writer);

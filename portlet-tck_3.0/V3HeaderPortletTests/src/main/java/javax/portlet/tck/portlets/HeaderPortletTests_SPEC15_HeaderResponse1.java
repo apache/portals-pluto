@@ -79,8 +79,6 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
       
-      ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
-      
       PrintWriter writer = portletResp.getWriter();
       
       String msg = (String) portletReq.getPortletSession().getAttribute(
@@ -95,10 +93,10 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       /* Details: "Data written to the HeaderResponse writer is added to the        */
       /* aggregated portal document HEAD section."                                  */
       writer.write("<script type='text/javascript'>");
-      writer.write("$( document ).ready(function() {");
-      writer.write("  var jQueryTag = $('#jquery-tag');");
+      writer.write("document.addEventListener('DOMContentLoaded', function(event) {");
+      writer.write("  var jQueryTag = document.getElementsByClassName('jquery-tag');");
       writer.write("  if(jQueryTag.length){");
-      writer.write("    $('#V3HeaderPortletTests_SPEC15_HeaderResponse_getWriter-result').html('Test Succeeded');");
+      writer.write("    document.getElementById('V3HeaderPortletTests_SPEC15_HeaderResponse_getWriter-result').innerHTML = 'Test Succeeded';");
       writer.write("  }");
       writer.write("});");
       writer.write("</script>");
@@ -109,10 +107,10 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       /* managed by the portal and adds a resource for addition to the page for the */
       /* dependency."                                                               */
       writer.write("<script type='text/javascript'>");
-      writer.write("$( document ).ready(function() {");
-      writer.write("  var dependencyTag = $('#dependency-test');");
+      writer.write("document.addEventListener('DOMContentLoaded', function(event) {");
+      writer.write("  var dependencyTag = document.getElementsByClassName('dependency-test');");
       writer.write("  if(dependencyTag.length){");
-      writer.write("    $('#V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency7-result').html('Test Succeeded');");
+      writer.write("    document.getElementById('V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency7-result').innerHTML= 'Test Succeeded';");
       writer.write("  }");
       writer.write("});");
       writer.write("</script>");
@@ -123,11 +121,11 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       /* resource on the page if 2 same dependencies with different version are     */
       /* declared."                                                                 */
       writer.write("<script type='text/javascript'>");
-      writer.write("$( document ).ready(function() {");
-      writer.write("  var dependencyTag2_1 = $('#dependency-test2-1');");
-      writer.write("  var dependencyTag2_2 = $('#dependency-test2-2');");
+      writer.write("document.addEventListener('DOMContentLoaded', function(event) {");
+      writer.write("  var dependencyTag2_1 = document.getElementsByClassName('dependency-test2-1');");
+      writer.write("  var dependencyTag2_2 = document.getElementsByClassName('dependency-test2-2');");
       writer.write("  if(dependencyTag2_1.length==0 && dependencyTag2_2.length>0){");
-      writer.write("    $('#V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency8-result').html('Test Succeeded');");
+      writer.write("    document.getElementById('V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency8-result').innerHTML= 'Test Succeeded';");
       writer.write("  }");
       writer.write("});");
       writer.write("</script>");
@@ -136,9 +134,9 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       /* Details: "Method addDependency(String name, String scope, String version)  */
       /* - The dependency added by this method can be shared with other portlets."  */
       writer.write("<script type='text/javascript'>");
-      writer.write("$( document ).ready(function() {");
+      writer.write("document.addEventListener('DOMContentLoaded', function(event) {");
       writer.write("  if (typeof window.portlet != 'undefined') { ");
-      writer.write("    $('#V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency2-result').html('Test Succeeded');");
+      writer.write("    document.getElementById('V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency2-result').innerHTML= 'Test Succeeded';");
       writer.write("  }");
       writer.write("});");
       writer.write("</script>");
@@ -188,7 +186,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_GETWRITER);
          PrintWriter pw = portletResp.getWriter();
-         pw.write("<script id='jquery-tag' src='https://code.jquery.com/jquery-3.1.0.min.js'></script>");
+         pw.write("<script class='jquery-tag'></script>");
          pw.close();
          result.writeTo(writer);
       }
@@ -238,7 +236,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       /* dependency."                                                               */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY7);
-         portletResp.addDependency("testDependency", "testDependency", "1.0", "<script id='dependency-test'></script>");
+         portletResp.addDependency("testDependency", "testDependency", "1.0", "<script class='dependency-test'></script>");
          result.writeTo(writer);
       }
 
@@ -249,8 +247,8 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       /* declared."                                                                 */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY8);
-         portletResp.addDependency("testDependency2", "testDependency2", "1.0", "<script id='dependency-test2-1'></script>");
-         portletResp.addDependency("testDependency2", "testDependency2", "2.0", "<script id='dependency-test2-2'></script>");
+         portletResp.addDependency("testDependency2", "testDependency2", "1.0", "<script class='dependency-test2-1'></script>");
+         portletResp.addDependency("testDependency2", "testDependency2", "2.0", "<script class='dependency-test2-2'></script>");
          result.writeTo(writer);
       }
 
@@ -260,7 +258,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY10);
          try{
-            portletResp.addDependency(null, "testDependency", "1.0", "<script id='dependency-test'></script>");
+            portletResp.addDependency(null, "testDependency", "1.0", "<script class='dependency-test'></script>");
             result.appendTcDetail("Failed because no exception is raised.");
          } catch (IllegalArgumentException e){
            result.setTcSuccess(true);
@@ -275,7 +273,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY11);
          try{
-            portletResp.addDependency("", "testDependency", "1.0", "<script id='dependency-test'></script>");
+            portletResp.addDependency("", "testDependency", "1.0", "<script class='dependency-test'></script>");
             result.appendTcDetail("Failed because no exception is raised.");
          } catch (IllegalArgumentException e){
            result.setTcSuccess(true);
@@ -291,7 +289,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY12);
          try{
-            portletResp.addDependency("testDependency", "testDependency", "1.0", "<invalid id='dependency-test'></invalid>");
+            portletResp.addDependency("testDependency", "testDependency", "1.0", "<invalid class='dependency-test'></invalid>");
             result.appendTcDetail("Failed because no exception is raised.");
          } catch (IllegalArgumentException e){
            result.setTcSuccess(true);

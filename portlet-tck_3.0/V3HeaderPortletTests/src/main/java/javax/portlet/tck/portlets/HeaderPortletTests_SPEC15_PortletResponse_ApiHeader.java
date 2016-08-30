@@ -101,10 +101,10 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* Details: "Method addProperty(String, org.w3c.dom.Element): Adds an XML DOM */
       /* Element to the response for the specified key"                             */
       writer.write("<script type='text/javascript'>");
-      writer.write("$( document ).ready(function() {");
-      writer.write("  var scriptTag = $('#testProperty1');");
+      writer.write("document.addEventListener('DOMContentLoaded', function(event) {");
+      writer.write("  var scriptTag = document.getElementsByClassName('testProperty1');");
       writer.write("  if(scriptTag.length){");
-      writer.write("    $('#V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB1-result').html('Test Succeeded');");
+      writer.write("    document.getElementById('V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB1-result').innerHTML = 'Test Succeeded';");
       writer.write("  }");
       writer.write("});");
       writer.write("</script>");
@@ -114,10 +114,10 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* Element for the specified key already exists, the new element is added in  */
       /* addition to the existing element"                                          */
       writer.write("<script type='text/javascript'>");
-      writer.write("$( document ).ready(function() {");
-      writer.write("  var scriptTag = $('#testProperty2');");
+      writer.write("document.addEventListener('DOMContentLoaded', function(event) {");
+      writer.write("  var scriptTag = document.getElementsByClassName('testProperty2');");
       writer.write("  if(scriptTag.length){");
-      writer.write("    $('#V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB2-result').html('Test Succeeded');");
+      writer.write("    document.getElementById('V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB2-result').innerHTML = 'Test Succeeded';");
       writer.write("  }");
       writer.write("});");
       writer.write("</script>");
@@ -157,7 +157,7 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
             result.appendTcDetail("addProperty(String, org.w3c.dom.Element) is not supported by portlal");
          } else {
             Element element = portletResp.createElement("script");
-            element.setAttribute("id", "testProperty1");
+            element.setAttribute("class", "testProperty1");
             portletResp.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, element);
          } 
          result.writeTo(writer);
@@ -174,7 +174,7 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
             result.appendTcDetail("addProperty(String, org.w3c.dom.Element) is not supported by portlal");
          } else {
             Element element = portletResp.createElement("script");
-            element.setAttribute("id", "testProperty2");
+            element.setAttribute("class", "testProperty2");
             portletResp.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, element);
          } 
          result.writeTo(writer);
