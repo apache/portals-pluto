@@ -231,7 +231,8 @@ public class RenderStateTests_SPEC1_12_RenderState implements Portlet, ResourceS
       {
          TestResult result = tcd.getTestResultFailed(
                V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETWINDOWSTATE2);
-         if (portletReq.getPortletMode().equals(WindowState.UNDEFINED)) {
+// BUG!! >>         if (portletReq.getPortletMode().equals(WindowState.UNDEFINED)) {
+         if (portletReq.getWindowState().equals(WindowState.UNDEFINED)) {
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail(

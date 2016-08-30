@@ -21,10 +21,13 @@ import java.util.Map;
 
 import javax.portlet.CacheControl;
 import javax.portlet.PortletAsyncContext;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
+import javax.portlet.WindowState;
 import javax.servlet.DispatcherType;
 
 import org.apache.pluto.container.PortletResourceRequestContext;
@@ -144,5 +147,21 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
    @Override
    public DispatcherType getDispatcherType() {
       return getRequestContext().getDispatcherType();
+   }
+   
+   @Override
+   public PortletMode getPortletMode() {
+      if (getCacheability().equals(ResourceURL.FULL)) {
+         return PortletMode.UNDEFINED;
+      }
+      return super.getPortletMode();
+   }
+   
+   @Override
+   public WindowState getWindowState() {
+      if (getCacheability().equals(ResourceURL.FULL)) {
+         return WindowState.UNDEFINED;
+      }
+      return super.getWindowState();
    }
 }

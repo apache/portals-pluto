@@ -303,7 +303,7 @@ public class PortletArtifactProducer {
       PortletArtifactProducer pap = producers.get();
       assert pap != null;
       RenderRequest req = null;
-      if (pap.req instanceof RenderRequest) {
+      if ((pap.req instanceof RenderRequest) && !(pap.req instanceof HeaderRequest)) {
          req = (RenderRequest) pap.req;
       }
       return req;
