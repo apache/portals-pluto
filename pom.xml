@@ -324,7 +324,7 @@ TODO: Check if we need all of them. -->
 
       <!-- Specification Libraries =========================================== -->
       <dependency>
-         <groupId>org.apache.portals.pluto</groupId>
+         <groupId>javax.portlet</groupId>
          <artifactId>portlet-api</artifactId>
          <version>${portals.portlet-api.version}</version>
          <scope>provided</scope>

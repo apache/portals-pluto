@@ -50,7 +50,7 @@
           <artifactId>tomcat-servlet-api</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>org.apache.portals</groupId>
+          <groupId>javax.portlet</groupId>
           <artifactId>portlet-api</artifactId>
         </exclusion>
         <exclusion>
@@ -113,7 +113,7 @@
        <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.portals.pluto</groupId>
+      <groupId>javax.portlet</groupId>
       <artifactId>portlet-api</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
