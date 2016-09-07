@@ -151,7 +151,7 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
    
    @Override
    public PortletMode getPortletMode() {
-      if (getCacheability().equals(ResourceURL.FULL)) {
+      if (ResourceURL.FULL.equals(getCacheability())) {
          return PortletMode.UNDEFINED;
       }
       return super.getPortletMode();
@@ -159,7 +159,7 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
    
    @Override
    public WindowState getWindowState() {
-      if (getCacheability().equals(ResourceURL.FULL)) {
+      if (ResourceURL.FULL.equals(getCacheability())) {
          return WindowState.UNDEFINED;
       }
       return super.getWindowState();
