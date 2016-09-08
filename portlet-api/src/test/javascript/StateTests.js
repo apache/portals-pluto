@@ -104,17 +104,11 @@ describe('The Portlet Hub provides accessor functions for the render state and p
          expect(typeof hubA.newParameters).toEqual('function');
       });
 
-      it('returns a Parameters object containing the required functions', function () {
+      it('returns a Parameters object', function () {
          var p;
          runs(function() {
             p = hubA.newParameters();
             expect(typeof p).toEqual('object');
-            expect(typeof p.clone).toEqual('function');
-            expect(typeof p.setValue).toEqual('function');
-            expect(typeof p.setValues).toEqual('function');
-            expect(typeof p.getValue).toEqual('function');
-            expect(typeof p.getValues).toEqual('function');
-            expect(typeof p.remove).toEqual('function');
          }); 
       });
 
@@ -164,229 +158,6 @@ describe('The Portlet Hub provides accessor functions for the render state and p
    });
 
    
-   describe('The returned parameters object: ', function () {
-
-      // The tests in this section use just a single portlet - portletA
-      var cbA = new portlet.jasmine.JasminePortletUtils('SimulateCommError', pageState),
-      parms = null;
-
-      // add an osc handler for the test
-      beforeEach(function () {
-         cbA.complete = false;
-         runs(function() {
-            cbA.oscHandle = hubA.addEventListener("portlet.onStateChange", cbA.getListener());
-            parms = null;
-         }); 
-         waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
-         runs(function() {
-            cbA.complete = false;    // in prep for the actual test
-            parms = hubA.newParameters();
-         }); 
-      });
-
-      // remove the osc handler added during the test
-      afterEach(function () {
-         if (cbA.oscHandle !== null) {
-            hubA.removeEventListener(cbA.oscHandle);
-            cbA.oscHandle = null;
-         }
-      });
-
-      it('allows parameters to be set', function () {
-         var parm1 = ['fred'], parm2 = ['barney'], key, cnt = 0;
-         runs(function() {
-            parms.setValue('parm1', parm1)
-            parms.setValue('parm2', parm2)
-            for (key in parms) {
-               if (parms.hasOwnProperty(key)){
-                  cnt++;
-               }
-            }
-            expect(cnt).toEqual(2);
-            expect(parms.parm1).toEqual(parm1);
-            expect(parms.parm2).toEqual(parm2);
-         }); 
-      });
-
-      it('setting a parameter of the same name replaces the old  parameter value', function () {
-         var parm1 = ['fred'], parm2 = ['barney'], key, cnt = 0;
-         runs(function() {
-            parms.setValue('parm1', parm1)
-            parms.setValue('parm1', parm2)
-            for (key in parms) {
-               if (parms.hasOwnProperty(key)){
-                  cnt++;
-               }
-            }
-            expect(cnt).toEqual(1);
-            expect(parms.parm1).toEqual(parm2);
-         }); 
-      });
-
-      it('allows reading a single-value parameter that was set', function () {
-         var parm1 = ['fred'], parm2;
-         runs(function() {
-            parms.setValue('parm1', parm1)
-            parm2 = parms.getValue('parm1');
-            expect(parm2).toEqual(parm1[0]);
-         }); 
-      });
-
-      it('allows reading a single-value parameter when a default value is provided', function () {
-         var parm1 = ['fred'], parm2;
-         runs(function() {
-            parms.setValue('parm1', parm1)
-            parm2 = parms.getValue('parm1', 'defaultVal');
-            expect(parm2).toEqual(parm1[0]);
-         }); 
-      });
-
-      it('allows reading a single-value parameter that was set to null', function () {
-         var parm1 = [null], parm2;
-         runs(function() {
-            parms.setValue('parm1', parm1)
-            parm2 = parms.getValue('parm1', 'defaultVal');
-            expect(parm2).toBeNull();
-         }); 
-      });
-
-      it('allows removing a single-value parameter that was set', function () {
-         var parm1 = ['fred'], parm2;
-         runs(function() {
-            parms.setValue('parm1', parm1)
-            parms.remove('parm1');
-            parm2 = parms.getValue('parm1');
-            expect(parm2).toBeUndefined();
-            expect(parms.parm1).toBeUndefined();
-         }); 
-      });
-
-      it('returns undefined when reading an undefined single-value parameter without a default', function () {
-         var parm2;
-         runs(function() {
-            parm2 = parms.getValue('parm1');
-            expect(parm2).toBeUndefined();
-         }); 
-      });
-
-      it('returns the default value when reading an undefined single-value parameter with a default', function () {
-         var parm2;
-         runs(function() {
-            parm2 = parms.getValue('parm1', 'defaultValue');
-            expect(parm2).toEqual('defaultValue');
-         }); 
-      });
-
-      it('allows reading a multi-value parameter that was set', function () {
-         var parm1 = ['fred', 'barney'], parm2;
-         runs(function() {
-            parms.parm1 = parm1;
-            parm2 = parms.getValues('parm1', ['defaultVal1', 'defaultVal2']);
-            expect(parm2).toEqual(parm1);
-         }); 
-      });
-
-      it('allows reading a multi-value parameter that was set through setValues', function () {
-         var parm1 = ['fred', 'barney'], parm2;
-         runs(function() {
-            parms.setValues('parm1', parm1)
-            parm2 = parms.getValues('parm1');
-            expect(parm2).toEqual(parm1);
-         }); 
-      });
-
-      it('allows reading a multi-value parameter when a default value array is provided', function () {
-         var parm1 = ['fred', 'barney'], parm2;
-         runs(function() {
-            parms.setValues('parm1', parm1)
-            parm2 = parms.getValues('parm1', ['defVal1', 'defVal2']);
-            expect(parm2).toEqual(parm1);
-         }); 
-      });
-
-      it('allows reading a multi-value parameter that was set to null', function () {
-         var parm1 = ['fred', null], parm2;
-         runs(function() {
-            parms.setValue('parm1', parm1)
-            parm2 = parms.getValues('parm1');
-            expect(parm2).toEqual(parm1);
-            expect(parm2[0]).toEqual('fred');
-            expect(parm2[1]).toEqual(null);
-         }); 
-      });
-
-      it('allows removing a multi-value parameter that was set', function () {
-         var parm1 = ['fred', 'barney'], parm2;
-         runs(function() {
-            parms.setValue('parm1', parm1)
-            parms.remove('parm1');
-            parm2 = parms.getValue('parm1');
-            expect(parm2).toBeUndefined();
-            expect(parms.parm1).toBeUndefined();
-         }); 
-      });
-
-      it('returns undefined when reading an undefined multi-value parameter without a default', function () {
-         var parm2;
-         runs(function() {
-            parm2 = parms.getValues('parm1');
-            expect(parm2).toBeUndefined();
-         }); 
-      });
-
-      it('returns the default value when reading an undefined multi-value parameter with a default', function () {
-         var parm2;
-         runs(function() {
-            parm2 = parms.getValues('parm1', ['defaultVal1', 'defaultVal2']);
-            expect(parm2).toEqual(['defaultVal1', 'defaultVal2']);
-         }); 
-      });
-
-      it('can be cloned if empty', function () {
-         var p2, key, cnt = 0;
-         runs(function() {
-            p2 = parms.clone();
-            for (key in p2) {
-               if (parms.hasOwnProperty(key)){
-                  cnt++;
-               }
-            }
-            expect(cnt).toEqual(0);
-            expect(typeof p2).toEqual('object');
-            expect(typeof p2.clone).toEqual('function');
-            expect(typeof p2.setValue).toEqual('function');
-            expect(typeof p2.getValue).toEqual('function');
-            expect(typeof p2.getValues).toEqual('function');
-            expect(typeof p2.remove).toEqual('function');
-        }); 
-      });
-
-      it('can be cloned if parameters are set', function () {
-         var parm1 = ['fred'], parm2 = ['barney'], key, cnt = 0, p2;
-         runs(function() {
-            parms.setValue('parm1', parm1)
-            parms.setValue('parm2', parm2)
-            p2 = parms.clone();
-            for (key in p2) {
-               if (parms.hasOwnProperty(key)){
-                  cnt++;
-               }
-            }
-            expect(cnt).toEqual(2);
-            expect(typeof p2).toEqual('object');
-            expect(typeof p2.clone).toEqual('function');
-            expect(typeof p2.setValue).toEqual('function');
-            expect(typeof p2.setValues).toEqual('function');
-            expect(typeof p2.getValue).toEqual('function');
-            expect(typeof p2.getValues).toEqual('function');
-            expect(typeof p2.remove).toEqual('function');
-            expect(p2.parm1).toEqual(parm1);
-            expect(p2.parm2).toEqual(parm2);
-         }); 
-      });
-   });
-
-   
    describe('The portlet hub newState function: ', function () {
 
       // The tests in this section use just a single portlet - portletA
@@ -422,13 +193,18 @@ describe('The Portlet Hub provides accessor functions for the render state and p
             s = hubA.newState();
             expect(typeof s).toEqual('object');
             expect(typeof s.clone).toEqual('function');
+            
             expect(typeof s.setPortletMode).toEqual('function');
             expect(typeof s.getPortletMode).toEqual('function');
             expect(typeof s.setWindowState).toEqual('function');
             expect(typeof s.getWindowState).toEqual('function');
+            
+            expect(typeof s.setValue).toEqual('function');
+            expect(typeof s.getValue).toEqual('function');
+            expect(typeof s.getValues).toEqual('function');
+            expect(typeof s.remove).toEqual('function');
+
             expect(typeof s.parameters).toEqual('object');
-            expect(typeof s.p).toEqual('object');
-            expect(s.p).toEqual(s.parameters);
             expect(typeof s.portletMode).toEqual('string');
             expect(typeof s.windowState).toEqual('string');
          }); 
@@ -500,8 +276,8 @@ describe('The Portlet Hub provides accessor functions for the render state and p
       it('allows parameters to be set', function () {
          var parm1 = ['fred'], parm2 = ['barney'], key, cnt = 0;
          runs(function() {
-            state.parameters.setValue('parm1', parm1)
-            state.parameters.setValue('parm2', parm2)
+            state.setValue('parm1', parm1)
+            state.setValue('parm2', parm2)
             for (key in state.parameters) {
                if (state.parameters.hasOwnProperty(key)){
                   cnt++;
@@ -513,27 +289,11 @@ describe('The Portlet Hub provides accessor functions for the render state and p
          }); 
       });
 
-      it('has a shortcut p to access the parameters', function () {
-         var parm1 = ['fred'], parm2 = ['barney'], key, cnt = 0;
-         runs(function() {
-            state.p.setValue('parm1', parm1)
-            state.p.setValue('parm2', parm2)
-            for (key in state.p) {
-               if (state.p.hasOwnProperty(key)){
-                  cnt++;
-               }
-            }
-            expect(cnt).toEqual(2);
-            expect(state.p.parm1).toEqual(parm1);
-            expect(state.p.parm2).toEqual(parm2);
-         }); 
-      });
-
       it('setting a parameter of the same name replaces the old  parameter value', function () {
          var parm1 = ['fred'], parm2 = ['barney'], key, cnt = 0;
          runs(function() {
-            state.parameters.setValue('parm1', parm1)
-            state.parameters.setValue('parm1', parm2)
+            state.setValue('parm1', parm1)
+            state.setValue('parm1', parm2)
             for (key in state.parameters) {
                if (state.parameters.hasOwnProperty(key)){
                   cnt++;
@@ -547,8 +307,17 @@ describe('The Portlet Hub provides accessor functions for the render state and p
       it('allows reading a single-value parameter that was set', function () {
          var parm1 = ['fred'], parm2;
          runs(function() {
-            state.parameters.setValue('parm1', parm1)
-            parm2 = state.parameters.getValue('parm1');
+            state.setValue('parm1', parm1)
+            parm2 = state.getValue('parm1');
+            expect(parm2).toEqual(parm1[0]);
+         }); 
+      });
+
+      it('allows reading a single-value parameter when a default value is provided', function () {
+         var parm1 = ['fred'], parm2;
+         runs(function() {
+            state.setValue('parm1', parm1)
+            parm2 = state.getValue('parm1', 'defaultVal');
             expect(parm2).toEqual(parm1[0]);
          }); 
       });
@@ -556,8 +325,8 @@ describe('The Portlet Hub provides accessor functions for the render state and p
       it('allows reading a single-value parameter that was set to null', function () {
          var parm1 = [null], parm2;
          runs(function() {
-            state.parameters.setValue('parm1', parm1)
-            parm2 = state.parameters.getValue('parm1');
+            state.setValue('parm1', parm1)
+            parm2 = state.getValue('parm1');
             expect(parm2).toBeNull();
          }); 
       });
@@ -565,28 +334,44 @@ describe('The Portlet Hub provides accessor functions for the render state and p
       it('allows removing a single-value parameter that was set', function () {
          var parm1 = ['fred'], parm2;
          runs(function() {
-            state.parameters.setValue('parm1', parm1)
-            state.parameters.remove('parm1');
-            parm2 = state.parameters.getValue('parm1');
+            state.setValue('parm1', parm1)
+            state.remove('parm1');
+            parm2 = state.getValue('parm1');
             expect(parm2).toBeUndefined();
             expect(state.parameters.parm1).toBeUndefined();
+         }); 
+      });
+
+      it('returns undefined when reading an undefined single-value parameter without a default', function () {
+         var parm2;
+         runs(function() {
+            parm2 = state.getValue('parm1');
+            expect(parm2).toBeUndefined();
+         }); 
+      });
+
+      it('returns the default value when reading an undefined single-value parameter with a default', function () {
+         var parm2;
+         runs(function() {
+            parm2 = state.getValue('parm1', 'defaultValue');
+            expect(parm2).toEqual('defaultValue');
          }); 
       });
 
       it('allows reading a multi-value parameter that was set', function () {
          var parm1 = ['fred', 'barney'], parm2;
          runs(function() {
-            state.parameters.setValue('parm1', parm1)
-            parm2 = state.parameters.getValues('parm1');
+            state.setValue('parm1', parm1)
+            parm2 = state.getValues('parm1');
             expect(parm2).toEqual(parm1);
          }); 
       });
 
-      it('allows reading a multi-value parameter that was set through the shortcut p', function () {
+      it('allows reading a multi-value parameter when a default value array is provided', function () {
          var parm1 = ['fred', 'barney'], parm2;
          runs(function() {
-            state.p.setValue('parm1', parm1)
-            parm2 = state.p.getValues('parm1');
+            state.setValues('parm1', parm1)
+            parm2 = state.getValues('parm1', ['defVal1', 'defVal2']);
             expect(parm2).toEqual(parm1);
          }); 
       });
@@ -594,8 +379,8 @@ describe('The Portlet Hub provides accessor functions for the render state and p
       it('allows reading a multi-value parameter that was set to null', function () {
          var parm1 = ['fred', null], parm2;
          runs(function() {
-            state.parameters.setValue('parm1', parm1)
-            parm2 = state.parameters.getValues('parm1');
+            state.setValue('parm1', parm1)
+            parm2 = state.getValues('parm1');
             expect(parm2).toEqual(parm1);
             expect(parm2[0]).toEqual('fred');
             expect(parm2[1]).toEqual(null);
@@ -605,9 +390,9 @@ describe('The Portlet Hub provides accessor functions for the render state and p
       it('allows removing a multi-value parameter that was set', function () {
          var parm1 = ['fred', 'barney'], parm2;
          runs(function() {
-            state.parameters.setValue('parm1', parm1)
-            state.parameters.remove('parm1');
-            parm2 = state.parameters.getValue('parm1');
+            state.setValue('parm1', parm1)
+            state.remove('parm1');
+            parm2 = state.getValue('parm1');
             expect(parm2).toBeUndefined();
             expect(state.parameters.parm1).toBeUndefined();
          }); 
@@ -616,7 +401,7 @@ describe('The Portlet Hub provides accessor functions for the render state and p
       it('returns undefined when getValue reads a parameter that was not set', function () {
          var parm1;
          runs(function() {
-            parm1 = state.parameters.getValue('parm1');
+            parm1 = state.getValue('parm1');
             expect(parm1).toBeUndefined();
          }); 
       });
@@ -624,16 +409,24 @@ describe('The Portlet Hub provides accessor functions for the render state and p
       it('returns undefined when getValues reads a parameter that was not set', function () {
          var parm1;
          runs(function() {
-            parm1 = state.parameters.getValues('parm1');
+            parm1 = state.getValues('parm1');
             expect(parm1).toBeUndefined();
+         }); 
+      });
+
+      it('returns the default value when reading an undefined multi-value parameter with a default', function () {
+         var parm2;
+         runs(function() {
+            parm2 = state.getValues('parm1', ['defaultVal1', 'defaultVal2']);
+            expect(parm2).toEqual(['defaultVal1', 'defaultVal2']);
          }); 
       });
 
       it('can be cloned if empty', function () {
          var p2, key, cnt = 0;
          runs(function() {
-            p2 = state.parameters.clone();
-            for (key in p2) {
+            p2 = state.clone();
+            for (key in p2.parameters) {
                if (state.parameters.hasOwnProperty(key)){
                   cnt++;
                }
@@ -651,10 +444,10 @@ describe('The Portlet Hub provides accessor functions for the render state and p
       it('can be cloned if parameters are set', function () {
          var parm1 = ['fred'], parm2 = ['barney'], key, cnt = 0, p2;
          runs(function() {
-            state.parameters.setValue('parm1', parm1)
-            state.parameters.setValue('parm2', parm2)
-            p2 = state.parameters.clone();
-            for (key in p2) {
+            state.setValue('parm1', parm1)
+            state.setValue('parm2', parm2)
+            p2 = state.clone();
+            for (key in p2.parameters) {
                if (state.parameters.hasOwnProperty(key)){
                   cnt++;
                }
@@ -666,8 +459,8 @@ describe('The Portlet Hub provides accessor functions for the render state and p
             expect(typeof p2.getValue).toEqual('function');
             expect(typeof p2.getValues).toEqual('function');
             expect(typeof p2.remove).toEqual('function');
-            expect(p2.parm1).toEqual(parm1);
-            expect(p2.parm2).toEqual(parm2);
+            expect(p2.parameters.parm1).toEqual(parm1);
+            expect(p2.parameters.parm2).toEqual(parm2);
          }); 
       });
 

@@ -18,8 +18,8 @@
 
 /**
  * <span class="changed_added_3_0">
- * This describes a proposed extension for the JSR 362 Portlet Specification 3.0
- * public API to exploit CDI capabilities in portlets. 
+ * The javax.portlet.annotations package provides the annotations used 
+ * for portlet configuration and portlet-specific dependency injection.
  * </span>
  * <h4>Overview</h4>
  * <p>
@@ -38,18 +38,18 @@
  * descriptor, the information from the deployment descriptor has precedence. 
  * </li>
  * <li>
- * It allows portlets to be written as CDI beans.
- * Such portlets can make use of standard CDI features such as interceptors, 
- * decorators, and dependency injection.
+ * It allows portlet lifecycle methods to be identified through use of annotations.
  * <p>
- * Bean portlet methods must carry with one of the following annotations:
+ * The possible portlet method annotations are:
+ * {@link javax.portlet.annotations.InitMethod}, 
+ * {@link javax.portlet.annotations.DestroyMethod}, 
  * {@link javax.portlet.annotations.ActionMethod}, 
  * {@link javax.portlet.annotations.EventMethod}, 
  * {@link javax.portlet.annotations.HeaderMethod}, 
- * {@link javax.portlet.annotations.RenderMethod}, 
- * {@link javax.portlet.annotations.ServeResourceMethod}, or 
+ * {@link javax.portlet.annotations.RenderMethod}, or
+ * {@link javax.portlet.annotations.ServeResourceMethod}. 
  * <p>
- * Bean portlet methods can be contained in any valid bean class. 
+ * Annotated portlet lifecycle methods can be contained in any valid CDI bean class. 
  * The class needs not implement any portlet-specific interface or extend a portlet class. 
  * However, each bean portlet method has method signature requirements that 
  * must be fulfilled.
@@ -65,6 +65,11 @@
  * </li>
  * <li>
  * Using the scope annotation
+ * {@link javax.portlet.annotations.PortletRequestScoped} 
+ * associates the bean lifecycle with the portlet request.
+ * </li>
+ * <li>
+ * Using the scope annotation
  * {@link javax.portlet.annotations.RenderStateScoped} 
  * associates the bean lifecycle with the render state, which conceptually is stored 
  * on the URL.
@@ -75,7 +80,7 @@
  * </li>
  * <li>
  * It allows portlet artifacts such as portlet request filters, URL generation listeners,
- * and preference validators to be implemented as CDI beans.
+ * and preference validators to be identified through annotations.
  * <p>
  * Please see the following annotation descriptions:
  * {@link javax.portlet.annotations.PortletLifecycleFilter},
@@ -84,22 +89,18 @@
  * </ul>
  * <h4>Injectable Portlet Artifacts</h4>
  * <p>
- * In addition to the annotations, this package provides producer methods that allow
- * many portlet artifacts to be injected into your code as beans.
- * The following table describes the beans that are available for injection.
- * </p>
- * <p>
  * <span style="font-weight:bold; text-decoration:underline;">Note:</span> 
- * Most of these beans are dependent on the portlet request being executed, but could not themselves 
- * be declared as {@literal @}RequestScoped due to technical limitations. 
+ * Most of these beans are dependent on the portlet request being executed, but 
+ * some of them could not themselves 
+ * be declared as {@literal @}PortletRequestScoped due to technical limitations. 
  * These beans should be used within enclosing beans that are either
- * {@literal @}RenderStateScoped or {@literal @}RequestScoped to allow the portlet container to properly manage 
- * the lifecycle of the injected object.
+ * {@literal @}RenderStateScoped or {@literal @}PortletRequestScoped to allow 
+ * the portlet container to properly manage the lifecycle of the injected object.
  * The required enclosing bean scope is noted in the table.
  * <table class='ovtable' width='100%'>
  * <thead>
  * <tr>
- * <th width="15%">Object</th>
+ * <th width="15%">name</th>
  * <th width="40%">Description</th>
  * <th width="15%">Enclosing Bean Scope</th>
  * <th width="30%">Annotation Example</th>
@@ -108,19 +109,21 @@
  * <tbody>
  * <!-- ************* -->
  * <tr>
- * <td>PortletConfig</td>
- * <td>The PortletConfig object. Use qualifier {@literal @}BeanPortlet for disambiguation.</td>
+ * <td>portletConfig</td>
+ * <td>
+ * The PortletConfig object.
+ * </td>
  * <td>Any</td>
  * <td>
  * <div class='codebox'>
- * {@literal @}Inject {@literal @}BeanPortlet<br/>
+ * {@literal @}Inject<br/>
  * private PortletConfig portletConfig;
  * </div>
  * </td>
  * </tr>
  * <!-- ************* -->
  * <tr>
- * <td>PortletRequest</td>
+ * <td>portletRequest</td>
  * <td>The PortletRequest object.</td>
  * <td>Any</td>
  * <td>
@@ -132,7 +135,7 @@
  * </tr>
  * <!-- ************* -->
  * <tr>
- * <td>PortletResponse</td>
+ * <td>portletResponse</td>
  * <td>The PortletResponse object.</td>
  * <td>Any</td>
  * <td>
@@ -144,7 +147,223 @@
  * </tr>
  * <!-- ************* -->
  * <tr>
- * <td>PortletPreferences</td>
+ * <td>actionRequest</td>
+ * <td>The ActionRequest object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private ActionRequest request;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>actionResponse</td>
+ * <td>The ActionResponse object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private ActionResponse request;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>headerRequest</td>
+ * <td>The HeaderRequest object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private HeaderRequest request;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>headerResponse</td>
+ * <td>The HeaderResponse object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private HeaderResponse request;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>renderRequest</td>
+ * <td>The RenderRequest object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private RenderRequest request;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>renderResponse</td>
+ * <td>The RenderResponse object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private RenderResponse request;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>eventRequest</td>
+ * <td>The EventRequest object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private EventRequest request;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>eventResponse</td>
+ * <td>The EventResponse object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private EventResponse request;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>resourceRequest</td>
+ * <td>The ResourceRequest object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private ResourceRequest request;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>resourceResponse</td>
+ * <td>The ResourceResponse object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private ResourceResponse request;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>clientDataRequest</td>
+ * <td>The ClientDataRequest object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private ClientDataRequest request;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>mimeResponse</td>
+ * <td>The MimeResponse object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private MimeResponse request;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>stateAwareResponse</td>
+ * <td>The StateAwareResponse object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private StateAwareResponse request;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>renderParams</td>
+ * <td>The RenderParameters object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private RenderParameters renderParams;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>mutableRenderParams</td>
+ * <td>The MutableRenderParameters object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private MutableRenderParameters mutableRenderParams;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>actionParams</td>
+ * <td>The ActionParameters object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private ActionParameters actionParams;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>resourceParams</td>
+ * <td>The ResourceParameters object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private ResourceParameters resourceParams;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>portletContext</td>
+ * <td>The PortletContext object.</td>
+ * <td>Any</td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private PortletContext portletContext;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>portletPreferences</td>
  * <td>The PortletPreferences object.</td>
  * <td>Any</td>
  * <td>
@@ -156,7 +375,7 @@
  * </tr>
  * <!-- ************* -->
  * <tr>
- * <td>PortletSession</td>
+ * <td>portletSession</td>
  * <td>The PortletSession object.</td>
  * <td>Any</td>
  * <td>
@@ -168,13 +387,11 @@
  * </tr>
  * <!-- ************* -->
  * <tr>
- * <td>PortletMode</td>
+ * <td>portletMode</td>
  * <td>The PortletMode object.
  * </td>
  * <td>
- * {@literal @}RequestScoped
- * or
- * {@literal @}RenderStateScoped
+ * Any
  * </td>
  * <td>
  * <div class='codebox'>
@@ -185,13 +402,11 @@
  * </tr>
  * <!-- ************* -->
  * <tr>
- * <td>WindowState</td>
+ * <td>windowState</td>
  * <td>The WindowState object.
  * </td>
  * <td>
- * {@literal @}RequestScoped
- * or
- * {@literal @}RenderStateScoped
+ * Any
  * </td>
  * <td>
  * <div class='codebox'>
@@ -202,55 +417,110 @@
  * </tr>
  * <!-- ************* -->
  * <tr>
- * <td>Cookies[]</td>
- * <td>An array of Cookies set for the portlet.
+ * <td>cookies</td>
+ * <td>An list of Cookie objects set for the portlet.
  * See {@link javax.portlet.PortletRequest#getCookies() getCookies}.
  * </td>
  * <td>
- * {@literal @}RequestScoped
- * or
- * {@literal @}RenderStateScoped
+ * Any
  * </td>
  * <td>
  * <div class='codebox'>
  * {@literal @}Inject<br/>
- * private Cookies[] cookies;
+ * private List{@literal <}Cookie> cookies;
  * </div>
  * </td>
  * </tr>
  * <!-- ************* -->
  * <tr>
- * <td>Locale</td>
- * <td>The Locale object.
- * See {@link javax.portlet.PortletRequest#getLocale() getLocale}.
- * </td>
- * <td>
- * {@literal @}RequestScoped
- * or
- * {@literal @}RenderStateScoped
- * </td>
- * <td>
- * <div class='codebox'>
- * {@literal @}Inject<br/>
- * private Locale locale;
- * </div>
- * </td>
- * </tr>
- * <!-- ************* -->
- * <tr>
- * <td>Locales[]</td>
- * <td>An array of supported Locales for the portlet.
+ * <td>locales</td>
+ * <td>An list of supported Locales for the portlet.
  * See {@link javax.portlet.PortletRequest#getLocales() getLocales}.
  * </td>
  * <td>
- * {@literal @}RequestScoped
+ * Any
+ * </td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private List{@literal <}Locale> locales;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ********************** -->
+ * <!-- ** Dependent scoped ** -->
+ * <!-- ********************** -->
+ * <tr>
+ * <td>namespace</td>
+ * <td>A <code>String</code> representing the unique name space for the
+ * portlet window.
+ * See {@link javax.portlet.PortletResponse#getNamespace() getNamespace}.
+ * </td>
+ * <td>
+ * {@literal @}PortletRequestScoped
  * or
  * {@literal @}RenderStateScoped
  * </td>
  * <td>
  * <div class='codebox'>
  * {@literal @}Inject<br/>
- * private Locales[] locales;
+ * private String namespace;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>contextPath</td>
+ * <td>A <code>String</code> representing the context path for the 
+ * portlet application.
+ * See {@link javax.portlet.PortletRequest#getContextPath() getContextPath}.
+ * </td>
+ * <td>
+ * {@literal @}PortletRequestScoped
+ * or
+ * {@literal @}RenderStateScoped
+ * </td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private String contextPath;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>windowId</td>
+ * <td>A <code>String</code> representing the unique window ID for the
+ * portlet window.
+ * See {@link javax.portlet.PortletRequest#getWindowID() getWindowID}.
+ * </td>
+ * <td>
+ * {@literal @}PortletRequestScoped
+ * or
+ * {@literal @}RenderStateScoped
+ * </td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private String windowId;
+ * </div>
+ * </td>
+ * </tr>
+ * <!-- ************* -->
+ * <tr>
+ * <td>portletName</td>
+ * <td>A <code>String</code> representing the portlet name.
+ * See {@link javax.portlet.PortletConfig#getPortletName() getportletName}.
+ * </td>
+ * <td>
+ * {@literal @}PortletRequestScoped
+ * or
+ * {@literal @}RenderStateScoped
+ * </td>
+ * <td>
+ * <div class='codebox'>
+ * {@literal @}Inject<br/>
+ * private String portletName;
  * </div>
  * </td>
  * </tr>
@@ -288,7 +558,8 @@
  * {@link  javax.portlet.PortletURL#setBeanParameter setBeanParameter}
  * method.
  * You can create a new bean, set the fields as desired, and use the 
- * <code>setBeanParameter</code> method to set the new bean on the URL.
+ * {@link  javax.portlet.PortletURL#setBeanParameter setBeanParameter}
+ * method to set the new bean on the URL.
  * </p>
  * <p>
  * <span style="font-weight:bold; text-decoration:underline;">Tip:</span> 

@@ -207,20 +207,6 @@ describe('The portlet hub provides the ability to add and remove event listeners
          expect(typeof oeHandle).not.toEqual('undefined');
       });
 
-      it('throws an IllegalArgumentException if a "portlet.onStateChange" is added twice',function(){
-         var testFunc = function () {
-            hubA.addEventListener("portlet.onStateChange", onStateChange);
-         }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
-      });
-
-      it('throws an IllegalArgumentException if a "portlet.onError" is added twice',function(){
-         var testFunc = function () {
-            hubA.addEventListener("portlet.onError", onError);
-         }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
-      });
-      
    });
    
    
@@ -352,14 +338,14 @@ describe('The portlet hub provides the ability to add and remove event listeners
          expect(typeof retRenderData).toEqual('undefined');
       });
 
-      it('is passed a RenderState parameter that has 4 properties',function(){
+      it('is passed a RenderState parameter that has 3 properties',function(){
          var cnt = 0, prop;
          for (prop in retRenderState) {
             if (retRenderState.hasOwnProperty(prop)) {
                cnt = cnt + 1;
             }
          }
-         expect(cnt).toEqual(4);
+         expect(cnt).toEqual(3);
       });
 
       it('is passed a RenderState object with a "parameters" property',function(){
@@ -464,14 +450,14 @@ describe('The portlet hub provides the ability to add and remove event listeners
          expect(typeof retRenderState).toEqual('object');
       });
 
-      it('is passed a RenderState parameter that has 4 properties',function(){
+      it('is passed a RenderState parameter that has 3 properties',function(){
          var cnt = 0;
          for (var prop in retRenderState) {
             if (retRenderState.hasOwnProperty(prop)) {
                cnt = cnt + 1;
             }
          }
-         expect(cnt).toEqual(4);
+         expect(cnt).toEqual(3);
       });
 
       it('is passed a RenderState object with a "parameters" property',function(){

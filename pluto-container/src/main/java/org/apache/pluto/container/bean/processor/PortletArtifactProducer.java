@@ -432,16 +432,6 @@ public class PortletArtifactProducer {
    }
 
    /**
-    * Producer method for the Locale. 
-    */
-   @Produces @PortletRequestScoped @Named("locale")
-   public static Locale produceLocale() {
-      PortletArtifactProducer pap = producers.get();
-      assert pap != null;
-      return pap.req.getLocale();
-   }
-
-   /**
     * Producer method for the Locales
     */
    @Produces @PortletRequestScoped @Named("locales") 

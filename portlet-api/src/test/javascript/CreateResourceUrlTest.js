@@ -135,41 +135,41 @@ describe('The portlet hub allows the portlet client to create a resource URL.',f
          expect(typeof hubA.createResourceUrl).toEqual('function');
       });
 
-      it('throws an IllegalArgumentException if too many (>2) arguments are provided',function(){
+      it('throws an IllegalArgumentException if too many (>3) arguments are provided',function(){
          var testFunc = function () {
-            hubA.createResourceUrl("parm1", "parm2", "parm3");
+            hubA.createResourceUrl(null, "parm1", "parm2", "parm3");
          }
          expect(testFunc).toThrowCustomException("IllegalArgumentException");
       });
 
-      it('throws an IllegalArgumentException if a single argument is null',function(){
-         var testFunc = function () {
-            hubA.createResourceUrl(null);
-         }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
-      });
+      // it('throws an IllegalArgumentException if a single argument is null',function(){
+      //    var testFunc = function () {
+      //       hubA.createResourceUrl(null);
+      //    }
+      //    expect(testFunc).toThrowCustomException("IllegalArgumentException");
+      // });
 
-      it('throws an IllegalArgumentException if the cacheability argument is null',function(){
-         var parms  = {rp1 : ["resVal"]};
-         var testFunc = function () {
-            hubA.createResourceUrl(parms, null);
-         }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
-      });
+      // it('throws an IllegalArgumentException if the cacheability argument is null',function(){
+      //    var parms  = {rp1 : ["resVal"]};
+      //    var testFunc = function () {
+      //       hubA.createResourceUrl(parms, null);
+      //    }
+      //    expect(testFunc).toThrowCustomException("IllegalArgumentException");
+      // });
 
-      it('throws an IllegalArgumentException if resource parameters  is null',function(){
-         var testFunc = function () {
-            hubA.createResourceUrl(null, "cacheLevelFull");
-         }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
-      });
+      // it('throws an IllegalArgumentException if resource parameters  is null',function(){
+      //    var testFunc = function () {
+      //       hubA.createResourceUrl(null, "cacheLevelFull");
+      //    }
+      //    expect(testFunc).toThrowCustomException("IllegalArgumentException");
+      // });
 
-      it('throws an IllegalArgumentException if resource parameters is undefined',function(){
-         var testFunc = function () {
-            hubA.createResourceUrl(undefined, "cacheLevelFull");
-         }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
-      });
+      // it('throws an IllegalArgumentException if resource parameters is undefined',function(){
+      //    var testFunc = function () {
+      //       hubA.createResourceUrl(undefined, "cacheLevelFull");
+      //    }
+      //    expect(testFunc).toThrowCustomException("IllegalArgumentException");
+      // });
 
       it('throws an IllegalArgumentException if resource parameters is invalid',function(){
          var parms  = {rp1 : "resVal"};
@@ -225,24 +225,18 @@ describe('The portlet hub allows the portlet client to create a resource URL.',f
          }); 
       });
 
-      it('returns a string if cacheability is specified first',function(){
+      it('Throws an exception if cacheability is specified first',function(){
          var parms  = {rp1 : ["resVal"]}, retval;
          var testFunc = function () {
             return hubA.createResourceUrl("cacheLevelPage", parms);
          }
-         var ph = new portlet.jasmine.PromiseHandler(testFunc, false);
-         runs(ph.getRun());
-         waitsFor(ph.getIsComplete(), "The promise from createResourceUrl is settled.", 1000);
-         runs(ph.getChecker()); 
-         runs(function() {
-            expect(typeof ph.result).toEqual('string');
-         }); 
+         expect(testFunc).toThrowCustomException("IllegalArgumentException");
       });
 
       it('returns a string if only cacheability present',function(){
          var parms  = {rp1 : ["resVal"]}, retval;
          var testFunc = function () {
-            return hubA.createResourceUrl("cacheLevelPortlet");
+            return hubA.createResourceUrl(null, "cacheLevelPortlet");
          }
          var ph = new portlet.jasmine.PromiseHandler(testFunc, false);
          runs(ph.getRun());
@@ -441,7 +435,7 @@ describe('The portlet hub allows the portlet client to create a resource URL.',f
       it('returns a URL without resource parameters when none are added',function(){
          var parms  = {}, cache="cacheLevelPage", url, str;
          var testFunc = function () {
-            return hubB.createResourceUrl(cache);
+            return hubB.createResourceUrl(null, cache);
          }
          var ph = new portlet.jasmine.PromiseHandler(testFunc, false);
          runs(ph.getRun());
