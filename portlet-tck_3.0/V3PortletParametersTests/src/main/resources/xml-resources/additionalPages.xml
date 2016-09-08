@@ -34,5 +34,8 @@
 <page xmlns="" name="V3PortletParametersTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
 <portlet context="/tck-V3PortletParametersTests-3.0-SNAPSHOT" name="PortletParametersTests_SPEC11_1"/>
 </page>
+<page xmlns="" name="V3ActionParametersTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+    <portlet context="/tck-V3PortletParametersTests-3.0-SNAPSHOT" name="PortletParametersTests_SPEC11_3"/>
+</page>
 </render-config>
 </pluto-portal-driver>
