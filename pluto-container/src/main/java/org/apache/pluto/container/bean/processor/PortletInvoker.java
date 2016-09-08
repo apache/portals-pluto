@@ -42,7 +42,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceServingPortlet;
-import javax.portlet.UnavailableException;
 import javax.portlet.annotations.HeaderMethod;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
@@ -268,7 +267,7 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
             if (rm.characterEncoding().length() > 0) {
                resp.setCharacterEncoding(rm.characterEncoding());
             }
-            if (rm.contentType().length() > 0) {
+            if (!rm.contentType().matches("(^$|\\*|\\*/\\*|text/\\*)")) {
                resp.setContentType(rm.contentType());
             }
          }
@@ -403,7 +402,7 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
          // method)
 
          RenderMethod rm = (RenderMethod) meth.getAnnotation();
-         if ((rm != null) && rm.contentType().length() > 0) {
+         if ((rm != null) && !rm.contentType().matches("(^$|\\*|\\*/\\*|text/\\*)")) {
             resp.setContentType(rm.contentType());
          }
 
@@ -459,7 +458,7 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
          // method)
 
          HeaderMethod hm = (HeaderMethod) meth.getAnnotation();
-         if ((hm != null) && hm.contentType().length() > 0) {
+         if ((hm != null) && !hm.contentType().matches("(^$|\\*|\\*/\\*|text/\\*)")) {
             resp.setContentType(hm.contentType());
          }
 
