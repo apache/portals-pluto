@@ -51,7 +51,7 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETPARAMETERSTE
  * additionalTCs.xml file into the complete list of test case names for execution by the driver.
  */
 
-@PortletConfiguration(portletName = "ActionParametersTests_SPEC11_3", publicParams = {"names_public1"})
+@PortletConfiguration(portletName = "PortletParametersTests_SPEC11_3", publicParams = {"names_public1"})
 public class PortletParametersTests_SPEC11_3 implements Portlet {
 
     private PortletConfig portletConfig = null;

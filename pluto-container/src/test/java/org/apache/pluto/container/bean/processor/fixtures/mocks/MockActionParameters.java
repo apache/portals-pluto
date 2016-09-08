@@ -49,7 +49,7 @@ public class MockActionParameters implements ActionParameters {
     * @see javax.portlet.PortletParameters#getNames()
     */
    @Override
-   public Set<? extends String> getNames() {
+   public Set<String> getNames() {
       return Collections.singleton(ActionRequest.ACTION_NAME);
    }
 

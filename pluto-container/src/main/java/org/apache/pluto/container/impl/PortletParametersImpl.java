@@ -110,7 +110,7 @@ public abstract class PortletParametersImpl implements PortletParameters {
    /* (non-Javadoc)
     * @see javax.portlet.PortletParameters#getNames()
     */
-   public Set<? extends String> getNames() {
+   public Set<String> getNames() {
       HashSet<String> names = new HashSet<String>();
       for (String name : params.keySet()) {
          names.add(name);

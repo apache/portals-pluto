@@ -167,7 +167,7 @@ public interface PortletParameters
    * @since 3.0
    */
 
-  public Set<? extends String> getNames();
+  public Set<String> getNames();
 
 
   /**
