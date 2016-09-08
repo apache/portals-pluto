@@ -25,4 +25,9 @@
 <entry key="V3PortletParametersTests_SPEC11_1_getValues">V3PortletParametersTests</entry>
 <entry key="V3PortletParametersTests_SPEC11_1_size">V3PortletParametersTests</entry>
 <entry key="V3PortletParametersTests_SPEC11_1_clone">V3PortletParametersTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_3_getNames">V3ActionParametersTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_3_getValue">V3ActionParametersTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_3_getValues">V3ActionParametersTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_3_size">V3ActionParametersTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_3_clone">V3ActionParametersTests</entry>
 </properties>
