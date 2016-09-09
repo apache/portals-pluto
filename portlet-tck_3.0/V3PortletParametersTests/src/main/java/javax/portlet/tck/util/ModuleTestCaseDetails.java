@@ -46,6 +46,12 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
     public final static String V3PORTLETPARAMETERSTESTS_SPEC11_3_SIZE = "V3PortletParametersTests_SPEC11_3_size";
     public final static String V3PORTLETPARAMETERSTESTS_SPEC11_3_CLONE = "V3PortletParametersTests_SPEC11_3_clone";
 
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4_GETNAMES = "V3PortletParametersTests_SPEC11_4_getNames";
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4_GETVALUE = "V3PortletParametersTests_SPEC11_4_getValue";
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4_GETVALUES = "V3PortletParametersTests_SPEC11_4_getValues";
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4_SIZE = "V3PortletParametersTests_SPEC11_4_size";
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4_CLONE = "V3PortletParametersTests_SPEC11_4_clone";
+
     private final static Map<String, String> tcd = new HashMap<String, String>();
 
     static {
@@ -61,6 +67,12 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
         tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_3_GETVALUES, "Returns all action parameter value as a string array for a given name");
         tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_3_SIZE, "Returns the number of action parameters available");
         tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_3_CLONE, "Clones the given action parameters returning a mutable copy of the parameters");
+
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4_GETNAMES, "Returns a set of strings representing the resource parameter names");
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4_GETVALUE, "Returns a single action resource value as a string for a given name");
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4_GETVALUES, "Returns all resource parameter value as a string array for a given name");
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4_SIZE, "Returns the number of resource parameters available");
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4_CLONE, "Clones the given resource parameters returning a mutable copy of the parameters");
 
     }
 
