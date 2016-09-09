@@ -34,6 +34,7 @@ import java.util.Map;
  */
 public class ModuleTestCaseDetails extends TestCaseDetails {
 
+   public final static String V3PORTLETCONFIGTESTS_CONFIG_INIT  = "V3PortletConfigTests_Config_init";
    public final static String V3PORTLETCONFIGTESTS_CONFIG_GETPORTLETMODES = "V3PortletConfigTests_Config_getPortletModes";
    public final static String V3PORTLETCONFIGTESTS_CONFIG_GETWINDOWSTATES = "V3PortletConfigTests_Config_getWindowStates";
    public final static String V3PORTLETCONFIGTESTS_CONFIG_GETPUBLICRENDERPARAMETERDEFINITIONS = "V3PortletConfigTests_Config_getPublicRenderParameterDefinitions";
@@ -42,6 +43,7 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
    private final static Map<String, String> tcd = new HashMap<String, String>();
    static {
 
+      tcd.put(V3PORTLETCONFIGTESTS_CONFIG_INIT, "The PortletConfig object is passed to an annotated init method.");
       tcd.put(V3PORTLETCONFIGTESTS_CONFIG_GETPORTLETMODES, "The PortletConfig.getPortletModes method returns the a list of supported portlet modes for this portlet for a given mimetype.");
       tcd.put(V3PORTLETCONFIGTESTS_CONFIG_GETWINDOWSTATES, "The PortletConfig.getWindowStates method returns the a list of supported window states for this portlet for a given mimetype.");
       tcd.put(V3PORTLETCONFIGTESTS_CONFIG_GETPUBLICRENDERPARAMETERDEFINITIONS, "The PortletConfig.getPublicRenderParameterDefinitions method returns the a list of supported public render parameter definitions for this portlet.");

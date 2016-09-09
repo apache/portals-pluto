@@ -298,11 +298,19 @@ public class Utils {
             .getCharacterEncoding();
       String portletCharacterEncoding = mimeResponse.getCharacterEncoding();
       String injectedContentType = injectedPortletArtifact.getContentType();
-      String portletContentType = mimeResponse.getContentType();
+      String portletContentType = mimeResponse.getContentType();      
+      
       if (checkEqualResponses(injectedPortletArtifact, mimeResponse)
+            
             && injectedBufferSize == portletBufferSize
-            && injectedCharacterEncoding.equals(portletCharacterEncoding)
-            && injectedContentType.equals(portletContentType)) {
+            
+            && ((injectedCharacterEncoding == null && portletCharacterEncoding == null) ||
+                 injectedCharacterEncoding.equals(portletCharacterEncoding))
+            
+            && (injectedContentType == null && portletContentType == null) ||
+               injectedContentType.equals(portletContentType)
+            
+            ) {
          return true;
       } else {
          return false;

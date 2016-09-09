@@ -21,6 +21,7 @@ package org.apache.pluto.container.reconcile.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.HashSet;
@@ -30,6 +31,7 @@ import javax.portlet.PortletMode;
 
 import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
 import org.apache.pluto.container.bean.processor.ConfigSummary;
+import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
 import org.apache.pluto.container.bean.processor.tests.FileHelper;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
@@ -48,6 +50,7 @@ public class StandAloneBeanPortletInvokeTest {
    
    private static final String pkg = "org.apache.pluto.container.reconcile.fixtures";
 
+   private InvocationResults meths = InvocationResults.getInvocationResults();
    private static InvokeHelper helper;
    private static AnnotatedMethodStore ams = null;
    private static ConfigSummary summary = null;
@@ -106,9 +109,24 @@ public class StandAloneBeanPortletInvokeTest {
    // Begin portlet 4 tests ================================== 
 
    @Test
+   public void test4init() throws Exception {
+      String expectedMeth = TestPortlet4.class.getSimpleName() + "#init";
+      helper.init("Portlet4", expectedMeth);
+      assertTrue(meths.isConfigExists());
+   }
+   
+   @Test
+   public void test4destroy() throws Exception {
+      String expectedMeth = TestPortlet4.class.getSimpleName() + "#destroy";
+      helper.destroy("Portlet4", expectedMeth);
+      assertTrue(meths.isConfigExists());
+   }
+
+   @Test
    public void test4action() throws Exception {
       String expectedMeth = TestPortlet4.class.getSimpleName() + "#doAction";
       helper.action("Portlet4", null, expectedMeth);
+      assertTrue(meths.isConfigExists());
    }
 
    @Test
@@ -116,6 +134,7 @@ public class StandAloneBeanPortletInvokeTest {
       String expectedMeth = TestPortlet4.class.getSimpleName() + "#myView";
       PortletMode pm = PortletMode.HELP;
       helper.render("Portlet4", pm, expectedMeth);
+      assertTrue(meths.isConfigExists());
    }
 
    @Test
@@ -123,6 +142,7 @@ public class StandAloneBeanPortletInvokeTest {
       String expectedMeth = TestPortlet4.class.getSimpleName() + "#res";
       String resid = "something";
       helper.resource("Portlet4", resid, expectedMeth);
+      assertTrue(meths.isConfigExists());
    }
 
 }

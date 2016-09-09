@@ -28,8 +28,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.portlet.annotations.ActionMethod;
+import javax.portlet.annotations.DestroyMethod;
 import javax.portlet.annotations.EventMethod;
 import javax.portlet.annotations.HeaderMethod;
+import javax.portlet.annotations.InitMethod;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
 import javax.servlet.ServletContext;
@@ -68,7 +70,7 @@ public class MethodAnnotationRecognizer extends PortletAnnotationRecognizer impl
    @Override
    public Class<? extends Annotation>[] annotations() {
       return new Class[] { HeaderMethod.class, ActionMethod.class, EventMethod.class, RenderMethod.class,
-            ServeResourceMethod.class };
+            ServeResourceMethod.class, InitMethod.class, DestroyMethod.class };
    }
 
    /**

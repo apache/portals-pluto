@@ -27,7 +27,9 @@ import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.annotations.ActionMethod;
+import javax.portlet.annotations.DestroyMethod;
 import javax.portlet.annotations.EventMethod;
+import javax.portlet.annotations.InitMethod;
 import javax.portlet.annotations.PortletQName;
 
 import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
@@ -45,6 +47,19 @@ public class IncompletePortlet {
    private InvocationResults meths = InvocationResults.getInvocationResults();
    
    private PortletConfig config;
+  
+   @InitMethod("Portlet4")
+   public void init(PortletConfig config) {
+      this.config = config;
+      meths.addMethod(this.getClass().getSimpleName() + "#init");
+      meths.setConfigExists(config != null);
+   }
+  
+   @DestroyMethod("Portlet4")
+   public void destroy() {
+      meths.addMethod(this.getClass().getSimpleName() + "#destroy");
+      meths.setConfigExists(config != null);
+   }   
    
    @ActionMethod(portletName="IncompletePortlet", publishingEvents = {
          @PortletQName(namespaceURI="http://www.apache.org/", localPart="event1"),

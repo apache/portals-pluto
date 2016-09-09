@@ -20,5 +20,8 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <!-- JSR 286 API PortletConfigTests test case names and page mappings -->
+<entry key="V3PortletConfigTests_Config_init">V3PortletConfigTests</entry>
 <entry key="V3PortletConfigTests_Config_getPortletModes">V3PortletConfigTests</entry>
+<entry key="V3PortletConfigTests_Config_getWindowStates">V3PortletConfigTests</entry>
+<entry key="V3PortletConfigTests_Config_getPublicRenderParameterDefinitions">V3PortletConfigTests</entry>
 </properties>

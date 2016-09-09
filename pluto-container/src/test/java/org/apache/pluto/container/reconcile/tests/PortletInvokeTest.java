@@ -254,9 +254,24 @@ public class PortletInvokeTest {
    // Begin portlet 4 tests ================================== 
 
    @Test
+   public void test4init() throws Exception {
+      String expectedMeth = TestPortlet4.class.getSimpleName() + "#init";
+      helper.init("Portlet4", expectedMeth);
+      assertTrue(meths.isConfigExists());
+   }
+
+   @Test
+   public void test4destroy() throws Exception {
+      String expectedMeth = TestPortlet4.class.getSimpleName() + "#destroy";
+      helper.destroy("Portlet4", expectedMeth);
+      assertTrue(meths.isConfigExists());
+   }
+   
+   @Test
    public void test4action() throws Exception {
       String expectedMeth = TestPortlet4.class.getSimpleName() + "#doAction";
       helper.action("Portlet4", null, expectedMeth);
+      assertTrue(meths.isConfigExists());
    }
 
    @Test
@@ -264,6 +279,7 @@ public class PortletInvokeTest {
       String expectedMeth = TestPortlet4.class.getSimpleName() + "#doEvent";
       QName qn = new QName("http://www.apache.org/", "event2");
       helper.event("Portlet4", qn, expectedMeth);
+      assertTrue(meths.isConfigExists());
    }
 
    @Test
@@ -271,6 +287,7 @@ public class PortletInvokeTest {
       String expectedMeth = TestPortlet4.class.getSimpleName() + "#doEvent";
       QName qn = new QName("https://www.java.net/", "event4");
       helper.event("Portlet4", qn, expectedMeth);
+      assertTrue(meths.isConfigExists());
    }
 
    @Test
@@ -278,6 +295,7 @@ public class PortletInvokeTest {
       String expectedMeth = TestPortlet4.class.getSimpleName() + "#myView";
       PortletMode pm = PortletMode.HELP;
       helper.render("Portlet4", pm, expectedMeth);
+      assertTrue(meths.isConfigExists());
    }
 
    @Test
@@ -285,6 +303,7 @@ public class PortletInvokeTest {
       String expectedMeth = TestPortlet4.class.getSimpleName() + "#res";
       String resid = "something";
       helper.resource("Portlet4", resid, expectedMeth);
+      assertTrue(meths.isConfigExists());
    }
 
 }
