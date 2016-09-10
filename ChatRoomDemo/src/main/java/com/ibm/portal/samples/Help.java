@@ -19,9 +19,7 @@
 
 package com.ibm.portal.samples;
 
-import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.RenderMethod;
-import javax.portlet.annotations.Supports;
 
 /**
  * Displays help information
@@ -29,8 +27,6 @@ import javax.portlet.annotations.Supports;
  * @author Scott Nicklous
  *
  */
-@PortletConfiguration(portletName="BeanPortletDemo",
-      supports = {@Supports(mimeType = "text/html", portletModes = {"view", "help"})})
 public class Help {
 
    /**
@@ -41,5 +37,5 @@ public class Help {
                  ordinal = 100, 
                  portletMode = "help")
    public void getImageInclude() {}
-
+   
 }
