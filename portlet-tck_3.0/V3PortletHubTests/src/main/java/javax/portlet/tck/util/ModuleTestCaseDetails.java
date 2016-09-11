@@ -72,7 +72,7 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
    static {
 
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER1, "The portlet hub provides a global namespace var portlet of type object");
-      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER2, "The global namespace var portlet property register is type function");
+      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER2, "The global portlet object register property is type function");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER3, "The portlet hub register function throws an IllegalArgumentException if no portlet ID argument is provided");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER4, "The portlet hub register function throws an IllegalArgumentException if too many (&gt;1) arguments are provided");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER5, "The portlet hub register function throws an IllegalArgumentException if the portlet ID is not a string");
@@ -81,8 +81,8 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER8, "The portlet hub register function The promise fails if the portlet ID is not defined for the portlet hub");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER9, "The portlet hub register function does not throw an exception if the portlet ID is valid");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTERA, "The portlet hub register function returns an object when provided with a valid portlet ID");
-      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT1, "The PortletInit object portletModes property is type string");
-      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT2, "The PortletInit object windowStates property is type string");
+      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT1, "The PortletInit object portletModes property is an array");
+      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT2, "The PortletInit object windowStates property is an array");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT3, "The PortletInit object action property is type function");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT4, "The PortletInit object addEventListener property is type function");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT5, "The PortletInit object createResourceUrl property is type function");

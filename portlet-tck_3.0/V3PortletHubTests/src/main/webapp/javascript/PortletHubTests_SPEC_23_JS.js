@@ -19,168 +19,308 @@
 
 (function() {
    'use strict';
+   var portletName = 'PortletHubTests_SPEC_23_JS';
 
-   function setSuccess (tc) {
+   function setSuccess (tc, fail) {
       var el;
       el = document.getElementById(tc + '-result');
       if (el !== null) {
-         el.innerHTML = 'Test Succeeded';
+         if (fail) {
+            el.innerHTML = fail;
+         } else {
+            el.innerHTML = 'Test Succeeded';
+         }
       }
    }
 
+   function testException (func, type) {
+      var ok = false;
+      try {
+         func();
+      } catch (e) {
+         ok = (e.name === type);
+      }
+      return ok;
+   }
+
    function execute () {
+      var update, testFunction,
+          pid = tck.PortletHubTests_SPEC_23_JS.pid;
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register1                           */
       /* Details: "The portlet hub provides a global namespace var portlet of type  */
       /* object"                                                                    */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_register1');
+      if (typeof portlet === 'object') {
+         setSuccess('V3PortletHubTests_SPEC_23_JS_register1');
+      }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register2                           */
-      /* Details: "The global namespace var portlet property register is type       */
-      /* function"                                                                  */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_register2');
+      /* Details: "The global portlet object register property is type function"    */
+      if (typeof portlet.register === 'function') {
+         setSuccess('V3PortletHubTests_SPEC_23_JS_register2');
+      }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register3                           */
       /* Details: "The portlet hub register function throws an                      */
       /* IllegalArgumentException if no portlet ID argument is provided"            */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_register3');
+      testFunction = function () {
+          portlet.register();
+      }
+      if (testException(testFunction, "IllegalArgumentException")) {
+         setSuccess('V3PortletHubTests_SPEC_23_JS_register3');
+      }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register4                           */
       /* Details: "The portlet hub register function throws an                      */
       /* IllegalArgumentException if too many (&gt;1) arguments are provided"       */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_register4');
+      testFunction = function () {
+          portlet.register("InvalidPortletID1", "InvalidPortletID2");
+      }
+      if (testException(testFunction, "IllegalArgumentException")) {
+         setSuccess('V3PortletHubTests_SPEC_23_JS_register4');
+      }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register5                           */
       /* Details: "The portlet hub register function throws an                      */
       /* IllegalArgumentException if the portlet ID is not a string"                */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_register5');
+      testFunction = function () {
+          portlet.register(89);
+      }
+      if (testException(testFunction, "IllegalArgumentException")) {
+         setSuccess('V3PortletHubTests_SPEC_23_JS_register5');
+      }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register6                           */
       /* Details: "The portlet hub register function throws an                      */
       /* IllegalArgumentException if the portlet ID is undefined"                   */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_register6');
+      testFunction = function () {
+          portlet.register(undefined);
+      }
+      if (testException(testFunction, "IllegalArgumentException")) {
+         setSuccess('V3PortletHubTests_SPEC_23_JS_register6');
+      }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register7                           */
       /* Details: "The portlet hub register function throws an                      */
       /* IllegalArgumentException if the portlet ID is null"                        */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_register7');
+      testFunction = function () {
+          portlet.register(null);
+      }
+      if (testException(testFunction, "IllegalArgumentException")) {
+         setSuccess('V3PortletHubTests_SPEC_23_JS_register7');
+      }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register8                           */
       /* Details: "The portlet hub register function The promise fails if the       */
       /* portlet ID is not defined for the portlet hub"                             */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_register8');
+      try {
+    	  portlet.register("invalidPortletID").then( 
+             function (pi) {
+             }, 
+             function (err) {
+                setSuccess('V3PortletHubTests_SPEC_23_JS_register8');
+             } 
+          );
+      } catch (e) {}
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register9                           */
       /* Details: "The portlet hub register function does not throw an exception if */
       /* the portlet ID is valid"                                                   */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_register9');
+      try {
+    	  portlet.register(pid).then( 
+             function (pi) {
+                 setSuccess('V3PortletHubTests_SPEC_23_JS_register9');
+             }, 
+             function (err) {
+             } 
+          );
+      } catch (e) {}
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_registerA                           */
       /* Details: "The portlet hub register function returns an object when         */
       /* provided with a valid portlet ID"                                          */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_registerA');
+      try {
+    	  portlet.register(pid).then( 
+    	     function (pi) {
+    	    	 if (typeof pi === 'object') {
+    	    		 setSuccess('V3PortletHubTests_SPEC_23_JS_registerA');
+    	    	 }
+    	     }, 
+    	     function (err) {
+    	     } 
+          );
+      } catch (e) {}
 
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit1                        */
-      /* Details: "The PortletInit object portletModes property is type string"     */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit1');
+      update = function (type, state) {
+      }
 
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit2                        */
-      /* Details: "The PortletInit object windowStates property is type string"     */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit2');
+      portlet.register(pid).then(function (hub) {
 
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit3                        */
-      /* Details: "The PortletInit object action property is type function"         */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit3');
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit1                        */
+         /* Details: "The PortletInit object portletModes property is an array"     */
+         if (Array.isArray(hub.portletModes)) {
+            setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit1');
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit2                        */
+         /* Details: "The PortletInit object windowStates property is an array"     */
+         if (Array.isArray(hub.windowStates)) {
+            setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit2');
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit3                        */
+         /* Details: "The PortletInit object action property is type function"         */
+         if (typeof hub.action === 'function') {
+            setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit3');
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit4                        */
+         /* Details: "The PortletInit object addEventListener property is type         */
+         /* function"                                                                  */
+         if (typeof hub.addEventListener === 'function') {
+            setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit4');
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit5                        */
+         /* Details: "The PortletInit object createResourceUrl property is type        */
+         /* function"                                                                  */
+         if (typeof hub.createResourceUrl === 'function') {
+            setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit5');
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit6                        */
+         /* Details: "The PortletInit object dispatchClientEvent property is type      */
+         /* function"                                                                  */
+         if (typeof hub.dispatchClientEvent === 'function') {
+            setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit6');
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit7                        */
+         /* Details: "The PortletInit object isInProgress property is type function"   */
+         if (typeof hub.isInProgress === 'function') {
+            setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit7');
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit8                        */
+         /* Details: "The PortletInit object newParameters property is type function"  */
+         if (typeof hub.newParameters === 'function') {
+            setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit8');
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit9                        */
+         /* Details: "The PortletInit object newState property is type function"       */
+         if (typeof hub.newState === 'function') {
+            setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit9');
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInitA                        */
+         /* Details: "The PortletInit object removeEventListener property is type      */
+         /* function"                                                                  */
+         if (typeof hub.removeEventListener === 'function') {
+            setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInitA');
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInitB                        */
+         /* Details: "The PortletInit object setRenderState property is type function" */
+         if (typeof hub.setRenderState === 'function') {
+            setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInitB');
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInitC                        */
+         /* Details: "The PortletInit object startPartialAction property is type       */
+         /* function"                                                                  */
+         if (typeof hub.startPartialAction === 'function') {
+            setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInitC');
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInitD                        */
+         /* Details: "The PortletInit object constants property is type object"        */
+         if (typeof hub.constants === 'object') {
+            setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInitD');
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants1                          */
+         /* Details: "The Constants object VIEW property is type string and equal to   */
+         /* 'VIEW'"                                                                    */
+         if (typeof hub.constants.VIEW === 'string') {
+            if (hub.constants.VIEW === 'VIEW') {
+              setSuccess('V3PortletHubTests_SPEC_23_JS_Constants1');
+            }
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants2                          */
+         /* Details: "The Constants object EDIT property is type string and equal to   */
+         /* 'EDIT'"                                                                    */
+         if (typeof hub.constants.EDIT === 'string') {
+            if (hub.constants.EDIT === 'EDIT') {
+              setSuccess('V3PortletHubTests_SPEC_23_JS_Constants2');
+            }
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants3                          */
+         /* Details: "The Constants object HELP property is type string and equal to   */
+         /* 'HELP'"                                                                    */
+         if (typeof hub.constants.HELP === 'string') {
+            if (hub.constants.HELP === 'HELP') {
+              setSuccess('V3PortletHubTests_SPEC_23_JS_Constants3');
+            }
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants4                          */
+         /* Details: "The Constants object NORMAL property is type string and equal to */
+         /* 'NORMAL'"                                                                  */
+         if (typeof hub.constants.NORMAL === 'string') {
+            if (hub.constants.NORMAL === 'NORMAL') {
+              setSuccess('V3PortletHubTests_SPEC_23_JS_Constants4');
+            }
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants5                          */
+         /* Details: "The Constants object MINIMIZED property is type string and equal */
+         /* to 'MINIMIZED'"                                                            */
+         if (typeof hub.constants.MINIMIZED === 'string') {
+            if (hub.constants.MINIMIZED === 'MINIMIZED') {
+              setSuccess('V3PortletHubTests_SPEC_23_JS_Constants5');
+            }
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants6                          */
+         /* Details: "The Constants object MAXIMIZED property is type string and equal */
+         /* to 'MAXIMIZED'"                                                            */
+         if (typeof hub.constants.MAXIMIZED === 'string') {
+            if (hub.constants.MAXIMIZED === 'MAXIMIZED') {
+              setSuccess('V3PortletHubTests_SPEC_23_JS_Constants6');
+            }
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants7                          */
+         /* Details: "The Constants object FULL property is type string and equal to   */
+         /* 'cacheLevelFull'"                                                          */
+         if (typeof hub.constants.FULL === 'string') {
+            if (hub.constants.FULL === 'cacheLevelFull') {
+              setSuccess('V3PortletHubTests_SPEC_23_JS_Constants7');
+            }
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants8                          */
+         /* Details: "The Constants object PORTLET property is type string and equal   */
+         /* to 'cacheLevelPortlet'"                                                    */
+         if (typeof hub.constants.PORTLET === 'string') {
+            if (hub.constants.PORTLET === 'cacheLevelPortlet') {
+              setSuccess('V3PortletHubTests_SPEC_23_JS_Constants8');
+            }
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants9                          */
+         /* Details: "The Constants object PAGE property is type string and equal to   */
+         /* 'cacheLevelPage'"                                                          */
+         if (typeof hub.constants.PAGE === 'string') {
+            if (hub.constants.PAGE === 'cacheLevelPage') {
+              setSuccess('V3PortletHubTests_SPEC_23_JS_Constants9');
+            }
+         }
 
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit4                        */
-      /* Details: "The PortletInit object addEventListener property is type         */
-      /* function"                                                                  */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit4');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit5                        */
-      /* Details: "The PortletInit object createResourceUrl property is type        */
-      /* function"                                                                  */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit5');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit6                        */
-      /* Details: "The PortletInit object dispatchClientEvent property is type      */
-      /* function"                                                                  */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit6');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit7                        */
-      /* Details: "The PortletInit object isInProgress property is type function"   */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit7');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit8                        */
-      /* Details: "The PortletInit object newParameters property is type function"  */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit8');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit9                        */
-      /* Details: "The PortletInit object newState property is type function"       */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInit9');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInitA                        */
-      /* Details: "The PortletInit object removeEventListener property is type      */
-      /* function"                                                                  */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInitA');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInitB                        */
-      /* Details: "The PortletInit object setRenderState property is type function" */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInitB');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInitC                        */
-      /* Details: "The PortletInit object startPartialAction property is type       */
-      /* function"                                                                  */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInitC');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInitD                        */
-      /* Details: "The PortletInit object constants property is type object"        */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_PortletInitD');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants1                          */
-      /* Details: "The Constants object VIEW property is type string and equal to   */
-      /* 'VIEW'"                                                                    */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_Constants1');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants2                          */
-      /* Details: "The Constants object EDIT property is type string and equal to   */
-      /* 'EDIT'"                                                                    */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_Constants2');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants3                          */
-      /* Details: "The Constants object HELP property is type string and equal to   */
-      /* 'HELP'"                                                                    */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_Constants3');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants4                          */
-      /* Details: "The Constants object NORMAL property is type string and equal to */
-      /* 'NORMAL'"                                                                  */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_Constants4');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants5                          */
-      /* Details: "The Constants object MINIMIZED property is type string and equal */
-      /* to 'MINIMIZED'"                                                            */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_Constants5');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants6                          */
-      /* Details: "The Constants object MAXIMIZED property is type string and equal */
-      /* to 'MAXIMIZED'"                                                            */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_Constants6');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants7                          */
-      /* Details: "The Constants object FULL property is type string and equal to   */
-      /* 'cacheLevelFull'"                                                          */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_Constants7');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants8                          */
-      /* Details: "The Constants object PORTLET property is type string and equal   */
-      /* to 'cacheLevelPortlet'"                                                    */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_Constants8');
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants9                          */
-      /* Details: "The Constants object PAGE property is type string and equal to   */
-      /* 'cacheLevelPage'"                                                          */
-      setSuccess('V3PortletHubTests_SPEC_23_JS_Constants9');
+      });
    }
 
    window.addEventListener('load', execute);

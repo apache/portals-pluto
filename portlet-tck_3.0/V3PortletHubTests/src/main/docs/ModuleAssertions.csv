@@ -18,7 +18,7 @@ PARMS outputPath=c:\temp\gen
 Class / Section;Keywords;Name;Testable;Description
 PortletHubTests;;;;
 SPEC_23;JS;register1;TRUE;The portlet hub provides a global namespace var portlet of type object
-SPEC_23;JS;register2;TRUE;The global namespace var portlet property register is type function
+SPEC_23;JS;register2;TRUE;The global portlet object register property is type function
 SPEC_23;JS;register3;TRUE;The portlet hub register function throws an IllegalArgumentException if no portlet ID argument is provided
 SPEC_23;JS;register4;TRUE;The portlet hub register function throws an IllegalArgumentException if too many (>1) arguments are provided
 SPEC_23;JS;register5;TRUE;The portlet hub register function throws an IllegalArgumentException if the portlet ID is not a string
