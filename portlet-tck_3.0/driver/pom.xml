@@ -322,51 +322,57 @@
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
-	  <dependency>
+	   <dependency>
          <groupId>${project.groupId}</groupId>
          <artifactId>tck-V3URLTests</artifactId>
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
-	  <dependency>
+	   <dependency>
          <groupId>${project.groupId}</groupId>
          <artifactId>tck-V3RenderStateTests</artifactId>
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
-   <dependency>
+      <dependency>
          <groupId>${project.groupId}</groupId>
          <artifactId>tck-V3HeaderPortletTests</artifactId>
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
-   <dependency>
+      <dependency>
          <groupId>${project.groupId}</groupId>
          <artifactId>tck-V3PortletParametersTests</artifactId>
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
-   <dependency>
+      <dependency>
          <groupId>${project.groupId}</groupId>
          <artifactId>tck-V3AnnotationPortletArtifactValidityTests</artifactId>
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
-   <dependency>
+      <dependency>
          <groupId>${project.groupId}</groupId>
          <artifactId>tck-V3AnnotationPortletApplicationConfigTests</artifactId>
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
-   <dependency>
+      <dependency>
          <groupId>${project.groupId}</groupId>
          <artifactId>tck-V3AnnotationPortletAppConfigOverrideTests</artifactId>
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
-   <dependency>
+      <dependency>
          <groupId>${project.groupId}</groupId>
          <artifactId>tck-V3AnnotationPortletConfigTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V3PortletHubTests</artifactId>
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
@@ -448,14 +454,15 @@
                         
                         tck-V3PortletContextTests,
                         tck-V3PortletConfigTests,
-						tck-V3URLTests,
-						tck-V3RenderStateTests
+						      tck-V3URLTests,
+						      tck-V3RenderStateTests
                         ,tck-V3HeaderPortletTests
                         ,tck-V3PortletParametersTests
                         ,tck-V3AnnotationPortletArtifactValidityTests
                         ,tck-V3AnnotationPortletApplicationConfigTests
                         ,tck-V3AnnotationPortletAppConfigOverrideTests
                         ,tck-V3AnnotationPortletConfigTests
+                        ,tck-V3PortletHubTests
                      </includeArtifactIds>
                      <includes>${test.file.dir}/*.xml</includes>
                      <outputDirectory>${project.build.directory}</outputDirectory>

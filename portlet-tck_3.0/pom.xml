@@ -168,14 +168,15 @@
       <module>V2SigTestsWrapper</module>
       <module>V3PortletContextTests</module>
       <module>V3PortletConfigTests</module>
-	  <module>V3URLTests</module>
-	  <module>V3RenderStateTests</module>
+	   <module>V3URLTests</module>
+	   <module>V3RenderStateTests</module>
       <module>V3HeaderPortletTests</module>
       <module>V3PortletParametersTests</module>
       <module>V3AnnotationPortletArtifactValidityTests</module>
       <module>V3AnnotationPortletApplicationConfigTests</module>
       <module>V3AnnotationPortletAppConfigOverrideTests</module>
       <module>V3AnnotationPortletConfigTests</module>
+      <module>V3PortletHubTests</module>
       <module>deploy</module>
       <module>driver</module>
    </modules>

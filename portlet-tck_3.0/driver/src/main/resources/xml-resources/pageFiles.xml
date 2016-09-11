@@ -63,10 +63,11 @@
    <fl:file>tck-V3PortletConfigTests-pages.xml</fl:file>
    <fl:file>tck-V3URLTests-pages.xml</fl:file>
    <fl:file>tck-V3RenderStateTests-pages.xml</fl:file>
-<fl:file>tck-V3HeaderPortletTests-pages.xml</fl:file>
-<fl:file>tck-V3PortletParametersTests-pages.xml</fl:file>
-<fl:file>tck-V3AnnotationPortletArtifactValidityTests-pages.xml</fl:file>
-<fl:file>tck-V3AnnotationPortletApplicationConfigTests-pages.xml</fl:file>
-<fl:file>tck-V3AnnotationPortletAppConfigOverrideTests-pages.xml</fl:file>
-<fl:file>tck-V3AnnotationPortletConfigTests-pages.xml</fl:file>
+   <fl:file>tck-V3HeaderPortletTests-pages.xml</fl:file>
+   <fl:file>tck-V3PortletParametersTests-pages.xml</fl:file>
+   <fl:file>tck-V3AnnotationPortletArtifactValidityTests-pages.xml</fl:file>
+   <fl:file>tck-V3AnnotationPortletApplicationConfigTests-pages.xml</fl:file>
+   <fl:file>tck-V3AnnotationPortletAppConfigOverrideTests-pages.xml</fl:file>
+   <fl:file>tck-V3AnnotationPortletConfigTests-pages.xml</fl:file>
+   <fl:file>tck-V3PortletHubTests-pages.xml</fl:file>
 </fl:filelist>
