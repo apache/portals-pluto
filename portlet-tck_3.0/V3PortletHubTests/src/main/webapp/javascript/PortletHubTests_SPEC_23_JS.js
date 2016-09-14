@@ -23,13 +23,14 @@
 
    function setSuccess (tc, fail) {
       var el;
-      el = document.getElementById(tc + '-result');
+      el = document.getElementById(tc + '-async');
       if (el !== null) {
          if (fail) {
             el.innerHTML = fail;
          } else {
             el.innerHTML = 'Test Succeeded';
          }
+         el.id = tc + '-result';
       }
    }
 

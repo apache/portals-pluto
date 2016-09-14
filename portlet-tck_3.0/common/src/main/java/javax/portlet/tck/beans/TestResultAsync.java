@@ -42,12 +42,19 @@ import java.io.Writer;
 import javax.portlet.tck.constants.Constants;
 
 /**
- * Encapsulates test results containint the test case name, the test case detail description, and the test case result (
- * <code>true</code> = success, <code>false</code> = failure).
+ * Encapsulates test results containing the test case name, the test case detail description, 
+ * and the test case result (<code>true</code> = success, <code>false</code> = failure).
+ * 
+ * This test result is for use when testing the portlet hub. The portlet Java code writes
+ * this result onto the page. The JavaScript portion of the test portlet updates the results
+ * for success.
+ * 
+ * Instead of directly producing test results, this class inserts an 'async' div that
+ * is filled by JavaScript test case code running on the test page.
  * 
  * @author nick
  */
-public class TestResult {
+public class TestResultAsync {
 
    private String  tcName;
    private String  tcDetail;
@@ -56,7 +63,7 @@ public class TestResult {
    /**
     * Creates an empty test result.
     */
-   public TestResult() {
+   public TestResultAsync() {
       this.tcName = "";
       this.tcDetail = "";
       this.tcSuccess = false;
@@ -72,7 +79,7 @@ public class TestResult {
     * @param tcDetail
     *           test case detail description
     */
-   public TestResult(String tcName, boolean tcSuccess, String tcDetail) {
+   public TestResultAsync(String tcName, boolean tcSuccess, String tcDetail) {
       this.tcName = tcName;
       this.tcDetail = tcDetail;
       this.tcSuccess = tcSuccess;
@@ -142,9 +149,9 @@ public class TestResult {
     */
    @Override
    public String toString() {
-      final String resId = tcName + Constants.RESULT_ID;
+      final String asyId = tcName + Constants.ASYNC_ID;
       final String detId = tcName + Constants.DETAIL_ID;
-      final String resStr = tcSuccess ? Constants.SUCCESS : Constants.FAILURE;
+      final String resStr = tcSuccess ? Constants.SUCCESS : Constants.WAITING;
 
       StringBuilder sb = new StringBuilder();
       sb.append("<div class='portletTCKTestcase' name='");
@@ -155,7 +162,7 @@ public class TestResult {
       sb.append(" results:");
       sb.append("</h4>\n");
       sb.append("<p class='portletTCKResult' id='");
-      sb.append(resId);
+      sb.append(asyId);
       sb.append("'>Test ");
       sb.append(resStr);
       sb.append("</p>\n");

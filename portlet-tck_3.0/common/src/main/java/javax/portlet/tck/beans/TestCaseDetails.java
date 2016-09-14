@@ -137,4 +137,32 @@ public class TestCaseDetails implements Map<String, String> {
       return new TestResult(tcName, true, detailsMap.get(tcName));
    }
 
+   /**
+    * Gets a test result initialized with the test case name, the test case detail string, and the results set to
+    * <code>false</code> (test failed).
+    * 
+    * For Portlet Hub testing.
+    * 
+    * @param tcName
+    *           test case name
+    * @return
+    */
+   public TestResultAsync getTestResultAsyncFailed(String tcName) {
+      return new TestResultAsync(tcName, false, detailsMap.get(tcName));
+   }
+
+   /**
+    * Gets a test result initialied with the test case name, the test case detail string, and the results set to
+    * <code>true</code> (test succeeded).
+    * 
+    * For Portlet Hub testing.
+    * 
+    * @param tcName
+    *           test case name
+    * @return
+    */
+   public TestResultAsync getTestResultAsyncSucceeded(String tcName) {
+      return new TestResultAsync(tcName, true, detailsMap.get(tcName));
+   }
+
 }

@@ -42,23 +42,18 @@
          <artifactId>selenium-java</artifactId>
          <scope>compile</scope>
       </dependency>
+      
       <dependency>
          <groupId>org.seleniumhq.selenium</groupId>
          <artifactId>htmlunit-driver</artifactId>
          <scope>compile</scope>
       </dependency>
       
-      <!-- PhantomJs Headless browser - Use if the default headless browser of Selenium is not working.
-           In order to use - 
-              1. Download PhantomJs - http://phantomjs.org/download.html
-              2. Configure driver to use PhantomJs in TCKSimpleTestDriver->setUpBeforeClass() method --> 
-      <!-- 
       <dependency>
-            <groupId>com.github.detro.ghostdriver</groupId>
-            <artifactId>phantomjsdriver</artifactId>
-            <version>1.0.4</version>
+         <groupId>com.codeborne</groupId>
+         <artifactId>phantomjsdriver</artifactId>
+         <scope>compile</scope>
       </dependency>
-	  -->
        
       <!-- Dependency on common module for element ID suffixes -->
       <dependency>
@@ -398,6 +393,24 @@
 
       <plugins>
 
+         <!-- get the phantomjs executable -->
+         <plugin>
+            <groupId>com.github.klieber</groupId>
+            <artifactId>phantomjs-maven-plugin</artifactId>
+            <version>0.7</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>install</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <version>1.9.7</version>
+              <checkSystemPath>false</checkSystemPath>
+            </configuration>
+         </plugin>
+            
          <!-- For extracting the XML transformation stylesheets from common module -->
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
