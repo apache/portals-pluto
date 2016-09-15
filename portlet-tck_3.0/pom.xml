@@ -110,8 +110,10 @@
       <!-- test.browser.webDriver>C:\ntutil\IEDriverServer_x64_2.42.0\IEDriverServer.exe</test.browser.webDriver -->
       
       <!-- Configuration for phantomJS driver -->
+      <!-- To use phantomJS, remove the comment marks around the following two lines.
       <test.browser>phantomjs</test.browser>
       <test.browser.webDriver>${phantomjs.binary}</test.browser.webDriver>
+       -->
 
       <!-- Specify timeout in seconds for the driver to wait for page load. must be an integer. -->
       <test.timeout>3</test.timeout>
