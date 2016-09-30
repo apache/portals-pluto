@@ -102,11 +102,20 @@ public class AnnotatedMethod {
     * @param bm   The BeanManager, may be null if non-bean class
     */
    public void activate(BeanManager bm) {
+      
       beanMgr = bm;
       if (bm != null) {
          Set<Bean<?>> beans = bm.getBeans(beanClass);
          bean = bm.resolve(beans);
          assert bean != null;
+      }
+      
+      if (isTrace) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("ID: ").append(toString());
+         txt.append(", beanMgr == null?: ").append(beanMgr == null);
+         txt.append(", bean == null?: ").append(bean == null);
+         LOG.trace(txt.toString());
       }
    }
    
@@ -145,6 +154,15 @@ public class AnnotatedMethod {
       if (!isPortletClass) {
          // get the reference for beans other than portlet classes in order to respect the 
          // scope of the bean.
+         
+         if (isTrace) {
+            StringBuilder txt = new StringBuilder();
+            txt.append("ID: ").append(toString());
+            txt.append(", beanMgr == null?").append(beanMgr == null);
+            txt.append(", bean == null?").append(bean == null);
+            LOG.trace(txt.toString());
+         }
+         
          beanInstance = beanMgr.getReference(bean, bean.getBeanClass(), beanMgr.createCreationalContext(bean));
       }
 

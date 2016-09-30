@@ -525,7 +525,6 @@ public abstract class ConfigurationProcessor {
 
       // Now add the declared portlet class methods to the store
 
-      List<PortletDefinition> badPortlets = new ArrayList<PortletDefinition>();
       for (PortletDefinition pd : pad.getPortlets()) {
          Class<?> cls = null;
 
@@ -622,8 +621,41 @@ public abstract class ConfigurationProcessor {
 
          }
 
-         // and finally make sure that the portlet has at least one render, header, or serveResource
-         // method. If not, delete it.
+      }
+      
+      // At this point we have all portlet methods in the store.
+            
+      // See if there is a portlet with a wild-card character. If so, then
+      // replicate the method identifiers to cover all other portlet names
+      
+      Set<MethodIdentifier> mis = ams.getMethodIDsForPortlet("*");
+      
+      if (isDebug) {
+         StringBuilder txt = new StringBuilder();
+         txt.append("Wild card portlets: ");
+         String sep = "";
+         for (MethodIdentifier mi : mis) {
+            txt.append(sep).append(mi.toString());
+            sep = ";";
+         }
+         LOG.debug(txt.toString());
+      }
+
+      for (MethodIdentifier mi : mis) {
+         List<AnnotatedMethod> meths = ams.getMethods(mi);
+         for (PortletDefinition pd : pad.getPortlets()) {
+            MethodIdentifier newMi = new MethodIdentifier(pd.getPortletName(), mi.getId(), mi.getType());
+            for (AnnotatedMethod meth : meths) {
+               ams.addMethod(newMi, meth);
+            }
+         }
+      }
+
+      // and finally make sure that each portlet has at least one render, header, or serveResource
+      // method. If not, delete it.
+
+      List<PortletDefinition> badPortlets = new ArrayList<PortletDefinition>();
+      for (PortletDefinition pd : pad.getPortlets()) {
 
          boolean methodsOK = false;
          for (MethodIdentifier mi : ams.getMethodIDsForPortlet(pd.getPortletName())) {
@@ -642,6 +674,7 @@ public abstract class ConfigurationProcessor {
             txt.append("Portlet name: ").append(pd.getPortletName());
             LOG.warn(txt.toString());
          }
+         
       }
 
       // if there are bad portlets, delete them from the config
@@ -656,6 +689,12 @@ public abstract class ConfigurationProcessor {
          finalNames.remove("*"); // don't display wildcard
          txt.append("Resulting portlet list: ").append(finalNames.toString());
          LOG.debug(txt.toString());
+      }
+      
+      if (isTrace) {
+         StringBuilder txt = new StringBuilder();
+         txt.append(ams.getMethodsAsString());
+         LOG.trace(txt.toString());
       }
 
    }

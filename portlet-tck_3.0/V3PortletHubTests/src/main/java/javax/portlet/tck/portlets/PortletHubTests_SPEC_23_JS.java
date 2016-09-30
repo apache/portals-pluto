@@ -18,52 +18,23 @@
 
 package javax.portlet.tck.portlets;
 
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS1;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS2;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS3;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS4;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS5;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS6;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS7;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS8;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS9;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT1;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT2;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT3;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT4;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT5;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT6;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT7;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT8;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT9;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINITA;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINITB;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINITC;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINITD;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER1;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER2;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER3;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER4;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER5;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER6;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER7;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER8;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER9;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JS_REGISTERA;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.Portlet;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.annotations.PortletConfiguration;
-import javax.portlet.tck.beans.TestResultAsync;
+import java.io.*;
+import java.util.*;
+import java.util.logging.*;
+import static java.util.logging.Logger.*;
+import javax.xml.namespace.QName;
+import javax.portlet.*;
+import javax.portlet.annotations.*;
+import javax.portlet.filter.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.portlet.tck.beans.*;
+import javax.portlet.tck.constants.*;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
+import static javax.portlet.tck.constants.Constants.*;
+import static javax.portlet.PortletSession.*;
+import static javax.portlet.ResourceURL.*;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -161,30 +132,22 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register9                           */
-      /* Details: "The portlet hub register function does not throw an exception if */
-      /* the portlet ID is valid"                                                   */
+      /* Details: "The portlet hub register function returns a PortletInit object   */
+      /* when provided with a valid portlet ID"                                     */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER9);
          result.writeTo(writer);
       }
 
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_registerA                           */
-      /* Details: "The portlet hub register function returns an object when         */
-      /* provided with a valid portlet ID"                                          */
-      {
-         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTERA);
-         result.writeTo(writer);
-      }
-
       /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit1                        */
-      /* Details: "The PortletInit object portletModes property is an array"     */
+      /* Details: "The PortletInit object portletModes property is an array"        */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT1);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit2                        */
-      /* Details: "The PortletInit object windowStates property is an array"     */
+      /* Details: "The PortletInit object windowStates property is an array"        */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT2);
          result.writeTo(writer);
@@ -344,22 +307,17 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
          result.writeTo(writer);
       }
 
+      writer.write("<script>");
+      writer.write("   var tck = tck || {};");
+      writer.write("   tck.PortletHubTests_SPEC_23_JS = {};");
+      writer.write("   tck.PortletHubTests_SPEC_23_JS.pid = '" + portletResp.getNamespace() + "';");
+      writer.write("</script>");
+
       StringBuilder txt = new StringBuilder(128);
-      txt.append("\n<script type='text/javascript' src='");
-      txt.append(portletConfig.getPortletContext().getContextPath());
-      txt.append("/javascript/promise.js'></script>\n");
-      writer.write(txt.toString());
-
-      writer.write("<script>\n");
-      writer.write("   var tck = tck || {};\n");
-      writer.write("   tck.PortletHubTests_SPEC_23_JS = {};\n");
-      writer.write("   tck.PortletHubTests_SPEC_23_JS.pid = '" + portletResp.getNamespace() + "';\n");
-      writer.write("</script>\n");
-
-      txt.setLength(0);
       txt.append("<script type='text/javascript' src='");
       txt.append(portletConfig.getPortletContext().getContextPath());
       txt.append("/javascript/PortletHubTests_SPEC_23_JS.js'></script>\n");
+
       writer.write(txt.toString());
 
 

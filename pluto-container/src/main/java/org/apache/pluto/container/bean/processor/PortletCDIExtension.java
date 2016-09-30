@@ -187,7 +187,6 @@ public class PortletCDIExtension implements Extension {
    void afterDeploymentValidation(@Observes AfterDeploymentValidation adv, BeanManager bm)
          throws InvalidAnnotationException {
       par.activateCustomScopes(bm);
-      par.activateAnnotatedMethods(bm);
       
       // Done processing the annotations, so put the resulting configuration in an
       // application scoped bean to pass it to the servlet

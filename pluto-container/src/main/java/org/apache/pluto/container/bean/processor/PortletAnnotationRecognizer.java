@@ -391,54 +391,6 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
       sessionScopedConfig.activate(bm);
    }
 
-   
-   /**
-    * To be called by the CDI extension afterDeploymentValidation method to
-    * verify that the stored methods are consistent.
-    */
-   @Override
-   public void activateAnnotatedMethods(BeanManager bm) {
-      
-      // Verify the portlet names in the proxied method store. It is an error if:
-      // 1) There is no method for a given name, but configuration data exists
-      
-      Set<String> names = ams.getPortletNames();
-      names.remove("*");
-      for (String name : names) {
-         StringBuilder txt = new StringBuilder(128);
-         Set<MethodIdentifier> meths = ams.getMethodIDsForPortlet(name);
-         if (meths.isEmpty()) {
-            txt.append("No methods exist for portlet.");
-            txt.append(" Portlet name: ").append(name);
-         }
-         if (txt.length() > 0) {
-            LOG.debug(txt.toString());
-            summary.addErrorString(name, txt.toString());
-         }
-      }
-      
-      // See if there is a portlet with a wild-card character. If so, then:
-      // 1) Create set of names of portlets without errors
-      // 2) replicate the method identifiers to cover all other portlet names
-      
-      Set<MethodIdentifier> mis = ams.getMethodIDsForPortlet("*");
-      if (!mis.isEmpty()) {
-         names = ams.getPortletNames();
-         names.removeAll(summary.getPortletsWithErrors());
-         names.remove("*");
-         for (MethodIdentifier mi : mis) {
-            List<AnnotatedMethod> meths = ams.getMethods(mi);
-            for (String name : names) {
-               MethodIdentifier newMi = new MethodIdentifier(name, mi.getId(), mi.getType());
-               for (AnnotatedMethod meth : meths) {
-                  ams.addMethod(newMi, meth);
-               }
-            }
-         }
-      }
-      
-   }
-
    /**
     * @return the stateScopedConfig
     */
