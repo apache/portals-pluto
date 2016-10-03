@@ -146,7 +146,7 @@ var portlet = portlet || {};
     * Returns true if input state differs from the current page state.
     * Throws exception if input state is malformed.
     */
-   stateChanged = function (nstate, pid) {
+   stateChanged = function (nstate, nrenderData, pid) {
       var ostate, pname, nparm, oparm, result = false;
       
       ostate = pageState.portlets[pid].state;
@@ -154,8 +154,11 @@ var portlet = portlet || {};
       if (!nstate.portletMode || !nstate.windowState || !nstate.parameters) {
          throw new Error ("Error decoding state: " + nstate);
       }
-      
-      if (nstate.portletMode !== ostate.portletMode) {
+
+      if (nrenderData && nrenderData.content) {
+         result = true;
+      }
+      else if (nstate.portletMode !== ostate.portletMode) {
          result = true;
       } else {
          if (nstate.windowState !== ostate.windowState) {
@@ -264,9 +267,10 @@ var portlet = portlet || {};
     * @returns    {RenderState}          Clone of the input render state
     * @private
     */
-   cloneState = function (aState) {
+   cloneState = function (aState, aRenderData) {
       var newParams = {},
       newState = {
+            renderData : aRenderData,
             portletMode : aState.portletMode,
             windowState : aState.windowState,
             parameters : newParams
@@ -300,7 +304,7 @@ var portlet = portlet || {};
     * gets render data for the portlet
     */
    getRenderData = function (pid) {
-      return pageState.portlets[pid].renderData;
+      return pageState.portlets[pid].state.renderData;
    },
          
    /**
@@ -657,7 +661,7 @@ var portlet = portlet || {};
    // returns an object containing the state for portlets whose 
    // state has changed as compared to the current page state.
    decodeUpdateString = function (ustr) {
-      var states = {}, ostate, nstate, pid, ps, npids = 0, cpids = 0;
+      var states = {}, ostate, nstate, nrenderData, pid, ps, npids = 0, cpids = 0;
       
       console.log("Decoding string: >>" + ustr + "<<");
 
@@ -666,14 +670,15 @@ var portlet = portlet || {};
          if (ps.portlets.hasOwnProperty(pid)) {
             npids++;
             nstate = ps.portlets[pid].state;
+            nrenderData = ps.portlets[pid].renderData;
             ostate = pageState.portlets[pid].state;
             
             if (!nstate || !ostate) {
                throw new Error ("Invalid update string. ostate=" + ostate + ", nstate=" + nstate);
             }
             
-            if (stateChanged(nstate, pid)) {
-               states[pid] = cloneState(nstate);
+            if (stateChanged(nstate, nrenderData, pid)) {
+               states[pid] = cloneState(nstate, nrenderData);
                cpids++;
             }
          }

@@ -31,8 +31,7 @@ public interface PortletRequestContextService {
          HttpServletResponse containerResponse, PortletWindow window);
 
    PortletResourceRequestContext getPortletResourceRequestContext(PortletContainer container,
-         HttpServletRequest containerRequest, HttpServletResponse containerResponse, PortletWindow window,
-         String pageState);
+         HttpServletRequest containerRequest, HttpServletResponse containerResponse, PortletWindow window);
 
    PortletRequestContext getPortletHeaderRequestContext(PortletContainer container,
          HttpServletRequest containerRequest, HttpServletResponse containerResponse, PortletWindow window);

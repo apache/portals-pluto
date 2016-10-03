@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -36,10 +37,12 @@ import javax.portlet.WindowState;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
@@ -57,12 +60,13 @@ public class PageState {
    private static final String LOG_CLASS = PageState.class.getName();
    private final Logger        LOGGER    = Logger.getLogger(LOG_CLASS);
 
-   private DriverConfiguration   drvrConfig;
-   private PageConfig            pageConfig;
-   private PortalRequestContext  portalRC;
-   private PortalURL             portalUrl;
-   private ServletContext        servletContext;
-   
+   private DriverConfiguration     drvrConfig;
+   private PageConfig              pageConfig;
+   private PortalRequestContext    portalRC;
+   private PortalURL               portalUrl;
+   private ServletContext          servletContext;
+   private Map<String, RenderData> renderDataMap;
+
    /**
     * Constructor. Access the classes containing the necessary data.
     *  
@@ -75,6 +79,11 @@ public class PageState {
             .getAttribute(AttributeKeys.DRIVER_CONFIG);
       servletContext = portalRC.getServletContext();
       pageConfig = portalUrl.getPageConfig(servletContext);
+   }
+
+   public PageState(HttpServletRequest request, Map<String, RenderData> renderDataMap) {
+      this(request);
+      this.renderDataMap = renderDataMap;
    }
    
    /**
@@ -338,8 +347,24 @@ public class PageState {
          json.append("      \"allowedPM\" : [" + getPortletModesAsString(pid) + "],\n");
          json.append("      \"allowedWS\" : [" + getWindowStatesAsString(pid) + "],\n");
          json.append("      \"renderData\" : {\n");
-         json.append("         \"renderData\" : null,\n");
-         json.append("         \"mimeType\" : \"text/plain\"\n");
+
+         RenderData renderData = null;
+         if (renderDataMap != null) {
+            renderData = renderDataMap.get(pid);
+         }
+         if (renderData == null) {
+            json.append("         \"renderData\" : null,\n");
+            json.append("         \"mimeType\" : \"text/plain\"\n");
+         }
+         else {
+            json.append("         \"content\" : \"");
+            String content = StringEscapeUtils.escapeJson(renderData.getContent());
+            json.append(content);
+            json.append("\",\n");
+            json.append("         \"mimeType\" : \"");
+            json.append(renderData.getContentType());
+            json.append("\"\n");
+         }
          json.append("      },\n");
          json.append("      \"urlpid\" : \"" + pid + "\"\n");
          json.append("   }");

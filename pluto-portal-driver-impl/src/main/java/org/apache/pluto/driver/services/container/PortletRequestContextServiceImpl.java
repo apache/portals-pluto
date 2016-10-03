@@ -99,10 +99,9 @@ public class PortletRequestContextServiceImpl implements PortletRequestContextSe
     public PortletResourceRequestContext getPortletResourceRequestContext(PortletContainer container,
                                                                           HttpServletRequest containerRequest,
                                                                           HttpServletResponse containerResponse,
-                                                                          PortletWindow window,
-                                                                          String pageState)
+                                                                          PortletWindow window)
     {
-        return new PortletResourceRequestContextImpl(container, containerRequest, containerResponse, window, pageState);
+        return new PortletResourceRequestContextImpl(container, containerRequest, containerResponse, window);
     }
 
     public PortletResourceResponseContext getPortletResourceResponseContext(PortletContainer container,

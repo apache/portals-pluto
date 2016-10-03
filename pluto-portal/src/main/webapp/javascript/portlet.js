@@ -804,7 +804,7 @@ var portlet = portlet || {};
 
       if (updateQueue.length >= 1) {
          delay(function() {
-            var qdata, state, data, callback, pi;
+            var qdata, state, renderData, callback, pi;
 
             // The busy flag is usually set by the caller.
             // but ... need more thought here. When the onStateChange
@@ -826,13 +826,13 @@ var portlet = portlet || {};
                pi = _registeredPortlets[qdata.id];
 
                state = new State(pi.getState());
-               data = pi.getRenderData();
+               renderData = pi.getRenderData();
                callback = qdata.callback;
 
-               if ((data !== undefined) && (data !== null)
-                     && (data.renderData !== undefined)
-                     && (data.renderData !== null)) {
-                  callback("portlet.onStateChange", state, data);
+               if ((renderData !== undefined) && (renderData !== null)
+                     && (renderData.content !== undefined)
+                     && (renderData.content !== null)) {
+                  callback("portlet.onStateChange", state, renderData);
                } else {
                   callback("portlet.onStateChange", state);
                }

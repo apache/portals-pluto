@@ -274,6 +274,7 @@ generate mailto links. -->
 <!--     <springframework.version>4.2.3.RELEASE</springframework.version> -->
     <maven.version>2.0.5</maven.version>
     <ant.version>1.6.5</ant.version>
+    <commons-lang.version>3.4</commons-lang.version>
     <commons-io.version>2.4</commons-io.version>
     <ccpp-api.version>1.0</ccpp-api.version>
     <junit.version>4.12</junit.version>
@@ -503,6 +504,11 @@ TODO: Check if we need all of them. -->
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
         <version>${commons-io.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${commons-lang.version}</version>
       </dependency>
       <dependency>
         <groupId>commons-digester</groupId>

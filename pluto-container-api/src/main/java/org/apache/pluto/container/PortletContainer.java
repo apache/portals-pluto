@@ -104,7 +104,6 @@ public interface PortletContainer {
      * @param portletWindow the portlet Window
      * @param request               the servlet request
      * @param response              the servlet response
-     * @param pageState             the page state (used for Partial Action processing)
      * @throws PortletException          if one portlet has trouble fulfilling
      *                                   the request
      * @throws PortletContainerException if the portlet container implementation
@@ -112,7 +111,7 @@ public interface PortletContainer {
      */
     void doServeResource(PortletWindow portletWindow,
             HttpServletRequest request,
-            HttpServletResponse response, String pageState)
+            HttpServletResponse response)
     throws PortletException, IOException, PortletContainerException;
 
     /**

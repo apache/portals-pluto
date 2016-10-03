@@ -110,12 +110,7 @@ public class PartialActionPortlet extends GenericPortlet {
       String num = req.getParameter(PARAM_NUM_ACTIONS);
       num = (num == null) ? "error" : num;
       
-      String pageState = (String) req.getAttribute(PAGE_STATE);
-      
       writer.write("<p>Partial Action has been executed " + num + " times.</p>\n");
-      writer.write(";#delimiter#;");
-      writer.write(pageState);
-      
    }
 
 }

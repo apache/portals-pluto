@@ -58,18 +58,16 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
    private static final boolean isDebug = LOG.isDebugEnabled();
    private static final boolean isTrace = LOG.isTraceEnabled();
 
-   private String                   pageState;
    private ResourceResponse         response;
    private PortletAsyncContextImpl  actx;
    private BeanManager              beanmgr;
 
    public PortletResourceRequestContextImpl(PortletContainer container, HttpServletRequest containerRequest,
-         HttpServletResponse containerResponse, PortletWindow window, String pageState) {
+         HttpServletResponse containerResponse, PortletWindow window) {
       // if pageState != null, we're dealing with a Partial Action request, so
       // the servlet parameters are not to be used. Otherwise, resource params could be
       // passed as servlet parameters.
-      super(container, containerRequest, containerResponse, window, (pageState == null), PortletRequest.RESOURCE_PHASE);
-      this.pageState = pageState;
+      super(container, containerRequest, containerResponse, window, true, PortletRequest.RESOURCE_PHASE);
    }
    
    @Override
@@ -90,16 +88,6 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
    @Override
    public String getResourceID() {
       return getPortalURL().getResourceID();
-   }
-
-   /*
-    * (non-Javadoc)
-    * 
-    * @see org.apache.pluto.container.PortletResourceRequestContext#getPageState()
-    */
-   @Override
-   public String getPageState() {
-      return pageState;
    }
 
    @Override

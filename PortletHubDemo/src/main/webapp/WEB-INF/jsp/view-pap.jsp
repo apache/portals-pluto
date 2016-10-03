@@ -47,7 +47,7 @@ limitations under the License.
        hub,
    
    // Handler for onStateChange event
-   update = function (type, s) {
+   update = function (type, s, renderData) {
       var nc = s.getValue('color', '#E0E0E0');
       console.log("PAP: state updated. Event type = " + type);
       
@@ -56,6 +56,9 @@ limitations under the License.
          document.getElementById(resdiv).style.background = nc;
       }
       state = s;
+      if ((renderData !== undefined) && (renderData !== null)) {
+         document.getElementById(resdiv).innerHTML = renderData.content;
+      }
    };
    
    // Handler for "partial action" button. Perform partial action sequence.
@@ -76,20 +79,11 @@ limitations under the License.
          
          xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
-               if (xhr.status === 200) {
-                  vals = xhr.responseText.split(";#delimiter#;");
-                  if (vals.length !== 2) {
-                     markup = "<p>Error parsing return data. # fields = " + vals.length + ".</p>";
-                  } else {
-                     markup = vals[0];
-                     pagestate = vals[1];
-                  }
-               } else {
-                  markup = "<p>Communication error. XHR status=" + xhr.statusText + "</p>";
-               } 
+               if (xhr.status !== 200) {
+                  console.log("XHR error: " + xhr.status);
+               }
                // Make sure setPageState is called even in error case in order to unblock the P.H.
-               pai.setPageState(pagestate);
-               document.getElementById(resdiv).innerHTML = markup;
+               pai.setPageState(xhr.responseText);
             }
          };
          xhr.open("POST",pai.url,true);

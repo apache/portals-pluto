@@ -453,11 +453,7 @@ public class PortletServlet3 extends HttpServlet {
             // if pageState != null, we're dealing with a Partial Action request, so
             // store the page state string as a request attribute
             PortletResourceRequestContext rc = (PortletResourceRequestContext) requestContext;
-            String ps = rc.getPageState();
-            if (ps != null) {
-               resourceRequest.setAttribute(ResourceRequest.PAGE_STATE, ps);
-            }
-            
+
             rc.setBeanManager(beanmgr);
 
             ResourceResponse resourceResponse = (ResourceResponse) portletResponse;
