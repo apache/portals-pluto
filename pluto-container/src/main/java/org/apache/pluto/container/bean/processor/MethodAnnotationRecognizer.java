@@ -123,7 +123,6 @@ public class MethodAnnotationRecognizer extends PortletAnnotationRecognizer impl
       files = getLibFilesForPath(ctx, LIBDIR);
       scanFiles(files);
       
-      activateAnnotatedMethods(null);
    }
    
    /**

@@ -269,10 +269,4 @@ public abstract class AnnotationRecognizer {
     * @param bm      BeanManager needed to activate the beans.
     */
    protected abstract void activateCustomScopes(BeanManager bm);
-
-   /**
-    * To be after the beans have been recognized and CDI is initialized to
-    * verify that the stored methods are consistent.
-    */
-   protected abstract void activateAnnotatedMethods(BeanManager bm);
 }

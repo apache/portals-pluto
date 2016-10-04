@@ -25,10 +25,9 @@ SPEC_23;JS;register5;TRUE;The portlet hub register function throws an IllegalArg
 SPEC_23;JS;register6;TRUE;The portlet hub register function throws an IllegalArgumentException if the portlet ID is undefined
 SPEC_23;JS;register7;TRUE;The portlet hub register function throws an IllegalArgumentException if the portlet ID is null
 SPEC_23;JS;register8;TRUE;The portlet hub register function The promise fails if the portlet ID is not defined for the portlet hub
-SPEC_23;JS;register9;TRUE;The portlet hub register function does not throw an exception if the portlet ID is valid
-SPEC_23;JS;registerA;TRUE;The portlet hub register function returns an object when provided with a valid portlet ID
-SPEC_23;JS;PortletInit1;TRUE;The PortletInit object portletModes property is type string
-SPEC_23;JS;PortletInit2;TRUE;The PortletInit object windowStates property is type string
+SPEC_23;JS;register9;TRUE;The portlet hub register function returns a PortletInit object when provided with a valid portlet ID
+SPEC_23;JS;PortletInit1;TRUE;The PortletInit object portletModes property is an array
+SPEC_23;JS;PortletInit2;TRUE;The PortletInit object windowStates property is an array
 SPEC_23;JS;PortletInit3;TRUE;The PortletInit object action property is type function
 SPEC_23;JS;PortletInit4;TRUE;The PortletInit object addEventListener property is type function
 SPEC_23;JS;PortletInit5;TRUE;The PortletInit object createResourceUrl property is type function

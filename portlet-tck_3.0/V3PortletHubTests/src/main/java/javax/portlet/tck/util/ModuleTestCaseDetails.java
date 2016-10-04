@@ -43,7 +43,6 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
    public final static String V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER7 = "V3PortletHubTests_SPEC_23_JS_register7";
    public final static String V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER8 = "V3PortletHubTests_SPEC_23_JS_register8";
    public final static String V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER9 = "V3PortletHubTests_SPEC_23_JS_register9";
-   public final static String V3PORTLETHUBTESTS_SPEC_23_JS_REGISTERA = "V3PortletHubTests_SPEC_23_JS_registerA";
    public final static String V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT1 = "V3PortletHubTests_SPEC_23_JS_PortletInit1";
    public final static String V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT2 = "V3PortletHubTests_SPEC_23_JS_PortletInit2";
    public final static String V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT3 = "V3PortletHubTests_SPEC_23_JS_PortletInit3";
@@ -79,8 +78,7 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER6, "The portlet hub register function throws an IllegalArgumentException if the portlet ID is undefined");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER7, "The portlet hub register function throws an IllegalArgumentException if the portlet ID is null");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER8, "The portlet hub register function The promise fails if the portlet ID is not defined for the portlet hub");
-      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER9, "The portlet hub register function does not throw an exception if the portlet ID is valid");
-      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTERA, "The portlet hub register function returns an object when provided with a valid portlet ID");
+      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER9, "The portlet hub register function returns a PortletInit object when provided with a valid portlet ID");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT1, "The PortletInit object portletModes property is an array");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT2, "The PortletInit object windowStates property is an array");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT3, "The PortletInit object action property is type function");

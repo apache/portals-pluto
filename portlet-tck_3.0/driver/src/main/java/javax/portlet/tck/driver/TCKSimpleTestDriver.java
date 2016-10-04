@@ -44,7 +44,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -201,19 +204,12 @@ public class TCKSimpleTestDriver {
       } else if (browser.equalsIgnoreCase("chrome")) {
          System.setProperty("webdriver.chrome.driver", wd);
          driver = new ChromeDriver();
+      } else if (browser.equalsIgnoreCase("phantomjs")) {
+         DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
+         capabilities.setJavascriptEnabled(true);
+         capabilities.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, wd);
+         driver = new PhantomJSDriver(capabilities);
       } else if (browser.equalsIgnoreCase("htmlUnit")) {
-        /*
-         * PhantomJs Headless browser - Use if the default headless browser of Selenium is not working.
-         * In order to use - 
-         *   1. Download PhantomJs - http://phantomjs.org/download.html
-         *   2. Uncomment the dependency in pom.xml
-         *   3. Insert this code - 
-         *        DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
-                  capabilities.setJavascriptEnabled(true);
-                  capabilities.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,"your custom path to downloaded bin\\phantomjs.exe");
-                  driver = new PhantomJSDriver(capabilities);
-         *   4. Comment-out driver = new HtmlUnitDriver(true);
-         */
         driver = new HtmlUnitDriver(true);
       } else if (browser.equalsIgnoreCase("safari")) {
          driver = new SafariDriver();
@@ -271,6 +267,9 @@ public class TCKSimpleTestDriver {
          wels = processClickable(wels);
          if (debug) System.out.println("   After processing clickable, results found: " + !wels.isEmpty());
 
+         // wait for any async JavaScript tests to complete
+         processAsync(wels);
+         
          checkResults(wels);
 
       } catch(Exception e) {
@@ -301,6 +300,7 @@ public class TCKSimpleTestDriver {
      
       if (wels.isEmpty()) {
          // retry through login page
+         if (debug) System.out.println("   logging in ... ");
          login();
          wels = driver.findElements(By.linkText(page));
          if (wels.isEmpty()) {
@@ -332,6 +332,7 @@ public class TCKSimpleTestDriver {
       // If there is no login or password fields, don't need to login.
       if (!uels.isEmpty() && !pwels.isEmpty()) {
 
+         if (debug) System.out.println("   No userid / password fields");
          WebElement userEl = uels.get(0);
          WebElement pwEl = pwels.get(0);
 
@@ -436,6 +437,40 @@ public class TCKSimpleTestDriver {
       
 
       return wels;
+   }
+
+   /**
+    * Looks for an async element on the page. The async element will be filed in 
+    * with results by the test case JavaScript code, which runs asynchronously.  
+    * 
+    * If an async element is found, this function waits the timeout period to 
+    * let the async test case code update the results.
+    * 
+    * @return  <code>true</code> if async was handled; <code>false</code> otherwise.
+    * @throws Exception 
+    */
+   private boolean processAsync(List<WebElement> wels) throws Exception {
+      String asyncId = tcName + Constants.ASYNC_ID;
+      String resultId = tcName + Constants.RESULT_ID;
+
+      List<WebElement> tcels = null;
+
+      for (WebElement wel : wels) {
+         tcels = wel.findElements(By.id(asyncId));
+         if (!tcels.isEmpty()) break;
+      }
+      
+      if (tcels.isEmpty()) {
+         // no async element
+         return false;
+      }
+      
+      if (debug) System.out.println("   Async element found. Waiting for results ...");
+
+      WebDriverWait wdw = new WebDriverWait(driver, timeout);
+      wdw.until(ExpectedConditions.visibilityOfElementLocated(By.id(resultId)));
+
+      return true;
    }
 
 }

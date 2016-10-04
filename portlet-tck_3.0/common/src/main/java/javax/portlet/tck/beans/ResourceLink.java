@@ -193,7 +193,7 @@ public class ResourceLink {
       sb.append("            if (xhr.status==200) {\n");
       sb.append("               document.getElementById('" + divId + "').innerHTML=xhr.responseText;\n");
       sb.append("            } else {\n");
-      sb.append("               var str=\"" + tr.toString() + "\";\n");
+      sb.append("               var str=\"" + tr.toString().replaceAll("\n", "") + "\";\n");
       sb.append("               document.getElementById('" + divId + "').innerHTML=str;\n");
       sb.append("               str=\"XMLHttpRequest status=\" + xhr.status;\n");
       sb.append("               document.getElementById('" + detId + "').innerHTML=str;\n");

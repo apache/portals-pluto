@@ -72,14 +72,14 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The portlet hub provides a global namespace var portlet of type  */
       /* object"                                                                    */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER1);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER1);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register2                           */
       /* Details: "The global portlet object register property is type function"    */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER2);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER2);
          result.writeTo(writer);
       }
 
@@ -87,7 +87,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The portlet hub register function throws an                      */
       /* IllegalArgumentException if no portlet ID argument is provided"            */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER3);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER3);
          result.writeTo(writer);
       }
 
@@ -95,7 +95,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The portlet hub register function throws an                      */
       /* IllegalArgumentException if too many (&gt;1) arguments are provided"       */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER4);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER4);
          result.writeTo(writer);
       }
 
@@ -103,7 +103,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The portlet hub register function throws an                      */
       /* IllegalArgumentException if the portlet ID is not a string"                */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER5);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER5);
          result.writeTo(writer);
       }
 
@@ -111,7 +111,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The portlet hub register function throws an                      */
       /* IllegalArgumentException if the portlet ID is undefined"                   */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER6);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER6);
          result.writeTo(writer);
       }
 
@@ -119,7 +119,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The portlet hub register function throws an                      */
       /* IllegalArgumentException if the portlet ID is null"                        */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER7);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER7);
          result.writeTo(writer);
       }
 
@@ -127,44 +127,36 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The portlet hub register function The promise fails if the       */
       /* portlet ID is not defined for the portlet hub"                             */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER8);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER8);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register9                           */
-      /* Details: "The portlet hub register function does not throw an exception if */
-      /* the portlet ID is valid"                                                   */
+      /* Details: "The portlet hub register function returns a PortletInit object   */
+      /* when provided with a valid portlet ID"                                     */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER9);
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JS_registerA                           */
-      /* Details: "The portlet hub register function returns an object when         */
-      /* provided with a valid portlet ID"                                          */
-      {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTERA);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER9);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit1                        */
-      /* Details: "The PortletInit object portletModes property is an array"     */
+      /* Details: "The PortletInit object portletModes property is an array"        */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT1);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT1);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit2                        */
-      /* Details: "The PortletInit object windowStates property is an array"     */
+      /* Details: "The PortletInit object windowStates property is an array"        */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT2);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT2);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit3                        */
       /* Details: "The PortletInit object action property is type function"         */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT3);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT3);
          result.writeTo(writer);
       }
 
@@ -172,7 +164,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The PortletInit object addEventListener property is type         */
       /* function"                                                                  */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT4);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT4);
          result.writeTo(writer);
       }
 
@@ -180,7 +172,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The PortletInit object createResourceUrl property is type        */
       /* function"                                                                  */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT5);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT5);
          result.writeTo(writer);
       }
 
@@ -188,28 +180,28 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The PortletInit object dispatchClientEvent property is type      */
       /* function"                                                                  */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT6);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT6);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit7                        */
       /* Details: "The PortletInit object isInProgress property is type function"   */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT7);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT7);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit8                        */
       /* Details: "The PortletInit object newParameters property is type function"  */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT8);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT8);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInit9                        */
       /* Details: "The PortletInit object newState property is type function"       */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT9);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINIT9);
          result.writeTo(writer);
       }
 
@@ -217,14 +209,14 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The PortletInit object removeEventListener property is type      */
       /* function"                                                                  */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINITA);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINITA);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInitB                        */
       /* Details: "The PortletInit object setRenderState property is type function" */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINITB);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINITB);
          result.writeTo(writer);
       }
 
@@ -232,14 +224,14 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The PortletInit object startPartialAction property is type       */
       /* function"                                                                  */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINITC);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINITC);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_PortletInitD                        */
       /* Details: "The PortletInit object constants property is type object"        */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINITD);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_PORTLETINITD);
          result.writeTo(writer);
       }
 
@@ -247,7 +239,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The Constants object VIEW property is type string and equal to   */
       /* 'VIEW'"                                                                    */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS1);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS1);
          result.writeTo(writer);
       }
 
@@ -255,7 +247,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The Constants object EDIT property is type string and equal to   */
       /* 'EDIT'"                                                                    */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS2);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS2);
          result.writeTo(writer);
       }
 
@@ -263,7 +255,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The Constants object HELP property is type string and equal to   */
       /* 'HELP'"                                                                    */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS3);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS3);
          result.writeTo(writer);
       }
 
@@ -271,7 +263,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The Constants object NORMAL property is type string and equal to */
       /* 'NORMAL'"                                                                  */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS4);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS4);
          result.writeTo(writer);
       }
 
@@ -279,7 +271,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The Constants object MINIMIZED property is type string and equal */
       /* to 'MINIMIZED'"                                                            */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS5);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS5);
          result.writeTo(writer);
       }
 
@@ -287,7 +279,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The Constants object MAXIMIZED property is type string and equal */
       /* to 'MAXIMIZED'"                                                            */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS6);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS6);
          result.writeTo(writer);
       }
 
@@ -295,7 +287,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The Constants object FULL property is type string and equal to   */
       /* 'cacheLevelFull'"                                                          */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS7);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS7);
          result.writeTo(writer);
       }
 
@@ -303,7 +295,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The Constants object PORTLET property is type string and equal   */
       /* to 'cacheLevelPortlet'"                                                    */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS8);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS8);
          result.writeTo(writer);
       }
 
@@ -311,7 +303,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       /* Details: "The Constants object PAGE property is type string and equal to   */
       /* 'cacheLevelPage'"                                                          */
       {
-         TestResult result = tcd.getTestResultFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS9);
+         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS9);
          result.writeTo(writer);
       }
 

@@ -315,16 +315,16 @@ public class ConfigurationHolder {
       }
    }
 
-   /**
-    * Reconciles the bean configuration with the config from annotations & portlet DD.
-    */
-   public void reconcileBeanConfig(AnnotatedMethodStore ams) {
-      if (jcp == null) {
-         jcp = new JSR362ConfigurationProcessor(pad);
-      }
-      jcp.reconcileBeanConfig(ams);
-      jcp.instantiatePortlets(ams, ams.getBeanMgr());
-   }
+//    /**
+//     * Reconciles the bean configuration with the config from annotations & portlet DD.
+//     */
+//    public void reconcileBeanConfig(AnnotatedMethodStore ams) {
+//       if (jcp == null) {
+//          jcp = new JSR362ConfigurationProcessor(pad);
+//       }
+//       jcp.reconcileBeanConfig(ams);
+//       jcp.instantiatePortlets(ams, ams.getBeanMgr());
+//    }
    
    /**
     * Scans servlet context for method annotations.
@@ -346,7 +346,6 @@ public class ConfigurationHolder {
    public void scanMethodAnnotations(Set<File> files) {
       MethodAnnotationRecognizer mar = new MethodAnnotationRecognizer(methodStore, configSummary);
       mar.scanFiles(files);
-      mar.activateAnnotatedMethods(null);
       LOG.debug("Scan complete: \n" + methodStore.getMethodsAsString());
    }
 
