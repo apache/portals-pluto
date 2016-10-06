@@ -300,7 +300,7 @@
  * listener function has been called. </li>
  * <li> It is not possible to initiate a blocking operation during execution of
  * the onStateChange listener function, since execution of that function belongs
- * to the preceeding state change operation. </li>
+ * to the preceding state change operation. </li>
  * </ol>
  * <hr>
  * 
@@ -1656,7 +1656,7 @@ var portlet = portlet || {};
                          * argument is optional.
                          * <p>
                          * The parameters must be provided in the
-                         * defined order. However, if a preceeding
+                         * defined order. However, if a preceding
                          * argument is not needed, it may be specified
                          * as <code>null</code>. Examples of valid
                          * calls: <code>

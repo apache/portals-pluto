@@ -353,18 +353,30 @@ var portlet = portlet || {};
       return new State(this);
    };
    State.prototype.setPortletMode = function(pm) {
+      if (typeof pm !== 'string') {
+         throw new TypeError('Portlet mode must be a string');
+      }
       this.portletMode = pm;
    };
    State.prototype.getPortletMode = function() {
       return this.portletMode;
    };
    State.prototype.setWindowState = function(ws) {
+      if (typeof ws !== 'string') {
+         throw new TypeError('Window state must be a string');
+      }
       this.windowState = ws;
    };
    State.prototype.getWindowState = function() {
       return this.windowState;
    };
    State.prototype.setValue = function(name, value) {
+      if (typeof name !== 'string') {
+         throw new TypeError('Parameter name must be a string');
+      }
+      if (typeof value !== 'string' && value !== null && !Array.isArray(value)) {
+         throw new TypeError('Parameter value must be a string, an array, or null');
+      }
       var val = value;
       if (!Array.isArray(value)) {
          val = [ value ];
@@ -373,11 +385,17 @@ var portlet = portlet || {};
    };
    State.prototype.setValues = State.prototype.setValue;
    State.prototype.remove = function(name) {
+      if (typeof name !== 'string') {
+         throw new TypeError('Parameter name must be a string');
+      }
       if (this.parameters[name] !== undefined) {
          delete this.parameters[name];
       }
    };
    State.prototype.getValue = function(name, def) {
+      if (typeof name !== 'string') {
+         throw new TypeError('Parameter name must be a string');
+      }
       var res = this.parameters[name];
       if (res) {
          res = res[0];
@@ -388,6 +406,9 @@ var portlet = portlet || {};
       return res;
    };
    State.prototype.getValues = function(name, def) {
+      if (typeof name !== 'string') {
+         throw new TypeError('Parameter name must be a string');
+      }
       var res = this.parameters[name];
       if (res === undefined) {
          res = def;
