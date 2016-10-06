@@ -49,6 +49,55 @@ SPEC_23;JS;Constants7;TRUE;The Constants object FULL property is type string and
 SPEC_23;JS;Constants8;TRUE;The Constants object PORTLET property is type string and equal to 'cacheLevelPortlet'
 SPEC_23;JS;Constants9;TRUE;The Constants object PAGE property is type string and equal to 'cacheLevelPage'
 
+SPEC_23;JS State;Parameters1;TRUE;The PortletInit object newParameters function returns a Parameters object
+SPEC_23;JS State;Parameters2;TRUE;The PortletInit object newParameters function returns a Parameters object containing no parameters
+SPEC_23;JS State;Parameters3;TRUE;The PortletInit object newParameters function returns a Parameters object containing cloned values if passed a parameters object
+SPEC_23;JS State;State1;TRUE;The PortletInit object newState function returns a State object 
+SPEC_23;JS State;State2;TRUE;The PortletInit object newState function returns a State object containing no parameters if not passed a State object
+SPEC_23;JS State;State3;TRUE;The PortletInit object newState function returns a State object containing cloned values if passed a State object
+SPEC_23;JS State;clone;TRUE;The RenderState object clone property is type function
+SPEC_23;JS State;setPortletMode;TRUE;The RenderState object setPortletMode property is type function
+SPEC_23;JS State;getPortletMode;TRUE;The RenderState object getPortletMode property is type function
+SPEC_23;JS State;setWindowState;TRUE;The RenderState object setWindowState property is type function
+SPEC_23;JS State;getWindowState;TRUE;The RenderState object getWindowState property is type function
+SPEC_23;JS State;setValue;TRUE;The RenderState object setValue property is type function
+SPEC_23;JS State;getValue;TRUE;The RenderState object getValue property is type function
+SPEC_23;JS State;getValues;TRUE;The RenderState object getValues property is type function
+SPEC_23;JS State;remove;TRUE;The RenderState object remove property is type function
+SPEC_23;JS State;parameters;TRUE;The RenderState object parameters property is type object
+SPEC_23;JS State;portletMode;TRUE;The RenderState object portletMode property is type string
+SPEC_23;JS State;windowState;TRUE;The RenderState object windowState property is type string
+SPEC_23;JS State;clone1;TRUE;The RenderState object clone function returns a new object instance
+SPEC_23;JS State;clone2;TRUE;The RenderState object clone function returns a RenderState object with the required properties
+SPEC_23;JS State;clone3;TRUE;The RenderState object clone function returns a RenderState object with the same portlet mode
+SPEC_23;JS State;clone4;TRUE;The RenderState object clone function returns a RenderState object with the same window state
+SPEC_23;JS State;clone5;TRUE;The RenderState object clone function returns a RenderState object with no parameters if the original had no parameters
+SPEC_23;JS State;clone6;TRUE;The RenderState object clone function returns a RenderState object with the same single-value parameters if the original had single-value parameters
+SPEC_23;JS State;clone7;TRUE;The RenderState object clone function returns a RenderState object with the same multi-value parameters if the original had multi-value parameters
+SPEC_23;JS State;setPortletMode1;TRUE;The RenderState object setPortletMode function throws a TypeError if the argument is not a string
+SPEC_23;JS State;setPortletMode2;TRUE;The RenderState object setPortletMode function sets the portlet mode
+SPEC_23;JS State;getPortletMode1;TRUE;The RenderState object getPortletMode function returns the portlet mode
+SPEC_23;JS State;setWindowState1;TRUE;The RenderState object setWindowState function throws a TypeError if the argument is not a string
+SPEC_23;JS State;setWindowState2;TRUE;The RenderState object setWindowState function sets the window state
+SPEC_23;JS State;getWindowState1;TRUE;The RenderState object getWindowState function returns the window state
+SPEC_23;JS State;setValue1;TRUE;The RenderState object setValue function throws a TypeError if the parameter name is not a string
+SPEC_23;JS State;setValue2;TRUE;The RenderState object setValue function throws a TypeError if the parameter value is not a string or array
+SPEC_23;JS State;setValue3;TRUE;The RenderState object setValue function can set a single-valued parameter
+SPEC_23;JS State;setValue4;TRUE;The RenderState object setValue function can set a multi-valued parameter
+SPEC_23;JS State;setValue5;TRUE;The RenderState object setValue function can set a parameter to null
+SPEC_23;JS State;getValue1;TRUE;The RenderState object getValue function throws a TypeError if the parameter name is not a string
+SPEC_23;JS State;getValue2;TRUE;The RenderState object getValue function returns a single-valued parameter
+SPEC_23;JS State;getValue3;TRUE;The RenderState object getValue function returns null if the parameter was set to null
+SPEC_23;JS State;getValue4;TRUE;The RenderState object getValue function returns the first value of a multi-valued parameter
+SPEC_23;JS State;getValue5;TRUE;The RenderState object getValue function returns undefined if the parameter name does not exist and there is no default
+SPEC_23;JS State;getValue6;TRUE;The RenderState object getValue function returns the default if the parameter name does not exist and a default is provided
+SPEC_23;JS State;getValues1;TRUE;The RenderState object getValues function throws a TypeError if the parameter name is not a string
+SPEC_23;JS State;getValues2;TRUE;The RenderState object getValues function returns an array of strings for a multi-valued parameter
+SPEC_23;JS State;getValues3;TRUE;The RenderState object getValues function returns undefined if the parameter name does not exist and there is no default
+SPEC_23;JS State;getValues4;TRUE;The RenderState object getValues function returns the default if the parameter name does not exist and a default is provided
+SPEC_23;JS State;remove1;TRUE;The RenderState object remove function throws a TypeError if the parameter name is not a string
+SPEC_23;JS State;remove2;TRUE;The RenderState object remove function removes an existing parameter
+
 
 
 // -------------------------------------------------------
