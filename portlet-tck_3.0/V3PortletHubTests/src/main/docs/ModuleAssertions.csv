@@ -19,11 +19,11 @@ Class / Section;Keywords;Name;Testable;Description
 PortletHubTests;;;;
 SPEC_23;JS;register1;TRUE;The portlet hub provides a global namespace var portlet of type object
 SPEC_23;JS;register2;TRUE;The global portlet object register property is type function
-SPEC_23;JS;register3;TRUE;The portlet hub register function throws an IllegalArgumentException if no portlet ID argument is provided
-SPEC_23;JS;register4;TRUE;The portlet hub register function throws an IllegalArgumentException if too many (>1) arguments are provided
-SPEC_23;JS;register5;TRUE;The portlet hub register function throws an IllegalArgumentException if the portlet ID is not a string
-SPEC_23;JS;register6;TRUE;The portlet hub register function throws an IllegalArgumentException if the portlet ID is undefined
-SPEC_23;JS;register7;TRUE;The portlet hub register function throws an IllegalArgumentException if the portlet ID is null
+SPEC_23;JS;register3;TRUE;The portlet hub register function throws a TypeError if no portlet ID argument is provided
+SPEC_23;JS;register4;TRUE;The portlet hub register function throws a TypeError if too many (>1) arguments are provided
+SPEC_23;JS;register5;TRUE;The portlet hub register function throws a TypeError if the portlet ID is not a string
+SPEC_23;JS;register6;TRUE;The portlet hub register function throws a TypeError if the portlet ID is undefined
+SPEC_23;JS;register7;TRUE;The portlet hub register function throws a TypeError if the portlet ID is null
 SPEC_23;JS;register8;TRUE;The portlet hub register function The promise fails if the portlet ID is not defined for the portlet hub
 SPEC_23;JS;register9;TRUE;The portlet hub register function returns a PortletInit object when provided with a valid portlet ID
 SPEC_23;JS;PortletInit1;TRUE;The PortletInit object portletModes property is an array
@@ -98,44 +98,44 @@ SPEC_23;JS State;getValues4;TRUE;The RenderState object getValues function retur
 SPEC_23;JS State;remove1;TRUE;The RenderState object remove function throws a TypeError if the parameter name is not a string
 SPEC_23;JS State;remove2;TRUE;The RenderState object remove function removes an existing parameter
 
-SPEC_23;JS Exc;addEventListener1;TRUE;The PortletInit object addEventListener function throws an IllegalArgumentException if no argument is provided
-SPEC_23;JS Exc;addEventListener2;TRUE;The PortletInit object addEventListener function throws an IllegalArgumentException if 1 argument is provided
-SPEC_23;JS Exc;addEventListener3;TRUE;The PortletInit object addEventListener function throws an IllegalArgumentException if too many (>2) arguments are provided
-SPEC_23;JS Exc;addEventListener4;TRUE;The PortletInit object addEventListener function throws an IllegalArgumentException if the type argument is not a string
-SPEC_23;JS Exc;addEventListener5;TRUE;The PortletInit object addEventListener function throws an IllegalArgumentException if the function argument is not a function
-SPEC_23;JS Exc;addEventListener6;TRUE;The PortletInit object addEventListener function throws an IllegalArgumentException if the type is null
-SPEC_23;JS Exc;addEventListener7;TRUE;The PortletInit object addEventListener function throws an IllegalArgumentException if the function is null
-SPEC_23;JS Exc;addEventListener8;TRUE;The PortletInit object addEventListener function throws an IllegalArgumentException if the type begins with "portlet." but is neither "portlet.onStateChange" or "portlet.onError"
-SPEC_23;JS Exc;removeEventListener1;TRUE;The PortletInit object removeEventListener function throws an IllegalArgumentException if no argument is provided
-SPEC_23;JS Exc;removeEventListener2;TRUE;The PortletInit object removeEventListener function throws an IllegalArgumentException if too many (>1) arguments are provided
-SPEC_23;JS Exc;removeEventListener3;TRUE;The PortletInit object removeEventListener function throws an IllegalArgumentException if the handle is null
-SPEC_23;JS Exc;removeEventListener4;TRUE;The PortletInit object removeEventListener function throws an IllegalArgumentException if the handle is undefined
-SPEC_23;JS Exc;removeEventListener5;TRUE;The PortletInit object removeEventListener function throws an IllegalArgumentException if the handle has an invalid value
-SPEC_23;JS Exc;createResourceUrl1;TRUE;The PortletInit object createResourceUrl function throws an IllegalArgumentException if too many (>3) arguments are provided
-SPEC_23;JS Exc;createResourceUrl2;TRUE;The PortletInit object createResourceUrl function throws an IllegalArgumentException if resource parameters is invalid
-SPEC_23;JS Exc;createResourceUrl3;TRUE;The PortletInit object createResourceUrl function throws an IllegalArgumentException if the cacheability argument is invalid
-SPEC_23;JS Exc;setRenderState1;TRUE;The PortletInit object setRenderState function throws an IllegalArgumentException if no argument is provided
-SPEC_23;JS Exc;setRenderState2;TRUE;The PortletInit object setRenderState function throws an IllegalArgumentException if too many (>1) arguments are provided
-SPEC_23;JS Exc;setRenderState3;TRUE;The PortletInit object setRenderState function throws an IllegalArgumentException if the argument is not an object
-SPEC_23;JS Exc;setRenderState4;TRUE;The PortletInit object setRenderState function throws an IllegalArgumentException if the single argument is null
-SPEC_23;JS Exc;setRenderState5;TRUE;The PortletInit object setRenderState function throws an IllegalArgumentException if the argument does not have a "parameters" property
-SPEC_23;JS Exc;setRenderState6;TRUE;The PortletInit object setRenderState function throws an IllegalArgumentException if the argument does not have a "windowState" property
-SPEC_23;JS Exc;setRenderState7;TRUE;The PortletInit object setRenderState function throws an IllegalArgumentException if the argument does not have a "portletMode" property
+SPEC_23;JS Exc;addEventListener1;TRUE;The PortletInit object addEventListener function throws a TypeError if no argument is provided
+SPEC_23;JS Exc;addEventListener2;TRUE;The PortletInit object addEventListener function throws a TypeError if 1 argument is provided
+SPEC_23;JS Exc;addEventListener3;TRUE;The PortletInit object addEventListener function throws a TypeError if too many (>2) arguments are provided
+SPEC_23;JS Exc;addEventListener4;TRUE;The PortletInit object addEventListener function throws a TypeError if the type argument is not a string
+SPEC_23;JS Exc;addEventListener5;TRUE;The PortletInit object addEventListener function throws a TypeError if the function argument is not a function
+SPEC_23;JS Exc;addEventListener6;TRUE;The PortletInit object addEventListener function throws a TypeError if the type is null
+SPEC_23;JS Exc;addEventListener7;TRUE;The PortletInit object addEventListener function throws a TypeError if the function is null
+SPEC_23;JS Exc;addEventListener8;TRUE;The PortletInit object addEventListener function throws a TypeError if the type begins with "portlet." but is neither "portlet.onStateChange" or "portlet.onError"
+SPEC_23;JS Exc;removeEventListener1;TRUE;The PortletInit object removeEventListener function throws a TypeError if no argument is provided
+SPEC_23;JS Exc;removeEventListener2;TRUE;The PortletInit object removeEventListener function throws a TypeError if too many (>1) arguments are provided
+SPEC_23;JS Exc;removeEventListener3;TRUE;The PortletInit object removeEventListener function throws a TypeError if the handle is null
+SPEC_23;JS Exc;removeEventListener4;TRUE;The PortletInit object removeEventListener function throws a TypeError if the handle is undefined
+SPEC_23;JS Exc;removeEventListener5;TRUE;The PortletInit object removeEventListener function throws a TypeError if the handle has an invalid value
+SPEC_23;JS Exc;createResourceUrl1;TRUE;The PortletInit object createResourceUrl function throws a TypeError if too many (>3) arguments are provided
+SPEC_23;JS Exc;createResourceUrl2;TRUE;The PortletInit object createResourceUrl function throws a TypeError if resource parameters is invalid
+SPEC_23;JS Exc;createResourceUrl3;TRUE;The PortletInit object createResourceUrl function throws a TypeError if the cacheability argument is invalid
+SPEC_23;JS Exc;setRenderState1;TRUE;The PortletInit object setRenderState function throws a TypeError if no argument is provided
+SPEC_23;JS Exc;setRenderState2;TRUE;The PortletInit object setRenderState function throws a TypeError if too many (>1) arguments are provided
+SPEC_23;JS Exc;setRenderState3;TRUE;The PortletInit object setRenderState function throws a TypeError if the argument is not an object
+SPEC_23;JS Exc;setRenderState4;TRUE;The PortletInit object setRenderState function throws a TypeError if the single argument is null
+SPEC_23;JS Exc;setRenderState5;TRUE;The PortletInit object setRenderState function throws a TypeError if the argument does not have a "parameters" property
+SPEC_23;JS Exc;setRenderState6;TRUE;The PortletInit object setRenderState function throws a TypeError if the argument does not have a "windowState" property
+SPEC_23;JS Exc;setRenderState7;TRUE;The PortletInit object setRenderState function throws a TypeError if the argument does not have a "portletMode" property
 SPEC_23;JS Exc;setRenderState9;TRUE;The PortletInit object setRenderState function throws an NotInitializedException if no onStateChange listener is registered
-SPEC_23;JS Exc;setRenderStateA;TRUE;The PortletInit object setRenderState function throws an IllegalArgumentException if "windowState" has an invalid value
-SPEC_23;JS Exc;setRenderStateB;TRUE;The PortletInit object setRenderState function throws an IllegalArgumentException if "portletMode" has an invalid value
-SPEC_23;JS Exc;action1;TRUE;The PortletInit object action function throws an IllegalArgumentException if too many (>2) arguments are provided
-SPEC_23;JS Exc;action2;TRUE;The PortletInit object action function throws an IllegalArgumentException if a single argument is null
-SPEC_23;JS Exc;action3;TRUE;The PortletInit object action function throws an IllegalArgumentException if the element argument is null
-SPEC_23;JS Exc;action4;TRUE;The PortletInit object action function throws an IllegalArgumentException if action parameters is null
-SPEC_23;JS Exc;action5;TRUE;The PortletInit object action function throws an IllegalArgumentException if action parameters is invalid
-SPEC_23;JS Exc;action6;TRUE;The PortletInit object action function throws an IllegalArgumentException if the element argument is invalid
-SPEC_23;JS Exc;action7;TRUE;The PortletInit object action function throws an IllegalArgumentException if there are 2 element arguments
-SPEC_23;JS Exc;action8;TRUE;The PortletInit object action function throws an IllegalArgumentException if there are 2 action parameters arguments
+SPEC_23;JS Exc;setRenderStateA;TRUE;The PortletInit object setRenderState function throws a TypeError if "windowState" has an invalid value
+SPEC_23;JS Exc;setRenderStateB;TRUE;The PortletInit object setRenderState function throws a TypeError if "portletMode" has an invalid value
+SPEC_23;JS Exc;action1;TRUE;The PortletInit object action function throws a TypeError if too many (>2) arguments are provided
+SPEC_23;JS Exc;action2;TRUE;The PortletInit object action function throws a TypeError if a single argument is null
+SPEC_23;JS Exc;action3;TRUE;The PortletInit object action function throws a TypeError if the element argument is null
+SPEC_23;JS Exc;action4;TRUE;The PortletInit object action function throws a TypeError if action parameters is null
+SPEC_23;JS Exc;action5;TRUE;The PortletInit object action function throws a TypeError if action parameters is invalid
+SPEC_23;JS Exc;action6;TRUE;The PortletInit object action function throws a TypeError if the element argument is invalid
+SPEC_23;JS Exc;action7;TRUE;The PortletInit object action function throws a TypeError if there are 2 element arguments
+SPEC_23;JS Exc;action8;TRUE;The PortletInit object action function throws a TypeError if there are 2 action parameters arguments
 SPEC_23;JS Exc;actionA;TRUE;The PortletInit object action function throws an NotInitializedException if no onStateChange listener is registered.
-SPEC_23;JS Exc;startPartialAction1;TRUE;The PortletInit object startPartialAction function throws an IllegalArgumentException if too many (>1) arguments are provided
-SPEC_23;JS Exc;startPartialAction2;TRUE;The PortletInit object startPartialAction function throws an IllegalArgumentException if the single argument is null
-SPEC_23;JS Exc;startPartialAction3;TRUE;The PortletInit object startPartialAction function throws an IllegalArgumentException if action parameters is invalid
+SPEC_23;JS Exc;startPartialAction1;TRUE;The PortletInit object startPartialAction function throws a TypeError if too many (>1) arguments are provided
+SPEC_23;JS Exc;startPartialAction2;TRUE;The PortletInit object startPartialAction function throws a TypeError if the single argument is null
+SPEC_23;JS Exc;startPartialAction3;TRUE;The PortletInit object startPartialAction function throws a TypeError if action parameters is invalid
 SPEC_23;JS Exc;startPartialAction4;TRUE;The PortletInit object startPartialAction function throws an NotInitializedException if no onStateChange listener is registered.
 
 
@@ -158,9 +158,9 @@ SPEC_23;JS Exc;startPartialAction4;TRUE;The PortletInit object startPartialActio
 //     allows a previously added user event listener to be removed
 //     allows a previously added portlet.onStateChange event listener to be removed
 //     allows a previously added portlet.onError event listener to be removed
-//     throws an IllegalArgumentException if the user event handler is removed twice
-//     throws an IllegalArgumentException if the onStateChange event handler is removed twice
-//     throws an IllegalArgumentException if the onError event handler is removed twice
+//     throws a TypeError if the user event handler is removed twice
+//     throws a TypeError if the onStateChange event handler is removed twice
+//     throws a TypeError if the onError event handler is removed twice
 //   Without render data, the portlet client onStateChange function: 
 //     does not call the portlet.onStateChange listener during the addEventListener call
 //     is called asynchronously after an onStateChange handler is registered

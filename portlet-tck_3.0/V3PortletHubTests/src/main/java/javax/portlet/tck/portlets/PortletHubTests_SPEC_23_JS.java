@@ -84,40 +84,40 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register3                           */
-      /* Details: "The portlet hub register function throws an                      */
-      /* IllegalArgumentException if no portlet ID argument is provided"            */
+      /* Details: "The portlet hub register function throws a TypeError if no       */
+      /* portlet ID argument is provided"                                           */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER3);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register4                           */
-      /* Details: "The portlet hub register function throws an                      */
-      /* IllegalArgumentException if too many (&gt;1) arguments are provided"       */
+      /* Details: "The portlet hub register function throws a TypeError if too many */
+      /* (&gt;1) arguments are provided"                                            */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER4);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register5                           */
-      /* Details: "The portlet hub register function throws an                      */
-      /* IllegalArgumentException if the portlet ID is not a string"                */
+      /* Details: "The portlet hub register function throws a TypeError if the      */
+      /* portlet ID is not a string"                                                */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER5);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register6                           */
-      /* Details: "The portlet hub register function throws an                      */
-      /* IllegalArgumentException if the portlet ID is undefined"                   */
+      /* Details: "The portlet hub register function throws a TypeError if the      */
+      /* portlet ID is undefined"                                                   */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER6);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register7                           */
-      /* Details: "The portlet hub register function throws an                      */
-      /* IllegalArgumentException if the portlet ID is null"                        */
+      /* Details: "The portlet hub register function throws a TypeError if the      */
+      /* portlet ID is null"                                                        */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER7);
          result.writeTo(writer);

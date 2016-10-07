@@ -456,23 +456,6 @@ var portlet = portlet || {};
    // ~~~~~~~~~~~~~~~~~~~~~~ Exceptions ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
    /**
-    * Exception thrown when a portlet hub method is provided with an invalid
-    * argument.
-    * 
-    * @typedef IllegalArgumentException
-    * @property {string} name The exception name, equal to
-    *           "IllegalArgumentException"
-    * @property {string} message An optional message that provides more detail
-    *           about the exception
-    */
-   throwIllegalArgumentException = function(msg) {
-      throw {
-         name : "IllegalArgumentException",
-         message : msg
-      };
-   },
-
-   /**
     * Exception thrown when a portlet client is not allowed to access a data
     * element
     * 
@@ -1016,19 +999,19 @@ var portlet = portlet || {};
     * @param {string[]}
     *            types An array containing the expected parameter types in the
     *            order of occurrance in the argument array
-    * @throws {IllegalArgumentException}
+    * @throws {TypeError}
     *             Thrown if the parameters are in some manner incorrect
     */
    checkArguments = function(parms, minParms, maxParms, types) {
 
       // Check for the minimum number of arguments
       if (parms.length < minParms) {
-         throwIllegalArgumentException("Too few arguments provided. Number of arguments: "
+         throw new TypeError("Too few arguments provided. Number of arguments: "
                + parms.length);
 
          // check for maximum number of arguments
       } else if ((typeof maxParms === 'number') && (parms.length > maxParms)) {
-         throwIllegalArgumentException("Too many arguments provided: "
+         throw new TypeError("Too many arguments provided: "
                + [].join.call(parms, ', '));
 
          // check if the argument types are as expected if provided with
@@ -1038,7 +1021,7 @@ var portlet = portlet || {};
          var ii;
          for (ii = Math.min(parms.length, types.length) - 1; ii >= 0; ii = ii - 1) {
             if (typeof parms[ii] !== types[ii]) {
-               throwIllegalArgumentException("Parameter " + ii
+               throw new TypeError("Parameter " + ii
                      + " is of type " + (typeof parms[ii])
                      + " rather than the expected type " + types[ii]);
             }
@@ -1047,7 +1030,7 @@ var portlet = portlet || {};
             // neither
             // null nor undefined.
             if ((parms[ii] === null) || (parms[ii] === undefined)) {
-               throwIllegalArgumentException("Argument is "
+               throw new TypeError("Argument is "
                      + (typeof parms[ii]));
             }
          }
@@ -1071,7 +1054,7 @@ var portlet = portlet || {};
     * @param {PortletParameters}
     *            parms The parameters to check
     * @private
-    * @throws {IllegalArgumentException}
+    * @throws {TypeError}
     *             Thrown if the parameters are incorrect
     */
    validateParms = function(parms) {
@@ -1079,20 +1062,20 @@ var portlet = portlet || {};
 
       // check for null or undefined argument
       if ((parms === null) || (parms === undefined)) {
-         throwIllegalArgumentException("The parameters object is "
+         throw new TypeError("The parameters object is "
                + (typeof parms));
       }
 
       for (parm in parms) {
          if (parms.hasOwnProperty(parm)) {
             if (Object.prototype.toString.call(parms[parm]) !== '[object Array]') {
-               throwIllegalArgumentException("Invalid parameters. The value of "
+               throw new TypeError("Invalid parameters. The value of "
                      + parm
                      + " is "
                      + Object.prototype.toString.call(parm)
                      + " rather than '[object Array]'");
             } else if (parms[parm].length === 0) {
-               throwIllegalArgumentException("Invalid parameters. The value of "
+               throw new TypeError("Invalid parameters. The value of "
                      + parm + " is " + "an array with length 0.");
             }
          }
@@ -1124,7 +1107,7 @@ var portlet = portlet || {};
     * @param {RenderState}
     *            state The render state object to check
     * @private
-    * @throws {IllegalArgumentException}
+    * @throws {TypeError}
     *             Thrown if any component of the state is incorrect
     */
    validateState = function(pid, state) {
@@ -1136,12 +1119,12 @@ var portlet = portlet || {};
       // portlet
       if ((state.portletMode === undefined)
             || (typeof state.portletMode !== 'string')) {
-         throwIllegalArgumentException("Invalid parameters. portletMode is "
+         throw new TypeError("Invalid parameters. portletMode is "
                + (typeof state.portletMode));
       } else {
          state.portletMode = state.portletMode.toLowerCase();
          if (!_isAllowedPM(pid, state.portletMode)) {
-            throwIllegalArgumentException("Invalid portletMode="
+            throw new TypeError("Invalid portletMode="
                + state.portletMode + " is not in " + pi.getAllowedPM());
          }
       }
@@ -1150,12 +1133,12 @@ var portlet = portlet || {};
       // portlet
       if ((state.windowState === undefined)
             || (typeof state.windowState !== 'string')) {
-         throwIllegalArgumentException("Invalid parameters. windowState is "
+         throw new TypeError("Invalid parameters. windowState is "
                + (typeof state.windowState));
       } else {
          state.windowState = state.windowState.toLowerCase();
          if (!_isAllowedWS(pid, state.windowState)) {
-            throwIllegalArgumentException("Invalid windowState="
+            throw new TypeError("Invalid windowState="
                + state.windowState + " is not in " + pi.getAllowedWS());
          }
       }
@@ -1224,7 +1207,7 @@ var portlet = portlet || {};
     *            pid The portlet ID for operation
     * @param {string}
     *            ustr The new page state in string form
-    * @throws {IllegalArgumentException}
+    * @throws {TypeError}
     *             Thrown if the parameter is not a string
     * @name setPageState
     * @callback setPageState
@@ -1235,7 +1218,7 @@ var portlet = portlet || {};
       // Perform some checks on the update string. allow null string.
       if ((ustr === undefined)
             || ((ustr !== null) && (typeof ustr !== 'string'))) {
-         throwIllegalArgumentException("Invalid update string: " + ustr);
+         throw new TypeError("Invalid update string: " + ustr);
       }
 
       // convert page state into an object.
@@ -1414,7 +1397,7 @@ var portlet = portlet || {};
                          * @returns {object} A handle that can be used
                          *          to remove the event listener
                          * 
-                         * @throws {IllegalArgumentException}
+                         * @throws {TypeError}
                          *             Thrown if the input parameters
                          *             are invalid
                          * 
@@ -1437,7 +1420,7 @@ var portlet = portlet || {};
                               // portlet.onError event, throw
                               if ((type !== "portlet.onStateChange")
                                     && (type !== "portlet.onError")) {
-                                 throwIllegalArgumentException("The system event type is invalid: "
+                                 throw new TypeError("The system event type is invalid: "
                                        + type);
                               }
 
@@ -1484,7 +1467,7 @@ var portlet = portlet || {};
                          *            handle The handle of the listener
                          *            to be removed
                          * 
-                         * @throws {IllegalArgumentException}
+                         * @throws {TypeError}
                          *             Thrown if the input parameters
                          *             are invalid
                          * @throws {AccessDeniedException}
@@ -1503,7 +1486,7 @@ var portlet = portlet || {};
                            // check for null or undefined argument
                            if ((handle === null)
                                  || (handle === undefined)) {
-                              throwIllegalArgumentException("The argument provided is "
+                              throw new TypeError("The argument provided is "
                                     + (typeof handle));
                            }
 
@@ -1523,7 +1506,7 @@ var portlet = portlet || {};
                                        oeListeners, portletId,
                                        handle) === false)) {
 
-                              throwIllegalArgumentException("The event listener handle doesn't match any listeners.");
+                              throw new TypeError("The event listener handle doesn't match any listeners.");
                            }
                         },
 
@@ -1566,7 +1549,7 @@ var portlet = portlet || {};
                          * @param {RenderState}
                          *            state The new state to be set
                          * 
-                         * @throws {IllegalArgumentException}
+                         * @throws {TypeError}
                          *             Thrown if the input parameters
                          *             are invalid
                          * @throws {AccessDeniedException}
@@ -1691,7 +1674,7 @@ var portlet = portlet || {};
                          *          Returns an Error object containing a
                          *          descriptive message on failure.
                          * 
-                         * @throws {IllegalArgumentException}
+                         * @throws {TypeError}
                          *             Thrown if the input parameters
                          *             are invalid
                          * 
@@ -1706,7 +1689,7 @@ var portlet = portlet || {};
                            // args and determine the types. Check
                            // values as possible.
                            if (arguments.length > 3) {
-                              throwIllegalArgumentException("Too many arguments. 3 arguments are allowed.");
+                              throw new TypeError("Too many arguments. 3 arguments are allowed.");
                            }
 
                            if (resParams) {
@@ -1717,7 +1700,7 @@ var portlet = portlet || {};
                                                       // are
                                                       // invalid
                               } else {
-                                 throwIllegalArgumentException("Invalid argument type. Resource parameters must be a parameters object.");
+                                 throw new TypeError("Invalid argument type. Resource parameters must be a parameters object.");
                               }
                            }
 
@@ -1730,11 +1713,11 @@ var portlet = portlet || {};
                                     cacheability = cache;
                                     break;
                                  default:
-                                    throwIllegalArgumentException("Invalid cacheability argument: "
+                                    throw new TypeError("Invalid cacheability argument: "
                                           + cache);
                                  }
                               } else {
-                                 throwIllegalArgumentException("Invalid argument type. Cacheability argument must be a string.");
+                                 throw new TypeError("Invalid argument type. Cacheability argument must be a string.");
                               }
                            }
 
@@ -1747,7 +1730,7 @@ var portlet = portlet || {};
                               if (typeof resid === 'string') {
                                  rid = resid;
                               } else {
-                                 throwIllegalArgumentException("Invalid argument type. Resource ID argument must be a string.");
+                                 throw new TypeError("Invalid argument type. Resource ID argument must be a string.");
                               }
                            }
 
@@ -1857,7 +1840,7 @@ var portlet = portlet || {};
                          *          resolved with no argument when the
                          *          action request has completed.
                          * 
-                         * @throws {IllegalArgumentException}
+                         * @throws {TypeError}
                          *             Thrown if the input parameters
                          *             are invalid
                          * @throws {AccessDeniedException}
@@ -1881,7 +1864,7 @@ var portlet = portlet || {};
                            // args and determine the types. Check
                            // values as possible.
                            if (arguments.length > 2) {
-                              throwIllegalArgumentException("Too many arguments. 2 arguments are allowed.");
+                              throw new TypeError("Too many arguments. 2 arguments are allowed.");
                            }
 
                            ii = arguments.length;
@@ -1893,7 +1876,7 @@ var portlet = portlet || {};
                                  if (el === null) {
                                     el = arg;
                                  } else {
-                                    throwIllegalArgumentException("too many [object HTMLFormElement] arguments: "
+                                    throw new TypeError("too many [object HTMLFormElement] arguments: "
                                           + arg + ", " + el);
                                  }
                               } else if (type === '[object Object]') {
@@ -1901,11 +1884,11 @@ var portlet = portlet || {};
                                                 // parms are
                                                 // invalid
                                  if (parms !== null) {
-                                    throwIllegalArgumentException("too many parameters arguments.");
+                                    throw new TypeError("too many parameters arguments.");
                                  }
                                  parms = arg;
                               } else if (arg !== undefined) {
-                                 throwIllegalArgumentException("Invalid argument type. Argument "
+                                 throw new TypeError("Invalid argument type. Argument "
                                        + (ii + 1)
                                        + " is of type "
                                        + type);
@@ -1922,7 +1905,7 @@ var portlet = portlet || {};
 
                               if (meth && (meth !== 'POST')
                                     && (meth !== 'GET')) {
-                                 throwIllegalArgumentException("Invalid form method "
+                                 throw new TypeError("Invalid form method "
                                        + el.method
                                        + ". Allowed methods are GET & POST ");
                               }
@@ -1933,7 +1916,7 @@ var portlet = portlet || {};
                               if (el.enctype
                                     && el.enctype !== 'application\/x-www-form-urlencoded'
                                     && el.enctype !== 'multipart\/form-data') {
-                                 throwIllegalArgumentException("Invalid form enctype "
+                                 throw new TypeError("Invalid form enctype "
                                        + el.enctype
                                        + ". Allowed: 'application\/x-www-form-urlencoded' & 'multipart\/form-data'  ");
                               }
@@ -1941,7 +1924,7 @@ var portlet = portlet || {};
                               if (el.enctype
                                     && (el.enctype === 'multipart\/form-data')
                                     && (meth !== 'POST')) {
-                                 throwIllegalArgumentException("Invalid method with multipart/form-data. Must be POST.");
+                                 throw new TypeError("Invalid method with multipart/form-data. Must be POST.");
                               }
 
                               // if the data is supposed to be
@@ -1954,7 +1937,7 @@ var portlet = portlet || {};
                                           .toUpperCase() === 'INPUT'
                                           && el.elements[ii].type
                                                 .toUpperCase() === 'FILE') {
-                                       throwIllegalArgumentException("Must use enctype = 'multipart/form-data' with input type FILE.");
+                                       throw new TypeError("Must use enctype = 'multipart/form-data' with input type FILE.");
                                     }
                                  }
                               }
@@ -2033,7 +2016,7 @@ var portlet = portlet || {};
                          *          Error object containing a
                          *          descriptive message on failure.
                          * 
-                         * @throws {IllegalArgumentException}
+                         * @throws {TypeError}
                          *             Thrown if the input parameters
                          *             are invalid
                          * @throws {AccessDeniedException}
@@ -2054,7 +2037,7 @@ var portlet = portlet || {};
                            // args and determine the types. Check
                            // values as possible.
                            if (arguments.length > 1) {
-                              throwIllegalArgumentException("Too many arguments. 1 arguments are allowed.");
+                              throw new TypeError("Too many arguments. 1 arguments are allowed.");
                            } else if (actParams !== undefined) {
                               if (typeof actParams === 'object') {
                                  validateParms(actParams); // throws
@@ -2064,7 +2047,7 @@ var portlet = portlet || {};
                                                       // invalid
                                  parms = actParams;
                               } else {
-                                 throwIllegalArgumentException("Invalid argument type. Argument is of type "
+                                 throw new TypeError("Invalid argument type. Argument is of type "
                                        + (typeof actParams));
                               }
                            }
@@ -2215,7 +2198,7 @@ var portlet = portlet || {};
                            // disallow use of reserved name for system
                            // event types
                            if (type.match(portletRegex)) {
-                              throwIllegalArgumentException("The event type is invalid: "
+                              throw new TypeError("The event type is invalid: "
                                     + type);
                            }
 
