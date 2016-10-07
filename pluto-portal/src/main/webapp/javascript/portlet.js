@@ -85,15 +85,15 @@
  * Provides defined values for some commonly-used portlet constants
  * <p>
  * @typedef    PortletConstants
- * @property   {string}       VIEW        Specifies portlet mode 'VIEW'    
- * @property   {string}       EDIT        Specifies portlet mode 'EDIT'    
- * @property   {string}       HELP        Specifies portlet mode 'HELP'    
- * @property   {string}       NORMAL      Specifies window state 'NORMAL'
- * @property   {string}       MINIMIZED   Specifies window state 'MINIMIZED'
- * @property   {string}       MAXIMIZED   Specifies window state 'MAXIMIZED'
- * @property   {string}       FULL        Specifies resource URL cacheability 'FULL'
- * @property   {string}       PORTLET     Specifies resource URL cacheability 'PORTLET'
- * @property   {string}       PAGE        Specifies resource URL cacheability 'PAGE'
+ * @property   {string}       VIEW        Specifies portlet mode 'view'    
+ * @property   {string}       EDIT        Specifies portlet mode 'edit'    
+ * @property   {string}       HELP        Specifies portlet mode 'help'    
+ * @property   {string}       NORMAL      Specifies window state 'normal'
+ * @property   {string}       MINIMIZED   Specifies window state 'minimized'
+ * @property   {string}       MAXIMIZED   Specifies window state 'maximized'
+ * @property   {string}       FULL        Specifies resource URL cacheability "cacheLevelFull"
+ * @property   {string}       PORTLET     Specifies resource URL cacheability "cacheLevelPage"
+ * @property   {string}       PAGE        Specifies resource URL cacheability "cacheLevelPortlet"
  */
 
 /**
@@ -418,18 +418,18 @@ var portlet = portlet || {};
    var portletConstants = {
 
       // Portlet mode
-      "VIEW" : "VIEW",
-      "EDIT" : "EDIT",
-      "HELP" : "HELP",
+      "VIEW" : "view",
+      "EDIT" : "edit",
+      "HELP" : "help",
 
       // window state
-      "NORMAL" : "NORMAL",
-      "MINIMIZED" : "MINIMIZED",
-      "MAXIMIZED" : "MAXIMIZED",
+      "NORMAL"    : "normal",
+      "MINIMIZED" : "minimized",
+      "MAXIMIZED" : "maximized",
 
       // Resource URL cacheability
-      "FULL" : "cacheLevelFull",
-      "PAGE" : "cacheLevelPage",
+      "FULL"    : "cacheLevelFull",
+      "PAGE"    : "cacheLevelPage",
       "PORTLET" : "cacheLevelPortlet"
    },
 
@@ -1138,9 +1138,12 @@ var portlet = portlet || {};
             || (typeof state.portletMode !== 'string')) {
          throwIllegalArgumentException("Invalid parameters. portletMode is "
                + (typeof state.portletMode));
-      } else if (!_isAllowedPM(pid, state.portletMode)) {
-         throwIllegalArgumentException("Invalid portletMode="
+      } else {
+         state.portletMode = state.portletMode.toLowerCase();
+         if (!_isAllowedPM(pid, state.portletMode)) {
+            throwIllegalArgumentException("Invalid portletMode="
                + state.portletMode + " is not in " + pi.getAllowedPM());
+         }
       }
 
       // see if the windowState is a string and is a value allowed for the
@@ -1149,9 +1152,12 @@ var portlet = portlet || {};
             || (typeof state.windowState !== 'string')) {
          throwIllegalArgumentException("Invalid parameters. windowState is "
                + (typeof state.windowState));
-      } else if (!_isAllowedWS(pid, state.windowState)) {
-         throwIllegalArgumentException("Invalid windowState="
+      } else {
+         state.windowState = state.windowState.toLowerCase();
+         if (!_isAllowedWS(pid, state.windowState)) {
+            throwIllegalArgumentException("Invalid windowState="
                + state.windowState + " is not in " + pi.getAllowedWS());
+         }
       }
 
    },
@@ -1626,20 +1632,20 @@ var portlet = portlet || {};
                          * that can be served. There are three possible
                          * values:
                          * <dl>
-                         * <dd>"FULL"</dd>
+                         * <dd>"full"</dd>
                          * <dt> Most cacheable, because the URL contains
                          * no portlet-specific or page-specific
                          * information. </dt>
-                         * <dd>"PORTLET"</dd>
+                         * <dd>"portlet"</dd>
                          * <dt> More cacheable, because the URL contains
                          * only portlet-specific but no page-specific
                          * information. </dt>
-                         * <dd>"PAGE"</dd>
+                         * <dd>"page"</dd>
                          * <dt> Least cacheable because the URL contains
                          * portlet-specific and page-specific
                          * information.
                          * <p>
-                         * However, cacheability must be set to "PAGE"
+                         * However, cacheability must be set to "page"
                          * if the content to be served contains portal
                          * URLs. </dt>
                          * </dl>

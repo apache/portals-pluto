@@ -448,6 +448,9 @@ public class PortletHubTests_SPEC_23_JSState implements Portlet {
       writer.write("   tck.PortletHubTests_SPEC_23_JSState.pid = '" + portletResp.getNamespace() + "';");
       writer.write("</script>");
 
+      writer.write("<form  id='PortletHubTests_SPEC_23_JSState-dummyForm' onsubmit='return false;' enctype='application/x-www-form-urlencoded'>");
+      writer.write("</form>");
+
       StringBuilder txt = new StringBuilder(128);
       txt.append("<script type='text/javascript' src='");
       txt.append(portletConfig.getPortletContext().getContextPath());

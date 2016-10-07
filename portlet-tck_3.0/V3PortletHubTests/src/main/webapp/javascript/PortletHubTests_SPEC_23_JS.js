@@ -246,54 +246,54 @@
    
          /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants1                          */
          /* Details: "The Constants object VIEW property is type string and equal to   */
-         /* 'VIEW'"                                                                    */
+         /* 'view'"                                                                    */
          if (typeof hub.constants.VIEW === 'string') {
-            if (hub.constants.VIEW === 'VIEW') {
+            if (hub.constants.VIEW === 'view') {
               setSuccess('V3PortletHubTests_SPEC_23_JS_Constants1');
             }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants2                          */
          /* Details: "The Constants object EDIT property is type string and equal to   */
-         /* 'EDIT'"                                                                    */
+         /* 'edit'"                                                                    */
          if (typeof hub.constants.EDIT === 'string') {
-            if (hub.constants.EDIT === 'EDIT') {
+            if (hub.constants.EDIT === 'edit') {
               setSuccess('V3PortletHubTests_SPEC_23_JS_Constants2');
             }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants3                          */
          /* Details: "The Constants object HELP property is type string and equal to   */
-         /* 'HELP'"                                                                    */
+         /* 'help'"                                                                    */
          if (typeof hub.constants.HELP === 'string') {
-            if (hub.constants.HELP === 'HELP') {
+            if (hub.constants.HELP === 'help') {
               setSuccess('V3PortletHubTests_SPEC_23_JS_Constants3');
             }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants4                          */
          /* Details: "The Constants object NORMAL property is type string and equal to */
-         /* 'NORMAL'"                                                                  */
+         /* 'normal'"                                                                  */
          if (typeof hub.constants.NORMAL === 'string') {
-            if (hub.constants.NORMAL === 'NORMAL') {
+            if (hub.constants.NORMAL === 'normal') {
               setSuccess('V3PortletHubTests_SPEC_23_JS_Constants4');
             }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants5                          */
          /* Details: "The Constants object MINIMIZED property is type string and equal */
-         /* to 'MINIMIZED'"                                                            */
+         /* to 'minimized'"                                                            */
          if (typeof hub.constants.MINIMIZED === 'string') {
-            if (hub.constants.MINIMIZED === 'MINIMIZED') {
+            if (hub.constants.MINIMIZED === 'minimized') {
               setSuccess('V3PortletHubTests_SPEC_23_JS_Constants5');
             }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants6                          */
          /* Details: "The Constants object MAXIMIZED property is type string and equal */
-         /* to 'MAXIMIZED'"                                                            */
+         /* to 'maximized'"                                                            */
          if (typeof hub.constants.MAXIMIZED === 'string') {
-            if (hub.constants.MAXIMIZED === 'MAXIMIZED') {
+            if (hub.constants.MAXIMIZED === 'maximized') {
               setSuccess('V3PortletHubTests_SPEC_23_JS_Constants6');
             }
          }

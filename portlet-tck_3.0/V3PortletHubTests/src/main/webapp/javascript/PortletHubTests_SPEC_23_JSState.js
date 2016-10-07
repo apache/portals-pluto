@@ -82,10 +82,11 @@
       }
 
       portlet.register(pid).then(function (hub) {
-         var state, params, newState, newParams;
+         var state, params, newState, newParams, element;
 
          state = hub.newState();
          params = hub.newParameters();
+         element = document.getElementById('PortletHubTests_SPEC_23_JSState-dummyForm');
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSState_Parameters1                    */
          /* Details: "The PortletInit object newParameters function returns a          */
