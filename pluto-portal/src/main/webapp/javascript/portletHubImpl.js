@@ -574,7 +574,7 @@ var portlet = portlet || {};
     * taking into account the public render parameters.
     */
    setState = function (pid, state) {
-      var prps = getUpdatedPRPs(pid, state), group, tpid, upids = [], newVal, prpName, groupMap;
+      var prps = getUpdatedPRPs(pid, state), group, tpid, upids = [], ii, newVal, prpName, groupMap;
          
       // For each updated PRP group for the
       // initiating portlet, update that PRP in the other portlets.
@@ -605,6 +605,14 @@ var portlet = portlet || {};
       pageState.portlets[pid].state = state;
       upids.push(pid);
       
+      // delete render data for all affected portlets in order to avoid dispatching
+      // stale render data
+      for (ii = 0; ii < upids.length; ii++) {
+         tpid = upids[ii];
+         pageState.portlets[tpid].renderData.content = null;
+      }
+      
+      // update history for back-button support
       updateHistory();
 
       
