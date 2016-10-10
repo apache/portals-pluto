@@ -33,6 +33,8 @@
 <render-config default="About Apache Pluto">
 <page xmlns="" name="V3PortletHubTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
 <portlet context="/tck-V3PortletHubTests-3.0-SNAPSHOT" name="PortletHubTests_SPEC_23_JS"/>
+<portlet context="/tck-V3PortletHubTests-3.0-SNAPSHOT" name="PortletHubTests_SPEC_23_JSState"/>
+<portlet context="/tck-V3PortletHubTests-3.0-SNAPSHOT" name="PortletHubTests_SPEC_23_JSExc"/>
 </page>
 </render-config>
 </pluto-portal-driver>

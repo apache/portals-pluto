@@ -19,7 +19,7 @@
 
 (function() {
    'use strict';
-   var portletName = 'PortletHubTests_SPEC_23_JS';
+   var portletName = 'PortletHubTests_SPEC_23_JS', msg;
 
    function setSuccess (tc, fail) {
       var el;
@@ -35,13 +35,42 @@
    }
 
    function testException (func, type) {
-      var ok = false;
+      var ok = null;
       try {
          func();
+         ok = 'Function did not throw exception';
       } catch (e) {
-         ok = (e.name === type);
+         if (e.name !== type) {
+            ok = 'Invalid exception type: ' + e.name;
+         }
       }
       return ok;
+   }
+
+   function checkParams (p1, p2) {
+      var fail = null, key, keys = Object.keys(p1), ii, jj;
+      if (keys.length !== Object.keys(p2).length) {
+         fail = 'Cloned parameters have different numbers of keys';
+      } else {
+         for (ii = 0; ii < keys.length && fail === null; ii++) {
+            key = keys[ii];
+            if (!Array.isArray(p1[key]) || !Array.isArray(p2[key])) {
+               fail = 'Parameter value is not array for key: ' + key;
+               break;
+            }
+            if (p1[key].length !== p2[key].length) {
+               fail = 'Value arrays not equal for key: ' + key;
+               break;
+            }
+            for (jj = 0; jj < p1[key].length; jj++) {
+               if (p1[key][jj] !== p2[key][jj]) {
+                  fail = 'Value arrays not equal for key: ' + key;
+                  break;
+               }
+            }
+         }
+      }
+      return fail;
    }
 
    function execute () {
@@ -62,54 +91,49 @@
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register3                           */
-      /* Details: "The portlet hub register function throws an                      */
-      /* IllegalArgumentException if no portlet ID argument is provided"            */
+      /* Details: "The portlet hub register function throws a TypeError if no       */
+      /* portlet ID argument is provided"                                           */
       testFunction = function () {
          portlet.register();
       }
-      if (testException(testFunction, "IllegalArgumentException")) {
-        setSuccess('V3PortletHubTests_SPEC_23_JS_register3');
-      }
+      msg = testException(testFunction, "TypeError");
+      setSuccess('V3PortletHubTests_SPEC_23_JS_register3', msg);
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register4                           */
-      /* Details: "The portlet hub register function throws an                      */
-      /* IllegalArgumentException if too many (&gt;1) arguments are provided"       */
+      /* Details: "The portlet hub register function throws a TypeError if too many */
+      /* (&gt;1) arguments are provided"                                            */
       testFunction = function () {
          portlet.register("InvalidPortletID1", "InvalidPortletID2");
       }
-      if (testException(testFunction, "IllegalArgumentException")) {
-        setSuccess('V3PortletHubTests_SPEC_23_JS_register4');
-      }
+      msg = testException(testFunction, "TypeError");
+      setSuccess('V3PortletHubTests_SPEC_23_JS_register4', msg);
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register5                           */
-      /* Details: "The portlet hub register function throws an                      */
-      /* IllegalArgumentException if the portlet ID is not a string"                */
+      /* Details: "The portlet hub register function throws a TypeError if the      */
+      /* portlet ID is not a string"                                                */
       testFunction = function () {
          portlet.register(89);
       }
-      if (testException(testFunction, "IllegalArgumentException")) {
-        setSuccess('V3PortletHubTests_SPEC_23_JS_register5');
-      }
+      msg = testException(testFunction, "TypeError");
+      setSuccess('V3PortletHubTests_SPEC_23_JS_register5', msg);
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register6                           */
-      /* Details: "The portlet hub register function throws an                      */
-      /* IllegalArgumentException if the portlet ID is undefined"                   */
+      /* Details: "The portlet hub register function throws a TypeError if the      */
+      /* portlet ID is undefined"                                                   */
       testFunction = function () {
          portlet.register(undefined);
       }
-      if (testException(testFunction, "IllegalArgumentException")) {
-        setSuccess('V3PortletHubTests_SPEC_23_JS_register6');
-      }
+      msg = testException(testFunction, "TypeError");
+      setSuccess('V3PortletHubTests_SPEC_23_JS_register6', msg);
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register7                           */
-      /* Details: "The portlet hub register function throws an                      */
-      /* IllegalArgumentException if the portlet ID is null"                        */
+      /* Details: "The portlet hub register function throws a TypeError if the      */
+      /* portlet ID is null"                                                        */
       testFunction = function () {
          portlet.register(null);
       }
-      if (testException(testFunction, "IllegalArgumentException")) {
-        setSuccess('V3PortletHubTests_SPEC_23_JS_register7');
-      }
+      msg = testException(testFunction, "TypeError");
+      setSuccess('V3PortletHubTests_SPEC_23_JS_register7', msg);
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register8                           */
       /* Details: "The portlet hub register function The promise fails if the       */
@@ -222,54 +246,54 @@
    
          /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants1                          */
          /* Details: "The Constants object VIEW property is type string and equal to   */
-         /* 'VIEW'"                                                                    */
+         /* 'view'"                                                                    */
          if (typeof hub.constants.VIEW === 'string') {
-            if (hub.constants.VIEW === 'VIEW') {
+            if (hub.constants.VIEW === 'view') {
               setSuccess('V3PortletHubTests_SPEC_23_JS_Constants1');
             }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants2                          */
          /* Details: "The Constants object EDIT property is type string and equal to   */
-         /* 'EDIT'"                                                                    */
+         /* 'edit'"                                                                    */
          if (typeof hub.constants.EDIT === 'string') {
-            if (hub.constants.EDIT === 'EDIT') {
+            if (hub.constants.EDIT === 'edit') {
               setSuccess('V3PortletHubTests_SPEC_23_JS_Constants2');
             }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants3                          */
          /* Details: "The Constants object HELP property is type string and equal to   */
-         /* 'HELP'"                                                                    */
+         /* 'help'"                                                                    */
          if (typeof hub.constants.HELP === 'string') {
-            if (hub.constants.HELP === 'HELP') {
+            if (hub.constants.HELP === 'help') {
               setSuccess('V3PortletHubTests_SPEC_23_JS_Constants3');
             }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants4                          */
          /* Details: "The Constants object NORMAL property is type string and equal to */
-         /* 'NORMAL'"                                                                  */
+         /* 'normal'"                                                                  */
          if (typeof hub.constants.NORMAL === 'string') {
-            if (hub.constants.NORMAL === 'NORMAL') {
+            if (hub.constants.NORMAL === 'normal') {
               setSuccess('V3PortletHubTests_SPEC_23_JS_Constants4');
             }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants5                          */
          /* Details: "The Constants object MINIMIZED property is type string and equal */
-         /* to 'MINIMIZED'"                                                            */
+         /* to 'minimized'"                                                            */
          if (typeof hub.constants.MINIMIZED === 'string') {
-            if (hub.constants.MINIMIZED === 'MINIMIZED') {
+            if (hub.constants.MINIMIZED === 'minimized') {
               setSuccess('V3PortletHubTests_SPEC_23_JS_Constants5');
             }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants6                          */
          /* Details: "The Constants object MAXIMIZED property is type string and equal */
-         /* to 'MAXIMIZED'"                                                            */
+         /* to 'maximized'"                                                            */
          if (typeof hub.constants.MAXIMIZED === 'string') {
-            if (hub.constants.MAXIMIZED === 'MAXIMIZED') {
+            if (hub.constants.MAXIMIZED === 'maximized') {
               setSuccess('V3PortletHubTests_SPEC_23_JS_Constants6');
             }
          }

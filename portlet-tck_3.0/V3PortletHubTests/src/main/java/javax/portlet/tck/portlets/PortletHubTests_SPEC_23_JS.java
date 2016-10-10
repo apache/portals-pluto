@@ -84,40 +84,40 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register3                           */
-      /* Details: "The portlet hub register function throws an                      */
-      /* IllegalArgumentException if no portlet ID argument is provided"            */
+      /* Details: "The portlet hub register function throws a TypeError if no       */
+      /* portlet ID argument is provided"                                           */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER3);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register4                           */
-      /* Details: "The portlet hub register function throws an                      */
-      /* IllegalArgumentException if too many (&gt;1) arguments are provided"       */
+      /* Details: "The portlet hub register function throws a TypeError if too many */
+      /* (&gt;1) arguments are provided"                                            */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER4);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register5                           */
-      /* Details: "The portlet hub register function throws an                      */
-      /* IllegalArgumentException if the portlet ID is not a string"                */
+      /* Details: "The portlet hub register function throws a TypeError if the      */
+      /* portlet ID is not a string"                                                */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER5);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register6                           */
-      /* Details: "The portlet hub register function throws an                      */
-      /* IllegalArgumentException if the portlet ID is undefined"                   */
+      /* Details: "The portlet hub register function throws a TypeError if the      */
+      /* portlet ID is undefined"                                                   */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER6);
          result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register7                           */
-      /* Details: "The portlet hub register function throws an                      */
-      /* IllegalArgumentException if the portlet ID is null"                        */
+      /* Details: "The portlet hub register function throws a TypeError if the      */
+      /* portlet ID is null"                                                        */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_REGISTER7);
          result.writeTo(writer);
@@ -237,7 +237,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants1                          */
       /* Details: "The Constants object VIEW property is type string and equal to   */
-      /* 'VIEW'"                                                                    */
+      /* 'view'"                                                                    */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS1);
          result.writeTo(writer);
@@ -245,7 +245,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants2                          */
       /* Details: "The Constants object EDIT property is type string and equal to   */
-      /* 'EDIT'"                                                                    */
+      /* 'edit'"                                                                    */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS2);
          result.writeTo(writer);
@@ -253,7 +253,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants3                          */
       /* Details: "The Constants object HELP property is type string and equal to   */
-      /* 'HELP'"                                                                    */
+      /* 'help'"                                                                    */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS3);
          result.writeTo(writer);
@@ -261,7 +261,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants4                          */
       /* Details: "The Constants object NORMAL property is type string and equal to */
-      /* 'NORMAL'"                                                                  */
+      /* 'normal'"                                                                  */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS4);
          result.writeTo(writer);
@@ -269,7 +269,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants5                          */
       /* Details: "The Constants object MINIMIZED property is type string and equal */
-      /* to 'MINIMIZED'"                                                            */
+      /* to 'minimized'"                                                            */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS5);
          result.writeTo(writer);
@@ -277,7 +277,7 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_Constants6                          */
       /* Details: "The Constants object MAXIMIZED property is type string and equal */
-      /* to 'MAXIMIZED'"                                                            */
+      /* to 'maximized'"                                                            */
       {
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JS_CONSTANTS6);
          result.writeTo(writer);
@@ -312,6 +312,9 @@ public class PortletHubTests_SPEC_23_JS implements Portlet {
       writer.write("   tck.PortletHubTests_SPEC_23_JS = {};");
       writer.write("   tck.PortletHubTests_SPEC_23_JS.pid = '" + portletResp.getNamespace() + "';");
       writer.write("</script>");
+
+      writer.write("<form  id='PortletHubTests_SPEC_23_JS-dummyForm' onsubmit='return false;' enctype='application/x-www-form-urlencoded'>");
+      writer.write("</form>");
 
       StringBuilder txt = new StringBuilder(128);
       txt.append("<script type='text/javascript' src='");
