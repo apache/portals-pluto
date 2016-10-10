@@ -146,7 +146,7 @@ var portlet = portlet || {};
     * Returns true if input state differs from the current page state.
     * Throws exception if input state is malformed.
     */
-   stateChanged = function (nstate, nrenderData, pid) {
+   stateChanged = function (nstate, pid) {
       var ostate, pname, nparm, oparm, result = false;
       
       ostate = pageState.portlets[pid].state;
@@ -154,11 +154,8 @@ var portlet = portlet || {};
       if (!nstate.portletMode || !nstate.windowState || !nstate.parameters) {
          throw new Error ("Error decoding state: " + nstate);
       }
-
-      if (nrenderData && nrenderData.content) {
-         result = true;
-      }
-      else if (nstate.portletMode !== ostate.portletMode) {
+      
+      if (nstate.portletMode !== ostate.portletMode) {
          result = true;
       } else {
          if (nstate.windowState !== ostate.windowState) {
@@ -257,34 +254,6 @@ var portlet = portlet || {};
       return prps;
    },
 
-      
-   /**
-    * Returns a deep-copy clone of the input render state object.
-    * Used to provide the portlet client with a copy of the current 
-    * state data rather than a reference to the live state itself.
-    * 
-    * @param      {RenderState} state    The render state object to check
-    * @returns    {RenderState}          Clone of the input render state
-    * @private
-    */
-   cloneState = function (aState, aRenderData) {
-      var newParams = {},
-      newState = {
-            renderData : aRenderData,
-            portletMode : aState.portletMode,
-            windowState : aState.windowState,
-            parameters : newParams
-      }, key, oldParams = aState.parameters;
-   
-      for (key in oldParams) {
-         if (oldParams.hasOwnProperty(key)) {
-            newParams[key] = oldParams[key].slice(0);
-         }
-      }
-   
-      return newState;
-   },
-
    /**
     * Get allowed window states for portlet
     */
@@ -304,7 +273,7 @@ var portlet = portlet || {};
     * gets render data for the portlet
     */
    getRenderData = function (pid) {
-      return pageState.portlets[pid].state.renderData;
+      return pageState.portlets[pid].renderData;
    },
          
    /**
@@ -658,10 +627,10 @@ var portlet = portlet || {};
    
    // decodes the update strings. The update string is 
    // a JSON object containing the entire page state. This decoder 
-   // returns an object containing the state for portlets whose 
+   // returns an object containing the portlet data for portlets whose 
    // state has changed as compared to the current page state.
    decodeUpdateString = function (ustr) {
-      var states = {}, ostate, nstate, nrenderData, pid, ps, npids = 0, cpids = 0;
+      var portlets = {}, ostate, nstate, pid, ps, npids = 0, cpids = 0;
       
       console.log("Decoding string: >>" + ustr + "<<");
 
@@ -670,15 +639,14 @@ var portlet = portlet || {};
          if (ps.portlets.hasOwnProperty(pid)) {
             npids++;
             nstate = ps.portlets[pid].state;
-            nrenderData = ps.portlets[pid].renderData;
             ostate = pageState.portlets[pid].state;
             
             if (!nstate || !ostate) {
                throw new Error ("Invalid update string. ostate=" + ostate + ", nstate=" + nstate);
             }
             
-            if (stateChanged(nstate, nrenderData, pid)) {
-               states[pid] = cloneState(nstate, nrenderData);
+            if (stateChanged(nstate, pid)) {
+               portlets[pid] = ps.portlets[pid];
                cpids++;
             }
          }
@@ -686,7 +654,7 @@ var portlet = portlet || {};
       
       console.log("decoded state for " + npids + " portlets. # changed = " + cpids);
       
-      return states;
+      return portlets;
    },
 
       
@@ -699,15 +667,15 @@ var portlet = portlet || {};
     * @private 
     */
    updatePageStateFromString = function (ustr, pid) {
-      var states, tpid, state, upids = [], stateUpdated = false;
+      var portlets, tpid, portlet, upids = [], stateUpdated = false;
 
-      states = decodeUpdateString(ustr);
+      portlets = decodeUpdateString(ustr);
 
-      // Update states and collect IDs of affected portlets. 
-      for (tpid in states) {
-         if (states.hasOwnProperty(tpid)) {
-            state = states[tpid];
-            pageState.portlets[tpid].state = state;
+      // Update portlets and collect IDs of affected portlets. 
+      for (tpid in portlets) {
+         if (portlets.hasOwnProperty(tpid)) {
+            portlet = portlets[tpid];
+            pageState.portlets[tpid] = portlet;
             upids.push(tpid);
             stateUpdated = true;
          }

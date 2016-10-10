@@ -353,7 +353,7 @@ public class PageState {
             renderData = renderDataMap.get(pid);
          }
          if (renderData == null) {
-            json.append("         \"renderData\" : null,\n");
+            json.append("         \"content\" : null,\n");
             json.append("         \"mimeType\" : \"text/plain\"\n");
          }
          else {

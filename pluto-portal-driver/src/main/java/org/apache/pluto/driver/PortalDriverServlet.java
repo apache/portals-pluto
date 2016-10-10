@@ -173,6 +173,7 @@ public class PortalDriverServlet extends HttpServlet {
                ps = new PageState(request, renderDataMap);
                jsondata = ps.toJSONString();
                LOG.debug("Ajax Action: returning new page state to client: " + jsondata);
+               response.setContentType("application/json");
                Writer responseWriter = response.getWriter();
                responseWriter.write(jsondata);
 
