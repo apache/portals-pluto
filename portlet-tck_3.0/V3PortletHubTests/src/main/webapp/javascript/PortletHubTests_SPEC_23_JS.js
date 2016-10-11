@@ -74,7 +74,7 @@
    }
 
    function execute () {
-      var update, testFunction,
+      var update, testFunction, hub,
           pid = tck.PortletHubTests_SPEC_23_JS.pid;
 
       /* TestCase: V3PortletHubTests_SPEC_23_JS_register1                           */
@@ -152,7 +152,8 @@
 
       }
 
-      portlet.register(pid).then(function (hub) {
+      portlet.register(pid).then(function (pi) {
+         hub = pi;
    
          /* TestCase: V3PortletHubTests_SPEC_23_JS_register9                           */
          /* Details: "The portlet hub register function returns a PortletInit object   */

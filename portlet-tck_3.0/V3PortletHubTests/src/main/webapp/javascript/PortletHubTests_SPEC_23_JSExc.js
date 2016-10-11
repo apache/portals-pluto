@@ -74,14 +74,15 @@
    }
 
    function execute () {
-      var update, testFunction,
+      var update, testFunction, hub,
           pid = tck.PortletHubTests_SPEC_23_JSExc.pid;
 
       update = function (type, state) {
 
       }
 
-      portlet.register(pid).then(function (hub) {
+      portlet.register(pid).then(function (pi) {
+         hub = pi;
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSExc_addEventListener1                */
          /* Details: "The PortletInit object addEventListener function throws a        */

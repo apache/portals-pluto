@@ -74,14 +74,15 @@
    }
 
    function execute () {
-      var update, testFunction,
+      var update, testFunction, hub,
           pid = tck.PortletHubTests_SPEC_23_JSState.pid;
 
       update = function (type, state) {
 
       }
 
-      portlet.register(pid).then(function (hub) {
+      portlet.register(pid).then(function (pi) {
+         hub = pi;
          var state, params, newState, newParams, element;
 
          state = hub.newState();

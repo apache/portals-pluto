@@ -35,6 +35,12 @@
 <portlet context="/tck-V3PortletHubTests-3.0-SNAPSHOT" name="PortletHubTests_SPEC_23_JS"/>
 <portlet context="/tck-V3PortletHubTests-3.0-SNAPSHOT" name="PortletHubTests_SPEC_23_JSState"/>
 <portlet context="/tck-V3PortletHubTests-3.0-SNAPSHOT" name="PortletHubTests_SPEC_23_JSExc"/>
+<portlet context="/tck-V3PortletHubTests-3.0-SNAPSHOT" name="PortletHubTests_SPEC_23_JSListener"/>
+<portlet context="/tck-V3PortletHubTests-3.0-SNAPSHOT" name="PortletHubTests_SPEC_23_JSURL"/>
+<portlet context="/tck-V3PortletHubTests-3.0-SNAPSHOT" name="PortletHubTests_SPEC_23_JSRS"/>
+<portlet context="/tck-V3PortletHubTests-3.0-SNAPSHOT" name="PortletHubTests_SPEC_23_JSAction"/>
+<portlet context="/tck-V3PortletHubTests-3.0-SNAPSHOT" name="PortletHubTests_SPEC_23_JSPRP"/>
+<portlet context="/tck-V3PortletHubTests-3.0-SNAPSHOT" name="PortletHubTests_SPEC_23_JSPA"/>
 </page>
 </render-config>
 </pluto-portal-driver>

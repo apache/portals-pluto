@@ -138,183 +138,63 @@ SPEC_23;JS Exc;startPartialAction2;TRUE;The PortletInit object startPartialActio
 SPEC_23;JS Exc;startPartialAction3;TRUE;The PortletInit object startPartialAction function throws a TypeError if action parameters is invalid
 SPEC_23;JS Exc;startPartialAction4;TRUE;The PortletInit object startPartialAction function throws an NotInitializedException if no onStateChange listener is registered.
 
+SPEC_23;JS Listener;onStateChange1;TRUE;After an onStateChange listener is added, the portlet hub calls the onStateChange function
+SPEC_23;JS Listener;onStateChange2;TRUE;The onStateChange listener type argument has the value 'portlet.onStateChange'
+SPEC_23;JS Listener;onStateChange3;TRUE;The onStateChange listener renderState argument is a valid RenderState object
+SPEC_23;JS Listener;onStateChange4;TRUE;A previously added onStateChangeListener can be removed
+SPEC_23;JS Listener;onStateChange5;TRUE;The portlet hub throws a TypeError if a previously added onStateChange listener is removed twice
+SPEC_23;JS Listener;onError1;TRUE;An onError listener can be added
+SPEC_23;JS Listener;onError2;TRUE;A previously added onError listener can be removed
+SPEC_23;JS Listener;onError3;TRUE;The portlet hub throws a TypeError if a previously added onError listener is removed twice
 
-// -------------------------------------------------------
-//  J A S M I N E   S P E C S
-// -------------------------------------------------------
-// [INFO] 
-// 
-// The portlet hub provides the ability to add and remove event listeners.
-//   initializes a portlet hub instance for portlet A
-//   initializes a portlet hub instance for portlet B
-//   The portlet hub addEventListener function: 
-//     is present in the register return object and is a function
-//     does not throw an exception if both parameters are valid
-//     returns a handle to the event handler (an object) when the parameters are valid
-//     allows a listener for event type "portlet.onStateChange" to be added.
-//     allows a listener for event type "portlet.onError" to be added.
-//   The portlet hub removeEventListener function: 
-//     is present in the register return object and is a function
-//     allows a previously added user event listener to be removed
-//     allows a previously added portlet.onStateChange event listener to be removed
-//     allows a previously added portlet.onError event listener to be removed
-//     throws a TypeError if the user event handler is removed twice
-//     throws a TypeError if the onStateChange event handler is removed twice
-//     throws a TypeError if the onError event handler is removed twice
-//   Without render data, the portlet client onStateChange function: 
-//     does not call the portlet.onStateChange listener during the addEventListener call
-//     is called asynchronously after an onStateChange handler is registered
-//     is passed a type parameter with value "portlet.onStateChange"
-//     is passed a RenderState parameter that is an object
-//     is not passed a RenderData object
-//     is passed a RenderState parameter that has 3 properties
-//     is passed a RenderState object with a "parameters" property
-//     is passed a RenderState object with a "portletMode" property
-//     is passed a RenderState object with a "windowState" property
-//     its RenderState "parameters" property is an object
-//     its RenderState has 2 parameters
-//     its RenderState "windowState" property is a string
-//     its RenderState "portletMode" property is a string
-//     its RenderState has windowState=NORMAL
-//     its RenderState has portletMode=VIEW
-//     its RenderState parameter is not identical to the test state object"
-//     its RenderState parameter equals the test state object"
-//   With render data, the portlet client onStateChange function: 
-//     does not call the portlet.onStateChange listener during the addEventListener call
-//     is called asynchronously after an onStateChange handler is registered
-//     is passed a type parameter with value "portlet.onStateChange"
-//     is passed a RenderState parameter that is an object
-//     is passed a RenderState parameter that has 3 properties
-//     is passed a RenderState object with a "parameters" property
-//     is passed a RenderState object with a "portletMode" property
-//     is passed a RenderState object with a "windowState" property
-//     its RenderState parameter is not identical to the test state object"
-//     its RenderState parameter equals the test state object"
-//     is passed a RenderData object
-//     is passed a RenderData parameter that has 2 properties
-//     is passed a RenderData object with a "renderData" property
-//     is passed a RenderData object with a "mimeType" property
-//     is passed a RenderData object with a "renderData" property of type string
-//     is passed a RenderData object with a "mimeType" property of type string
-//     its RenderData parameter equals the test render data object"
-// 
-// The portlet hub allows the portlet client to create a resource URL.
-//   The portlet hub is initialized for the tests: 
-//     initializes a portlet hub instance for portlet A
-//     initializes a portlet hub instance for portlet B
-//     initializes a portlet hub instance for portlet C
-//     initializes a portlet hub instance for portlet D
-//   The portlet hub createResourceUrl function: 
-//     is present in the register return object and is a function
-//     does not throw if both arguments are valid
-//     returns a string if both arguments are valid
-//     Throws an exception if cacheability is specified first
-//     returns a string if only cacheability present
-//     returns a string if only resource parameters present
-//     returns a string if no parameters present
-//     returns a URL indicating the initiating portlet A
-//     returns a URL indicating a different initiating portlet B
-//     returns a resource URL
-//     returns a URL with cacheability set to "cacheLevelPage"
-//     returns a URL with cacheability set to "cacheLevelPortlet"
-//     returns a URL with cacheability set to "cacheLevelFull"
-//     returns a URL with the resource parameters set as expected
-//     returns a URL with multivalued resource parameters set as expected
-//     returns a URL with multivalued resource parameters containing null set as expected
-//     returns a URL with null resource parameter set as expected
-//     returns a URL without resource parameters when none are added
-//   The portlet hub createResourceUrl function takes state into account: 
-//     returns a URL with the render state set when cacheability = cacheLevelPage
-//     returns a URL with the render state set when cacheability = cacheLevelPortlet
-//     returns a URL with no render state set when cacheability = cacheLevelFull
-//     returns a URL containing state of different portlet when cacheability = cacheLevelPage
-//     returns a URL not containing state of different portlet when cacheability = cacheLevelPortlet
-// 
-// The portlet hub allows the portlet client to set its state.
-//   The portlet hub is initialized for the tests: 
-//     initializes a portlet hub instance for portlet A
-//     initializes a portlet hub instance for portlet B
-//     initializes a portlet hub instance for portlet C
-//     initializes a portlet hub instance for portlet D
-//   The portlet hub setRenderState function: 
-//     is present in the register return object and is a function
-//     does not throw an Exception if the argument is correct
-//     causes the onStateChange listener to be called
-//     allows the portlet mode to be set to "EDIT"
-//     allows the portlet mode to be set to "VIEW"
-//     allows the window state to be set to "MAXIMIZED"
-//     allows the window state to be set to "NORMAL"
-//     allows a new parameter "NewParm" to be set to "NewVal"
-//     allows parameter "NewParm" to be set to ["NewVal1", "NewVal2"]
-//     allows a new parameter "NewParm" to be deleted
-//     allows all parameters to be deleted
-//     allows several parameters to be set
-//     allows setting the state back to the original test data
-//   The portlet hub setRenderState function handles public render parameters: 
-//     throws an AccessDeniedException if called before previous set render state completes
-//     informs the initiating portlet (B) when public render parameter is set
-//     informs the other affected portlet (C) when public render parameter is set
-//     does not inform unaffected portlet (D) when public render parameter is set
-//     does not update private parameter in unaffected portlet (D) with same name as public parameter
-//     does not update PRP when private parameter with same name as PRP is changed in different portlet
-//     allows changing multiple PRPs and having affected portlets be notified
-//     allows a PRP to be deleted, and it is deleted for all affected portlets
-//     allows a deleted PRP to be added again
-//     informs only affected portlets when a PRP is deleted
-//     allows a deleted PRP to be added again through a different portlet
-//     allows deleting all parameters on a portlet with PRPs. All affected portlets are notified
-//     allows adding back multiple previously deleted PRPs and having affected portlets be notified
-//     allows setting the state back to the original test data
-// 
-// The portlet hub allows the portlet client to execute a portlet action
-//   The portlet hub is initialized for the tests: 
-//     initializes a portlet hub instance for portlet A
-//     initializes a portlet hub instance for portlet B
-//     initializes a portlet hub instance for portlet C
-//     initializes a portlet hub instance for portlet D
-//   The portlet hub action function: 
-//     is present in the register return object and is a function
-//     does not throw if both arguments are valid
-//     causes the onStateChange listener to be called and state is as expected
-//     allows a resource URL to be created containing the render state
-//   The portlet hub actions affect multiple portlets: 
-//     throws an AccessDeniedException if called before previous action completes
-//     allows actions that update the state of 2 portlets. other portlets are not updated
-//     allows actions that update the state of several portlets. The state of each is as expected.
-// 
-// The portlet hub allows the portlet client to initiate a partial action
-//   The portlet hub is initialized for the tests: 
-//     initializes a portlet hub instance for portlet A
-//     initializes a portlet hub instance for portlet B
-//     initializes a portlet hub instance for portlet C
-//     initializes a portlet hub instance for portlet D
-//   The portlet hub startPartialAction function: 
-//     is present in the register return object and is a function
-//     does not throw if the argument is valid
-//     returns an object
-//     return object contains setPageState function
-//     return object setPageState function throws an exception if called without a parameter
-//     return object setPageState function throws an exception if called with invalid type
-//     onError event is fired if the setPageState function is called with invalid update string
-//     return object setPageState function does not throw if parameter is correct
-//     return object setPageState function causes the onStateChange listener to be called and state is as expected
-//     throws an AccessDeniedException if called twice
-//   The portlet hub partial action URLs are OK: 
-//     causes the onStateChange listener to be called and state is as expected
-//     return object setPageState URL indicates the initiating portlet A
-//     return object setPageState URL indicates a different initiating portlet B
-//     returns a partial action URL
-//     return object setPageState URL has the action parameters set as expected
-//     return object setPageState URL has multivalued action parameters set as expected
-//     return object setPageState URL has multivalued action parameters containing null set as expected
-//     return object setPageState URL has null action parameter set as expected
-//     return object setPageState URL has no action parameters when none are added
-//     allows a resource URL to be created containing the render state
-//   The portlet hub startPartialAction & setPageState functions: 
-//     allows actions that update the state of 2 portlets. other portlets are not updated
-//     allows actions that update the state of several portlets. The state of each is as expected.
-//     Blocks the startPartialAction method for a different portlet until setPageState is called
-//     Blocks the action method for a different portlet until setPageState is called
-//     Blocks the setRenderState method for a different portlet until setPageState is called
+SPEC_23;JS URL;createResourceUrl1;TRUE;The portlet hub createResourceUrl function returns a string if called with no arguments
+SPEC_23;JS URL;createResourceUrl2;TRUE;The portlet hub createResourceUrl function returns a string if called with a resource parameters argument
+SPEC_23;JS URL;createResourceUrl3;TRUE;The portlet hub createResourceUrl function returns a string if called with resource parameters and cacheability arguments
+SPEC_23;JS URL;createResourceUrl4;TRUE;The portlet hub createResourceUrl function returns a string if called with resource parameters, cacheability, and resource ID arguments
+SPEC_23;JS URL;createResourceUrl5;TRUE;The portlet hub createResourceUrl function returns a string if called with a resource ID argument and with the resource parameters and cacheability arguments null 
+SPEC_23;JS URL;createResourceUrl6;TRUE;The portlet hub createResourceUrl function returns a URL with cacheability set to "cacheLevelPage"
+SPEC_23;JS URL;createResourceUrl7;TRUE;The portlet hub createResourceUrl function returns a URL with cacheability set to "cacheLevelPortlet"
+SPEC_23;JS URL;createResourceUrl8;TRUE;The portlet hub createResourceUrl function returns a URL with cacheability set to "cacheLevelFull"
+SPEC_23;JS URL;createResourceUrl9;TRUE;The portlet hub createResourceUrl function returns a URL with the resource parameters set as expected
+SPEC_23;JS URL;createResourceUrl0;TRUE;The portlet hub createResourceUrl function returns a URL with multivalued resource parameters set as expected
+SPEC_23;JS URL;createResourceUrlA;TRUE;The portlet hub createResourceUrl function returns a URL with multivalued resource parameters containing null set as expected
+SPEC_23;JS URL;createResourceUrlB;TRUE;The portlet hub createResourceUrl function returns a URL with the render state set when cacheability = cacheLevelPage
+SPEC_23;JS URL;createResourceUrlC;TRUE;The portlet hub createResourceUrl function returns a URL with the render state set when cacheability = cacheLevelPortlet
+SPEC_23;JS URL;createResourceUrlD;TRUE;The portlet hub createResourceUrl function returns a URL with no render state set when cacheability = cacheLevelFull
+
+SPEC_23;JS RS;setRenderState1;TRUE;The portlet hub setRenderState function causes the onStateChange listener to be called
+SPEC_23;JS RS;setRenderState2;TRUE;The portlet hub setRenderState function allows the portlet mode to be set to "EDIT"
+SPEC_23;JS RS;setRenderState3;TRUE;The portlet hub setRenderState function allows the portlet mode to be set to "VIEW"
+SPEC_23;JS RS;setRenderState4;TRUE;The portlet hub setRenderState function allows the window state to be set to "MAXIMIZED"
+SPEC_23;JS RS;setRenderState5;TRUE;The portlet hub setRenderState function allows the window state to be set to "NORMAL"
+SPEC_23;JS RS;setRenderState6;TRUE;The portlet hub setRenderState function allows a new parameter "NewParm" to be set to "NewVal"
+SPEC_23;JS RS;setRenderState7;TRUE;The portlet hub setRenderState function allows parameter "NewParm" to be set to ["NewVal1", "NewVal2"]
+SPEC_23;JS RS;setRenderState8;TRUE;The portlet hub setRenderState function allows a new parameter "NewParm" to be deleted
+SPEC_23;JS RS;setRenderState9;TRUE;The portlet hub setRenderState function allows all parameters to be deleted
+SPEC_23;JS RS;setRenderState0;TRUE;The portlet hub setRenderState function allows several parameters to be set
+SPEC_23;JS RS;setRenderStateA;TRUE;The portlet hub setRenderState function allows setting the state back to the original test data
+
+SPEC_23;JS Action;Action1;TRUE;The portlet hub action function can be called with no arguments
+SPEC_23;JS Action;Action2;TRUE;The portlet hub action function can be called with an action parameters argument
+SPEC_23;JS Action;Action3;TRUE;The portlet hub action function can be called with a form element argument
+SPEC_23;JS Action;Action4;TRUE;The portlet hub action function can be called with both action parameters and form element arguments
+SPEC_23;JS Action;Action5;TRUE;The portlet hub action function can cause a private render parameter to be set for the initiating portlet
+SPEC_23;JS Action;Action6;TRUE;The portlet hub action function can cause a private render parameter to be set for a portlet that is target of an event
+SPEC_23;JS Action;Action7;TRUE;The portlet hub action function fulfills the promise when the action is complete
+
+SPEC_23;JS PRP;setRenderState1;TRUE;The portlet hub setRenderState function informs the initiating portlet when a public render parameter is set
+SPEC_23;JS PRP;setRenderState2;TRUE;The portlet hub setRenderState function informs other affected portlets when a public render parameter is set
+SPEC_23;JS PRP;setRenderState3;TRUE;The portlet hub setRenderState function allows a public render parameter to be deleted
+SPEC_23;JS PRP;setRenderState4;TRUE;The portlet hub setRenderState function informs other affected portlets when public render parameter is deleted
+SPEC_23;JS PRP;Action1;TRUE;The portlet hub action function can cause a public render parameter to be set for the initiating portlet
+SPEC_23;JS PRP;Action2;TRUE;The portlet hub action function can cause a public render parameter to be set for a portlet that is target of an event
+
+SPEC_23;JS PA;startPartialAction1;TRUE;The portlet hub startPartialAction function can be called with no arguments
+SPEC_23;JS PA;startPartialAction2;TRUE;The portlet hub startPartialAction function can be called with an action parameters argument
+SPEC_23;JS PA;startPartialAction3;TRUE;The portlet hub startPartialAction function returns a PartialActionInit object
+SPEC_23;JS PA;startPartialAction4;TRUE;The PartialActionInit object has a url property of type string
+SPEC_23;JS PA;startPartialAction5;TRUE;The PartialActionInit object has a setPageState property of type function
+SPEC_23;JS PA;startPartialAction6;TRUE;The PartialActionInit object url property used in an XHR causes a token to be returned that completes the partial action when passed to the setPageState function
+SPEC_23;JS PA;startPartialAction7;TRUE;The onStateChange event resulting from a partial action contains render data produced by the portlet resource method
 
 
