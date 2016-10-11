@@ -18,23 +18,29 @@
 
 package javax.portlet.tck.portlets;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import static java.util.logging.Logger.*;
-import javax.xml.namespace.QName;
-import javax.portlet.*;
-import javax.portlet.annotations.*;
-import javax.portlet.filter.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.portlet.tck.beans.*;
-import javax.portlet.tck.constants.*;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JSLISTENER_ONERROR1;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JSLISTENER_ONERROR2;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JSLISTENER_ONERROR3;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JSLISTENER_ONSTATECHANGE1;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JSLISTENER_ONSTATECHANGE2;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JSLISTENER_ONSTATECHANGE3;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JSLISTENER_ONSTATECHANGE4;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JSLISTENER_ONSTATECHANGE5;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.tck.beans.TestButtonAsync;
+import javax.portlet.tck.beans.TestResultAsync;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.*;
-import static javax.portlet.tck.constants.Constants.*;
-import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -72,8 +78,6 @@ public class PortletHubTests_SPEC_23_JSListener implements Portlet {
       /* Details: "After an onStateChange listener is added, the portlet hub calls  */
       /* the onStateChange function"                                                */
       {
-         TestButtonAsync button = new TestButtonAsync(V3PORTLETHUBTESTS_SPEC_23_JSLISTENER_ONSTATECHANGE1);
-         button.writeTo(writer);
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JSLISTENER_ONSTATECHANGE1);
          result.writeTo(writer);
       }
@@ -82,8 +86,6 @@ public class PortletHubTests_SPEC_23_JSListener implements Portlet {
       /* Details: "The onStateChange listener type argument has the value           */
       /* 'portlet.onStateChange'"                                                   */
       {
-         TestButtonAsync button = new TestButtonAsync(V3PORTLETHUBTESTS_SPEC_23_JSLISTENER_ONSTATECHANGE2);
-         button.writeTo(writer);
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JSLISTENER_ONSTATECHANGE2);
          result.writeTo(writer);
       }
@@ -92,8 +94,6 @@ public class PortletHubTests_SPEC_23_JSListener implements Portlet {
       /* Details: "The onStateChange listener renderState argument is a valid       */
       /* RenderState object"                                                        */
       {
-         TestButtonAsync button = new TestButtonAsync(V3PORTLETHUBTESTS_SPEC_23_JSLISTENER_ONSTATECHANGE3);
-         button.writeTo(writer);
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JSLISTENER_ONSTATECHANGE3);
          result.writeTo(writer);
       }

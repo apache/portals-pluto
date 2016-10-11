@@ -74,139 +74,154 @@
    }
 
    function execute () {
-      var update, testFunction, hub,
-          pid = tck.PortletHubTests_SPEC_23_JSListener.pid;
+      var update, testFunction, hub, handle, errorHandle,
+      pid = tck.PortletHubTests_SPEC_23_JSListener.pid;
 
-      /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onStateChange1              */
-      /* Details: "After an onStateChange listener is added, the portlet hub calls  */
-      /* the onStateChange function"                                                */
-      document.getElementById('V3PortletHubTests_SPEC_23_JSListener_onStateChange1-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSListener_onStateChange1');
-         hub.setRenderState(state);
+      update = function (type, state) {
+         var msg;
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onStateChange1              */
+         /* Details: "After an onStateChange listener is added, the portlet hub calls  */
+         /* the onStateChange function"                                                */
+         msg = null;
+         msg = (type) ? msg : 'Type is null or undefined.'; 
+         msg = (state) ? msg : msg + ' State is null or undefined.'; 
+         setSuccess('V3PortletHubTests_SPEC_23_JSListener_onStateChange1', msg);
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onStateChange2              */
+         /* Details: "The onStateChange listener type argument has the value           */
+         /* 'portlet.onStateChange'"                                                   */
+         msg = null;
+         if (!type || (typeof type !== 'string')){
+            msg = 'Type is not a string, but instead: ' + typeof type;
+         } else if (type !== 'portlet.onStateChange') {
+            msg = 'type is not equal to portlet.onStateChange, but to: ' + type; 
+         }
+         setSuccess('V3PortletHubTests_SPEC_23_JSListener_onStateChange2', msg);
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onStateChange3              */
+         /* Details: "The onStateChange listener renderState argument is a valid       */
+         /* RenderState object"                                                        */
+         msg = null;
+         if (typeof state !== 'object') {
+            msg = 'State is not of type object';
+         } else if (typeof state.clone  !== 'function') {
+            msg = 'State object clone function is not a function';
+         } else if (typeof state.setPortletMode  !== 'function') {
+            msg = 'State object setPortletMode function is not a function';
+         } else if (typeof state.getPortletMode  !== 'function') {
+            msg = 'State object getPortletMode function is not a function';
+         } else if (typeof state.setWindowState  !== 'function') {
+            msg = 'State object setWindowState function is not a function';
+         } else if (typeof state.getWindowState  !== 'function') {
+            msg = 'State object getWindowState function is not a function';
+         } else if (typeof state.setValue  !== 'function') {
+            msg = 'State object setValue function is not a function';
+         } else if (typeof state.getValue  !== 'function') {
+            msg = 'State object getValue function is not a function';
+         } else if (typeof state.getValues  !== 'function') {
+            msg = 'State object getValues function is not a function';
+         } else if (typeof state.remove  !== 'function') {
+            msg = 'State object remove function is not a function';
+         } else if (typeof state.parameters  !== 'object') {
+            msg = 'State object parameters is not of type object';
+         } else if (typeof state.portletMode  !== 'string') {
+            msg = 'State object portletMode is not of type string';
+         } else if (typeof state.windowState  !== 'string') {
+            msg = 'State object windowState is not of type string';
+         }
+         setSuccess('V3PortletHubTests_SPEC_23_JSListener_onStateChange3', msg);
+
       }
 
-      /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onStateChange2              */
-      /* Details: "The onStateChange listener type argument has the value           */
-      /* 'portlet.onStateChange'"                                                   */
-      document.getElementById('V3PortletHubTests_SPEC_23_JSListener_onStateChange2-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSListener_onStateChange2');
-         hub.setRenderState(state);
-      }
+      portlet.register(pid).then(function (pi) {
+         hub = pi;
+         handle = hub.addEventListener('portlet.onStateChange', update);
+      });
 
-      /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onStateChange3              */
-      /* Details: "The onStateChange listener renderState argument is a valid       */
-      /* RenderState object"                                                        */
-      document.getElementById('V3PortletHubTests_SPEC_23_JSListener_onStateChange3-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSListener_onStateChange3');
-         hub.setRenderState(state);
-      }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onStateChange4              */
       /* Details: "A previously added onStateChangeListener can be removed"         */
       document.getElementById('V3PortletHubTests_SPEC_23_JSListener_onStateChange4-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSListener_onStateChange4');
-         hub.setRenderState(state);
+         msg = null;
+         if (!handle) {
+            msg = 'onStateChange event listener is null or undefined.';
+         } else {
+            try {
+               hub.removeEventListener(handle);
+            } catch (e) {
+               msg = 'Error was thrown removing the listener: ' + e.message;
+            }
+         }
+         if (!msg) {
+            handle = hub.addEventListener('portlet.onStateChange', update);
+         }
+         setSuccess('V3PortletHubTests_SPEC_23_JSListener_onStateChange4', msg);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onStateChange5              */
       /* Details: "The portlet hub throws a TypeError if a previously added         */
       /* onStateChange listener is removed twice"                                   */
       document.getElementById('V3PortletHubTests_SPEC_23_JSListener_onStateChange5-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSListener_onStateChange5');
-         hub.setRenderState(state);
+         msg = null;
+         hub.removeEventListener(handle);
+         testFunction = function () {
+            hub.removeEventListener(handle);
+         }
+         msg = testException(testFunction, 'TypeError');
+         if (!msg) {
+            handle = hub.addEventListener('portlet.onStateChange', update);
+         }
+         setSuccess('V3PortletHubTests_SPEC_23_JSListener_onStateChange5', msg);
       }
+      
+      function onTestError () {}
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onError1                    */
       /* Details: "An onError listener can be added"                                */
       document.getElementById('V3PortletHubTests_SPEC_23_JSListener_onError1-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSListener_onError1');
-         hub.setRenderState(state);
+         msg = null;
+         try {
+            errorHandle = hub.addEventListener('portlet.onError', onTestError);
+         } catch (e) {
+            msg = 'Error was thrown adding the onError listener: ' + e.message;
+            errorHandle = null;
+         }
+         setSuccess('V3PortletHubTests_SPEC_23_JSListener_onError1', msg);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onError2                    */
       /* Details: "A previously added onError listener can be removed"              */
       document.getElementById('V3PortletHubTests_SPEC_23_JSListener_onError2-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSListener_onError2');
-         hub.setRenderState(state);
+         if (!errorHandle) {
+            errorHandle = hub.addEventListener('portlet.onError', onTestError);
+         }
+         msg = null;
+         try {
+            hub.removeEventListener(handle);
+         } catch (e) {
+            msg = 'Error was thrown removing the listener: ' + e.message;
+         }
+         errorHandle = null;
+         
+         setSuccess('V3PortletHubTests_SPEC_23_JSListener_onError2', msg);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onError3                    */
       /* Details: "The portlet hub throws a TypeError if a previously added onError */
       /* listener is removed twice"                                                 */
       document.getElementById('V3PortletHubTests_SPEC_23_JSListener_onError3-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSListener_onError3');
-         hub.setRenderState(state);
+         if (!errorHandle) {
+            errorHandle = hub.addEventListener('portlet.onError', onTestError);
+         }
+         msg = null;
+         hub.removeEventListener(errorHandle);
+         testFunction = function () {
+            hub.removeEventListener(errorHandle);
+         }
+         msg = testException(testFunction, 'TypeError');
+         setSuccess('V3PortletHubTests_SPEC_23_JSListener_onError3', msg);
       }
-
-      update = function (type, state) {
-   
-         /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onStateChange1              */
-         /* Details: "After an onStateChange listener is added, the portlet hub calls  */
-         /* the onStateChange function"                                                */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSListener_onStateChange1') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSListener_onStateChange1', 'Not implemented.');
-         }
-   
-         /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onStateChange2              */
-         /* Details: "The onStateChange listener type argument has the value           */
-         /* 'portlet.onStateChange'"                                                   */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSListener_onStateChange2') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSListener_onStateChange2', 'Not implemented.');
-         }
-   
-         /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onStateChange3              */
-         /* Details: "The onStateChange listener renderState argument is a valid       */
-         /* RenderState object"                                                        */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSListener_onStateChange3') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSListener_onStateChange3', 'Not implemented.');
-         }
-   
-         /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onStateChange4              */
-         /* Details: "A previously added onStateChangeListener can be removed"         */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSListener_onStateChange4') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSListener_onStateChange4', 'Not implemented.');
-         }
-   
-         /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onStateChange5              */
-         /* Details: "The portlet hub throws a TypeError if a previously added         */
-         /* onStateChange listener is removed twice"                                   */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSListener_onStateChange5') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSListener_onStateChange5', 'Not implemented.');
-         }
-   
-         /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onError1                    */
-         /* Details: "An onError listener can be added"                                */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSListener_onError1') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSListener_onError1', 'Not implemented.');
-         }
-   
-         /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onError2                    */
-         /* Details: "A previously added onError listener can be removed"              */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSListener_onError2') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSListener_onError2', 'Not implemented.');
-         }
-   
-         /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onError3                    */
-         /* Details: "The portlet hub throws a TypeError if a previously added onError */
-         /* listener is removed twice"                                                 */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSListener_onError3') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSListener_onError3', 'Not implemented.');
-         }
-
-      }
-
-      portlet.register(pid).then(function (pi) {
-         hub = pi;
-         hub.addEventListener('portlet.onStateChange', update);
-      });
    }
 
    window.addEventListener('load', execute);
