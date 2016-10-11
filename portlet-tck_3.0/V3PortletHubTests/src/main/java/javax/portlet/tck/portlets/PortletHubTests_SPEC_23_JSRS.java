@@ -41,6 +41,7 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.Supports;
 import javax.portlet.tck.beans.TestButtonAsync;
 import javax.portlet.tck.beans.TestResultAsync;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
@@ -53,7 +54,9 @@ import javax.portlet.tck.util.ModuleTestCaseDetails;
  *
  */
 
-@PortletConfiguration(portletName = "PortletHubTests_SPEC_23_JSRS")
+@PortletConfiguration(portletName = "PortletHubTests_SPEC_23_JSRS", supports = {
+      @Supports(mimeType="*/*", portletModes= {"view", "edit"}, windowStates= {"normal", "maximized"})
+})
 public class PortletHubTests_SPEC_23_JSRS implements Portlet {
    
    private PortletConfig portletConfig = null;

@@ -19,7 +19,7 @@
 
 (function() {
    'use strict';
-   var portletName = 'PortletHubTests_SPEC_23_JSRS', msg;
+   var portletName = 'PortletHubTests_SPEC_23_JSRS', msg,  doUpdate = false, doResolve, doReject;
 
    function setSuccess (tc, fail) {
       var el;
@@ -73,8 +73,14 @@
       return fail;
    }
 
+   function doPromise (resolve, reject) {
+      doResolve = resolve;
+      doReject = reject;
+      doUpdate = true;
+   }
+   
    function execute () {
-      var update, testFunction, hub,
+      var update, testFunction, hub, myPromise,
           pid = tck.PortletHubTests_SPEC_23_JSRS.pid;
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState1                   */
@@ -92,6 +98,7 @@
       document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState2-clickme').onclick = function () {
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSRS_setRenderState2');
+         state.setPortletMode(hub.constants.EDIT);
          hub.setRenderState(state);
       }
 
@@ -101,6 +108,7 @@
       document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState3-clickme').onclick = function () {
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSRS_setRenderState3');
+         state.setPortletMode(hub.constants.VIEW);
          hub.setRenderState(state);
       }
 
@@ -110,6 +118,7 @@
       document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState4-clickme').onclick = function () {
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSRS_setRenderState4');
+         state.setWindowState(hub.constants.MAXIMIZED);
          hub.setRenderState(state);
       }
 
@@ -119,6 +128,7 @@
       document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState5-clickme').onclick = function () {
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSRS_setRenderState5');
+         state.setWindowState(hub.constants.NORMAL);
          hub.setRenderState(state);
       }
 
@@ -128,6 +138,7 @@
       document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState6-clickme').onclick = function () {
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSRS_setRenderState6');
+         state.setValue('newParam', 'newVal');
          hub.setRenderState(state);
       }
 
@@ -137,6 +148,7 @@
       document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState7-clickme').onclick = function () {
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSRS_setRenderState7');
+         state.setValue('newParam', ['newVal1', 'newVal2']);
          hub.setRenderState(state);
       }
 
@@ -146,7 +158,15 @@
       document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState8-clickme').onclick = function () {
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSRS_setRenderState8');
+         state.setValue('toBeDeleted', 'someValue');
          hub.setRenderState(state);
+
+         myPromise = new Promise(doPromise);
+         myPromise.then(
+               function (newState) {
+                  newState.remove('toBeDeleted');
+                  hub.setRenderState(newState);
+               });
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState9                   */
@@ -177,61 +197,105 @@
       }
 
       update = function (type, state) {
+         var msg, params;
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState1                   */
          /* Details: "The portlet hub setRenderState function causes the onStateChange */
          /* listener to be called"                                                     */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSRS_setRenderState1') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState1', 'Not implemented.');
+            msg = null;
+            msg = (type) ? msg : 'Type is null or undefined.'; 
+            msg = (state) ? msg : msg + ' State is null or undefined.'; 
+            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState1', msg);
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState2                   */
          /* Details: "The portlet hub setRenderState function allows the portlet mode  */
          /* to be set to \"EDIT\""                                                     */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSRS_setRenderState2') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState2', 'Not implemented.');
+            msg = null;
+            if (state.getPortletMode().toLowerCase() !== 'edit') {
+               msg = 'Portlet mode is not set to edit, but to: ' + state.getPortletMode(); 
+            }
+            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState2', msg);
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState3                   */
          /* Details: "The portlet hub setRenderState function allows the portlet mode  */
          /* to be set to \"VIEW\""                                                     */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSRS_setRenderState3') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState3', 'Not implemented.');
+            msg = null;
+            if (state.getPortletMode().toLowerCase() !== 'view') {
+               msg = 'Portlet mode is not set to view, but to: ' + state.getPortletMode(); 
+            }
+            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState3', msg);
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState4                   */
          /* Details: "The portlet hub setRenderState function allows the window state  */
          /* to be set to \"MAXIMIZED\""                                                */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSRS_setRenderState4') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState4', 'Not implemented.');
+            msg = null;
+            if (state.getWindowState().toLowerCase() !== 'maximized') {
+               msg = 'Window state is not set to maximized, but to: ' + state.getWindowState(); 
+            }
+            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState4', msg);
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState5                   */
          /* Details: "The portlet hub setRenderState function allows the window state  */
          /* to be set to \"NORMAL\""                                                   */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSRS_setRenderState5') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState5', 'Not implemented.');
+            msg = null;
+            if (state.getWindowState().toLowerCase() !== 'normal') {
+               msg = 'Window state is not set to normal, but to: ' + state.getWindowState(); 
+            }
+            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState5', msg);
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState6                   */
          /* Details: "The portlet hub setRenderState function allows a new parameter   */
          /* \"NewParm\" to be set to \"NewVal\""                                       */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSRS_setRenderState6') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState6', 'Not implemented.');
+            var params = {};
+            params.newParam = ['newVal'];
+            params.testcase = ['V3PortletHubTests_SPEC_23_JSRS_setRenderState6'];
+            msg = checkParams(params, state.parameters);
+            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState6', msg);
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState7                   */
          /* Details: "The portlet hub setRenderState function allows parameter         */
          /* \"NewParm\" to be set to [\"NewVal1\", \"NewVal2\"]"                       */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSRS_setRenderState7') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState7', 'Not implemented.');
+            var params = {};
+            params.newParam = ['newVal1', 'newVal2'];
+            params.testcase = ['V3PortletHubTests_SPEC_23_JSRS_setRenderState7'];
+            msg = checkParams(params, state.parameters);
+            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState7', msg);
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState8                   */
          /* Details: "The portlet hub setRenderState function allows a new parameter   */
          /* \"NewParm\" to be deleted"                                                 */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSRS_setRenderState8') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState8', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               // make sure that 'toBeDeleted' is present
+               if (!state.getValue('toBeDeleted')) {
+                  setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState8', 'Expected parameter toBeDeleted not set.');
+                  doReject();
+               } else {
+                  doResolve(hub.newState(state));
+               }
+            } else {
+               // make sure that 'toBeDeleted' is NOT present
+               msg = null;
+               if (state.getValue('toBeDeleted')) {
+                  msg = 'Parameter toBeDeleted unexpectedly set.';
+               }
+               setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState8', msg);
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState9                   */
