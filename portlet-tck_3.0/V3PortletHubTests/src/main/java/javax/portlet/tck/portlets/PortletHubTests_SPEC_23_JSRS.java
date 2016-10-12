@@ -28,7 +28,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPE
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE7;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE8;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE9;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATEA;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -177,16 +176,6 @@ public class PortletHubTests_SPEC_23_JSRS implements Portlet {
          TestButtonAsync button = new TestButtonAsync(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE0);
          button.writeTo(writer);
          TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE0);
-         result.writeTo(writer);
-      }
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderStateA                   */
-      /* Details: "The portlet hub setRenderState function allows setting the state */
-      /* back to the original test data"                                            */
-      {
-         TestButtonAsync button = new TestButtonAsync(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATEA);
-         button.writeTo(writer);
-         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATEA);
          result.writeTo(writer);
       }
 

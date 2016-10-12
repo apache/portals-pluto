@@ -80,7 +80,7 @@
    }
    
    function execute () {
-      var update, testFunction, hub, myPromise,
+      var update, testFunction, hub, myPromise, deleteAllParameters = false, 
           pid = tck.PortletHubTests_SPEC_23_JSRS.pid;
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState1                   */
@@ -174,7 +174,7 @@
       /* be deleted"                                                                */
       document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState9-clickme').onclick = function () {
          var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSRS_setRenderState9');
+         deleteAllParameters = true;
          hub.setRenderState(state);
       }
 
@@ -184,20 +184,13 @@
       document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState0-clickme').onclick = function () {
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSRS_setRenderState0');
-         hub.setRenderState(state);
-      }
-
-      /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderStateA                   */
-      /* Details: "The portlet hub setRenderState function allows setting the state */
-      /* back to the original test data"                                            */
-      document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderStateA-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSRS_setRenderStateA');
+         state.setValue('param1', 'val1');
+         state.setValue('param2', ['val1', 'val2']);
          hub.setRenderState(state);
       }
 
       update = function (type, state) {
-         var msg, params;
+         var msg, params, cnt, param;
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState1                   */
          /* Details: "The portlet hub setRenderState function causes the onStateChange */
@@ -301,22 +294,32 @@
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState9                   */
          /* Details: "The portlet hub setRenderState function allows all parameters to */
          /* be deleted"                                                                */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSRS_setRenderState9') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState9', 'Not implemented.');
+         if (deleteAllParameters) {
+            deleteAllParameters = false;
+            cnt = 0; 
+            params = state.parameters;
+            for (var param in params) {
+               if (params.hasOwnProperty(param)) {
+                  cnt++;
+               }
+            }
+            msg = null;
+            if (cnt !== 0) {
+               msg = 'Parameters are still present.';
+            }
+            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState9', msg);
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState0                   */
          /* Details: "The portlet hub setRenderState function allows several           */
          /* parameters to be set"                                                      */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSRS_setRenderState0') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState0', 'Not implemented.');
-         }
-   
-         /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderStateA                   */
-         /* Details: "The portlet hub setRenderState function allows setting the state */
-         /* back to the original test data"                                            */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSRS_setRenderStateA') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderStateA', 'Not implemented.');
+            var params = {};
+            params.param1 = ['val1'];
+            params.param2 = ['val1', 'val2'];
+            params.testcase = ['V3PortletHubTests_SPEC_23_JSRS_setRenderState0'];
+            msg = checkParams(params, state.parameters);
+            setSuccess('V3PortletHubTests_SPEC_23_JSRS_setRenderState0', msg);
          }
 
       }
