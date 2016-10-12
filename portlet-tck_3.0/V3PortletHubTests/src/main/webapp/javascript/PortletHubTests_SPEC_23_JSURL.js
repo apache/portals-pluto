@@ -74,43 +74,95 @@
    }
 
    function execute () {
-      var update, testFunction, hub,
+      var update, testFunction, hub, myPromise, doUpdate = false, doResolve, doReject,
           pid = tck.PortletHubTests_SPEC_23_JSURL.pid;
+      
+      function doPromise (resolve, reject) {
+         doResolve = resolve;
+         doReject = reject;
+         doUpdate = true;
+      }
+      
+      function doCreateUrl (createFunction, tc, expectFull) {
+
+         // set up initial conditions
+         var state = hub.newState();
+         state.setValue('testcase', tc);
+         hub.setRenderState(state);
+         
+         // when the initial conditions are ready, do the action
+         myPromise = new Promise(doPromise);
+         myPromise.then(function () {
+            createFunction().then(function (url) {
+               var xhr = new XMLHttpRequest();
+               xhr.onreadystatechange = function () {
+                  var status;
+                  if (xhr.readyState === 4) {
+                     msg = null;
+                     if (xhr.status === 200) {
+                        if (xhr.responseText.length > 0) {
+                           status = xhr.responseText;
+                           if (status !== 'OK') {
+                              if (!expectFull || status !== 'OK cacheLevelFull') {
+                                 msg = status;
+                              }
+                           }
+                        } else {
+                           msg = 'Failed. No response from server.';
+                        }
+                     } else {
+                        msg = 'Bad response status: ' + xhr.status; 
+                     }
+                     setSuccess(tc, msg);
+                  }
+               };
+               xhr.open("GET",url,true);
+               xhr.send();
+            });
+         });
+
+      }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl1               */
       /* Details: "The portlet hub createResourceUrl function returns a string if   */
       /* called with no arguments"                                                  */
       document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl1-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl1');
-         hub.setRenderState(state);
+         doCreateUrl(function () {
+            return hub.createResourceUrl();
+         }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl1');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl2               */
       /* Details: "The portlet hub createResourceUrl function returns a string if   */
       /* called with a resource parameters argument"                                */
       document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl2-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl2');
-         hub.setRenderState(state);
+         doCreateUrl(function () {
+            var p = hub.newParameters();
+            p.param1 = ['val1'];
+            return hub.createResourceUrl(p);
+         }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl2');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl3               */
       /* Details: "The portlet hub createResourceUrl function returns a string if   */
       /* called with resource parameters and cacheability arguments"                */
       document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl3-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl3');
-         hub.setRenderState(state);
+         doCreateUrl(function () {
+            var p = hub.newParameters();
+            p.param1 = ['val1'];
+            return hub.createResourceUrl(p, hub.constants.PAGE);
+         }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl3');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl4               */
       /* Details: "The portlet hub createResourceUrl function returns a string if   */
       /* called with resource parameters, cacheability, and resource ID arguments"  */
       document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl4-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl4');
-         hub.setRenderState(state);
+         doCreateUrl(function () {
+            var p = hub.newParameters();
+            p.param1 = ['val1'];
+            return hub.createResourceUrl(p, hub.constants.PAGE, 'resourceId');
+         }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl4');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl5               */
@@ -118,90 +170,106 @@
       /* called with a resource ID argument and with the resource parameters and    */
       /* cacheability arguments null "                                              */
       document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl5-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl5');
-         hub.setRenderState(state);
+         doCreateUrl(function () {
+            return hub.createResourceUrl(null, null, 'resourceId');
+         }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl5');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl6               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
       /* cacheability set to \"cacheLevelPage\""                                    */
       document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl6-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl6');
-         hub.setRenderState(state);
+         doCreateUrl(function () {
+            var p = hub.newParameters();
+            p.param1 = ['val1'];
+            return hub.createResourceUrl(p, hub.constants.PAGE);
+         }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl6');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl7               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
       /* cacheability set to \"cacheLevelPortlet\""                                 */
       document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl7-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl7');
-         hub.setRenderState(state);
+         doCreateUrl(function () {
+            var p = hub.newParameters();
+            p.param1 = ['val1'];
+            return hub.createResourceUrl(p, hub.constants.PORTLET);
+         }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl7');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl8               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
       /* cacheability set to \"cacheLevelFull\""                                    */
       document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl8-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl8');
-         hub.setRenderState(state);
+         doCreateUrl(function () {
+            return hub.createResourceUrl(null, hub.constants.FULL);
+         }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl8', true);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl9               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
       /* the resource parameters set as expected"                                   */
       document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl9-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl9');
-         hub.setRenderState(state);
+         doCreateUrl(function () {
+            var p = hub.newParameters();
+            p.param1 = ['val1'];
+            return hub.createResourceUrl(p);
+         }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl9');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl0               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
       /* multivalued resource parameters set as expected"                           */
       document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl0-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl0');
-         hub.setRenderState(state);
+         doCreateUrl(function () {
+            var p = hub.newParameters();
+            p.param1 = ['val1', 'val2'];
+            return hub.createResourceUrl(p);
+         }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl0');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlA               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
       /* multivalued resource parameters containing null set as expected"           */
       document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrlA-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlA');
-         hub.setRenderState(state);
+         doCreateUrl(function () {
+            var p = hub.newParameters();
+            p.param1 = ['val1', 'val2', null];
+            return hub.createResourceUrl(p);
+         }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlA');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlB               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
       /* the render state set when cacheability = cacheLevelPage"                   */
       document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrlB-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlB');
-         hub.setRenderState(state);
+         doCreateUrl(function () {
+            var p = hub.newParameters();
+            p.param1 = ['val1'];
+            return hub.createResourceUrl(p, hub.constants.PAGE);
+         }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlB');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
       /* the render state set when cacheability = cacheLevelPortlet"                */
       document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC');
-         hub.setRenderState(state);
+         doCreateUrl(function () {
+            var p = hub.newParameters();
+            p.param1 = ['val1'];
+            return hub.createResourceUrl(p, hub.constants.PORTLET);
+         }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with no */
       /* render state set when cacheability = cacheLevelFull"                       */
       document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD');
-         hub.setRenderState(state);
+         doCreateUrl(function () {
+            var p = hub.newParameters();
+            p.param1 = ['val1'];
+            return hub.createResourceUrl(p, hub.constants.FULL);
+         }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD', true);
       }
 
       update = function (type, state) {
@@ -210,28 +278,40 @@
          /* Details: "The portlet hub createResourceUrl function returns a string if   */
          /* called with no arguments"                                                  */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl1') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl1', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve();
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl2               */
          /* Details: "The portlet hub createResourceUrl function returns a string if   */
          /* called with a resource parameters argument"                                */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl2') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl2', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve();
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl3               */
          /* Details: "The portlet hub createResourceUrl function returns a string if   */
          /* called with resource parameters and cacheability arguments"                */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl3') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl3', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve();
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl4               */
          /* Details: "The portlet hub createResourceUrl function returns a string if   */
          /* called with resource parameters, cacheability, and resource ID arguments"  */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl4') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl4', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve();
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl5               */
@@ -239,70 +319,100 @@
          /* called with a resource ID argument and with the resource parameters and    */
          /* cacheability arguments null "                                              */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl5') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl5', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve();
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl6               */
          /* Details: "The portlet hub createResourceUrl function returns a URL with    */
          /* cacheability set to \"cacheLevelPage\""                                    */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl6') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl6', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve();
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl7               */
          /* Details: "The portlet hub createResourceUrl function returns a URL with    */
          /* cacheability set to \"cacheLevelPortlet\""                                 */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl7') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl7', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve();
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl8               */
          /* Details: "The portlet hub createResourceUrl function returns a URL with    */
          /* cacheability set to \"cacheLevelFull\""                                    */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl8') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl8', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve();
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl9               */
          /* Details: "The portlet hub createResourceUrl function returns a URL with    */
          /* the resource parameters set as expected"                                   */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl9') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl9', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve();
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl0               */
          /* Details: "The portlet hub createResourceUrl function returns a URL with    */
          /* multivalued resource parameters set as expected"                           */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl0') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl0', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve();
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlA               */
          /* Details: "The portlet hub createResourceUrl function returns a URL with    */
          /* multivalued resource parameters containing null set as expected"           */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlA') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSURL_createResourceUrlA', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve();
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlB               */
          /* Details: "The portlet hub createResourceUrl function returns a URL with    */
          /* the render state set when cacheability = cacheLevelPage"                   */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlB') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSURL_createResourceUrlB', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve();
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC               */
          /* Details: "The portlet hub createResourceUrl function returns a URL with    */
          /* the render state set when cacheability = cacheLevelPortlet"                */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve();
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD               */
          /* Details: "The portlet hub createResourceUrl function returns a URL with no */
          /* render state set when cacheability = cacheLevelFull"                       */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve();
+            }
          }
 
       }

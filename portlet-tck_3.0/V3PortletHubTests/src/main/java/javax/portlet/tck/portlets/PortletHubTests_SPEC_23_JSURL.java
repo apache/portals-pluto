@@ -35,6 +35,9 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPE
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -43,6 +46,11 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceParameters;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.ResourceURL;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.tck.beans.TestButtonAsync;
 import javax.portlet.tck.beans.TestResultAsync;
@@ -57,7 +65,7 @@ import javax.portlet.tck.util.ModuleTestCaseDetails;
  */
 
 @PortletConfiguration(portletName = "PortletHubTests_SPEC_23_JSURL")
-public class PortletHubTests_SPEC_23_JSURL implements Portlet {
+public class PortletHubTests_SPEC_23_JSURL implements Portlet, ResourceServingPortlet {
    
    private PortletConfig portletConfig = null;
 
@@ -238,6 +246,163 @@ public class PortletHubTests_SPEC_23_JSURL implements Portlet {
       writer.write(txt.toString());
 
 
+   }
+
+   @Override
+   public void serveResource(ResourceRequest request, ResourceResponse response) throws PortletException, IOException {
+      
+      String status = "OK";
+      String testcase = request.getRenderParameters().getValue("testcase");
+      ResourceParameters rp = request.getResourceParameters();
+      
+      if (testcase == null || testcase.isEmpty()) {
+         if (request.getCacheability().equals(ResourceURL.FULL)) {
+            status = "OK " + ResourceURL.FULL;
+         } else {
+            status = "Failed. No test case parameter present.";
+         }
+         
+         /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl1               */
+         /* Details: "The portlet hub createResourceUrl function returns a string if   */
+         /* called with no arguments"                                                  */
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL1)) {
+         if (!rp.isEmpty()) {
+            List<String> names = new ArrayList<String>(rp.getNames());
+            status = "Resource Parameters were unexpectedly present: " + names.toString(); 
+         }
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl2               */
+         /* Details: "The portlet hub createResourceUrl function returns a string if   */
+         /* called with a resource parameters argument"                                */
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL2)) {
+         String param = rp.getValue("param1");
+         if (param == null || !param.equals("val1")) {
+            status = "Failed. Invalid resource parameter value: " + param;
+         }
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl3               */
+         /* Details: "The portlet hub createResourceUrl function returns a string if   */
+         /* called with resource parameters and cacheability arguments"                */
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL3)) {
+         String param = rp.getValue("param1");
+         String ca = request.getCacheability();
+         if (param == null || !param.equals("val1")) {
+            status = "Failed. Invalid resource parameter value: " + param;
+         } else if (ca == null || !ca.equals(ResourceURL.PAGE)) {
+            status = "Failed. Invalid cacheability option: " + ca;
+         }
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl4               */
+         /* Details: "The portlet hub createResourceUrl function returns a string if   */
+         /* called with resource parameters, cacheability, and resource ID arguments"  */
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL4)) {
+         String param = rp.getValue("param1");
+         String resid = request.getResourceID();
+         String ca = request.getCacheability();
+         if (param == null || !param.equals("val1")) {
+            status = "Failed. Invalid resource parameter value: " + param;
+         } else if (resid == null || !resid.equals("resourceId")) {
+            status = "Failed. Invalid resource ID: " + resid;
+         } else if (ca == null || !ca.equals(ResourceURL.PAGE)) {
+            status = "Failed. Invalid cacheability option: " + ca;
+         }
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl5               */
+         /* Details: "The portlet hub createResourceUrl function returns a string if   */
+         /* called with a resource ID argument and with the resource parameters and    */
+         /* cacheability arguments null "                                              */
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL5)) {
+         String resid = request.getResourceID();
+         String ca = request.getCacheability();
+         if (!rp.isEmpty()) {
+            List<String> names = new ArrayList<String>(rp.getNames());
+            status = "Failed. Resource parameter were unexpectedly present: " + names.toString();;
+         } else if (resid == null || !resid.equals("resourceId")) {
+            status = "Failed. Invalid resource ID: " + resid;
+         } else if (ca == null || !ca.equals(ResourceURL.PAGE)) {
+            status = "Failed. Invalid cacheability option: " + ca;
+         }
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl6               */
+         /* Details: "The portlet hub createResourceUrl function returns a URL with    */
+         /* cacheability set to \"cacheLevelPage\""                                    */
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL6)) {
+         String ca = request.getCacheability();
+         if (ca == null || !ca.equals(ResourceURL.PAGE)) {
+            status = "Failed. Invalid cacheability option: " + ca;
+         }
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl7               */
+         /* Details: "The portlet hub createResourceUrl function returns a URL with    */
+         /* cacheability set to \"cacheLevelPortlet\""                                 */
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL7)) {
+         String ca = request.getCacheability();
+         if (ca == null || !ca.equals(ResourceURL.PORTLET)) {
+            status = "Failed. Invalid cacheability option: " + ca;
+         }
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl8               */
+         /* Details: "The portlet hub createResourceUrl function returns a URL with    */
+         /* cacheability set to \"cacheLevelFull\""                                    */
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL8)) {
+         // taken care of above, since there is no testcase parameter
+         status = "Failed. Test case parameter present: " + testcase;
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl9               */
+         /* Details: "The portlet hub createResourceUrl function returns a URL with    */
+         /* the resource parameters set as expected"                                   */
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL9)) {
+         String param = rp.getValue("param1");
+         if (param == null || !param.equals("val1")) {
+            status = "Failed. Invalid resource parameter value: " + param;
+         }
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl0               */
+         /* Details: "The portlet hub createResourceUrl function returns a URL with    */
+         /* multivalued resource parameters set as expected"                           */
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL0)) {
+         String[] vals = rp.getValues("param1");
+         if (vals == null || vals.length != 2 || vals[0] == null || vals[1] == null || 
+               !vals[0].equals("val1") || !vals[1].equals("val2")) {
+            status = "Failed. Invalid values: " + (vals == null ? "null" : Arrays.asList(vals).toString());
+         }
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlA               */
+         /* Details: "The portlet hub createResourceUrl function returns a URL with    */
+         /* multivalued resource parameters containing null set as expected"           */
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURLA)) {
+         String[] vals = rp.getValues("param1");
+         if (vals == null || vals.length != 3 || vals[0] == null || vals[1] == null || 
+               !vals[0].equals("val1") || !vals[1].equals("val2") || 
+               vals[2] != null) {
+            status = "Failed. Invalid values: " + (vals == null ? "null" : Arrays.asList(vals).toString());
+         }
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlB               */
+         /* Details: "The portlet hub createResourceUrl function returns a URL with    */
+         /* the render state set when cacheability = cacheLevelPage"                   */
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURLB)) {
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC               */
+         /* Details: "The portlet hub createResourceUrl function returns a URL with    */
+         /* the render state set when cacheability = cacheLevelPortlet"                */
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURLC)) {
+
+         /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD               */
+         /* Details: "The portlet hub createResourceUrl function returns a URL with no */
+         /* render state set when cacheability = cacheLevelFull"                       */
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURLD)) {
+         // taken care of above, since there is no testcase parameter
+         status = "Failed. Test case parameter present: " + testcase;
+         
+      } else {
+         status = "Failed. Unknown test case: " + testcase;
+      }
+      
+      response.setCharacterEncoding("UTF-8");
+      response.setContentType("text/plain");
+      response.getWriter().write(status);
+      
    }
 
 }
