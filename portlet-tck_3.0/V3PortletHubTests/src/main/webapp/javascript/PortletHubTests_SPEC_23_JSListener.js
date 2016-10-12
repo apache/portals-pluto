@@ -198,7 +198,7 @@
          }
          msg = null;
          try {
-            hub.removeEventListener(handle);
+            hub.removeEventListener(errorHandle);
          } catch (e) {
             msg = 'Error was thrown removing the listener: ' + e.message;
          }

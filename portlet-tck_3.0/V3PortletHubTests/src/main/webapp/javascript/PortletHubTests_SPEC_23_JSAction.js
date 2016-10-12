@@ -74,119 +74,287 @@
    }
 
    function execute () {
-      var update, testFunction, hub,
+      var update, testFunction, hub, myPromise, doUpdate = false, doResolve, doReject,
           pid = tck.PortletHubTests_SPEC_23_JSAction.pid;
+
+      function doPromise (resolve, reject) {
+         doResolve = resolve;
+         doReject = reject;
+         doUpdate = true;
+      }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action1                       */
       /* Details: "The portlet hub action function can be called with no arguments" */
       document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action1-clickme').onclick = function () {
+         
+         // set up initial conditions
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSAction_Action1');
          hub.setRenderState(state);
+         
+         // when the initial conditions are ready, do the action
+         myPromise = new Promise(doPromise);
+         myPromise.then(
+               function (newState) {
+                  hub.action();
+               });
+
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action2                       */
       /* Details: "The portlet hub action function can be called with an action     */
       /* parameters argument"                                                       */
       document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action2-clickme').onclick = function () {
+         
+         // set up initial conditions
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSAction_Action2');
          hub.setRenderState(state);
+         
+         // when the initial conditions are ready, do the action
+         myPromise = new Promise(doPromise);
+         myPromise.then(
+               function (newState) {
+                  var p = hub.newParameters();
+                  p.param1 = ['val1'];
+                  hub.action(p);
+               });
+
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action3                       */
       /* Details: "The portlet hub action function can be called with a form        */
       /* element argument"                                                          */
       document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action3-clickme').onclick = function () {
+         
+         // set up initial conditions
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSAction_Action3');
          hub.setRenderState(state);
+         
+         // when the initial conditions are ready, do the action
+         myPromise = new Promise(doPromise);
+         myPromise.then(
+               function (newState) {
+                  var f = document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action3-clickme').form;
+                  hub.action(f);
+               });
+         
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action4                       */
       /* Details: "The portlet hub action function can be called with both action   */
       /* parameters and form element arguments"                                     */
       document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action4-clickme').onclick = function () {
+         
+         // set up initial conditions
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSAction_Action4');
          hub.setRenderState(state);
+         
+         // when the initial conditions are ready, do the action
+         myPromise = new Promise(doPromise);
+         myPromise.then(
+               function (newState) {
+                  var p = hub.newParameters();
+                  p.param1 = ['val1'];
+                  var f = document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action4-clickme').form;
+                  hub.action (p, f);
+               });
+         
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action5                       */
       /* Details: "The portlet hub action function can cause a private render       */
       /* parameter to be set for the initiating portlet"                            */
       document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action5-clickme').onclick = function () {
+         
+         // set up initial conditions
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSAction_Action5');
          hub.setRenderState(state);
+         
+         // when the initial conditions are ready, do the action
+         myPromise = new Promise(doPromise);
+         myPromise.then(
+               function (newState) {
+                  hub.action();
+               });
+
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action6                       */
       /* Details: "The portlet hub action function can cause a private render       */
       /* parameter to be set for a portlet that is target of an event"              */
       document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action6-clickme').onclick = function () {
+         
+         // set up initial conditions
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSAction_Action6');
          hub.setRenderState(state);
+         
+         // when the initial conditions are ready, do the action
+         myPromise = new Promise(doPromise);
+         myPromise.then(
+               function (newState) {
+                  hub.action();
+               });
+
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action7                       */
       /* Details: "The portlet hub action function fulfills the promise when the    */
       /* action is complete"                                                        */
       document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action7-clickme').onclick = function () {
+         
+         // set up initial conditions
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSAction_Action7');
          hub.setRenderState(state);
+         
+         // when the initial conditions are ready, do the action
+         myPromise = new Promise(doPromise);
+         myPromise.then(
+               function (newState) {
+                  hub.action().then(function () {
+                     setSuccess('V3PortletHubTests_SPEC_23_JSAction_Action7');
+                  }, function () {
+                     setSuccess('V3PortletHubTests_SPEC_23_JSAction_Action7', 'Action promise was rejected.');
+                  });
+               });
+
       }
 
       update = function (type, state) {
+         var msg, status;
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action1                       */
          /* Details: "The portlet hub action function can be called with no arguments" */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSAction_Action1') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSAction_Action1', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve(hub.newState(state));
+            } else {
+               // make sure that the status set by the server indicates success
+               msg = null;
+               status = state.getValue('status'); 
+               if (!status) {
+                  msg = 'Status not set by server.';
+               } else if (status !== 'OK') {
+                  msg = 'Status: ' + status;
+               }
+               setSuccess('V3PortletHubTests_SPEC_23_JSAction_Action1', msg);
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action2                       */
          /* Details: "The portlet hub action function can be called with an action     */
          /* parameters argument"                                                       */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSAction_Action2') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSAction_Action2', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve(hub.newState(state));
+            } else {
+               // make sure that the status set by the server indicates success
+               msg = null;
+               status = state.getValue('status'); 
+               if (!status) {
+                  msg = 'Status not set by server.';
+               } else if (status !== 'OK') {
+                  msg = 'Status: ' + status;
+               }
+               setSuccess('V3PortletHubTests_SPEC_23_JSAction_Action2', msg);
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action3                       */
          /* Details: "The portlet hub action function can be called with a form        */
          /* element argument"                                                          */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSAction_Action3') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSAction_Action3', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve(hub.newState(state));
+            } else {
+               // make sure that the status set by the server indicates success
+               msg = null;
+               status = state.getValue('status'); 
+               if (!status) {
+                  msg = 'Status not set by server.';
+               } else if (status !== 'OK') {
+                  msg = 'Status: ' + status;
+               }
+               setSuccess('V3PortletHubTests_SPEC_23_JSAction_Action3', msg);
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action4                       */
          /* Details: "The portlet hub action function can be called with both action   */
          /* parameters and form element arguments"                                     */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSAction_Action4') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSAction_Action4', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve(hub.newState(state));
+            } else {
+               // make sure that the status set by the server indicates success
+               msg = null;
+               status = state.getValue('status'); 
+               if (!status) {
+                  msg = 'Status not set by server.';
+               } else if (status !== 'OK') {
+                  msg = 'Status: ' + status;
+               }
+               setSuccess('V3PortletHubTests_SPEC_23_JSAction_Action4', msg);
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action5                       */
          /* Details: "The portlet hub action function can cause a private render       */
          /* parameter to be set for the initiating portlet"                            */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSAction_Action5') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSAction_Action5', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve(hub.newState(state));
+            } else {
+               // make sure that the status set by the server indicates success
+               msg = null;
+               status = state.getValue('status'); 
+               if (!status) {
+                  msg = 'Status not set by server.';
+               } else if (status !== 'OK') {
+                  msg = 'Status: ' + status;
+               }
+               setSuccess('V3PortletHubTests_SPEC_23_JSAction_Action5', msg);
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action6                       */
          /* Details: "The portlet hub action function can cause a private render       */
          /* parameter to be set for a portlet that is target of an event"              */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSAction_Action6') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSAction_Action6', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve(hub.newState(state));
+            } else {
+               // make sure that the status set by the server indicates success
+               msg = null;
+               status = state.getValue('status'); 
+               if (!status) {
+                  msg = 'Status not set by server.';
+               } else if (status !== 'OK') {
+                  msg = 'Status: ' + status;
+               }
+               setSuccess('V3PortletHubTests_SPEC_23_JSAction_Action6', msg);
+            }
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action7                       */
          /* Details: "The portlet hub action function fulfills the promise when the    */
          /* action is complete"                                                        */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSAction_Action7') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSAction_Action7', 'Not implemented.');
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve(hub.newState(state));
+            } 
          }
 
       }

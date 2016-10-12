@@ -98,6 +98,9 @@ public class TestButtonAsync {
       sb.append("'  name='").append(Constants.BUTTON_PARAM_NAME);
       sb.append("'  id='").append(actId);
       sb.append("'/>");
+      sb.append("<input type='hidden' value='").append(testcase);
+      sb.append("'  name='formParam'");
+      sb.append("'/>");
       sb.append("</form>");
       sb.append("</div>");
 

@@ -29,17 +29,27 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPE
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.annotations.ActionMethod;
+import javax.portlet.annotations.EventDefinition;
+import javax.portlet.annotations.EventMethod;
+import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.PortletQName;
 import javax.portlet.tck.beans.TestButtonAsync;
 import javax.portlet.tck.beans.TestResultAsync;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
+import javax.xml.namespace.QName;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -49,6 +59,11 @@ import javax.portlet.tck.util.ModuleTestCaseDetails;
  *
  */
 
+@PortletApplication(events = {
+      @EventDefinition(
+            qname=@PortletQName(namespaceURI="http://www.apache.org/", localPart="event"),
+            payloadType=String.class)
+      })
 @PortletConfiguration(portletName = "PortletHubTests_SPEC_23_JSAction")
 public class PortletHubTests_SPEC_23_JSAction implements Portlet {
    
@@ -64,7 +79,71 @@ public class PortletHubTests_SPEC_23_JSAction implements Portlet {
    }
 
    @Override
+   @ActionMethod(portletName = "PortletHubTests_SPEC_23_JSAction", publishingEvents = {
+         @PortletQName(namespaceURI="http://www.apache.org/", localPart="event")
+   })
    public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+      
+      MutableRenderParameters mrp = portletResp.getRenderParameters();
+      String testcase = mrp.getValue("testcase");
+      ActionParameters ap = portletReq.getActionParameters();
+      
+      if (testcase == null || testcase.isEmpty()) {
+         mrp.setValue("status", "Failed. No test case parameter present.");
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION1)) {
+         mrp.setValue("status", "OK");
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION2)) {
+         String param = ap.getValue("param1");
+         String status = "OK";
+         if (param == null || !param.equals("val1")) {
+            status = "Failed. Action parameter had incorrect value: " + param;
+         }
+         mrp.setValue("status", status);
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION3)) {
+         String formParam = ap.getValue("formParam");
+         String status = "OK";
+         if (formParam == null || !formParam.equals(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION3)) {
+            status = "Failed. Form parameter had incorrect value: " + formParam;
+         }
+         mrp.setValue("status", status);
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION4)) {
+         String param = ap.getValue("param1");
+         String formParam = ap.getValue("formParam");
+         String status = "OK";
+         if (formParam == null || !formParam.equals(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION4)) {
+            status = "Failed. Form parameter had incorrect value: " + formParam;
+         } else if (param == null || !param.equals("val1")) {
+            status = "Failed. Action parameter had incorrect value: " + param;
+         }
+         mrp.setValue("status", status);
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION5)) {
+         mrp.setValue("status", "OK");
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION6)) {
+         QName qname = new QName("http://www.apache.org/", "event");
+         portletResp.setEvent(qname, "hi");;
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION7)) {
+         mrp.setValue("status", "OK");
+      }
+      
+   }
+   
+   
+   @EventMethod(portletName = "PortletHubTests_SPEC_23_JSAction", processingEvents = {
+         @PortletQName(namespaceURI="http://www.apache.org/", localPart="event")
+   })
+   public void doEvent(EventRequest eventReq, EventResponse eventResp) {
+
+      MutableRenderParameters mrp = eventResp.getRenderParameters();
+      String testcase = mrp.getValue("testcase");
+
+      if (testcase == null || testcase.isEmpty()) {
+         mrp.setValue("status", "Failed. No test case parameter present.");
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION6)) {
+         mrp.setValue("status", "OK");
+      } else {
+         mrp.setValue("status", "Failed. Unknown test case: " + testcase);
+      }
+
    }
 
    @Override
