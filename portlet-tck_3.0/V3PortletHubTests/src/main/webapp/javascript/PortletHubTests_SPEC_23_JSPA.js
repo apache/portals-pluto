@@ -74,51 +74,117 @@
    }
 
    function execute () {
-      var update, testFunction, hub,
+      var update, testFunction, hub, myPromise, doUpdate = false, doResolve, doReject,
           pid = tck.PortletHubTests_SPEC_23_JSPA.pid;
 
+      
+      function doPromise (resolve, reject) {
+         doResolve = resolve;
+         doReject = reject;
+         doUpdate = true;
+      }
+      
+      function doPartialAction (createFunction, tc) {
+
+         // set up initial conditions
+         var state = hub.newState();
+         state.setValue('testcase', tc);
+         hub.setRenderState(state);
+         
+         // when the initial conditions are ready, do the action
+         myPromise = new Promise(doPromise);
+         myPromise.then(function () {
+            createFunction().then(function (paInit) {
+               if (!paInit || typeof paInit.url !== 'string' || typeof paInit.setPageState !== 'function') {
+                  setSuccess(tc, 'Failed. PartialActionInit object does not contain expected callback function.');
+               } else {
+                  var xhr = new XMLHttpRequest();
+                  xhr.onreadystatechange = function () {
+                     var status;
+                     if (xhr.readyState === 4) {
+                        msg = null;
+                        if (xhr.status === 200) {
+                           paInit.setPageState(xhr.responseText)
+                        } else {
+                           msg = 'Bad response status: ' + xhr.status; 
+                           setSuccess(tc, msg);
+                        }
+                     }
+                  };
+                  xhr.open("GET",paInit.url,true);
+                  xhr.send();
+               }
+            });
+         });
+
+      }
+
+      
       /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction1               */
       /* Details: "The portlet hub startPartialAction function can be called with   */
       /* no arguments"                                                              */
       document.getElementById('V3PortletHubTests_SPEC_23_JSPA_startPartialAction1-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction1');
-         hub.setRenderState(state);
+         doPartialAction(function () {
+            return hub.startPartialAction();
+         }, 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction1');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction2               */
       /* Details: "The portlet hub startPartialAction function can be called with   */
       /* an action parameters argument"                                             */
       document.getElementById('V3PortletHubTests_SPEC_23_JSPA_startPartialAction2-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction2');
-         hub.setRenderState(state);
+         doPartialAction(function () {
+            var p = hub.newParameters();
+            p.param1 = ['val1'];
+            return hub.startPartialAction(p);
+         }, 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction2');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction3               */
       /* Details: "The portlet hub startPartialAction function returns a            */
       /* PartialActionInit object"                                                  */
       document.getElementById('V3PortletHubTests_SPEC_23_JSPA_startPartialAction3-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction3');
-         hub.setRenderState(state);
+         doPartialAction(function () {
+            return hub.startPartialAction().then (function (paInit) {
+               msg = null;
+               if (typeof paInit !== 'object') {
+                  msg = 'PartialActionInit is not an object, but: ' + typeof paInit;
+               }
+               setSuccess('V3PortletHubTests_SPEC_23_JSPA_startPartialAction3', msg);
+               return paInit;
+            });
+         }, 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction3');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction4               */
       /* Details: "The PartialActionInit object has a url property of type string"  */
       document.getElementById('V3PortletHubTests_SPEC_23_JSPA_startPartialAction4-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction4');
-         hub.setRenderState(state);
+         doPartialAction(function () {
+            return hub.startPartialAction().then (function (paInit) {
+               msg = null;
+               if (typeof paInit.url !== 'string') {
+                  msg = 'PartialActionInit url property is not a string, but: ' + typeof paInit.url;
+               }
+               setSuccess('V3PortletHubTests_SPEC_23_JSPA_startPartialAction4', msg);
+               return paInit;
+            });
+         }, 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction4');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction5               */
       /* Details: "The PartialActionInit object has a setPageState property of type */
       /* function"                                                                  */
       document.getElementById('V3PortletHubTests_SPEC_23_JSPA_startPartialAction5-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction5');
-         hub.setRenderState(state);
+         doPartialAction(function () {
+            return hub.startPartialAction().then (function (paInit) {
+               msg = null;
+               if (typeof paInit.setPageState !== 'function') {
+                  msg = 'PartialActionInit setPageState property is not a function, but: ' + typeof paInit.setPageState;
+               }
+               setSuccess('V3PortletHubTests_SPEC_23_JSPA_startPartialAction5', msg);
+               return paInit;
+            });
+         }, 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction5');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction6               */
@@ -126,54 +192,78 @@
       /* a token to be returned that completes the partial action when passed to    */
       /* the setPageState function"                                                 */
       document.getElementById('V3PortletHubTests_SPEC_23_JSPA_startPartialAction6-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction6');
-         hub.setRenderState(state);
+         doPartialAction(function () {
+            return hub.startPartialAction();
+         }, 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction6');
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction7               */
       /* Details: "The onStateChange event resulting from a partial action contains */
       /* render data produced by the portlet resource method"                       */
       document.getElementById('V3PortletHubTests_SPEC_23_JSPA_startPartialAction7-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction7');
-         hub.setRenderState(state);
+         doPartialAction(function () {
+            return hub.startPartialAction();
+         }, 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction7');
       }
 
-      update = function (type, state) {
+      update = function (type, state, renderData) {
+         
+         function checkStatus (tc, skipCheck) {
+            var expectedContent, msg;
+            if (doUpdate) {
+               doUpdate = false;
+               doResolve(hub.newState(state));
+            } else if (!skipCheck) {
+               // make sure that the status set by the server indicates success
+               status = state.getValue('status'); 
+               expectedContent = 'OK ' + tc;
+               if (!status) {
+                  msg = 'Status not set by server.';
+               } else if (status !== 'OK') {
+                  msg = 'Status: ' + status;
+               } else if (!renderData) {
+                  msg = 'Failed. No render data provided.';
+               } else if (renderData.mimeType !== 'text/plain') {
+                  msg = 'Failed. Type not set to text/plain, but to: ' + renderData.type;
+               } else if (renderData.content !== expectedContent) {
+                  msg = 'Failed. Status from resource method: ' + renderData.content;
+               }
+               setSuccess(tc, msg);
+            }
+         }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction1               */
          /* Details: "The portlet hub startPartialAction function can be called with   */
          /* no arguments"                                                              */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction1') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSPA_startPartialAction1', 'Not implemented.');
+            checkStatus('V3PortletHubTests_SPEC_23_JSPA_startPartialAction1');
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction2               */
          /* Details: "The portlet hub startPartialAction function can be called with   */
          /* an action parameters argument"                                             */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction2') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSPA_startPartialAction2', 'Not implemented.');
+            checkStatus('V3PortletHubTests_SPEC_23_JSPA_startPartialAction2');
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction3               */
          /* Details: "The portlet hub startPartialAction function returns a            */
          /* PartialActionInit object"                                                  */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction3') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSPA_startPartialAction3', 'Not implemented.');
+            checkStatus('V3PortletHubTests_SPEC_23_JSPA_startPartialAction3', true);
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction4               */
          /* Details: "The PartialActionInit object has a url property of type string"  */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction4') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSPA_startPartialAction4', 'Not implemented.');
+            checkStatus('V3PortletHubTests_SPEC_23_JSPA_startPartialAction4', true);
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction5               */
          /* Details: "The PartialActionInit object has a setPageState property of type */
          /* function"                                                                  */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction5') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSPA_startPartialAction5', 'Not implemented.');
+            checkStatus('V3PortletHubTests_SPEC_23_JSPA_startPartialAction5', true);
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction6               */
@@ -181,14 +271,14 @@
          /* a token to be returned that completes the partial action when passed to    */
          /* the setPageState function"                                                 */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction6') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSPA_startPartialAction6', 'Not implemented.');
+            checkStatus('V3PortletHubTests_SPEC_23_JSPA_startPartialAction6');
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction7               */
          /* Details: "The onStateChange event resulting from a partial action contains */
          /* render data produced by the portlet resource method"                       */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction7') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSPA_startPartialAction7', 'Not implemented.');
+            checkStatus('V3PortletHubTests_SPEC_23_JSPA_startPartialAction7');
          }
 
       }
