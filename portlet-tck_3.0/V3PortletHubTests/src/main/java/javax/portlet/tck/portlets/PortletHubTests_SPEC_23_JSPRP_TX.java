@@ -28,17 +28,25 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETHUBTESTS_SPE
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.annotations.ActionMethod;
+import javax.portlet.annotations.EventMethod;
 import javax.portlet.annotations.PortletConfiguration;
+import javax.portlet.annotations.PortletQName;
 import javax.portlet.tck.beans.TestButtonAsync;
 import javax.portlet.tck.beans.TestResultAsync;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
+import javax.xml.namespace.QName;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -48,8 +56,10 @@ import javax.portlet.tck.util.ModuleTestCaseDetails;
  *
  */
 
-@PortletConfiguration(portletName = "PortletHubTests_SPEC_23_JSPRP")
-public class PortletHubTests_SPEC_23_JSPRP implements Portlet {
+@PortletConfiguration(portletName = "PortletHubTests_SPEC_23_JSPRP_TX",
+                      publicParams = "prptestcase"
+                     )
+public class PortletHubTests_SPEC_23_JSPRP_TX implements Portlet {
    
    private PortletConfig portletConfig = null;
 
@@ -63,8 +73,45 @@ public class PortletHubTests_SPEC_23_JSPRP implements Portlet {
    }
 
    @Override
+   @ActionMethod(portletName = "PortletHubTests_SPEC_23_JSPRP_TX", publishingEvents = {
+         @PortletQName(namespaceURI="http://www.apache.org/", localPart="prpevent")
+   })
    public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+      
+      ActionParameters ap = portletReq.getActionParameters();
+      String testcase = ap.getValue("testcase");
+      
+      if (testcase != null && (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSPRP_ACTION1) ||
+            testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSPRP_ACTION2))) {
+         
+         QName qname = new QName("http://www.apache.org/", "prpevent");
+         portletResp.setEvent(qname, testcase);
+
+      }
    }
+   
+   
+   @EventMethod(portletName = "PortletHubTests_SPEC_23_JSPRP_TX", processingEvents = {
+         @PortletQName(namespaceURI="http://www.apache.org/", localPart="prpevent")
+   })
+   public void doEvent(EventRequest eventReq, EventResponse eventResp) {
+
+      MutableRenderParameters mrp = eventResp.getRenderParameters();
+      String testcase = (String) eventReq.getEvent().getValue();
+
+      if (testcase == null || testcase.isEmpty()) {
+         
+         mrp.setValue("status", "Failed. No test case parameter present.");
+         
+      } else if (testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSPRP_ACTION1) ||
+            testcase.equals(V3PORTLETHUBTESTS_SPEC_23_JSPRP_ACTION2)) {
+         
+         mrp.setValue("status", "OK");
+         mrp.setValue("prptestcase", testcase);
+      }
+
+   }
+
 
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
@@ -88,8 +135,6 @@ public class PortletHubTests_SPEC_23_JSPRP implements Portlet {
       {
          TestButtonAsync button = new TestButtonAsync(V3PORTLETHUBTESTS_SPEC_23_JSPRP_SETRENDERSTATE2);
          button.writeTo(writer);
-         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JSPRP_SETRENDERSTATE2);
-         result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_setRenderState3                  */
@@ -108,13 +153,11 @@ public class PortletHubTests_SPEC_23_JSPRP implements Portlet {
       {
          TestButtonAsync button = new TestButtonAsync(V3PORTLETHUBTESTS_SPEC_23_JSPRP_SETRENDERSTATE4);
          button.writeTo(writer);
-         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JSPRP_SETRENDERSTATE4);
-         result.writeTo(writer);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_Action1                          */
       /* Details: "The portlet hub action function can cause a public render        */
-      /* parameter to be set for the initiating portlet"                            */
+      /* parameter to be set for the initiating portlet that is target of an event" */
       {
          TestButtonAsync button = new TestButtonAsync(V3PORTLETHUBTESTS_SPEC_23_JSPRP_ACTION1);
          button.writeTo(writer);
@@ -128,23 +171,21 @@ public class PortletHubTests_SPEC_23_JSPRP implements Portlet {
       {
          TestButtonAsync button = new TestButtonAsync(V3PORTLETHUBTESTS_SPEC_23_JSPRP_ACTION2);
          button.writeTo(writer);
-         TestResultAsync result = tcd.getTestResultAsyncFailed(V3PORTLETHUBTESTS_SPEC_23_JSPRP_ACTION2);
-         result.writeTo(writer);
       }
 
       writer.write("<script>");
       writer.write("   var tck = tck || {};");
-      writer.write("   tck.PortletHubTests_SPEC_23_JSPRP = {};");
-      writer.write("   tck.PortletHubTests_SPEC_23_JSPRP.pid = '" + portletResp.getNamespace() + "';");
+      writer.write("   tck.PortletHubTests_SPEC_23_JSPRP_TX = {};");
+      writer.write("   tck.PortletHubTests_SPEC_23_JSPRP_TX.pid = '" + portletResp.getNamespace() + "';");
       writer.write("</script>");
 
-      writer.write("<form  id='PortletHubTests_SPEC_23_JSPRP-dummyForm' onsubmit='return false;' enctype='application/x-www-form-urlencoded'>");
+      writer.write("<form  id='PortletHubTests_SPEC_23_JSPRP_TX-dummyForm' onsubmit='return false;' enctype='application/x-www-form-urlencoded'>");
       writer.write("</form>");
 
       StringBuilder txt = new StringBuilder(128);
       txt.append("<script type='text/javascript' src='");
       txt.append(portletConfig.getPortletContext().getContextPath());
-      txt.append("/javascript/PortletHubTests_SPEC_23_JSPRP.js'></script>\n");
+      txt.append("/javascript/PortletHubTests_SPEC_23_JSPRP_TX.js'></script>\n");
 
       writer.write(txt.toString());
 

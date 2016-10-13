@@ -186,8 +186,8 @@ SPEC_23;JS PRP;setRenderState1;TRUE;The portlet hub setRenderState function info
 SPEC_23;JS PRP;setRenderState2;TRUE;The portlet hub setRenderState function informs other affected portlets when a public render parameter is set
 SPEC_23;JS PRP;setRenderState3;TRUE;The portlet hub setRenderState function allows a public render parameter to be deleted
 SPEC_23;JS PRP;setRenderState4;TRUE;The portlet hub setRenderState function informs other affected portlets when public render parameter is deleted
-SPEC_23;JS PRP;Action1;TRUE;The portlet hub action function can cause a public render parameter to be set for the initiating portlet
-SPEC_23;JS PRP;Action2;TRUE;The portlet hub action function can cause a public render parameter to be set for a portlet that is target of an event
+SPEC_23;JS PRP;Action1;TRUE;The portlet hub action function can cause a public render parameter to be set for the initiating portlet that is target of an event
+SPEC_23;JS PRP;Action2;TRUE;The portlet hub action function can cause a public render parameter to be set for an affected portlet through an event
 
 SPEC_23;JS PA;startPartialAction1;TRUE;The portlet hub startPartialAction function can be called with no arguments
 SPEC_23;JS PA;startPartialAction2;TRUE;The portlet hub startPartialAction function can be called with an action parameters argument

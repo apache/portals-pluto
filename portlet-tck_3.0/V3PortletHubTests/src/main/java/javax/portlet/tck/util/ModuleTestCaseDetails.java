@@ -365,15 +365,15 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION2, "The portlet hub action function can be called with an action parameters argument");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION3, "The portlet hub action function can be called with a form element argument");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION4, "The portlet hub action function can be called with both action parameters and form element arguments");
-      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION5, "The portlet hub action function can cause a private render parameter to be set for the initiating portlet");
+      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION5, "The portlet hub action function can cause a private render parameter to be set for the initiating portlet that is target of an event");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION6, "The portlet hub action function can cause a private render parameter to be set for a portlet that is target of an event");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSACTION_ACTION7, "The portlet hub action function fulfills the promise when the action is complete");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSPRP_SETRENDERSTATE1, "The portlet hub setRenderState function informs the initiating portlet when a public render parameter is set");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSPRP_SETRENDERSTATE2, "The portlet hub setRenderState function informs other affected portlets when a public render parameter is set");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSPRP_SETRENDERSTATE3, "The portlet hub setRenderState function allows a public render parameter to be deleted");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSPRP_SETRENDERSTATE4, "The portlet hub setRenderState function informs other affected portlets when public render parameter is deleted");
-      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSPRP_ACTION1, "The portlet hub action function can cause a public render parameter to be set for the initiating portlet");
-      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSPRP_ACTION2, "The portlet hub action function can cause a public render parameter to be set for a portlet that is target of an event");
+      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSPRP_ACTION1, "The portlet hub action function can cause a public render parameter to be set for the initiating portlet that is target of an event");
+      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSPRP_ACTION2, "The portlet hub action function can cause a public render parameter to be set for an affected portlet through an event");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSPA_STARTPARTIALACTION1, "The portlet hub startPartialAction function can be called with no arguments");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSPA_STARTPARTIALACTION2, "The portlet hub startPartialAction function can be called with an action parameters argument");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSPA_STARTPARTIALACTION3, "The portlet hub startPartialAction function returns a PartialActionInit object");

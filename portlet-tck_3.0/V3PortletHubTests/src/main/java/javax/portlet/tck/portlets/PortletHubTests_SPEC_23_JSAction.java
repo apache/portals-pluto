@@ -41,9 +41,7 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.annotations.ActionMethod;
-import javax.portlet.annotations.EventDefinition;
 import javax.portlet.annotations.EventMethod;
-import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletQName;
 import javax.portlet.tck.beans.TestButtonAsync;
@@ -59,11 +57,6 @@ import javax.xml.namespace.QName;
  *
  */
 
-@PortletApplication(events = {
-      @EventDefinition(
-            qname=@PortletQName(namespaceURI="http://www.apache.org/", localPart="event"),
-            payloadType=String.class)
-      })
 @PortletConfiguration(portletName = "PortletHubTests_SPEC_23_JSAction")
 public class PortletHubTests_SPEC_23_JSAction implements Portlet {
    

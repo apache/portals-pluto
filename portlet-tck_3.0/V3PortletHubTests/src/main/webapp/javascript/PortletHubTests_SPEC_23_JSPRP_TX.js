@@ -75,14 +75,14 @@
 
    function execute () {
       var update, testFunction, hub,
-          pid = tck.PortletHubTests_SPEC_23_JSPRP.pid;
+          pid = tck.PortletHubTests_SPEC_23_JSPRP_TX.pid;
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_setRenderState1                  */
       /* Details: "The portlet hub setRenderState function informs the initiating   */
       /* portlet when a public render parameter is set"                             */
       document.getElementById('V3PortletHubTests_SPEC_23_JSPRP_setRenderState1-clickme').onclick = function () {
          var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState1');
+         state.setValue('prptestcase', 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState1');
          hub.setRenderState(state);
       }
 
@@ -91,7 +91,7 @@
       /* portlets when a public render parameter is set"                            */
       document.getElementById('V3PortletHubTests_SPEC_23_JSPRP_setRenderState2-clickme').onclick = function () {
          var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState2');
+         state.setValue('prptestcase', 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState2');
          hub.setRenderState(state);
       }
 
@@ -100,7 +100,7 @@
       /* parameter to be deleted"                                                   */
       document.getElementById('V3PortletHubTests_SPEC_23_JSPRP_setRenderState3-clickme').onclick = function () {
          var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState3');
+         state.setValue('prptestcase', 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState3');
          hub.setRenderState(state);
       }
 
@@ -109,26 +109,26 @@
       /* portlets when public render parameter is deleted"                          */
       document.getElementById('V3PortletHubTests_SPEC_23_JSPRP_setRenderState4-clickme').onclick = function () {
          var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState4');
+         state.setValue('prptestcase', 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState4');
          hub.setRenderState(state);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_Action1                          */
       /* Details: "The portlet hub action function can cause a public render        */
-      /* parameter to be set for the initiating portlet"                            */
+      /* parameter to be set for the initiating portlet that is target of an event" */
       document.getElementById('V3PortletHubTests_SPEC_23_JSPRP_Action1-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSPRP_Action1');
-         hub.setRenderState(state);
+         var p = {};
+         p.testcase = ['V3PortletHubTests_SPEC_23_JSPRP_Action1'];
+         hub.action(p);
       }
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_Action2                          */
       /* Details: "The portlet hub action function can cause a public render        */
-      /* parameter to be set for a portlet that is target of an event"              */
+      /* parameter to be set for a portlet through an event"                        */
       document.getElementById('V3PortletHubTests_SPEC_23_JSPRP_Action2-clickme').onclick = function () {
-         var state = hub.newState();
-         state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSPRP_Action2');
-         hub.setRenderState(state);
+         var p = {};
+         p.testcase = ['V3PortletHubTests_SPEC_23_JSPRP_Action2'];
+         hub.action(p);
       }
 
       update = function (type, state) {
@@ -136,43 +136,22 @@
          /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_setRenderState1                  */
          /* Details: "The portlet hub setRenderState function informs the initiating   */
          /* portlet when a public render parameter is set"                             */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState1') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSPRP_setRenderState1', 'Not implemented.');
-         }
-   
-         /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_setRenderState2                  */
-         /* Details: "The portlet hub setRenderState function informs other affected   */
-         /* portlets when a public render parameter is set"                            */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState2') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSPRP_setRenderState2', 'Not implemented.');
+         if (state.getValue('prptestcase') === 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState1') {
+            setSuccess('V3PortletHubTests_SPEC_23_JSPRP_setRenderState1');
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_setRenderState3                  */
          /* Details: "The portlet hub setRenderState function allows a public render   */
          /* parameter to be deleted"                                                   */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState3') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSPRP_setRenderState3', 'Not implemented.');
-         }
-   
-         /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_setRenderState4                  */
-         /* Details: "The portlet hub setRenderState function informs other affected   */
-         /* portlets when public render parameter is deleted"                          */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState4') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSPRP_setRenderState4', 'Not implemented.');
+         if (state.getValue('prptestcase') === 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState3') {
+            setSuccess('V3PortletHubTests_SPEC_23_JSPRP_setRenderState3');
          }
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_Action1                          */
          /* Details: "The portlet hub action function can cause a public render        */
-         /* parameter to be set for the initiating portlet"                            */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSPRP_Action1') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSPRP_Action1', 'Not implemented.');
-         }
-   
-         /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_Action2                          */
-         /* Details: "The portlet hub action function can cause a public render        */
-         /* parameter to be set for a portlet that is target of an event"              */
-         if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSPRP_Action2') {
-            setSuccess('V3PortletHubTests_SPEC_23_JSPRP_Action2', 'Not implemented.');
+         /* parameter to be set for the initiating portlet that is target of an event" */
+         if (state.getValue('prptestcase') === 'V3PortletHubTests_SPEC_23_JSPRP_Action1') {
+            setSuccess('V3PortletHubTests_SPEC_23_JSPRP_Action1');
          }
 
       }

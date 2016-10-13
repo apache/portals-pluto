@@ -71,13 +71,13 @@ public interface DriverConfiguration {
      */
     String getContainerName();
 
-    Collection getSupportedPortletModes();
+    Collection<String> getSupportedPortletModes();
 
-    Collection getSupportedWindowStates();
+    Collection<String> getSupportedWindowStates();
     
 //    Collection getPortletApplications();
 
-    Collection getPages();
+    Collection<PageConfig> getPages();
 
     PageConfig getPageConfig(String pageId);
     

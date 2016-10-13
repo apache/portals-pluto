@@ -100,7 +100,7 @@ public class DriverConfigurationImpl
      * Standard Getter.
      * @return the names of the supported portlet modes.
      */
-    public Collection getSupportedPortletModes() {
+    public Collection<String> getSupportedPortletModes() {
         return propertyService.getSupportedPortletModes();
     }
 
@@ -108,7 +108,7 @@ public class DriverConfigurationImpl
      * Standard Getter.
      * @return the names of the supported window states.
      */
-    public Collection getSupportedWindowStates() {
+    public Collection<String> getSupportedWindowStates() {
         return propertyService.getSupportedWindowStates();
     }
 
@@ -116,7 +116,7 @@ public class DriverConfigurationImpl
      * Standard Getter.
      * @return the render configuration.
      */
-    public Collection getPages() {
+    public Collection<PageConfig> getPages() {
         return renderService.getPages();
     }
 

@@ -16,6 +16,31 @@
  */
 package org.apache.pluto.driver.services.container;
 
+import java.io.IOException;
+import java.io.Serializable;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import javax.portlet.Event;
+import javax.portlet.PortletException;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.namespace.QName;
+import javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+
 import org.apache.pluto.container.EventCoordinationService;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
@@ -33,36 +58,13 @@ import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.portlet.Event;
-import javax.portlet.PortletException;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.namespace.QName;
-import javax.xml.parsers.FactoryConfigurationError;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-
-import java.io.IOException;
-import java.io.Serializable;
-import java.io.StringReader;
-import java.util.*;
 
 public class EventCoordinationServiceImpl implements EventCoordinationService {
    /** Logger. */
    private static final Logger          LOG           = LoggerFactory
                                                             .getLogger(EventCoordinationServiceImpl.class);
-
-   private static final long            WAITING_CYCLE = 100;
 
    /** PortletRegistryService used to obtain PortletApplicationConfig objects */
    private final PortletRegistryService portletRegistry;
@@ -79,6 +81,7 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
    public void processEvents(PortletContainer container,
          PortletWindow portletWindow, HttpServletRequest request,
          HttpServletResponse response, List<Event> events) {
+      
       ServletContext containerServletContext = PortalRequestContext.getContext(
             request).getServletContext();
       DriverConfiguration driverConfig = (DriverConfiguration) containerServletContext
@@ -95,7 +98,7 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
 
       for (Event event : events) {
          List<String> portletNames = getAllPortletsRegisteredForEvent(event,
-               driverConfig, containerServletContext);
+               driverConfig, containerServletContext, portalURL);
 
          // Deliver events to all portlets in the portal
          // Collection<PortletWindowConfig> portlets =
@@ -150,6 +153,7 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
       }
    }
 
+   @SuppressWarnings("rawtypes")
    protected void doEvent(PortletContainer container,
          PortletWindow portletWindow, Event event, HttpServletRequest request,
          HttpServletResponse response) {
@@ -229,11 +233,18 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
 
    private List<String> getAllPortletsRegisteredForEvent(Event event,
          DriverConfiguration driverConfig,
-         ServletContext containerServletContext) {
+         ServletContext containerServletContext, PortalURL portalURL) {
+      
       Set<String> resultSet = new HashSet<String>();
       List<String> resultList = new ArrayList<String>();
       QName eventName = event.getQName();
-      Collection<PortletWindowConfig> portlets = getAllPortlets(driverConfig);
+      // Collection<PortletWindowConfig> portlets = getAllPortlets(driverConfig);
+      
+      // limit event processing to those portlets on the page
+      Collection<PortletWindowConfig> portlets = new ArrayList<PortletWindowConfig>();
+      for (String pid : portalURL.getPortletIds()) {
+         portlets.add(PortletWindowConfig.fromId(pid));
+      }
 
       for (PortletWindowConfig portlet : portlets) {
          String contextPath = portlet.getContextPath();
@@ -337,75 +348,22 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
       return null;
    }
 
-   
-   /**
-    * gets the right PortletWindowThread or makes a new one, if theres none
-    * 
-    */
-//   private PortletWindowThread getPortletWindowThread(
-//         Map<String, PortletWindowThread> portletWindowThreads,
-//         ThreadGroup threadGroup, PortletContainer container,
-//         PortletWindowConfig config, PortletWindow window,
-//         HttpServletRequest req, HttpServletResponse res,
-//         ServletContext containerServletContext) {
-//      String windowID = window.getId().getStringId();
-//      PortletWindowThread portletWindowThread = portletWindowThreads
-//            .get(windowID);
-//      if (portletWindowThread == null) {
-//         portletWindowThread = new PortletWindowThread(threadGroup,
-//               config.getId(), container, window, req, res,
-//               portletContextService);
-//         portletWindowThreads.put(windowID, portletWindowThread);
-//      } else {
-//         // a thread could be started twice, so we make a new one,
-//         // after the old thread stopped
-//         // try {
-//         try {
-//            portletWindowThread.join();
-//         } catch (InterruptedException e) {
-//            LOG.warn(e.getMessage(), e);
-//         }
-//         portletWindowThreads.remove(portletWindowThread);
-//         portletWindowThread = new PortletWindowThread(threadGroup,
-//               config.getId(), container, window, req, res,
-//               portletContextService);
-//         portletWindowThreads.put(windowID, portletWindowThread);
-//      }
-//      return portletWindowThread;
-//   }
-
-   /**
-    * Wait for event execution.
-    */
-//   private void waitForEventExecution(ThreadGroup threadGroup) {
-//      long counter = 0;
-//      while (threadGroup.activeCount() > 0) {
-//         try {
-//            counter = +WAITING_CYCLE;
-//            if (counter > 500) {
-//               threadGroup.stop();
-//            }
-//            Thread.sleep(WAITING_CYCLE);
-//         } catch (InterruptedException e) {
-//            LOG.warn(e.getMessage(), e);
-//         }
-//      }
-//   }
 
    /**
 	 * 
 	 */
+   @SuppressWarnings("unused")
    private Collection<PortletWindowConfig> getAllPortlets(
          DriverConfiguration driverConfig) {
       Collection<PortletWindowConfig> portlets = new ArrayList<PortletWindowConfig>();
-      Collection pages = driverConfig.getPages();
+      Collection<PageConfig> pages = driverConfig.getPages();
       if (pages != null) {
-         Iterator iPages = pages.iterator();
+         Iterator<PageConfig> iPages = pages.iterator();
          while (iPages.hasNext()) {
             PageConfig pageConfig = (PageConfig) iPages.next();
-            Collection portletIDs = pageConfig.getPortletIds();
+            Collection<String> portletIDs = pageConfig.getPortletIds();
             if (portletIDs != null) {
-               Iterator iPortletIDs = portletIDs.iterator();
+               Iterator<String> iPortletIDs = portletIDs.iterator();
                while (iPortletIDs.hasNext()) {
                   portlets.add(PortletWindowConfig.fromId(iPortletIDs.next()
                         .toString()));
