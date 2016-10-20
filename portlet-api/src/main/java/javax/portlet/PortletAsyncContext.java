@@ -80,7 +80,7 @@ public interface PortletAsyncContext {
     * @param listener   the listener to be added
     * @throws IllegalStateException
     * if this method is called after the container-initiated dispatch, during which
-    * one of the <code>ServletRequest.startAsync()</code> methods was called, has
+    * one of the <code>ResourceRequest.startAsync()</code> methods was called, has
     * returned to the container
     * 
     */
@@ -123,7 +123,7 @@ public interface PortletAsyncContext {
     * @param response   the response object to be included in the <code>PortletAsyncEvent</code>
     * @throws IllegalStateException
     * if this method is called after the container-initiated dispatch, during which
-    * one of the <code>ServletRequest.startAsync()</code> methods was called, has
+    * one of the <code>ResourceRequest.startAsync()</code> methods was called, has
     * returned to the container
     * 
     */
@@ -155,7 +155,7 @@ public interface PortletAsyncContext {
     * @throws IllegalStateException
     * if this method is called before an asynchronous processing cycle was started, 
     * after it has already been completed, or after a call to 
-    * one of the <code>ServletRequest.dispatch()</code> methods
+    * one of the <code>dispatch()</code> methods
     * 
     */
    public void complete() throws IllegalStateException;
@@ -391,7 +391,7 @@ public interface PortletAsyncContext {
     * @throws IllegalStateException
     * if this method is called before an asynchronous processing cycle was started, 
     * after it has already been completed, or after a call to 
-    * one of the <code>ServletRequest.dispatch()</code> methods
+    * one of the <code>dispatch()</code> methods
     * 
     **/
    public void start(Runnable run) throws IllegalStateException;

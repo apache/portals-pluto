@@ -184,6 +184,7 @@
       <module>V3AnnotationPortletAppConfigOverrideTests</module>
       <module>V3AnnotationPortletConfigTests</module>
       <module>V3PortletHubTests</module>
+      <module>V3ResourceAsyncTests</module>
       <module>deploy</module>
       <module>driver</module>
    </modules>

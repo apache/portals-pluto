@@ -371,6 +371,12 @@
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V3ResourceAsyncTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
    </dependencies>
 
    <properties>
@@ -476,6 +482,7 @@
                         ,tck-V3AnnotationPortletAppConfigOverrideTests
                         ,tck-V3AnnotationPortletConfigTests
                         ,tck-V3PortletHubTests
+                        ,tck-V3ResourceAsyncTests
                      </includeArtifactIds>
                      <includes>${test.file.dir}/*.xml</includes>
                      <outputDirectory>${project.build.directory}</outputDirectory>

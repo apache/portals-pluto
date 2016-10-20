@@ -70,4 +70,5 @@
    <fl:file>tck-V3AnnotationPortletAppConfigOverrideTests-tests.xml</fl:file>
    <fl:file>tck-V3AnnotationPortletConfigTests-tests.xml</fl:file>
    <fl:file>tck-V3PortletHubTests-tests.xml</fl:file>
+   <fl:file>tck-V3ResourceAsyncTests-tests.xml</fl:file>
 </fl:filelist>

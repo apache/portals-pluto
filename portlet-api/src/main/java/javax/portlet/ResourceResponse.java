@@ -55,7 +55,7 @@ public interface ResourceResponse extends MimeResponse {
 	 * for setting the HTTP status code via the 
 	 * <code>setProperty</code> method.
 	 * <span class="changed_added_3_0">
-	 * Changing the HTTP status code after 
+	 * Changing the HTTP status code
     * after the response has been committed has no effect.
     * </span>
 	 */
@@ -70,7 +70,7 @@ public interface ResourceResponse extends MimeResponse {
      * by the portlet container.
      * <p>
      * <span class="changed_added_3_0">
-     * This method has no effect if it is called after 
+     * This method has no effect if it is called
      * after the response has been committed.
      * </span>
      * 
@@ -105,7 +105,7 @@ public interface ResourceResponse extends MimeResponse {
      * the length of the content body in the response.
      * <p>
      * <span class="changed_added_3_0">
-     * This method has no effect if it is called after 
+     * This method has no effect if it is called
      * after the response has been committed.
      * </span>
      * 
@@ -124,7 +124,7 @@ public interface ResourceResponse extends MimeResponse {
      * </a>. The status code constants "SC_*" defined in 
      * {@link javax.servlet.http.HttpServletResponse} may be used.
      * <p>
-     * This method has no effect if it is called after 
+     * This method has no effect if it is called
      * after the response has been committed.
      * </div>
      * 
@@ -157,7 +157,7 @@ public interface ResourceResponse extends MimeResponse {
      * <div class="changed_added_3_0">
      * Sets the length of the content body in the response.
      * <p>
-     * This method has no effect if it is called after 
+     * This method has no effect if it is called
      * after the response has been committed.
      * </div>
      * 

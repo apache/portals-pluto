@@ -1,0 +1,95 @@
+PARMS outputPath=c:\temp\gen
+//
+// The tool is used with the command: java -jar TestFileGenerator.jar <filespec>
+// Example:                           java -jar target\TestFileGenerator.jar ModuleAssertions.csv
+//
+// The format of this file is as follows:
+// * lines beginning with '//', blank lines, and the header line beginning with
+//   'Class / Section' are ignored.
+// * If the first line begins with 'PARMS', the rest of the line contains parameters for the run.
+//   The output path can be specified as parameter.
+// * A line containing a single word followed by ';;;;' starts a new module.
+// * The tool can generate multiple modules from one input file.
+// * The class name is generated from the module name and the contents of the first and 
+//   second columns. When this combination changes, you get a new portlet.
+//
+// The tool recognizes duplicate test case names. You should make sure that there are none.
+//
+Class / Section;Keywords;Name;Testable;Description
+ResourceAsyncTests;;;;
+SPEC_21;No Async;isAsyncSupported;TRUE;The ResourceRequest object isAsyncSupported() method returns false if the portlet does not support async processing
+SPEC_21;No Async;isAsyncStarted;TRUE;The ResourceRequest object isAsyncStarted() method returns false if the portlet does not support async processing
+SPEC_21;No Async;startAsync1;TRUE;The ResourceRequest object startAsync() method throws an IllegalStateException if the portlet does not support async processing
+SPEC_21;No Async;startAsync2;TRUE;The ResourceRequest object startAsync(ResourceRequest, ResourceResponse) method throws an IllegalStateException if the portlet does not support async processing
+SPEC_21;No Async;getDispatcherType;TRUE;The ResourceRequest object getDispatcherType() method returns the value DispatcherType.REQUEST within the resource method if the portlet does not support async processing
+SPEC_21;No Async;getPortletAsyncContext;TRUE;The ResourceRequest object getPortletAsyncContext() method returns the value null if the portlet does not support async processing
+
+SPEC_21;Async;isAsyncSupported;TRUE;The ResourceRequest object isAsyncSupported() method returns true if the portlet supports async processing
+SPEC_21;Async;isAsyncStarted1;TRUE;The ResourceRequest object isAsyncStarted() method returns false if asynchronous processing has not been started
+SPEC_21;Async;isAsyncStarted2;TRUE;The ResourceRequest object isAsyncStarted() method returns true if asynchronous processing has been started
+SPEC_21;Async;startAsync1;TRUE;The ResourceRequest object startAsync() method returns a PortletAsyncContext object
+SPEC_21;Async;startAsync2;TRUE;The ResourceRequest object startAsync(ResourceRequest, ResourceResponse) method returns a PortletAsyncContext object
+SPEC_21;Async;startAsync3;TRUE;The ResourceRequest object startAsync() method throws an IllegalStateException if asynchronous processing has already been started
+SPEC_21;Async;startAsync4;TRUE;The ResourceRequest object startAsync(ResourceRequest, ResourceResponse) method throws an IllegalStateException if asynchronous processing has already been started
+SPEC_21;Async;getDispatcherType1;TRUE;The ResourceRequest object getDispatcherType() method returns the value DispatcherType.REQUEST within the resource method before the container dispatch cycle in which asynchronous processing is started returns
+SPEC_21;Async;getDispatcherType2;TRUE;The ResourceRequest object getDispatcherType() method returns the value DispatcherType.REQUEST within the resource filter before the container dispatch cycle in which asynchronous processing is started returns
+SPEC_21;Async;getDispatcherType3;TRUE;The ResourceRequest object getDispatcherType() method returns the value DispatcherType.ASYNC within the resource method when the PortletAsyncContext object dispatch() method is used to dispatch to the resource method 
+SPEC_21;Async;getDispatcherType4;TRUE;The ResourceRequest object getDispatcherType() method returns the value DispatcherType.ASYNC within the resource filter when the PortletAsyncContext object dispatch() method is used to dispatch to the resource method 
+SPEC_21;Async;getDispatcherType5;TRUE;The ResourceRequest object getDispatcherType() method returns the value DispatcherType.ASYNC within the dispatch target method when the PortletAsyncContext object dispatch(String) method is used to dispatch to the resource method 
+SPEC_21;Async;getPortletAsyncContext1;TRUE;The ResourceRequest object getPortletAsyncContext() method returns the value null if async processing has not been started
+SPEC_21;Async;getPortletAsyncContext2;TRUE;The ResourceRequest object getPortletAsyncContext() method returns a PortletAsyncContext object if async processing has been started
+SPEC_21;Async;complete1;TRUE;The PortletAsyncContext object complete() method completes asynchronous processing within the original resource request
+SPEC_21;Async;complete2;TRUE;The PortletAsyncContext object complete() method completes asynchronous processing within an asynchronous thread
+SPEC_21;Async;complete3;TRUE;The PortletAsyncContext object complete() method throws an IllegalStateException if called before asynchronous processing has started
+SPEC_21;Async;complete4;TRUE;The PortletAsyncContext object complete() method throws an IllegalStateException if called after asynchronous processing has completed
+SPEC_21;Async;complete5;TRUE;The PortletAsyncContext object complete() method throws an IllegalStateException if called after the PortletAsyncContext object dispatch() method has been called
+SPEC_21;Async;complete6;TRUE;The PortletAsyncContext object complete() method throws an IllegalStateException if called after the PortletAsyncContext object dispatch(String) method has been called
+SPEC_21;Async;setTimeout;TRUE;The PortletAsyncContext object setTimeout() method sets the asynchronous timeout value
+SPEC_21;Async;getTimeout1;TRUE;The PortletAsyncContext object getTimeout() method returns the default value of 30000 ms
+SPEC_21;Async;getTimeout2;TRUE;The PortletAsyncContext object getTimeout() method returns a previously set timeout value
+SPEC_21;Async;hasOriginalRequestAndResponse1;TRUE;The PortletAsyncContext object hasOriginalRequestAndResponse() method returns true if asynchronous processing was started through the startPortletAsync() method
+SPEC_21;Async;hasOriginalRequestAndResponse2;TRUE;The PortletAsyncContext object hasOriginalRequestAndResponse() method returns true if asynchronous processing was started through the startPortletAsync(ResourceRequest, ResourceResponse) method if the request and response objects were not wrapped
+SPEC_21;Async;hasOriginalRequestAndResponse3;TRUE;The PortletAsyncContext object hasOriginalRequestAndResponse() method returns false if asynchronous processing was started through the startPortletAsync(ResourceRequest, ResourceResponse) method if the request and response objects were wrapped
+SPEC_21;Async;getResourceRequest1;TRUE;The PortletAsyncContext object getResourceRequest() method returns the original ResourceRequest object if asynchronous processing was started through the startPortletAsync() method
+SPEC_21;Async;getResourceRequest2;TRUE;The PortletAsyncContext object getResourceRequest() method returns the original ResourceRequest object if asynchronous processing was started through the startPortletAsync(ResourceRequest, ResourceResponse) method if the request and response objects were not wrapped
+SPEC_21;Async;getResourceRequest3;TRUE;The PortletAsyncContext object getResourceRequest() method returns the wrapped ResourceRequest object if asynchronous processing was started through the startPortletAsync(ResourceRequest, ResourceResponse) method if the request and response objects were wrapped
+SPEC_21;Async;getResourceResponse1;TRUE;The PortletAsyncContext object getResourceResponse() method returns the original ResourceResponse object if asynchronous processing was started through the startPortletAsync() method
+SPEC_21;Async;getResourceResponse2;TRUE;The PortletAsyncContext object getResourceResponse() method returns the original ResourceResponse object if asynchronous processing was started through the startPortletAsync(ResourceRequest, ResourceResponse) method if the request and response objects were not wrapped
+SPEC_21;Async;getResourceResponse3;TRUE;The PortletAsyncContext object getResourceResponse() method returns the wrapped  ResourceResponse object if asynchronous processing was started through the startPortletAsync(ResourceRequest, ResourceResponse) method if the request and response objects were wrapped
+SPEC_21;Async;createPortletAsyncListener1;TRUE;The PortletAsyncContext object createPortletAsyncListener(Class) method returns an instance of the PortletAsyncListener class provided
+SPEC_21;Async;createPortletAsyncListener2;TRUE;The PortletAsyncContext object createPortletAsyncListener(Class) method throws a PortletException if the class provided is not of type PortletAsyncListener
+SPEC_21;Async;createPortletAsyncListener3;TRUE;The PortletAsyncContext object createPortletAsyncListener(Class) method throws a PortletException if the class provided cannot be instantiated
+SPEC_21;Async;createPortletAsyncListener4;TRUE;The PortletAsyncContext object createPortletAsyncListener(Class) method throws a PortletException if the class provided does not have a zero argument constructor
+SPEC_21;Async;addListener1;TRUE;The PortletAsyncContext object addListener(PortletAsyncListener) method adds a portlet asynchronous listener
+SPEC_21;Async;addListener2;TRUE;The PortletAsyncContext object addListener(PortletAsyncListener) method throws an IllegalStateException if called after the container-initiated dispatch during which one of the startAsync() methods was called has returned to the container
+SPEC_21;Async;addListener3;TRUE;The PortletAsyncContext object addListener(PortletAsyncListener, ResourceRequest, ResourceResponse) method adds a portlet asynchronous listener
+SPEC_21;Async;addListener4;TRUE;The PortletAsyncContext object addListener(PortletAsyncListener, ResourceRequest, ResourceResponse) method throws an IllegalStateException if called after the container-initiated dispatch during which one of the startAsync() methods was called has returned to the container
+SPEC_21;Async;dispatch1;TRUE;The PortletAsyncContext object dispatch() method dispatches to the resource method if called from within the original resource request
+SPEC_21;Async;dispatch2;TRUE;The PortletAsyncContext object dispatch() method dispatches to the resource method if called from within an asynchronous thread
+SPEC_21;Async;dispatch3;TRUE;The PortletAsyncContext object dispatch() method throws an IllegalStateException if called before a new asynchronous processing cycle has been started
+SPEC_21;Async;dispatch4;TRUE;The PortletAsyncContext object dispatch() method throws an IllegalStateException if called after asynchronous processing has completed
+SPEC_21;Async;dispatch5;TRUE;The PortletAsyncContext object dispatch() method throws an IllegalStateException if called after a dispatch method has been called within the same container dispatch cycle
+SPEC_21;Async;dispatch6;TRUE;The PortletAsyncContext object dispatch(String) method dispatches to the given path if called from within the original resource request
+SPEC_21;Async;dispatch7;TRUE;The PortletAsyncContext object dispatch(String) method dispatches to the given path if called from within an asynchronous thread
+SPEC_21;Async;dispatch8;TRUE;The PortletAsyncContext object dispatch(String) method throws an IllegalStateException if called before a new asynchronous processing cycle has been started
+SPEC_21;Async;dispatch9;TRUE;The PortletAsyncContext object dispatch(String) method throws an IllegalStateException if called after asynchronous processing has completed
+SPEC_21;Async;dispatchA;TRUE;The PortletAsyncContext object dispatch(String) method throws an IllegalStateException if called after a dispatch method has been called within the same container dispatch cycle
+SPEC_21;Async;start1;TRUE;The PortletAsyncContext object start(String) method causes an asynchronous thread to run
+SPEC_21;Async;start2;TRUE;The PortletAsyncContext object start(String) method throws an IllegalStateException if called before a new asynchronous processing cycle has been started
+SPEC_21;Async;start3;TRUE;The PortletAsyncContext object start(String) method throws an IllegalStateException if called after asynchronous processing has completed
+SPEC_21;Async;start4;TRUE;The PortletAsyncContext object start(String) method throws an IllegalStateException if called after a dispatch method has been called within the same container dispatch cycle
+SPEC_21;Async;cdi1;TRUE;When CDI is available and the asynchronous thread is started through the PortletAsyncContext object, the asynchronous thread runs in the same context as the original request
+SPEC_21;Async;cdi2;TRUE;When CDI is available and the asynchronous thread is started through the PortletAsyncContext object, the PortletAsyncListener runs in the same context as the original request
+SPEC_21;Async;cdi3;TRUE;When CDI is available and the asynchronous thread is started through the PortletAsyncContext object, the resource filter runs in the same context as the original request
+SPEC_21;Async;onTimeout;TRUE;The PortletAsyncListener object onTimeout(PortletAsyncEvent) method is called when a timeout occurs 
+SPEC_21;Async;onError;TRUE;The PortletAsyncListener object onError(PortletAsyncEvent) method is called if an exception is thrown in an asynchronous thread started through the PortletAsyncContext object 
+SPEC_21;Async;onComplete;TRUE;The PortletAsyncListener object onComplete(PortletAsyncEvent) method is called when asynchronous processing completes 
+SPEC_21;Async;onStartAsync;TRUE;The PortletAsyncListener object onStartAsync(PortletAsyncEvent) method is called when asynchronous processing is restarted 
+SPEC_21;Async;getPortletAsyncContext;TRUE;The PortletAsyncEvent object getPortletAsyncContext() method returns the PortletAsyncContext object for the request
+SPEC_21;Async;getSuppliedRequest1;TRUE;The PortletAsyncEvent object getSuppliedRequest() method returns null if no resource request was supplied when the PortletAsyncListener was added 
+SPEC_21;Async;getSuppliedRequest2;TRUE;The PortletAsyncEvent object getSuppliedRequest() method returns the supplied request if a resource request was supplied when the PortletAsyncListener was added 
+SPEC_21;Async;getSuppliedResponse1;TRUE;The PortletAsyncEvent object getSuppliedResponse() method returns null if no resource response was supplied when the PortletAsyncListener was added 
+SPEC_21;Async;getSuppliedResponse2;TRUE;The PortletAsyncEvent object getSuppliedResponse() method returns the supplied response if a resource response was supplied when the PortletAsyncListener was added 
+SPEC_21;Async;getThrowable1;TRUE;The PortletAsyncEvent object getThrowable() method returns null within the PortletAsyncListener object onComplete(), onTimeout(), and onStartAsync() methods
+SPEC_21;Async;getThrowable2;TRUE;The PortletAsyncEvent object getThrowable() method returns the Throwable object associated with the error within the PortletAsyncListener object onError() method
+
