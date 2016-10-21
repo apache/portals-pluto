@@ -61,7 +61,7 @@ public interface PortletResourceRequestContext extends PortletRequestContext
      */
     
     AsyncContext startAsync(ResourceRequest request) throws IllegalStateException;
-    AsyncContext startAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException;
+    AsyncContext startAsync(ResourceRequest request, ResourceResponse response, boolean origReqResp) throws IllegalStateException;
     boolean isAsyncStarted();
     boolean isAsyncSupported();
     AsyncContext getAsyncContext() throws IllegalStateException;

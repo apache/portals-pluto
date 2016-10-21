@@ -130,11 +130,11 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
 
    @Override
    public AsyncContext startAsync(ResourceRequest request) throws IllegalStateException {
-      return startAsync(request, response);
+      return startAsync(request, response, true);
    }
 
    @Override
-   public AsyncContext startAsync(ResourceRequest resreq, ResourceResponse resresp) throws IllegalStateException {
+   public AsyncContext startAsync(ResourceRequest resreq, ResourceResponse resresp, boolean origReqResp) throws IllegalStateException {
       if (actx != null && actx.isComplete()) {
          return null;
       }
@@ -205,7 +205,7 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
       if (actx != null) {
          actx.setWrapped(hreq.startAsync(wreq, wresp));
       } else {
-         actx = new PortletAsyncContextImpl(hreq.startAsync(wreq, wresp), this, resreq);
+         actx = new PortletAsyncContextImpl(hreq.startAsync(wreq, wresp), this, resreq, resresp, origReqResp);
       }
 
       if (isTrace) {
@@ -321,4 +321,18 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
 
       return sess;
    }
+   
+   /**
+    * called with the argument set to false when the request body is no longer being executed.
+    * In this case, set the PortletAsyncContext to no longer active, which means that
+    * no more listeners can be added, etc.
+    */
+   @Override
+   public void setExecutingRequestBody(boolean executingRequestBody) {
+      if (actx != null && !executingRequestBody) {
+         actx.setContextInactive();
+      }
+      super.setExecutingRequestBody(executingRequestBody);
+   }
+
 }

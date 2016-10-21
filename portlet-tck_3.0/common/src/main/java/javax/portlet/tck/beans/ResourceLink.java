@@ -209,6 +209,7 @@ public class ResourceLink {
 
       writer.write(sb.toString());
    }
+   
    /**
     * Writes resource-fetching JavaScript code into the output stream.
     * The resource is retrieved without waiting for a link to be clicked. 
@@ -233,6 +234,48 @@ public class ResourceLink {
       sb.append("      if (xhr.readyState==4) {\n");
       sb.append("         if (xhr.status==200) {\n");
       sb.append("            document.getElementById('" + divId + "').innerHTML=xhr.responseText;\n");
+      sb.append("         }\n");
+      sb.append("      }\n");
+      sb.append("   };\n");
+      sb.append("   xhr.open('GET', '" + urlstr + "',true);\n");
+      sb.append("   xhr.send();\n");
+      sb.append("})();\n");
+      sb.append("</script>\n");
+
+      writer.write(sb.toString());
+   }
+   
+   /**
+    * Writes resource-fetching JavaScript code into the output stream for testing
+    * the resource method asynchronous support. Can fetch twice - once for preparation
+    * and once to collect the results.
+    * The resource is retrieved without waiting for a link to be clicked. 
+    * 
+    * @param writer
+    *           Writer to which the string is written
+    * @throws IOException
+    */
+   public void writeResourceFetcherAsync(Writer writer) throws IOException {
+
+      if (urlstr == null)
+         urlstr = rurl.toString();
+      StringBuilder sb = new StringBuilder();
+      sb.append("<div class='portletTCKTestcase' name='").append(tcName);
+      sb.append("' id='").append(divId).append("'>\n");
+      sb.append("</div>\n");
+
+      sb.append("<script>\n");
+      sb.append("(function fetch () {\n");
+      sb.append("   var xhr = new XMLHttpRequest(), retried = false;\n");
+      sb.append("   xhr.onreadystatechange=function() {\n");
+      sb.append("      if (xhr.readyState==4) {\n");
+      sb.append("         if (xhr.status==200) {\n");
+      sb.append("            if (xhr.responseText === 'repeat' && !retried) {\n");
+      sb.append("               retried = true;\n");
+      sb.append("               fetch();\n");
+      sb.append("            } else {\n");
+      sb.append("               document.getElementById('" + divId + "').innerHTML=xhr.responseText;\n");
+      sb.append("            }\n");
       sb.append("         }\n");
       sb.append("      }\n");
       sb.append("   };\n");

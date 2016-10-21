@@ -126,7 +126,9 @@ public class ResourceRequestImpl extends ClientDataRequestImpl implements Resour
 
    @Override
    public PortletAsyncContext startPortletAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
-      return (PortletAsyncContext) getRequestContext().startAsync(request, response);
+      // determine if called with original request and response objects
+      boolean orr = (request == this) && (response == getRequestContext().getResponse());
+      return (PortletAsyncContext) getRequestContext().startAsync(request, response, orr);
    }
 
    @Override

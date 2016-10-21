@@ -90,11 +90,14 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3RESOURCEASYNCTESTS_
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletAsyncContext;
+import javax.portlet.PortletAsyncListener;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
@@ -122,6 +125,7 @@ import javax.servlet.DispatcherType;
 
 @PortletConfiguration(portletName = "ResourceAsyncTests_SPEC_21_Async", asyncSupported = true)
 public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServingPortlet {
+   private static final Logger LOGGER = Logger.getLogger(ResourceAsyncTests_SPEC_21_Async.class.getName());
 
    @Override
    public void init(PortletConfig config) throws PortletException {
@@ -147,7 +151,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ISASYNCSUPPORTED) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ISASYNCSUPPORTED, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_isAsyncStarted1               */
@@ -157,7 +161,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ISASYNCSTARTED1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ISASYNCSTARTED1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_isAsyncStarted2               */
@@ -167,7 +171,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ISASYNCSTARTED2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ISASYNCSTARTED2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_startAsync1                   */
@@ -177,7 +181,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_STARTASYNC1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_STARTASYNC1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_startAsync2                   */
@@ -187,7 +191,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_STARTASYNC2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_STARTASYNC2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_startAsync3                   */
@@ -197,7 +201,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_STARTASYNC3) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_STARTASYNC3, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_startAsync4                   */
@@ -208,7 +212,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_STARTASYNC4) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_STARTASYNC4, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getDispatcherType1            */
@@ -220,7 +224,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETDISPATCHERTYPE1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETDISPATCHERTYPE1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getDispatcherType2            */
@@ -232,7 +236,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETDISPATCHERTYPE2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETDISPATCHERTYPE2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getDispatcherType3            */
@@ -244,7 +248,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETDISPATCHERTYPE3) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETDISPATCHERTYPE3, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getDispatcherType4            */
@@ -256,7 +260,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETDISPATCHERTYPE4) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETDISPATCHERTYPE4, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getDispatcherType5            */
@@ -268,7 +272,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETDISPATCHERTYPE5) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETDISPATCHERTYPE5, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getPortletAsyncContext1       */
@@ -278,7 +282,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETPORTLETASYNCCONTEXT1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETPORTLETASYNCCONTEXT1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getPortletAsyncContext2       */
@@ -288,7 +292,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETPORTLETASYNCCONTEXT2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETPORTLETASYNCCONTEXT2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_complete1                     */
@@ -298,7 +302,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_complete2                     */
@@ -308,7 +312,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_complete3                     */
@@ -319,7 +323,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE3) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE3, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_complete4                     */
@@ -330,7 +334,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE4) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE4, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_complete5                     */
@@ -341,7 +345,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE5) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE5, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_complete6                     */
@@ -352,7 +356,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE6) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE6, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_setTimeout                    */
@@ -362,7 +366,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_SETTIMEOUT) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_SETTIMEOUT, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getTimeout1                   */
@@ -372,7 +376,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTIMEOUT1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTIMEOUT1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getTimeout2                   */
@@ -382,7 +386,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTIMEOUT2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTIMEOUT2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_hasOriginalRequestAndResponse1 */
@@ -393,7 +397,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_HASORIGINALREQUESTANDRESPONSE1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_HASORIGINALREQUESTANDRESPONSE1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_hasOriginalRequestAndResponse2 */
@@ -405,7 +409,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_HASORIGINALREQUESTANDRESPONSE2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_HASORIGINALREQUESTANDRESPONSE2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_hasOriginalRequestAndResponse3 */
@@ -417,7 +421,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_HASORIGINALREQUESTANDRESPONSE3) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_HASORIGINALREQUESTANDRESPONSE3, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getResourceRequest1           */
@@ -428,7 +432,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCEREQUEST1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCEREQUEST1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getResourceRequest2           */
@@ -440,7 +444,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCEREQUEST2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCEREQUEST2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getResourceRequest3           */
@@ -452,7 +456,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCEREQUEST3) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCEREQUEST3, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getResourceResponse1          */
@@ -463,7 +467,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCERESPONSE1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCERESPONSE1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getResourceResponse2          */
@@ -476,7 +480,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCERESPONSE2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCERESPONSE2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getResourceResponse3          */
@@ -488,7 +492,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCERESPONSE3) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCERESPONSE3, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_createPortletAsyncListener1   */
@@ -498,7 +502,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_createPortletAsyncListener2   */
@@ -509,7 +513,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_createPortletAsyncListener3   */
@@ -520,7 +524,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER3) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER3, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_createPortletAsyncListener4   */
@@ -531,7 +535,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER4) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER4, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_addListener1                  */
@@ -541,7 +545,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_addListener2                  */
@@ -553,7 +557,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_addListener3                  */
@@ -564,7 +568,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER3) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER3, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_addListener4                  */
@@ -576,7 +580,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER4) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER4, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch1                     */
@@ -586,7 +590,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch2                     */
@@ -596,7 +600,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch3                     */
@@ -607,7 +611,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH3) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH3, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch4                     */
@@ -618,7 +622,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH4) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH4, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch5                     */
@@ -629,7 +633,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH5) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH5, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch6                     */
@@ -640,7 +644,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH6) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH6, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch7                     */
@@ -650,7 +654,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH7) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH7, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch8                     */
@@ -661,7 +665,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH8) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH8, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch9                     */
@@ -672,7 +676,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH9) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH9, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatchA                     */
@@ -683,7 +687,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCHA) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCHA, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_start1                        */
@@ -693,7 +697,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_start2                        */
@@ -704,7 +708,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_start3                        */
@@ -715,7 +719,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START3) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START3, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_start4                        */
@@ -726,7 +730,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START4) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START4, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_cdi1                          */
@@ -737,7 +741,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CDI1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CDI1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_cdi2                          */
@@ -748,7 +752,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CDI2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CDI2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_cdi3                          */
@@ -759,7 +763,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CDI3) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CDI3, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_onTimeout                     */
@@ -769,7 +773,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONTIMEOUT) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONTIMEOUT, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_onError                       */
@@ -780,7 +784,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONERROR) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONERROR, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_onComplete                    */
@@ -790,7 +794,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONCOMPLETE) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONCOMPLETE, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_onStartAsync                  */
@@ -800,7 +804,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONSTARTASYNC) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONSTARTASYNC, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getPortletAsyncContext        */
@@ -810,7 +814,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETPORTLETASYNCCONTEXT) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETPORTLETASYNCCONTEXT, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getSuppliedRequest1           */
@@ -821,7 +825,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDREQUEST1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDREQUEST1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getSuppliedRequest2           */
@@ -832,7 +836,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDREQUEST2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDREQUEST2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getSuppliedResponse1          */
@@ -843,7 +847,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDRESPONSE1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDRESPONSE1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getSuppliedResponse2          */
@@ -854,7 +858,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDRESPONSE2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDRESPONSE2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getThrowable1                 */
@@ -865,7 +869,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTHROWABLE1) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTHROWABLE1, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getThrowable2                 */
@@ -876,7 +880,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          ResourceURL rurl = portletResp.createResourceURL();
          rurl.getResourceParameters().setValue("testcase",V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTHROWABLE2) ;
          ResourceLink link = new ResourceLink(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTHROWABLE2, rurl);
-         link.writeResourceFetcherImmediate(writer);
+         link.writeResourceFetcherAsync(writer);
       }
 
    }
@@ -894,6 +898,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
       PortletAsyncContext pac = null;
       boolean doComplete = false;
       PortletSession session = req.getPortletSession();
+      AsyncResults asyres = AsyncResults.getAsyncResults();
       
       try {
       
@@ -1007,6 +1012,9 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
             } else {
                result.appendTcDetail("Unexpected dispatcher type: " + dt.name());
             }
+
+            // actual test done in filter
+         } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETDISPATCHERTYPE2)) {
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getDispatcherType3            */
          /* Details: "The ResourceRequest object getDispatcherType() method returns    */
@@ -1036,6 +1044,9 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
                   result.appendTcDetail("Exception starting or dispatching async: " + t.getMessage());
                }
             }
+
+            // actual test done in filter
+         } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETDISPATCHERTYPE4)) {
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getDispatcherType5            */
          /* Details: "The ResourceRequest object getDispatcherType() method returns    */
@@ -1079,9 +1090,16 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* Details: "The PortletAsyncContext object complete() method completes       */
          /* asynchronous processing within the original resource request"              */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE1)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE1);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            // results are created in the listener
+            result = asyres.getAndClearResult(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE1);
+            if (result == null) {
+               writer.write("repeat");     // signal the JS fetch code to repeat
+               pac = req.startPortletAsync();
+               AsyncListener listener = new AsyncListener();
+               listener.setTestcase(testcase);
+               pac.addListener(listener);
+               pac.complete();
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_complete2                     */
          /* Details: "The PortletAsyncContext object complete() method completes       */
@@ -1096,18 +1114,56 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* IllegalStateException if called before asynchronous processing has         */
          /* started"                                                                   */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE3)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE3);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            boolean isDispatched = new Boolean((String) session.getAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE3));
+            if (isDispatched) {
+               // 2nd time thru
+               session.removeAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE3);
+               result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE3);
+               pac = req.getPortletAsyncContext();
+               if (pac != null) {
+                  try {
+                     pac.complete();
+                     result.appendTcDetail("No exception was thrown.");
+                  } catch (IllegalStateException e) {
+                     result.setTcSuccess(true);
+                  }
+               } else {
+                  result.appendTcDetail("Couldn't retrieve PortletAsyncContext object");
+               }
+            } else {
+               // 1st time thru
+               try {
+                  pac = req.startPortletAsync();
+                  pac.dispatch();
+                  session.setAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE3, "true");
+               } catch (Throwable t) {
+                  result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE3);
+                  result.appendTcDetail("Exception starting or dispatching async: " + t.getMessage());
+               }
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_complete4                     */
          /* Details: "The PortletAsyncContext object complete() method throws an       */
          /* IllegalStateException if called after asynchronous processing has          */
          /* completed"                                                                 */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE4)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE4);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            result = asyres.getAndClearResult(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE4);
+            if (result == null) {
+               writer.write("repeat");     // signal the JS fetch code to repeat
+               result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE4);
+               pac = req.startPortletAsync();
+               pac.complete();
+               try {
+                  pac.complete();
+                  result.appendTcDetail("complete() did not throw exception although the async context was already complete.");
+               } catch (IllegalStateException e) {
+                  result.setTcSuccess(true);
+               } catch (Throwable t) {
+                  result.appendTcDetail("complete() threw unexpected exception: " + t.getMessage());
+               }
+               asyres.setResult(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE4, result);
+               result = null;
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_complete5                     */
          /* Details: "The PortletAsyncContext object complete() method throws an       */
@@ -1156,25 +1212,41 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* Details: "The PortletAsyncContext object setTimeout() method sets the      */
          /* asynchronous timeout value"                                                */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_SETTIMEOUT)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_SETTIMEOUT);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            // the results are written in the async listener
+            pac = req.startPortletAsync();
+            pac.setTimeout(100);
+            AsyncListener listener = new AsyncListener();
+            listener.setTestcase(testcase);
+            pac.addListener(listener);
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getTimeout1                   */
          /* Details: "The PortletAsyncContext object getTimeout() method returns the   */
          /* default value of 30000 ms"                                                 */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTIMEOUT1)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTIMEOUT1);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            pac = req.startPortletAsync();
+            doComplete = true;
+            long to = pac.getTimeout();
+            if (to == 30000) {
+               result.setTcSuccess(true);
+            } else {
+               result.appendTcDetail("Timeout value was not 30000 as expected, but: " + to);
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getTimeout2                   */
          /* Details: "The PortletAsyncContext object getTimeout() method returns a     */
          /* previously set timeout value"                                              */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTIMEOUT2)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTIMEOUT2);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            pac = req.startPortletAsync();
+            doComplete = true;
+            pac.setTimeout(1000);
+            long to = pac.getTimeout();
+            if (to == 1000) {
+               result.setTcSuccess(true);
+            } else {
+               result.appendTcDetail("Timeout value was not 1000 as expected, but: " + to);
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_hasOriginalRequestAndResponse1 */
          /* Details: "The PortletAsyncContext object hasOriginalRequestAndResponse()   */
@@ -1182,8 +1254,13 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* startPortletAsync() method"                                                */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_HASORIGINALREQUESTANDRESPONSE1)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_HASORIGINALREQUESTANDRESPONSE1);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            pac = req.startPortletAsync();
+            doComplete = true;
+            if (pac.hasOriginalRequestAndResponse() == true) {
+               result.setTcSuccess(true);
+            } else {
+               result.appendTcDetail("Method returned false when the ResourceRequest and ResourceResponse objects were not provided.");
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_hasOriginalRequestAndResponse2 */
          /* Details: "The PortletAsyncContext object hasOriginalRequestAndResponse()   */
@@ -1192,8 +1269,13 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* and response objects were not wrapped"                                     */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_HASORIGINALREQUESTANDRESPONSE2)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_HASORIGINALREQUESTANDRESPONSE2);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            pac = req.startPortletAsync(req, resp);
+            doComplete = true;
+            if (pac.hasOriginalRequestAndResponse() == true) {
+               result.setTcSuccess(true);
+            } else {
+               result.appendTcDetail("Method returned false when the original ResourceRequest and ResourceResponse objects were provided.");
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_hasOriginalRequestAndResponse3 */
          /* Details: "The PortletAsyncContext object hasOriginalRequestAndResponse()   */
@@ -1202,8 +1284,15 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* and response objects were wrapped"                                         */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_HASORIGINALREQUESTANDRESPONSE3)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_HASORIGINALREQUESTANDRESPONSE3);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            ResourceRequestWrapper wreq = new ResourceRequestWrapper(req);
+            ResourceResponseWrapper wresp = new ResourceResponseWrapper(resp);
+            pac = req.startPortletAsync(wreq, wresp);
+            doComplete = true;
+            if (pac.hasOriginalRequestAndResponse() == false) {
+               result.setTcSuccess(true);
+            } else {
+               result.appendTcDetail("Method returned true when wrapped ResourceRequest and ResourceResponse objects were provided.");
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getResourceRequest1           */
          /* Details: "The PortletAsyncContext object getResourceRequest() method       */
@@ -1211,8 +1300,13 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* started through the startPortletAsync() method"                            */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCEREQUEST1)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCEREQUEST1);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            pac = req.startPortletAsync();
+            doComplete = true;
+            if (pac.getResourceRequest() == req) {
+               result.setTcSuccess(true);
+            } else {
+               result.appendTcDetail("Method returned object different than the original when no ResourceRequest and ResourceResponse objects were provided.");
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getResourceRequest2           */
          /* Details: "The PortletAsyncContext object getResourceRequest() method       */
@@ -1221,8 +1315,13 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* method if the request and response objects were not wrapped"               */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCEREQUEST2)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCEREQUEST2);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            pac = req.startPortletAsync(req, resp);
+            doComplete = true;
+            if (pac.getResourceRequest() == req) {
+               result.setTcSuccess(true);
+            } else {
+               result.appendTcDetail("Method returned object different than the original when the original ResourceRequest and ResourceResponse objects were provided.");
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getResourceRequest3           */
          /* Details: "The PortletAsyncContext object getResourceRequest() method       */
@@ -1231,8 +1330,15 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* method if the request and response objects were wrapped"                   */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCEREQUEST3)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCEREQUEST3);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            ResourceRequestWrapper wreq = new ResourceRequestWrapper(req);
+            ResourceResponseWrapper wresp = new ResourceResponseWrapper(resp);
+            pac = req.startPortletAsync(wreq, wresp);
+            doComplete = true;
+            if (pac.getResourceRequest() == wreq) {
+               result.setTcSuccess(true);
+            } else {
+               result.appendTcDetail("Method returned object different than the wrapped object when wrapped ResourceRequest and ResourceResponse objects were provided.");
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getResourceResponse1          */
          /* Details: "The PortletAsyncContext object getResourceResponse() method      */
@@ -1240,8 +1346,13 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* was started through the startPortletAsync() method"                        */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCERESPONSE1)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCERESPONSE1);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            pac = req.startPortletAsync();
+            doComplete = true;
+            if (pac.getResourceResponse() == resp) {
+               result.setTcSuccess(true);
+            } else {
+               result.appendTcDetail("Method returned object different than the original when no ResourceRequest and ResourceResponse objects were provided.");
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getResourceResponse2          */
          /* Details: "The PortletAsyncContext object getResourceResponse() method      */
@@ -1251,8 +1362,13 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* wrapped"                                                                   */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCERESPONSE2)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCERESPONSE2);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            pac = req.startPortletAsync(req, resp);
+            doComplete = true;
+            if (pac.getResourceResponse() == resp) {
+               result.setTcSuccess(true);
+            } else {
+               result.appendTcDetail("Method returned object different than the original when the original ResourceRequest and ResourceResponse objects were provided.");
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getResourceResponse3          */
          /* Details: "The PortletAsyncContext object getResourceResponse() method      */
@@ -1261,16 +1377,29 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* method if the request and response objects were wrapped"                   */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCERESPONSE3)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETRESOURCERESPONSE3);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            ResourceRequestWrapper wreq = new ResourceRequestWrapper(req);
+            ResourceResponseWrapper wresp = new ResourceResponseWrapper(resp);
+            pac = req.startPortletAsync(wreq, wresp);
+            doComplete = true;
+            if (pac.getResourceResponse() == wresp) {
+               result.setTcSuccess(true);
+            } else {
+               result.appendTcDetail("Method returned object different than the wrapped object when wrapped ResourceRequest and ResourceResponse objects were provided.");
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_createPortletAsyncListener1   */
          /* Details: "The PortletAsyncContext object createPortletAsyncListener(Class) */
          /* method returns an instance of the PortletAsyncListener class provided"     */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER1)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER1);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            pac = req.startPortletAsync();
+            PortletAsyncListener pal = pac.createPortletAsyncListener(AsyncListener.class);
+            doComplete = true;
+            if (pal instanceof AsyncListener) {
+               result.setTcSuccess(true);
+            } else {
+               result.appendTcDetail("Returned object was not instance of AsyncListener. Class: " + pal.getClass().getCanonicalName());
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_createPortletAsyncListener2   */
          /* Details: "The PortletAsyncContext object createPortletAsyncListener(Class) */
@@ -1278,8 +1407,17 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* PortletAsyncListener"                                                      */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER2)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER2);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            pac = req.startPortletAsync();
+            doComplete = true;
+            try {
+               @SuppressWarnings("rawtypes")
+               Class cls = StringBuilder.class;
+               @SuppressWarnings("unchecked")
+               PortletAsyncListener pal = pac.createPortletAsyncListener(cls);
+               result.appendTcDetail("Method did not throw exception although bad class was provided.");
+            } catch (PortletException e) {
+               result.setTcSuccess(true);
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_createPortletAsyncListener3   */
          /* Details: "The PortletAsyncContext object createPortletAsyncListener(Class) */
@@ -1287,8 +1425,14 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* instantiated"                                                              */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER3)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER3);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            pac = req.startPortletAsync();
+            doComplete = true;
+            try {
+               PortletAsyncListener pal = pac.createPortletAsyncListener(BadAsyncListener.class);
+               result.appendTcDetail("Method did not throw exception although bad class was provided.");
+            } catch (PortletException e) {
+               result.setTcSuccess(true);
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_createPortletAsyncListener4   */
          /* Details: "The PortletAsyncContext object createPortletAsyncListener(Class) */
@@ -1296,16 +1440,29 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* zero argument constructor"                                                 */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER4)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CREATEPORTLETASYNCLISTENER4);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            pac = req.startPortletAsync();
+            doComplete = true;
+            try {
+               PortletAsyncListener pal = pac.createPortletAsyncListener(NoDefaultConstructorAsyncListener.class);
+               result.appendTcDetail("Method did not throw exception although bad class was provided.");
+            } catch (PortletException e) {
+               result.setTcSuccess(true);
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_addListener1                  */
          /* Details: "The PortletAsyncContext object addListener(PortletAsyncListener) */
          /* method adds a portlet asynchronous listener"                               */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER1)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER1);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            result = asyres.getAndClearResult(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER1);
+            if (result == null) {
+               // the results are written in the async listener
+               pac = req.startPortletAsync();
+               AsyncListener listener = new AsyncListener();
+               listener.setTestcase(testcase);
+               pac.addListener(listener);
+               writer.write("repeat");     // signal the JS fetch code to repeat
+               pac.complete();
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_addListener2                  */
          /* Details: "The PortletAsyncContext object addListener(PortletAsyncListener) */
@@ -1313,18 +1470,55 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* container-initiated dispatch during which one of the startAsync() methods  */
          /* was called has returned to the container"                                  */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            boolean isDispatched = new Boolean((String) session.getAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2));
+            LOGGER.fine("isDispatched: " + isDispatched);
+            if (isDispatched) {
+               // 2nd time thru
+               session.removeAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2);
+               result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2);
+               pac = req.getPortletAsyncContext();
+               if (pac != null) {
+                  try {
+                     AsyncListener listener = new AsyncListener();
+                     listener.setTestcase(testcase);
+                     pac.addListener(listener);
+                     result.appendTcDetail("No exception was thrown.");
+                  } catch (IllegalStateException e) {
+                     result.setTcSuccess(true);
+                  }
+               } else {
+                  result.appendTcDetail("Couldn't retrieve PortletAsyncContext object");
+               }
+            } else {
+               // 1st time thru
+               try {
+                  pac = req.startPortletAsync();
+                  pac.dispatch();
+                  session.setAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2, "true");
+                  LOGGER.fine("dispatched to resource method.");
+               } catch (Throwable t) {
+                  result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2);
+                  result.appendTcDetail("Exception starting or dispatching async: " + t.getMessage());
+               }
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_addListener3                  */
          /* Details: "The PortletAsyncContext object addListener(PortletAsyncListener, */
          /* ResourceRequest, ResourceResponse) method adds a portlet asynchronous      */
          /* listener"                                                                  */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER3)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER3);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            result = asyres.getAndClearResult(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER3);
+            if (result == null) {
+               // the results are written in the async listener
+               pac = req.startPortletAsync();
+               AsyncListener listener = new AsyncListener();
+               listener.setTestcase(testcase);
+               ResourceRequestWrapper wreq = new ResourceRequestWrapper(req);
+               ResourceResponseWrapper wresp = new ResourceResponseWrapper(resp);
+               pac.addListener(listener, wreq, wresp);
+               writer.write("repeat");    // signal the JS fetch code to repeat
+               pac.complete();
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_addListener4                  */
          /* Details: "The PortletAsyncContext object addListener(PortletAsyncListener, */
@@ -1332,17 +1526,58 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* if called after the container-initiated dispatch during which one of the   */
          /* startAsync() methods was called has returned to the container"             */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER4)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER4);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            boolean isDispatched = new Boolean((String) session.getAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER4));
+            if (isDispatched) {
+               // 2nd time thru
+               session.removeAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER4);
+               result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER4);
+               pac = req.getPortletAsyncContext();
+               if (pac != null) {
+                  try {
+                     AsyncListener listener = new AsyncListener();
+                     listener.setTestcase(testcase);
+                     ResourceRequestWrapper wreq = new ResourceRequestWrapper(req);
+                     ResourceResponseWrapper wresp = new ResourceResponseWrapper(resp);
+                     pac.addListener(listener, wreq, wresp);
+                     result.appendTcDetail("No exception was thrown.");
+                  } catch (IllegalStateException e) {
+                     result.setTcSuccess(true);
+                  }
+               } else {
+                  result.appendTcDetail("Couldn't retrieve PortletAsyncContext object");
+               }
+            } else {
+               // 1st time thru
+               try {
+                  pac = req.startPortletAsync();
+                  pac.dispatch();
+                  session.setAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER4, "true");
+               } catch (Throwable t) {
+                  result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER4);
+                  result.appendTcDetail("Exception starting or dispatching async: " + t.getMessage());
+               }
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch1                     */
          /* Details: "The PortletAsyncContext object dispatch() method dispatches to   */
          /* the resource method if called from within the original resource request"   */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH1)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH1);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            boolean isDispatched = new Boolean((String) session.getAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH1));
+            if (isDispatched) {
+               // 2nd time thru
+               session.removeAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH1);
+               result = tcd.getTestResultSucceeded(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH1);
+            } else {
+               // 1st time thru
+               try {
+                  pac = req.startPortletAsync();
+                  pac.dispatch();
+                  session.setAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH1, "true");
+               } catch (Throwable t) {
+                  result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH1);
+                  result.appendTcDetail("Exception starting or dispatching async: " + t.getMessage());
+               }
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch2                     */
          /* Details: "The PortletAsyncContext object dispatch() method dispatches to   */

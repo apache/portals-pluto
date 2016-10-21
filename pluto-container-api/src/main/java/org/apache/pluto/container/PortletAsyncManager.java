@@ -12,6 +12,7 @@ public interface PortletAsyncManager {
    void launchRunner();
    boolean isComplete();
    void setComplete(boolean complete);
+   void setContextInactive();
    HttpServletRequestWrapper getAsyncRequestWrapper();
 
 }
