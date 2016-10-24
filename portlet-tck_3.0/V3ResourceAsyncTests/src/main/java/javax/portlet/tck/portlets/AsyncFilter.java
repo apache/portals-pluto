@@ -18,12 +18,14 @@
 
 package javax.portlet.tck.portlets;
 
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CDI3;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETDISPATCHERTYPE2;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETDISPATCHERTYPE4;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.inject.Inject;
 import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
@@ -43,6 +45,8 @@ import javax.servlet.DispatcherType;
  */
 @PortletLifecycleFilter(portletNames = "ResourceAsyncTests_SPEC_21_Async")
 public class AsyncFilter implements ResourceFilter {
+
+   @Inject private AsyncBean bean;
 
    /*
     * (non-Javadoc)
@@ -123,8 +127,35 @@ public class AsyncFilter implements ResourceFilter {
                result.appendTcDetail("Exception starting or dispatching async: " + t.getMessage());
             }
          }
+         
+         /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_cdi3                          */
+         /* Details: "When CDI is available and the asynchronous thread is started     */
+         /* through the PortletAsyncContext object, the resource filter runs in the    */
+         /* same context as the original request"                                      */
+      } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CDI3)) {
+         if (bean != null) {
+            DispatcherType dt = req.getDispatcherType();
+            if (dt == DispatcherType.ASYNC) {
+               // setup is performed in the portlet resource method
+               result = tcd.getTestResultFailed(testcase);
+               String btc = bean.getTestcase();
+               if (btc != null && btc.equals(testcase)) {
+                  result.setTcSuccess(true);
+               } else {
+                  StringBuilder txt = new StringBuilder(128);
+                  txt.append("value from injected bean not as expected. ");
+                  txt.append("Expected: ").append(testcase);
+                  txt.append(", Actual: ").append(btc);
+                  result.appendTcDetail(txt.toString());
+               }
+               writer.write(result.toString());
+            }
+         } else {
+            result = tcd.getTestResultFailed(testcase);
+            result.appendTcDetail("CDI support not available.");
+            writer.write(result.toString());
+         }
+
       }
-
    }
-
 }

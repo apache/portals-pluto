@@ -76,6 +76,7 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
    private boolean                             doDeregister       = true;
    private boolean                             complete           = false;
    private boolean                             isContextActive    = true;
+   private boolean                             isDispatchedOrComplete       = false;
 
    public PortletAsyncContextImpl(AsyncContext actx, PortletResourceRequestContext prctx, ResourceRequest resreq, ResourceResponse resresp, boolean origReqResp) {
       this.actx = actx;
@@ -223,7 +224,7 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
    }
 
    /*
-    * (non-Javadoc)
+    * Called when asynchronous processing is restarted
     * 
     * @see org.apache.pluto.driver.services.container.PortletAsyncContext#setWrapped(javax.servlet.AsyncContext)
     */
@@ -231,6 +232,7 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
    public void setWrapped(AsyncContext actx) {
       this.actx = actx;
       isContextActive = true;
+      isDispatchedOrComplete = false;
    }
 
    /*
@@ -267,6 +269,7 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
     */
    @Override
    public void complete() {
+      isDispatchedOrComplete = true;
       actx.complete();
    }
 
@@ -294,6 +297,7 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
     */
    @Override
    public void dispatch() {
+      isDispatchedOrComplete = true;
       // workaround for Tomcat bug 59213
       actx.dispatch(hreq.getServletContext(), hreq.getServletPath());
    }
@@ -305,6 +309,7 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
     */
    @Override
    public void dispatch(String path) {
+      isDispatchedOrComplete = true;
 
       // enable proper query string parameter handling during async dispatch
       HttpServletPortletRequestWrapper wrapper = (HttpServletPortletRequestWrapper) getAsyncRequestWrapper();
@@ -321,6 +326,7 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
     */
    @Override
    public void dispatch(ServletContext sctx, String path) {
+      isDispatchedOrComplete = true;
       actx.dispatch(sctx, path);
    }
 
@@ -381,6 +387,12 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
     */
    @Override
    public void start(Runnable run) {
+      if (!isContextActive) {
+         throw new IllegalStateException("Asynchronous thread can only be started when the asynchronous context is active.");
+      }
+      if (isDispatchedOrComplete) {
+         throw new IllegalStateException("Asynchronous thread cannot be started after an asynchronous dispatch has been performed or asynchronous processing has been completed.");
+      }
       pendingRunner = run;
    }
 

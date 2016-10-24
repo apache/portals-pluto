@@ -19,6 +19,8 @@
 package javax.portlet.tck.portlets;
 
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE6;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH6;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH7;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETDISPATCHERTYPE5;
 
 import java.io.IOException;
@@ -79,7 +81,22 @@ public class AsyncServlet extends HttpServlet {
          }
          session.removeAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE6);
          writer.write(result.toString());
-      
+         
+         /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch6                     */
+         /* Details: "The PortletAsyncContext object dispatch(String) method           */
+         /* dispatches to the given path if called from within the original resource   */
+         /* request"                                                                   */
+      } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH6)) {
+         result = tcd.getTestResultSucceeded(testcase);
+         writer.write(result.toString());
+         
+         /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch7                     */
+         /* Details: "The PortletAsyncContext object dispatch(String) method           */
+         /* dispatches to the given path if called from within an asynchronous thread" */
+      } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH7)) {
+         result = tcd.getTestResultSucceeded(testcase);
+         writer.write(result.toString());
+         
       }
    }
 

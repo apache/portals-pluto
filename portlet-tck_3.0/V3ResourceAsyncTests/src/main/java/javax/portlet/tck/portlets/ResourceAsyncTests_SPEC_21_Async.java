@@ -90,9 +90,9 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3RESOURCEASYNCTESTS_
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.inject.Inject;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
@@ -126,6 +126,10 @@ import javax.servlet.DispatcherType;
 @PortletConfiguration(portletName = "ResourceAsyncTests_SPEC_21_Async", asyncSupported = true)
 public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServingPortlet {
    private static final Logger LOGGER = Logger.getLogger(ResourceAsyncTests_SPEC_21_Async.class.getName());
+   
+   @Inject private AsyncBean           bean;
+   @Inject private AsyncBeanRunner     beanRunner;
+   @Inject private AsyncBeanListener   beanListener;
 
    @Override
    public void init(PortletConfig config) throws PortletException {
@@ -691,7 +695,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_start1                        */
-      /* Details: "The PortletAsyncContext object start(String) method causes an    */
+      /* Details: "The PortletAsyncContext object start(Runnable) method causes an    */
       /* asynchronous thread to run"                                                */
       {
          ResourceURL rurl = portletResp.createResourceURL();
@@ -701,7 +705,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_start2                        */
-      /* Details: "The PortletAsyncContext object start(String) method throws an    */
+      /* Details: "The PortletAsyncContext object start(Runnable) method throws an    */
       /* IllegalStateException if called before a new asynchronous processing cycle */
       /* has been started"                                                          */
       {
@@ -712,7 +716,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_start3                        */
-      /* Details: "The PortletAsyncContext object start(String) method throws an    */
+      /* Details: "The PortletAsyncContext object start(Runnable) method throws an    */
       /* IllegalStateException if called after asynchronous processing has          */
       /* completed"                                                                 */
       {
@@ -723,7 +727,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
       }
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_start4                        */
-      /* Details: "The PortletAsyncContext object start(String) method throws an    */
+      /* Details: "The PortletAsyncContext object start(Runnable) method throws an    */
       /* IllegalStateException if called after a dispatch method has been called    */
       /* within the same container dispatch cycle"                                  */
       {
@@ -1105,9 +1109,17 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* Details: "The PortletAsyncContext object complete() method completes       */
          /* asynchronous processing within an asynchronous thread"                     */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE2)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE2);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            // results are created in the listener
+            result = asyres.getAndClearResult(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE2);
+            if (result == null) {
+               pac = req.startPortletAsync();
+               AsyncListener listener = new AsyncListener();
+               listener.setTestcase(testcase);
+               pac.addListener(listener);
+               AsyncRunner runner = new AsyncRunner();
+               runner.init(pac, V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_COMPLETE2);
+               pac.start(runner);
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_complete3                     */
          /* Details: "The PortletAsyncContext object complete() method throws an       */
@@ -1583,237 +1595,522 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* Details: "The PortletAsyncContext object dispatch() method dispatches to   */
          /* the resource method if called from within an asynchronous thread"          */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH2)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH2);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            boolean isDispatched = new Boolean((String) session.getAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH2));
+            if (isDispatched) {
+               // 2nd time thru
+               session.removeAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH2);
+               result = tcd.getTestResultSucceeded(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH2);
+            } else {
+               // 1st time thru
+               try {
+                  pac = req.startPortletAsync();
+                  session.setAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH2, "true");
+                  AsyncRunner runner = new AsyncRunner();
+                  runner.init(pac, testcase);
+                  pac.start(runner);
+               } catch (Throwable t) {
+                  result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH2);
+                  result.appendTcDetail("Exception starting or dispatching async: " + t.getMessage());
+               }
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch3                     */
          /* Details: "The PortletAsyncContext object dispatch() method throws an       */
          /* IllegalStateException if called before a new asynchronous processing cycle */
          /* has been started"                                                          */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH3)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH3);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            boolean isDispatched = new Boolean((String) session.getAttribute(testcase));
+            if (isDispatched) {
+               // 2nd time thru
+               session.removeAttribute(testcase);
+               result = tcd.getTestResultFailed(testcase);
+               pac = req.getPortletAsyncContext();
+               if (pac != null) {
+                  try {
+                     pac.dispatch();
+                     result.appendTcDetail("No exception was thrown.");
+                  } catch (IllegalStateException e) {
+                     result.setTcSuccess(true);
+                  }
+               } else {
+                  result.appendTcDetail("Couldn't retrieve PortletAsyncContext object");
+               }
+            } else {
+               // 1st time thru
+               try {
+                  pac = req.startPortletAsync();
+                  pac.dispatch();
+                  session.setAttribute(testcase, "true");
+               } catch (Throwable t) {
+                  result = tcd.getTestResultFailed(testcase);
+                  result.appendTcDetail("Exception starting or dispatching async: " + t.getMessage());
+               }
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch4                     */
          /* Details: "The PortletAsyncContext object dispatch() method throws an       */
          /* IllegalStateException if called after asynchronous processing has          */
          /* completed"                                                                 */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH4)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH4);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            result = asyres.getAndClearResult(testcase);
+            if (result == null) {
+               writer.write("repeat");     // signal the JS fetch code to repeat
+               result = tcd.getTestResultFailed(testcase);
+               pac = req.startPortletAsync();
+               pac.complete();
+               try {
+                  pac.dispatch();
+                  result.appendTcDetail("dispatch() did not throw exception although the async context was already complete.");
+               } catch (IllegalStateException e) {
+                  result.setTcSuccess(true);
+               } catch (Throwable t) {
+                  result.appendTcDetail("complete() threw unexpected exception: " + t.getMessage());
+               }
+               asyres.setResult(testcase, result);
+               result = null;
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch5                     */
          /* Details: "The PortletAsyncContext object dispatch() method throws an       */
          /* IllegalStateException if called after a dispatch method has been called    */
          /* within the same container dispatch cycle"                                  */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH5)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH5);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            result = asyres.getAndClearResult(testcase);
+            if (result == null) {
+               result = tcd.getTestResultFailed(testcase);
+               pac = req.startPortletAsync();
+               pac.dispatch();
+               try {
+                  pac.dispatch();
+                  result.appendTcDetail("dispatch() did not throw exception although the async context was already complete.");
+               } catch (IllegalStateException e) {
+                  result.setTcSuccess(true);
+               } catch (Throwable t) {
+                  result.appendTcDetail("complete() threw unexpected exception: " + t.getMessage());
+               }
+               asyres.setResult(testcase, result);
+               result = null;
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch6                     */
          /* Details: "The PortletAsyncContext object dispatch(String) method           */
          /* dispatches to the given path if called from within the original resource   */
          /* request"                                                                   */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH6)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH6);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            try {
+               pac = req.startPortletAsync();
+               pac.dispatch("/dispatchTarget");
+            } catch (Throwable t) {
+               result = tcd.getTestResultFailed(testcase);
+               result.appendTcDetail("Exception starting or dispatching async: " + t.getMessage());
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch7                     */
          /* Details: "The PortletAsyncContext object dispatch(String) method           */
          /* dispatches to the given path if called from within an asynchronous thread" */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH7)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH7);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            try {
+               pac = req.startPortletAsync();
+               AsyncRunner runner = new AsyncRunner();
+               runner.init(pac, testcase);
+               pac.start(runner);
+            } catch (Throwable t) {
+               result = tcd.getTestResultFailed(testcase);
+               result.appendTcDetail("Exception setting up test: " + t.getMessage());
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch8                     */
          /* Details: "The PortletAsyncContext object dispatch(String) method throws an */
          /* IllegalStateException if called before a new asynchronous processing cycle */
          /* has been started"                                                          */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH8)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH8);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            boolean isDispatched = new Boolean((String) session.getAttribute(testcase));
+            if (isDispatched) {
+               // 2nd time thru
+               session.removeAttribute(testcase);
+               result = tcd.getTestResultFailed(testcase);
+               pac = req.getPortletAsyncContext();
+               if (pac != null) {
+                  try {
+                     pac.dispatch("/dispatchTarget");
+                     result.appendTcDetail("No exception was thrown.");
+                  } catch (IllegalStateException e) {
+                     result.setTcSuccess(true);
+                  }
+               } else {
+                  result.appendTcDetail("Couldn't retrieve PortletAsyncContext object");
+               }
+            } else {
+               // 1st time thru
+               try {
+                  pac = req.startPortletAsync();
+                  pac.dispatch();
+                  session.setAttribute(testcase, "true");
+               } catch (Throwable t) {
+                  result = tcd.getTestResultFailed(testcase);
+                  result.appendTcDetail("Exception starting or dispatching async: " + t.getMessage());
+               }
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatch9                     */
          /* Details: "The PortletAsyncContext object dispatch(String) method throws an */
          /* IllegalStateException if called after asynchronous processing has          */
          /* completed"                                                                 */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH9)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCH9);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            result = asyres.getAndClearResult(testcase);
+            if (result == null) {
+               writer.write("repeat");     // signal the JS fetch code to repeat
+               result = tcd.getTestResultFailed(testcase);
+               pac = req.startPortletAsync();
+               pac.complete();
+               try {
+                  pac.dispatch("/dispatchTarget");
+                  result.appendTcDetail("dispatch() did not throw exception although the async context was already complete.");
+               } catch (IllegalStateException e) {
+                  result.setTcSuccess(true);
+               } catch (Throwable t) {
+                  result.appendTcDetail("dispatch() threw unexpected exception: " + t.getMessage());
+               }
+               asyres.setResult(testcase, result);
+               result = null;
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_dispatchA                     */
          /* Details: "The PortletAsyncContext object dispatch(String) method throws an */
          /* IllegalStateException if called after a dispatch method has been called    */
          /* within the same container dispatch cycle"                                  */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCHA)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_DISPATCHA);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            result = asyres.getAndClearResult(testcase);
+            if (result == null) {
+               result = tcd.getTestResultFailed(testcase);
+               pac = req.startPortletAsync();
+               pac.dispatch();
+               try {
+                  pac.dispatch("/dispatchTarget");
+                  result.appendTcDetail("dispatch() did not throw exception although the async context was already complete.");
+               } catch (IllegalStateException e) {
+                  result.setTcSuccess(true);
+               } catch (Throwable t) {
+                  result.appendTcDetail("dispatch() threw unexpected exception: " + t.getMessage());
+               }
+               asyres.setResult(testcase, result);
+               result = null;
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_start1                        */
-         /* Details: "The PortletAsyncContext object start(String) method causes an    */
+         /* Details: "The PortletAsyncContext object start(Runnable) method causes an    */
          /* asynchronous thread to run"                                                */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START1)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START1);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            try {
+               pac = req.startPortletAsync();
+               AsyncRunner runner = new AsyncRunner();
+               runner.init(pac, testcase);
+               pac.start(runner);
+            } catch (Throwable t) {
+               result = tcd.getTestResultFailed(testcase);
+               result.appendTcDetail("Exception setting up test: " + t.getMessage());
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_start2                        */
-         /* Details: "The PortletAsyncContext object start(String) method throws an    */
+         /* Details: "The PortletAsyncContext object start(Runnable) method throws an    */
          /* IllegalStateException if called before a new asynchronous processing cycle */
          /* has been started"                                                          */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START2)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START2);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            boolean isDispatched = new Boolean((String) session.getAttribute(testcase));
+            if (isDispatched) {
+               // 2nd time thru
+               session.removeAttribute(testcase);
+               result = tcd.getTestResultFailed(testcase);
+               pac = req.getPortletAsyncContext();
+               if (pac != null) {
+                  try {
+                     AsyncRunner runner = new AsyncRunner();
+                     runner.init(pac, testcase);
+                     pac.start(runner);
+                     result.appendTcDetail("No exception was thrown.");
+                  } catch (IllegalStateException e) {
+                     result.setTcSuccess(true);
+                  }
+               } else {
+                  result.appendTcDetail("Couldn't retrieve PortletAsyncContext object");
+               }
+            } else {
+               // 1st time thru
+               try {
+                  pac = req.startPortletAsync();
+                  pac.dispatch();
+                  session.setAttribute(testcase, "true");
+               } catch (Throwable t) {
+                  result = tcd.getTestResultFailed(testcase);
+                  result.appendTcDetail("Exception starting or dispatching async: " + t.getMessage());
+               }
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_start3                        */
-         /* Details: "The PortletAsyncContext object start(String) method throws an    */
+         /* Details: "The PortletAsyncContext object start(Runnable) method throws an    */
          /* IllegalStateException if called after asynchronous processing has          */
          /* completed"                                                                 */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START3)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START3);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            result = asyres.getAndClearResult(testcase);
+            if (result == null) {
+               writer.write("repeat");     // signal the JS fetch code to repeat
+               result = tcd.getTestResultFailed(testcase);
+               pac = req.startPortletAsync();
+               pac.complete();
+               try {
+                  AsyncRunner runner = new AsyncRunner();
+                  runner.init(pac, testcase);
+                  pac.start(runner);
+                  result.appendTcDetail("Method did not throw exception although the async context was already complete.");
+               } catch (IllegalStateException e) {
+                  result.setTcSuccess(true);
+               } catch (Throwable t) {
+                  result.appendTcDetail("Method threw unexpected exception: " + t.getMessage());
+               }
+               asyres.setResult(testcase, result);
+               result = null;
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_start4                        */
-         /* Details: "The PortletAsyncContext object start(String) method throws an    */
+         /* Details: "The PortletAsyncContext object start(Runnable) method throws an    */
          /* IllegalStateException if called after a dispatch method has been called    */
          /* within the same container dispatch cycle"                                  */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START4)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_START4);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            result = asyres.getAndClearResult(testcase);
+            if (result == null) {
+               result = tcd.getTestResultFailed(testcase);
+               pac = req.startPortletAsync();
+               pac.dispatch();
+               try {
+                  AsyncRunner runner = new AsyncRunner();
+                  runner.init(pac, testcase);
+                  pac.start(runner);
+                  result.appendTcDetail("Method did not throw exception although the async context was already complete.");
+               } catch (IllegalStateException e) {
+                  result.setTcSuccess(true);
+               } catch (Throwable t) {
+                  result.appendTcDetail("Method threw unexpected exception: " + t.getMessage());
+               }
+               asyres.setResult(testcase, result);
+               result = null;
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_cdi1                          */
          /* Details: "When CDI is available and the asynchronous thread is started     */
          /* through the PortletAsyncContext object, the asynchronous thread runs in    */
          /* the same context as the original request"                                  */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CDI1)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CDI1);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            result = tcd.getTestResultFailed(testcase);
+            if (bean != null && beanRunner != null) {
+               bean.setTestcase(testcase);
+               pac = req.startPortletAsync();
+               beanRunner.init(pac, testcase);
+               pac.start(beanRunner);
+               result = null;
+            } else {
+               result.appendTcDetail("CDI support not available.");
+            }
+            
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_cdi2                          */
          /* Details: "When CDI is available and the asynchronous thread is started     */
          /* through the PortletAsyncContext object, the PortletAsyncListener runs in   */
          /* the same context as the original request"                                  */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CDI2)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CDI2);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            result = tcd.getTestResultFailed(testcase);
+            if (bean != null) {
+               bean.setTestcase(testcase);
+               pac = req.startPortletAsync();
+               beanListener.setTestcase(testcase);
+               pac.addListener(beanListener);
+               // Force a timeout to get the listener to run
+               pac.setTimeout(100);
+               result = null;
+            } else {
+               result.appendTcDetail("CDI support not available.");
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_cdi3                          */
          /* Details: "When CDI is available and the asynchronous thread is started     */
          /* through the PortletAsyncContext object, the resource filter runs in the    */
          /* same context as the original request"                                      */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CDI3)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_CDI3);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
-         
+            // output is written in the filter during the async dispatch
+            if (req.getDispatcherType() == DispatcherType.REQUEST) {
+               result = tcd.getTestResultFailed(testcase);
+               if (bean != null) {
+                  bean.setTestcase(testcase);
+                  pac = req.startPortletAsync();
+                  pac.dispatch();
+                  result = null;
+               }
+            }
+            
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_onTimeout                     */
          /* Details: "The PortletAsyncListener object onTimeout(PortletAsyncEvent)     */
          /* method is called when a timeout occurs "                                   */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONTIMEOUT)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONTIMEOUT);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            pac = req.startPortletAsync();
+            AsyncListener listener = new AsyncListener();
+            listener.setTestcase(testcase);
+            pac.addListener(listener);
+            pac.setTimeout(100); 
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_onError                       */
          /* Details: "The PortletAsyncListener object onError(PortletAsyncEvent)       */
          /* method is called if an exception is thrown in an asynchronous thread       */
          /* started through the PortletAsyncContext object "                           */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONERROR)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONERROR);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            result = asyres.getAndClearResult(testcase);
+            if (result == null) {
+               result = tcd.getTestResultFailed(testcase);
+               pac = req.startPortletAsync();
+               AsyncListener listener = new AsyncListener();
+               listener.setTestcase(testcase);
+               pac.addListener(listener);
+               pac.setTimeout(2000); 
+               AsyncRunner runner = new AsyncRunner();
+               runner.init(pac, testcase);
+               pac.start(runner);
+               result = null;
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_onComplete                    */
          /* Details: "The PortletAsyncListener object onComplete(PortletAsyncEvent)    */
          /* method is called when asynchronous processing completes "                  */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONCOMPLETE)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONCOMPLETE);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            result = asyres.getAndClearResult(testcase);
+            if (result == null) {
+               writer.write("repeat");     // signal the JS fetch code to repeat
+               result = tcd.getTestResultFailed(testcase);
+               pac = req.startPortletAsync();
+               AsyncListener listener = new AsyncListener();
+               listener.setTestcase(testcase);
+               pac.addListener(listener);
+               pac.complete();
+               result = null;
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_onStartAsync                  */
          /* Details: "The PortletAsyncListener object onStartAsync(PortletAsyncEvent)  */
          /* method is called when asynchronous processing is restarted "               */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONSTARTASYNC)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ONSTARTASYNC);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            boolean isDispatched = new Boolean((String) session.getAttribute(testcase));
+            if (isDispatched) {
+               // 2nd time thru
+               session.removeAttribute(testcase);
+               result = tcd.getTestResultFailed(testcase);
+               pac = req.getPortletAsyncContext();
+               if (pac != null) {
+                  req.startPortletAsync();
+                  result = null;
+               } else {
+                  result.appendTcDetail("Couldn't retrieve PortletAsyncContext object");
+               }
+            } else {
+               // 1st time thru
+               try {
+                  pac = req.startPortletAsync();
+                  AsyncListener listener = new AsyncListener();
+                  listener.setTestcase(testcase);
+                  pac.addListener(listener);
+                  pac.dispatch();
+                  session.setAttribute(testcase, "true");
+               } catch (Throwable t) {
+                  result = tcd.getTestResultFailed(testcase);
+                  result.appendTcDetail("Exception starting or dispatching async: " + t.getMessage());
+               }
+            }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getPortletAsyncContext        */
          /* Details: "The PortletAsyncEvent object getPortletAsyncContext() method     */
          /* returns the PortletAsyncContext object for the request"                    */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETPORTLETASYNCCONTEXT)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETPORTLETASYNCCONTEXT);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            // test performed in onTimeout method
+            pac = req.startPortletAsync();
+            AsyncListener listener = new AsyncListener();
+            listener.setTestcase(testcase);
+            pac.addListener(listener);
+            pac.setTimeout(20); 
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getSuppliedRequest1           */
          /* Details: "The PortletAsyncEvent object getSuppliedRequest() method returns */
          /* null if no resource request was supplied when the PortletAsyncListener was */
          /* added "                                                                    */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDREQUEST1)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDREQUEST1);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            // test performed in onTimeout method
+            pac = req.startPortletAsync();
+            AsyncListener listener = new AsyncListener();
+            listener.setTestcase(testcase);
+            pac.addListener(listener);
+            pac.setTimeout(20); 
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getSuppliedRequest2           */
          /* Details: "The PortletAsyncEvent object getSuppliedRequest() method returns */
          /* the supplied request if a resource request was supplied when the           */
          /* PortletAsyncListener was added "                                           */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDREQUEST2)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDREQUEST2);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            // test performed in onTimeout method
+            pac = req.startPortletAsync();
+            AsyncListener listener = new AsyncListener();
+            listener.setTestcase(testcase);
+            pac.addListener(listener, req, resp);
+            pac.setTimeout(20); 
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getSuppliedResponse1          */
          /* Details: "The PortletAsyncEvent object getSuppliedResponse() method        */
          /* returns null if no resource response was supplied when the                 */
          /* PortletAsyncListener was added "                                           */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDRESPONSE1)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDRESPONSE1);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            // test performed in onTimeout method
+            pac = req.startPortletAsync();
+            AsyncListener listener = new AsyncListener();
+            listener.setTestcase(testcase);
+            pac.addListener(listener);
+            pac.setTimeout(20); 
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getSuppliedResponse2          */
          /* Details: "The PortletAsyncEvent object getSuppliedResponse() method        */
          /* returns the supplied response if a resource response was supplied when the */
          /* PortletAsyncListener was added "                                           */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDRESPONSE2)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETSUPPLIEDRESPONSE2);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            // test performed in onTimeout method
+            pac = req.startPortletAsync();
+            AsyncListener listener = new AsyncListener();
+            listener.setTestcase(testcase);
+            pac.addListener(listener, req, resp);
+            pac.setTimeout(20); 
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getThrowable1                 */
          /* Details: "The PortletAsyncEvent object getThrowable() method returns null  */
          /* within the PortletAsyncListener object onComplete(), onTimeout(), and      */
          /* onStartAsync() methods"                                                    */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTHROWABLE1)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTHROWABLE1);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            // test performed in onTimeout method
+            pac = req.startPortletAsync();
+            AsyncListener listener = new AsyncListener();
+            listener.setTestcase(testcase);
+            pac.addListener(listener);
+            pac.setTimeout(20); 
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getThrowable2                 */
          /* Details: "The PortletAsyncEvent object getThrowable() method returns the   */
          /* Throwable object associated with the error within the PortletAsyncListener */
          /* object onError() method"                                                   */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTHROWABLE2)) {
-            result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETTHROWABLE2);
-            /* TODO: implement test */
-            result.appendTcDetail("Not implemented.");
+            result = asyres.getAndClearResult(testcase);
+            if (result == null) {
+               result = tcd.getTestResultFailed(testcase);
+               pac = req.startPortletAsync();
+               AsyncListener listener = new AsyncListener();
+               listener.setTestcase(testcase);
+               pac.addListener(listener);
+               pac.setTimeout(2000); 
+               AsyncRunner runner = new AsyncRunner();
+               runner.init(pac, testcase);
+               pac.start(runner);
+               result = null;
+            }
          
          } else {
             writer.write("Unknown test case:" + testcase);

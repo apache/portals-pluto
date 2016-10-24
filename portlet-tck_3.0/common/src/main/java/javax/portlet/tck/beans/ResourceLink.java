@@ -262,17 +262,22 @@ public class ResourceLink {
       StringBuilder sb = new StringBuilder();
       sb.append("<div class='portletTCKTestcase' name='").append(tcName);
       sb.append("' id='").append(divId).append("'>\n");
+      sb.append("<h4>");
+      sb.append(tcName);
+      sb.append(":</h4>\n");
+      sb.append("<p>Waiting ...</p>\n");
       sb.append("</div>\n");
 
       sb.append("<script>\n");
-      sb.append("(function fetch () {\n");
-      sb.append("   var xhr = new XMLHttpRequest(), retried = false;\n");
+      sb.append("(function fetch (retried) {\n");
+      sb.append("   var xhr = new XMLHttpRequest();\n");
       sb.append("   xhr.onreadystatechange=function() {\n");
       sb.append("      if (xhr.readyState==4) {\n");
       sb.append("         if (xhr.status==200) {\n");
       sb.append("            if (xhr.responseText === 'repeat' && !retried) {\n");
-      sb.append("               retried = true;\n");
-      sb.append("               fetch();\n");
+      sb.append("               fetch(true);\n");
+      sb.append("            } else if (xhr.responseText === 'repeat') {\n");
+      sb.append("               document.getElementById('" + divId + "').innerHTML= 'Too many retries.';\n");
       sb.append("            } else {\n");
       sb.append("               document.getElementById('" + divId + "').innerHTML=xhr.responseText;\n");
       sb.append("            }\n");
@@ -281,7 +286,7 @@ public class ResourceLink {
       sb.append("   };\n");
       sb.append("   xhr.open('GET', '" + urlstr + "',true);\n");
       sb.append("   xhr.send();\n");
-      sb.append("})();\n");
+      sb.append("})(false);\n");
       sb.append("</script>\n");
 
       writer.write(sb.toString());
