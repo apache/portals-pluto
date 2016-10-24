@@ -128,8 +128,7 @@ public class PageResources {
     * adds a resource
     */
    public void addResource(PageResourceId id, Type type, String source) {
-      if (id.getName() != null && id.getScope() != null  && type != null && 
-            id.getVersion() != null && source != null) {
+      if (id.getName() != null && type != null && source != null) {
          resources.put(id, new Source(type, source));
       } else {
          StringBuilder txt = new StringBuilder(128);
