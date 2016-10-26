@@ -77,15 +77,15 @@ public class TestMessage {
    public String toString() {
 
       StringBuilder sb = new StringBuilder();
-      sb.append("<div class='portletTCKTestcase'>");
-      sb.append("<h4>");
+      sb.append("<div class='portletTCKTestcase'>\n");
+      sb.append("<h4>\n");
       sb.append(tcName);
       sb.append(" message:");
-      sb.append("</h4>");
-      sb.append("<p>");
+      sb.append("</h4>\n");
+      sb.append("<p>\n");
       sb.append(msg);
-      sb.append("</p>");
-      sb.append("</div>");
+      sb.append("</p>\n");
+      sb.append("</div>\n");
 
       return sb.toString();
    }

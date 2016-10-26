@@ -244,7 +244,7 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSSTATE_PARAMETERS1, "The PortletInit object newParameters function returns a Parameters object");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSSTATE_PARAMETERS2, "The PortletInit object newParameters function returns a Parameters object containing no parameters");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSSTATE_PARAMETERS3, "The PortletInit object newParameters function returns a Parameters object containing cloned values if passed a parameters object");
-      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSSTATE_STATE1, "The PortletInit object newState function returns a State object ");
+      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSSTATE_STATE1, "The PortletInit object newState function returns a State object");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSSTATE_STATE2, "The PortletInit object newState function returns a State object containing no parameters if not passed a State object");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSSTATE_STATE3, "The PortletInit object newState function returns a State object containing cloned values if passed a State object");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSSTATE_CLONE, "The RenderState object clone property is type function");
@@ -340,7 +340,7 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL2, "The portlet hub createResourceUrl function returns a string if called with a resource parameters argument");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL3, "The portlet hub createResourceUrl function returns a string if called with resource parameters and cacheability arguments");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL4, "The portlet hub createResourceUrl function returns a string if called with resource parameters, cacheability, and resource ID arguments");
-      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL5, "The portlet hub createResourceUrl function returns a string if called with a resource ID argument and with the resource parameters and cacheability arguments null ");
+      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL5, "The portlet hub createResourceUrl function returns a string if called with a resource ID argument and with the resource parameters and cacheability arguments null");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL6, "The portlet hub createResourceUrl function returns a URL with cacheability set to \"cacheLevelPage\"");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL7, "The portlet hub createResourceUrl function returns a URL with cacheability set to \"cacheLevelPortlet\"");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURL8, "The portlet hub createResourceUrl function returns a URL with cacheability set to \"cacheLevelFull\"");

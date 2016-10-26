@@ -434,7 +434,6 @@
 <entry key="V2RequestTests_ClientDataRequest_ApiResource_getPortletInputStream2">V2RequestTests</entry>
 <entry key="V2RequestTests_ClientDataRequest_ApiResource_getPortletInputStream3">V2RequestTests</entry>
 <entry key="V2RequestTests_ClientDataRequest_ApiResource_setCharacterEncoding1">V2RequestTests</entry>
-<entry key="V2RequestTests_ClientDataRequest_ApiResource_setCharacterEncoding2">V2RequestTests</entry>
 <entry key="V2RequestTests_ClientDataRequest_ApiResource_setCharacterEncoding3">V2RequestTests</entry>
 <entry key="V2RequestTests_ClientDataRequest_ApiResource_setCharacterEncoding4">V2RequestTests</entry>
 <entry key="V2RequestTests_ClientDataRequest_ApiResource_getReader1">V2RequestTests</entry>

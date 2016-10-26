@@ -36,6 +36,7 @@ package javax.portlet.tck.beans;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Map;
 
 import javax.portlet.ResourceURL;
 import javax.portlet.tck.constants.Constants;
@@ -55,6 +56,7 @@ public class ResourceLink {
    String      divId;
    String      resId;
    String      detId;
+   String      asyncId;
    String      title;
 
    /**
@@ -67,6 +69,7 @@ public class ResourceLink {
       divId = "";
       resId = "";
       detId = "";
+      asyncId = "";
       title = "";
       rurl = null;
       urlstr = null;
@@ -87,6 +90,7 @@ public class ResourceLink {
       this.divId = tcName + Constants.RESOURCE_DIV_ID;
       this.resId = tcName + Constants.RESULT_ID;
       this.detId = tcName + Constants.DETAIL_ID;
+      this.asyncId = tcName + Constants.ASYNC_ID;
       this.title = " Resource Link";
       this.rurl = rurl;
       this.urlstr = null;
@@ -108,6 +112,7 @@ public class ResourceLink {
       this.divId = tcName + Constants.RESOURCE_DIV_ID;
       this.resId = tcName + Constants.RESULT_ID;
       this.detId = tcName + Constants.DETAIL_ID;
+      this.asyncId = tcName + Constants.ASYNC_ID;
       this.title = " Resource Link";
       this.urlstr = urlstr;
       this.rurl = null;
@@ -129,19 +134,19 @@ public class ResourceLink {
       StringBuilder sb = new StringBuilder();
       sb.append("<div class='portletTCKTestcase' name='");
       sb.append(tcName);
-      sb.append("'>");
-      sb.append("<h4>");
+      sb.append("'>\n");
+      sb.append("<h4>\n");
       sb.append(tcName);
       sb.append(" " + title + ":");
-      sb.append("</h4>");
+      sb.append("</h4>\n");
       sb.append("<a class='portletTCKLink' id='");
       sb.append(linkId);
       sb.append("' href='");
       sb.append(urlstr);
-      sb.append("'>");
+      sb.append("'>\n");
       sb.append(tcName);
-      sb.append("</a>");
-      sb.append("</div>");
+      sb.append("</a>\n");
+      sb.append("</div>\n");
 
       return sb.toString();
    }
@@ -176,12 +181,12 @@ public class ResourceLink {
       TestResult tr = new TestResult(tcName, false, "");
       sb.append("<div class='portletTCKTestcase' name='").append(tcName);
       sb.append("' id='").append(divId).append("'>\n");
-      sb.append("<h4>");
+      sb.append("<h4>\n");
       sb.append(tcName);
       sb.append(": Click for results from serveResource:");
       sb.append("</h4>\n");
       sb.append("<a class='portletTCKLink' id='");
-      sb.append(actId).append("' href='javascript:;'>Waiting for results ...</a>");
+      sb.append(actId).append("' href='javascript:;'>Waiting for results ...</a>\n");
       sb.append("</div>\n");
 
       sb.append("<script>\n");
@@ -261,32 +266,96 @@ public class ResourceLink {
          urlstr = rurl.toString();
       StringBuilder sb = new StringBuilder();
       sb.append("<div class='portletTCKTestcase' name='").append(tcName);
-      sb.append("' id='").append(divId).append("'>\n");
-      sb.append("<h4>");
+      sb.append("' id='").append(asyncId).append("'>\n");
+      sb.append("<h4>\n");
       sb.append(tcName);
       sb.append(":</h4>\n");
       sb.append("<p>Waiting ...</p>\n");
       sb.append("</div>\n");
 
       sb.append("<script>\n");
-      sb.append("(function fetch (retried) {\n");
+      sb.append("(function fetch (retries) {\n");
       sb.append("   var xhr = new XMLHttpRequest();\n");
       sb.append("   xhr.onreadystatechange=function() {\n");
       sb.append("      if (xhr.readyState==4) {\n");
       sb.append("         if (xhr.status==200) {\n");
-      sb.append("            if (xhr.responseText === 'repeat' && !retried) {\n");
-      sb.append("               fetch(true);\n");
+      sb.append("            if (xhr.responseText === 'repeat' && retries > 0) {\n");
+      sb.append("               window.setTimeout(function () {fetch(retries - 1);}, 200);\n");
       sb.append("            } else if (xhr.responseText === 'repeat') {\n");
-      sb.append("               document.getElementById('" + divId + "').innerHTML= 'Too many retries.';\n");
+      sb.append("               document.getElementById('" + asyncId + "').innerHTML += '<p>Too many retries.</p>';\n");
+      sb.append("               document.getElementById('" + asyncId + "').id = '" + resId + "';\n");
+      sb.append("            } else if (xhr.responseText === '') {\n");
+      sb.append("               document.getElementById('" + asyncId + "').innerHTML += '</p>Empty response.</p>';\n");
+      sb.append("               document.getElementById('" + asyncId + "').id = '" + resId + "';\n");
       sb.append("            } else {\n");
-      sb.append("               document.getElementById('" + divId + "').innerHTML=xhr.responseText;\n");
+      sb.append("               document.getElementById('" + asyncId + "').innerHTML=xhr.responseText;\n");
       sb.append("            }\n");
       sb.append("         }\n");
       sb.append("      }\n");
       sb.append("   };\n");
       sb.append("   xhr.open('GET', '" + urlstr + "',true);\n");
       sb.append("   xhr.send();\n");
-      sb.append("})(false);\n");
+      sb.append("})(5);\n");
+      sb.append("</script>\n");
+
+      writer.write(sb.toString());
+   }
+   
+   /**
+    * Writes resource-fetching JavaScript code into the output stream.
+    * Can fetch twice - once for preparation and once to collect the results.
+    * The resource is retrieved without waiting for a link to be clicked. 
+    * 
+    * @param writer        Writer to which the string is written
+    * @throws IOException
+    */
+   public void writeResourceFetcherCustom(Writer writer, Map<String, String> headers, String method, String body) throws IOException {
+
+      if (urlstr == null)
+         urlstr = rurl.toString();
+      StringBuilder sb = new StringBuilder();
+      sb.append("<div class='portletTCKTestcase' name='").append(tcName);
+      sb.append("' id='").append(asyncId).append("'>\n");
+      sb.append("<h4>\n");
+      sb.append(tcName);
+      sb.append(":</h4>\n");
+      sb.append("<p>Waiting ...</p>\n");
+      sb.append("</div>\n");
+
+      sb.append("<script>\n");
+      sb.append("(function fetch (retries) {\n");
+      sb.append("   var xhr = new XMLHttpRequest();\n");
+      sb.append("   xhr.onreadystatechange=function() {\n");
+      sb.append("      if (xhr.readyState==4) {\n");
+      sb.append("         if (xhr.status==200) {\n");
+      sb.append("            if (xhr.responseText === 'repeat' && retries > 0) {\n");
+      sb.append("               window.setTimeout(function () {fetch(retries - 1);}, 200);\n");
+      sb.append("            } else if (xhr.responseText === 'repeat') {\n");
+      sb.append("               document.getElementById('" + asyncId + "').innerHTML += '<p>Too many retries.</p>';\n");
+      sb.append("               document.getElementById('" + asyncId + "').id = '" + resId + "';\n");
+      sb.append("            } else if (xhr.responseText === '') {\n");
+      sb.append("               document.getElementById('" + asyncId + "').innerHTML += '</p>Empty response.</p>';\n");
+      sb.append("               document.getElementById('" + asyncId + "').id = '" + resId + "';\n");
+      sb.append("            } else {\n");
+      sb.append("               document.getElementById('" + asyncId + "').innerHTML=xhr.responseText;\n");
+      sb.append("            }\n");
+      sb.append("         }\n");
+      sb.append("      }\n");
+      sb.append("   };\n");
+      sb.append("   xhr.open('" + method + "', '" + urlstr + "',true);\n");
+      
+      
+      for (String key : headers.keySet()) {
+         sb.append("   xhr.setRequestHeader('" + key + "', '" + headers.get(key) + "');\n");
+      }
+      
+      if (body == null || body.isEmpty()) {
+         sb.append("   xhr.send();\n");
+      } else {
+         sb.append("   xhr.send('" + body + "');\n");
+      }
+      
+      sb.append("})(5);\n");
       sb.append("</script>\n");
 
       writer.write(sb.toString());

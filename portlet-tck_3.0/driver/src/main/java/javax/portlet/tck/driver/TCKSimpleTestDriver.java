@@ -277,14 +277,10 @@ public class TCKSimpleTestDriver {
          // Some type of unexpected error occurred, so generate text
          // and mark the TC as failed.
          
-         List<WebElement> bels = driver.findElements(By.tagName("body"));
-         String err = "";
-         if (!bels.isEmpty()) {
-            err = bels.get(0).getText();
-         }
+         if (debug) System.out.println("   Exception occurred: " + e.getMessage());
+         
          assertTrue("Test case " + tcName + " failed. " +  
-               " Setup link could not be accessed. \nException: " + e.toString() +
-               "\nPage text: " + err, false);
+               " Setup link could not be accessed. \nException: " + e.toString(), false);
       }
    }
 
@@ -360,9 +356,10 @@ public class TCKSimpleTestDriver {
          if (!rels.isEmpty() && !dels.isEmpty()) break;
       }
       
-      if (!rels.isEmpty() && !dels.isEmpty()) {
+      if (!rels.isEmpty()) {
          String res = rels.get(0).getText();
-         String det = "Test case " + tcName + ": " + dels.get(0).getText();
+         String det = "Test case " + tcName + ": ";
+         det += dels.isEmpty() ? "No details provided." : dels.get(0).getText(); 
          boolean ok = res.contains(Constants.SUCCESS);
          if (debug) System.out.println("   Test OK: " + ok + ", results: " + res + ", details: " + det);
          assertTrue(det, ok);
@@ -459,13 +456,15 @@ public class TCKSimpleTestDriver {
          tcels = wel.findElements(By.id(asyncId));
          if (!tcels.isEmpty()) break;
       }
+
+      tcels = driver.findElements(By.id(asyncId));
+
+      if (debug) System.out.println("   Element with async id=" + asyncId + " found: " + !tcels.isEmpty());
       
       if (tcels.isEmpty()) {
          // no async element
          return false;
       }
-      
-      if (debug) System.out.println("   Async element found. Waiting for results ...");
 
       WebDriverWait wdw = new WebDriverWait(driver, timeout);
       wdw.until(ExpectedConditions.visibilityOfElementLocated(By.id(resultId)));

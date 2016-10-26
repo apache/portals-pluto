@@ -113,19 +113,19 @@ public class TestLink {
       StringBuilder sb = new StringBuilder();
       sb.append("<div class='portletTCKTestcase' name='");
       sb.append(tcName);
-      sb.append("'>");
-      sb.append("<h4>");
+      sb.append("'>\n");
+      sb.append("<h4>\n");
       sb.append(tcName);
       sb.append(" " + title + ":");
-      sb.append("</h4>");
+      sb.append("</h4>\n");
       sb.append("<a class='portletTCKLink' id='");
       sb.append(actId);
       sb.append("' href='");
       sb.append(urlstr);
-      sb.append("'>");
+      sb.append("'>\n");
       sb.append(tcName);
-      sb.append("</a>");
-      sb.append("</div>");
+      sb.append("</a>\n");
+      sb.append("</div>\n");
 
       return sb.toString();
    }

@@ -115,18 +115,18 @@ public class TestButton {
       StringBuilder sb = new StringBuilder();
       sb.append("<div class='portletTCKTestcase' name='");
       sb.append(tcName);
-      sb.append("'>");
-      sb.append("<h4>");
+      sb.append("'>\n");
+      sb.append("<h4>\n");
       sb.append(tcName);
       sb.append(title);
-      sb.append("</h4>");
-      sb.append("<form  class='portletTCKButton'" + " action='" + urlstr + "' method='post'>");
+      sb.append("</h4>\n");
+      sb.append("<form  class='portletTCKButton'" + " action='" + urlstr + "' method='post'>\n");
       sb.append("<input type='submit' value='").append(paramName);
       sb.append("'  name='").append(Constants.BUTTON_PARAM_NAME);
       sb.append("'  id='").append(actId);
-      sb.append("'/>");
-      sb.append("</form>");
-      sb.append("</div>");
+      sb.append("'/>\n");
+      sb.append("</form>\n");
+      sb.append("</div>\n");
 
       return sb.toString();
    }

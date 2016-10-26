@@ -88,21 +88,21 @@ public class TestButtonAsync {
       StringBuilder sb = new StringBuilder();
       sb.append("<div class='portletTCKTestcase' name='");
       sb.append(tcName);
-      sb.append("'>");
-      sb.append("<h4>");
+      sb.append("'>\n");
+      sb.append("<h4>\n");
       sb.append(tcName);
       sb.append(title);
-      sb.append("</h4>");
-      sb.append("<form  class='portletTCKButton'" + " onsubmit='return false;' method='post' enctype='application/x-www-form-urlencoded'>");
+      sb.append("</h4>\n");
+      sb.append("<form  class='portletTCKButton'" + " onsubmit='return false;' method='post' enctype='application/x-www-form-urlencoded'>\n");
       sb.append("<input type='submit' value='").append(testcase);
       sb.append("'  name='").append(Constants.BUTTON_PARAM_NAME);
       sb.append("'  id='").append(actId);
-      sb.append("'/>");
+      sb.append("'/>\n");
       sb.append("<input type='hidden' value='").append(testcase);
       sb.append("'  name='formParam'");
-      sb.append("'/>");
-      sb.append("</form>");
-      sb.append("</div>");
+      sb.append("'/>\n");
+      sb.append("</form>\n");
+      sb.append("</div>\n");
 
       return sb.toString();
    }

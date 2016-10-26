@@ -780,7 +780,7 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
             V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETDEFAULTNAMESPACE2,
             "Method getDefaultNamespace(): Returns XMLConstants.NULL_NS_URI if no default namespace is defined in the deployment descriptor");
       tcd.put(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETCONTAINERRUNTIMEOPTIONS4,
-            "Method getContainerRuntimeOptions(): Returns an empty map if no container runtime options have been defined ");
+            "Method getContainerRuntimeOptions(): Returns an empty map if no container runtime options have been defined");
       tcd.put(
             V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG2_GETRESOURCEBUNDLE8,
             "If no resource bundle is defined, the value defined in the deployment descriptor &lt;title&gt; element is returned by the corresponding getString method call");
@@ -1319,7 +1319,7 @@ public class JSR286SpecTestCaseDetails extends TestCaseDetails {
       tcd.put(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PUBLICRENDERPARAMETERS6,
             "Public render parameters are available in the render method");
       tcd.put(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PUBLICRENDERPARAMETERS13,
-            "A public render parameter can be deleted using the removePublicRenderParameter method on the StateAwareResponse ");
+            "A public render parameter can be deleted using the removePublicRenderParameter method on the StateAwareResponse");
       tcd.put(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PUBLICRENDERPARAMETERS13A,
             "A public render parameter can be deleted using the removePublicRenderParameter method on the PortletURL");
       tcd.put(

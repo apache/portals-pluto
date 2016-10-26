@@ -885,12 +885,12 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
    public final static String               V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB11                              = "V2ResponseTests_ActionResponse_ApiAction_sendRedirectB11";
    public final static String               V2RESPONSETESTS_EVENTRESPONSE_APIEVENT_SETRENDERPARAMETERS1                           = "V2ResponseTests_EventResponse_ApiEvent_setRenderParameters1";
    public final static String               V2RESPONSETESTS_EVENTRESPONSE_APIEVENT_SETRENDERPARAMETERS2                           = "V2ResponseTests_EventResponse_ApiEvent_setRenderParameters2";
-   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_FIELDEXPIRATION_CACHE                          = "V2ResponseTests_MimeResponse_ApiRender_fieldEXPIRATION_CACHE ";
-   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_FIELDCACHE_SCOPE                               = "V2ResponseTests_MimeResponse_ApiRender_fieldCACHE_SCOPE ";
-   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_FIELDPUBLIC_SCOPE                              = "V2ResponseTests_MimeResponse_ApiRender_fieldPUBLIC_SCOPE ";
-   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_FIELDPRIVATE_SCOPE                             = "V2ResponseTests_MimeResponse_ApiRender_fieldPRIVATE_SCOPE ";
-   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_FIELDETAG                                      = "V2ResponseTests_MimeResponse_ApiRender_fieldETAG ";
-   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_FIELDUSE_CACHED_CONTENT                        = "V2ResponseTests_MimeResponse_ApiRender_fieldUSE_CACHED_CONTENT ";
+   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_FIELDEXPIRATION_CACHE                          = "V2ResponseTests_MimeResponse_ApiRender_fieldEXPIRATION_CACHE";
+   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_FIELDCACHE_SCOPE                               = "V2ResponseTests_MimeResponse_ApiRender_fieldCACHE_SCOPE";
+   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_FIELDPUBLIC_SCOPE                              = "V2ResponseTests_MimeResponse_ApiRender_fieldPUBLIC_SCOPE";
+   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_FIELDPRIVATE_SCOPE                             = "V2ResponseTests_MimeResponse_ApiRender_fieldPRIVATE_SCOPE";
+   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_FIELDETAG                                      = "V2ResponseTests_MimeResponse_ApiRender_fieldETAG";
+   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_FIELDUSE_CACHED_CONTENT                        = "V2ResponseTests_MimeResponse_ApiRender_fieldUSE_CACHED_CONTENT";
    public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_FIELDNAMESPACED_RESPONSE                       = "V2ResponseTests_MimeResponse_ApiRender_fieldNAMESPACED_RESPONSE";
    public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_FIELDMARKUP_HEAD_ELEMENT                       = "V2ResponseTests_MimeResponse_ApiRender_fieldMARKUP_HEAD_ELEMENT";
    public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_GETCONTENTTYPE1                                = "V2ResponseTests_MimeResponse_ApiRender_getContentType1";
@@ -918,12 +918,12 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
    public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_CREATEACTIONURL                                = "V2ResponseTests_MimeResponse_ApiRender_createActionURL";
    public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_CREATERESOURCEURL                              = "V2ResponseTests_MimeResponse_ApiRender_createResourceURL";
    public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRENDER_GETCACHECONTROL                                = "V2ResponseTests_MimeResponse_ApiRender_getCacheControl";
-   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDEXPIRATION_CACHE                        = "V2ResponseTests_MimeResponse_ApiResource_fieldEXPIRATION_CACHE ";
-   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDCACHE_SCOPE                             = "V2ResponseTests_MimeResponse_ApiResource_fieldCACHE_SCOPE ";
-   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDPUBLIC_SCOPE                            = "V2ResponseTests_MimeResponse_ApiResource_fieldPUBLIC_SCOPE ";
-   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDPRIVATE_SCOPE                           = "V2ResponseTests_MimeResponse_ApiResource_fieldPRIVATE_SCOPE ";
-   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDETAG                                    = "V2ResponseTests_MimeResponse_ApiResource_fieldETAG ";
-   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDUSE_CACHED_CONTENT                      = "V2ResponseTests_MimeResponse_ApiResource_fieldUSE_CACHED_CONTENT ";
+   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDEXPIRATION_CACHE                        = "V2ResponseTests_MimeResponse_ApiResource_fieldEXPIRATION_CACHE";
+   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDCACHE_SCOPE                             = "V2ResponseTests_MimeResponse_ApiResource_fieldCACHE_SCOPE";
+   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDPUBLIC_SCOPE                            = "V2ResponseTests_MimeResponse_ApiResource_fieldPUBLIC_SCOPE";
+   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDPRIVATE_SCOPE                           = "V2ResponseTests_MimeResponse_ApiResource_fieldPRIVATE_SCOPE";
+   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDETAG                                    = "V2ResponseTests_MimeResponse_ApiResource_fieldETAG";
+   public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDUSE_CACHED_CONTENT                      = "V2ResponseTests_MimeResponse_ApiResource_fieldUSE_CACHED_CONTENT";
    public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDNAMESPACED_RESPONSE                     = "V2ResponseTests_MimeResponse_ApiResource_fieldNAMESPACED_RESPONSE";
    public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDMARKUP_HEAD_ELEMENT                     = "V2ResponseTests_MimeResponse_ApiResource_fieldMARKUP_HEAD_ELEMENT";
    public final static String               V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_GETCONTENTTYPE1                              = "V2ResponseTests_MimeResponse_ApiResource_getContentType1";
@@ -955,7 +955,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
    public final static String               V2RESPONSETESTS_RENDERRESPONSE_APIRENDER_SETNEXTPOSSIBLEPORTLETMODES2                 = "V2ResponseTests_RenderResponse_ApiRender_setNextPossiblePortletModes2";
    public final static String               V2RESPONSETESTS_RENDERRESPONSE_APIRENDER_SETCONTENTTYPE1                              = "V2ResponseTests_RenderResponse_ApiRender_setContentType1";
    public final static String               V2RESPONSETESTS_RENDERRESPONSE_APIRENDER_SETCONTENTTYPE2                              = "V2ResponseTests_RenderResponse_ApiRender_setContentType2";
-   public final static String               V2RESPONSETESTS_RESOURCERESPONSE_APIRESOURCE_FIELDHTTP_STATUS_CODE                    = "V2ResponseTests_ResourceResponse_ApiResource_fieldHTTP_STATUS_CODE ";
+   public final static String               V2RESPONSETESTS_RESOURCERESPONSE_APIRESOURCE_FIELDHTTP_STATUS_CODE                    = "V2ResponseTests_ResourceResponse_ApiResource_fieldHTTP_STATUS_CODE";
    public final static String               V2RESPONSETESTS_RESOURCERESPONSE_APIRESOURCE_SETLOCALE1                               = "V2ResponseTests_ResourceResponse_ApiResource_setLocale1";
    public final static String               V2RESPONSETESTS_RESOURCERESPONSE_APIRESOURCE_SETLOCALE4                               = "V2ResponseTests_ResourceResponse_ApiResource_setLocale4";
    public final static String               V2RESPONSETESTS_RESOURCERESPONSE_APIRESOURCE_SETCHARACTERENCODING1                    = "V2ResponseTests_ResourceResponse_ApiResource_setCharacterEncoding1";
@@ -1511,28 +1511,28 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
             "Invoking doFilter(ActionRequest, ActionResponse): causes portlet action method to be invoked");
       tcd.put(
             V2FILTERTESTS_FILTERCHAIN_APIACTIONFILTER_INVOKEACTIONEXCEPTION,
-            "Method doFilter(ActionRequest, ActionResponse): If a PortletException is thrown before invoking the next filter in the chain, processing does not continue down the chain ");
+            "Method doFilter(ActionRequest, ActionResponse): If a PortletException is thrown before invoking the next filter in the chain, processing does not continue down the chain");
       tcd.put(V2FILTERTESTS_FILTERCHAIN_APIEVENTFILTER_INVOKEEVENTFILTER,
             "Invoking doFilter(EventRequest, EventResponse): causes next filter to be invoked");
       tcd.put(V2FILTERTESTS_FILTERCHAIN_APIEVENTFILTER_INVOKEEVENTFILTER2,
             "Invoking doFilter(EventRequest, EventResponse): causes portlet Event method to be invoked");
       tcd.put(
             V2FILTERTESTS_FILTERCHAIN_APIEVENTFILTER_INVOKEEVENTEXCEPTION,
-            "Method doFilter(EventRequest, EventResponse): If a PortletException is thrown before invoking the next filter in the chain, processing does not continue down the chain ");
+            "Method doFilter(EventRequest, EventResponse): If a PortletException is thrown before invoking the next filter in the chain, processing does not continue down the chain");
       tcd.put(V2FILTERTESTS_FILTERCHAIN_APIRENDERFILTER_INVOKERENDERFILTER,
             "Invoking doFilter(RenderRequest, RenderResponse): causes next filter to be invoked");
       tcd.put(V2FILTERTESTS_FILTERCHAIN_APIRENDERFILTER_INVOKERENDERFILTER2,
             "Invoking doFilter(RenderRequest, RenderResponse): causes portlet Render method to be invoked");
       tcd.put(
             V2FILTERTESTS_FILTERCHAIN_APIRENDERFILTER_INVOKERENDEREXCEPTION,
-            "Method doFilter(RenderRequest, RenderResponse): If a PortletException is thrown before invoking the next filter in the chain, processing does not continue down the chain ");
+            "Method doFilter(RenderRequest, RenderResponse): If a PortletException is thrown before invoking the next filter in the chain, processing does not continue down the chain");
       tcd.put(V2FILTERTESTS_FILTERCHAIN_APIRESOURCEFILTER_INVOKERESOURCEFILTER,
             "Invoking doFilter(ResourceRequest, ResourceResponse): causes next filter to be invoked");
       tcd.put(V2FILTERTESTS_FILTERCHAIN_APIRESOURCEFILTER_INVOKERESOURCEFILTER2,
             "Invoking doFilter(ResourceRequest, ResourceResponse): causes portlet Resource method to be invoked");
       tcd.put(
             V2FILTERTESTS_FILTERCHAIN_APIRESOURCEFILTER_INVOKERESOURCEEXCEPTION,
-            "Method doFilter(ResourceRequest, ResourceResponse): If a PortletException is thrown before invoking the next filter in the chain, processing does not continue down the chain ");
+            "Method doFilter(ResourceRequest, ResourceResponse): If a PortletException is thrown before invoking the next filter in the chain, processing does not continue down the chain");
       tcd.put(V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETFILTERNAME,
             "Method getFilterName(): getFilterName method returns filter name as defined in deployment descriptor");
       tcd.put(V2FILTERTESTS_FILTERCONFIG_APIRENDERFILTER_GETPORTLETCONTEXT,
@@ -1844,7 +1844,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2WRAPPERTESTS_RENDERREQUESTWRAPPER_APIRENDER_GETREQUEST,
             "Method getRequest(): Returns wrapped RenderRequest object");
       tcd.put(V2WRAPPERTESTS_RENDERREQUESTWRAPPER_APIRENDER_SETREQUEST,
-            "Method setRequest(RenderRequest): Allows wrapped RenderRequest object to be set ");
+            "Method setRequest(RenderRequest): Allows wrapped RenderRequest object to be set");
       tcd.put(V2WRAPPERTESTS_RENDERREQUESTWRAPPER_APIRENDER_GETETAG, "Method getETag(): Calls wrapped method");
       tcd.put(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_FLUSHBUFFER, "Method flushBuffer(): Calls wrapped method");
       tcd.put(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_GETBUFFERSIZE,
@@ -1872,7 +1872,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_GETRESPONSE,
             "Method getResponse(): Returns wrapped RenderResponse object");
       tcd.put(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_SETRESPONSE,
-            "Method setResponse(RenderResponse): Allows wrapped RenderResponse object to be set ");
+            "Method setResponse(RenderResponse): Allows wrapped RenderResponse object to be set");
       tcd.put(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_CREATEACTIONURL,
             "Method createActionURL(): Calls wrapped method");
       tcd.put(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_CREATERENDERURL,
@@ -1980,7 +1980,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_ISPORTLETMODEALLOWED2,
             "Method isPortletModeAllowed(PortletMode): Returns false if the specified PortletMode is not allowed");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPORTLETMODE,
-            "Method getPortletMode(): Returns current PortletMode ");
+            "Method getPortletMode(): Returns current PortletMode");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETWINDOWSTATE,
             "Method getWindowState(): Returns current WindowState");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPREFERENCES,
@@ -1998,13 +1998,13 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPORTLETSESSIONB4,
             "Method getPortletSession(boolean): If input flag is false, returns null if one does not already exist");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPROPERTY1,
-            "Method getProperty(String): If specified request property exists, returns its value ");
+            "Method getProperty(String): If specified request property exists, returns its value");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPROPERTY2,
             "Method getProperty(String): If specified request property does not exist, returns null");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPROPERTY3,
             "Method getProperty(String): Throws IllegalArgumentException if the name is null");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPROPERTIES1,
-            "Method getProperties(String): If specified request property exists, returns its values as an Enumeration ");
+            "Method getProperties(String): If specified request property exists, returns its values as an Enumeration");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPROPERTIES2,
             "Method getProperties(String): If specified request property does not exist, returns an empty Enumeration");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPROPERTIES3,
@@ -2184,7 +2184,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIACTION_ISPORTLETMODEALLOWED2,
             "Method isPortletModeAllowed(PortletMode): Returns false if the specified PortletMode is not allowed");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIACTION_GETPORTLETMODE,
-            "Method getPortletMode(): Returns current PortletMode ");
+            "Method getPortletMode(): Returns current PortletMode");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIACTION_GETWINDOWSTATE,
             "Method getWindowState(): Returns current WindowState");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIACTION_GETPREFERENCES,
@@ -2202,13 +2202,13 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIACTION_GETPORTLETSESSIONB4,
             "Method getPortletSession(boolean): If input flag is false, returns null if one does not already exist");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIACTION_GETPROPERTY1,
-            "Method getProperty(String): If specified request property exists, returns its value ");
+            "Method getProperty(String): If specified request property exists, returns its value");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIACTION_GETPROPERTY2,
             "Method getProperty(String): If specified request property does not exist, returns null");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIACTION_GETPROPERTY3,
             "Method getProperty(String): Throws IllegalArgumentException if the name is null");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIACTION_GETPROPERTIES1,
-            "Method getProperties(String): If specified request property exists, returns its values as an Enumeration ");
+            "Method getProperties(String): If specified request property exists, returns its values as an Enumeration");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIACTION_GETPROPERTIES2,
             "Method getProperties(String): If specified request property does not exist, returns an empty Enumeration");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIACTION_GETPROPERTIES3,
@@ -2389,7 +2389,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_ISPORTLETMODEALLOWED2,
             "Method isPortletModeAllowed(PortletMode): Returns false if the specified PortletMode is not allowed");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETPORTLETMODE,
-            "Method getPortletMode(): Returns current PortletMode ");
+            "Method getPortletMode(): Returns current PortletMode");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETWINDOWSTATE,
             "Method getWindowState(): Returns current WindowState");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETPREFERENCES,
@@ -2407,13 +2407,13 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETPORTLETSESSIONB4,
             "Method getPortletSession(boolean): If input flag is false, returns null if one does not already exist");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETPROPERTY1,
-            "Method getProperty(String): If specified request property exists, returns its value ");
+            "Method getProperty(String): If specified request property exists, returns its value");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETPROPERTY2,
             "Method getProperty(String): If specified request property does not exist, returns null");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETPROPERTY3,
             "Method getProperty(String): Throws IllegalArgumentException if the name is null");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETPROPERTIES1,
-            "Method getProperties(String): If specified request property exists, returns its values as an Enumeration ");
+            "Method getProperties(String): If specified request property exists, returns its values as an Enumeration");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETPROPERTIES2,
             "Method getProperties(String): If specified request property does not exist, returns an empty Enumeration");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETPROPERTIES3,
@@ -2594,7 +2594,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISPORTLETMODEALLOWED2,
             "Method isPortletModeAllowed(PortletMode): Returns false if the specified PortletMode is not allowed");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETMODE,
-            "Method getPortletMode(): Returns current PortletMode ");
+            "Method getPortletMode(): Returns current PortletMode");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETWINDOWSTATE,
             "Method getWindowState(): Returns current WindowState");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPREFERENCES,
@@ -2612,13 +2612,13 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTLETSESSIONB4,
             "Method getPortletSession(boolean): If input flag is false, returns null if one does not already exist");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTY1,
-            "Method getProperty(String): If specified request property exists, returns its value ");
+            "Method getProperty(String): If specified request property exists, returns its value");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTY2,
             "Method getProperty(String): If specified request property does not exist, returns null");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTY3,
             "Method getProperty(String): Throws IllegalArgumentException if the name is null");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTIES1,
-            "Method getProperties(String): If specified request property exists, returns its values as an Enumeration ");
+            "Method getProperties(String): If specified request property exists, returns its values as an Enumeration");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTIES2,
             "Method getProperties(String): If specified request property does not exist, returns an empty Enumeration");
       tcd.put(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTIES3,
@@ -2906,7 +2906,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT1,
             "Method createElement(String): Returns an org.w3c.dom.Element object for the specified tag name");
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT2,
-            "Method createElement(String): The returned Element has nodeName set to the the specified tag name ");
+            "Method createElement(String): The returned Element has nodeName set to the the specified tag name");
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT3,
             "Method createElement(String): The returned Element has localName set to null");
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_CREATEELEMENT4,
@@ -2950,7 +2950,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIRESOURCE_CREATEELEMENT1,
             "Method createElement(String): Returns an org.w3c.dom.Element object for the specified tag name");
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIRESOURCE_CREATEELEMENT2,
-            "Method createElement(String): The returned Element has nodeName set to the the specified tag name ");
+            "Method createElement(String): The returned Element has nodeName set to the the specified tag name");
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIRESOURCE_CREATEELEMENT3,
             "Method createElement(String): The returned Element has localName set to null");
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIRESOURCE_CREATEELEMENT4,
@@ -2989,7 +2989,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIACTION_CREATEELEMENT1,
             "Method createElement(String): Returns an org.w3c.dom.Element object for the specified tag name");
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIACTION_CREATEELEMENT2,
-            "Method createElement(String): The returned Element has nodeName set to the the specified tag name ");
+            "Method createElement(String): The returned Element has nodeName set to the the specified tag name");
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIACTION_CREATEELEMENT3,
             "Method createElement(String): The returned Element has localName set to null");
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIACTION_CREATEELEMENT4,
@@ -3028,7 +3028,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIEVENT_CREATEELEMENT1,
             "Method createElement(String): Returns an org.w3c.dom.Element object for the specified tag name");
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIEVENT_CREATEELEMENT2,
-            "Method createElement(String): The returned Element has nodeName set to the the specified tag name ");
+            "Method createElement(String): The returned Element has nodeName set to the the specified tag name");
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIEVENT_CREATEELEMENT3,
             "Method createElement(String): The returned Element has localName set to null");
       tcd.put(V2RESPONSETESTS_PORTLETRESPONSE_APIEVENT_CREATEELEMENT4,
@@ -3073,10 +3073,10 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS8,
             "Method setRenderParameters(java.util.Map): Throws IllegalArgumentException if any key in the map is null");
       tcd.put(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS10,
-            "Method setRenderParameters(java.util.Map): Throws IllegalArgumentException if the values array for any key is null ");
+            "Method setRenderParameters(java.util.Map): Throws IllegalArgumentException if the values array for any key is null");
       tcd.put(
             V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS11,
-            "Method setRenderParameters(java.util.Map): Throws IllegalArgumentException if any element in the values array is null ");
+            "Method setRenderParameters(java.util.Map): Throws IllegalArgumentException if any element in the values array is null");
       tcd.put(
             V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS12,
             "Method setRenderParameters(java.util.Map): Throws IllegalStateException if the method is invoked after the sendRedirect method has been called");
@@ -3143,7 +3143,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP3,
             "Method getRenderParameterMap(): The returned map contains private render parameters");
       tcd.put(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETRENDERPARAMETERMAP4,
-            "Method getRenderParameterMap(): An empty map is returned if no parameters have been set ");
+            "Method getRenderParameterMap(): An empty map is returned if no parameters have been set");
       tcd.put(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETPORTLETMODE1,
             "Method getPortletMode(): Returns the current PortletMode for the portlet");
       tcd.put(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_GETPORTLETMODE2,
@@ -3191,10 +3191,10 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2RESPONSETESTS_STATEAWARERESPONSE_APIACTION_SETRENDERPARAMETERS8,
             "Method setRenderParameters(java.util.Map): Throws IllegalArgumentException if any key in the map is null");
       tcd.put(V2RESPONSETESTS_STATEAWARERESPONSE_APIACTION_SETRENDERPARAMETERS10,
-            "Method setRenderParameters(java.util.Map): Throws IllegalArgumentException if the values array for any key is null ");
+            "Method setRenderParameters(java.util.Map): Throws IllegalArgumentException if the values array for any key is null");
       tcd.put(
             V2RESPONSETESTS_STATEAWARERESPONSE_APIACTION_SETRENDERPARAMETERS11,
-            "Method setRenderParameters(java.util.Map): Throws IllegalArgumentException if any element in the values array is null ");
+            "Method setRenderParameters(java.util.Map): Throws IllegalArgumentException if any element in the values array is null");
       tcd.put(
             V2RESPONSETESTS_STATEAWARERESPONSE_APIACTION_SETRENDERPARAMETERS12,
             "Method setRenderParameters(java.util.Map): Throws IllegalStateException if the method is invoked after the sendRedirect method has been called");
@@ -3261,7 +3261,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2RESPONSETESTS_STATEAWARERESPONSE_APIACTION_GETRENDERPARAMETERMAP3,
             "Method getRenderParameterMap(): The returned map contains private render parameters");
       tcd.put(V2RESPONSETESTS_STATEAWARERESPONSE_APIACTION_GETRENDERPARAMETERMAP4,
-            "Method getRenderParameterMap(): An empty map is returned if no parameters have been set ");
+            "Method getRenderParameterMap(): An empty map is returned if no parameters have been set");
       tcd.put(V2RESPONSETESTS_STATEAWARERESPONSE_APIACTION_GETPORTLETMODE1,
             "Method getPortletMode(): Returns the current PortletMode for the portlet");
       tcd.put(V2RESPONSETESTS_STATEAWARERESPONSE_APIACTION_GETPORTLETMODE2,
@@ -3279,13 +3279,13 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTA2,
             "Method sendRedirect(String): Throws IllegalArgumentException if a relative path URL is specified");
       tcd.put(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTA3,
-            "Method sendRedirect(String): Throws IllegalStateException if setPortletMode has been called before this method ");
+            "Method sendRedirect(String): Throws IllegalStateException if setPortletMode has been called before this method");
       tcd.put(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTA4,
-            "Method sendRedirect(String): Throws IllegalStateException if setWindowState has been called before this method ");
+            "Method sendRedirect(String): Throws IllegalStateException if setWindowState has been called before this method");
       tcd.put(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTA5,
-            "Method sendRedirect(String): Throws IllegalStateException if setRenderParameter has been called before this method ");
+            "Method sendRedirect(String): Throws IllegalStateException if setRenderParameter has been called before this method");
       tcd.put(V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTA6,
-            "Method sendRedirect(String): Throws IllegalStateException if setRenderParameters has been called before this method ");
+            "Method sendRedirect(String): Throws IllegalStateException if setRenderParameters has been called before this method");
       tcd.put(
             V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTA7,
             "Method sendRedirect(String): Throws IllegalStateException if removePublicRenderParameter has been called before this method");
@@ -3303,16 +3303,16 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
             "Method sendRedirect(String, String): Throws IllegalArgumentException if a relative path URL is specified");
       tcd.put(
             V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB7,
-            "Method sendRedirect(String, String): Throws IllegalStateException if setPortletMode has been called before this method ");
+            "Method sendRedirect(String, String): Throws IllegalStateException if setPortletMode has been called before this method");
       tcd.put(
             V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB8,
-            "Method sendRedirect(String, String): Throws IllegalStateException if setWindowState has been called before this method ");
+            "Method sendRedirect(String, String): Throws IllegalStateException if setWindowState has been called before this method");
       tcd.put(
             V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB9,
-            "Method sendRedirect(String, String): Throws IllegalStateException if setRenderParameter has been called before this method ");
+            "Method sendRedirect(String, String): Throws IllegalStateException if setRenderParameter has been called before this method");
       tcd.put(
             V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB10,
-            "Method sendRedirect(String, String): Throws IllegalStateException if setRenderParameters has been called before this method ");
+            "Method sendRedirect(String, String): Throws IllegalStateException if setRenderParameters has been called before this method");
       tcd.put(
             V2RESPONSETESTS_ACTIONRESPONSE_APIACTION_SENDREDIRECTB11,
             "Method sendRedirect(String, String): Throws IllegalStateException if removePublicRenderParameter has been called before this method");
@@ -3522,7 +3522,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERS10,
             "Method setParameters(java.util.Map): Throws IllegalArgumentException if any key in the map is null");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERS12,
-            "Method setParameters(java.util.Map): Throws IllegalArgumentException if the values array for any key is null ");
+            "Method setParameters(java.util.Map): Throws IllegalArgumentException if the values array for any key is null");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRENURL_SETSECURE2,
             "Method setSecure(boolean): If the input parameter is true, the resulting URL uses a secure connection (HTTPS)");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRENURL_TOSTRING,
@@ -3583,7 +3583,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS10,
             "Method setParameters(java.util.Map): Throws IllegalArgumentException if any key in the map is null");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS12,
-            "Method setParameters(java.util.Map): Throws IllegalArgumentException if the values array for any key is null ");
+            "Method setParameters(java.util.Map): Throws IllegalArgumentException if the values array for any key is null");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERACTURL_SETSECURE2,
             "Method setSecure(boolean): If the input parameter is true, the resulting URL uses a secure connection (HTTPS)");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERACTURL_TOSTRING,
@@ -3644,7 +3644,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERS10,
             "Method setParameters(java.util.Map): Throws IllegalArgumentException if any key in the map is null");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERS12,
-            "Method setParameters(java.util.Map): Throws IllegalArgumentException if the values array for any key is null ");
+            "Method setParameters(java.util.Map): Throws IllegalArgumentException if the values array for any key is null");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRESURL_SETSECURE2,
             "Method setSecure(boolean): If the input parameter is true, the resulting URL uses a secure connection (HTTPS)");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRESURL_TOSTRING,
@@ -3815,11 +3815,11 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
             "Returns the PortletMode object causing this exception");
       tcd.put(V2EXCEPTIONTESTS_UNAVAILABLEEXCEPTION_APIRENDER_ISPERMANENT1, "Method isPermanent(): Returns a boolean");
       tcd.put(V2EXCEPTIONTESTS_UNAVAILABLEEXCEPTION_APIRENDER_ISPERMANENT2,
-            "Method isPermanent(): Returns true if the portlet is permanently unavailable ");
+            "Method isPermanent(): Returns true if the portlet is permanently unavailable");
       tcd.put(V2EXCEPTIONTESTS_UNAVAILABLEEXCEPTION_APIRENDER_ISPERMANENT3,
-            "Method isPermanent(): Returns false if the portlet is temporarily unavailable ");
+            "Method isPermanent(): Returns false if the portlet is temporarily unavailable");
       tcd.put(V2EXCEPTIONTESTS_UNAVAILABLEEXCEPTION_APIRENDER_GETUNAVAILABLESECONDS1,
-            "Method getUnavailableSeconds(): Returns an integer ");
+            "Method getUnavailableSeconds(): Returns an integer");
       tcd.put(V2EXCEPTIONTESTS_UNAVAILABLEEXCEPTION_APIRENDER_GETUNAVAILABLESECONDS2,
             "Method getUnavailableSeconds(): Returns a number &lt;= 0 if the portlet is permanently unavailable");
       tcd.put(
@@ -3887,10 +3887,10 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETINITPARAMETER2,
             "Method getInitParameter(String): Returns null if the specified initialization parameter does not exist");
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETINITPARAMETERNAMES2,
-            "Method getInitParameterNames(): Returns an empty Enumeration if there are no initialization parameters available ");
+            "Method getInitParameterNames(): Returns an empty Enumeration if there are no initialization parameters available");
       tcd.put(
             V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPUBLICRENDERPARAMETERNAMES2,
-            "Method getPublicRenderParameterNames(): Returns an empty Enumeration if there are no public render parameters are defined ");
+            "Method getPublicRenderParameterNames(): Returns an empty Enumeration if there are no public render parameters are defined");
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPUBLISHINGEVENTQNAMES2,
             "Method getPublishingEventQNames(): Returns an empty Enumeration if there are no processing events are defined");
       tcd.put(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER2_GETPROCESSINGEVENTQNAMES2,
@@ -3902,11 +3902,11 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2PORTLETTESTS_PORTLETMODE_APIRENDER_CONSTRUCTOR2,
             "The constructor PortletMode(java.lang.String): converts any upper case letters in the name parameter to lower case");
       tcd.put(V2PORTLETTESTS_PORTLETMODE_APIRENDER_FIELDEDIT,
-            "Has PortletMode field EDIT with value of PortletMode.EDIT ");
+            "Has PortletMode field EDIT with value of PortletMode.EDIT");
       tcd.put(V2PORTLETTESTS_PORTLETMODE_APIRENDER_FIELDHELP,
-            "Has PortletMode field HELP with value of PortletMode.HELP ");
+            "Has PortletMode field HELP with value of PortletMode.HELP");
       tcd.put(V2PORTLETTESTS_PORTLETMODE_APIRENDER_FIELDVIEW,
-            "Has PortletMode field VIEW with value of PortletMode.VIEW ");
+            "Has PortletMode field VIEW with value of PortletMode.VIEW");
       tcd.put(V2PORTLETTESTS_PORTLETMODE_APIRENDER_TOSTRING,
             "Method toString(): Returns a String representation of the portlet mode");
       tcd.put(V2PORTLETTESTS_PORTLETMODE_APIRENDER_HASHCODE,
@@ -3918,11 +3918,11 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_CONSTRUCTOR2,
             "The constructor WindowState(java.lang.String): converts any upper case letters in the name parameter to lower case");
       tcd.put(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_FIELDMAXIMIZED,
-            "Has WindowState field MAXIMIZED with value of WindowState.MAXIMIZED ");
+            "Has WindowState field MAXIMIZED with value of WindowState.MAXIMIZED");
       tcd.put(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_FIELDMINIMIZED,
-            "Has WindowState field MINIMIZED with value of WindowState.MINIMIZED ");
+            "Has WindowState field MINIMIZED with value of WindowState.MINIMIZED");
       tcd.put(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_FIELDNORMAL,
-            "Has WindowState field NORMAL with value of WindowState.NORMAL ");
+            "Has WindowState field NORMAL with value of WindowState.NORMAL");
       tcd.put(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_TOSTRING,
             "Method toString(): Returns a String representation of the portlet mode");
       tcd.put(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_HASHCODE,
@@ -3950,7 +3950,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2PORTLETTESTS_EVENTPORTLET_APIEVENT_PROCESSEVENT,
             "Method processEvent(EventRequest, EventResponse): is called when an event is targeted to the portlet");
       tcd.put(V2PORTLETTESTS_RESOURCESERVINGPORTLET_APIRESOURCE_SERVERESOURCE,
-            "Method serveResource(ResourceRequest, ResourceResponse): is called to allow the portlet to generate resource content ");
+            "Method serveResource(ResourceRequest, ResourceResponse): is called to allow the portlet to generate resource content");
       tcd.put(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_INITA, "Method init(): Called when the portlet is initialized");
       tcd.put(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_INITB,
             "Method init(PortletConfig): Called when the portlet is initialized");
@@ -3991,10 +3991,10 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
             "Method isPublicScope(): Returns true if the caching scope has been set to public through the setPublicScope method");
       tcd.put(
             V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE2,
-            "Method isPublicScope(): Returns true if the caching scope default has not been set with the setPublicScope method, but has been set to public in the deployment descriptor ");
+            "Method isPublicScope(): Returns true if the caching scope default has not been set with the setPublicScope method, but has been set to public in the deployment descriptor");
       tcd.put(
             V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE3,
-            "Method isPublicScope(): Returns false if the caching scope has not been set with the setPublicScope method, but has been set to private through the setPublicScope method ");
+            "Method isPublicScope(): Returns false if the caching scope has not been set with the setPublicScope method, but has been set to private through the setPublicScope method");
       tcd.put(
             V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_ISPUBLICSCOPE5,
             "Method isPublicScope(): Returns false if the caching scope has not been set with the setPublicScope method and has not been set in the deployment descriptor");
@@ -4021,9 +4021,9 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_USECACHEDCONTENT3,
             "Method useCachedContent(): Returns false if the use cached content indcator has not been set");
       tcd.put(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETUSECACHEDCONTENT1,
-            "Method setUseCachedContent(boolean): If set to true, the cached content is valid ");
+            "Method setUseCachedContent(boolean): If set to true, the cached content is valid");
       tcd.put(V2ENVIRONMENTTESTS_CACHECONTROL_APIRENDER_SETUSECACHEDCONTENT2,
-            "Method setUseCachedContent(boolean): If set to false, the cached content is invalid ");
+            "Method setUseCachedContent(boolean): If set to false, the cached content is invalid");
       tcd.put(V2ENVIRONMENTTESTS_CACHECONTROL_APIRESOURCE_GETEXPIRATIONTIME1,
             "Method getExpirationTime(): Returns the expiration time set through setExpirationTime");
       tcd.put(
@@ -4042,10 +4042,10 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
             "Method isPublicScope(): Returns true if the caching scope has been set to public through the setPublicScope method");
       tcd.put(
             V2ENVIRONMENTTESTS_CACHECONTROL_APIRESOURCE_ISPUBLICSCOPE2,
-            "Method isPublicScope(): Returns true if the caching scope default has not been set with the setPublicScope method, but has been set to public in the deployment descriptor ");
+            "Method isPublicScope(): Returns true if the caching scope default has not been set with the setPublicScope method, but has been set to public in the deployment descriptor");
       tcd.put(
             V2ENVIRONMENTTESTS_CACHECONTROL_APIRESOURCE_ISPUBLICSCOPE3,
-            "Method isPublicScope(): Returns false if the caching scope has not been set with the setPublicScope method, but has been set to private through the setPublicScope method ");
+            "Method isPublicScope(): Returns false if the caching scope has not been set with the setPublicScope method, but has been set to private through the setPublicScope method");
       tcd.put(
             V2ENVIRONMENTTESTS_CACHECONTROL_APIRESOURCE_ISPUBLICSCOPE5,
             "Method isPublicScope(): Returns false if the caching scope has not been set with the setPublicScope method and has not been set in the deployment descriptor");
@@ -4072,17 +4072,17 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2ENVIRONMENTTESTS_CACHECONTROL_APIRESOURCE_USECACHEDCONTENT3,
             "Method useCachedContent(): Returns false if the use cached content indcator has not been set");
       tcd.put(V2ENVIRONMENTTESTS_CACHECONTROL_APIRESOURCE_SETUSECACHEDCONTENT1,
-            "Method setUseCachedContent(boolean): If set to true, the cached content is valid ");
+            "Method setUseCachedContent(boolean): If set to true, the cached content is valid");
       tcd.put(V2ENVIRONMENTTESTS_CACHECONTROL_APIRESOURCE_SETUSECACHEDCONTENT2,
-            "Method setUseCachedContent(boolean): If set to false, the cached content is invalid ");
+            "Method setUseCachedContent(boolean): If set to false, the cached content is invalid");
       tcd.put(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_FIELDMARKUP_HEAD_ELEMENT_SUPPORT,
             "Has String field MARKUP_HEAD_ELEMENT_SUPPORT with value of \"javax.portlet.markup.head.element.support\" ");
       tcd.put(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPROPERTY1,
-            "Method getProperty(String): Returns a String containing the value for the specified property ");
+            "Method getProperty(String): Returns a String containing the value for the specified property");
       tcd.put(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPROPERTY2,
             "Method getProperty(String): Returns null if there is no property defined for the specified name");
       tcd.put(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPROPERTY3,
-            "Method getProperty(String): Throws IllegalArgumentException if the specified name is null ");
+            "Method getProperty(String): Throws IllegalArgumentException if the specified name is null");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPROPERTYNAMES1,
             "Method getPropertyNames(): Returns an java.util.Enumeration&lt;java.lang.String&gt; containing all portal property names");
@@ -4127,14 +4127,14 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETRESOURCEASSTREAM3,
             "Method getResourceAsStream(String): Returns null if no resource exists at the specified path");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMAJORVERSION,
-            "Method getMajorVersion(): Returns the major version of the portlet API supported by the container ");
+            "Method getMajorVersion(): Returns the major version of the portlet API supported by the container");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMINORVERSION,
             "Method getMinorVersion(): Returns the minor version of the portlet API supported by the container");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE1,
             "Method getMimeType(String): Returns a String containing the MIME type of the specified file name");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE2,
-            "Method getMimeType(String): Returns \"text/html\" for an HTML file with the approriate &lt;mime-mapping&gt; element in web.xml ");
+            "Method getMimeType(String): Returns \"text/html\" for an HTML file with the approriate &lt;mime-mapping&gt; element in web.xml");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETMIMETYPE3,
             "Method getMimeType(String): Returns \"image/gif\" for an image file with the approriate &lt;mime-mapping&gt; element in web.xml");
@@ -4229,20 +4229,20 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUE1,
             "Method getValue(String, String): Returns the first String value for the specified key");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUE2,
-            "Method getValue(String, String): Returns the specified default value if there is no value for the specified key ");
+            "Method getValue(String, String): Returns the specified default value if there is no value for the specified key");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUE3,
-            "Method getValue(String, String): Returns the specified default value if the existing value for the specified key is null ");
+            "Method getValue(String, String): Returns the specified default value if the existing value for the specified key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUE4,
             "Method getValue(String, String): Throws IllegalArgumentException if the key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUES1,
             "Method getValues(String, String[]): Returns the values String[] for the specified key");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUES2,
-            "Method getValues(String, String[]): Returns the specified default String[] if there is no Values for the specified key ");
+            "Method getValues(String, String[]): Returns the specified default String[] if there is no Values for the specified key");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUES3,
-            "Method getValues(String, String[]): Returns the specified default String[] if the existing String[] for the specified key is null ");
+            "Method getValues(String, String[]): Returns the specified default String[] if the existing String[] for the specified key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUES4,
             "Method getValues(String, String[]): Throws IllegalArgumentException if the key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_SETVALUE4,
@@ -4272,20 +4272,20 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_GETVALUE1,
             "Method getValue(String, String): Returns the first String value for the specified key");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_GETVALUE2,
-            "Method getValue(String, String): Returns the specified default value if there is no value for the specified key ");
+            "Method getValue(String, String): Returns the specified default value if there is no value for the specified key");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_GETVALUE3,
-            "Method getValue(String, String): Returns the specified default value if the existing value for the specified key is null ");
+            "Method getValue(String, String): Returns the specified default value if the existing value for the specified key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_GETVALUE4,
             "Method getValue(String, String): Throws IllegalArgumentException if the key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_GETVALUES1,
             "Method getValues(String, String[]): Returns the values String[] for the specified key");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_GETVALUES2,
-            "Method getValues(String, String[]): Returns the specified default String[] if there is no Values for the specified key ");
+            "Method getValues(String, String[]): Returns the specified default String[] if there is no Values for the specified key");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_GETVALUES3,
-            "Method getValues(String, String[]): Returns the specified default String[] if the existing String[] for the specified key is null ");
+            "Method getValues(String, String[]): Returns the specified default String[] if the existing String[] for the specified key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_GETVALUES4,
             "Method getValues(String, String[]): Throws IllegalArgumentException if the key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_SETVALUE1,
@@ -4325,7 +4325,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_RESET3,
             "Method reset(String): Throws IllegalArgumentException if the key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE1,
-            "Method store(): Commits changes made to the preferences to the persistent store ");
+            "Method store(): Commits changes made to the preferences to the persistent store");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE2,
             "Method store(): If the store(): method is not called, changes made are discarded");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE3,
@@ -4335,12 +4335,12 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE5,
             "Method store(): Throws IllegalStateException if store(): is called in the render method  ");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_STORE6,
-            "Method store(): Throws ValidatorException if the validation performed by the associated validator fails ");
+            "Method store(): Throws ValidatorException if the validation performed by the associated validator fails");
       tcd.put(V2ENVIRONMENTTESTS_PREFERENCESVALIDATOR_APIACTION_CANBECONFIGURED,
             "A PreferencesValidator can be configured in the deployment descriptor");
       tcd.put(
             V2ENVIRONMENTTESTS_PREFERENCESVALIDATOR_APIACTION_VALIDATE1,
-            "Method validate(PortletPreferences): The validate(PortletPreferences): method is called when the preferences are stored ");
+            "Method validate(PortletPreferences): The validate(PortletPreferences): method is called when the preferences are stored");
       tcd.put(V2ENVIRONMENTTESTS_PREFERENCESVALIDATOR_APIACTION_VALIDATE2,
             "Method validate(PortletPreferences): If a ValidatorException is thrown, the preferences are not stored");
       tcd.put(
@@ -4356,20 +4356,20 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUE1,
             "Method getValue(String, String): Returns the first String value for the specified key");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUE2,
-            "Method getValue(String, String): Returns the specified default value if there is no value for the specified key ");
+            "Method getValue(String, String): Returns the specified default value if there is no value for the specified key");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUE3,
-            "Method getValue(String, String): Returns the specified default value if the existing value for the specified key is null ");
+            "Method getValue(String, String): Returns the specified default value if the existing value for the specified key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUE4,
             "Method getValue(String, String): Throws IllegalArgumentException if the key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUES1,
             "Method getValues(String, String[]): Returns the values String[] for the specified key");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUES2,
-            "Method getValues(String, String[]): Returns the specified default String[] if there is no Values for the specified key ");
+            "Method getValues(String, String[]): Returns the specified default String[] if there is no Values for the specified key");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUES3,
-            "Method getValues(String, String[]): Returns the specified default String[] if the existing String[] for the specified key is null ");
+            "Method getValues(String, String[]): Returns the specified default String[] if the existing String[] for the specified key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_GETVALUES4,
             "Method getValues(String, String[]): Throws IllegalArgumentException if the key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_SETVALUE1,
@@ -4409,7 +4409,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_RESET3,
             "Method reset(String): Throws IllegalArgumentException if the key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_STORE1,
-            "Method store(): Commits changes made to the preferences to the persistent store ");
+            "Method store(): Commits changes made to the preferences to the persistent store");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_STORE2,
             "Method store(): If the store(): method is not called, changes made are discarded");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_STORE3,
@@ -4419,12 +4419,12 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_STORE5,
             "Method store(): Throws IllegalStateException if store(): is called in the render method  ");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIEVENT_STORE6,
-            "Method store(): Throws ValidatorException if the validation performed by the associated validator fails ");
+            "Method store(): Throws ValidatorException if the validation performed by the associated validator fails");
       tcd.put(V2ENVIRONMENTTESTS_PREFERENCESVALIDATOR_APIEVENT_CANBECONFIGURED,
             "A PreferencesValidator can be configured in the deployment descriptor");
       tcd.put(
             V2ENVIRONMENTTESTS_PREFERENCESVALIDATOR_APIEVENT_VALIDATE1,
-            "Method validate(PortletPreferences): The validate(PortletPreferences): method is called when the preferences are stored ");
+            "Method validate(PortletPreferences): The validate(PortletPreferences): method is called when the preferences are stored");
       tcd.put(V2ENVIRONMENTTESTS_PREFERENCESVALIDATOR_APIEVENT_VALIDATE2,
             "Method validate(PortletPreferences): If a ValidatorException is thrown, the preferences are not stored");
       tcd.put(
@@ -4440,20 +4440,20 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_GETVALUE1,
             "Method getValue(String, String): Returns the first String value for the specified key");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_GETVALUE2,
-            "Method getValue(String, String): Returns the specified default value if there is no value for the specified key ");
+            "Method getValue(String, String): Returns the specified default value if there is no value for the specified key");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_GETVALUE3,
-            "Method getValue(String, String): Returns the specified default value if the existing value for the specified key is null ");
+            "Method getValue(String, String): Returns the specified default value if the existing value for the specified key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_GETVALUE4,
             "Method getValue(String, String): Throws IllegalArgumentException if the key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_GETVALUES1,
             "Method getValues(String, String[]): Returns the values String[] for the specified key");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_GETVALUES2,
-            "Method getValues(String, String[]): Returns the specified default String[] if there is no Values for the specified key ");
+            "Method getValues(String, String[]): Returns the specified default String[] if there is no Values for the specified key");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_GETVALUES3,
-            "Method getValues(String, String[]): Returns the specified default String[] if the existing String[] for the specified key is null ");
+            "Method getValues(String, String[]): Returns the specified default String[] if the existing String[] for the specified key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_GETVALUES4,
             "Method getValues(String, String[]): Throws IllegalArgumentException if the key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_SETVALUE1,
@@ -4493,7 +4493,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_RESET3,
             "Method reset(String): Throws IllegalArgumentException if the key is null");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE1,
-            "Method store(): Commits changes made to the preferences to the persistent store ");
+            "Method store(): Commits changes made to the preferences to the persistent store");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE2,
             "Method store(): If the store(): method is not called, changes made are discarded");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE3,
@@ -4503,12 +4503,12 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE5,
             "Method store(): Throws IllegalStateException if store(): is called in the render method  ");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRESOURCE_STORE6,
-            "Method store(): Throws ValidatorException if the validation performed by the associated validator fails ");
+            "Method store(): Throws ValidatorException if the validation performed by the associated validator fails");
       tcd.put(V2ENVIRONMENTTESTS_PREFERENCESVALIDATOR_APIRESOURCE_CANBECONFIGURED,
             "A PreferencesValidator can be configured in the deployment descriptor");
       tcd.put(
             V2ENVIRONMENTTESTS_PREFERENCESVALIDATOR_APIRESOURCE_VALIDATE1,
-            "Method validate(PortletPreferences): The validate(PortletPreferences): method is called when the preferences are stored ");
+            "Method validate(PortletPreferences): The validate(PortletPreferences): method is called when the preferences are stored");
       tcd.put(V2ENVIRONMENTTESTS_PREFERENCESVALIDATOR_APIRESOURCE_VALIDATE2,
             "Method validate(PortletPreferences): If a ValidatorException is thrown, the preferences are not stored");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_INCLUDEA1,
@@ -4537,11 +4537,11 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
             "Method forward(PortletRequest, PortletResponse): Throws IllegalStateException if the response was already committed");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETREQUESTDISPATCHER_APIRENDER_FORWARD4,
-            "Method forward(PortletRequest, PortletResponse): Throws PortletException if the forwarded servlet throws any excpetion other than IOException or a runtime exception ");
+            "Method forward(PortletRequest, PortletResponse): Throws PortletException if the forwarded servlet throws any excpetion other than IOException or a runtime exception");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_FIELDAPPLICATION_SCOPE,
-            "Has int field APPLICATION_SCOPE with value of 0x01 ");
+            "Has int field APPLICATION_SCOPE with value of 0x01");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_FIELDPORTLET_SCOPE,
-            "Has int field PORTLET_SCOPE with value of 0x02 ");
+            "Has int field PORTLET_SCOPE with value of 0x02");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEA1,
             "Method getAttribute(String): Returns a java.lang.Object for the specified attribute name in the PORTLET_SCOPE");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEA2,
@@ -4672,7 +4672,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
             "Method decodeAttributeName(String): Returns a String containing the decoded name of the attribute if the input name is an encoded name in PORTLET_SCOPE");
       tcd.put(
             V2ENVIRONMENTTESTS_PORTLETSESSIONUTIL_APIRENDER_DECODEATTRIBUTENAME2,
-            "Method decodeAttributeName(String): Returns a String containing the input name unchanged if the input name is in APPLICATION_SCOPE ");
+            "Method decodeAttributeName(String): Returns a String containing the input name unchanged if the input name is in APPLICATION_SCOPE");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETSESSIONUTIL_APIRENDER_DECODESCOPE1,
             "Method decodeScope(String): Returns the decoded attribute scope for the input encoded attribute name");
       tcd.put(V2ENVIRONMENTTESTS_PORTLETSESSIONUTIL_APIRENDER_DECODESCOPE2,

@@ -17,7 +17,7 @@
     specific language governing permissions and limitations
     under the License.     
 -->
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<!DOCTYPE properties SYSTEM"http://java.sun.com/dtd/properties.dtd">
 <properties>
 <!-- JSR 286 API ResponseTests test case names and page mappings -->
 <entry key="V2ResponseTests_PortletResponse_ApiRender_addPropertyA1">V2ResponseTests</entry>
@@ -216,12 +216,12 @@
 <entry key="V2ResponseTests_ActionResponse_ApiAction_sendRedirectB11">V2ResponseTests</entry>
 <entry key="V2ResponseTests_EventResponse_ApiEvent_setRenderParameters1">V2ResponseTests</entry>
 <entry key="V2ResponseTests_EventResponse_ApiEvent_setRenderParameters2">V2ResponseTests</entry>
-<entry key="V2ResponseTests_MimeResponse_ApiRender_fieldEXPIRATION_CACHE ">V2ResponseTests</entry>
-<entry key="V2ResponseTests_MimeResponse_ApiRender_fieldCACHE_SCOPE ">V2ResponseTests</entry>
-<entry key="V2ResponseTests_MimeResponse_ApiRender_fieldPUBLIC_SCOPE ">V2ResponseTests</entry>
-<entry key="V2ResponseTests_MimeResponse_ApiRender_fieldPRIVATE_SCOPE ">V2ResponseTests</entry>
-<entry key="V2ResponseTests_MimeResponse_ApiRender_fieldETAG ">V2ResponseTests</entry>
-<entry key="V2ResponseTests_MimeResponse_ApiRender_fieldUSE_CACHED_CONTENT ">V2ResponseTests</entry>
+<entry key="V2ResponseTests_MimeResponse_ApiRender_fieldEXPIRATION_CACHE">V2ResponseTests</entry>
+<entry key="V2ResponseTests_MimeResponse_ApiRender_fieldCACHE_SCOPE">V2ResponseTests</entry>
+<entry key="V2ResponseTests_MimeResponse_ApiRender_fieldPUBLIC_SCOPE">V2ResponseTests</entry>
+<entry key="V2ResponseTests_MimeResponse_ApiRender_fieldPRIVATE_SCOPE">V2ResponseTests</entry>
+<entry key="V2ResponseTests_MimeResponse_ApiRender_fieldETAG">V2ResponseTests</entry>
+<entry key="V2ResponseTests_MimeResponse_ApiRender_fieldUSE_CACHED_CONTENT">V2ResponseTests</entry>
 <entry key="V2ResponseTests_MimeResponse_ApiRender_fieldNAMESPACED_RESPONSE">V2ResponseTests</entry>
 <entry key="V2ResponseTests_MimeResponse_ApiRender_fieldMARKUP_HEAD_ELEMENT">V2ResponseTests</entry>
 <entry key="V2ResponseTests_MimeResponse_ApiRender_getContentType1">V2ResponseTests</entry>
@@ -249,12 +249,12 @@
 <entry key="V2ResponseTests_MimeResponse_ApiRender_createActionURL">V2ResponseTests</entry>
 <entry key="V2ResponseTests_MimeResponse_ApiRender_createResourceURL">V2ResponseTests</entry>
 <entry key="V2ResponseTests_MimeResponse_ApiRender_getCacheControl">V2ResponseTests</entry>
-<entry key="V2ResponseTests_MimeResponse_ApiResource_fieldEXPIRATION_CACHE ">V2ResponseTests</entry>
-<entry key="V2ResponseTests_MimeResponse_ApiResource_fieldCACHE_SCOPE ">V2ResponseTests</entry>
-<entry key="V2ResponseTests_MimeResponse_ApiResource_fieldPUBLIC_SCOPE ">V2ResponseTests</entry>
-<entry key="V2ResponseTests_MimeResponse_ApiResource_fieldPRIVATE_SCOPE ">V2ResponseTests</entry>
-<entry key="V2ResponseTests_MimeResponse_ApiResource_fieldETAG ">V2ResponseTests</entry>
-<entry key="V2ResponseTests_MimeResponse_ApiResource_fieldUSE_CACHED_CONTENT ">V2ResponseTests</entry>
+<entry key="V2ResponseTests_MimeResponse_ApiResource_fieldEXPIRATION_CACHE">V2ResponseTests</entry>
+<entry key="V2ResponseTests_MimeResponse_ApiResource_fieldCACHE_SCOPE">V2ResponseTests</entry>
+<entry key="V2ResponseTests_MimeResponse_ApiResource_fieldPUBLIC_SCOPE">V2ResponseTests</entry>
+<entry key="V2ResponseTests_MimeResponse_ApiResource_fieldPRIVATE_SCOPE">V2ResponseTests</entry>
+<entry key="V2ResponseTests_MimeResponse_ApiResource_fieldETAG">V2ResponseTests</entry>
+<entry key="V2ResponseTests_MimeResponse_ApiResource_fieldUSE_CACHED_CONTENT">V2ResponseTests</entry>
 <entry key="V2ResponseTests_MimeResponse_ApiResource_fieldNAMESPACED_RESPONSE">V2ResponseTests</entry>
 <entry key="V2ResponseTests_MimeResponse_ApiResource_fieldMARKUP_HEAD_ELEMENT">V2ResponseTests</entry>
 <entry key="V2ResponseTests_MimeResponse_ApiResource_getContentType1">V2ResponseTests</entry>
@@ -286,7 +286,7 @@
 <entry key="V2ResponseTests_RenderResponse_ApiRender_setNextPossiblePortletModes2">V2ResponseTests</entry>
 <entry key="V2ResponseTests_RenderResponse_ApiRender_setContentType1">V2ResponseTests</entry>
 <entry key="V2ResponseTests_RenderResponse_ApiRender_setContentType2">V2ResponseTests</entry>
-<entry key="V2ResponseTests_ResourceResponse_ApiResource_fieldHTTP_STATUS_CODE ">V2ResponseTests</entry>
+<entry key="V2ResponseTests_ResourceResponse_ApiResource_fieldHTTP_STATUS_CODE">V2ResponseTests</entry>
 <entry key="V2ResponseTests_ResourceResponse_ApiResource_setLocale1">V2ResponseTests</entry>
 <entry key="V2ResponseTests_ResourceResponse_ApiResource_setLocale4">V2ResponseTests</entry>
 <entry key="V2ResponseTests_ResourceResponse_ApiResource_setCharacterEncoding1">V2ResponseTests</entry>

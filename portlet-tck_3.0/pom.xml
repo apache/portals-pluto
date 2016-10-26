@@ -106,6 +106,12 @@
       <test.browser>firefox</test.browser>
       <test.browser>HTMLUnit</test.browser>
       
+      <!-- Lines commented out below illustrate how the chromedriver web driver can be configured -->
+      <!--
+      <test.browser>chrome</test.browser>
+      <test.browser.webDriver>c:/ntutil/chromedriver.exe</test.browser.webDriver>
+      -->
+      
       <!-- commented outline below shows configuration for the Internet Explorer driver -->
       <!-- test.browser.webDriver>C:\ntutil\IEDriverServer_x64_2.42.0\IEDriverServer.exe</test.browser.webDriver -->
       
