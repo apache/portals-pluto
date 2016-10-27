@@ -268,7 +268,7 @@ public class TCKSimpleTestDriver {
          if (debug) System.out.println("   After processing clickable, results found: " + !wels.isEmpty());
 
          // wait for any async JavaScript tests to complete
-         processAsync(wels);
+         processAsync();
          
          checkResults(wels);
 
@@ -346,15 +346,11 @@ public class TCKSimpleTestDriver {
    private void checkResults(List<WebElement> tcels) {
       String resultId = tcName + Constants.RESULT_ID;
       String detailId = tcName + Constants.DETAIL_ID;
-      
-      List<WebElement> rels = null;
-      List<WebElement> dels = null;
+
       if (debug) System.out.println("   Checking results, #TC elements: " + tcels.size());
-      for (WebElement wel : tcels) {
-         rels = wel.findElements(By.id(resultId));
-         dels = wel.findElements(By.id(detailId));
-         if (!rels.isEmpty() && !dels.isEmpty()) break;
-      }
+
+      List<WebElement> rels = driver.findElements(By.id(resultId)); 
+      List<WebElement> dels = driver.findElements(By.id(detailId)); 
       
       if (!rels.isEmpty()) {
          String res = rels.get(0).getText();
@@ -446,16 +442,11 @@ public class TCKSimpleTestDriver {
     * @return  <code>true</code> if async was handled; <code>false</code> otherwise.
     * @throws Exception 
     */
-   private boolean processAsync(List<WebElement> wels) throws Exception {
+   private boolean processAsync() throws Exception {
       String asyncId = tcName + Constants.ASYNC_ID;
       String resultId = tcName + Constants.RESULT_ID;
 
       List<WebElement> tcels = null;
-
-      for (WebElement wel : wels) {
-         tcels = wel.findElements(By.id(asyncId));
-         if (!tcels.isEmpty()) break;
-      }
 
       tcels = driver.findElements(By.id(asyncId));
 

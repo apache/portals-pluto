@@ -218,13 +218,16 @@ public class ResourceAsyncTests_SPEC_21_NoAsync implements Portlet, ResourceServ
 
       /* TestCase: V3ResourceAsyncTests_SPEC_21_NoAsync_getPortletAsyncContext      */
       /* Details: "The ResourceRequest object getPortletAsyncContext() method       */
-      /* returns the value null if the portlet does not support async processing"   */
+      /* throws an IllegalStateException if the portlet does not support async processing"   */
       } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_NOASYNC_GETPORTLETASYNCCONTEXT)) {
          result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_NOASYNC_GETPORTLETASYNCCONTEXT);
-         if (req.getPortletAsyncContext() == null) {
+         try {
+            PortletAsyncContext ctx = req.getPortletAsyncContext();
+            result.appendTcDetail("Method did not throw exception although async is not supported.");
+         } catch (IllegalStateException e) {
             result.setTcSuccess(true);
-         } else {
-            result.appendTcDetail("PortletAsyncContext was not null although async is not supported.");
+         } catch (Throwable t) {
+            result.appendTcDetail("Method threw unexpected exception type: " + t.getMessage());
          }
 
       } else {

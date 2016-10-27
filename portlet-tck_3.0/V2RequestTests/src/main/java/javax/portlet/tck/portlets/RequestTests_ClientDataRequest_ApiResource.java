@@ -540,7 +540,6 @@ public class RequestTests_ClientDataRequest_ApiResource implements Portlet, Reso
          ResourceLink link = new ResourceLink(V2REQUESTTESTS_CLIENTDATAREQUEST_APIRESOURCE_GETCONTENTLENGTH1, rurl);
          Map<String, String> headers = new HashMap<>();
          headers.put("content-type", "text/plain");
-         headers.put("content-length", "" + TESTSTRING.length());
          String body = TESTSTRING;
          link.writeResourceFetcherCustom(writer, headers, "POST", body);
       }

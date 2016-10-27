@@ -1071,10 +1071,13 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* returns the value null if async processing has not been started"           */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETPORTLETASYNCCONTEXT1)) {
             result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_GETPORTLETASYNCCONTEXT1);
-            if (req.getPortletAsyncContext() == null) {
+            try {
+               PortletAsyncContext ctx = req.getPortletAsyncContext();
+               result.appendTcDetail("Method did not throw exception although async is not sstarted.");
+            } catch (IllegalStateException e) {
                result.setTcSuccess(true);
-            } else {
-               result.appendTcDetail("PortletAsyncContext was not null although async is not started.");
+            } catch (Throwable t) {
+               result.appendTcDetail("Method threw unexpected exception type: " + t.getMessage());
             }
          
          /* TestCase: V3ResourceAsyncTests_SPEC_21_Async_getPortletAsyncContext2       */

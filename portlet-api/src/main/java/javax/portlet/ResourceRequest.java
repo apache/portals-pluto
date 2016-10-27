@@ -406,6 +406,12 @@ public interface ResourceRequest extends ClientDataRequest {
     * </div>
     * 
     * @return   the <code>AsyncContext</code> (re)initialized by the most recent <code>startAsync</code> method invocation 
+    * 
+    * @throws  IllegalStateException 
+    *          if this request is within the scope of a filter or servlet that does not 
+    *          support asynchronous operations (that is, isAsyncSupported() returns 
+    *          false), or if asynchronous processing has not yet been started.
+    *          
     * @since    3.0
     * @see      javax.servlet.ServletRequest#startAsync()
     * @see      javax.servlet.AsyncContext 
