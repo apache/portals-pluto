@@ -128,6 +128,7 @@
             return hub.startPartialAction();
          }, 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction1');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSPA_startPartialAction1-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction2               */
       /* Details: "The portlet hub startPartialAction function can be called with   */
@@ -139,6 +140,7 @@
             return hub.startPartialAction(p);
          }, 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction2');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSPA_startPartialAction2-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction3               */
       /* Details: "The portlet hub startPartialAction function returns a            */
@@ -155,6 +157,7 @@
             });
          }, 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction3');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSPA_startPartialAction3-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction4               */
       /* Details: "The PartialActionInit object has a url property of type string"  */
@@ -170,6 +173,7 @@
             });
          }, 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction4');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSPA_startPartialAction4-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction5               */
       /* Details: "The PartialActionInit object has a setPageState property of type */
@@ -186,6 +190,7 @@
             });
          }, 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction5');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSPA_startPartialAction5-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction6               */
       /* Details: "The PartialActionInit object url property used in an XHR causes  */
@@ -196,6 +201,7 @@
             return hub.startPartialAction();
          }, 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction6');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSPA_startPartialAction6-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPA_startPartialAction7               */
       /* Details: "The onStateChange event resulting from a partial action contains */
@@ -205,6 +211,7 @@
             return hub.startPartialAction();
          }, 'V3PortletHubTests_SPEC_23_JSPA_startPartialAction7');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSPA_startPartialAction7-notready').id='ready';
 
       update = function (type, state, renderData) {
          

@@ -158,6 +158,7 @@
          }
          setSuccess('V3PortletHubTests_SPEC_23_JSListener_onStateChange4', msg);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSListener_onStateChange4-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onStateChange5              */
       /* Details: "The portlet hub throws a TypeError if a previously added         */
@@ -174,6 +175,7 @@
          }
          setSuccess('V3PortletHubTests_SPEC_23_JSListener_onStateChange5', msg);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSListener_onStateChange5-notready').id='ready';
       
       function onTestError () {}
 
@@ -189,6 +191,7 @@
          }
          setSuccess('V3PortletHubTests_SPEC_23_JSListener_onError1', msg);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSListener_onError1-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onError2                    */
       /* Details: "A previously added onError listener can be removed"              */
@@ -206,6 +209,7 @@
          
          setSuccess('V3PortletHubTests_SPEC_23_JSListener_onError2', msg);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSListener_onError2-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSListener_onError3                    */
       /* Details: "The portlet hub throws a TypeError if a previously added onError */
@@ -222,6 +226,7 @@
          msg = testException(testFunction, 'TypeError');
          setSuccess('V3PortletHubTests_SPEC_23_JSListener_onError3', msg);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSListener_onError3-notready').id='ready';
    }
 
    window.addEventListener('load', execute);

@@ -85,6 +85,7 @@
          state.setValue('prptestcase', 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState1');
          hub.setRenderState(state);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSPRP_setRenderState1-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_setRenderState2                  */
       /* Details: "The portlet hub setRenderState function informs other affected   */
@@ -94,6 +95,7 @@
          state.setValue('prptestcase', 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState2');
          hub.setRenderState(state);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSPRP_setRenderState2-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_setRenderState3                  */
       /* Details: "The portlet hub setRenderState function allows a public render   */
@@ -103,6 +105,7 @@
          state.setValue('prptestcase', 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState3');
          hub.setRenderState(state);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSPRP_setRenderState3-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_setRenderState4                  */
       /* Details: "The portlet hub setRenderState function informs other affected   */
@@ -112,6 +115,7 @@
          state.setValue('prptestcase', 'V3PortletHubTests_SPEC_23_JSPRP_setRenderState4');
          hub.setRenderState(state);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSPRP_setRenderState4-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_Action1                          */
       /* Details: "The portlet hub action function can cause a public render        */
@@ -121,6 +125,7 @@
          p.testcase = ['V3PortletHubTests_SPEC_23_JSPRP_Action1'];
          hub.action(p);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSPRP_Action1-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSPRP_Action2                          */
       /* Details: "The portlet hub action function can cause a public render        */
@@ -130,6 +135,7 @@
          p.testcase = ['V3PortletHubTests_SPEC_23_JSPRP_Action2'];
          hub.action(p);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSPRP_Action2-notready').id='ready';
 
       update = function (type, state) {
    

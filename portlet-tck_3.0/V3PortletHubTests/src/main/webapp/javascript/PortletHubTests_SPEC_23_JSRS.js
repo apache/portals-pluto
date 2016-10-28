@@ -91,6 +91,7 @@
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSRS_setRenderState1');
          hub.setRenderState(state);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState1-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState2                   */
       /* Details: "The portlet hub setRenderState function allows the portlet mode  */
@@ -101,6 +102,7 @@
          state.setPortletMode(hub.constants.EDIT);
          hub.setRenderState(state);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState2-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState3                   */
       /* Details: "The portlet hub setRenderState function allows the portlet mode  */
@@ -111,6 +113,7 @@
          state.setPortletMode(hub.constants.VIEW);
          hub.setRenderState(state);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState3-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState4                   */
       /* Details: "The portlet hub setRenderState function allows the window state  */
@@ -121,6 +124,7 @@
          state.setWindowState(hub.constants.MAXIMIZED);
          hub.setRenderState(state);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState4-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState5                   */
       /* Details: "The portlet hub setRenderState function allows the window state  */
@@ -131,6 +135,7 @@
          state.setWindowState(hub.constants.NORMAL);
          hub.setRenderState(state);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState5-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState6                   */
       /* Details: "The portlet hub setRenderState function allows a new parameter   */
@@ -141,6 +146,7 @@
          state.setValue('newParam', 'newVal');
          hub.setRenderState(state);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState6-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState7                   */
       /* Details: "The portlet hub setRenderState function allows parameter         */
@@ -151,6 +157,7 @@
          state.setValue('newParam', ['newVal1', 'newVal2']);
          hub.setRenderState(state);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState7-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState8                   */
       /* Details: "The portlet hub setRenderState function allows a new parameter   */
@@ -168,6 +175,7 @@
                   hub.setRenderState(newState);
                });
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState8-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState9                   */
       /* Details: "The portlet hub setRenderState function allows all parameters to */
@@ -177,6 +185,7 @@
          deleteAllParameters = true;
          hub.setRenderState(state);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState9-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState0                   */
       /* Details: "The portlet hub setRenderState function allows several           */
@@ -188,6 +197,7 @@
          state.setValue('param2', ['val1', 'val2']);
          hub.setRenderState(state);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState0-notready').id='ready';
 
       update = function (type, state) {
          var msg, params, cnt, param;

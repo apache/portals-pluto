@@ -68,6 +68,8 @@ public class TCKSimpleTestDriver {
 
    private static WebDriver driver;
    private String page, tcName;
+   
+   private List<String> debugLines = new ArrayList<>();
 
    /**
     * Reads the consolidated list of test cases and provides the list to Junit
@@ -229,7 +231,7 @@ public class TCKSimpleTestDriver {
       if (driver != null) {
          driver.quit();
       }
-      if (debug) System.out.println("   after class.");
+      System.out.println("   after class.");
    }
 
    /**
@@ -237,7 +239,7 @@ public class TCKSimpleTestDriver {
     */
    @Before
    public void setUp() throws Exception {
-      if (debug) System.out.println("   before test.");
+      debugLines.add("   before test.");
    }
 
    /**
@@ -245,12 +247,17 @@ public class TCKSimpleTestDriver {
     */
    @After
    public void tearDown() throws Exception {
-      if (debug) System.out.println("   after test.");
+      debugLines.add("   after test.");
+      if (debug) {
+         for (String line : debugLines) {
+            System.out.println(line);
+         }
+      }
    }
 
    @Test
    public void test() {
-      if (debug) System.out.println("   execute test.");
+      debugLines.add("   execute test.");
 
       try {
 
@@ -258,14 +265,14 @@ public class TCKSimpleTestDriver {
          // First look for the test results or links already being present on the page. 
 
          List<WebElement> wels = driver.findElements(By.name(tcName));
-         if (debug) System.out.println("   TC elements already on page: " + !wels.isEmpty() + ", tcname===" + tcName + "===");
+         debugLines.add("   TC elements already on page: " + !wels.isEmpty() + ", tcname===" + tcName + "===");
          if (wels.isEmpty()) {
             wels = accessPage();
          }
          
          // process links if present
          wels = processClickable(wels);
-         if (debug) System.out.println("   After processing clickable, results found: " + !wels.isEmpty());
+         debugLines.add("   After processing clickable, results found: " + !wels.isEmpty());
 
          // wait for any async JavaScript tests to complete
          processAsync();
@@ -277,7 +284,10 @@ public class TCKSimpleTestDriver {
          // Some type of unexpected error occurred, so generate text
          // and mark the TC as failed.
          
-         if (debug) System.out.println("   Exception occurred: " + e.getMessage());
+         System.out.println("   Exception occurred: " + e.getMessage());
+         for (String line : debugLines) {
+            System.out.println(line);
+         }
          
          assertTrue("Test case " + tcName + " failed. " +  
                " Setup link could not be accessed. \nException: " + e.toString(), false);
@@ -292,11 +302,11 @@ public class TCKSimpleTestDriver {
     */
    private List<WebElement> accessPage() throws Exception {
       List<WebElement> wels = driver.findElements(By.linkText(page));
-      if (debug) System.out.println("   Access page, link found: " + !wels.isEmpty() + ", page===" + page + "===");
+      debugLines.add("   Access page, link found: " + !wels.isEmpty() + ", page===" + page + "===");
      
       if (wels.isEmpty()) {
          // retry through login page
-         if (debug) System.out.println("   logging in ... ");
+         debugLines.add("   logging in ... ");
          login();
          wels = driver.findElements(By.linkText(page));
          if (wels.isEmpty()) {
@@ -328,7 +338,7 @@ public class TCKSimpleTestDriver {
       // If there is no login or password fields, don't need to login.
       if (!uels.isEmpty() && !pwels.isEmpty()) {
 
-         if (debug) System.out.println("   No userid / password fields");
+         System.out.println("   No userid / password fields");
          WebElement userEl = uels.get(0);
          WebElement pwEl = pwels.get(0);
 
@@ -347,7 +357,7 @@ public class TCKSimpleTestDriver {
       String resultId = tcName + Constants.RESULT_ID;
       String detailId = tcName + Constants.DETAIL_ID;
 
-      if (debug) System.out.println("   Checking results, #TC elements: " + tcels.size());
+      debugLines.add("   Checking results, #TC elements: " + tcels.size());
 
       List<WebElement> rels = driver.findElements(By.id(resultId)); 
       List<WebElement> dels = driver.findElements(By.id(detailId)); 
@@ -357,10 +367,10 @@ public class TCKSimpleTestDriver {
          String det = "Test case " + tcName + ": ";
          det += dels.isEmpty() ? "No details provided." : dels.get(0).getText(); 
          boolean ok = res.contains(Constants.SUCCESS);
-         if (debug) System.out.println("   Test OK: " + ok + ", results: " + res + ", details: " + det);
+         debugLines.add("   Test OK: " + ok + ", results: " + res + ", details: " + det);
          assertTrue(det, ok);
       } else {
-         if (debug) System.out.println("   Results not found");
+         debugLines.add("   Results not found");
          assertTrue("Test case " + tcName + " failed. Results could not be found.", false);
       }
    }
@@ -380,19 +390,30 @@ public class TCKSimpleTestDriver {
       String actionId = tcName + Constants.CLICK_ID;
       String resultId = tcName + Constants.RESULT_ID;
       String detailId = tcName + Constants.DETAIL_ID;
+      String asyncId = tcName + Constants.ASYNC_ID;
+      String notreadyId = tcName + Constants.NOTREADY_ID;
       List<WebElement> tcels = null;
 
       for (WebElement wel : wels) {
          tcels = wel.findElements(By.id(setupId));
          if (!tcels.isEmpty()) break;
       }
-      if (debug) System.out.println("   Setup link found: " + ((tcels != null) && !tcels.isEmpty()));
+      debugLines.add("   Setup link found: " + ((tcels != null) && !tcels.isEmpty()));
+      
+      // If were dealing with async, make sure the JavaScript is initialized
+      List<WebElement> acels = driver.findElements(By.id(asyncId));
+      debugLines.add("   Async elements found: " + ((acels != null) && !acels.isEmpty()));
+      if (acels != null && !acels.isEmpty()) {
+         WebDriverWait wdw = new WebDriverWait(driver, timeout);
+         wdw.until(ExpectedConditions.invisibilityOfElementLocated(By.id(notreadyId)));
+         debugLines.add("   Async elements are now ready.");
+      }
 
       // Click setup link if found
       if ((tcels != null) && !tcels.isEmpty()) {
          WebElement wel = tcels.get(0);
          wel.click();
-         if (debug) System.out.println("   Clicked setup link.");
+         debugLines.add("   Clicked setup link.");
 
          WebDriverWait wdw = new WebDriverWait(driver, timeout);
 
@@ -401,12 +422,11 @@ public class TCKSimpleTestDriver {
 
          wdw.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(expr)));
          wels = driver.findElements(By.name(tcName));
-         if (debug) {
-            System.out.println("   Found elements: " + (!wels.isEmpty()));
-            List<WebElement> xels = driver.findElements(By.xpath(expr));
-            for (WebElement w : xels) {
-               System.out.println("      Element: " + w.getTagName() + ", id=" + w.getAttribute("id"));
-            }
+         
+         debugLines.add("   Found elements: " + (!wels.isEmpty()));
+         List<WebElement> xels = driver.findElements(By.xpath(expr));
+         for (WebElement w : xels) {
+            debugLines.add("      Element: " + w.getTagName() + ", id=" + w.getAttribute("id"));
          }
       }
       
@@ -415,7 +435,7 @@ public class TCKSimpleTestDriver {
          tcels = wel.findElements(By.id(actionId));
          if (!tcels.isEmpty()) break;
       }
-      if (debug) System.out.println("   Clickable link found: " + ((tcels != null) && !tcels.isEmpty()));
+      debugLines.add("   Clickable link found: " + ((tcels != null) && !tcels.isEmpty()));
       
       if (tcels != null && !tcels.isEmpty()) {
          WebElement wel = tcels.get(0);
@@ -450,7 +470,7 @@ public class TCKSimpleTestDriver {
 
       tcels = driver.findElements(By.id(asyncId));
 
-      if (debug) System.out.println("   Element with async id=" + asyncId + " found: " + !tcels.isEmpty());
+      debugLines.add("   Element with async id=" + asyncId + " found: " + !tcels.isEmpty());
       
       if (tcels.isEmpty()) {
          // no async element

@@ -100,6 +100,7 @@
                });
 
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action1-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action2                       */
       /* Details: "The portlet hub action function can be called with an action     */
@@ -121,6 +122,7 @@
                });
 
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action2-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action3                       */
       /* Details: "The portlet hub action function can be called with a form        */
@@ -141,6 +143,7 @@
                });
          
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action3-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action4                       */
       /* Details: "The portlet hub action function can be called with both action   */
@@ -163,6 +166,7 @@
                });
          
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action4-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action5                       */
       /* Details: "The portlet hub action function can cause a private render       */
@@ -182,6 +186,7 @@
                });
 
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action5-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action6                       */
       /* Details: "The portlet hub action function can cause a private render       */
@@ -201,6 +206,7 @@
                });
 
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action6-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSAction_Action7                       */
       /* Details: "The portlet hub action function fulfills the promise when the    */
@@ -224,6 +230,7 @@
                });
 
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSAction_Action7-notready').id='ready';
 
       update = function (type, state) {
          var msg, status;

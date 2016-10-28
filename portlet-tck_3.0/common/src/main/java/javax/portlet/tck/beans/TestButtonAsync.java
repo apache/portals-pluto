@@ -48,6 +48,7 @@ public class TestButtonAsync {
 
    protected String     tcName;
    protected String     actId;
+   protected String     notreadyId;
    protected String     title = " Execute Button:";
    protected String     testcase;
 
@@ -58,6 +59,7 @@ public class TestButtonAsync {
    public TestButtonAsync() {
       tcName = "";
       actId = "";
+      notreadyId = "";
       testcase = "";
    }
 
@@ -72,6 +74,7 @@ public class TestButtonAsync {
       this.tcName = tcName;
       this.testcase = tcName;
       this.actId = tcName + Constants.CLICK_ID;
+      this.notreadyId = tcName + Constants.NOTREADY_ID;
    }
 
    /**
@@ -89,6 +92,9 @@ public class TestButtonAsync {
       sb.append("<div class='portletTCKTestcase' name='");
       sb.append(tcName);
       sb.append("'>\n");
+      sb.append("<div id='");       // is removed by JS code after loading is complete
+      sb.append(notreadyId);
+      sb.append("'></div>\n");
       sb.append("<h4>\n");
       sb.append(tcName);
       sb.append(title);

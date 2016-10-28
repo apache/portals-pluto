@@ -29,6 +29,7 @@ public class Constants {
    public static final String DETAIL_ID = "-detail";
    public static final String CLICK_ID = "-clickme";
    public static final String SETUP_ID = "-setup";
+   public static final String NOTREADY_ID = "-notready";
    public static final String RESOURCE_LINK_ID = "-reslink";
    public static final String RESOURCE_DIV_ID = "-resdiv";
    public static final String WAITING = "Waiting for results";

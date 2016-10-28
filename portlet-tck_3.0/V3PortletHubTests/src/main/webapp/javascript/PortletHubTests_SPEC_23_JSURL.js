@@ -131,6 +131,7 @@
             return hub.createResourceUrl();
          }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl1');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl1-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl2               */
       /* Details: "The portlet hub createResourceUrl function returns a string if   */
@@ -142,6 +143,7 @@
             return hub.createResourceUrl(p);
          }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl2');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl2-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl3               */
       /* Details: "The portlet hub createResourceUrl function returns a string if   */
@@ -153,6 +155,7 @@
             return hub.createResourceUrl(p, hub.constants.PAGE);
          }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl3');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl3-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl4               */
       /* Details: "The portlet hub createResourceUrl function returns a string if   */
@@ -164,6 +167,7 @@
             return hub.createResourceUrl(p, hub.constants.PAGE, 'resourceId');
          }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl4');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl4-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl5               */
       /* Details: "The portlet hub createResourceUrl function returns a string if   */
@@ -174,6 +178,7 @@
             return hub.createResourceUrl(null, null, 'resourceId');
          }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl5');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl5-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl6               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
@@ -185,6 +190,7 @@
             return hub.createResourceUrl(p, hub.constants.PAGE);
          }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl6');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl6-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl7               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
@@ -196,6 +202,7 @@
             return hub.createResourceUrl(p, hub.constants.PORTLET);
          }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl7');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl7-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl8               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
@@ -205,6 +212,7 @@
             return hub.createResourceUrl(null, hub.constants.FULL);
          }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl8', true);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl8-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl9               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
@@ -216,6 +224,7 @@
             return hub.createResourceUrl(p);
          }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl9');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl9-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrl0               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
@@ -227,6 +236,7 @@
             return hub.createResourceUrl(p);
          }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrl0');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrl0-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlA               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
@@ -238,6 +248,7 @@
             return hub.createResourceUrl(p);
          }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlA');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrlA-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlB               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
@@ -249,6 +260,7 @@
             return hub.createResourceUrl(p, hub.constants.PAGE);
          }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlB');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrlB-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with    */
@@ -260,6 +272,7 @@
             return hub.createResourceUrl(p, hub.constants.PORTLET);
          }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC');
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrlC-notready').id='ready';
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD               */
       /* Details: "The portlet hub createResourceUrl function returns a URL with no */
@@ -271,6 +284,7 @@
             return hub.createResourceUrl(p, hub.constants.FULL);
          }, 'V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD', true);
       }
+      document.getElementById('V3PortletHubTests_SPEC_23_JSURL_createResourceUrlD-notready').id='ready';
 
       update = function (type, state) {
    
