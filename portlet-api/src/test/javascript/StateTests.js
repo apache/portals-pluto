@@ -225,7 +225,7 @@ describe('The Portlet Hub provides accessor functions for the render state and p
       });
 
       it('returns a State object containing cloned values if passed a State object', function () {
-         var state = {parameters: {parm1: ['fred'], parm2: ['barney']}, portletMode:'EDIT', windowState: 'MINIMIZED'}, 
+         var state = {parameters: {parm1: ['fred'], parm2: ['barney']}, portletMode:'edit', windowState: 'minimized'}, 
                      s, key, cnt = 0;
          runs(function() {
             s = hubA.newState(state);
@@ -237,8 +237,8 @@ describe('The Portlet Hub provides accessor functions for the render state and p
             expect(cnt).toEqual(2);
             expect(s.parameters.parm1).toEqual(['fred']);
             expect(s.parameters.parm2).toEqual(['barney']);
-            expect(s.portletMode).toEqual('EDIT');
-            expect(s.windowState).toEqual('MINIMIZED');
+            expect(s.portletMode).toEqual('edit');
+            expect(s.windowState).toEqual('minimized');
          }); 
       });
 
@@ -465,7 +465,7 @@ describe('The Portlet Hub provides accessor functions for the render state and p
       });
 
       it('allows setting and getting the portlet mode', function () {
-         var pm = 'EDIT', pm2;
+         var pm = 'edit', pm2;
          runs(function() {
             state.setPortletMode(pm)
             pm2 = state.getPortletMode();
@@ -475,7 +475,7 @@ describe('The Portlet Hub provides accessor functions for the render state and p
       });
 
       it('allows setting and getting the window state', function () {
-         var ws = 'MAXIMIZED', ws2;
+         var ws = 'maximized', ws2;
          runs(function() {
             state.setWindowState(ws)
             ws2 = state.getWindowState();
@@ -519,9 +519,9 @@ describe('The Portlet Hub provides accessor functions for the render state and p
             expect(typeof cons.VIEW).toEqual('string');
             expect(typeof cons.EDIT).toEqual('string');
             expect(typeof cons.HELP).toEqual('string');
-            expect(cons.VIEW).toEqual('VIEW');
-            expect(cons.EDIT).toEqual('EDIT');
-            expect(cons.HELP).toEqual('HELP');
+            expect(cons.VIEW).toEqual('view');
+            expect(cons.EDIT).toEqual('edit');
+            expect(cons.HELP).toEqual('help');
          }); 
       });
 
@@ -530,9 +530,9 @@ describe('The Portlet Hub provides accessor functions for the render state and p
             expect(typeof cons.NORMAL).toEqual('string');
             expect(typeof cons.MINIMIZED).toEqual('string');
             expect(typeof cons.MAXIMIZED).toEqual('string');
-            expect(cons.NORMAL).toEqual('NORMAL');
-            expect(cons.MINIMIZED).toEqual('MINIMIZED');
-            expect(cons.MAXIMIZED).toEqual('MAXIMIZED');
+            expect(cons.NORMAL).toEqual('normal');
+            expect(cons.MINIMIZED).toEqual('minimized');
+            expect(cons.MAXIMIZED).toEqual('maximized');
          }); 
       });
 

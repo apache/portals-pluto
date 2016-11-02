@@ -155,79 +155,79 @@ describe('The portlet hub allows the portlet client to execute a portlet action'
          expect(typeof hubA.action).toEqual('function');
       });
 
-      it('throws an IllegalArgumentException if too many (>2) arguments are provided',function(){
+      it('throws a TypeError if too many (>2) arguments are provided',function(){
          var parms  = {rp1 : ["resVal"]},
              el = document.createElement("form");
          var testFunc = function () {
             hubA.action(parms, el, "parm3");
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if a single argument is null',function(){
+      it('throws a TypeError if a single argument is null',function(){
          var testFunc = function () {
             hubA.action(null);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the element argument is null',function(){
+      it('throws a TypeError if the element argument is null',function(){
          var parms  = {rp1 : ["resVal"]};
          var testFunc = function () {
             hubA.action(parms, null);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if action parameters  is null',function(){
+      it('throws a TypeError if action parameters  is null',function(){
          var el = document.createElement("form");
          var testFunc = function () {
             hubA.action(null, el);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-//       it('throws an IllegalArgumentException if action parameters is undefined',function(){
+//       it('throws a TypeError if action parameters is undefined',function(){
 //          var el = document.createElement("form");
 //          var testFunc = function () {
 //             hubA.action(undefined, el);
 //          }
-//          expect(testFunc).toThrowCustomException("IllegalArgumentException");
+//          expect(testFunc).toThrowCustomException("TypeError");
 //       });
 
-      it('throws an IllegalArgumentException if action parameters is invalid',function(){
+      it('throws a TypeError if action parameters is invalid',function(){
          var parms  = {rp1 : "resVal"};
          var el = document.createElement("form");
          var testFunc = function () {
             hubA.action(parms, el);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the element argument is invalid',function(){
+      it('throws a TypeError if the element argument is invalid',function(){
          var parms  = {rp1 : ["resVal"]};
          var el = document.createElement("form");
          var testFunc = function () {
             hubA.action(parms, "Invalid");
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if there are 2 element arguments',function(){
+      it('throws a TypeError if there are 2 element arguments',function(){
          var parms  = {rp1 : ["resVal"]};
          var el = document.createElement("form");
          var testFunc = function () {
             hubA.action(el, el);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if there are 2 action parameters arguments',function(){
+      it('throws a TypeError if there are 2 action parameters arguments',function(){
          var parms  = {rp1 : ["resVal"]};
          var testFunc = function () {
             hubA.action(parms, parms);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
       it('does not throw if both arguments are valid',function(){

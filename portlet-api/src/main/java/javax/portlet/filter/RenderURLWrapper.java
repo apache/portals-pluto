@@ -29,8 +29,6 @@ import javax.portlet.RenderURL;
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  * </div>
- * 
- * @author Scott Nicklous
  *
  */
 public class RenderURLWrapper extends PortletURLWrapper implements RenderURL {

@@ -55,39 +55,39 @@ describe('The portlet hub provides JavaScript support for portlets.',function(){
     */
    describe('The portlet hub register function: ',function(){
 
-      it('throws an IllegalArgumentException if no portlet ID argument is provided',function(){
+      it('throws a TypeError if no portlet ID argument is provided',function(){
          var testFunc = function () {
             portlet.register();
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if too many (>1) arguments are provided',function(){
+      it('throws a TypeError if too many (>1) arguments are provided',function(){
          var testFunc = function () {
             portlet.register("InvalidPortletID1", "InvalidPortletID2");
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the portlet ID is not a string',function(){
+      it('throws a TypeError if the portlet ID is not a string',function(){
          var testFunc = function () {
             portlet.register(89);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the portlet ID is undefined',function(){
+      it('throws a TypeError if the portlet ID is undefined',function(){
          var testFunc = function () {
             portlet.register(undefined);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the portlet ID is null',function(){
+      it('throws a TypeError if the portlet ID is null',function(){
          var testFunc = function () {
             portlet.register(null);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
       it('The promise fails if the portlet ID is not defined for the portlet hub',function(){

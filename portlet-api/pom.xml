@@ -15,6 +15,26 @@
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
 >
 
+   <properties>
+      <!-- basic project settings -->
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+      <!-- Plugin versions -->
+      <version.javadoc.plugin>2.9</version.javadoc.plugin>
+
+      <!-- The javadoc.css.file property defines the css file to be used for the HTML javadoc output files. -->
+      <!-- portlet-api.css - provides colored change bars and displays deleted text -->
+      <!-- portlet-api-production.css - provides no change bars and supresses deleted text -->
+      <javadoc.css.file>portlet-api-production.css</javadoc.css.file>
+
+      <!-- The javadoc.overview.file property specifies the overview file to use. -->
+      <!-- overview.html - production overview, contains no change history        -->
+      <!-- overview_dev.html - development overview with change history            -->
+      <javadoc.overview.file>${basedir}/src/main/javadoc/overview.html</javadoc.overview.file>
+
+      <javadoc.spec.title>JSR 362 Portlet 3.0 API Specification</javadoc.spec.title>
+   </properties>
+
    <modelVersion>4.0.0</modelVersion>
 
    <parent>
@@ -25,17 +45,16 @@
 
    <groupId>javax.portlet</groupId>
    <artifactId>portlet-api</artifactId>
+   <version>3.0-SNAPSHOT</version>
    <packaging>bundle</packaging>
    <name>Java Portlet API V3.0</name>
    <description>The Java Portlet API version 3.0 developed by the Java Community Process JSR-362 Expert Group.</description>
 
-   <!-- temp values for URL & scm stuff. to be updated later -->
-   <url>http://msnicklous.github.io/portletspec3/apidocs/index.html</url>
-
    <dependencies>
       <dependency>
-         <groupId>org.apache.tomcat</groupId>
-         <artifactId>tomcat-servlet-api</artifactId>
+         <groupId>javax</groupId>
+         <artifactId>javaee-api</artifactId>
+         <version>6.0</version>
          <scope>provided</scope>
       </dependency>
       <dependency>
@@ -55,25 +74,25 @@
          <plugins>
             <plugin>
                <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-               <groupId>org.apache.felix</groupId>
-               <artifactId>maven-bundle-plugin</artifactId>
-               <version>2.0.0</version>
-               <extensions>true</extensions>
+               <artifactId>maven-javadoc-plugin</artifactId>
+               <version>${version.javadoc.plugin}</version>
                <configuration>
-                  <instructions>
-                     <Export-Package>javax.portlet.filter;version=2.0.0,
-                        javax.portlet;version=2.0.0
-                     </Export-Package>
-                     <Import-Package>
-                        javax.servlet.http;version=2.4,*
-                     </Import-Package>
-                     <Implementation-Title>${project.name}</Implementation-Title>
-                     <Implementation-Version>${project.version}</Implementation-Version>
-                     <Bundle-DocURL>${project.url}</Bundle-DocURL>
-                  </instructions>
+                  <doctitle>${javadoc.spec.title}</doctitle>
+                  <windowtitle>${javadoc.spec.title}</windowtitle>
+                  <stylesheetfile>${javadoc.css.file}</stylesheetfile>
+                  <overview>${javadoc.overview.file}</overview>
+                  <!-- link to Java EE APIs for cross-references -->
+                  <links>
+                     <link>http://docs.oracle.com/javaee/7/api/</link>
+                  </links>
+                  <docfilessubdirs>true</docfilessubdirs>
+                  <bottom>
+            <![CDATA[Java Portlet 3.0 API Specification.
+               See the <a href="doc-files/NOTICE.txt">Copyright</a> and 
+               <a href="doc-files/LICENSE.txt">License</a> provided with this distribution.
+               Use is subject to
+               <a href="http://www.apache.org/licenses/LICENSE-2.0">license terms</a>.]]>
+                  </bottom>
                </configuration>
             </plugin>
          </plugins>
@@ -81,11 +100,275 @@
 
       <plugins>
          <plugin>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>maven-bundle-plugin</artifactId>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>attach-sources</id>
+                  <goals>
+                     <goal>jar</goal>
+                  </goals>
+               </execution>
+            </executions>
          </plugin>
+
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>attach-javadocs</id>
+                  <goals>
+                     <goal>jar</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+
+         <!-- Run the junit tests -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.17</version>
+            <configuration>
+               <testFailureIgnore>true</testFailureIgnore>
+            </configuration>
+         </plugin>
+
+         <!-- prereq to allow Jasmine to execute with PhantomJS -->
+         <plugin>
+            <groupId>com.github.klieber</groupId>
+            <artifactId>phantomjs-maven-plugin</artifactId>
+            <version>0.4</version>
+            <executions>
+               <execution>
+                  <goals>
+                     <goal>install</goal>
+                  </goals>
+               </execution>
+            </executions>
+            <configuration>
+               <version>1.9.7</version>
+            </configuration>
+         </plugin>
+
+         <!-- Javasript unit tests through Jasmine -->
+         <plugin>
+            <groupId>com.github.searls</groupId>
+            <artifactId>jasmine-maven-plugin</artifactId>
+            <version>1.3.1.4</version>
+            <executions>
+               <execution>
+                  <goals>
+                     <goal>test</goal>
+                  </goals>
+               </execution>
+            </executions>
+            <configuration>
+               <haltOnFailure>false</haltOnFailure>
+               <jsSrcDir>src/main/javascript</jsSrcDir>
+               <jsTestSrcDir>src/test/javascript</jsTestSrcDir>
+               <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
+               <webDriverCapabilities>
+                  <capability>
+                     <name>phantomjs.binary.path</name>
+                     <value>${phantomjs.binary}</value>
+                  </capability>
+               </webDriverCapabilities>
+               <!-- preload some utilities for working with portlets -->
+               <preloadSources>
+                  <include>promise-6.0.0.min.js</include>
+                  <include>JasminePortletUtils.js</include>
+               </preloadSources>
+               <sourceIncludes>
+                  <include>**/MockData.js</include>
+                  <include>**/portlet.js</include>
+               </sourceIncludes>
+               <specIncludes>
+                  <include>**/CustomMatchers.js</include>
+                  <include>**/SetUpAndRegisterTest.js</include>
+                  <include>**/AddEventListenerTest.js</include>
+                  <include>**/CreateResourceUrlTest.js</include>
+                  <include>**/SetPortletStateTest.js</include>
+                  <include>**/ActionTest.js</include>
+                  <include>**/PartialActionTest.js</include>
+                  <include>**/IsInProgressTest.js</include>
+                  <include>**/DispatchClientEventTest.js</include>
+                  <include>**/SimulatedErrorTests.js</include>
+                  <include>**/StateTests.js</include>
+               </specIncludes>
+            </configuration>
+         </plugin>
+
+         <!-- Javascript compressor plugin -->
+         <plugin>
+            <groupId>net.alchim31.maven</groupId>
+            <artifactId>yuicompressor-maven-plugin</artifactId>
+            <version>1.1</version>
+            <executions>
+               <execution>
+                  <id>compress-js</id>
+                  <goals>
+                     <goal>compress</goal>
+                  </goals>
+                  <configuration>
+                     <jswarn>false</jswarn>
+                     <sourceDirectory>src/main/javascript</sourceDirectory>
+                     <outputDirectory>${project.build.directory}/${project.build.finalName}/javascript</outputDirectory>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+
+         <!-- copy the original uncompressed javascript files as web resources, 
+            just to have them too. -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.4</version>
+            <configuration>
+               <webResources>
+                  <resource>
+                     <directory>src/main/javascript</directory>
+                     <targetPath>/javascript</targetPath>
+                  </resource>
+               </webResources>
+            </configuration>
+         </plugin>
+
+         <!-- Generate jsdocs during package execution. Bind execution to 
+            maven package phase. -->
+         <plugin>
+            <groupId>com.phasebash.jsdoc</groupId>
+            <artifactId>jsdoc3-maven-plugin</artifactId>
+            <version>1.1.0</version>
+            <executions>
+               <execution>
+                  <goals>
+                     <goal>jsdoc3</goal>
+                  </goals>
+                  <phase>prepare-package</phase>
+               </execution>
+            </executions>
+            <configuration>
+               <sourceFiles>
+                  <sourceFile>${basedir}/src/main/javascript/portlet.js</sourceFile>
+               </sourceFiles>
+               <outputDirectory>${project.build.directory}/apidocs/docfiles/jsdoc</outputDirectory>
+            </configuration>
+         </plugin>
+
+         <!-- want the javascript files in the site directory, too. Bind 
+            execution to maven package phase. -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.7</version>
+            <executions>
+               <execution>
+                  <phase>prepare-package</phase>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+                  <configuration>
+                     <tasks>
+                        <copy todir="target/site/javascript">
+                           <fileset dir="src/main/javascript" />
+                        </copy>
+                     </tasks>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+
       </plugins>
    </build>
+
+
+   <reporting>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+            <version>2.17</version>
+            <configuration>
+               <aggregate>true</aggregate>
+               <reportsDirectories>
+                  <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                  <reportsDirectory>${project.build.directory}/jasmine</reportsDirectory>
+               </reportsDirectories>
+            </configuration>
+         </plugin>
+      </plugins>
+   </reporting>
+
+   <profiles>
+      <profile>
+         <id>apache-release</id>
+         <build>
+            <plugins>
+               <plugin>
+                  <!-- only include this in top level project poms -->
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-assembly-plugin</artifactId>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+
+      <!-- Profile for publishing Javadoc to GitHub Pages (https://help.github.com/categories/20/articles) 
+         = Setup = Add this profile to your .m2/settings.xml <profile> <id>github</id> 
+         <properties> <github.global.userName>your_github_username</github.global.userName> 
+         <github.global.password>your_github_password</github.global.password> </properties> 
+         </profile> = Usage = To build and deploy Javadoc: mvn site -Pgithub Javadocs 
+         are published to GitHub pages : your_github_username.github.io/portletspec3 -->
+      <profile>
+         <id>github</id>
+         <build>
+            <plugins>
+               <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-javadoc-plugin</artifactId>
+                  <executions>
+                     <execution>
+                        <goals>
+                           <goal>javadoc</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                     </execution>
+                  </executions>
+               </plugin>
+               <plugin>
+                  <groupId>com.github.github</groupId>
+                  <artifactId>site-maven-plugin</artifactId>
+                  <version>0.12</version>
+                  <configuration>
+                     <message>Deploy javadoc for ${project.version}</message>
+                     <repositoryOwner>msnicklous</repositoryOwner>
+                     <repositoryName>portletspec3</repositoryName>
+                     <outputDirectory>${project.build.directory}/site/</outputDirectory>
+                     <includes>
+                        <include>surefire-report.html</include>
+                        <include>apidocs/**/*</include>
+                        <include>css/**/*</include>
+                        <include>images/**/*</include>
+                        <include>javascript/**/*</include>
+                        <include>jsdoc/**/*</include>
+                     </includes>
+                  </configuration>
+                  <executions>
+                     <execution>
+                        <goals>
+                           <goal>site</goal>
+                        </goals>
+                        <phase>install</phase>
+                     </execution>
+                  </executions>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+   </profiles>
 
 </project>
 

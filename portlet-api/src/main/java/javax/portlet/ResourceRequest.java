@@ -267,7 +267,7 @@ public interface ResourceRequest extends ClientDataRequest {
     *          if this request is within the scope of a filter or servlet that does not 
     *          support asynchronous operations (that is, isAsyncSupported() returns 
     *          false), or if this method is called again without any asynchronous 
-    *          dispatch (resulting from one of the AsyncContext#dispatch methods), 
+    *          dispatch (resulting from one of the PortletAsyncContext#dispatch methods), 
     *          is called outside the scope of any such dispatch, or is called again 
     *          within the scope of the same dispatch, or if the response has 
     *          already been closed
@@ -344,7 +344,7 @@ public interface ResourceRequest extends ClientDataRequest {
     *          if this request is within the scope of a filter or servlet that does not 
     *          support asynchronous operations (that is, isAsyncSupported() returns 
     *          false), or if this method is called again without any asynchronous 
-    *          dispatch (resulting from one of the AsyncContext#dispatch methods), 
+    *          dispatch (resulting from one of the PortletAsyncContext#dispatch methods), 
     *          is called outside the scope of any such dispatch, or is called again 
     *          within the scope of the same dispatch, or if the response has 
     *          already been closed

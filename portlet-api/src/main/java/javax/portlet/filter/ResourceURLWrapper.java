@@ -30,8 +30,6 @@ import javax.portlet.ResourceURL;
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped request object.
  * </div>
- * 
- * @author Scott Nicklous
  *
  */
 public class ResourceURLWrapper extends BaseURLWrapper implements ResourceURL {

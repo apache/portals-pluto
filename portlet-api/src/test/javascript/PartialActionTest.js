@@ -163,27 +163,27 @@ describe('The portlet hub allows the portlet client to initiate a partial action
          expect(typeof hubA.startPartialAction).toEqual('function');
       });
 
-      it('throws an IllegalArgumentException if too many (>1) arguments are provided',function(){
+      it('throws a TypeError if too many (>1) arguments are provided',function(){
          var parms  = {ap1 : ["actionVal"]};
          var testFunc = function () {
             pai = hubA.startPartialAction(parms, "parm3");
          };
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the argument is null',function(){
+      it('throws a TypeError if the argument is null',function(){
          var testFunc = function () {
             pai = hubA.startPartialAction(null);
          };
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if action parameters is invalid',function(){
+      it('throws a TypeError if action parameters is invalid',function(){
          var parms  = {ap1 : "actionVal"};
          var testFunc = function () {
             pai = hubA.startPartialAction(parms);
          };
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
       it('throws an NotInitializedException if no onStateChange listener is registered.',function(){
@@ -231,14 +231,14 @@ describe('The portlet hub allows the portlet client to initiate a partial action
          var testFunc = function () {
             pai.setPageState();
          };
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
       it('return object setPageState function throws an exception if called with invalid type',function(){
          var testFunc = function () {
             pai.setPageState(89);
          };
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
       it('onError event is fired if the setPageState function is called with invalid update string',function(){

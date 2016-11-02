@@ -124,60 +124,60 @@ describe('The portlet hub provides the ability to add and remove event listeners
          expect(typeof hubA.addEventListener).toEqual('function');
       });
 
-      it('throws an IllegalArgumentException if no argument is provided',function(){
+      it('throws a TypeError if no argument is provided',function(){
          var testFunc = function () {
             hubA.addEventListener();
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if 1 argument is provided',function(){
+      it('throws a TypeError if 1 argument is provided',function(){
          var testFunc = function () {
             hubA.addEventListener(userEventName);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if too many (>2) arguments are provided',function(){
+      it('throws a TypeError if too many (>2) arguments are provided',function(){
          var testFunc = function () {
             hubA.addEventListener("parm1", "parm2", "parm3");
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the type argument is not a string',function(){
+      it('throws a TypeError if the type argument is not a string',function(){
          var testFunc = function () {
             hubA.addEventListener(89, onStateChange);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the function argument is not a function',function(){
+      it('throws a TypeError if the function argument is not a function',function(){
          var testFunc = function () {
             hubA.addEventListener(userEventName, 89);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the type is null',function(){
+      it('throws a TypeError if the type is null',function(){
          var testFunc = function () {
             hubA.addEventListener(null, onStateChange);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the function is null',function(){
+      it('throws a TypeError if the function is null',function(){
          var testFunc = function () {
             hubA.addEventListener(userEventName, null);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the type begins with "portlet." but is neither "portlet.onStateChange" or "portlet.onError"',function(){
+      it('throws a TypeError if the type begins with "portlet." but is neither "portlet.onStateChange" or "portlet.onError"',function(){
          var testFunc = function () {
             hubA.addEventListener("portlet.invalidType", onStateChange);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
       it('does not throw an exception if both parameters are valid',function(){
@@ -216,39 +216,39 @@ describe('The portlet hub provides the ability to add and remove event listeners
          expect(typeof hubA.removeEventListener).toEqual('function');
       });
 
-      it('throws an IllegalArgumentException if no argument is provided',function(){
+      it('throws a TypeError if no argument is provided',function(){
          var testFunc = function () {
             hubA.removeEventListener();
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if too many (>1) arguments are provided',function(){
+      it('throws a TypeError if too many (>1) arguments are provided',function(){
          var testFunc = function () {
             hubA.removeEventListener("parm1", "parm2", "parm3");
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the handle is null',function(){
+      it('throws a TypeError if the handle is null',function(){
          var testFunc = function () {
             hubA.removeEventListener(null);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the handle is undefined',function(){
+      it('throws a TypeError if the handle is undefined',function(){
          var testFunc = function () {
             hubA.removeEventListener(undefined);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the handle has an invalid value',function(){
+      it('throws a TypeError if the handle has an invalid value',function(){
          var testFunc = function () {
             hubA.removeEventListener("This is an invalid handle.");
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
       it('allows a previously added user event listener to be removed',function(){
@@ -272,25 +272,25 @@ describe('The portlet hub provides the ability to add and remove event listeners
          expect(testFunc).not.toThrow();
       });
 
-      it('throws an IllegalArgumentException if the user event handler is removed twice',function(){
+      it('throws a TypeError if the user event handler is removed twice',function(){
          var testFunc = function () {
             hubA.removeEventListener(userEventHandle);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the onStateChange event handler is removed twice',function(){
+      it('throws a TypeError if the onStateChange event handler is removed twice',function(){
          var testFunc = function () {
             hubA.removeEventListener(oscHandle);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the onError event handler is removed twice',function(){
+      it('throws a TypeError if the onError event handler is removed twice',function(){
          var testFunc = function () {
             hubA.removeEventListener(oeHandle);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
       
    });

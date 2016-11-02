@@ -34,8 +34,6 @@ import javax.portlet.PortletSecurityException;
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped object.
  * </div>
- * 
- * @author Scott Nicklous
  *
  */
 public class BaseURLWrapper extends RenderStateWrapper implements BaseURL {

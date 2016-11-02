@@ -171,39 +171,39 @@ describe('The portlet hub allows the portlet client to dispatch events',function
          expect(typeof hubA.dispatchClientEvent).toEqual('function');
       });
 
-      it('throws an IllegalArgumentException if no argument is provided',function(){
+      it('throws a TypeError if no argument is provided',function(){
          var testFunc = function () {
             hubA.dispatchClientEvent();
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if 1 argument is provided',function(){
+      it('throws a TypeError if 1 argument is provided',function(){
          var testFunc = function () {
             hubA.dispatchClientEvent("myType");
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if too many (>2) arguments are provided',function(){
+      it('throws a TypeError if too many (>2) arguments are provided',function(){
          var testFunc = function () {
             hubA.dispatchClientEvent("parm1", "parm2", "parm3");
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the type argument is not a string',function(){
+      it('throws a TypeError if the type argument is not a string',function(){
          var testFunc = function () {
             hubA.dispatchClientEvent(89, "aPayload");
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the type is null',function(){
+      it('throws a TypeError if the type is null',function(){
          var testFunc = function () {
             hubA.dispatchClientEvent(null, "aPayload");
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
       it('does not throw an Exception if the payload is null',function(){
@@ -213,18 +213,18 @@ describe('The portlet hub allows the portlet client to dispatch events',function
          expect(testFunc).not.toThrow();
       });
 
-      it('throws an IllegalArgumentException if the type begins with "portlet."',function(){
+      it('throws a TypeError if the type begins with "portlet."',function(){
          var testFunc = function () {
             hubA.dispatchClientEvent("portlet.invalidType", "aPayload");
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the type matches a system event type',function(){
+      it('throws a TypeError if the type matches a system event type',function(){
          var testFunc = function () {
             hubA.dispatchClientEvent("portlet.onStateChange", "aPayload");
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
       it('does not throw an exception if both parameters are valid',function(){

@@ -71,12 +71,12 @@ portlet.test.data  = {
                'parm1' : ['val1'], 
                'parm2' : ['val2', 'val3']
             }, 
-            'portletMode' : 'VIEW', 
-            'windowState' : 'NORMAL'
+            'portletMode' : 'view', 
+            'windowState' : 'normal'
          },
          'pubParms' : [],
-         'allowedPM' : ['VIEW', 'EDIT', 'HELP'],
-         'allowedWS' : ['NORMAL', 'MINIMIZED', 'MAXIMIZED'],
+         'allowedPM' : ['view', 'edit', 'help'],
+         'allowedWS' : ['normal', 'minimized', 'maximized'],
          'renderData' : {
             'renderData' : null,
             'mimeType' : "text/plain"
@@ -89,12 +89,12 @@ portlet.test.data  = {
                'pubparm1' : ['pubval1'], 
                'parm2' : ['val2', 'val3']
             }, 
-            'portletMode' : 'VIEW', 
-            'windowState' : 'NORMAL'
+            'portletMode' : 'view', 
+            'windowState' : 'normal'
          },
          'pubParms' : ['pubparm1'],
-         'allowedPM' : ['VIEW', 'EDIT', 'HELP'],
-         'allowedWS' : ['NORMAL', 'MINIMIZED', 'MAXIMIZED'],
+         'allowedPM' : ['view', 'edit', 'help'],
+         'allowedWS' : ['normal', 'minimized', 'maximized'],
          'renderData' : null
       },
       'PortletC' : {
@@ -105,12 +105,12 @@ portlet.test.data  = {
                'pubparm2' : ['pubval2'], 
                'parm2' : ['val2', 'val3']
             }, 
-            'portletMode' : 'VIEW', 
-            'windowState' : 'NORMAL'
+            'portletMode' : 'view', 
+            'windowState' : 'normal'
          },
          'pubParms' : ['pubparm1', 'pubparm2'],
-         'allowedPM' : ['VIEW', 'EDIT', 'HELP'],
-         'allowedWS' : ['NORMAL', 'MINIMIZED', 'MAXIMIZED']
+         'allowedPM' : ['view', 'edit', 'help'],
+         'allowedWS' : ['normal', 'minimized', 'maximized']
       },
       'PortletD' : {
          'state' : {
@@ -119,12 +119,12 @@ portlet.test.data  = {
                'pubparm2' : ['pubval2'], 
                'parm2' : ['val2', 'val3']
             }, 
-            'portletMode' : 'VIEW', 
-            'windowState' : 'NORMAL'
+            'portletMode' : 'view', 
+            'windowState' : 'normal'
          },
          'pubParms' : ['pubparm2'],
-         'allowedPM' : ['VIEW', 'EDIT', 'HELP'],
-         'allowedWS' : ['NORMAL', 'MINIMIZED', 'MAXIMIZED'],
+         'allowedPM' : ['view', 'edit', 'help'],
+         'allowedWS' : ['normal', 'minimized', 'maximized'],
          'renderData' : {
             'renderData' : "Some render data.",
             'mimeType' : "text/plain"
@@ -138,12 +138,12 @@ portlet.test.data  = {
                'pubparm2' : ['pubval2'], 
                'parm2' : ['val2', 'val3']
             }, 
-            'portletMode' : 'VIEW', 
-            'windowState' : 'NORMAL'
+            'portletMode' : 'view', 
+            'windowState' : 'normal'
          },
          'pubParms' : ['pubparm1', 'pubparm2'],
-         'allowedPM' : ['VIEW', 'EDIT', 'HELP'],
-         'allowedWS' : ['NORMAL', 'MINIMIZED', 'MAXIMIZED'],
+         'allowedPM' : ['view', 'edit', 'help'],
+         'allowedWS' : ['normal', 'minimized', 'maximized'],
          'renderData' : {
             'renderData' : "Some render data.",
             'mimeType' : "text/plain"
@@ -153,12 +153,12 @@ portlet.test.data  = {
          'state' : {
             'parameters' : {
             }, 
-            'portletMode' : 'VIEW', 
-            'windowState' : 'NORMAL'
+            'portletMode' : 'view', 
+            'windowState' : 'normal'
          },
          'pubParms' : [],
-         'allowedPM' : ['VIEW', 'EDIT', 'HELP'],
-         'allowedWS' : ['NORMAL', 'MINIMIZED', 'MAXIMIZED'],
+         'allowedPM' : ['view', 'edit', 'help'],
+         'allowedWS' : ['normal', 'minimized', 'maximized'],
          'renderData' : {
             'renderData' : "Some render data.",
             'mimeType' : "text/plain"
@@ -174,36 +174,36 @@ portlet.test.data  = {
             'parameters' : {
                'parm1' : ['val1'], 
             }, 
-            'portletMode' : 'VIEW', 
-            'windowState' : 'NORMAL'
+            'portletMode' : 'view', 
+            'windowState' : 'normal'
          },
          'pubParms' : ['pubparm1', 'pubparm2'],
-         'allowedPM' : ['VIEW', 'EDIT', 'HELP'],
-         'allowedWS' : ['NORMAL', 'MINIMIZED', 'MAXIMIZED']
+         'allowedPM' : ['view', 'edit', 'help'],
+         'allowedWS' : ['normal', 'minimized', 'maximized']
       },
       'SimulateCommError' : {
          'state' : {
             'parameters' : {
                'parm1' : ['val1'], 
             }, 
-            'portletMode' : 'VIEW', 
-            'windowState' : 'NORMAL'
+            'portletMode' : 'view', 
+            'windowState' : 'normal'
          },
          'pubParms' : ['pubparm1', 'pubparm2'],
-         'allowedPM' : ['VIEW', 'EDIT', 'HELP'],
-         'allowedWS' : ['NORMAL', 'MINIMIZED', 'MAXIMIZED']
+         'allowedPM' : ['view', 'edit', 'help'],
+         'allowedWS' : ['normal', 'minimized', 'maximized']
       },
       'SimulateError' : {
          'state' : {
             'parameters' : {
                'parm1' : ['val1'], 
             }, 
-            'portletMode' : 'VIEW', 
-            'windowState' : 'NORMAL'
+            'portletMode' : 'view', 
+            'windowState' : 'normal'
          },
          'pubParms' : ['pubparm1', 'pubparm2'],
-         'allowedPM' : ['VIEW', 'EDIT', 'HELP'],
-         'allowedWS' : ['NORMAL', 'MINIMIZED', 'MAXIMIZED']
+         'allowedPM' : ['view', 'edit', 'help'],
+         'allowedWS' : ['normal', 'minimized', 'maximized']
       }
    },
    
@@ -214,19 +214,19 @@ portlet.test.data  = {
    // by both the action() and the setPageState() code.
    updateStrings : {
       // just updates PortletA
-      "PortletA" : "&~~~&PortletA&mode=VIEW&ws=NORMAL&parm1=Fred&parm2=Barney" +
+      "PortletA" : "&~~~&PortletA&mode=view&ws=normal&parm1=Fred&parm2=Barney" +
       "&~~~",
       
       // updates portlets B & C
-      "PortletB" : "&~~~&PortletB&mode=VIEW&ws=NORMAL&parm1=val1&pubparm1=pubval1&parm2=val2&parm2=val3" +
-      "&~~~&PortletC&mode=VIEW&ws=NORMAL&parm1=val1&pubparm1=pubval1&pubparm2=pubval2&parm2=val2&parm2=val3" +
+      "PortletB" : "&~~~&PortletB&mode=view&ws=normal&parm1=val1&pubparm1=pubval1&parm2=val2&parm2=val3" +
+      "&~~~&PortletC&mode=view&ws=normal&parm1=val1&pubparm1=pubval1&pubparm2=pubval2&parm2=val2&parm2=val3" +
       "&~~~",
       
       // Updates A, B, C, & D
-      "PortletC" : "&~~~&PortletA&mode=VIEW&ws=NORMAL&parm1=Fred&parm2=Barney" +
-      "&~~~&PortletB&mode=VIEW&ws=NORMAL&parm1=val1&pubparm1=pubval1&parm2=val2&parm2=val3" +
-      "&~~~&PortletC&mode=VIEW&ws=NORMAL&parm1=val1&pubparm1=pubval1&pubparm2=pubval2&parm2=val2&parm2=val3" +
-      "&~~~&PortletD&mode=VIEW&ws=NORMAL&pubparm1=private_val1&pubparm2=pubval2&parm2=val2&parm2=val3" +
+      "PortletC" : "&~~~&PortletA&mode=view&ws=normal&parm1=Fred&parm2=Barney" +
+      "&~~~&PortletB&mode=view&ws=normal&parm1=val1&pubparm1=pubval1&parm2=val2&parm2=val3" +
+      "&~~~&PortletC&mode=view&ws=normal&parm1=val1&pubparm1=pubval1&pubparm2=pubval2&parm2=val2&parm2=val3" +
+      "&~~~&PortletD&mode=view&ws=normal&pubparm1=private_val1&pubparm2=pubval2&parm2=val2&parm2=val3" +
       "&~~~",
       
       "PortletD" : "",
@@ -234,7 +234,7 @@ portlet.test.data  = {
       "PortletF" : "",
 
       // For special portlet ID that causes error sto be simulated
-      "SimulateCommError" : "&~~~&SimulateCommError&mode=VIEW&ws=NORMAL&parm1=Fred&parm2=Barney" +
+      "SimulateCommError" : "&~~~&SimulateCommError&mode=view&ws=normal&parm1=Fred&parm2=Barney" +
       "&~~~"
    }
 };
@@ -652,12 +652,12 @@ portlet.test.getIds = function () {
       
       // This is how it should look:
       //  http://www.dummyportal.com/some/context/PortletA/ACTION/PAGE/?&rp1=resVal&RENDERPARMS
-      //  &~~~&PortletA&mode=VIEW&ws=NORMAL&parm1=Fred&parm2=Wilma&parm2=Pebbles&parm3=Barney&parm3=Betty&parm3=Bam%20Bam
-      //  &~~~&PortletB&mode=VIEW&ws=NORMAL&parm1=val1&pubparm1=pubval1&parm2=val2&parm2=val3
-      //  &~~~&PortletC&mode=VIEW&ws=NORMAL&parm1=val1&pubparm1=pubval1&pubparm2=pubval2&parm2=val2&parm2=val3
-      //  &~~~&PortletD&mode=VIEW&ws=NORMAL&pubparm1=private_val1&pubparm2=pubval2&parm2=val2&parm2=val3
-      //  &~~~&PortletE&mode=VIEW&ws=NORMAL&parm1=val1&parm2=val2&parm2=val3&pubparm1=pubval1&pubparm2=pubval2
-      //  &~~~&PortletF&mode=VIEW&ws=NORMAL&~~~
+      //  &~~~&PortletA&mode=view&ws=normal&parm1=Fred&parm2=Wilma&parm2=Pebbles&parm3=Barney&parm3=Betty&parm3=Bam%20Bam
+      //  &~~~&PortletB&mode=view&ws=normal&parm1=val1&pubparm1=pubval1&parm2=val2&parm2=val3
+      //  &~~~&PortletC&mode=view&ws=normal&parm1=val1&pubparm1=pubval1&pubparm2=pubval2&parm2=val2&parm2=val3
+      //  &~~~&PortletD&mode=view&ws=normal&pubparm1=private_val1&pubparm2=pubval2&parm2=val2&parm2=val3
+      //  &~~~&PortletE&mode=view&ws=normal&parm1=val1&parm2=val2&parm2=val3&pubparm1=pubval1&pubparm2=pubval2
+      //  &~~~&PortletF&mode=view&ws=normal&~~~
       
       url += pid + "/" + type + "/"; 
       url += (((cache===undefined)||(cache===null))?"cacheLevelPage":cache) + "/?";
@@ -777,12 +777,12 @@ portlet.test.getIds = function () {
       //          'parm1' : ['val1'],
       //          'parm2' : ['val2', 'val3']
       //       },
-      //       'portletMode' : 'VIEW',
-      //       'windowState' : 'NORMAL',
+      //       'portletMode' : 'view',
+      //       'windowState' : 'normal',
       //    },
       //    'pubParms' : [],
-      //    'allowedPM' : ['VIEW', 'EDIT', 'HELP'],
-      //    'allowedWS' : ['NORMAL', 'MINIMIZED', 'MAXIMIZED'],
+      //    'allowedPM' : ['view', 'edit', 'help'],
+      //    'allowedWS' : ['normal', 'minimized', 'maximized'],
       // }
       // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

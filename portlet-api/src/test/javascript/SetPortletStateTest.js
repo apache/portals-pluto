@@ -155,65 +155,65 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          expect(typeof hubA.setRenderState).toEqual('function');
       });
 
-      it('throws an IllegalArgumentException if no argument is provided',function(){
+      it('throws a TypeError if no argument is provided',function(){
          var testFunc = function () {
             hubA.setRenderState();
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if too many (>1) arguments are provided',function(){
+      it('throws a TypeError if too many (>1) arguments are provided',function(){
          var testFunc = function () {
             hubA.setRenderState("parm1", "parm2");
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the argument is not an object',function(){
+      it('throws a TypeError if the argument is not an object',function(){
          var testFunc = function () {
             hubA.setRenderState(89);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the argument is null',function(){
+      it('throws a TypeError if the argument is null',function(){
          var testFunc = function () {
             hubA.setRenderState(null);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the argument does not have a "parameters" property',function(){
+      it('throws a TypeError if the argument does not have a "parameters" property',function(){
          var state = {
-               portletMode : "VIEW",
-               windowState : "NORMAL",
+               portletMode : "view",
+               windowState : "normal",
          };
          var testFunc = function () {
             hubA.setRenderState(state);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if the argument does not have a "windowState" property',function(){
-         var state = {
-               parameters  : {},
-               portletMode : "VIEW",
-         };
-         var testFunc = function () {
-            hubA.setRenderState(state);
-         }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
-      });
-
-      it('throws an IllegalArgumentException if the argument does not have a "portletMode" property',function(){
+      it('throws a TypeError if the argument does not have a "windowState" property',function(){
          var state = {
                parameters  : {},
-               windowState : "NORMAL",
+               portletMode : "view",
          };
          var testFunc = function () {
             hubA.setRenderState(state);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
+      });
+
+      it('throws a TypeError if the argument does not have a "portletMode" property',function(){
+         var state = {
+               parameters  : {},
+               windowState : "normal",
+         };
+         var testFunc = function () {
+            hubA.setRenderState(state);
+         }
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
       it('throws an AccessDeniedException if setRenderState is called twice',function(){
@@ -233,22 +233,22 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          expect(testFunc).toThrowCustomException("NotInitializedException");
       });
 
-      it('throws an IllegalArgumentException if "windowState" has an invalid value',function(){
+      it('throws a TypeError if "windowState" has an invalid value',function(){
          var state = cbA.getState();
          state.windowState = "ABNORMAL";
          var testFunc = function () {
             hubA.setRenderState(state);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
-      it('throws an IllegalArgumentException if "portletMode" has an invalid value',function(){
+      it('throws a TypeError if "portletMode" has an invalid value',function(){
          var state = cbA.getState();
          state.portletMode = "ABNORMAL";
          var testFunc = function () {
             hubA.setRenderState(state);
          }
-         expect(testFunc).toThrowCustomException("IllegalArgumentException");
+         expect(testFunc).toThrowCustomException("TypeError");
       });
 
       it('throws an NotInitializedException if the portlet client has no registered onStateChange listener',function(){
@@ -280,51 +280,51 @@ describe('The portlet hub allows the portlet client to set its state.',function(
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
       });
 
-      it('allows the portlet mode to be set to "EDIT"',function(){
+      it('allows the portlet mode to be set to "edit"',function(){
          var state = cbA.getState();
-         state.portletMode = "EDIT";
+         state.portletMode = "edit";
          runs(function() {
             hubA.setRenderState(state);
          }); 
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbA.retRenderState.portletMode).toEqual("EDIT");
+            expect(cbA.retRenderState.portletMode).toEqual("edit");
          }); 
       });
 
-      it('allows the portlet mode to be set to "VIEW"',function(){
+      it('allows the portlet mode to be set to "view"',function(){
          var state = cbA.getState();
-         state.portletMode = "VIEW";
+         state.portletMode = "view";
          runs(function() {
             hubA.setRenderState(state);
          }); 
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbA.retRenderState.portletMode).toEqual("VIEW");
+            expect(cbA.retRenderState.portletMode).toEqual("view");
          }); 
       });
 
-      it('allows the window state to be set to "MAXIMIZED"',function(){
+      it('allows the window state to be set to "maximized"',function(){
          var state = cbA.getState();
-         state.windowState = "MAXIMIZED";
+         state.windowState = "maximized";
          runs(function() {
             hubA.setRenderState(state);
          }); 
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbA.retRenderState.windowState).toEqual("MAXIMIZED");
+            expect(cbA.retRenderState.windowState).toEqual("maximized");
          }); 
       });
 
-      it('allows the window state to be set to "NORMAL"',function(){
+      it('allows the window state to be set to "normal"',function(){
          var state = cbA.getState();
-         state.windowState = "NORMAL";
+         state.windowState = "normal";
          runs(function() {
             hubA.setRenderState(state);
          }); 
          waitsFor(cbA.getIsComplete(), "The onStateChange callback should be called", 100);
          runs(function() {
-            expect(cbA.retRenderState.windowState).toEqual("NORMAL");
+            expect(cbA.retRenderState.windowState).toEqual("normal");
          }); 
       });
 
