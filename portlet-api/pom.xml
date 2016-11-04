@@ -52,7 +52,7 @@
 
    <groupId>javax.portlet</groupId>
    <artifactId>portlet-api</artifactId>
-   <version>3.0-SNAPSHOT</version>
+   
    <packaging>bundle</packaging>
    <name>Java Portlet API V3.0</name>
    <description>The Java Portlet API version 3.0 developed by the Java Community Process JSR-362 Expert Group.</description>

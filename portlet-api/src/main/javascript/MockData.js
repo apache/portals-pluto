@@ -78,7 +78,7 @@ portlet.test.data  = {
          'allowedPM' : ['view', 'edit', 'help'],
          'allowedWS' : ['normal', 'minimized', 'maximized'],
          'renderData' : {
-            'renderData' : null,
+            'content' : null,
             'mimeType' : "text/plain"
          }
       },
@@ -126,7 +126,7 @@ portlet.test.data  = {
          'allowedPM' : ['view', 'edit', 'help'],
          'allowedWS' : ['normal', 'minimized', 'maximized'],
          'renderData' : {
-            'renderData' : "Some render data.",
+            'content' : "Some render data.",
             'mimeType' : "text/plain"
          }
       },
@@ -145,7 +145,7 @@ portlet.test.data  = {
          'allowedPM' : ['view', 'edit', 'help'],
          'allowedWS' : ['normal', 'minimized', 'maximized'],
          'renderData' : {
-            'renderData' : "Some render data.",
+            'content' : "Some render data.",
             'mimeType' : "text/plain"
          }
       },
@@ -160,7 +160,7 @@ portlet.test.data  = {
          'allowedPM' : ['view', 'edit', 'help'],
          'allowedWS' : ['normal', 'minimized', 'maximized'],
          'renderData' : {
-            'renderData' : "Some render data.",
+            'content' : "Some render data.",
             'mimeType' : "text/plain"
          }
       },

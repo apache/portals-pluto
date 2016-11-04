@@ -17,36 +17,39 @@
   under the License.
 -->
 <!--
-	Builds bundled and source distribution of Pluto, archiving it in zip, gzip and bzip2 files.
-	Prerequisites for this build includes an installed Java 5+ JDK, Maven 2.0+ and Ant 1.6+.
-	
-	Run the binary build using the command line:
-		ant -f dist-build.xml
+   Builds bundled and source distribution of Pluto, archiving it in zip, gzip and bzip2 files.
+   Prerequisites for this build includes an installed Java 5+ JDK, Maven 2.0+ and Ant 1.6+.
+   
+   Run the binary build using the command line:
+      ant -f dist-build.xml
 
-	Or if you want to include the demo portlet WARs:
-		ant -f dist-build.xml -DincludeDemos=true
+   Or if you want to include the demo portlet WARs:
+      ant -f dist-build.xml -DincludeDemos=true
 
-	If you want to retain the intermediate products (tomcat directory), add the noClean flag:
-		ant -f dist-build.xml -DincludeDemos=true -DnoClean=true
+   If you want to package the TCK source & deliverables (warning: produces large files!):
+      ant -f dist-build.xml -DpackageTck=true
+      
+   If you want to retain the intermediate products (tomcat directory), add the noClean flag:
+      ant -f dist-build.xml -DincludeDemos=true -DnoClean=true
 
-	The bundled distribution is done in the following way:
-	1. Downloads Tomcat from Apache and unzips it into a working directory. To this distribution, the
-		build:
-		a. Adds emptySessionPath="true" to server.xml.
-		b. Adds a pluto and tomcat users with pluto and manager roles to tomcat-users.xml.
-	2. Runs 'mvn install' and 'mvn pluto:install' to create the	Pluto driver and testsuite 
-		and installs them into the Tomcat dist in the working directory.
-	3. Archives the altered Tomcat dist with Pluto into a zip, gzip and bzip2 file.
-	
-	All built distributions end up in target/dist.
-	
-	After unarchiving the built distribution into a directory, invoke the startup script in the bin
-	directory and browse to: http://localhost:8080/pluto/portal/
-	
-	Login as 'pluto' (password=pluto) to the portal. You will need to login again into the manager
-	application linked at the bottom of the Pluto Admin page in order to upload portlet application
-	war files to be able to deploy them to Pluto using the admin portlet. The 'tomcat' (password=tomcat)
-	user can also be used to deploy portlets.					
+   The bundled distribution is done in the following way:
+   1. Downloads Tomcat from Apache and unzips it into a working directory. To this distribution, the
+      build:
+      a. Adds emptySessionPath="true" to server.xml.
+      b. Adds a pluto and tomcat users with pluto and manager roles to tomcat-users.xml.
+   2. Runs 'mvn install' and 'mvn pluto:install' to create the   Pluto driver and testsuite 
+      and installs them into the Tomcat dist in the working directory.
+   3. Archives the altered Tomcat dist with Pluto into a zip, gzip and bzip2 file.
+   
+   All built distributions end up in target/dist.
+   
+   After unarchiving the built distribution into a directory, invoke the startup script in the bin
+   directory and browse to: http://localhost:8080/pluto/portal/
+   
+   Login as 'pluto' (password=pluto) to the portal. You will need to login again into the manager
+   application linked at the bottom of the Pluto Admin page in order to upload portlet application
+   war files to be able to deploy them to Pluto using the admin portlet. The 'tomcat' (password=tomcat)
+   user can also be used to deploy portlets.               
 -->
 <project name="PlutoDistributions" default="bundle-dist">
 
@@ -56,86 +59,120 @@
     <xmlproperty file="pom.xml"/> <!-- picks up pluto build version from pom file -->
     <property name="pluto.version" value="${project.version}" description="Version of Pluto to build"/>
 
-	<property name="dist.basedir" value="target/dist" description="Base working directory"/>
-	<property name="base.name" value="apache-tomcat-${tomcat.full.version}"/>
-	<property name="dist.dir" value="${dist.basedir}/${base.name}"/>
-	<property name="pluto.name" value="pluto-${pluto.version}"/>
-	<property name="pluto.dir" value="${dist.basedir}/${pluto.name}"/>
-	<property name="cache.dir" value="${user.home}/.m2/repository/org/apache/tomcat/dist" />
-	<property name="download.file" value="${cache.dir}/${base.name}.tar.gz" />
-	<property name="tar.file" value="${dist.basedir}/${base.name}.tar"/>
+   <property name="dist.basedir" value="target/dist" description="Base working directory"/>
+   <property name="base.name" value="apache-tomcat-${tomcat.full.version}"/>
+   <property name="dist.dir" value="${dist.basedir}/${base.name}"/>
+   <property name="tck.dir" value="portlet-tck_3.0"/>
+   <property name="pluto.name" value="pluto-${pluto.version}"/>
+   <property name="pluto.tck.name" value="pluto-${pluto.version}-tck"/>
+   <property name="pluto.dir" value="${dist.basedir}/${pluto.name}"/>
+   <property name="cache.dir" value="${user.home}/.m2/repository/org/apache/tomcat/dist" />
+   <property name="download.file" value="${cache.dir}/${base.name}.tar.gz" />
+   <property name="tar.file" value="${dist.basedir}/${base.name}.tar"/>
 
-	<target name="bundle-dist"
-			depends="prepare-bundle-dist,run-maven-exclude-demos,run-maven-include-demos,run-maven-pluto-plugin"
-			description="Creates zip, gzip, and bzip2 distributions">
-		<!-- Copy over jars needed to deploy custom portlets -->
-		<copy file="pluto-util/target/pluto-util-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
+   <target name="bundle-dist"
+         depends="prepare-bundle-dist,run-maven-exclude-demos,run-maven-include-demos,run-maven-pluto-plugin"
+         description="Creates zip, gzip, and bzip2 distributions">
+      <!-- Copy over jars needed to deploy custom portlets -->
+      <copy file="pluto-util/target/pluto-util-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>         
 
-		<antcall target="include-demos" />
+      <antcall target="include-demos" />
 
-		<!-- Zip everything up -->
-		<zip destfile="${dist.basedir}/${pluto.name}-bundle.zip">
-			<zipfileset prefix="${pluto.name}" dir="${dist.dir}" includes="**/*"/>
-		</zip>
+      <!-- Zip everything up -->
+      <zip destfile="${dist.basedir}/${pluto.name}-bundle.zip">
+         <zipfileset prefix="${pluto.name}" dir="${dist.dir}" includes="**/*"/>
+      </zip>
 
-		<antcall target="tar-nocompress"/>
-		
-		<gzip src="${dist.basedir}/${pluto.name}-bundle.tar" 
-			destfile="${dist.basedir}/${pluto.name}-bundle.tar.gz"/>
-		
-		<bzip2 src="${dist.basedir}/${pluto.name}-bundle.tar" 
-			destfile="${dist.basedir}/${pluto.name}-bundle.tar.bz2"/>
-				
-		<antcall target="clean"/>	
-	</target>
+      <antcall target="tar-nocompress"/>
+      
+      <gzip src="${dist.basedir}/${pluto.name}-bundle.tar" 
+         destfile="${dist.basedir}/${pluto.name}-bundle.tar.gz"/>
+      
+      <bzip2 src="${dist.basedir}/${pluto.name}-bundle.tar" 
+         destfile="${dist.basedir}/${pluto.name}-bundle.tar.bz2"/>
 
-	<target name="include-demos" if="includeDemos">
-		<copy file="ChatRoomDemo/target/chatRoomDemo.war" todir="${dist.dir}/webapps" />
-		<copy file="PortletHubDemo/target/PortletHubDemo.war" todir="${dist.dir}/webapps" />
-		<copy file="PortletV3Demo/target/PortletV3Demo.war" todir="${dist.dir}/webapps" />
-		<copy file="PortletV3AnnotatedDemo/target/PortletV3AnnotatedDemo.war" todir="${dist.dir}/webapps" />
-	</target>
-	
-	<target name="tar-nocompress" description="Creates tar bundled distribution">
-		<tar destfile="${dist.basedir}/${pluto.name}-bundle.tar">
-			<tarfileset prefix="${pluto.name}" dir="${dist.dir}" mode="755" username="pluto" group="pluto">
-		    	<include name="bin/*.sh"/>
-			</tarfileset>
-			<tarfileset prefix="${pluto.name}" dir="${dist.dir}" username="pluto" group="pluto">
-				<include name="**/*"/>
-				<exclude name="bin/*.sh"/>
-			</tarfileset>
-		</tar>		
-	</target>
-	
-	<target name="prepare-bundle-dist">
-		<exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
-			<arg line="clean:clean"/>
-		</exec>
-		<mkdir dir="${dist.basedir}"/>
-		<mkdir dir="${cache.dir}" />
-		<get src="http://archive.apache.org/dist/tomcat/tomcat-${tomcat.major.version}/v${tomcat.full.version}/bin/${base.name}.tar.gz"
-		     dest="${download.file}" skipexisting="true" />
+      <!-- copy the portlet API jars to the dist directory -->
+      <copy file="portlet-api/target/portlet-api-${pluto.version}.jar" todir="${dist.basedir}"/>         
+      <copy file="portlet-api/target/portlet-api-${pluto.version}-javadoc.jar" todir="${dist.basedir}"/>         
+      <copy file="portlet-api/target/portlet-api-${pluto.version}-sources.jar" todir="${dist.basedir}"/>         
+         
+      <!-- Now package the TCK deliverables -->         
+      <antcall target="package-tck"/>      
+            
+      <antcall target="clean"/>   
+   </target>
 
-		<gunzip src="${download.file}"
-			dest="${dist.basedir}"
-			description="Creates tar from tar.gz tomcat dist"
-		/>
+   <target name="package-tck" if="packageTck">
+      <zip destfile="${dist.basedir}/${pluto.name}-tck.zip">
+         <zipfileset prefix="${pluto.tck.name}" dir="${tck.dir}" includes="**/*"/>
+      </zip>
 
-		<untar src="${tar.file}"
-			dest="${dist.basedir}"
-			description="Untars tomcat dist"
-		/>		
+      <tar destfile="${dist.basedir}/${pluto.name}-tck.tar">
+         <tarfileset prefix="${pluto.name}" dir="${tck.dir}" username="pluto" group="pluto">
+            <include name="**/*"/>
+         </tarfileset>
+      </tar>      
+      
+      <gzip src="${dist.basedir}/${pluto.name}-tck.tar" 
+         destfile="${dist.basedir}/${pluto.name}-tck.tar.gz"/>
+      
+      <bzip2 src="${dist.basedir}/${pluto.name}-tck.tar" 
+         destfile="${dist.basedir}/${pluto.name}-tck.tar.bz2"/>
 
-		<!-- Copy over README -->
-		<copy file="README" todir="${dist.dir}"/>
+   </target>
+
+   <target name="include-demos" if="includeDemos">
+      <copy file="ChatRoomDemo/target/chatRoomDemo.war" todir="${dist.dir}/webapps" />
+      <copy file="PortletHubDemo/target/PortletHubDemo.war" todir="${dist.dir}/webapps" />
+      <copy file="PortletV3Demo/target/PortletV3Demo.war" todir="${dist.dir}/webapps" />
+      <copy file="PortletV3AnnotatedDemo/target/PortletV3AnnotatedDemo.war" todir="${dist.dir}/webapps" />
+   </target>
+   
+   <target name="tar-nocompress" description="Creates tar bundled distribution">
+      <tar destfile="${dist.basedir}/${pluto.name}-bundle.tar">
+         <tarfileset prefix="${pluto.name}" dir="${dist.dir}" mode="755" username="pluto" group="pluto">
+             <include name="bin/*.sh"/>
+         </tarfileset>
+         <tarfileset prefix="${pluto.name}" dir="${dist.dir}" username="pluto" group="pluto">
+            <include name="**/*"/>
+            <exclude name="bin/*.sh"/>
+         </tarfileset>
+      </tar>      
+   </target>
+      
+   <!-- convenience to speed up the build -->
+   <target name="preclean" unless="noPreClean">
+      <exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
+         <arg line="clean:clean"/>
+      </exec>
+   </target>
+   
+   <target name="prepare-bundle-dist" depends="preclean">
+      <delete dir="${dist.basedir}" failonerror="false"/>
+      <mkdir dir="${dist.basedir}"/>
+      <mkdir dir="${cache.dir}" />
+      <get src="http://archive.apache.org/dist/tomcat/tomcat-${tomcat.major.version}/v${tomcat.full.version}/bin/${base.name}.tar.gz"
+           dest="${download.file}" skipexisting="true" />
+
+      <gunzip src="${download.file}"
+         dest="${dist.basedir}"
+         description="Creates tar from tar.gz tomcat dist"
+      />
+
+      <untar src="${tar.file}"
+         dest="${dist.basedir}"
+         description="Untars tomcat dist"
+      />      
+
+      <!-- Copy over README -->
+      <copy file="README" todir="${dist.dir}"/>
 
         <!-- Copy over additional licenses from pluto and testsuite web app-->
         <copy todir="${dist.dir}" flatten="true">
             <fileset dir="${basedir}/pluto-testsuite">
                 <include name="src/main/webapp/META-INF/*-LICENSE"/>
             </fileset>
-		</copy>
+      </copy>
         <copy todir="${dist.dir}" flatten="true">
             <fileset dir="${basedir}/pluto-portal">
                 <include name="src/main/webapp/META-INF/*-LICENSE"/>
@@ -144,48 +181,48 @@
 
          <!-- Add sessionCookiePath="/" to root Context in context.xml
              (Tomcat 6.0.27+ replacement for emptySessionPath="true" attribute of Connector element in server.xml) -->
-		<replace file="${dist.dir}/conf/context.xml"
-			token="&lt;Context&gt;" 
-			value="&lt;Context sessionCookiePath=&quot;/&quot;&gt;" 
-			summary="true"
-		/>
-		
-		<replace file="${dist.dir}/conf/catalina.properties"
-			token="common.loader=" 
-			value="common.loader=&quot;${catalina.home}/lib/weld-servlet-2.3.1.Final.jar&quot;,"
-			summary="true"
-		/>
-		
-		<!-- Add 'pluto' and 'tomcat' users to tomcat-users.xml -->
-		<replace file="${dist.dir}/conf/tomcat-users.xml"
-			token="&lt;/tomcat-users&gt;" 
-			value="&lt;user name=&quot;tomcat&quot; password=&quot;tomcat&quot; roles=&quot;tomcat,pluto,manager&quot; /&gt;${line.separator}&lt;user name=&quot;pluto&quot; password=&quot;pluto&quot; roles=&quot;pluto,manager,tckuser&quot; /&gt;${line.separator}&lt;/tomcat-users&gt;" 
-			summary="true"
-		/>
-	</target>
+      <replace file="${dist.dir}/conf/context.xml"
+         token="&lt;Context&gt;" 
+         value="&lt;Context sessionCookiePath=&quot;/&quot;&gt;" 
+         summary="true"
+      />
+      
+      <replace file="${dist.dir}/conf/catalina.properties"
+         token="common.loader=" 
+         value="common.loader=&quot;${catalina.home}/lib/weld-servlet-2.3.1.Final.jar&quot;,"
+         summary="true"
+      />
+      
+      <!-- Add 'pluto' and 'tomcat' users to tomcat-users.xml -->
+      <replace file="${dist.dir}/conf/tomcat-users.xml"
+         token="&lt;/tomcat-users&gt;" 
+         value="&lt;user name=&quot;tomcat&quot; password=&quot;tomcat&quot; roles=&quot;tomcat,pluto,manager&quot; /&gt;${line.separator}&lt;user name=&quot;pluto&quot; password=&quot;pluto&quot; roles=&quot;pluto,manager,tckuser&quot; /&gt;${line.separator}&lt;/tomcat-users&gt;" 
+         summary="true"
+      />
+   </target>
 
-	<target name="run-maven-exclude-demos" unless="includeDemos" description="Runs the install goal and excludes the demos from pluto-portal-driver-config.xml">
-		<exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true" os="Mac OS X">
-			<arg line="install -Ppluto -DincludeDemosBegin=&lt;!-- -DincludeDemosEnd=-->"/>
-		</exec>
-		<exec executable="dist-exclude-demos.bat" vmlauncher="false" dir="${basedir}" failonerror="true" os="Windows 7" />
-	</target>
+   <target name="run-maven-exclude-demos" unless="includeDemos" description="Runs the install goal and excludes the demos from pluto-portal-driver-config.xml">
+      <exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true" os="Mac OS X">
+         <arg line="install -Ppluto -DincludeDemosBegin=&lt;!-- -DincludeDemosEnd=-->"/>
+      </exec>
+      <exec executable="dist-exclude-demos.bat" vmlauncher="false" dir="${basedir}" failonerror="true" os="Windows 7" />
+   </target>
 
-	<target name="run-maven-include-demos" if="includeDemos" description="Runs the install goal and includes the demos in pluto-portal-driver-config.xml">
-		<exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
-			<arg line="install -Ppluto -DskipTests=true -DincludeDemosBegin= -DincludeDemosEnd="/>
-		</exec>
-	</target>
+   <target name="run-maven-include-demos" if="includeDemos" description="Runs the install goal and includes the demos in pluto-portal-driver-config.xml">
+      <exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
+         <arg line="install -Ppluto -DskipTests=true -DincludeDemosBegin= -DincludeDemosEnd="/>
+      </exec>
+   </target>
 
-	<target name="run-maven-pluto-plugin" description="Runs the install goal for the maven-pluto-plugin">
-		<exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
-			<arg line="org.apache.portals.pluto:maven-pluto-plugin:${pluto.version}:install -DinstallDir=${basedir}/${dist.dir}"/>
-		</exec>
-	</target>
-		
-	<target name="clean" unless="noClean">
-		<delete dir="${dist.dir}"/>
-		<delete file="${tar.file}"/>	
-	</target>
+   <target name="run-maven-pluto-plugin" description="Runs the install goal for the maven-pluto-plugin">
+      <exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
+         <arg line="org.apache.portals.pluto:maven-pluto-plugin:${pluto.version}:install -DinstallDir=${basedir}/${dist.dir}"/>
+      </exec>
+   </target>
+      
+   <target name="clean" unless="noClean">
+      <delete dir="${dist.dir}"/>
+      <delete file="${tar.file}"/>   
+   </target>
 
 </project>

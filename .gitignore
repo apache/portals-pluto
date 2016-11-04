@@ -17,3 +17,5 @@ maven-eclipse.xml
 .externalToolBuilders
 velocity.log
 *~
+phantomjsdriver.log
+

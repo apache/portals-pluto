@@ -496,16 +496,16 @@ describe('The portlet hub provides the ability to add and remove event listeners
          expect(cnt).toEqual(2);
       });
 
-      it('is passed a RenderData object with a "renderData" property',function(){
-         expect(typeof retRenderData.renderData).not.toEqual('undefined');
+      it('is passed a RenderData object with a "content" property',function(){
+         expect(typeof retRenderData.content).not.toEqual('undefined');
       });
 
       it('is passed a RenderData object with a "mimeType" property',function(){
          expect(typeof retRenderData.mimeType).not.toEqual('undefined');
       });
 
-      it('is passed a RenderData object with a "renderData" property of type string',function(){
-         expect(typeof retRenderData.renderData).toEqual('string');
+      it('is passed a RenderData object with a "content" property of type string',function(){
+         expect(typeof retRenderData.content).toEqual('string');
       });
 
       it('is passed a RenderData object with a "mimeType" property of type string',function(){
