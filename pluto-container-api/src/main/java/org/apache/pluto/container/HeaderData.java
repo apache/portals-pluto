@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -88,7 +89,7 @@ public class HeaderData {
    private StringWriter              sWriter            = null;
    private PrintWriter               pWriter            = null;
    
-   private Map<PageResourceId, String> resources = new HashMap<PageResourceId, String>();
+   private Map<PageResourceId, String> resources = new LinkedHashMap<PageResourceId, String>();
    
    /**
     * default constructor
