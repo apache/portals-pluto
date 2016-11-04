@@ -64,7 +64,7 @@ public class TCKSimpleTestDriver {
    private static String loginUrl, host, port, testFile, browser, 
    username, usernameId, password, passwordId, testContextBase, module;
    private static int timeout = 3; // for waiting on page load
-   private static boolean useGeneratedUrl = true, debug = false;
+   private static boolean useGeneratedUrl = true, debug = false, dryrun = false;
 
    private static WebDriver driver;
    private String page, tcName;
@@ -85,6 +85,11 @@ public class TCKSimpleTestDriver {
       module = System.getProperty("test.module");
       System.out.println("   Module       =" + module);
       
+      String ignoreFile = System.getProperty("test.ignore.list.file");
+      System.out.println("   Ignore file  =" + ignoreFile);
+      boolean doIgnore = new Boolean(System.getProperty("test.ignore"));
+      System.out.println("   Ignore TCs   =" + doIgnore);
+      
       boolean filterTCs = (module != null && module.length() > 0);
       boolean excTCs = true;        // include or exclude TCs
       String filterStr = module;
@@ -104,6 +109,19 @@ public class TCKSimpleTestDriver {
          e.printStackTrace();
          return null;
       }
+
+      Properties ignoredTCs = new Properties();
+      if (doIgnore) {
+         try {
+            FileInputStream fis = new FileInputStream(ignoreFile);
+            ignoredTCs.loadFromXML(fis);
+         } catch (Exception e) {
+            System.out.println("Could not read test cases file. Attempted to read file " + ignoreFile);
+            e.printStackTrace();
+            return null;
+         }
+      }
+      System.out.println("   # ignore TCs =" + ignoredTCs.size());
       
       // See if performance can be improved by sorting the test cases by
       // the page to be accessed. The map uses the page as key and has a 
@@ -112,6 +130,8 @@ public class TCKSimpleTestDriver {
       
       TreeMap<String, Set<String>> pages = new TreeMap<String, Set<String>>();
       Set<Object> tcs = tprops.keySet();
+      
+      tcloop:
       for (Object o : tcs) {
          String tcase = (String) o ;
          String tpage = tprops.getProperty(tcase);
@@ -119,6 +139,15 @@ public class TCKSimpleTestDriver {
             boolean c = tcase.contains(filterStr);
             if (excTCs && c) continue;       // exclude matches
             if (!excTCs && !c) continue;     // exclude non-matches
+         }
+         // handle ignore list
+         if (doIgnore) {
+            for (Object itc : ignoredTCs.keySet()) {
+               if (tcase.equalsIgnoreCase((String)itc)) {
+                  System.out.println("   Ignoring     :" + tcase);
+                  continue tcloop;
+               }
+            }
          }
          if (!pages.containsKey(tpage)) {
             pages.put(tpage, new TreeSet<String>());
@@ -138,7 +167,7 @@ public class TCKSimpleTestDriver {
       
       int numP = pages.size();
       int numTC = tests.size();
-      System.out.println("Executing " + numTC + " tests on " + numP + "pages.");
+      System.out.println("Executing " + numTC + " tests on " + numP + " pages.");
 
       return tests;
    }
@@ -180,11 +209,13 @@ public class TCKSimpleTestDriver {
       str = System.getProperty("test.debug");
       debug = str.equalsIgnoreCase("true");
       str = System.getProperty("test.timeout");
+      dryrun = new Boolean(System.getProperty("test.dryrun"));
       timeout = ((str != null) && str.matches("\\d+")) ? Integer.parseInt(str) : 3; 
       String wd = System.getProperty("test.browser.webDriver");
 
       System.out.println("before class.");
       System.out.println("   Debug        =" + debug);
+      System.out.println("   Dryrun       =" + dryrun);
       System.out.println("   Timeout      =" + timeout);
       System.out.println("   Login URL    =" + loginUrl);
       System.out.println("   Host         =" + host);
@@ -219,7 +250,9 @@ public class TCKSimpleTestDriver {
          throw new Exception("Unsupported browser: " + browser);
       }
 
-      login();
+      if (!dryrun) {
+         login();
+      }
 
    }
 
@@ -258,6 +291,10 @@ public class TCKSimpleTestDriver {
    @Test
    public void test() {
       debugLines.add("   execute test.");
+      
+      if (dryrun) {
+         return;
+      }
 
       try {
 
@@ -418,7 +455,7 @@ public class TCKSimpleTestDriver {
          WebDriverWait wdw = new WebDriverWait(driver, timeout);
 
          String expr = "//*[@id='" + resultId + "'] | //*[@id='" + actionId + "']";
-         if(debug) System.out.println("   xpath string: ===" + expr + "===");
+         debugLines.add("   xpath string: ===" + expr + "===");
 
          wdw.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(expr)));
          wels = driver.findElements(By.name(tcName));

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<!-- JSR 362 TCK Ignore List                                               -->
+<!-- The TCK driver ignores all test cases appearing in this list.         -->
+<!-- The test cases will not be executed or evaluated.                     -->
+
+<properties>
+<entry key="V3ResourceAsyncTests_SPEC_21_Async_getThrowable2"></entry>
+<entry key="V3ResourceAsyncTests_SPEC_21_Async_onError"></entry>
+</properties>

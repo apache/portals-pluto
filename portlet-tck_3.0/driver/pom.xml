@@ -395,6 +395,13 @@
                <include>*</include>
             </includes>
          </resource>
+         <resource>
+            <directory>src/main/resources/xml-resources</directory>
+            <targetPath>${test.list.dir}</targetPath>
+            <includes>
+               <include>ignoredTestCases.xml</include>
+            </includes>
+         </resource>
       </resources>
 
       <plugins>
@@ -626,6 +633,14 @@
                         <property>
                            <name>test.list.file</name>
                            <value>${project.build.directory}/classes/${test.list.dir}/${test.list.name}</value>
+                        </property>
+                        <property>
+                           <name>test.ignore.list.file</name>
+                           <value>${project.build.directory}/classes/${test.list.dir}/${test.ignore.list.name}</value>
+                        </property>
+                        <property>
+                           <name>test.ignore</name>
+                           <value>true</value>
                         </property>
                         <property>
                            <name>test.browser</name>
