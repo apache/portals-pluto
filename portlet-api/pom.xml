@@ -142,71 +142,6 @@
             </configuration>
          </plugin>
 
-         <!-- prereq to allow Jasmine to execute with PhantomJS -->
-         <plugin>
-            <groupId>com.github.klieber</groupId>
-            <artifactId>phantomjs-maven-plugin</artifactId>
-            <version>0.4</version>
-            <executions>
-               <execution>
-                  <goals>
-                     <goal>install</goal>
-                  </goals>
-               </execution>
-            </executions>
-            <configuration>
-               <version>1.9.7</version>
-            </configuration>
-         </plugin>
-
-         <!-- Javasript unit tests through Jasmine -->
-         <plugin>
-            <groupId>com.github.searls</groupId>
-            <artifactId>jasmine-maven-plugin</artifactId>
-            <version>1.3.1.4</version>
-            <executions>
-               <execution>
-                  <goals>
-                     <goal>test</goal>
-                  </goals>
-               </execution>
-            </executions>
-            <configuration>
-               <haltOnFailure>false</haltOnFailure>
-               <jsSrcDir>src/main/javascript</jsSrcDir>
-               <jsTestSrcDir>src/test/javascript</jsTestSrcDir>
-               <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
-               <webDriverCapabilities>
-                  <capability>
-                     <name>phantomjs.binary.path</name>
-                     <value>${phantomjs.binary}</value>
-                  </capability>
-               </webDriverCapabilities>
-               <!-- preload some utilities for working with portlets -->
-               <preloadSources>
-                  <include>promise-6.0.0.min.js</include>
-                  <include>JasminePortletUtils.js</include>
-               </preloadSources>
-               <sourceIncludes>
-                  <include>**/MockData.js</include>
-                  <include>**/portlet.js</include>
-               </sourceIncludes>
-               <specIncludes>
-                  <include>**/CustomMatchers.js</include>
-                  <include>**/SetUpAndRegisterTest.js</include>
-                  <include>**/AddEventListenerTest.js</include>
-                  <include>**/CreateResourceUrlTest.js</include>
-                  <include>**/SetPortletStateTest.js</include>
-                  <include>**/ActionTest.js</include>
-                  <include>**/PartialActionTest.js</include>
-                  <include>**/IsInProgressTest.js</include>
-                  <include>**/DispatchClientEventTest.js</include>
-                  <include>**/SimulatedErrorTests.js</include>
-                  <include>**/StateTests.js</include>
-               </specIncludes>
-            </configuration>
-         </plugin>
-
          <!-- Javascript compressor plugin -->
          <plugin>
             <groupId>net.alchim31.maven</groupId>
@@ -319,6 +254,80 @@
                   <groupId>org.apache.maven.plugins</groupId>
                   <artifactId>maven-assembly-plugin</artifactId>
                </plugin>
+            </plugins>
+         </build>
+      </profile>
+      
+      <profile>
+         <id>PortletHubTest</id>
+         <build>
+            <plugins>
+
+               <!-- prereq to allow Jasmine to execute with PhantomJS -->
+               <plugin>
+                  <groupId>com.github.klieber</groupId>
+                  <artifactId>phantomjs-maven-plugin</artifactId>
+                  <version>0.4</version>
+                  <executions>
+                     <execution>
+                        <goals>
+                           <goal>install</goal>
+                        </goals>
+                     </execution>
+                  </executions>
+                  <configuration>
+                     <version>1.9.7</version>
+                  </configuration>
+               </plugin>
+               
+               <!-- Javasript unit tests through Jasmine -->
+               <plugin>
+                  <groupId>com.github.searls</groupId>
+                  <artifactId>jasmine-maven-plugin</artifactId>
+                  <version>1.3.1.4</version>
+                  <executions>
+                     <execution>
+                        <goals>
+                           <goal>test</goal>
+                        </goals>
+                     </execution>
+                  </executions>
+                  <configuration>
+                     <haltOnFailure>false</haltOnFailure>
+                     <jsSrcDir>src/main/javascript</jsSrcDir>
+                     <jsTestSrcDir>src/test/javascript</jsTestSrcDir>
+                     <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
+                     <webDriverCapabilities>
+                        <capability>
+                           <name>phantomjs.binary.path</name>
+                           <value>${phantomjs.binary}</value>
+                        </capability>
+                     </webDriverCapabilities>
+                     <!-- preload some utilities for working with portlets -->
+                     <preloadSources>
+                        <include>promise-6.0.0.min.js</include>
+                        <include>JasminePortletUtils.js</include>
+                     </preloadSources>
+                     <sourceIncludes>
+                        <include>**/MockData.js</include>
+                        <include>**/portlet.js</include>
+                     </sourceIncludes>
+                     <specIncludes>
+                        <include>**/CustomMatchers.js</include>
+                        <include>**/SetUpAndRegisterTest.js</include>
+                        <include>**/AddEventListenerTest.js</include>
+                        <include>**/CreateResourceUrlTest.js</include>
+                        <include>**/SetPortletStateTest.js</include>
+                        <include>**/ActionTest.js</include>
+                        <include>**/PartialActionTest.js</include>
+                        <include>**/IsInProgressTest.js</include>
+                        <include>**/DispatchClientEventTest.js</include>
+                        <include>**/SimulatedErrorTests.js</include>
+                        <include>**/StateTests.js</include>
+                     </specIncludes>
+                  </configuration>
+               </plugin>
+               
             </plugins>
          </build>
       </profile>
