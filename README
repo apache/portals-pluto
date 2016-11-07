@@ -14,20 +14,52 @@
 #  limitations under the License
 #
 
-Apach Pluto 2.1 is the second version of the JSR-286 Reference Implementation (Java Portlet API 2.0).
-See the Getting Started page on the Pluto web site (http://portals.apache.org/pluto)
-for instructions on how to build Pluto from source. 
+This directory contains the source code for the Apache Pluto 3.0 project.
+Apache Pluto 3.0 is the third version of the JSR-362 Reference Implementation
+(Java Portlet API 3.0) and Technology Compliance Kit (TCK). The project can 
+be built using the maven command:
 
-A simplified way to build a bundled Pluto 2.1 distribution is to use the dist-build.xml Ant build which downloads 
-Tomcat and calls the appropriate Maven commands to create a distribution with Pluto embedded in Tomcat. The 
-built distribution, which contains this file, when started via the startup script in the bin directory will 
-start the Pluto portal by browsing to http://localhost:8080/pluto/portal/ and logging in as pluto/pluto 
-(or tomcat/tomcat). See the documentation in dist-build.xml for more details. Also invoke the Help mode on the
-Pluto Admin page for instructions on how to use the admin portlet to deploy custom portlets.
+mvn clean install -Ppluto
 
-This version was based on Pluto 1.1 and was refactored in the 1.1-286-COMPATIBILITY branch to add 
-JSR-286 features and create the official JSR-286 RI submitted to the Java Community Process.
+The command line switch '-Ppluto' activates a maven profile that causes the 
+TCK war files to be built for running in the Pluto environment.
 
-The Pluto 2.0 code was subsequently refactored within the 2.0-spi-refactoring branch to make the descriptor
-API more flexible and fix other issues. This branch became the new trunk on 11/3/2008. 
+See the portlet-tck_3.0/README.txt file for information on the TCK.
+
+Building with dist-build.xml
+============================
+
+A simplified way to build a bundled Pluto 3.0 distribution is to use the
+dist-build.xml Ant build which downloads Tomcat and calls the appropriate Maven
+commands to create a distribution with Pluto embedded in Tomcat. It will also
+copy the portlet API jars (source, executable, and javadoc) into the
+distribution directory. Optionally, the TCK can be packaged as well. The
+finished bundles and jar files will be located in the target/dist directory.
+
+See the documentation in dist-build.xml for details on how to run the build.
+
+Once the bundle has been built, you can unpack it and run the RI. There are three 
+bundles available in different formats that have the same contents.
+
+pluto-<version>-bundle.zip
+pluto-<version>-bundle.gz
+pluto-<version>-bundle.bz2
+
+where <version> is equal to '3.0-SNAPSHOT' for a snapshot build or '3.0' for the
+release build.
+
+Select the bundle file appropriate for your environment and unpack it to the 
+directory of choice. After unpacking, navigate to the directory:
+
+./pluto-<version>/bin 
+
+and run either startup.bat or startup.sh depending on your environment. This
+will start Tomcat with the Pluto application installed.
+
+The application is configured to use port 8080. You can access the application 
+with the following URL:
+
+http://localhost:8080/pluto/portal
+
+Use the credentials pluto/pluto to log on to the application.
 
