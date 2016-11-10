@@ -91,7 +91,7 @@ public class PortletContainerInitializer implements ServletContainerInitializer 
 
          if (isDebug) {
             StringBuilder txt = new StringBuilder(128);
-            txt.append("§§§ ServletContainerInitializer. ctx path: ").append(
+            txt.append("$$$ ServletContainerInitializer. ctx path: ").append(
                   ctx.getContextPath());
             txt.append(", servlet ctx name: ").append(ctx.getServletContextName());
             txt.append(", # portlet annotations: ").append(
