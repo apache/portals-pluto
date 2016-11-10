@@ -662,6 +662,9 @@ TODO: Check if we need all of them. -->
         <module>pluto-portal-driver-impl</module>
         <module>pluto-portal</module>
         <module>pluto-testsuite</module>
+
+        <!-- Aggregated common jar for shared library location -->
+        <module>pluto-common</module>
         
         <!-- PortletHub demo portlets -->
         <module>ChatRoomDemo</module>
