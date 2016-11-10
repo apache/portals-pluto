@@ -20,7 +20,6 @@
 package org.apache.pluto.container.reconcile.fixtures;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
@@ -48,14 +47,14 @@ public class IncompletePortlet {
    
    private PortletConfig config;
   
-   @InitMethod("Portlet4")
+   @InitMethod("IncompletePortlet")
    public void init(PortletConfig config) {
       this.config = config;
       meths.addMethod(this.getClass().getSimpleName() + "#init");
       meths.setConfigExists(config != null);
    }
   
-   @DestroyMethod("Portlet4")
+   @DestroyMethod("IncompletePortlet")
    public void destroy() {
       meths.addMethod(this.getClass().getSimpleName() + "#destroy");
       meths.setConfigExists(config != null);
