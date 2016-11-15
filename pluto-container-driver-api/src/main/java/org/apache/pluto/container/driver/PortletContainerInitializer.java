@@ -143,7 +143,7 @@ public class PortletContainerInitializer implements ServletContainerInitializer 
                ServletRegistration.Dynamic sr = ctx.addServlet(servletName, PortletServlet3.class);
                sr.addMapping(mapping);
                sr.setInitParameter(PortletServlet3.PORTLET_NAME, pn);
-               sr.setAsyncSupported(pd.isAsyncSupported());
+               sr.setAsyncSupported(true);
                if (pd.isMultipartSupported()) {
                   MultipartConfigElement mce = new MultipartConfigElement(pd.getLocation(), 
                         pd.getMaxFileSize(), pd.getMaxRequestSize(), pd.getFileSizeThreshold());
