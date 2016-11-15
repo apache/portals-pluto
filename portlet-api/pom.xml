@@ -70,11 +70,11 @@
       </dependency>
    </dependencies>
 
-   <scm>
-      <connection>git://git.apache.org/pluto.git</connection>
-      <developerConnection>git://git.apache.org/pluto.git</developerConnection>
-      <url>http://msnicklous.github.io/portletspec3/apidocs/index.html</url>
-   </scm>
+   <!--<scm>-->
+      <!--<connection>git://git.apache.org/pluto.git</connection>-->
+      <!--<developerConnection>git://git.apache.org/pluto.git</developerConnection>-->
+      <!--<url>http://msnicklous.github.io/portletspec3/apidocs/index.html</url>-->
+   <!--</scm>-->
 
    <build>
       <pluginManagement>

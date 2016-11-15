@@ -127,6 +127,19 @@ generate mailto links. -->
     </developer>
 
     <developer>
+      <name>Neil Griffin</name>
+      <id>asfgriff</id>
+      <email>neil.griffin@portletfaces.org</email>
+      <timezone>+8</timezone>
+      <organization>Liferay</organization>
+      <organizationUrl>https://www.liferay.com/</organizationUrl>
+      <roles>
+        <role>Specification Architect, JSR 362 Portlet Specification 3.0</role>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+
+    <developer>
       <name>Nick Lothian</name>
       <id>nlothian</id>
       <email>nlothian#a@T#apache.d0t.org</email>
@@ -167,7 +180,13 @@ generate mailto links. -->
       <name>David S. Taylor</name>
       <id>taylor</id>
       <email>david#a@T#bluesunrise.d0t.com</email>
-      <organization />
+      <timezone>+8</timezone>
+      <organization>Bluesunrise</organization>
+      <organizationUrl>https://www.bluesunrise.com/</organizationUrl>
+      <roles>
+        <role>Expert Group Member, JSR 362 Portlet Specification 3.0</role>
+        <role>Java Developer</role>
+      </roles>
     </developer>
 
     <developer>
