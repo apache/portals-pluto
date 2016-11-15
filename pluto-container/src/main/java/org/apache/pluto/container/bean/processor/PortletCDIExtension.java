@@ -56,18 +56,7 @@ public class PortletCDIExtension implements Extension {
    private final AnnotatedMethodStore ams = new AnnotatedMethodStore(summary);
    private final PortletAnnotationRecognizer par = new PortletAnnotationRecognizer(ams, summary);
    
-   private static AnnotatedConfigBean acb = null;
-   
-   /**
-    * This is necessary to allow the portlet container initializer access to the 
-    * config bean, since injection won't work there.
-    * 
-    * @return the annotated config bean.
-    */
-   public static AnnotatedConfigBean getConfig() {
-      return acb;
-   }
-
+   private AnnotatedConfigBean acb = null;
 
    public PortletCDIExtension() {
    }
@@ -186,7 +175,6 @@ public class PortletCDIExtension implements Extension {
     */
    void afterDeploymentValidation(@Observes AfterDeploymentValidation adv, BeanManager bm)
          throws InvalidAnnotationException {
-      par.activateCustomScopes(bm);
       
       // Done processing the annotations, so put the resulting configuration in an
       // application scoped bean to pass it to the servlet
