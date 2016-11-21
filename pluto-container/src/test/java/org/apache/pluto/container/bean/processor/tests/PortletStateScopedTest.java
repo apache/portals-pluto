@@ -27,6 +27,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 import java.util.Set;
 
+import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 
 import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
@@ -58,6 +59,9 @@ public class PortletStateScopedTest {
    @Inject
    AnnotatedConfigBean acb;
    
+   @Inject
+   BeanManager beanmgr;
+   
    private AnnotatedMethodStore ams = null;
    private ConfigSummary summary = null;
    private PortletStateScopedConfig psconfig = null;
@@ -67,6 +71,7 @@ public class PortletStateScopedTest {
       ams = acb.getMethodStore();
       summary = acb.getSummary();
       psconfig = acb.getStateScopedConfig();
+      psconfig.activate(beanmgr);
    }
 
    @Test

@@ -88,6 +88,7 @@ public class PortletStateScopedBeanHolder implements Serializable {
          StringBuilder txt = new StringBuilder(80);
          txt.append("Setting render state bean holder.");
          txt.append(" ThreadId=").append(Thread.currentThread().getId());
+         txt.append(", config: ").append((config == null) ? "null" : config.getConfigAsString());
          LOG.trace(txt.toString());
       }
 

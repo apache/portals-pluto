@@ -145,6 +145,7 @@ public class PathDisplay {
       
       if (req instanceof ResourceRequest) {
          ResourceRequest rreq = (ResourceRequest) req;
+         isAsyncSupported = rreq.isAsyncSupported();
          for (String key : rreq.getResourceParameters().getNames()) {
             resParams.put(key, Arrays.asList(rreq.getResourceParameters().getValues(key)));
          }

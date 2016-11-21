@@ -19,11 +19,15 @@ package org.apache.pluto.container.driver;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
+import javax.naming.InitialContext;
+import javax.naming.NameNotFoundException;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
@@ -94,8 +98,11 @@ public class PortletServlet3 extends HttpServlet {
    /**
     * For CDI support
     */
-   @Inject private AnnotatedConfigBean acb;
-   @Inject private BeanManager beanmgr;
+   private AnnotatedConfigBean acb = null;
+   
+   @Inject private BeanManager injectedBeanmgr;
+
+   private BeanManager beanmgr = null;
    
    /**
     * The webapp configuration
@@ -146,6 +153,46 @@ public class PortletServlet3 extends HttpServlet {
       
       // Retrieve portlet name as defined as an initialization parameter.
       portletName = getInitParameter(PORTLET_NAME);
+      
+      // look up the bean manager to get a properly initialized one
+      // (Fix for running on Liberty)
+
+      BeanManager ibm = null;
+      try {
+         InitialContext context = new InitialContext();
+         
+         try {
+            // "regular" naming
+            ibm = (BeanManager) context.lookup("java:comp/BeanManager");
+         } catch (NameNotFoundException e) {
+            // try again with Tomcat naming
+            try {
+               ibm = (BeanManager) context.lookup("java:comp/env/BeanManager");
+            } catch (Throwable t) {}
+         }
+         
+      } catch (Throwable e) {}
+
+      if (ibm != null) {
+         LOG.debug("BeanManager by JNDI lookup, portlet name: " + portletName);
+         beanmgr = ibm;
+      } else {
+         LOG.debug("BeanManager by injection, portlet name: " + portletName);
+         beanmgr = injectedBeanmgr;
+      }
+      
+      if (beanmgr != null) {
+         try {
+            Set<Bean<?>> beans = beanmgr.getBeans(AnnotatedConfigBean.class);
+            Bean<?> bean = beanmgr.resolve(beans);
+            acb = (AnnotatedConfigBean) beanmgr.getReference(bean, bean.getBeanClass(), beanmgr.createCreationalContext(bean));
+            LOG.debug("ACB instance: " + acb + ", RS config: " + ((acb==null) ? "null" : acb.getSessionScopedConfig()));
+            acb.getSessionScopedConfig().activate(beanmgr);
+            acb.getStateScopedConfig().activate(beanmgr);
+         } catch (Throwable t) {
+            LOG.debug("Could not retrieve annotated config bean.");
+         }
+      }
       
       // Get the config bean, instantiate the portlets, and create the invoker
       holder = (ConfigurationHolder) config.getServletContext().getAttribute(ConfigurationHolder.ATTRIB_NAME);
@@ -281,14 +328,17 @@ public class PortletServlet3 extends HttpServlet {
       }
    }
 
+   @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       dispatch(request, response);
    }
 
+   @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       dispatch(request, response);
    }
 
+   @Override
    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       dispatch(request, response);
    }

@@ -78,7 +78,13 @@ public class AsyncListener implements PortletAsyncListener {
 
       StringBuilder txt = new StringBuilder(128);
       txt.append("Listener: Error after ").append(delta).append(" milliseconds.");
-      txt.append(", Exception: ").append(evt.getThrowable().getMessage());
+      
+      String msg = "null";
+      if (evt != null && evt.getThrowable() != null) {
+         msg = evt.getThrowable().getMessage();
+      }
+      
+      txt.append(", Exception: ").append(msg);
 
       LOGGER.fine(txt.toString());
       evt.getPortletAsyncContext().complete();

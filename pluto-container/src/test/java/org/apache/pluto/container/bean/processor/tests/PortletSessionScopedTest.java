@@ -28,6 +28,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 import java.util.Set;
 
+import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 
 import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
@@ -35,7 +36,6 @@ import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
 import org.apache.pluto.container.bean.processor.ConfigSummary;
 import org.apache.pluto.container.bean.processor.PortletCDIExtension;
 import org.apache.pluto.container.bean.processor.PortletSessionScopedConfig;
-import org.apache.pluto.container.bean.processor.PortletStateScopedConfig;
 import org.apache.pluto.container.bean.processor.fixtures.PortletStateScopedClass;
 import org.apache.pluto.container.bean.processor.fixtures.SessionScopedApp1;
 import org.apache.pluto.container.bean.processor.fixtures.SessionScopedApp2;
@@ -65,17 +65,19 @@ public class PortletSessionScopedTest {
    @Inject
    AnnotatedConfigBean acb;
    
+   @Inject
+   BeanManager beanmgr;
+   
    private AnnotatedMethodStore ams = null;
    private ConfigSummary summary = null;
-   private PortletStateScopedConfig psconfig = null;
    private PortletSessionScopedConfig sessConfig = null;
    
    @Before
    public void setUp() {
       ams = acb.getMethodStore();
       summary = acb.getSummary();
-      psconfig = acb.getStateScopedConfig();
       sessConfig = acb.getSessionScopedConfig();
+      sessConfig.activate(beanmgr);
    }
 
    @Test
@@ -83,7 +85,6 @@ public class PortletSessionScopedTest {
       assertNotNull(acb);
       assertNotNull(ams);
       assertNotNull(summary);
-      assertNotNull(psconfig);
       assertNotNull(sessConfig);
    }
    

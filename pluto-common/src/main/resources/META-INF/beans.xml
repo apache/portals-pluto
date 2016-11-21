@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
+       version="1.1" bean-discovery-mode="all">
+   
+   <scan>
+      <exclude name="org.apache.container.impl.*"></exclude>
+      <exclude name="org.apache.container.util.*"></exclude>
+      <exclude name="org.apache.container.om.portlet.impl.*"></exclude>
+      <exclude name="org.apache.container.om.portlet10.impl.*"></exclude>
+      <exclude name="org.apache.container.om.portlet20.impl.*"></exclude>
+      <exclude name="org.apache.container.om.portlet30.impl.*"></exclude>
+      <exclude name="org.apache.pluto.tags.*"></exclude>
+   </scan>
+</beans>
