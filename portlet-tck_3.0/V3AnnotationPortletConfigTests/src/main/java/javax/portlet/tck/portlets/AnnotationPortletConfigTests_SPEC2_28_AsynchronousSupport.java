@@ -24,6 +24,7 @@ import java.io.PrintWriter;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -101,13 +102,15 @@ public class AnnotationPortletConfigTests_SPEC2_28_AsynchronousSupport implement
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_ASYNCHRONOUSSUPPORT_DECLARINGASYNCSUPPORT1);
          try{
-            portletReq.startPortletAsync();
+            PortletAsyncContext ctx = portletReq.startPortletAsync();
             result.appendTcDetail("Failed because async is supported even when it is disabled in @PortletConfiguration annotation");
+            result.writeTo(writer);
+            ctx.complete();
          } catch (Exception e){
             result.setTcSuccess(true);
             result.appendTcDetail("Passed as async support is disabled, thats why using startPortletAsync() throws exception - "+e.toString());
+            result.writeTo(writer);
          }
-         result.writeTo(writer);
       }    
    }
 

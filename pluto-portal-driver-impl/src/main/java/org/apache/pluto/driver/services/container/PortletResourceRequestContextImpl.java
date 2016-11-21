@@ -135,6 +135,10 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
 
    @Override
    public AsyncContext startAsync(ResourceRequest resreq, ResourceResponse resresp, boolean origReqResp) throws IllegalStateException {
+      if (!isAsyncSupported()) {
+         throw new IllegalStateException("This portlet does not support asynchronous mode.");
+      }
+
       if (actx != null && actx.isComplete()) {
          return null;
       }
@@ -253,6 +257,9 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
    // For wrapper use
    @Override
    public AsyncContext startAsync() {
+      if (!isAsyncSupported()) {
+         throw new IllegalStateException("This portlet does not support asynchronous mode.");
+      }
       if (actx != null && actx.isComplete()) {
          return null;
       }
@@ -269,6 +276,9 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
    // for wrapper use
    @Override
    public AsyncContext startAsync(ServletRequest request, ServletResponse response) {
+      if (!isAsyncSupported()) {
+         throw new IllegalStateException("This portlet does not support asynchronous mode.");
+      }
       if (actx != null && actx.isComplete()) {
          return null;
       }
@@ -289,11 +299,14 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
 
    @Override
    public boolean isAsyncSupported() {
-      return getServletRequest().isAsyncSupported();
+      return getPortletWindow().getPortletDefinition().isAsyncSupported();
    }
 
    @Override
    public AsyncContext getAsyncContext() {
+      if (!isAsyncSupported()) {
+         throw new IllegalStateException("This portlet does not support asynchronous mode.");
+      }
       if (actx != null) {
          if (actx.isComplete()) {
             return null;
