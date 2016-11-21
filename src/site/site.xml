@@ -78,7 +78,8 @@ limitations under the License.
       <item name="Release Notes" href="/v11/release-notes.html"/>
     </menu>
 
-    <menu  name="Subprojects" collapse="true">
+    <menu  name="Subprojects">
+    <!--<menu  name="Subprojects" collapse="true">-->
       <item name="Overview" href="subprojects/subprojects.html"/>
       <item name="Pluto Container API" href="subprojects/container-api.html"/>
       <item name="Pluto Portlet Container" href="subprojects/portlet-container.html"/>
