@@ -190,6 +190,8 @@ public class MethodAnnotationRecognizer extends PortletAnnotationRecognizer impl
                } catch(Exception e) {
                   StringBuilder txt = new StringBuilder(128);
                   txt.append("Exception getting library file.");
+                  txt.append(" Servlet context path: ").append(ctx.getContextPath());
+                  txt.append(", File path: ").append(path).append("\n");
 
                   StringWriter sw = new StringWriter();
                   PrintWriter pw = new PrintWriter(sw);
