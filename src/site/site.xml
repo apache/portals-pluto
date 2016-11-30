@@ -28,7 +28,8 @@ limitations under the License.
   <bannerRight>
     <src>http://portals.apache.org/pluto/images/banner.png</src>
   </bannerRight>
-  <publishDate position="left" format="MM-dd-yy hh:mm zz"/>
+  <publishDate position="left"/>
+  <version position="none"/>
   <skin>  
     <groupId>org.apache.portals.pluto</groupId>
     <artifactId>pluto-site-skin</artifactId>
@@ -41,10 +42,12 @@ limitations under the License.
     </breadcrumbs>
     
     <links>
-      <item name="JSR 168 (Portlet 1.0)" href="http://jcp.org/en/jsr/detail?id=168"/>
-      <item name="Portlet 1.0 API (Javadoc)" href="http://portals.apache.org/pluto/portlet-1.0-apidocs"/>
-      <item name="JSR 286 (Portlet 2.0)" href="http://jcp.org/en/jsr/detail?id=286"/>
-      <item name="Portlet 2.0 API (Javadoc)" href="http://portals.apache.org/pluto/portlet-2.0-apidocs"/>
+      <item name="Portlet 3.0 API" href="/portlet-3.0-apidocs/index.html"/>
+      <item name="Portlet 2.0 API" href="/portlet-2.0-apidocs/index.html"/>
+      <item name="Portlet 1.0 API" href="/portlet-1.0-apidocs/index.html"/>
+      <item name="JSR 362 JCP Page" href="http://jcp.org/en/jsr/detail?id=362"/>
+      <item name="JSR 286 JCP Page" href="http://jcp.org/en/jsr/detail?id=286"/>
+      <item name="JSR 168 JCP Page" href="http://jcp.org/en/jsr/detail?id=168"/>
     </links>
     
     <menu name="The Pluto Project">
@@ -54,7 +57,6 @@ limitations under the License.
       <item name="News" href="/news.html"/>
       <item name="Status" href="/status.html"/>
       
-      <item name="App Servers" href="/app-servers.html"/>
       <item name="Architecture" href="/architecture.html"/>	
 
       <item name="Resources" href="/resources.html"/>
@@ -62,7 +64,6 @@ limitations under the License.
       <item name="FAQ" href="/faq.html"/>
       <item name="Wiki" href="http://wiki.apache.org/portals/Pluto"/>
       <item name="Issue Tracker (JIRA)" href="https://issues.apache.org/jira/browse/PLUTO"/>
-      <item name="Powered By Pluto" href="/powered.html"/>
       <item name="Get Involved" href="/helping.html"/>
     </menu>
 
@@ -71,6 +72,8 @@ limitations under the License.
       <item name="Deploying" href="/v20/deploying.html"/>
       <item name="Embedding" href="/v20/embedding.html"/>
       <item name="Release Notes" href="/v20/release-notes.html"/>
+      <item name="App Servers" href="/v20/app-servers.html"/>
+      <item name="Powered By Pluto" href="/v20/powered.html"/>
 	</menu>    
     <menu name="Pluto 1.1">
       <item name="Getting Started" href="/v11/getting-started.html"/>
@@ -79,18 +82,7 @@ limitations under the License.
     </menu>
 
     <menu  name="Subprojects">
-    <!--<menu  name="Subprojects" collapse="true">-->
       <item name="Overview" href="subprojects/subprojects.html"/>
-      <item name="Pluto Container API" href="subprojects/container-api.html"/>
-      <item name="Pluto Portlet Container" href="subprojects/portlet-container.html"/>
-      <item name="Pluto Portlet Tag Library" href="subprojects/tag-library.html"/>
-      <item name="Pluto Portal Driver" href="subprojects/driver.html"/>
-      <item name="Pluto Portal" href="subprojects/portal.html"/>
-      <item name="Pluto Utilities" href="subprojects/utilities.html"/>
-      <item name="Pluto Installer" href="subprojects/installer.html"/>
-      <item name="Pluto Testsuite" href="subprojects/testsuite.html"/>
-      <item name="Pluto Ant Tasks" href="subprojects/anttasks.html"/>
-      <item name="Pluto Website Skin" href="subprojects/skin.html"/>          
 	</menu>    
 	
     <menu name='Project Info'>
@@ -103,5 +95,4 @@ limitations under the License.
     </menu>
  
   </body>
-  
 </project>
