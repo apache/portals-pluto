@@ -140,8 +140,8 @@ public interface HeaderResponse extends MimeResponse {
      * specific resources is left to the portal implementation.
      * 
      * @param name      the resource name
-     * @param scope     the resource scope
-     * @param version   the resource version
+     * @param scope     the resource scope, may be <code>null</code> or empty
+     * @param version   the resource version, may be <code>null</code> or empty
      * 
      * @see PortletResponse#addProperty(String, org.w3c.dom.Element)
      * @see #getWriter()
@@ -174,8 +174,8 @@ public interface HeaderResponse extends MimeResponse {
      * version of the resource on the page. 
      * 
      * @param name      the resource name
-     * @param scope     the resource scope
-     * @param version   the resource version
+     * @param scope     the resource scope, may be <code>null</code> or empty
+     * @param version   the resource version, may be <code>null</code> or empty
      * @param markup    the markup for adding the resource to the page
      * 
      * @throws          java.lang.IllegalArgumentException 
