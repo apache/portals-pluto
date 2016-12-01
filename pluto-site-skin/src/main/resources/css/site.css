@@ -206,3 +206,11 @@ body {
     border-top-color: #2E6794;
 }
 
+/**
+ * inline monocode for use with span tag
+ */
+
+.monoCode {
+    font-family: monospace;
+}
+

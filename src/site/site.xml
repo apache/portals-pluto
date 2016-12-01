@@ -33,7 +33,7 @@ limitations under the License.
   <skin>  
     <groupId>org.apache.portals.pluto</groupId>
     <artifactId>pluto-site-skin</artifactId>
-    <version>2.1.0-SNAPSHOT</version>
+    <version>3.0-SNAPSHOT</version>
   </skin> 
   
   <body>
@@ -67,6 +67,14 @@ limitations under the License.
       <item name="Get Involved" href="/helping.html"/>
     </menu>
 
+	<menu name="Pluto 3.0">
+      <item name="Getting Started" href="/v30/getting-started.html"/>
+      <item name="Deploying Portlets" href="/v30/deploying.html"/>
+      <item name="Portlet API 3.0" href="/v30/portlet-api.html"/>
+      <item name="Using the TCK" href="/v30/tck.html"/>
+      <item name="Release Notes" href="/v30/release-notes.html"/>
+	</menu>    
+	
 	<menu name="Pluto 2.0">
       <item name="Getting Started" href="/v20/getting-started.html"/>
       <item name="Deploying" href="/v20/deploying.html"/>
@@ -75,6 +83,7 @@ limitations under the License.
       <item name="App Servers" href="/v20/app-servers.html"/>
       <item name="Powered By Pluto" href="/v20/powered.html"/>
 	</menu>    
+	
     <menu name="Pluto 1.1">
       <item name="Getting Started" href="/v11/getting-started.html"/>
       <item name="Deploying" href="/v11/deploying.html"/>
