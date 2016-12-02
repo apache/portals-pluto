@@ -106,9 +106,19 @@ location:
 
 ./pluto-portal-driver/src/main/resources/pluto-portal-driver-config.xsd
 
+After the TCK has been built, complete page file for the TCK pages is contained
+in the following file:
+
+./pluto/portlet-tck_3.0/deploy/target/deploy-files/pluto-portal-driver-config.xml
+
 It is expected that vendors will extract the portlet to page mapping information
 from the page file in order to create the necessary configuration files for
 the portal under test.
+
+When creating pages for your system, note that the test driver expects links to
+all test case pages to be available. The test driver searches for the page links
+by link text, so it is important that the links have the names defined in the
+page file.
 
 Building the TCK:
 =================
@@ -154,7 +164,7 @@ need to add additional configuration properties (See the test.browser.webDriver
 property in the parent POM).
 
 At the time of this writing, the HTMLUnit driver does not support JavaScript 
-adequately for JSR 361 TCK purposes. You may need to try different drivers to
+adequately for JSR 362 TCK purposes. You may need to try different drivers to
 find the appropriate WebDriver driver for your environment.
 
 All TCK tests were successfully executed through the test driver against Pluto

@@ -70,7 +70,8 @@ limitations under the License.
 	<menu name="Pluto 3.0">
       <item name="Getting Started" href="/v30/getting-started.html"/>
       <item name="Deploying Portlets" href="/v30/deploying.html"/>
-      <item name="Portlet API 3.0" href="/v30/portlet-api.html"/>
+      <item name="Portlet Concepts" href="/v30/portlet-api.html"/>
+      <item name="Version 3 Features" href="/v30/v3Features.html"/>
       <item name="Using the TCK" href="/v30/tck.html"/>
       <item name="Release Notes" href="/v30/release-notes.html"/>
 	</menu>    
