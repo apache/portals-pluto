@@ -453,6 +453,21 @@
                </execution>
             </executions>
          </plugin>
+         
+         <!-- configure excludes for maven rat plugin -->
+         <plugin>
+            <groupId>org.apache.rat</groupId>
+            <artifactId>apache-rat-plugin</artifactId>
+            <configuration>
+               <excludes>
+                  <exclude>src/main/javadoc/doc-files/JSR286ApidocAssertions.csv</exclude>
+                  <exclude>src/main/javadoc/doc-files/JSR286ApidocGenerated.csv</exclude>
+                  <exclude>src/main/javadoc/doc-files/JSR286SpecAssertions.csv</exclude>
+                  <exclude>src/main/javadoc/doc-files/JSR286SpecAssertionsDispatcher.csv</exclude>
+                  <exclude>src/main/javadoc/doc-files/JSR286TCDispatchTableAssertions.csv</exclude>
+               </excludes>
+            </configuration>
+         </plugin>
       </plugins>
    </build>
 

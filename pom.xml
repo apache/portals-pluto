@@ -579,7 +579,7 @@ TODO: Check if we need all of them. -->
         <plugin>
           <groupId>org.apache.rat</groupId>
           <artifactId>apache-rat-plugin</artifactId>
-          <version>0.10</version>
+          <version>0.12</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>

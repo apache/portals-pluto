@@ -67,4 +67,18 @@
          <scope>provided</scope>
       </dependency>
    </dependencies>
+   
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.rat</groupId>
+            <artifactId>apache-rat-plugin</artifactId>
+            <configuration>
+               <excludes>
+                  <exclude>src/main/resources/META-INF/services/javax.servlet.ServletContainerInitializer</exclude>
+               </excludes>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
 </project>

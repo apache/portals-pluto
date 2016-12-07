@@ -107,6 +107,17 @@
             <groupId>com.coderplus.maven.plugins</groupId>
             <artifactId>copy-rename-maven-plugin</artifactId>
          </plugin>
+         
+         <!-- ignored files for rat check -->
+         <plugin>
+            <groupId>org.apache.rat</groupId>
+            <artifactId>apache-rat-plugin</artifactId>
+            <configuration>
+               <excludes>
+                  <exclude>src/main/docs/ModuleAssertions.csv</exclude>
+               </excludes>
+            </configuration>
+         </plugin>
       </plugins>
    </build>
 

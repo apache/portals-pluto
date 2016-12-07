@@ -564,6 +564,17 @@
                </archive>
             </configuration>
          </plugin>
+
+         <plugin>
+            <groupId>org.apache.rat</groupId>
+            <artifactId>apache-rat-plugin</artifactId>
+            <configuration>
+               <excludes>
+                  <exclude>.externalToolBuilders/Maven_Ant_Builder.launch</exclude>
+                  <exclude>maven-eclipse.xml</exclude>
+               </excludes>
+            </configuration>
+         </plugin>
       </plugins>
    </build>
 
