@@ -346,7 +346,7 @@ TODO: Check if we need all of them. -->
       <dependency>
          <groupId>javax.portlet</groupId>
          <artifactId>portlet-api</artifactId>
-         <version>${portals.portlet-api.version}</version>
+         <version>${project.version}</version>
          <scope>provided</scope>
       </dependency>
       <dependency>
