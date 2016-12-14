@@ -383,11 +383,11 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREALPATH3);
     try {
       String realPath =
-          pc.getRealPath("&^*#V2EnvironmentTests_PortletContext_ApiRender_getMimeType4.invalid");
+          pc.getRealPath("&^*#\\/V2EnvironmentTests_PortletContext_ApiRender_getMimeType4.invalid");
       if (realPath == null) {
         tr18.setTcSuccess(true);
       } else {
-        tr18.appendTcDetail("Failed because real path if not null but " + realPath);
+        tr18.appendTcDetail("Failed because real path is not null but " + realPath);
       }
     } catch (Exception e) {
       tr18.appendTcDetail(e.toString());
