@@ -93,6 +93,7 @@ public class PortletRequestContextImpl implements PortletRequestContext {
    private PortalURL                 url;
    private PortletConfig             portletConfig;
    private ServletContext            servletContext;
+   private CachedPortletSession      cachedPortletSession;
    private Cookie                    cookies[];
    private String                    renderHeaders        = null;
    private boolean                   executingRequestBody = false;
@@ -352,68 +353,72 @@ public class PortletRequestContextImpl implements PortletRequestContext {
          LOG.debug("Retrieving portlet session (create=" + create + ")");
       }
 
-      //
-      // It is critical that we don't retrieve the portlet session until the
-      // cross context dispatch has been completed. If we do then we risk
-      // having a cached version which is invalid for the context within
-      // which it exists.
-      //
+      if ((cachedPortletSession == null) || cachedPortletSession.isInvalidated()) {
+
+         //
+         // It is critical that we don't retrieve the portlet session until the
+         // cross context dispatch has been completed. If we do then we risk
+         // having a cached version which is invalid for the context within
+         // which it exists.
+         //
       
-      if (portletConfig == null) {
-         throw new IllegalStateException(EXCEPTIONS.getString("error.session.illegalState"));
-      }
+         if (portletConfig == null) {
+            throw new IllegalStateException(EXCEPTIONS.getString("error.session.illegalState"));
+         }
       
-      //
-      // We must make sure that if the session has been invalidated (perhaps
-      // through setMaxIntervalTimeout()) and the underlying request
-      // returns null that we no longer use the cached version.
-      // We have to check (ourselves) if the session has exceeded its max
-      // inactive interval. If so, we should invalidate the underlying
-      // HttpSession and recreate a new one (if the create flag is set to
-      // true) -- We just cannot depend on the implementation of
-      // javax.servlet.http.HttpSession!
-      //
+         //
+         // We must make sure that if the session has been invalidated (perhaps
+         // through setMaxIntervalTimeout()) and the underlying request
+         // returns null that we no longer use the cached version.
+         // We have to check (ourselves) if the session has exceeded its max
+         // inactive interval. If so, we should invalidate the underlying
+         // HttpSession and recreate a new one (if the create flag is set to
+         // true) -- We just cannot depend on the implementation of
+         // javax.servlet.http.HttpSession!
+         //
       
-      HttpSession httpSession = getServletRequest().getSession(create);
-      if (httpSession != null) {
-         // HttpSession is not null does NOT mean that it is valid.
-         int maxInactiveInterval = httpSession.getMaxInactiveInterval();
-         long lastAccesstime = httpSession.getLastAccessedTime();// lastAccesstime checks added for PLUTO-436
-         if (maxInactiveInterval >= 0 && lastAccesstime > 0) { // < 0 => Never expires.
-            long maxInactiveTime = httpSession.getMaxInactiveInterval() * 1000L;
-            long currentInactiveTime = System.currentTimeMillis() - lastAccesstime;
-            if (currentInactiveTime > maxInactiveTime) {
-               if (isDebug) {
-                  LOG.debug("The underlying HttpSession is expired and " + "should be invalidated.");
+         HttpSession httpSession = getServletRequest().getSession(create);
+         if (httpSession != null) {
+            // HttpSession is not null does NOT mean that it is valid.
+            int maxInactiveInterval = httpSession.getMaxInactiveInterval();
+            long lastAccesstime = httpSession.getLastAccessedTime();// lastAccesstime checks added for PLUTO-436
+            if (maxInactiveInterval >= 0 && lastAccesstime > 0) { // < 0 => Never expires.
+               long maxInactiveTime = httpSession.getMaxInactiveInterval() * 1000L;
+               long currentInactiveTime = System.currentTimeMillis() - lastAccesstime;
+               if (currentInactiveTime > maxInactiveTime) {
+                  if (isDebug) {
+                     LOG.debug("The underlying HttpSession is expired and " + "should be invalidated.");
+                  }
+                  httpSession.invalidate();
+                  httpSession = getServletRequest().getSession(create);
+                  // Added for PLUTO-436
+                  // a cached portletSession is no longer useable.
+                  // a new one will be created below.
                }
-               httpSession.invalidate();
-               httpSession = getServletRequest().getSession(create);
-               // Added for PLUTO-436
-               // a cached portletSession is no longer useable.
-               // a new one will be created below.
             }
          }
-      }
       
-      if (httpSession == null) {
-         if (isDebug) {
-            LOG.debug("The underlying HttpSession is not available: " + "no session will be returned.");
+         if (httpSession == null) {
+            if (isDebug) {
+               LOG.debug("The underlying HttpSession is not available: " + "no session will be returned.");
+            }
+            return null;
          }
-         return null;
-      }
       
-      //
-      // If we reach here, we are sure that the underlying HttpSession is
-      // available. If we haven't created and cached a portlet session
-      // instance, we will create and cache one now.
-      //
+         //
+         // If we reach here, we are sure that the underlying HttpSession is
+         // available. If we haven't created and cached a portlet session
+         // instance, we will create and cache one now.
+         //
       
-      final ContainerServices containerServices = container.getContainerServices();
-      final PortletEnvironmentService portletEnvironmentService = containerServices.getPortletEnvironmentService();
+         final ContainerServices containerServices = container.getContainerServices();
+         final PortletEnvironmentService portletEnvironmentService = containerServices.getPortletEnvironmentService();
 
-      PortletSession portletSession = portletEnvironmentService.createPortletSession(portletConfig.getPortletContext(),
-            getPortletWindow(), httpSession);
-      return portletSession;
+         cachedPortletSession = new CachedPortletSessionImpl(portletEnvironmentService.createPortletSession(
+             portletConfig.getPortletContext(), getPortletWindow(), httpSession));
+      }
+
+      return cachedPortletSession;
    }
 
    @Override
