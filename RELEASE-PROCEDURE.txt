@@ -1,0 +1,359 @@
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+==========================================
+Environment setup for releasing artifacts
+==========================================
+Since 3.0.0
+
+1. Environmental Setup
+	* Increase the default Java heap available to Maven
+	* export MAVEN_OPTS="-Xmx256m -XX:MaxPermSize=128m"
+	* Use the JDK 1.7.
+	* Use Maven 3.3.1 or higher
+
+2. Prepare the source for release
+	* Cleanup JIRA so the Fix Version in issues resolved since the last release includes this release version correctly.
+	* Create a JIRA issue for release maintenance for example see
+		https://issues.apache.org/jira/browse/JS2-1355
+	* Checkout a clean copy of the trunk (on the specific branch if needed) to release using command line git.
+	    cd ~/apache/releases
+	    git clone https://github.com/apache/portals-pluto
+
+	* Do not use Eclipse to do the checkout. The extra dot (.) files created by Eclipse throws off the rat:check processing.
+
+3. Verify the source has the required license headers before trying to release.
+
+    mvn -P rat apache-rat:check
+
+4. DRY RUN
+	Do a dry run of the release:prepare step:
+
+		$ mvn -P apache-release release:prepare -DautoVersionSubmodules=true -DdryRun=true
+
+	The dry run will not commit any changes back to Git and gives you the opportunity to verify that the release process will complete as expected.
+	You will be prompted for the following information :
+
+		Release version - take the default or use semvar like 3.0.0
+		SCM release tag - review the default naming and compare it with the existing git tag structure; change it if needed.
+		New development version - take the default
+		Have your GPG Passphrase ready
+
+	If you cancel a release:prepare before it updates the pom.xml versions, then use the release:clean goal to just remove the extra files that were created.
+	The Maven release plugin checks for SNAPSHOT dependencies in pom's. It will not complete the prepare goal until all SNAPSHOT dependencies are resolved.
+
+5. VERIFY RELEASE
+	Verify that the release process completed as expected
+
+	The release plugin will create pom.xml.tag files which contain the changes that would have been committed to SVN.
+	The only differences between pom.xml.tag and it's corresponding pom.xml file should be the version number(s) and git location(s) (e.g., /trunk vs /tags).
+
+	Check release.properties and make sure that the scm properties have the right version. Sometimes the scm location can be the previous version not the next version.
+
+	Verify signatures (Verifying release signatures)
+        gpg --verify target/pluto-3.0-SNAPSHOT-source-release.zip.asc target/pluto-3.0-SNAPSHOT-source-release.zip
+
+6. CLEANUP AND START OVER
+	Cleanup the release prepare files again:
+
+	$ mvn -P apache-release release:clean
+
+7. PREPARE THE RELEASE
+	Run the "release:prepare" step for real this time. You'll be prompted for the same version information.
+
+	$ mvn -P apache-release release:prepare -DautoVersionSubmodules=true
+
+	Backup (zip or tar) your local release candidate directory in case you need to rollback the release after the next step is performed.
+
+8. PERFORM THE RELEASE
+	This step will create a maven staging repository and site for use in testing and voting.
+
+	$ mvn -P apache-release release:perform -Duser.name=[your_apache_uid]
+
+	If your local OS userid doesn't match your Apache userid, then you'll have to also override the value provided
+	by the OS to Maven for the site-deploy step to work. This is known to work for Linux, but not for Mac and unknown for Windows.
+
+9. VERIFY THE RELEASE
+    a. Verify the Nexus release artifacts
+
+    Verify the staged artifacts in the nexus repo
+        https://repository.apache.org/index.html
+    Staging repositories (under Build Promotion) --> Name column --> org.apache.portals-XXX
+    Navigate through the artifact tree and make sure that all javadoc, sources, tests, jars, ... have
+        .asc (GPG signature)
+        .md5 files
+    See http://people.apache.org/~henkp/repo/faq.html and http://www.apache.org/dev/release-signing.html#openpgp-ascii-detach-sig
+
+    b. Close the nexus staging repo
+
+        https://repository.apache.org/index.html
+        Staging repositories (under Build Promotion) --> Name column --> org.apache.portals-XXX
+        Click checkbox for the open staging repo (org.apache.portals-XXX) and press Close in the menu bar.
+
+10. Create a Distribution Bundle
+        
+        # ant -f dist-build.xml -DincludeDemos=true -DnoClean=true
+        ant -f dist-build.xml -DnoClean=true
+
+        copy the following files from target/dist/ to somewhere on the web for download
+            pluto-3.0.0-bundle.zip
+
+11. PUT THE RELEASE CANDIDATE UP FOR A VOTE
+
+    a. Create a VOTE email thread on dev@ to record votes as replies. (See Example VOTE e-mail message)
+    b. Perform a review of the release and cast your vote. See the following for more details on Apache releases
+
+        http://www.apache.org/dev/release.html
+
+    c. A -1 vote does not necessarily mean that the vote must be redone, however it is usually a good idea to rollback the release if a -1 vote is received.
+    If you want to recover it from a vetoed release, refer to the OpenJPA documentation, Recovering from a vetoed release.
+
+    d. After the vote has been open for at least 72 hours, has at least three +1 PMC votes and no -1 votes, then post the results to the vote thread by
+       reply to the initial email and prepend to the original subject "[RESULT]" (See Example RESULT e-mail message)
+       Include a list of everyone who voted +1, 0 or -1.
+
+       References:
+            Apache Voting Process http://www.apache.org/foundation/voting.html
+            Who We Are (Apache Portals Project) http://portals.apache.org/whoweare.html
+
+12. FINALIZE THE RELEASE
+
+    a. Promote the staged nexus artifacts
+        https://repository.apache.org/index.html
+        Staging repositories (under Build Promotion) --> Name column --> org.apache.portals
+        Click checkbox of the closed staging repo (org.apache.portals-XXX) and select Release.
+
+    b. Copy the source/binary artifacts over to the distribution area (managed by svnpubsub)
+       Command line examples to distribute artifacts (pluto-3.0.0-source-release.zip as an example below.):
+
+    $ cd ~/apache/portals/dist/ALL/portals
+    $ svn co https://dist.apache.org/repos/dist/release/portals/pluto 
+    $ cd pluto
+    $ echo "Copying source artifacts..."
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/pluto/3.0.0/pluto-3.0.0-source-release.zip
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/pluto/3.0.0/pluto-3.0.0-source-release.zip.asc
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/pluto/3.0.0/pluto-3.0.0-source-release.zip.md5
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/pluto/3.0.0/pluto-3.0.0-source-release.zip.sha1   
+    $ svn add pluto-3.0.0-source-release*
+    # portlet-api source, portlet-api javadoc 
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-sources.jar
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-sources.jar.asc
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-sources.jar.md5
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-sources.jar.sha1   
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-javadoc.jar
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-javadoc.jar.asc
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-javadoc.jar.md5
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-javadoc.jar.sha1   
+    $ svn add portlet-api-3.0.0*
+    $ svn commit -m "Committing Source Release for pluto-3.0.0"
+
+    # portlet-api binary
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0.jar
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0.jar.asc
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0.jar.md5
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0.jar.sha1   
+    $ svn add portlet-api-3.0.0.jar*
+    $ svn commit -m "Committing Binary Release for pluto-3.0.0"
+
+    $ ### Sign the Pluto 3.0.0 Release Bundle
+    $ cp ~/apache/releases/portals-pluto/target/dist/pluto-3.0.0-bundle.zip .
+    $ gpg --print-md MD5 pluto-3.0.0-bundle.zip > pluto-3.0.0-bundle.zip.md5
+    $ # compare...
+    $ md5 pluto-3.0.0-bundle.zip
+    $ gpg --armor --output pluto-3.0.0-bundle.zip.asc --detach-sig pluto-3.0.0-bundle.zip
+    $ gpg --verify pluto-3.0.0-bundle.zip.asc pluto-3.0.0-bundle.zip
+    $ shasum pluto-3.0.0-bundle.zip > pluto-3.0.0-bundle.zip.sha1
+    $ shasum -c pluto-3.0.0-bundle.zip.sha1
+    $ svn add pluto-3.0.0-bundle.zip*
+    $ svn commit -m "Committing Binary Release for Pluto 3.0.0"
+
+    WAIT 24hrs after committing releases for mirrors to replicate before announcing release
+
+13. UPDATE JIRA
+    Update the JIRA versions page to close all issues, mark the version as "released", and set the date to the date
+    that the release was approved. You may also need to make a new release entry for the next release.
+
+    Generate the Release Notes from the Version page
+
+14. UPDATE SITE DOCS
+    a. copy site/pluto/src/site/xdoc/release-notes.xml to site/pluto/src/site/xdoc/release-notes-[last version].xml
+    b. edit site/pluto/src/site/xdoc/v30/release-notes.xml
+        include generated release notes from step 13
+    c. edit site/pluto/src/site/xdoc/v3Features.xml
+    d. edit site/pluto/src/site/xdoc/
+    e. edit site/pluto/src/site/xdoc/getting-started.xml
+    f. edit site/pluto/src/site/xdoc/deploying.xml
+    g. edit site/pluto/src/site/xdoc/portlet-api.xml
+    f. edit Portals main site: site/src/site/xdoc/news.xml
+    g. mvn site
+
+    i. publish the docs to LIVE SITE
+
+    Commit changes into the SVN location of Apache Portals Maven Site documentation:
+        https://svn.apache.org/repos/asf/portals/site/
+
+    Copy the generated html and resources into the workspace folder of the following svnpubsub SVN location:
+        https://svn.apache.org/repos/asf/portals/site-live/
+    Commit your changes to site-live, they will publish automatically
+
+15. ANNOUNCE THE RELEASE
+
+    Make an announcement about the release on the
+
+        general@portals.apache.org
+        pluto-user@portals.apache.org
+
+        announce@apache.org list
+
+        as per the Apache Announcement Mailing Lists page) (See Example ANNOUNCE e-mail message)
+        NOTE: Because announce@apache.org list allows message posting only to senders having '@apache.org' e-mail address.
+        Therefore, be sure that you send the announce message by your apache e-mail address.
+        See Committer e-mail configuration for detail.
+        NOTE: When sending announce message to multiple lists together from your @apache.org e-mail address,
+        be careful because your message can be rejected if your @apache.org e-mail address didn't susbscribe user mailinglist
+         (portalapps-user@portals.apache.org, in this case.) You can either subscribe it first from your @apache.org
+         e-mail address or send the announce message twice separately.
+
+        NOTE: It is not required but it is better to digitally sign the announce e-mail message by using your PGP key.
+
+                - go to G-mail settings page
+                - Select 'Accounts and Import' tab
+                - In 'Send mail as' field,
+                 - click on 'Add another email address you own'
+                 - type your name and apache e-mail address in the popup
+                 - enter 'mail-relay.apache.org' in SMTP Server field and choose 465 as port number
+                 - enter your apache account username and password
+                 - select 'Secured connection using SSL (recommended)' (default)
+                 - click on 'Add Account'
+                 - ...
+                - You can change the default send email address if want there.
+                - When sending e-mail, check the sender address is @apache.org.
+
+------------------------------------ Release Candidate Email Template ------------------------------------------------------------
+To: pluto-dev list
+cc: pluto-user list, portals-pmc list
+Subject: [VOTE] Release Apache Portals Pluto 3.0.0
+
+Dear Apache Portals Pluto Team and community,
+
+I've staged a release candidate for the new Apache Portals Pluto 3.0.0 release. 
+
+This release candidate includes:
+
+* a fully compliant Reference Implementation of the new Portlet 3.0 Specification per JCR-362
+    https://www.jcp.org/en/jsr/detail?id=362
+* a completed TCK (Test Compatibility Kit) for Portlet Spec 3.0
+
+The Portlet API 3.0 specification has been approved by the JCP (JSR 362 Public Review Ballot), see:
+https://www.jcp.org/en/jsr/results?id=5896
+
+Please review the release candidate for this project which is available from the following maven staging repository:
+
+https://repository.apache.org/content/repositories/orgapacheportals-****/
+
+The full source distributions are also available from the above staging repository from the following locations:
+
+https://repository.apache.org/content/repositories/orgapacheportals-****/org/apache/portals/pluto/pluto/3.0.0/pluto-3.0.0-source-release.zip
+https://repository.apache.org/content/repositories/orgapacheportals-****/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-sources.jar
+https://repository.apache.org/content/repositories/orgapacheportals-****/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-javadoc.jar
+https://repository.apache.org/content/repositories/orgapacheportals-****/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0.jar
+
+The release notes are available here:
+
+https://issues.apache.org/jira/secure/ReleaseNote.jspa?projectId=****&version=******
+
+In addition, we are providing a binary bundle of the Pluto Container with an Tomcat8 ready to use, based on this release candidate here:
+
+http://www.bluesunrise.com/downloads/pluto-3.0.0-bundle.zip
+
+The bundle can be tested by unzipping it, and running start.sh from the bin directory
+
+The KEYS file to verify the release artifacts signature can be found here:
+
+https://dist.apache.org/repos/dist/release/portals/pluto/KEYS
+
+Please review the release candidates and vote on releasing Apache Portals Pluto 3.0.0
+
+This vote is open for the next 72 hours.
+
+Please cast your vote:
+
+[ ] +1 for Release
+[ ]  0  for Don't care
+[ ] -1 Don't release (do provide a reason then)
+
+Regards,
+
+(your name)
+
+------------------------------------ Result/Vote Email Template ------------------------------------------------------------
+
+Respond to last email
+Subject: [RESULT][VOTE] Release Apache Portals Pluto 3.0.0
+
+Apache Portals Team and community,
+
+This release is accepted with the following votes:
+
+ +1 Randy Watler
+ +1 Woonsan Ko
+ +1 David S Taylor
+
+Thank you all for voting!
+
+We will promote the release candidates to the Maven Central Repository and upload the source and binary distributions to the official download area.
+
+An announcement about the new release will be send out as soon as the Jetspeed website is updated and the source and binary distributions have been mirrored.
+
+Regards,
+
+(your name)
+
+------------------------------------ Release Email -------------------------------------------------
+To      general@portals.apache.org
+        pluto-user@portals.apache.org
+
+        announce@apache.org list
+
+Subject: [ANNOUNCE] Apache Portals Pluto 3.0.0 release
+
+The Apache Portals team is pleased to announce the General Availability of Apache Pluto version 3.0.0
+
+Version 3.0.0 introduces .... TODO: Scott
+
+For a full overview of all the Pluto features, see the online documentation. To get up and running quickly,
+download the bundle which comes with a bundled latest Tomcat 8 ready to run.
+
+Features:
+http://portals.apache.org/pluto/v30/v3Features.html
+
+Release notes:
+http://portals.apache.org/pluto/v30/release-notes.html
+
+Website Documentation:
+http://portals.apache.org/pluto
+
+Download and Deploying:
+http://portals.apache.org/pluto/v30/deploying.html
+
+Tomcat 8 Bundle:
+TODO:
+
+
+--
+David S Taylor
+On behalf of the Apache Portals PMC
+
+
