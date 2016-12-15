@@ -103,6 +103,22 @@
                   </bottom>
                </configuration>
             </plugin>
+            <plugin>
+               <groupId>org.apache.felix</groupId>
+               <artifactId>maven-bundle-plugin</artifactId>
+               <version>3.2.0</version>
+               <extensions>true</extensions>
+               <configuration>
+                  <instructions>
+                     <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                     <Import-Package>
+                        javax.enterprise.context;resolution:=optional,
+                        javax.inject;resolution:=optional,*
+                     </Import-Package>
+                     <Provide-Capability>osgi.contract; osgi.contract=JavaPortlet; version:List&lt;Version&gt;="3,2,1"; uses:="javax.portlet,javax.portlet.annotations,javax.portlet.filter"</Provide-Capability>
+                  </instructions>
+               </configuration>
+            </plugin>
          </plugins>
       </pluginManagement>
 
