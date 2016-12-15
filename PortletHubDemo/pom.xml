@@ -88,6 +88,21 @@
                <archiveClasses>false</archiveClasses>
             </configuration>
          </plugin>
+         
+         <!-- Don't attach source or javadoc archive (for release plugin)-->
+         <plugin>
+           <artifactId>maven-source-plugin</artifactId>
+           <configuration>
+             <attach>false</attach>
+           </configuration>
+         </plugin>
+         <plugin>
+           <artifactId>maven-javadoc-plugin</artifactId>
+           <configuration>
+             <skip>true</skip>
+           </configuration>
+         </plugin>
+         
       </plugins>
    </build>
 
