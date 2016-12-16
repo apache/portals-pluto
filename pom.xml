@@ -732,6 +732,11 @@ TODO: Check if we need all of them. -->
     <!-- Build Pluto for deployment without the demos -->
     <profile>
       <id>excludeDemos</id>
+      <activation>
+        <property>
+          <name>excludeDemos</name>
+        </property>
+      </activation>
       <properties>
 		  <includeDemosBegin>&lt;!--</includeDemosBegin>
 		  <includeDemosEnd>--&gt;</includeDemosEnd>
