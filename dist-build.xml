@@ -31,6 +31,10 @@
       
    If you want to retain the intermediate products (tomcat directory), add the noClean flag:
       ant -f dist-build.xml -DincludeDemos=true -DnoClean=true
+      
+   If you want to just package an existing build without cleaning and recompiling first, 
+   add the packageOnly flag:
+      ant -f dist-build.xml -DincludeDemos=true -DpackageOnly=true
 
    The bundled distribution is done in the following way:
    1. Downloads Tomcat from Apache and unzips it into a working directory. To this distribution, the
@@ -141,7 +145,7 @@
    </target>
       
    <!-- convenience to speed up the build -->
-   <target name="preclean" unless="noPreClean">
+   <target name="preclean" unless="packageOnly">
       <exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
          <arg line="clean:clean"/>
       </exec>
@@ -200,15 +204,37 @@
          summary="true"
       />
    </target>
+   
+   <!-- Only do mvn install if 'packageOnly' is not set -->
+   <condition property="installDemos">
+     <and>
+       <equals casesensitive="false" arg1="${includeDemos}" arg2="true"/>
+       <not>
+          <equals casesensitive="false" arg1="${packageOnly}" arg2="true"/>
+       </not>
+     </and>
+   </condition>
+   
+   <!-- Only do mvn install if 'packageOnly' is not set -->
+   <condition property="installNoDemos">
+     <and>
+       <not>
+          <equals casesensitive="false" arg1="${includeDemos}" arg2="true"/>
+       </not>
+       <not>
+          <equals casesensitive="false" arg1="${packageOnly}" arg2="true"/>
+       </not>
+     </and>
+   </condition>
 
-   <target name="run-maven-exclude-demos" unless="includeDemos" description="Runs the install goal and excludes the demos from pluto-portal-driver-config.xml">
+   <target name="run-maven-exclude-demos" if="installNoDemos" description="Runs the install goal and excludes the demos from pluto-portal-driver-config.xml">
       <exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true" os="Mac OS X">
          <arg line="install -Ppluto -DincludeDemosBegin=&lt;!-- -DincludeDemosEnd=-->"/>
       </exec>
       <exec executable="dist-exclude-demos.bat" vmlauncher="false" dir="${basedir}" failonerror="true" os="Windows 7" />
    </target>
 
-   <target name="run-maven-include-demos" if="includeDemos" description="Runs the install goal and includes the demos in pluto-portal-driver-config.xml">
+   <target name="run-maven-include-demos" if="installDemos" description="Runs the install goal and includes the demos in pluto-portal-driver-config.xml">
       <exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
          <arg line="install -Ppluto -DskipTests=true -DincludeDemosBegin= -DincludeDemosEnd="/>
       </exec>

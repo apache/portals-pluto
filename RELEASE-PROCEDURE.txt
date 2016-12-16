@@ -104,8 +104,7 @@ Since 3.0.0
 
 10. Create a Distribution Bundle
         
-        # ant -f dist-build.xml -DincludeDemos=true -DnoClean=true
-        ant -f dist-build.xml -DnoClean=true
+        ant -f dist-build.xml -DincludeDemos=true -DpackageOnly=true -DnoClean=true
 
         copy the following files from target/dist/ to somewhere on the web for download
             pluto-3.0.0-bundle.zip
