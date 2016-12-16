@@ -321,6 +321,11 @@ TODO: Check if we need all of them. -->
     <!-- scope of certain dependencies is "compile" for deployment on tomcat, 
          but "provided" for deployment on tomee. See tomee profile. -->
     <dependency.scope>compile</dependency.scope>
+    
+    <!-- following properties control whether or not demos are included in page 
+         config file (see profile 'excludeDemos' below) -->
+    <includeDemosBegin></includeDemosBegin>
+	 <includeDemosEnd></includeDemosEnd>
   </properties>
 
   <dependencyManagement>
@@ -721,6 +726,15 @@ TODO: Check if we need all of them. -->
          <!-- scope of certain dependencies is "compile" for deployment on tomcat, 
               but "provided" for deployment on tomee. See tomee profile. -->
 		  <dependency.scope>provided</dependency.scope>
+      </properties>
+    </profile>
+    
+    <!-- Build Pluto for deployment without the demos -->
+    <profile>
+      <id>excludeDemos</id>
+      <properties>
+		  <includeDemosBegin>&lt;!--</includeDemosBegin>
+		  <includeDemosEnd>--&gt;</includeDemosEnd>
       </properties>
     </profile>
 
