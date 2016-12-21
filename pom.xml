@@ -627,10 +627,11 @@ TODO: Check if we need all of them. -->
             <mavenExecutorId>forked-path</mavenExecutorId>
             <autoVersionSubmodules>true</autoVersionSubmodules>
             <!-- by default, the release build includes the V3 demos. To perform the release build without the demos, 
-                 remove the comments around the 'arguments' line below. -->
+                 activate the 'excludeDemos profile 'arguments' line as shown below. -->
             <!--
-            <arguments>-PexcludeDemos</arguments>
+            <arguments>-Ppluto,excludeDemos</arguments>
             -->
+            <arguments>-Ppluto</arguments>
           </configuration>
         </plugin>
 
