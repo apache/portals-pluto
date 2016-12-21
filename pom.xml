@@ -603,7 +603,7 @@ TODO: Check if we need all of them. -->
         <plugin>
           <groupId>org.apache.felix</groupId>
           <artifactId>maven-bundle-plugin</artifactId>
-          <version>2.0.1</version>
+          <version>3.2.0</version>
           <extensions>true</extensions>
           <configuration>
             <instructions>
