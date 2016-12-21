@@ -626,6 +626,7 @@ TODO: Check if we need all of them. -->
             <preparationGoals>clean install</preparationGoals>
             <mavenExecutorId>forked-path</mavenExecutorId>
             <autoVersionSubmodules>true</autoVersionSubmodules>
+            <arguments>-PexcludeDemos</arguments>
           </configuration>
         </plugin>
 
