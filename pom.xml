@@ -626,7 +626,11 @@ TODO: Check if we need all of them. -->
             <preparationGoals>clean install</preparationGoals>
             <mavenExecutorId>forked-path</mavenExecutorId>
             <autoVersionSubmodules>true</autoVersionSubmodules>
+            <!-- by default, the release build includes the V3 demos. To perform the release build without the demos, 
+                 remove the comments around the 'arguments' line below. -->
+            <!--
             <arguments>-PexcludeDemos</arguments>
+            -->
           </configuration>
         </plugin>
 
