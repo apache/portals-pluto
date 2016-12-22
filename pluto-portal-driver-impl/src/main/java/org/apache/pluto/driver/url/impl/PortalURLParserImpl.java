@@ -66,7 +66,12 @@ public class PortalURLParserImpl implements PortalURLParser {
    private static final String PUBLIC_RENDER_PARAM = "sp";
    private static final String WINDOW_STATE = "ws";
    private static final String PORTLET_MODE = "pm";
-   
+
+   //This is a list of characters that need to be encoded to be protected
+   private static final String[][] ENCODINGS = new String[][] {
+       new String[] { "/",  "0x3" },
+   };
+
    // The delimiter & special chars for the value encoding are chosen
    // from the URL reserved delimiter characters that ARE ENCODED by the URLEncoder
    // so that they will not appear encoded parameter names or values.
@@ -672,7 +677,10 @@ public class PortalURLParserImpl implements PortalURLParser {
       String out = str;
       if (str != null) {
          try {
-            out = URLEncoder.encode(str, "UTF-8");
+            for (int i = 0; i < ENCODINGS.length; i++) {
+               out = out.replace(ENCODINGS[i][0], ENCODINGS[i][1]);
+            }
+            out = URLEncoder.encode(out, "UTF-8");
          } catch(Exception e) {
             LOG.warn("Error URL encoding string: " + str);
          }
@@ -689,7 +697,10 @@ public class PortalURLParserImpl implements PortalURLParser {
       String out = str;
       if (str != null) {
          try {
-            out = URLDecoder.decode(str, "UTF-8");
+            for (int i = 0; i < ENCODINGS.length; i++) {
+               out = out.replace(ENCODINGS[i][1], ENCODINGS[i][0]);
+            }
+            out = URLDecoder.decode(out, "UTF-8");
          } catch(Exception e) {
             LOG.warn("Error URL decoding string: " + str);
          }
