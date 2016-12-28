@@ -586,7 +586,7 @@ public class RequestTests_PortletRequest_ApiEvent_event implements Portlet, Even
       /* portal"                                                              */
       TestResult tr36 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETPORTALCONTEXT);
       String gpc=portletReq.getPortalContext().getPortalInfo();
-      if(gpc.equals("pluto-portal-driver/2.1.0-SNAPSHOT")) {
+      if(gpc.startsWith("pluto-portal-driver/3.0")) {
     	  tr36.setTcSuccess(true);
       } else {
     	  tr36.setTcDetail("The PortalContext for the portal is invalid");
