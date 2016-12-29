@@ -20,7 +20,7 @@
 package org.apache.pluto.container.om.portlet.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -41,7 +41,7 @@ public class FilterImpl implements Filter {
    private final ArrayList<String> lifecycles = new ArrayList<String>();
    private final List<Description> descs = new ArrayList<Description>();
    private final List<DisplayName> dispNames = new ArrayList<DisplayName>();
-   private final Map<String, InitParam> initParams = new HashMap<String, InitParam>();
+   private final Map<String, InitParam> initParams = new LinkedHashMap<String, InitParam>();
    private String fclass = "";
    private int ordinal;
    private boolean ordinalSet = false;
