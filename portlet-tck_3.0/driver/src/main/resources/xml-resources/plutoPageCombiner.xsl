@@ -36,7 +36,7 @@
 
 
     <portal-name>pluto-portal-driver</portal-name>
-    <portal-version>2.1.0-SNAPSHOT</portal-version>
+    <portal-version>3.0-SNAPSHOT</portal-version>
     <container-name>Pluto Portal Driver</container-name>
 
     <supports>
