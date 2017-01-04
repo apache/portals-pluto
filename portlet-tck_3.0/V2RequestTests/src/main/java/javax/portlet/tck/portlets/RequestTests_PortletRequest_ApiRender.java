@@ -120,7 +120,6 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
@@ -130,6 +129,7 @@ import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortalContext;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
@@ -598,11 +598,11 @@ public class RequestTests_PortletRequest_ApiRender implements Portlet, ResourceS
       /* Details: "Method getPortalContext(): Returns the context of the      */
       /* portal"                                                              */
       TestResult tr36 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRENDER_GETPORTALCONTEXT);
-      String gpc=portletReq.getPortalContext().getPortalInfo();
-      if(gpc.startsWith("pluto-portal-driver/3.0")) {
+      PortalContext gpc = portletReq.getPortalContext();
+      if(gpc != null) {
     	  tr36.setTcSuccess(true);
       } else {
-    	  tr36.setTcDetail("The PortalContext for the portal is invalid");
+    	  tr36.setTcDetail("The PortalContext for the portal may not be null");
       }
       tr36.writeTo(writer);
 

@@ -130,6 +130,7 @@ import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortalContext;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
@@ -587,11 +588,11 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Details: "Method getPortalContext(): Returns the context of the      */
       /* portal"                                                              */
       TestResult tr36 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPORTALCONTEXT);
-      String gpc=portletReq.getPortalContext().getPortalInfo();
-      if(gpc.startsWith("pluto-portal-driver/3.0")) {
+      PortalContext gpc = portletReq.getPortalContext();
+      if(gpc != null) {
     	  tr36.setTcSuccess(true);
       } else {
-    	  tr36.setTcDetail("The PortalContext for the portal is invalid");
+    	  tr36.setTcDetail("The PortalContext for the portal may not be null");
       }
       tr36.writeTo(writer);
 

@@ -200,7 +200,7 @@
       <!-- Add 'pluto' and 'tomcat' users to tomcat-users.xml -->
       <replace file="${dist.dir}/conf/tomcat-users.xml"
          token="&lt;/tomcat-users&gt;" 
-         value="&lt;user name=&quot;tomcat&quot; password=&quot;tomcat&quot; roles=&quot;tomcat,pluto,manager&quot; /&gt;${line.separator}&lt;user name=&quot;pluto&quot; password=&quot;pluto&quot; roles=&quot;pluto,manager,tckuser&quot; /&gt;${line.separator}&lt;/tomcat-users&gt;" 
+         value="&lt;user name=&quot;tomcat&quot; password=&quot;tomcat&quot; roles=&quot;tomcat,pluto,manager-gui&quot; /&gt;${line.separator}&lt;user name=&quot;pluto&quot; password=&quot;pluto&quot; roles=&quot;pluto,manager-gui,tckuser&quot; /&gt;${line.separator}&lt;/tomcat-users&gt;" 
          summary="true"
       />
    </target>

@@ -135,6 +135,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.EventPortlet;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.PortalContext;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
@@ -585,11 +586,11 @@ public class RequestTests_PortletRequest_ApiEvent_event implements Portlet, Even
       /* Details: "Method getPortalContext(): Returns the context of the      */
       /* portal"                                                              */
       TestResult tr36 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETPORTALCONTEXT);
-      String gpc=portletReq.getPortalContext().getPortalInfo();
-      if(gpc.startsWith("pluto-portal-driver/3.0")) {
+      PortalContext gpc = portletReq.getPortalContext();
+      if(gpc != null) {
     	  tr36.setTcSuccess(true);
       } else {
-    	  tr36.setTcDetail("The PortalContext for the portal is invalid");
+    	  tr36.setTcDetail("The PortalContext for the portal may not be null");
       }
       tr36.writeTo(writer);
 
