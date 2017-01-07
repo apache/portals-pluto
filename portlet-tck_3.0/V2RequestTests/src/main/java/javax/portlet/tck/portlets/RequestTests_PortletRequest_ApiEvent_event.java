@@ -619,7 +619,7 @@ public class RequestTests_PortletRequest_ApiEvent_event implements Portlet, Even
       /* the context path associated with the portlet"                        */
       TestResult tr39 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETCONTEXTPATH1);
       String getctxtpath =portletReq.getContextPath();
-      if(getctxtpath!=null && getctxtpath.equals("/tck-V2RequestTests-3.0-SNAPSHOT")) {
+      if(getctxtpath!=null && getctxtpath.startsWith("/tck-V2RequestTests")) {
     	  tr39.setTcSuccess(true);
       } else {
     	  tr39.appendTcDetail("The getContextPath has an Empty path ");
