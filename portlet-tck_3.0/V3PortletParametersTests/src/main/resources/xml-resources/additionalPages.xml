@@ -19,7 +19,7 @@
 -->
 <pluto-portal-driver xmlns="http://portals.apache.org/pluto/xsd/pluto-portal-driver-config.xsd" xmlns:pa="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://portals.apache.org/pluto/xsd/pluto-portal-driver-config.xsd                         http://portals.apache.org/pluto/pluto-portal/1.1/pluto-portal-driver-config.xsd" version="1.1">
 <portal-name>pluto-portal-driver</portal-name>
-<portal-version>3.0-SNAPSHOT</portal-version>
+<portal-version>${project.version}</portal-version>
 <container-name>Pluto Portal Driver</container-name>
 <supports>
 <portlet-mode>view</portlet-mode>
@@ -32,13 +32,13 @@
 </supports>
 <render-config default="About Apache Pluto">
 <page xmlns="" name="V3PortletParametersTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-<portlet context="/tck-V3PortletParametersTests-3.0-SNAPSHOT" name="PortletParametersTests_SPEC11_1"/>
+<portlet context="/${project.artifactId}-${project.version}" name="PortletParametersTests_SPEC11_1"/>
 </page>
 <page xmlns="" name="V3ActionParametersTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-    <portlet context="/tck-V3PortletParametersTests-3.0-SNAPSHOT" name="PortletParametersTests_SPEC11_3"/>
+    <portlet context="/${project.artifactId}-${project.version}" name="PortletParametersTests_SPEC11_3"/>
 </page>
 <page xmlns="" name="V3ResourceParametersTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-    <portlet context="/tck-V3PortletParametersTests-3.0-SNAPSHOT" name="PortletParametersTests_SPEC11_4"/>
+    <portlet context="/${project.artifactId}-${project.version}" name="PortletParametersTests_SPEC11_4"/>
 </page>
 </render-config>
 </pluto-portal-driver>
