@@ -256,8 +256,13 @@
                   <failOnMissingWebXml>false</failOnMissingWebXml>
                   <webResources>
                      <webResource>
-                        <directory>${project.build.directory}/${test.file.dir}</directory>
-                        <targetPath>${test.file.dir}</targetPath>
+                       <filtering>true</filtering>
+                       <directory>${project.build.directory}/${test.file.dir}</directory>
+                       <includes>
+                         <include>${project.artifactId}-pages.xml</include>
+                         <include>${project.artifactId}-tests.xml</include>
+                       </includes>
+                       <targetPath>${test.file.dir}</targetPath>
                      </webResource>
                   </webResources>
                </configuration>
