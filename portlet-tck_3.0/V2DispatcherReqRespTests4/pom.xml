@@ -22,7 +22,7 @@
    <parent>
       <groupId>javax.portlet</groupId>
       <artifactId>portlet-tck</artifactId>
-      <version>3.0.0</version>
+      <version>3.0.1-SNAPSHOT</version>
    </parent>
 
    <artifactId>tck-V2DispatcherReqRespTests4</artifactId>
