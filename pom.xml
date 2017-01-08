@@ -259,7 +259,7 @@ generate mailto links. -->
   NOTE:
 
   Modification of these properties affects:
-  1)  maven-pluto-plugin/src/main/resources/versions.properties as well!
+  1)  pluto-maven-plugin/src/main/resources/versions.properties as well!
   -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -558,7 +558,7 @@ TODO: Check if we need all of them. -->
       <plugins>
         <plugin>
           <groupId>org.apache.portals.pluto</groupId>
-          <artifactId>maven-pluto-plugin</artifactId>
+          <artifactId>pluto-maven-plugin</artifactId>
           <version>${project.version}</version>
         </plugin>
         <plugin>

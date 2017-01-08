@@ -75,7 +75,7 @@
    <property name="tar.file" value="${dist.basedir}/${base.name}.tar"/>
 
    <target name="bundle-dist"
-         depends="prepare-bundle-dist,run-maven-exclude-demos,run-maven-include-demos,run-maven-pluto-plugin"
+         depends="prepare-bundle-dist,run-maven-exclude-demos,run-maven-include-demos,run-pluto-maven-plugin"
          description="Creates zip, gzip, and bzip2 distributions">
       <!-- Copy over jars needed to deploy custom portlets -->
       <copy file="pluto-util/target/pluto-util-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>         
@@ -239,9 +239,9 @@
       </exec>
    </target>
 
-   <target name="run-maven-pluto-plugin" description="Runs the install goal for the maven-pluto-plugin">
+   <target name="run-pluto-maven-plugin" description="Runs the install goal for the pluto-maven-plugin">
       <exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
-         <arg line="org.apache.portals.pluto:maven-pluto-plugin:${pluto.version}:install -DinstallDir=${basedir}/${dist.dir}"/>
+         <arg line="org.apache.portals.pluto:pluto-maven-plugin:${pluto.version}:install -DinstallDir=${basedir}/${dist.dir}"/>
       </exec>
    </target>
       
