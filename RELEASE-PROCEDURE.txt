@@ -23,6 +23,22 @@ Since 3.0.0
 	* export MAVEN_OPTS="-Xmx256m -XX:MaxPermSize=128m"
 	* Use the JDK 1.7.
 	* Use Maven 3.3.1 or higher
+	* edit $HOME/.m2/settings.xml, make sure your Apache account credentials are setup in the servers section:
+        <servers>
+            <server>
+              <id>apache.snapshots.https</id>
+              <username>your-apache-username</username>
+              <password>your-apache-password</password>
+            </server>
+
+            <server>
+              <id>apache.releases.https</id>
+              <username>your-apache-username</username>
+              <password>your-apache-password</password>
+            </server>
+    * submit your public key to an authorized Public Key server such as http://pgp.mit.edu/
+      see instructions here:
+        http://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/
 
 2. Prepare the source for release
 	* Cleanup JIRA so the Fix Version in issues resolved since the last release includes this release version correctly.
