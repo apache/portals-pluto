@@ -163,22 +163,22 @@ Since 3.0.0
     $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/pluto/3.0.0/pluto-3.0.0-source-release.zip.sha1   
     $ svn add pluto-3.0.0-source-release*
     # portlet-api source, portlet-api javadoc 
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-sources.jar
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-sources.jar.asc
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-sources.jar.md5
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-sources.jar.sha1   
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-javadoc.jar
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-javadoc.jar.asc
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-javadoc.jar.md5
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0-javadoc.jar.sha1   
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.0/portlet-api-3.0.0-sources.jar
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.0/portlet-api-3.0.0-sources.jar.asc
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.0/portlet-api-3.0.0-sources.jar.md5
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.0/portlet-api-3.0.0-sources.jar.sha1
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.0/portlet-api-3.0.0-javadoc.jar
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.0/portlet-api-3.0.0-javadoc.jar.asc
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.0/portlet-api-3.0.0-javadoc.jar.md5
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.0/portlet-api-3.0.0-javadoc.jar.sha1
     $ svn add portlet-api-3.0.0*
     $ svn commit -m "Committing Source Release for pluto-3.0.0"
 
     # portlet-api binary
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0.jar
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0.jar.asc
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0.jar.md5
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/portlet-api/3.0.0/portlet-api-3.0.0.jar.sha1   
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.0/portlet-api-3.0.0.jar
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.0/portlet-api-3.0.0.jar.asc
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.0/portlet-api-3.0.0.jar.md5
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.0/portlet-api-3.0.0.jar.sha1
     $ svn add portlet-api-3.0.0.jar*
     $ svn commit -m "Committing Binary Release for pluto-3.0.0"
 
