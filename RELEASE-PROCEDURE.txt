@@ -118,14 +118,34 @@ Since 3.0.0
         Staging repositories (under Build Promotion) --> Name column --> org.apache.portals-XXX
         Click checkbox for the open staging repo (org.apache.portals-XXX) and press Close in the menu bar.
 
-10. Create a Distribution Bundle
+10. Checkout the new tag, since the repository will be set to a later commit
+
+        git checkout pluto-3.0.0
+
+11. Create a Distribution Bundle
         
         ant -f dist-build.xml -DincludeDemos=true -DpackageOnly=true -DnoClean=true
 
-        copy the following files from target/dist/ to somewhere on the web for download
-            pluto-3.0.0-bundle.zip
+12. Release the bundle Zip file
 
-11. PUT THE RELEASE CANDIDATE UP FOR A VOTE
+        #
+        # NOTE: This will release a file with the following identification:
+        #		 <groupId>org.apache.portals.pluto</groupId>
+        #		 <artifactId>pluto-bundle</artifactId>
+        #		 <version>3.0.0</version>
+        #
+        #  And the download filename will be pluto-bundle-3.0.0.zip
+        #
+        mvn \
+          gpg:sign-and-deploy-file \
+          -Dfile=target/dist/pluto-3.0.0-bundle.zip \
+          -DgroupId=org.apache.portals.pluto \
+          -DartifactId=pluto-bundle \
+          -Dversion=3.0.0 \
+          -Durl=https://repository.apache.org/service/local/staging/deploy/maven2 \
+          -DrepositoryId=apache.releases.https
+
+13. PUT THE RELEASE CANDIDATE UP FOR A VOTE
 
     a. Create a VOTE email thread on dev@ to record votes as replies. (See Example VOTE e-mail message)
     b. Perform a review of the release and cast your vote. See the following for more details on Apache releases
@@ -143,7 +163,7 @@ Since 3.0.0
             Apache Voting Process http://www.apache.org/foundation/voting.html
             Who We Are (Apache Portals Project) http://portals.apache.org/whoweare.html
 
-12. FINALIZE THE RELEASE
+14. FINALIZE THE RELEASE
 
     a. Promote the staged nexus artifacts
         https://repository.apache.org/index.html
@@ -182,27 +202,23 @@ Since 3.0.0
     $ svn add portlet-api-3.0.0.jar*
     $ svn commit -m "Committing Binary Release for pluto-3.0.0"
 
-    $ ### Sign the Pluto 3.0.0 Release Bundle
-    $ cp ~/apache/releases/portals-pluto/target/dist/pluto-3.0.0-bundle.zip .
-    $ gpg --print-md MD5 pluto-3.0.0-bundle.zip > pluto-3.0.0-bundle.zip.md5
-    $ # compare...
-    $ md5 pluto-3.0.0-bundle.zip
-    $ gpg --armor --output pluto-3.0.0-bundle.zip.asc --detach-sig pluto-3.0.0-bundle.zip
-    $ gpg --verify pluto-3.0.0-bundle.zip.asc pluto-3.0.0-bundle.zip
-    $ shasum pluto-3.0.0-bundle.zip > pluto-3.0.0-bundle.zip.sha1
-    $ shasum -c pluto-3.0.0-bundle.zip.sha1
+    # the Pluto 3.0.0 Release Bundle
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/pluto-bundle/3.0.0/pluto-bundle-3.0.0.zip
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/pluto-bundle/3.0.0/pluto-bundle-3.0.0.zip.asc
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/pluto-bundle/3.0.0/pluto-bundle-3.0.0.zip.md5
+    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/pluto-bundle/3.0.0/pluto-bundle-3.0.0.zip.sha1
     $ svn add pluto-3.0.0-bundle.zip*
     $ svn commit -m "Committing Binary Release for Pluto 3.0.0"
 
     WAIT 24hrs after committing releases for mirrors to replicate before announcing release
 
-13. UPDATE JIRA
+15. UPDATE JIRA
     Update the JIRA versions page to close all issues, mark the version as "released", and set the date to the date
     that the release was approved. You may also need to make a new release entry for the next release.
 
     Generate the Release Notes from the Version page
 
-14. UPDATE SITE DOCS
+16. UPDATE SITE DOCS
     a. copy site/pluto/src/site/xdoc/release-notes.xml to site/pluto/src/site/xdoc/release-notes-[last version].xml
     b. edit site/pluto/src/site/xdoc/v30/release-notes.xml
         include generated release notes from step 13
@@ -223,7 +239,7 @@ Since 3.0.0
         https://svn.apache.org/repos/asf/portals/site-live/
     Commit your changes to site-live, they will publish automatically
 
-15. ANNOUNCE THE RELEASE
+17. ANNOUNCE THE RELEASE
 
     Make an announcement about the release on the
 
