@@ -18,7 +18,15 @@ package org.apache.pluto.container.driver;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
+import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.Writer;
+import java.lang.annotation.Annotation;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,6 +38,7 @@ import javax.naming.InitialContext;
 import javax.naming.NameNotFoundException;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.HeaderRequest;
@@ -55,6 +64,16 @@ import javax.servlet.ServletResponseWrapper;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.namespace.QName;
+import javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import org.apache.pluto.container.FilterManager;
 import org.apache.pluto.container.PortletAsyncManager;
@@ -65,13 +84,21 @@ import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
+import org.apache.pluto.container.bean.processor.CDIEventsStore;
 import org.apache.pluto.container.bean.processor.PortletArtifactProducer;
+import org.apache.pluto.container.bean.processor.PortletCDIEvent;
 import org.apache.pluto.container.bean.processor.PortletInvoker;
 import org.apache.pluto.container.bean.processor.PortletRequestScopedBeanHolder;
 import org.apache.pluto.container.bean.processor.PortletSessionBeanHolder;
 import org.apache.pluto.container.bean.processor.PortletStateScopedBeanHolder;
 import org.apache.pluto.container.impl.HttpServletPortletRequestWrapper;
+import org.apache.pluto.container.om.portlet.EventDefinition;
+import org.apache.pluto.container.om.portlet.EventDefinitionReference;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
+import org.apache.pluto.container.om.portlet.impl.EventDefinitionImpl;
+import org.apache.pluto.container.om.portlet.impl.EventDefinitionReferenceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -133,6 +160,8 @@ public class PortletServlet3 extends HttpServlet {
 
    private boolean                started = false;
    Timer                          startTimer;
+   
+   private static final QName CDI_EVENT_QNAME = new QName("javax.portlet.cdi.event", "javax.portlet.cdi.event");
 
    // HttpServlet Impl --------------------------------------------------------
 
@@ -261,11 +290,42 @@ public class PortletServlet3 extends HttpServlet {
                isOutOfService = true;
                return true;
             }
-
+            
             String applicationName = contextService.register(sConfig);
             started = true;
             portletContext = contextService.getPortletContext(applicationName);
             portletConfig = contextService.getPortletConfig(applicationName, portletName);
+            
+            // Get the portlet application definition
+            //PortletApplicationDefinition apd = portletContext.getPortletApplicationDefinition();
+            PortletApplicationDefinition pad = holder.getPad();
+            
+            PortletDefinition portletDefinition =pad.getPortlet(portletName);
+            
+            // Make a new Portlet event to correspond to CDI event
+            EventDefinition eventDefinition = new EventDefinitionImpl(CDI_EVENT_QNAME);
+            eventDefinition.setQName(CDI_EVENT_QNAME);
+            eventDefinition.setValueType("java.io.Serializable");
+            EventDefinitionReference eventDefinitionReference = new EventDefinitionReferenceImpl(CDI_EVENT_QNAME);
+            
+            // Add definition of new portlet CDI event to portlet application definition
+            if(pad.getEventDefinition(CDI_EVENT_QNAME)==null){
+               pad.addEventDefinition(eventDefinition);
+            }
+            
+            // Made this portlet publisher of the new portlet CDI event
+            portletDefinition.addSupportedPublishingEvent(eventDefinitionReference);
+            
+            // Add the modified portlet definition in portlet application definition  
+            
+            if(!CDIEventsStore.portletAdded.containsKey(pad)){          
+               // Made this portlet subscriber of the new portlet CDI event
+               portletDefinition.addSupportedProcessingEvent(eventDefinitionReference);
+               CDIEventsStore.portletAdded.put(pad, portletName);
+            } 
+            pad.addPortlet(portletDefinition);
+            contextService.updatePortletConfig(portletContext, portletDefinition);
+            
 
          } catch (PortletContainerException ex) {
             context.log(ex.getMessage(), ex);
@@ -515,13 +575,195 @@ public class PortletServlet3 extends HttpServlet {
             ActionRequest actionRequest = (ActionRequest) portletRequest;
             ActionResponse actionResponse = (ActionResponse) portletResponse;
             filterManager.processFilter(actionRequest, actionResponse, invoker, portletContext);
+            
+            // TODO: Document this
+            System.out.println("We have "+CDIEventsStore.universalEventList.size()+" events in universal event list.");
+            for(PortletCDIEvent newPortletCDIEvent : CDIEventsStore.universalEventList){
+               Object value = newPortletCDIEvent.getData();
+               if(value!=null){
+                  ClassLoader cl = Thread.currentThread().getContextClassLoader();
+                  Writer out = new StringWriter();
+      
+                  try {
+                     @SuppressWarnings("rawtypes")
+                     Class clazz = value.getClass();
+                     System.setProperty( "com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize", "true");
+                     JAXBContext jc = JAXBContext.newInstance(clazz);
+                     Marshaller marshaller = jc.createMarshaller();
+                     JAXBElement<Serializable> element = new JAXBElement<Serializable>(CDI_EVENT_QNAME, clazz, (Serializable) value);
+                     marshaller.marshal(element, out);
+                     newPortletCDIEvent.setSerializedData(out.toString());
+                     actionResponse.setEvent(CDI_EVENT_QNAME, out.toString());
+                     // TODO: Check if the events has already been set in another portlet of the same web app
+                     /*
+                     
+                     PortletApplicationDefinition pad = holder.getPad();
+                     if(CDIEventsStore.portletAppCDIEventList.containsKey(pad)){
+                        Set<PortletCDIEvent> portletAppCDIEventList = CDIEventsStore.portletAppCDIEventList.get(pad);
+                        for(PortletCDIEvent existingPortletCDIEvent: portletAppCDIEventList){
+                           if(!existingPortletCDIEvent.equals(newPortletCDIEvent)){
+                              System.out.println("Wrongly set CDI portlet event again");
+                              portletAppCDIEventList.add(newPortletCDIEvent);
+                              CDIEventsStore.portletAppCDIEventList.put(pad, portletAppCDIEventList);
+                              actionResponse.setEvent(CDI_EVENT_QNAME, out.toString());
+                           } else {
+                              System.out.println("Skipped setting CDI portlet event because its already set by another portlet in the same web app");
+                           }
+                        }
+                     } else {
+                        System.out.println("Set CDI portlet event for the first time");
+                        Set<PortletCDIEvent> portletAppCDIEventList = new HashSet<PortletCDIEvent>();
+                        portletAppCDIEventList.add(newPortletCDIEvent);
+                        CDIEventsStore.portletAppCDIEventList.put(pad, portletAppCDIEventList);
+                        actionResponse.setEvent(CDI_EVENT_QNAME, out.toString());
+                     }
+                     */
+                     
+                  } catch(Exception e) {
+                     System.out.println("Error while serializing cdi event data "+e.toString());
+                     e.printStackTrace();
+                  } finally {
+                     Thread.currentThread().setContextClassLoader(cl);
+                     System.getProperties().remove("com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize");
+                  }
+               }
+            }
          }
 
-         // The request methode is Event: call Portlet.processEvent(..)
+         // The request method is Event: call Portlet.processEvent(..)
          else if (methodId == PortletInvokerService.METHOD_EVENT) {
             EventRequest eventRequest = (EventRequest) portletRequest;
             EventResponse eventResponse = (EventResponse) portletResponse;
-            filterManager.processFilter(eventRequest, eventResponse, invoker, portletContext);
+            System.out.println("Calling event method of "+portletName);
+            
+            // check if it is my cdi event
+            // then deserialize data, don't let invoker get control and fire the cdi event
+            
+            Event portletEvent = eventRequest.getEvent();
+            if(portletEvent!=null){
+               if(portletEvent.getQName().equals(CDI_EVENT_QNAME)){
+                  Object value = portletEvent.getValue();
+                  XMLStreamReader xml = null;
+                  try {
+                     if (value instanceof String) {
+                        String in = (String) value;
+                        xml = XMLInputFactory.newInstance().createXMLStreamReader(
+                              new StringReader(in));
+                     } 
+                  } catch (XMLStreamException e1) {
+                     System.out.println(e1.toString());
+                     throw new IllegalStateException(e1);
+                  } catch (FactoryConfigurationError e1) {
+                     System.out.println(e1.toString());
+                     throw new IllegalStateException(e1);
+                  }
+
+                  if (xml != null) {
+                     try {
+                        System.out.println("Universal event list size is "+CDIEventsStore.universalEventList.size());
+                        for(PortletCDIEvent portletCDIEvent : CDIEventsStore.universalEventList){
+                           if(portletCDIEvent.getData().equals(value)){
+                              ClassLoader loader = portletContext.getClassLoader();
+                              Class<? extends Serializable> clazz = loader.loadClass(
+                                    portletCDIEvent.getDataType()).asSubclass(
+                                    Serializable.class);
+               
+                              JAXBContext jc = JAXBContext.newInstance(clazz);
+                              Unmarshaller unmarshaller = jc.createUnmarshaller();
+               
+                              JAXBElement result = unmarshaller.unmarshal(xml, clazz);
+               
+                              try{
+                                    System.out.println("Now firing event from bean manager");
+                                    // TODO: Check if the event has already been fired before
+                                    //       by another portlet of the same web app
+                                    CDIEventsStore.firedFromBeanManager=true;
+                                    beanmgr.fireEvent(result.getValue(), portletCDIEvent.getQualifiers());
+                                    CDIEventsStore.firedFromBeanManager=false;
+                              } catch (Exception e){
+                                 e.printStackTrace();
+                              }
+                           }
+                        }
+                        /*
+                        boolean contains = false;
+                        for(String portletName : CDIEventsStore.recieverPortlets){
+                           if(this.portletName.equals(portletName)){
+                              contains = true;
+                              break;
+                           }
+                        }
+                        if(!contains){
+                           for(PortletCDIEvent portletCDIEvent : CDIEventsStore.universalEventList){
+                              if(portletCDIEvent.getData().equals(value)){
+                                 ClassLoader loader = portletContext.getClassLoader();
+                                 Class<? extends Serializable> clazz = loader.loadClass(
+                                       portletCDIEvent.getDataType()).asSubclass(
+                                       Serializable.class);
+                  
+                                 JAXBContext jc = JAXBContext.newInstance(clazz);
+                                 Unmarshaller unmarshaller = jc.createUnmarshaller();
+                  
+                                 JAXBElement result = unmarshaller.unmarshal(xml, clazz);
+                  
+                                 try{
+                                       System.out.println("Now firing event from bean manager");
+                                       // TODO: Check if the event has already been fired before
+                                       //       by another portlet of the same web app
+                                       CDIEventsStore.firedFromBeanManager=true;
+                                       beanmgr.fireEvent(result.getValue(), portletCDIEvent.getQualifiers());
+                                       PortletApplicationDefinition pad = holder.getPad();
+                                       List<PortletDefinition> portlets = pad.getPortlets();
+                                       for(PortletDefinition portlet : portlets){
+                                          CDIEventsStore.recieverPortlets.remove(portlet.getPortletName());
+                                       }
+                                       if(CDIEventsStore.recieverPortlets.isEmpty()){
+                                          CDIEventsStore.universalEventList.clear();
+                                       }
+                                       CDIEventsStore.firedFromBeanManager=false;
+                                 } catch (Exception e){
+                                    e.printStackTrace();
+                                 }
+                              }
+                           }
+                        }
+                        */
+                        /*Set<Entry<PortletApplicationDefinition, Set<PortletCDIEvent>>> portletAppCDIEventList = CDIEventsStore.portletAppCDIEventList.entrySet();
+                        for(Entry<PortletApplicationDefinition, Set<PortletCDIEvent>> iterator : portletAppCDIEventList){
+                           if(pad.equals(iterator.getKey())){
+                              for(PortletCDIEvent portletCDIEvent : iterator.getValue()){
+                                 if(portletCDIEvent.getData().equals(value)){
+                                    contains = true;
+                                    break;
+                                 }
+                              }
+                              if(contains){
+                                 break;
+                              }
+                           }
+                        }
+                        */
+                        
+                       
+                     } catch (JAXBException e) {
+                        System.out.println(e.toString());
+                        throw new IllegalStateException(e);
+                     } catch (ClassCastException e) {
+                        System.out.println(e.toString());
+                        throw new IllegalStateException(e);
+                     } catch (ClassNotFoundException e) {
+                       System.out.println(e.toString());
+                        throw new IllegalStateException(e);
+                     }
+                  }
+                  
+                  
+               } else {
+                  filterManager.processFilter(eventRequest, eventResponse, invoker, portletContext);
+               }
+            } else {
+               System.out.println("Portlet Event is null.");
+            }
          }
          // The requested method is ADMIN: call handlers.
          else if (methodId == PortletInvokerService.METHOD_ADMIN) {

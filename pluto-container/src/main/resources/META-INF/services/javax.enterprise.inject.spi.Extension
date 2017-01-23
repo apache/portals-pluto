@@ -1,1 +1,2 @@
 org.apache.pluto.container.bean.processor.PortletCDIExtension
+org.apache.pluto.container.bean.processor.PortletCDIEventExtension

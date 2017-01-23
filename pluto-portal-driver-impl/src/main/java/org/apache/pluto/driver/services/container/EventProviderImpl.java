@@ -103,6 +103,7 @@ public class EventProviderImpl implements EventProvider {
                @SuppressWarnings("rawtypes")
                Class clazz = value.getClass();
                try {
+                  System.setProperty( "com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize", "true");
                   Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
                   JAXBContext jc = JAXBContext.newInstance(clazz);
                   Marshaller marshaller = jc.createMarshaller();
@@ -110,17 +111,41 @@ public class EventProviderImpl implements EventProvider {
                   marshaller.marshal(element, out);
                } finally {
                   Thread.currentThread().setContextClassLoader(cl);
+                  System.getProperties().remove("com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize");
                }
                
                if (debug) {
                   LOG.debug("Resulting marshalled HashMap: \n" + out.toString());
                }
-               
                return new EventImpl(qname, out.toString());
             }
          } catch (JAXBException e) {
             // maybe there is no valid jaxb binding
             LOG.error("Event handling failed", e);
+         } catch (FactoryConfigurationError e) {
+            LOG.warn(e.getMessage(), e);
+         }
+      }
+      return null;
+   }
+   
+   // TODO: Document this
+   public Event createCDIEvent(QName qname, Serializable value) throws IllegalArgumentException {
+      
+      if (LOG.isDebugEnabled()) {
+         StringBuilder txt = new StringBuilder(128);
+         txt.append("QName: ").append(qname.toString());
+         txt.append(", value class: ").append((value == null) ? "null": value.getClass().getCanonicalName());
+         LOG.debug(txt.toString());
+      }
+      
+      if (isDeclaredAsPublishingEvent(qname)) {
+         if (value != null && !isValueInstanceOfDefinedClass(qname, value)) {
+            throw new IllegalArgumentException("Payload class (" + value.getClass().getCanonicalName()
+                  + ") does not have the right class, check your defined event types in portlet.xml.");
+         }
+         try {
+           return new EventImpl(qname, value);
          } catch (FactoryConfigurationError e) {
             LOG.warn(e.getMessage(), e);
          }

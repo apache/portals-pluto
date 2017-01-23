@@ -164,6 +164,11 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
         }
         return contextPath;
     }
+	
+	// TODO: Document this function
+	public void updatePortletConfig(DriverPortletContext portletContext, PortletDefinition portletDefinition){
+	   portletConfigs.put(portletContext.getApplicationName() + "/" + portletDefinition.getPortletName(), new DriverPortletConfigImpl(portletContext, portletDefinition));
+	}
 
     /**
      * @see org.apache.pluto.container.driver.PortletContextService#unregister(org.apache.pluto.container.driver.DriverPortletContext)

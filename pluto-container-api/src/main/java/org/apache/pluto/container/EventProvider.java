@@ -31,4 +31,6 @@ public interface EventProvider {
 
     Event createEvent(QName name, Serializable value)
     throws IllegalArgumentException;
+
+    Event createCDIEvent(QName qname, Serializable value) throws IllegalArgumentException;
 }

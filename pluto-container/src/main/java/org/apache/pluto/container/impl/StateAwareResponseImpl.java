@@ -97,16 +97,24 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl
 
    public void setEvent(QName qname, Serializable value) {
       ArgumentUtility.validateNotNull("qname", qname);
+      Event event = null;
       
-      if (LOGGER.isTraceEnabled()) {
-         StringBuilder txt = new StringBuilder(128);
-         txt.append("QName: ").append(qname.toString());
-         txt.append(", value class: ").append((value == null) ? "null": value.getClass().getCanonicalName());
-         LOGGER.debug(txt.toString());
-      }
+      QName CDI_EVENT_QNAME = new QName("javax.portlet.cdi.event", "javax.portlet.cdi.event");
+      if(qname.equals(CDI_EVENT_QNAME)){
+         event = responseContext.getEventProvider()
+               .createCDIEvent(qname, value);
+      } else {
+         if (LOGGER.isTraceEnabled()) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("QName: ").append(qname.toString());
+            txt.append(", value class: ").append((value == null) ? "null": value.getClass().getCanonicalName());
+            LOGGER.debug(txt.toString());
+         }
 
-      Event event = responseContext.getEventProvider()
-            .createEvent(qname, value);
+         event = responseContext.getEventProvider()
+               .createEvent(qname, value);
+      }
+      
       if (event != null) {
          responseContext.getEvents().add(event);
       }
