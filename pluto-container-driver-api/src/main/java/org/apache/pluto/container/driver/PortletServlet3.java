@@ -575,7 +575,6 @@ public class PortletServlet3 extends HttpServlet {
             ActionRequest actionRequest = (ActionRequest) portletRequest;
             ActionResponse actionResponse = (ActionResponse) portletResponse;
             filterManager.processFilter(actionRequest, actionResponse, invoker, portletContext);
-            
             // TODO: Document this
             System.out.println("We have "+CDIEventsStore.universalEventList.size()+" events in universal event list.");
             for(PortletCDIEvent newPortletCDIEvent : CDIEventsStore.universalEventList){
@@ -593,6 +592,7 @@ public class PortletServlet3 extends HttpServlet {
                      JAXBElement<Serializable> element = new JAXBElement<Serializable>(CDI_EVENT_QNAME, clazz, (Serializable) value);
                      marshaller.marshal(element, out);
                      newPortletCDIEvent.setSerializedData(out.toString());
+                     newPortletCDIEvent.setProcessing(true);
                      actionResponse.setEvent(CDI_EVENT_QNAME, out.toString());
                      // TODO: Check if the events has already been set in another portlet of the same web app
                      /*
@@ -760,6 +760,59 @@ public class PortletServlet3 extends HttpServlet {
                   
                } else {
                   filterManager.processFilter(eventRequest, eventResponse, invoker, portletContext);
+                  for(PortletCDIEvent newPortletCDIEvent : CDIEventsStore.universalEventList){
+                     if(!newPortletCDIEvent.isProcessing()){
+                        Object value = newPortletCDIEvent.getData();
+                        if(value!=null){
+                           ClassLoader cl = Thread.currentThread().getContextClassLoader();
+                           Writer out = new StringWriter();
+               
+                           try {
+                              @SuppressWarnings("rawtypes")
+                              Class clazz = value.getClass();
+                              System.setProperty( "com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize", "true");
+                              JAXBContext jc = JAXBContext.newInstance(clazz);
+                              Marshaller marshaller = jc.createMarshaller();
+                              JAXBElement<Serializable> element = new JAXBElement<Serializable>(CDI_EVENT_QNAME, clazz, (Serializable) value);
+                              marshaller.marshal(element, out);
+                              newPortletCDIEvent.setSerializedData(out.toString());
+                              newPortletCDIEvent.setProcessing(true);
+                              eventResponse.setEvent(CDI_EVENT_QNAME, out.toString());
+                              // TODO: Check if the events has already been set in another portlet of the same web app
+                              /*
+                              
+                              PortletApplicationDefinition pad = holder.getPad();
+                              if(CDIEventsStore.portletAppCDIEventList.containsKey(pad)){
+                                 Set<PortletCDIEvent> portletAppCDIEventList = CDIEventsStore.portletAppCDIEventList.get(pad);
+                                 for(PortletCDIEvent existingPortletCDIEvent: portletAppCDIEventList){
+                                    if(!existingPortletCDIEvent.equals(newPortletCDIEvent)){
+                                       System.out.println("Wrongly set CDI portlet event again");
+                                       portletAppCDIEventList.add(newPortletCDIEvent);
+                                       CDIEventsStore.portletAppCDIEventList.put(pad, portletAppCDIEventList);
+                                       actionResponse.setEvent(CDI_EVENT_QNAME, out.toString());
+                                    } else {
+                                       System.out.println("Skipped setting CDI portlet event because its already set by another portlet in the same web app");
+                                    }
+                                 }
+                              } else {
+                                 System.out.println("Set CDI portlet event for the first time");
+                                 Set<PortletCDIEvent> portletAppCDIEventList = new HashSet<PortletCDIEvent>();
+                                 portletAppCDIEventList.add(newPortletCDIEvent);
+                                 CDIEventsStore.portletAppCDIEventList.put(pad, portletAppCDIEventList);
+                                 actionResponse.setEvent(CDI_EVENT_QNAME, out.toString());
+                              }
+                              */
+                              
+                           } catch(Exception e) {
+                              System.out.println("Error while serializing cdi event data "+e.toString());
+                              e.printStackTrace();
+                           } finally {
+                              Thread.currentThread().setContextClassLoader(cl);
+                              System.getProperties().remove("com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize");
+                           }
+                        }
+                     }
+                  }
                }
             } else {
                System.out.println("Portlet Event is null.");

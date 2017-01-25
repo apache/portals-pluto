@@ -19,6 +19,7 @@ package org.apache.pluto.container.impl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -36,6 +37,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.namespace.QName;
 
 import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.FilterManager;
@@ -347,9 +349,22 @@ public class PortletContainerImpl implements PortletContainer
             if (!responseContext.isRedirect())
             {
                 List<Event> events = responseContext.getEvents();
+                QName cdiEventQname = new QName("javax.portlet.cdi.event", "javax.portlet.cdi.event");
                 if (!events.isEmpty())
                 {
-                    getContainerServices().getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
+                   List<Event> cdiEvents = new ArrayList<Event>();
+                   List<Event> portletEvents = new ArrayList<Event>();
+                   for(Event event : events){
+                      if(event.getQName().equals(cdiEventQname)){
+                         cdiEvents.add(event);
+                      } else {
+                         portletEvents.add(event);
+                      }
+                   }
+                   events.clear();
+                   events.addAll(cdiEvents);
+                   events.addAll(portletEvents);
+                   getContainerServices().getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
                 }
             }
         } catch (Throwable t) {
@@ -563,7 +578,20 @@ public class PortletContainerImpl implements PortletContainer
 
         if (events != null && !events.isEmpty())
         {
-            getContainerServices().getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
+           QName cdiEventQname = new QName("javax.portlet.cdi.event", "javax.portlet.cdi.event");
+           List<Event> cdiEvents = new ArrayList<Event>();
+           List<Event> portletEvents = new ArrayList<Event>();
+           for(Event eventEvent : events){
+              if(eventEvent.getQName().equals(cdiEventQname)){
+                 cdiEvents.add(eventEvent);
+              } else {
+                 portletEvents.add(eventEvent);
+              }
+           }
+           events.clear();
+           events.addAll(cdiEvents);
+           events.addAll(portletEvents);
+           getContainerServices().getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
         }
 
         debugWithName("Portlet event: "+ event.getName() +" fired for: " + portletWindow.getPortletDefinition().getPortletName());

@@ -163,7 +163,7 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
             }
          }
          for(PortletCDIEvent portletCDIEvent : CDIEventsStore.universalEventList){
-            if(event.getQName().equals(CDI_EVENT_QNAME) && event.getValue().equals(portletCDIEvent.getData())){
+            if(event.getQName().equals(CDI_EVENT_QNAME) && event.getValue().equals(portletCDIEvent.getData()) && portletCDIEvent.isProcessing()){
                //System.out.println("Processed event "+ event.getValue().toString());
                //System.out.println("processed both portlet event so removing event from universal event list.");
                CDIEventsStore.universalEventList.remove(portletCDIEvent);

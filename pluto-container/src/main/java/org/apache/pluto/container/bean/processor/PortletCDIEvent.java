@@ -11,6 +11,7 @@ public class PortletCDIEvent {
    private Object data;
    private String dataType;
    private Class observerBeanClass;
+   private boolean processing;
 
    public PortletCDIEvent(Set<Annotation> qualifiers, Object data, Class observerBeanClass) {
       this.qualifiers = new Annotation[qualifiers.size()];
@@ -23,6 +24,7 @@ public class PortletCDIEvent {
       this.data = data;
       this.dataType = data.getClass().getCanonicalName();
       this.observerBeanClass=observerBeanClass;
+      this.processing=false;
    }
 
    public Annotation[] getQualifiers() {
@@ -48,7 +50,14 @@ public class PortletCDIEvent {
    public Class getObserverBeanClass() {
       return observerBeanClass;
    }
+   
+   public boolean isProcessing() {
+      return processing;
+   }
 
+   public void setProcessing(boolean processing) {
+      this.processing = processing;
+   }
    
    // TODO: Maybe throw exceptions when equals return false
    // TODO: Check if we can set same CDI event 2 times  
