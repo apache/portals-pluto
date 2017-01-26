@@ -349,21 +349,8 @@ public class PortletContainerImpl implements PortletContainer
             if (!responseContext.isRedirect())
             {
                 List<Event> events = responseContext.getEvents();
-                QName cdiEventQname = new QName("javax.portlet.cdi.event", "javax.portlet.cdi.event");
                 if (!events.isEmpty())
                 {
-                   List<Event> cdiEvents = new ArrayList<Event>();
-                   List<Event> portletEvents = new ArrayList<Event>();
-                   for(Event event : events){
-                      if(event.getQName().equals(cdiEventQname)){
-                         cdiEvents.add(event);
-                      } else {
-                         portletEvents.add(event);
-                      }
-                   }
-                   events.clear();
-                   events.addAll(cdiEvents);
-                   events.addAll(portletEvents);
                    getContainerServices().getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
                 }
             }
@@ -578,19 +565,6 @@ public class PortletContainerImpl implements PortletContainer
 
         if (events != null && !events.isEmpty())
         {
-           QName cdiEventQname = new QName("javax.portlet.cdi.event", "javax.portlet.cdi.event");
-           List<Event> cdiEvents = new ArrayList<Event>();
-           List<Event> portletEvents = new ArrayList<Event>();
-           for(Event eventEvent : events){
-              if(eventEvent.getQName().equals(cdiEventQname)){
-                 cdiEvents.add(eventEvent);
-              } else {
-                 portletEvents.add(eventEvent);
-              }
-           }
-           events.clear();
-           events.addAll(cdiEvents);
-           events.addAll(portletEvents);
            getContainerServices().getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
         }
 

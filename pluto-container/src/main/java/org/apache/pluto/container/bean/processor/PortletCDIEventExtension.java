@@ -2,6 +2,7 @@ package org.apache.pluto.container.bean.processor;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ class PortletCDIEventExtension implements Extension {
    private static final Logger LOG = LoggerFactory.getLogger(PortletCDIEventExtension.class);
    
    // To make reference to the original observers 
-   private HashSet<ObserverMethod<?>> originalObserverMethods = new HashSet<ObserverMethod<?>>();
+   private HashSet<ObserverMethod<?>> emptyObserverMethods = new HashSet<ObserverMethod<?>>();
 
    // Starting the scanning process 
    void beforeBeanDiscovery(@Observes BeforeBeanDiscovery bbd) {
@@ -50,9 +51,9 @@ class PortletCDIEventExtension implements Extension {
       
       for (final AnnotatedField<? super T> field : fields) {
          
-         if (isFieldCDIEvent(field.getBaseType())) {
-            ObserverMethod<T> emptyObserverMethod = getEmptyObserver(field);
-            originalObserverMethods.add(emptyObserverMethod);
+         if (isFieldCDIEventDefinition(field.getJavaMember())) {
+            ObserverMethod<T> emptyObserverMethod = createEmptyObserverFor(field);
+            emptyObserverMethods.add(emptyObserverMethod);
          }
       }      
       
@@ -127,6 +128,7 @@ class PortletCDIEventExtension implements Extension {
                      return firstParameter.getTypeClosure();
                   }
 
+                  @SuppressWarnings("hiding")
                   @Override
                   public <T extends Annotation> T getAnnotation(
                         Class<T> annotationType) {
@@ -151,6 +153,7 @@ class PortletCDIEventExtension implements Extension {
                      return firstParameter.getPosition();
                   }
 
+                  @SuppressWarnings("unchecked")
                   @Override
                   public AnnotatedCallable<T> getDeclaringCallable() {
                      return (AnnotatedCallable<T>) firstParameter.getDeclaringCallable();
@@ -176,6 +179,7 @@ class PortletCDIEventExtension implements Extension {
                      return method.isStatic();
                   }
 
+                  @SuppressWarnings("unchecked")
                   @Override
                   public AnnotatedType<T> getDeclaringType() {
                      return (AnnotatedType<T>) method.getDeclaringType();
@@ -191,6 +195,7 @@ class PortletCDIEventExtension implements Extension {
                      return method.getTypeClosure();
                   }
 
+                  @SuppressWarnings("hiding")
                   @Override
                   public <T extends Annotation> T getAnnotation(
                         Class<T> annotationType) {
@@ -227,6 +232,7 @@ class PortletCDIEventExtension implements Extension {
          
          // Wrapper for annotated type
          AnnotatedType<T> wrappedAnnotatedType = new AnnotatedType<T>() {
+            @SuppressWarnings("hiding")
             @Override
             public <T extends Annotation> T getAnnotation(Class<T> arg0) {
                return at.getAnnotation(arg0);
@@ -283,18 +289,18 @@ class PortletCDIEventExtension implements Extension {
    // Finish the scanning process
    void afterBeanDiscovery(@Observes AfterBeanDiscovery abd) {
       
-      for(ObserverMethod<?> observerMethod : originalObserverMethods){
+      for(ObserverMethod<?> observerMethod : emptyObserverMethods){
          abd.addObserverMethod(observerMethod);
       }
       
-      originalObserverMethods.clear();
+      emptyObserverMethods.clear();
       
       
       System.out.println("Finished the scanning process");
       LOG.debug("Finished the scanning process");
    } 
    
-   private <T> ObserverMethod<T> getEmptyObserver(final AnnotatedField<? super T> field) {
+   private <T> ObserverMethod<T> createEmptyObserverFor(final AnnotatedField<? super T> field) {
       
       final Set<Annotation> annotations = new HashSet<Annotation>();
       for(Annotation annotation : field.getAnnotations()){
@@ -341,7 +347,7 @@ class PortletCDIEventExtension implements Extension {
             public void notify(T event) {
                if(!CDIEventsStore.firedFromBeanManager){
                   annotations.add(new MyPortletEvent());
-                  CDIEventsStore.addEventToUniversalList(new PortletCDIEvent(annotations, (Serializable) event, field.getJavaMember().getDeclaringClass()));
+                  CDIEventsStore.addEventToEventBus(new PortletCDIEvent(annotations, (Serializable) event, field.getJavaMember().getDeclaringClass()));
                }
             }
          }; 
@@ -352,22 +358,9 @@ class PortletCDIEventExtension implements Extension {
       
    }
 
-   private boolean isFieldCDIEvent(Type baseType) {
-      String fieldType = baseType.toString();
-      if(fieldType.contains("javax.enterprise.event.Event")){
-         String fieldClassName = fieldType.split("<")[0];
-         try {
-            @SuppressWarnings("rawtypes")
-            Class fieldClass = Class.forName(fieldClassName);
-            if(fieldClass.equals(javax.enterprise.event.Event.class)){
-               return true;
-            } else {
-               return false;
-            }
-         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-         }
+   private <T> boolean isFieldCDIEventDefinition(Field field) {
+      if(field.getType().equals(javax.enterprise.event.Event.class)){
+         return true;
       } else {
          return false;
       }

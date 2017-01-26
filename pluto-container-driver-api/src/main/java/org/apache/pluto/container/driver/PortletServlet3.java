@@ -296,8 +296,6 @@ public class PortletServlet3 extends HttpServlet {
             portletContext = contextService.getPortletContext(applicationName);
             portletConfig = contextService.getPortletConfig(applicationName, portletName);
             
-            // Get the portlet application definition
-            //PortletApplicationDefinition apd = portletContext.getPortletApplicationDefinition();
             PortletApplicationDefinition pad = holder.getPad();
             
             PortletDefinition portletDefinition =pad.getPortlet(portletName);
@@ -576,8 +574,8 @@ public class PortletServlet3 extends HttpServlet {
             ActionResponse actionResponse = (ActionResponse) portletResponse;
             filterManager.processFilter(actionRequest, actionResponse, invoker, portletContext);
             // TODO: Document this
-            System.out.println("We have "+CDIEventsStore.universalEventList.size()+" events in universal event list.");
-            for(PortletCDIEvent newPortletCDIEvent : CDIEventsStore.universalEventList){
+            System.out.println("We have "+CDIEventsStore.CDIEventBus.size()+" events in universal event list.");
+            for(PortletCDIEvent newPortletCDIEvent : CDIEventsStore.CDIEventBus){
                Object value = newPortletCDIEvent.getData();
                if(value!=null){
                   ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -660,8 +658,8 @@ public class PortletServlet3 extends HttpServlet {
 
                   if (xml != null) {
                      try {
-                        System.out.println("Universal event list size is "+CDIEventsStore.universalEventList.size());
-                        for(PortletCDIEvent portletCDIEvent : CDIEventsStore.universalEventList){
+                        System.out.println("Universal event list size is "+CDIEventsStore.CDIEventBus.size());
+                        for(PortletCDIEvent portletCDIEvent : CDIEventsStore.CDIEventBus){
                            if(portletCDIEvent.getData().equals(value)){
                               ClassLoader loader = portletContext.getClassLoader();
                               Class<? extends Serializable> clazz = loader.loadClass(
@@ -760,7 +758,7 @@ public class PortletServlet3 extends HttpServlet {
                   
                } else {
                   filterManager.processFilter(eventRequest, eventResponse, invoker, portletContext);
-                  for(PortletCDIEvent newPortletCDIEvent : CDIEventsStore.universalEventList){
+                  for(PortletCDIEvent newPortletCDIEvent : CDIEventsStore.CDIEventBus){
                      if(!newPortletCDIEvent.isProcessing()){
                         Object value = newPortletCDIEvent.getData();
                         if(value!=null){

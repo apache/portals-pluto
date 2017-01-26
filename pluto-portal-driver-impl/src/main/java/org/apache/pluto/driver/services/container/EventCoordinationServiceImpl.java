@@ -107,6 +107,19 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
 
       QName CDI_EVENT_QNAME = new QName("javax.portlet.cdi.event", "javax.portlet.cdi.event");
       
+      List<Event> cdiEvents = new ArrayList<Event>();
+      List<Event> portletEvents = new ArrayList<Event>();
+      for(Event event : events){
+         if(event.getQName().equals(CDI_EVENT_QNAME)){
+            cdiEvents.add(event);
+         } else {
+            portletEvents.add(event);
+         }
+      }
+      events.clear();
+      events.addAll(cdiEvents);
+      events.addAll(portletEvents);
+      
       for (Event event : events) {
          List<String> portletNames = getAllPortletsRegisteredForEvent(event,
                driverConfig, containerServletContext, portalURL);
@@ -162,11 +175,11 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
                }
             }
          }
-         for(PortletCDIEvent portletCDIEvent : CDIEventsStore.universalEventList){
+         for(PortletCDIEvent portletCDIEvent : CDIEventsStore.CDIEventBus){
             if(event.getQName().equals(CDI_EVENT_QNAME) && event.getValue().equals(portletCDIEvent.getData()) && portletCDIEvent.isProcessing()){
                //System.out.println("Processed event "+ event.getValue().toString());
                //System.out.println("processed both portlet event so removing event from universal event list.");
-               CDIEventsStore.universalEventList.remove(portletCDIEvent);
+               CDIEventsStore.CDIEventBus.remove(portletCDIEvent);
                break;
             }
          }
