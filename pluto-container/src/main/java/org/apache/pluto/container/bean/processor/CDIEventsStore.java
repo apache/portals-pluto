@@ -2,20 +2,22 @@ package org.apache.pluto.container.bean.processor;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.xml.namespace.QName;
 
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 
 @ApplicationScoped
 public class CDIEventsStore {
 
-   public static ArrayList<PortletCDIEvent>                CDIEventBus   = new ArrayList<PortletCDIEvent>();
+   public static final QName CDI_EVENT_QNAME = new QName("javax.portlet.cdi.event", "javax.portlet.cdi.event");
+   public static List<PortletCDIEvent>                CDIEventBus   = Collections.synchronizedList(new ArrayList<PortletCDIEvent>());
    public static boolean                                   firedFromBeanManager = false;
-   public static Map<PortletApplicationDefinition, String> portletAdded         = Collections
-         .synchronizedMap(new HashMap<PortletApplicationDefinition, String>());
+   public static Set<PortletApplicationDefinition> CDIPortletEventSubscriberPADList = Collections.synchronizedSet(new HashSet<PortletApplicationDefinition>());
 
    public static synchronized void addEventToEventBus(
          PortletCDIEvent newPortletCDIEvent) {

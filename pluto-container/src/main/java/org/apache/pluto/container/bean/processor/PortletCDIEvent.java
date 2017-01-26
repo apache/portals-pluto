@@ -10,10 +10,11 @@ public class PortletCDIEvent {
    private int          no_of_qualifiers;
    private Object data;
    private String dataType;
+   @SuppressWarnings("rawtypes")
    private Class observerBeanClass;
    private boolean processing;
 
-   public PortletCDIEvent(Set<Annotation> qualifiers, Object data, Class observerBeanClass) {
+   public PortletCDIEvent(Set<Annotation> qualifiers, Object data, @SuppressWarnings("rawtypes") Class observerBeanClass) {
       this.qualifiers = new Annotation[qualifiers.size()];
       int count = 0;
       for(Annotation qualifier : qualifiers){
@@ -47,6 +48,7 @@ public class PortletCDIEvent {
       return dataType;
    }
    
+   @SuppressWarnings("rawtypes")
    public Class getObserverBeanClass() {
       return observerBeanClass;
    }

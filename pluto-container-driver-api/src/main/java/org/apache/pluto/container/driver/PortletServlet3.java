@@ -22,11 +22,6 @@ import java.io.Serializable;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.annotation.Annotation;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -69,7 +64,6 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.namespace.QName;
 import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -101,6 +95,8 @@ import org.apache.pluto.container.om.portlet.impl.EventDefinitionImpl;
 import org.apache.pluto.container.om.portlet.impl.EventDefinitionReferenceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.apache.pluto.container.bean.processor.CDIEventsStore.CDI_EVENT_QNAME;
 
 /**
  * Portlet Invocation Servlet. This servlet receives cross context requests from the the container and services the
@@ -160,8 +156,6 @@ public class PortletServlet3 extends HttpServlet {
 
    private boolean                started = false;
    Timer                          startTimer;
-   
-   private static final QName CDI_EVENT_QNAME = new QName("javax.portlet.cdi.event", "javax.portlet.cdi.event");
 
    // HttpServlet Impl --------------------------------------------------------
 
@@ -302,7 +296,6 @@ public class PortletServlet3 extends HttpServlet {
             
             // Make a new Portlet event to correspond to CDI event
             EventDefinition eventDefinition = new EventDefinitionImpl(CDI_EVENT_QNAME);
-            eventDefinition.setQName(CDI_EVENT_QNAME);
             eventDefinition.setValueType("java.io.Serializable");
             EventDefinitionReference eventDefinitionReference = new EventDefinitionReferenceImpl(CDI_EVENT_QNAME);
             
@@ -316,10 +309,10 @@ public class PortletServlet3 extends HttpServlet {
             
             // Add the modified portlet definition in portlet application definition  
             
-            if(!CDIEventsStore.portletAdded.containsKey(pad)){          
+            if(!CDIEventsStore.CDIPortletEventSubscriberPADList.contains(pad)){          
                // Made this portlet subscriber of the new portlet CDI event
                portletDefinition.addSupportedProcessingEvent(eventDefinitionReference);
-               CDIEventsStore.portletAdded.put(pad, portletName);
+               CDIEventsStore.CDIPortletEventSubscriberPADList.add(pad);
             } 
             pad.addPortlet(portletDefinition);
             contextService.updatePortletConfig(portletContext, portletDefinition);
@@ -573,10 +566,9 @@ public class PortletServlet3 extends HttpServlet {
             ActionRequest actionRequest = (ActionRequest) portletRequest;
             ActionResponse actionResponse = (ActionResponse) portletResponse;
             filterManager.processFilter(actionRequest, actionResponse, invoker, portletContext);
-            // TODO: Document this
-            System.out.println("We have "+CDIEventsStore.CDIEventBus.size()+" events in universal event list.");
-            for(PortletCDIEvent newPortletCDIEvent : CDIEventsStore.CDIEventBus){
-               Object value = newPortletCDIEvent.getData();
+            
+            for(PortletCDIEvent portletCDIEvent : CDIEventsStore.CDIEventBus){
+               Object value = portletCDIEvent.getData();
                if(value!=null){
                   ClassLoader cl = Thread.currentThread().getContextClassLoader();
                   Writer out = new StringWriter();
@@ -587,38 +579,14 @@ public class PortletServlet3 extends HttpServlet {
                      System.setProperty( "com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize", "true");
                      JAXBContext jc = JAXBContext.newInstance(clazz);
                      Marshaller marshaller = jc.createMarshaller();
+                     @SuppressWarnings("unchecked")
                      JAXBElement<Serializable> element = new JAXBElement<Serializable>(CDI_EVENT_QNAME, clazz, (Serializable) value);
                      marshaller.marshal(element, out);
-                     newPortletCDIEvent.setSerializedData(out.toString());
-                     newPortletCDIEvent.setProcessing(true);
+                     portletCDIEvent.setSerializedData(out.toString());
+                     portletCDIEvent.setProcessing(true);
                      actionResponse.setEvent(CDI_EVENT_QNAME, out.toString());
-                     // TODO: Check if the events has already been set in another portlet of the same web app
-                     /*
-                     
-                     PortletApplicationDefinition pad = holder.getPad();
-                     if(CDIEventsStore.portletAppCDIEventList.containsKey(pad)){
-                        Set<PortletCDIEvent> portletAppCDIEventList = CDIEventsStore.portletAppCDIEventList.get(pad);
-                        for(PortletCDIEvent existingPortletCDIEvent: portletAppCDIEventList){
-                           if(!existingPortletCDIEvent.equals(newPortletCDIEvent)){
-                              System.out.println("Wrongly set CDI portlet event again");
-                              portletAppCDIEventList.add(newPortletCDIEvent);
-                              CDIEventsStore.portletAppCDIEventList.put(pad, portletAppCDIEventList);
-                              actionResponse.setEvent(CDI_EVENT_QNAME, out.toString());
-                           } else {
-                              System.out.println("Skipped setting CDI portlet event because its already set by another portlet in the same web app");
-                           }
-                        }
-                     } else {
-                        System.out.println("Set CDI portlet event for the first time");
-                        Set<PortletCDIEvent> portletAppCDIEventList = new HashSet<PortletCDIEvent>();
-                        portletAppCDIEventList.add(newPortletCDIEvent);
-                        CDIEventsStore.portletAppCDIEventList.put(pad, portletAppCDIEventList);
-                        actionResponse.setEvent(CDI_EVENT_QNAME, out.toString());
-                     }
-                     */
                      
                   } catch(Exception e) {
-                     System.out.println("Error while serializing cdi event data "+e.toString());
                      e.printStackTrace();
                   } finally {
                      Thread.currentThread().setContextClassLoader(cl);
@@ -632,10 +600,6 @@ public class PortletServlet3 extends HttpServlet {
          else if (methodId == PortletInvokerService.METHOD_EVENT) {
             EventRequest eventRequest = (EventRequest) portletRequest;
             EventResponse eventResponse = (EventResponse) portletResponse;
-            System.out.println("Calling event method of "+portletName);
-            
-            // check if it is my cdi event
-            // then deserialize data, don't let invoker get control and fire the cdi event
             
             Event portletEvent = eventRequest.getEvent();
             if(portletEvent!=null){
@@ -649,16 +613,13 @@ public class PortletServlet3 extends HttpServlet {
                               new StringReader(in));
                      } 
                   } catch (XMLStreamException e1) {
-                     System.out.println(e1.toString());
                      throw new IllegalStateException(e1);
                   } catch (FactoryConfigurationError e1) {
-                     System.out.println(e1.toString());
                      throw new IllegalStateException(e1);
                   }
 
                   if (xml != null) {
                      try {
-                        System.out.println("Universal event list size is "+CDIEventsStore.CDIEventBus.size());
                         for(PortletCDIEvent portletCDIEvent : CDIEventsStore.CDIEventBus){
                            if(portletCDIEvent.getData().equals(value)){
                               ClassLoader loader = portletContext.getClassLoader();
@@ -669,12 +630,10 @@ public class PortletServlet3 extends HttpServlet {
                               JAXBContext jc = JAXBContext.newInstance(clazz);
                               Unmarshaller unmarshaller = jc.createUnmarshaller();
                
+                              @SuppressWarnings("rawtypes")
                               JAXBElement result = unmarshaller.unmarshal(xml, clazz);
                
                               try{
-                                    System.out.println("Now firing event from bean manager");
-                                    // TODO: Check if the event has already been fired before
-                                    //       by another portlet of the same web app
                                     CDIEventsStore.firedFromBeanManager=true;
                                     beanmgr.fireEvent(result.getValue(), portletCDIEvent.getQualifiers());
                                     CDIEventsStore.firedFromBeanManager=false;
@@ -683,74 +642,12 @@ public class PortletServlet3 extends HttpServlet {
                               }
                            }
                         }
-                        /*
-                        boolean contains = false;
-                        for(String portletName : CDIEventsStore.recieverPortlets){
-                           if(this.portletName.equals(portletName)){
-                              contains = true;
-                              break;
-                           }
-                        }
-                        if(!contains){
-                           for(PortletCDIEvent portletCDIEvent : CDIEventsStore.universalEventList){
-                              if(portletCDIEvent.getData().equals(value)){
-                                 ClassLoader loader = portletContext.getClassLoader();
-                                 Class<? extends Serializable> clazz = loader.loadClass(
-                                       portletCDIEvent.getDataType()).asSubclass(
-                                       Serializable.class);
-                  
-                                 JAXBContext jc = JAXBContext.newInstance(clazz);
-                                 Unmarshaller unmarshaller = jc.createUnmarshaller();
-                  
-                                 JAXBElement result = unmarshaller.unmarshal(xml, clazz);
-                  
-                                 try{
-                                       System.out.println("Now firing event from bean manager");
-                                       // TODO: Check if the event has already been fired before
-                                       //       by another portlet of the same web app
-                                       CDIEventsStore.firedFromBeanManager=true;
-                                       beanmgr.fireEvent(result.getValue(), portletCDIEvent.getQualifiers());
-                                       PortletApplicationDefinition pad = holder.getPad();
-                                       List<PortletDefinition> portlets = pad.getPortlets();
-                                       for(PortletDefinition portlet : portlets){
-                                          CDIEventsStore.recieverPortlets.remove(portlet.getPortletName());
-                                       }
-                                       if(CDIEventsStore.recieverPortlets.isEmpty()){
-                                          CDIEventsStore.universalEventList.clear();
-                                       }
-                                       CDIEventsStore.firedFromBeanManager=false;
-                                 } catch (Exception e){
-                                    e.printStackTrace();
-                                 }
-                              }
-                           }
-                        }
-                        */
-                        /*Set<Entry<PortletApplicationDefinition, Set<PortletCDIEvent>>> portletAppCDIEventList = CDIEventsStore.portletAppCDIEventList.entrySet();
-                        for(Entry<PortletApplicationDefinition, Set<PortletCDIEvent>> iterator : portletAppCDIEventList){
-                           if(pad.equals(iterator.getKey())){
-                              for(PortletCDIEvent portletCDIEvent : iterator.getValue()){
-                                 if(portletCDIEvent.getData().equals(value)){
-                                    contains = true;
-                                    break;
-                                 }
-                              }
-                              if(contains){
-                                 break;
-                              }
-                           }
-                        }
-                        */
-                        
                        
                      } catch (JAXBException e) {
-                        System.out.println(e.toString());
                         throw new IllegalStateException(e);
                      } catch (ClassCastException e) {
-                        System.out.println(e.toString());
                         throw new IllegalStateException(e);
                      } catch (ClassNotFoundException e) {
-                       System.out.println(e.toString());
                         throw new IllegalStateException(e);
                      }
                   }
@@ -771,38 +668,14 @@ public class PortletServlet3 extends HttpServlet {
                               System.setProperty( "com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize", "true");
                               JAXBContext jc = JAXBContext.newInstance(clazz);
                               Marshaller marshaller = jc.createMarshaller();
+                              @SuppressWarnings("unchecked")
                               JAXBElement<Serializable> element = new JAXBElement<Serializable>(CDI_EVENT_QNAME, clazz, (Serializable) value);
                               marshaller.marshal(element, out);
                               newPortletCDIEvent.setSerializedData(out.toString());
                               newPortletCDIEvent.setProcessing(true);
                               eventResponse.setEvent(CDI_EVENT_QNAME, out.toString());
-                              // TODO: Check if the events has already been set in another portlet of the same web app
-                              /*
-                              
-                              PortletApplicationDefinition pad = holder.getPad();
-                              if(CDIEventsStore.portletAppCDIEventList.containsKey(pad)){
-                                 Set<PortletCDIEvent> portletAppCDIEventList = CDIEventsStore.portletAppCDIEventList.get(pad);
-                                 for(PortletCDIEvent existingPortletCDIEvent: portletAppCDIEventList){
-                                    if(!existingPortletCDIEvent.equals(newPortletCDIEvent)){
-                                       System.out.println("Wrongly set CDI portlet event again");
-                                       portletAppCDIEventList.add(newPortletCDIEvent);
-                                       CDIEventsStore.portletAppCDIEventList.put(pad, portletAppCDIEventList);
-                                       actionResponse.setEvent(CDI_EVENT_QNAME, out.toString());
-                                    } else {
-                                       System.out.println("Skipped setting CDI portlet event because its already set by another portlet in the same web app");
-                                    }
-                                 }
-                              } else {
-                                 System.out.println("Set CDI portlet event for the first time");
-                                 Set<PortletCDIEvent> portletAppCDIEventList = new HashSet<PortletCDIEvent>();
-                                 portletAppCDIEventList.add(newPortletCDIEvent);
-                                 CDIEventsStore.portletAppCDIEventList.put(pad, portletAppCDIEventList);
-                                 actionResponse.setEvent(CDI_EVENT_QNAME, out.toString());
-                              }
-                              */
                               
                            } catch(Exception e) {
-                              System.out.println("Error while serializing cdi event data "+e.toString());
                               e.printStackTrace();
                            } finally {
                               Thread.currentThread().setContextClassLoader(cl);

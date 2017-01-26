@@ -104,7 +104,7 @@ class PortletCDIEventExtension implements Extension {
                }
                
                // Make the @PortletEvent qualifier
-               Annotation portletEventAnnotation = new MyPortletEvent();
+               Annotation portletEventAnnotation = new PortletEventImpl();
 
                // Add @PortletEvent annotation as last qualifier in the linked list
                newAnnotationsList.add(portletEventAnnotation);
@@ -295,8 +295,6 @@ class PortletCDIEventExtension implements Extension {
       
       emptyObserverMethods.clear();
       
-      
-      System.out.println("Finished the scanning process");
       LOG.debug("Finished the scanning process");
    } 
    
@@ -346,7 +344,7 @@ class PortletCDIEventExtension implements Extension {
             @Override
             public void notify(T event) {
                if(!CDIEventsStore.firedFromBeanManager){
-                  annotations.add(new MyPortletEvent());
+                  annotations.add(new PortletEventImpl());
                   CDIEventsStore.addEventToEventBus(new PortletCDIEvent(annotations, (Serializable) event, field.getJavaMember().getDeclaringClass()));
                }
             }

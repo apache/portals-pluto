@@ -38,6 +38,8 @@ import org.apache.pluto.container.PortletStateAwareResponseContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.util.ArgumentUtility;
 
+import static org.apache.pluto.container.bean.processor.CDIEventsStore.CDI_EVENT_QNAME;
+
 /**
  * Implementation of JSR-286 <code>StateAwareResponse</code>.
  * 
@@ -99,7 +101,6 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl
       ArgumentUtility.validateNotNull("qname", qname);
       Event event = null;
       
-      QName CDI_EVENT_QNAME = new QName("javax.portlet.cdi.event", "javax.portlet.cdi.event");
       if(qname.equals(CDI_EVENT_QNAME)){
          event = responseContext.getEventProvider()
                .createCDIEvent(qname, value);

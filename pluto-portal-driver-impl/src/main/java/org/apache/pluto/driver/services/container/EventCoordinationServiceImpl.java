@@ -24,13 +24,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.enterprise.inject.spi.Bean;
-import javax.enterprise.inject.spi.BeanManager;
-import javax.enterprise.inject.spi.ObserverMethod;
-import javax.inject.Inject;
 import javax.portlet.Event;
 import javax.portlet.PortletException;
 import javax.servlet.ServletContext;
@@ -50,7 +45,6 @@ import org.apache.pluto.container.EventCoordinationService;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
 import org.apache.pluto.container.bean.processor.CDIEventsStore;
 import org.apache.pluto.container.bean.processor.PortletCDIEvent;
 import org.apache.pluto.container.driver.PortletContextService;
@@ -68,6 +62,8 @@ import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.apache.pluto.container.bean.processor.CDIEventsStore.CDI_EVENT_QNAME;
 
 public class EventCoordinationServiceImpl implements EventCoordinationService {
    
@@ -104,8 +100,6 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
       // HashMap<String, PortletWindowThread>();
 
       // ThreadGroup threadGroup = new ThreadGroup("FireEventThreads");
-
-      QName CDI_EVENT_QNAME = new QName("javax.portlet.cdi.event", "javax.portlet.cdi.event");
       
       List<Event> cdiEvents = new ArrayList<Event>();
       List<Event> portletEvents = new ArrayList<Event>();
@@ -177,8 +171,6 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
          }
          for(PortletCDIEvent portletCDIEvent : CDIEventsStore.CDIEventBus){
             if(event.getQName().equals(CDI_EVENT_QNAME) && event.getValue().equals(portletCDIEvent.getData()) && portletCDIEvent.isProcessing()){
-               //System.out.println("Processed event "+ event.getValue().toString());
-               //System.out.println("processed both portlet event so removing event from universal event list.");
                CDIEventsStore.CDIEventBus.remove(portletCDIEvent);
                break;
             }
@@ -209,7 +201,6 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
          if (xml != null) {
             // XMLStreamReader xml = (XMLStreamReader) event.getValue();
             // provider.getEventDefinition(event.getQName());
-            QName CDI_EVENT_QNAME = new QName("javax.portlet.cdi.event", "javax.portlet.cdi.event");
             if(!event.getQName().equals(CDI_EVENT_QNAME)){
                try {
                   // now test if object is jaxb
