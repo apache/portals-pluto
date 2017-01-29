@@ -48,12 +48,70 @@ class PortletCDIEventExtension implements Extension {
 
       // Get all fields of the class
       Set<AnnotatedField<? super T>> fields = at.getFields();
+      final Set<AnnotatedField<? super T>> modifiedFields = new HashSet<AnnotatedField<? super T>>();
       
       for (final AnnotatedField<? super T> field : fields) {
          
+         final Set<Annotation> modifiedAnnotations = new HashSet<Annotation>();
+         
+         for(Annotation annotation : field.getAnnotations()){
+            modifiedAnnotations.add(annotation);
+         }
+         
+         EmptyEventImpl emptyEventAnnotation = new EmptyEventImpl();
+         modifiedAnnotations.add(emptyEventAnnotation);
+         
          if (isFieldCDIEventDefinition(field.getJavaMember())) {
-            ObserverMethod<T> emptyObserverMethod = createEmptyObserverFor(field);
+            AnnotatedField<T> modifiedCDIEvent = new AnnotatedField<T>(){
+
+               @SuppressWarnings("unchecked")
+               @Override
+               public AnnotatedType<T> getDeclaringType() {
+                  return (AnnotatedType<T>) field.getDeclaringType();
+               }
+
+               @Override
+               public boolean isStatic() {
+                  return field.isStatic();
+               }
+
+               @SuppressWarnings("hiding")
+               @Override
+               public <T extends Annotation> T getAnnotation(Class<T> arg0) {
+                  return field.getAnnotation(arg0);
+               }
+
+               @Override
+               public Set<Annotation> getAnnotations() {
+                  return modifiedAnnotations;
+               }
+
+               @Override
+               public Type getBaseType() {
+                  return field.getBaseType();
+               }
+
+               @Override
+               public Set<Type> getTypeClosure() {
+                  return field.getTypeClosure();
+               }
+
+               @Override
+               public boolean isAnnotationPresent(
+                     Class<? extends Annotation> arg0) {
+                  return field.isAnnotationPresent(arg0);
+               }
+
+               @Override
+               public Field getJavaMember() {
+                  return field.getJavaMember();
+               }
+            };
+            ObserverMethod<T> emptyObserverMethod = createEmptyObserverFor(modifiedCDIEvent);
             emptyObserverMethods.add(emptyObserverMethod);
+            modifiedFields.add(modifiedCDIEvent);
+         } else {
+            modifiedFields.add(field);
          }
       }      
       
@@ -265,7 +323,7 @@ class PortletCDIEventExtension implements Extension {
 
             @Override
             public Set<AnnotatedField<? super T>> getFields() {
-               return at.getFields();
+               return modifiedFields;
             }
 
             @Override
@@ -300,12 +358,17 @@ class PortletCDIEventExtension implements Extension {
    
    private <T> ObserverMethod<T> createEmptyObserverFor(final AnnotatedField<? super T> field) {
       
-      final Set<Annotation> annotations = new HashSet<Annotation>();
+      final Set<Annotation> emptyAnnotations = new HashSet<Annotation>();
+      final Set<Annotation> portletAnnotations = new HashSet<Annotation>();
       for(Annotation annotation : field.getAnnotations()){
          if(!(annotation instanceof javax.inject.Inject)){
-            annotations.add(annotation);
+            emptyAnnotations.add(annotation);
+            if(!(annotation instanceof EmptyEventImpl)){
+               portletAnnotations.add(annotation);
+            }
          }
       }
+      portletAnnotations.add(new PortletEventImpl());
       
       String genericType = field.getJavaMember().getGenericType().toString();
       String genericTypeClassName = genericType.substring(genericType.indexOf("<")+1, genericType.indexOf(">"));
@@ -328,7 +391,7 @@ class PortletCDIEventExtension implements Extension {
 
             @Override
             public Set<Annotation> getObservedQualifiers() {
-               return annotations;
+               return emptyAnnotations;
             }
 
             @Override
@@ -343,10 +406,7 @@ class PortletCDIEventExtension implements Extension {
 
             @Override
             public void notify(T event) {
-               if(!CDIEventsStore.firedFromBeanManager){
-                  annotations.add(new PortletEventImpl());
-                  CDIEventsStore.addEventToEventBus(new PortletCDIEvent(annotations, (Serializable) event, field.getJavaMember().getDeclaringClass()));
-               }
+               CDIEventsStore.addEventToEventBus(new PortletCDIEvent(portletAnnotations, (Serializable) event, field.getJavaMember().getDeclaringClass()));
             }
          }; 
       } catch (ClassNotFoundException e) {

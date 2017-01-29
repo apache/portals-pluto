@@ -16,7 +16,6 @@ public class CDIEventsStore {
 
    public static final QName CDI_EVENT_QNAME = new QName("javax.portlet.cdi.event", "javax.portlet.cdi.event");
    public static List<PortletCDIEvent>                CDIEventBus   = Collections.synchronizedList(new ArrayList<PortletCDIEvent>());
-   public static boolean                                   firedFromBeanManager = false;
    public static Set<PortletApplicationDefinition> CDIPortletEventSubscriberPADList = Collections.synchronizedSet(new HashSet<PortletApplicationDefinition>());
 
    public static synchronized void addEventToEventBus(

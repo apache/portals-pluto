@@ -536,6 +536,10 @@ public class PortletServlet3 extends HttpServlet {
             }
             RenderResponse renderResponse = (RenderResponse) portletResponse;
             filterManager.processFilter(renderRequest, renderResponse, invoker, portletContext);
+            for(PortletCDIEvent portletCDIEvent : CDIEventsStore.CDIEventBus){
+               beanmgr.fireEvent(portletCDIEvent.getData(), portletCDIEvent.getQualifiers());
+            }
+            CDIEventsStore.CDIEventBus.clear();
          }
 
          // The requested method is HEADER: call
@@ -559,6 +563,10 @@ public class PortletServlet3 extends HttpServlet {
 
             ResourceResponse resourceResponse = (ResourceResponse) portletResponse;
             filterManager.processFilter(resourceRequest, resourceResponse, invoker, portletContext);
+            for(PortletCDIEvent portletCDIEvent : CDIEventsStore.CDIEventBus){
+               beanmgr.fireEvent(portletCDIEvent.getData(), portletCDIEvent.getQualifiers());
+            }
+            CDIEventsStore.CDIEventBus.clear();
          }
 
          // The requested method is ACTION: call Portlet.processAction(..)
@@ -566,33 +574,8 @@ public class PortletServlet3 extends HttpServlet {
             ActionRequest actionRequest = (ActionRequest) portletRequest;
             ActionResponse actionResponse = (ActionResponse) portletResponse;
             filterManager.processFilter(actionRequest, actionResponse, invoker, portletContext);
-            
             for(PortletCDIEvent portletCDIEvent : CDIEventsStore.CDIEventBus){
-               Object value = portletCDIEvent.getData();
-               if(value!=null){
-                  ClassLoader cl = Thread.currentThread().getContextClassLoader();
-                  Writer out = new StringWriter();
-      
-                  try {
-                     @SuppressWarnings("rawtypes")
-                     Class clazz = value.getClass();
-                     System.setProperty( "com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize", "true");
-                     JAXBContext jc = JAXBContext.newInstance(clazz);
-                     Marshaller marshaller = jc.createMarshaller();
-                     @SuppressWarnings("unchecked")
-                     JAXBElement<Serializable> element = new JAXBElement<Serializable>(CDI_EVENT_QNAME, clazz, (Serializable) value);
-                     marshaller.marshal(element, out);
-                     portletCDIEvent.setSerializedData(out.toString());
-                     portletCDIEvent.setProcessing(true);
-                     actionResponse.setEvent(CDI_EVENT_QNAME, out.toString());
-                     
-                  } catch(Exception e) {
-                     e.printStackTrace();
-                  } finally {
-                     Thread.currentThread().setContextClassLoader(cl);
-                     System.getProperties().remove("com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize");
-                  }
-               }
+               convertFiredCDIEventstoPortletEvents(portletCDIEvent, actionResponse);
             }
          }
 
@@ -634,12 +617,16 @@ public class PortletServlet3 extends HttpServlet {
                               JAXBElement result = unmarshaller.unmarshal(xml, clazz);
                
                               try{
-                                    CDIEventsStore.firedFromBeanManager=true;
-                                    beanmgr.fireEvent(result.getValue(), portletCDIEvent.getQualifiers());
-                                    CDIEventsStore.firedFromBeanManager=false;
+                                 System.out.println("\nNow firing event from bean manager of "+portletName);
+                                 beanmgr.fireEvent(result.getValue(), portletCDIEvent.getQualifiers());
                               } catch (Exception e){
                                  e.printStackTrace();
                               }
+                           }
+                        }
+                        for(PortletCDIEvent portletCDIEvent : CDIEventsStore.CDIEventBus){
+                           if(!portletCDIEvent.isProcessing()){
+                              convertFiredCDIEventstoPortletEvents(portletCDIEvent, eventResponse);
                            }
                         }
                        
@@ -655,39 +642,13 @@ public class PortletServlet3 extends HttpServlet {
                   
                } else {
                   filterManager.processFilter(eventRequest, eventResponse, invoker, portletContext);
-                  for(PortletCDIEvent newPortletCDIEvent : CDIEventsStore.CDIEventBus){
-                     if(!newPortletCDIEvent.isProcessing()){
-                        Object value = newPortletCDIEvent.getData();
-                        if(value!=null){
-                           ClassLoader cl = Thread.currentThread().getContextClassLoader();
-                           Writer out = new StringWriter();
-               
-                           try {
-                              @SuppressWarnings("rawtypes")
-                              Class clazz = value.getClass();
-                              System.setProperty( "com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize", "true");
-                              JAXBContext jc = JAXBContext.newInstance(clazz);
-                              Marshaller marshaller = jc.createMarshaller();
-                              @SuppressWarnings("unchecked")
-                              JAXBElement<Serializable> element = new JAXBElement<Serializable>(CDI_EVENT_QNAME, clazz, (Serializable) value);
-                              marshaller.marshal(element, out);
-                              newPortletCDIEvent.setSerializedData(out.toString());
-                              newPortletCDIEvent.setProcessing(true);
-                              eventResponse.setEvent(CDI_EVENT_QNAME, out.toString());
-                              
-                           } catch(Exception e) {
-                              e.printStackTrace();
-                           } finally {
-                              Thread.currentThread().setContextClassLoader(cl);
-                              System.getProperties().remove("com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize");
-                           }
-                        }
+                  for(PortletCDIEvent portletCDIEvent : CDIEventsStore.CDIEventBus){
+                     if(!portletCDIEvent.isProcessing()){
+                        convertFiredCDIEventstoPortletEvents(portletCDIEvent, eventResponse);
                      }
                   }
                }
-            } else {
-               System.out.println("Portlet Event is null.");
-            }
+            } 
          }
          // The requested method is ADMIN: call handlers.
          else if (methodId == PortletInvokerService.METHOD_ADMIN) {
@@ -764,6 +725,35 @@ public class PortletServlet3 extends HttpServlet {
                LOG.warn("Wrong kind of request context: " + requestContext.getClass().getCanonicalName());
             }
 
+         }
+      }
+   }
+
+   private void convertFiredCDIEventstoPortletEvents(
+         PortletCDIEvent portletCDIEvent, StateAwareResponse portletResponse) {
+      Object value = portletCDIEvent.getData();
+      if(value!=null){
+         ClassLoader cl = Thread.currentThread().getContextClassLoader();
+         Writer out = new StringWriter();
+
+         try {
+            @SuppressWarnings("rawtypes")
+            Class clazz = value.getClass();
+            System.setProperty( "com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize", "true");
+            JAXBContext jc = JAXBContext.newInstance(clazz);
+            Marshaller marshaller = jc.createMarshaller();
+            @SuppressWarnings("unchecked")
+            JAXBElement<Serializable> element = new JAXBElement<Serializable>(CDI_EVENT_QNAME, clazz, (Serializable) value);
+            marshaller.marshal(element, out);
+            portletCDIEvent.setSerializedData(out.toString());
+            portletCDIEvent.setProcessing(true);
+            portletResponse.setEvent(CDI_EVENT_QNAME, out.toString());
+            
+         } catch(Exception e) {
+            e.printStackTrace();
+         } finally {
+            Thread.currentThread().setContextClassLoader(cl);
+            System.getProperties().remove("com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize");
          }
       }
    }

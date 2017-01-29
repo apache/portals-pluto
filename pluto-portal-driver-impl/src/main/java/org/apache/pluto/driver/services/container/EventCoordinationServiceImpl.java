@@ -117,7 +117,6 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
       for (Event event : events) {
          List<String> portletNames = getAllPortletsRegisteredForEvent(event,
                driverConfig, containerServletContext, portalURL);
-         System.out.println(portletNames.size() + "portlets are responsible for "+event.getName()+" event");
 
          // Deliver events to all portlets in the portal
          // Collection<PortletWindowConfig> portlets =

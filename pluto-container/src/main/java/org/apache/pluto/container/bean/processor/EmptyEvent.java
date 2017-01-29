@@ -21,4 +21,4 @@ import javax.inject.Qualifier;
 @Retention(RetentionPolicy.RUNTIME)
 @Qualifier
 @Target({FIELD, METHOD, PARAMETER, TYPE})
-public @interface PortletEvent {}
+public @interface EmptyEvent {}
