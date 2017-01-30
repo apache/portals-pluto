@@ -374,8 +374,10 @@ class PortletCDIEventExtension implements Extension {
       String genericTypeClassName = genericType.substring(genericType.indexOf("<")+1, genericType.indexOf(">"));
       
       try {
+         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
          @SuppressWarnings("rawtypes")
-         final Class genericTypeClass = Class.forName(genericTypeClassName);
+         final Class genericTypeClass = classLoader.loadClass(genericTypeClassName);
+         
          
          return new ObserverMethod<T>() {
 
@@ -410,6 +412,7 @@ class PortletCDIEventExtension implements Extension {
             }
          }; 
       } catch (ClassNotFoundException e) {
+         System.out.println(e.toString());
          e.printStackTrace();
          return null;
       }

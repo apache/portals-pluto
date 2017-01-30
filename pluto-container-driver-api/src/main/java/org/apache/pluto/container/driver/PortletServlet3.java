@@ -617,7 +617,6 @@ public class PortletServlet3 extends HttpServlet {
                               JAXBElement result = unmarshaller.unmarshal(xml, clazz);
                
                               try{
-                                 System.out.println("\nNow firing event from bean manager of "+portletName);
                                  beanmgr.fireEvent(result.getValue(), portletCDIEvent.getQualifiers());
                               } catch (Exception e){
                                  e.printStackTrace();
