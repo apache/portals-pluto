@@ -38,6 +38,8 @@ import org.apache.pluto.container.PortletStateAwareResponseContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.util.ArgumentUtility;
 
+import static org.apache.pluto.container.bean.processor.CDIEventStore.CDI_EVENT_QNAME;
+
 /**
  * Implementation of JSR-286 <code>StateAwareResponse</code>.
  * 
@@ -97,16 +99,23 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl
 
    public void setEvent(QName qname, Serializable value) {
       ArgumentUtility.validateNotNull("qname", qname);
+      Event event = null;
       
-      if (LOGGER.isTraceEnabled()) {
-         StringBuilder txt = new StringBuilder(128);
-         txt.append("QName: ").append(qname.toString());
-         txt.append(", value class: ").append((value == null) ? "null": value.getClass().getCanonicalName());
-         LOGGER.debug(txt.toString());
-      }
+      if(qname.equals(CDI_EVENT_QNAME)){
+         event = responseContext.getEventProvider()
+               .createCDIEvent(qname, value);
+      } else {
+         if (LOGGER.isTraceEnabled()) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("QName: ").append(qname.toString());
+            txt.append(", value class: ").append((value == null) ? "null": value.getClass().getCanonicalName());
+            LOGGER.debug(txt.toString());
+         }
 
-      Event event = responseContext.getEventProvider()
-            .createEvent(qname, value);
+         event = responseContext.getEventProvider()
+               .createEvent(qname, value);
+      }
+      
       if (event != null) {
          responseContext.getEvents().add(event);
       }

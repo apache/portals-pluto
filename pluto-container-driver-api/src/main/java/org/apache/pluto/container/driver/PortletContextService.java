@@ -22,6 +22,7 @@ import javax.servlet.ServletConfig;
 
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
 
 /**
  * Interface defining the services used by both the Pluto Portal Driver
@@ -95,4 +96,7 @@ public interface PortletContextService
      * @param context
      */
     void unregister(DriverPortletContext context);
+    
+    //TODO: Document this function
+    public void updatePortletConfig(DriverPortletContext portletContext, PortletDefinition portletDefinition);
 }

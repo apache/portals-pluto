@@ -19,6 +19,7 @@ package org.apache.pluto.container.impl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -36,6 +37,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.namespace.QName;
 
 import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.FilterManager;
@@ -349,7 +351,7 @@ public class PortletContainerImpl implements PortletContainer
                 List<Event> events = responseContext.getEvents();
                 if (!events.isEmpty())
                 {
-                    getContainerServices().getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
+                   getContainerServices().getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
                 }
             }
         } catch (Throwable t) {
@@ -563,7 +565,7 @@ public class PortletContainerImpl implements PortletContainer
 
         if (events != null && !events.isEmpty())
         {
-            getContainerServices().getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
+           getContainerServices().getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
         }
 
         debugWithName("Portlet event: "+ event.getName() +" fired for: " + portletWindow.getPortletDefinition().getPortletName());

@@ -45,6 +45,8 @@ import org.apache.pluto.container.EventCoordinationService;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.bean.processor.CDIEventStore;
+import org.apache.pluto.container.bean.processor.CrossContextCDIEvent;
 import org.apache.pluto.container.driver.PortletContextService;
 import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.container.om.portlet.EventDefinition;
@@ -61,7 +63,10 @@ import org.apache.pluto.driver.url.PortalURL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.apache.pluto.container.bean.processor.CDIEventStore.CDI_EVENT_QNAME;
+
 public class EventCoordinationServiceImpl implements EventCoordinationService {
+   
    /** Logger. */
    private static final Logger          LOG           = LoggerFactory
                                                             .getLogger(EventCoordinationServiceImpl.class);
@@ -95,7 +100,20 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
       // HashMap<String, PortletWindowThread>();
 
       // ThreadGroup threadGroup = new ThreadGroup("FireEventThreads");
-
+      
+      List<Event> cdiEvents = new ArrayList<Event>();
+      List<Event> portletEvents = new ArrayList<Event>();
+      for(Event event : events){
+         if(event.getQName().equals(CDI_EVENT_QNAME)){
+            cdiEvents.add(event);
+         } else {
+            portletEvents.add(event);
+         }
+      }
+      events.clear();
+      events.addAll(cdiEvents);
+      events.addAll(portletEvents);
+      
       for (Event event : events) {
          List<String> portletNames = getAllPortletsRegisteredForEvent(event,
                driverConfig, containerServletContext, portalURL);
@@ -150,6 +168,12 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
                }
             }
          }
+         for(CrossContextCDIEvent portletCDIEvent : CDIEventStore.CDIEventBus){
+            if(event.getQName().equals(CDI_EVENT_QNAME) && event.getValue().equals(portletCDIEvent.getData()) && portletCDIEvent.isProcessing()){
+               CDIEventStore.CDIEventBus.remove(portletCDIEvent);
+               break;
+            }
+         }
       }
    }
 
@@ -158,15 +182,15 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
          PortletWindow portletWindow, Event event, HttpServletRequest request,
          HttpServletResponse response) {
       try {
+         
          Object value = event.getValue();
-
          XMLStreamReader xml = null;
          try {
             if (value instanceof String) {
                String in = (String) value;
                xml = XMLInputFactory.newInstance().createXMLStreamReader(
                      new StringReader(in));
-            }
+            } 
          } catch (XMLStreamException e1) {
             throw new IllegalStateException(e1);
          } catch (FactoryConfigurationError e1) {
@@ -175,38 +199,43 @@ public class EventCoordinationServiceImpl implements EventCoordinationService {
 
          if (xml != null) {
             // XMLStreamReader xml = (XMLStreamReader) event.getValue();
-
             // provider.getEventDefinition(event.getQName());
-            try {
-               // now test if object is jaxb
-               EventDefinition eventDefinitionDD = getEventDefintion(
-                     portletWindow, event.getQName());
-
-               ClassLoader loader = portletContextService
-                     .getClassLoader(portletWindow.getPortletDefinition()
-                           .getApplication().getName());
-               Class<? extends Serializable> clazz = loader.loadClass(
-                     eventDefinitionDD.getValueType()).asSubclass(
-                     Serializable.class);
-
-               JAXBContext jc = JAXBContext.newInstance(clazz);
-               Unmarshaller unmarshaller = jc.createUnmarshaller();
-
-               // unmarshaller.setEventHandler(new
-               // javax.xml.bind.helpers.DefaultValidationEventHandler());
-
-               JAXBElement result = unmarshaller.unmarshal(xml, clazz);
-
-               event = new EventImpl(event.getQName(),
-                     (Serializable) result.getValue());
-            } catch (JAXBException e) {
-               throw new IllegalStateException(e);
-            } catch (ClassCastException e) {
-               throw new IllegalStateException(e);
-            } catch (ClassNotFoundException e) {
-               throw new IllegalStateException(e);
-            } catch (PortletContainerException e) {
-               throw new IllegalStateException(e);
+            if(!event.getQName().equals(CDI_EVENT_QNAME)){
+               try {
+                  // now test if object is jaxb
+                  EventDefinition eventDefinitionDD = getEventDefintion(
+                        portletWindow, event.getQName());
+   
+                  ClassLoader loader = portletContextService
+                        .getClassLoader(portletWindow.getPortletDefinition()
+                              .getApplication().getName());
+                  Class<? extends Serializable> clazz = loader.loadClass(
+                        eventDefinitionDD.getValueType()).asSubclass(
+                        Serializable.class);
+   
+                  JAXBContext jc = JAXBContext.newInstance(clazz);
+                  Unmarshaller unmarshaller = jc.createUnmarshaller();
+   
+                  // unmarshaller.setEventHandler(new
+                  // javax.xml.bind.helpers.DefaultValidationEventHandler());
+   
+                  JAXBElement result = unmarshaller.unmarshal(xml, clazz);
+   
+                  event = new EventImpl(event.getQName(),
+                        (Serializable) result.getValue());
+               } catch (JAXBException e) {
+                  System.out.println(e.toString());
+                  throw new IllegalStateException(e);
+               } catch (ClassCastException e) {
+                  System.out.println(e.toString());
+                  throw new IllegalStateException(e);
+               } catch (ClassNotFoundException e) {
+                  System.out.println(e.toString());
+                  throw new IllegalStateException(e);
+               } catch (PortletContainerException e) {
+                  System.out.println(e.toString());
+                  throw new IllegalStateException(e);
+               } 
             }
          }
          container.doEvent(portletWindow, request, response, event);

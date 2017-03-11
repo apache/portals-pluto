@@ -18,7 +18,10 @@ package org.apache.pluto.container.driver;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
+import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,6 +33,7 @@ import javax.naming.InitialContext;
 import javax.naming.NameNotFoundException;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.HeaderRequest;
@@ -55,6 +59,15 @@ import javax.servlet.ServletResponseWrapper;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import org.apache.pluto.container.FilterManager;
 import org.apache.pluto.container.PortletAsyncManager;
@@ -65,15 +78,25 @@ import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.bean.processor.AnnotatedConfigBean;
+import org.apache.pluto.container.bean.processor.CDIEventStore;
 import org.apache.pluto.container.bean.processor.PortletArtifactProducer;
+import org.apache.pluto.container.bean.processor.CrossContextCDIEvent;
 import org.apache.pluto.container.bean.processor.PortletInvoker;
 import org.apache.pluto.container.bean.processor.PortletRequestScopedBeanHolder;
 import org.apache.pluto.container.bean.processor.PortletSessionBeanHolder;
 import org.apache.pluto.container.bean.processor.PortletStateScopedBeanHolder;
 import org.apache.pluto.container.impl.HttpServletPortletRequestWrapper;
+import org.apache.pluto.container.om.portlet.EventDefinition;
+import org.apache.pluto.container.om.portlet.EventDefinitionReference;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
+import org.apache.pluto.container.om.portlet.impl.EventDefinitionImpl;
+import org.apache.pluto.container.om.portlet.impl.EventDefinitionReferenceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.apache.pluto.container.bean.processor.CDIEventStore.CDI_EVENT_QNAME;
 
 /**
  * Portlet Invocation Servlet. This servlet receives cross context requests from the the container and services the
@@ -261,11 +284,39 @@ public class PortletServlet3 extends HttpServlet {
                isOutOfService = true;
                return true;
             }
-
+            
             String applicationName = contextService.register(sConfig);
             started = true;
             portletContext = contextService.getPortletContext(applicationName);
             portletConfig = contextService.getPortletConfig(applicationName, portletName);
+            
+            PortletApplicationDefinition pad = holder.getPad();
+            
+            PortletDefinition portletDefinition =pad.getPortlet(portletName);
+            
+            // Make a new Portlet event to correspond to CDI event
+            EventDefinition eventDefinition = new EventDefinitionImpl(CDI_EVENT_QNAME);
+            eventDefinition.setValueType("java.io.Serializable");
+            EventDefinitionReference eventDefinitionReference = new EventDefinitionReferenceImpl(CDI_EVENT_QNAME);
+            
+            // Add definition of new portlet CDI event to portlet application definition
+            if(pad.getEventDefinition(CDI_EVENT_QNAME)==null){
+               pad.addEventDefinition(eventDefinition);
+            }
+            
+            // Made this portlet publisher of the new portlet CDI event
+            portletDefinition.addSupportedPublishingEvent(eventDefinitionReference);
+            
+            // Add the modified portlet definition in portlet application definition  
+            
+            if(!CDIEventStore.crossContextEventSubscriberPADList.contains(pad)){          
+               // Made this portlet subscriber of the new portlet CDI event
+               portletDefinition.addSupportedProcessingEvent(eventDefinitionReference);
+               CDIEventStore.crossContextEventSubscriberPADList.add(pad);
+            } 
+            pad.addPortlet(portletDefinition);
+            contextService.updatePortletConfig(portletContext, portletDefinition);
+            
 
          } catch (PortletContainerException ex) {
             context.log(ex.getMessage(), ex);
@@ -485,6 +536,10 @@ public class PortletServlet3 extends HttpServlet {
             }
             RenderResponse renderResponse = (RenderResponse) portletResponse;
             filterManager.processFilter(renderRequest, renderResponse, invoker, portletContext);
+            if(!CDIEventStore.CDIEventBus.isEmpty()){
+               CDIEventStore.CDIEventBus.clear();
+               throw new PortletException("CDI cross context events are not allowed in Render method.");
+            }
          }
 
          // The requested method is HEADER: call
@@ -493,6 +548,10 @@ public class PortletServlet3 extends HttpServlet {
             HeaderRequest headerRequest = (HeaderRequest) portletRequest;
             HeaderResponse headerResponse = (HeaderResponse) portletResponse;
             filterManager.processFilter(headerRequest, headerResponse, invoker, portletContext);
+            if(!CDIEventStore.CDIEventBus.isEmpty()){
+               CDIEventStore.CDIEventBus.clear();
+               throw new PortletException("CDI cross context events are not allowed in Header method.");
+            }
          }
 
          // The requested method is RESOURCE: call
@@ -508,6 +567,10 @@ public class PortletServlet3 extends HttpServlet {
 
             ResourceResponse resourceResponse = (ResourceResponse) portletResponse;
             filterManager.processFilter(resourceRequest, resourceResponse, invoker, portletContext);
+            if(!CDIEventStore.CDIEventBus.isEmpty()){
+               CDIEventStore.CDIEventBus.clear();
+               throw new PortletException("CDI cross context events are not allowed in Resource method.");
+            }
          }
 
          // The requested method is ACTION: call Portlet.processAction(..)
@@ -515,13 +578,80 @@ public class PortletServlet3 extends HttpServlet {
             ActionRequest actionRequest = (ActionRequest) portletRequest;
             ActionResponse actionResponse = (ActionResponse) portletResponse;
             filterManager.processFilter(actionRequest, actionResponse, invoker, portletContext);
+            for(CrossContextCDIEvent portletCDIEvent : CDIEventStore.CDIEventBus){
+               convertFiredCDIEventstoPortletEvents(portletCDIEvent, actionResponse);
+            }
          }
 
-         // The request methode is Event: call Portlet.processEvent(..)
+         // The request method is Event: call Portlet.processEvent(..)
          else if (methodId == PortletInvokerService.METHOD_EVENT) {
             EventRequest eventRequest = (EventRequest) portletRequest;
             EventResponse eventResponse = (EventResponse) portletResponse;
-            filterManager.processFilter(eventRequest, eventResponse, invoker, portletContext);
+            
+            Event portletEvent = eventRequest.getEvent();
+            if(portletEvent!=null){
+               if(portletEvent.getQName().equals(CDI_EVENT_QNAME)){
+                  Object value = portletEvent.getValue();
+                  XMLStreamReader xml = null;
+                  try {
+                     if (value instanceof String) {
+                        String in = (String) value;
+                        xml = XMLInputFactory.newInstance().createXMLStreamReader(
+                              new StringReader(in));
+                     } 
+                  } catch (XMLStreamException e1) {
+                     throw new IllegalStateException(e1);
+                  } catch (FactoryConfigurationError e1) {
+                     throw new IllegalStateException(e1);
+                  }
+
+                  if (xml != null) {
+                     try {
+                        for(CrossContextCDIEvent portletCDIEvent : CDIEventStore.CDIEventBus){
+                           if(portletCDIEvent.getData().equals(value)){
+                              ClassLoader loader = portletContext.getClassLoader();
+                              Class<? extends Serializable> clazz = loader.loadClass(
+                                    portletCDIEvent.getDataType()).asSubclass(
+                                    Serializable.class);
+               
+                              JAXBContext jc = JAXBContext.newInstance(clazz);
+                              Unmarshaller unmarshaller = jc.createUnmarshaller();
+               
+                              @SuppressWarnings("rawtypes")
+                              JAXBElement result = unmarshaller.unmarshal(xml, clazz);
+               
+                             try{
+                                 beanmgr.fireEvent(result.getValue(), portletCDIEvent.getQualifiers());
+                              } catch (Exception e){
+                                 e.printStackTrace();
+                              }
+                           }
+                        }
+                        for(CrossContextCDIEvent portletCDIEvent : CDIEventStore.CDIEventBus){
+                           if(!portletCDIEvent.isProcessing()){
+                              convertFiredCDIEventstoPortletEvents(portletCDIEvent, eventResponse);
+                           }
+                        }
+                       
+                     } catch (JAXBException e) {
+                        throw new IllegalStateException(e);
+                     } catch (ClassCastException e) {
+                        throw new IllegalStateException(e);
+                     } catch (ClassNotFoundException e) {
+                        throw new IllegalStateException(e);
+                     }
+                  }
+                  
+                  
+               } else {
+                  filterManager.processFilter(eventRequest, eventResponse, invoker, portletContext);
+                  for(CrossContextCDIEvent portletCDIEvent : CDIEventStore.CDIEventBus){
+                     if(!portletCDIEvent.isProcessing()){
+                        convertFiredCDIEventstoPortletEvents(portletCDIEvent, eventResponse);
+                     }
+                  }
+               }
+            } 
          }
          // The requested method is ADMIN: call handlers.
          else if (methodId == PortletInvokerService.METHOD_ADMIN) {
@@ -598,6 +728,35 @@ public class PortletServlet3 extends HttpServlet {
                LOG.warn("Wrong kind of request context: " + requestContext.getClass().getCanonicalName());
             }
 
+         }
+      }
+   }
+
+   private void convertFiredCDIEventstoPortletEvents(
+         CrossContextCDIEvent portletCDIEvent, StateAwareResponse portletResponse) {
+      Object value = portletCDIEvent.getData();
+      if(value!=null){
+         ClassLoader cl = Thread.currentThread().getContextClassLoader();
+         Writer out = new StringWriter();
+
+         try {
+            @SuppressWarnings("rawtypes")
+            Class clazz = value.getClass();
+            System.setProperty( "com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize", "true");
+            JAXBContext jc = JAXBContext.newInstance(clazz);
+            Marshaller marshaller = jc.createMarshaller();
+            @SuppressWarnings("unchecked")
+            JAXBElement<Serializable> element = new JAXBElement<Serializable>(CDI_EVENT_QNAME, clazz, (Serializable) value);
+            marshaller.marshal(element, out);
+            portletCDIEvent.setSerializedData(out.toString());
+            portletCDIEvent.setProcessing(true);
+            portletResponse.setEvent(CDI_EVENT_QNAME, out.toString());
+            
+         } catch(Exception e) {
+            e.printStackTrace();
+         } finally {
+            Thread.currentThread().setContextClassLoader(cl);
+            System.getProperties().remove("com.sun.xml.bind.v2.bytecode.ClassTailor.noOptimize");
          }
       }
    }
