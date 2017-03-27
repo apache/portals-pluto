@@ -1,0 +1,271 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<!--
+   Builds bundled and source distribution of Pluto, archiving it in zip, gzip and bzip2 files.
+   Prerequisites for this build includes an installed Java 5+ JDK, Maven 2.0+ and Ant 1.6+.
+   
+   Run the binary build using the command line:
+      ant -f dist-wildfly-build.xml
+
+   Or if you want to include the demo portlet WARs:
+      ant -f dist-wildfly-build.xml -DincludeDemos=true
+
+   If you want to package the TCK source & deliverables (warning: produces large files!):
+      ant -f dist-wildfly-build.xml -DpackageTck=true
+      
+   If you want to retain the intermediate products (tomcat directory), add the noClean flag:
+      ant -f dist-wildfly-build.xml -DincludeDemos=true -DnoClean=true
+      
+   If you want to just package an existing build without cleaning and recompiling first, 
+   add the packageOnly flag:
+      ant -f dist-wildfly-build.xml -DincludeDemos=true -DpackageOnly=true
+
+   The bundled distribution is done in the following way:
+   1. Downloads wildfly and unzips it into a working directory. To this distribution, the
+      build:
+      a. Adds a pluto user with pluto to application users
+      b. Create module.xml files for pluto dependencies
+      c. Add pluto in global-modules in standalone.xml
+   2. Runs 'mvn install' and 'mvn dependency:copy' to create the Pluto driver and testsuite 
+      and installs them into the Tomee dist in the working directory.
+   3. Archives the altered Wildfly dist with Pluto into a zip, gzip and bzip2 file.
+   
+   All built distributions end up in target/dist.
+   
+   After unarchiving the built distribution into a directory, invoke the standalone startup script in the bin
+   directory and browse to: http://localhost:8080/pluto/portal/
+   
+   Login as 'pluto' (password=pluto) to the portal. You will need to login again into the manager
+   application linked at the bottom of the Pluto Admin page in order to upload portlet application
+   war files to be able to deploy them to Pluto using the admin portlet. 
+-->
+<project name="PlutoWildflyDistributions" default="bundle-dist">
+
+    <property name="wildfly.full.version" value="10.1.0.Final" description="Full version of Wildfly to deploy Pluto war files."/>
+
+    <xmlproperty file="pom.xml"/> <!-- picks up pluto build version from pom file -->
+    <property name="pluto.version" value="${project.version}" description="Version of Pluto to build"/>
+
+    <property name="dist.basedir" value="target/dist" description="Base working directory"/>
+    <property name="base.name" value="wildfly-${wildfly.full.version}"/>
+                                     
+    <property name="dist.dir" value="${dist.basedir}/${base.name}"/>
+    <property name="tck.dir" value="portlet-tck_3.0"/>
+    <property name="pluto.name" value="pluto-wildfly-${pluto.version}"/>
+    <property name="pluto.tck.name" value="pluto-${pluto.version}-tck"/>
+    <property name="pluto.dir" value="${dist.basedir}/${pluto.name}"/>
+    <property name="cache.dir" value="${user.home}/.m2/repository/org/wildfly/dist" />
+    <property name="download.file" value="${cache.dir}/${base.name}.tar.gz" />
+    <property name="tar.file" value="${dist.basedir}/${base.name}.tar"/>
+
+    <target name="bundle-dist"
+            depends="prepare-bundle-dist,run-maven-exclude-demos,run-maven-include-demos,run-dependency-maven-plugin"
+            description="Creates zip, gzip, and bzip2 distributions">
+        <!-- Copy over jars needed to deploy custom portlets -->
+        <copy file="pluto-util/target/pluto-util-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>         
+
+        <antcall target="include-demos" />
+
+        <!-- Zip everything up -->
+        <zip destfile="${dist.basedir}/${pluto.name}-bundle.zip">
+            <zipfileset prefix="${pluto.name}" dir="${dist.dir}" includes="**/*" />
+        </zip>
+
+        <antcall target="tar-nocompress"/>
+      
+        <gzip src="${dist.basedir}/${pluto.name}-bundle.tar" 
+              destfile="${dist.basedir}/${pluto.name}-bundle.tar.gz"/>
+      
+        <bzip2 src="${dist.basedir}/${pluto.name}-bundle.tar" 
+               destfile="${dist.basedir}/${pluto.name}-bundle.tar.bz2"/>
+
+        <!-- copy the portlet API jars to the dist directory -->
+        <copy file="portlet-api/target/portlet-api-${pluto.version}.jar" todir="${dist.basedir}"/>         
+        <copy file="portlet-api/target/portlet-api-${pluto.version}-javadoc.jar" todir="${dist.basedir}"/>         
+        <copy file="portlet-api/target/portlet-api-${pluto.version}-sources.jar" todir="${dist.basedir}"/>         
+         
+        <!-- Now package the TCK deliverables -->         
+        <antcall target="package-tck"/>      
+            
+        <antcall target="clean"/>
+    </target>
+
+    <target name="package-tck" if="packageTck">
+        <zip destfile="${dist.basedir}/${pluto.name}-tck.zip">
+            <zipfileset prefix="${pluto.tck.name}" dir="${tck.dir}" includes="**/*"/>
+        </zip>
+
+        <tar destfile="${dist.basedir}/${pluto.name}-tck.tar">
+            <tarfileset prefix="${pluto.name}" dir="${tck.dir}" username="pluto" group="pluto">
+                <include name="**/*"/>
+            </tarfileset>
+        </tar>      
+      
+        <gzip src="${dist.basedir}/${pluto.name}-tck.tar" 
+              destfile="${dist.basedir}/${pluto.name}-tck.tar.gz"/>
+      
+        <bzip2 src="${dist.basedir}/${pluto.name}-tck.tar" 
+               destfile="${dist.basedir}/${pluto.name}-tck.tar.bz2"/>
+
+    </target>
+
+    <target name="include-demos" if="includeDemos">
+        <copy file="ChatRoomDemo/target/chatRoomDemo.war" todir="${dist.dir}/standalone/deployments" />
+        <copy file="PortletHubDemo/target/PortletHubDemo.war" todir="${dist.dir}/standalone/deployments" />
+        <copy file="PortletV3Demo/target/PortletV3Demo.war" todir="${dist.dir}/standalone/deployments" />
+        <copy file="PortletV3AnnotatedDemo/target/PortletV3AnnotatedDemo.war" todir="${dist.dir}/standalone/deployments" />
+    </target>
+   
+    <target name="tar-nocompress" description="Creates tar bundled distribution">
+        <tar destfile="${dist.basedir}/${pluto.name}-bundle.tar">
+            <tarfileset prefix="${pluto.name}" dir="${dist.dir}" mode="755" username="pluto" group="pluto">
+                <include name="bin/*.sh"/>
+            </tarfileset>
+            <tarfileset prefix="${pluto.name}" dir="${dist.dir}" username="pluto" group="pluto">
+                <include name="**/*"/>
+                <exclude name="bin/*.sh"/>
+            </tarfileset>
+        </tar>      
+    </target>
+      
+    <!-- convenience to speed up the build -->
+    <target name="preclean" unless="packageOnly">
+        <exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
+            <arg line="clean:clean"/>
+        </exec>
+    </target>
+   
+    <target name="prepare-bundle-dist" depends="preclean">
+        <delete dir="${dist.basedir}" failonerror="false"/>
+        <mkdir dir="${dist.basedir}"/>
+        <mkdir dir="${cache.dir}" />
+        
+        <get src="http://download.jboss.org/wildfly/${wildfly.full.version}/wildfly-${wildfly.full.version}.tar.gz"
+             dest="${download.file}" skipexisting="true" />
+
+        <gunzip src="${download.file}"
+                dest="${dist.basedir}"
+                description="Creates tar from tar.gz wildfly dist"
+                
+        />
+
+        <untar src="${tar.file}"
+               dest="${dist.basedir}"
+               description="Untars wildfly dist"
+        />      
+
+        <!-- Copy over README -->
+        <copy file="README" todir="${dist.dir}"/>
+
+        <!-- Copy over additional licenses from pluto and testsuite web app-->
+        <copy todir="${dist.dir}" flatten="true">
+            <fileset dir="${basedir}/pluto-testsuite">
+                <include name="src/main/webapp/META-INF/*-LICENSE"/>
+            </fileset>
+        </copy>
+        <copy todir="${dist.dir}" flatten="true">
+            <fileset dir="${basedir}/pluto-portal">
+                <include name="src/main/webapp/META-INF/*-LICENSE"/>
+            </fileset>
+        </copy>
+
+        <!-- Add 'pluto' to application-users.properties 
+            ./add-user.sh -a -g pluto pluto pluto (Linux)
+            ./add-user.bat -a -g pluto pluto pluto (Windows)
+        -->
+        <echo append="true" file="${dist.dir}/standalone/configuration/application-users.properties" level="verbose">pluto=de129a3c0a09e04aef0e508490543f14</echo>
+        <echo append="true" file="${dist.dir}/standalone/configuration/application-roles.properties" level="verbose">pluto=pluto</echo>
+        
+        <echo append="true" file="${dist.dir}/standalone/configuration/mgmt-users.properties" level="verbose">pluto=d4ccdb4bbaeb51d98b1d0e3ab4657b88</echo>
+        
+        <!-- Create modules.xml (TODO: Find a better to do this) -->
+        <echo file="${dist.dir}/modules/system/layers/base/org/apache/pluto/main/module.xml" level="verbose">&lt;module xmlns="urn:jboss:module:1.1" name="org.apache.pluto"&gt;
+    &lt;resources&gt;
+        &lt;resource-root path="annotation-detector-3.0.5.jar"/&gt;
+        &lt;resource-root path="ccpp-1.0.jar"/&gt;
+        &lt;resource-root path="pluto-container-${pluto.version}.jar"/&gt;
+        &lt;resource-root path="pluto-container-api-${pluto.version}.jar"/&gt;
+        &lt;resource-root path="pluto-container-driver-api-${pluto.version}.jar"/&gt;
+        &lt;resource-root path="pluto-taglib-${pluto.version}.jar"/&gt;
+        &lt;resource-root path="portlet-api-${pluto.version}.jar"/&gt;
+    &lt;/resources&gt;
+    &lt;dependencies&gt;
+        &lt;module name="javaee.api"/&gt;
+        &lt;module name="org.slf4j"/&gt;
+    &lt;/dependencies&gt;
+&lt;/module&gt;</echo>
+
+        <!-- Add global-modules in standalone.xml -->
+        <replace file='${dist.dir}/standalone/configuration/standalone.xml'
+                 token='&lt;subsystem xmlns="urn:jboss:domain:ee:4.0"&gt;' 
+                 value='&lt;subsystem xmlns="urn:jboss:domain:ee:4.0"&gt;
+            &lt;global-modules&gt;
+                &lt;module name="org.apache.pluto" slot="main"/&gt;
+            &lt;/global-modules&gt;' 
+                 summary='true'
+        />
+        
+    </target>
+   
+    <!-- Only do mvn install if 'packageOnly' is not set -->
+    <condition property="installDemos">
+        <and>
+            <equals casesensitive="false" arg1="${includeDemos}" arg2="true"/>
+            <not>
+                <equals casesensitive="false" arg1="${packageOnly}" arg2="true"/>
+            </not>
+        </and>
+    </condition>
+   
+    <!-- Only do mvn install if 'packageOnly' is not set -->
+    <condition property="installNoDemos">
+        <and>
+            <not>
+                <equals casesensitive="false" arg1="${includeDemos}" arg2="true"/>
+            </not>
+            <not>
+                <equals casesensitive="false" arg1="${packageOnly}" arg2="true"/>
+            </not>
+        </and>
+    </condition>
+
+    <target name="run-maven-exclude-demos" if="installNoDemos" description="Runs the install goal and excludes the demos from pluto-portal-driver-config.xml">
+        <exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
+            <arg line="install -Ppluto,excludeDemos -DskipTests=true"/>
+        </exec>
+    </target>
+
+    <target name="run-maven-include-demos" if="installDemos" description="Runs the install goal and includes the demos in pluto-portal-driver-config.xml">
+        <exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
+            <arg line="install -Ppluto -DskipTests=true"/>
+        </exec>
+    </target>
+
+    <target name="run-dependency-maven-plugin" description="Runs the install goal for the pluto-maven-plugin">
+        <exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
+           <arg line="-P=wildfly dependency:copy -N -DlibDir=${basedir}/${dist.dir}/modules/system/layers/base/org/apache/pluto/main -DdomainDir=${basedir}/${dist.dir}/standalone/deployments"/>
+        </exec>
+    </target>
+      
+    <target name="clean" unless="noClean">
+        <delete dir="${dist.dir}"/>
+        <delete file="${tar.file}"/>   
+    </target>
+
+</project>
