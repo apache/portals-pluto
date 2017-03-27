@@ -921,6 +921,118 @@ generate mailto links. -->
             </build>
         </profile>
 
+        <!-- To build Pluto for deployment on payara, activate this profile -->
+        <!-- Activate using the payara property: mvn clean install -Dpayara -->
+        <profile>
+            <id>payara</id>
+            <activation>
+                <property>
+                    <name>payara</name>
+                </property>
+            </activation>
+            <properties>
+                <!-- scope of certain dependencies is "compile" for deployment on tomcat, 
+                but "provided" for deployment on payara. See wildfly profile. -->
+                <!-- TODO: This might have to change to a per dependency property -->
+                <dependency.scope>provided</dependency.scope>
+            </properties>
+      
+            <!-- The artifacts needed for wildfly -->
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+
+                        <configuration>
+                            <excludeScope>test</excludeScope>
+                            <excludeScope>compile</excludeScope>
+
+                            <artifactItems>
+                                <!-- The Spec -->
+                                <artifactItem>
+                                    <groupId>javax.portlet</groupId>
+                                    <artifactId>portlet-api</artifactId>
+                                    <type>jar</type>
+                                    <outputDirectory>${libDir}</outputDirectory>
+                                </artifactItem>
+                                
+                                <!-- Pluto Implementation -->
+                                <artifactItem>
+                                    <groupId>org.apache.portals.pluto</groupId>
+                                    <artifactId>pluto-container</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${libDir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.portals.pluto</groupId>
+                                    <artifactId>pluto-container-api</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${libDir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.portals.pluto</groupId>
+                                    <artifactId>pluto-container-driver-api</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${libDir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.portals.pluto</groupId>
+                                    <artifactId>pluto-taglib</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${libDir}</outputDirectory>
+                                </artifactItem>
+                                <!-- Pluto portal wars -->
+                                <artifactItem>
+                                    <groupId>org.apache.portals.pluto</groupId>
+                                    <artifactId>pluto-portal</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>war</type>
+                                    <outputDirectory>${domainDir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.portals.pluto</groupId>
+                                    <artifactId>pluto-testsuite</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>war</type>
+                                    <outputDirectory>${domainDir}</outputDirectory>
+                                </artifactItem>
+                                    
+                                <!-- 3rd Party Libraries -->
+                                <artifactItem>
+                                    <groupId>eu.infomas</groupId>
+                                    <artifactId>annotation-detector</artifactId>
+                                    <type>jar</type>
+                                    <outputDirectory>${libDir}</outputDirectory>
+                                </artifactItem>    
+                                <artifactItem>
+                                    <groupId>javax.ccpp</groupId>
+                                    <artifactId>ccpp</artifactId>
+                                    <type>jar</type>
+                                    <outputDirectory>${libDir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.slf4j</groupId>
+                                    <artifactId>slf4j-api</artifactId>
+                                    <type>jar</type>
+                                    <outputDirectory>${libDir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.slf4j</groupId>
+                                    <artifactId>slf4j-jdk14</artifactId>
+                                    <type>jar</type>
+                                    <outputDirectory>${libDir}</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
     </profiles>
 
