@@ -56,8 +56,8 @@
    war files to be able to deploy them to Pluto using the admin portlet. 
 -->
 <project name="PlutoPayaraDistributions" default="bundle-dist">
-
-    <property name="payara.full.version" value="4.1.1.171.0.1" description="Full version of Payara to deploy Pluto war files."/>
+                                                
+    <property name="payara.full.version" value="4.1.1.171.1" description="Full version of Payara to deploy Pluto war files."/>
 
     <xmlproperty file="pom.xml"/> <!-- picks up pluto build version from pom file -->
     <property name="pluto.version" value="${project.version}" description="Version of Pluto to build"/>
@@ -157,7 +157,7 @@
         <delete dir="${dist.basedir}" failonerror="false"/>
         <mkdir dir="${dist.basedir}"/>
         <mkdir dir="${cache.dir}" />
-        
+                  
         <get src="https://s3-eu-west-1.amazonaws.com/payara.fish/Payara+Downloads/Payara+${payara.full.version}/payara-${payara.full.version}.zip"
              dest="${download.file}" skipexisting="true" />
 
