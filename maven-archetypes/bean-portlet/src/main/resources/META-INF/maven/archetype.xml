@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<archetype>
+	<id>org.apache.portals.pluto.bean.portlet</id>
+</archetype>
