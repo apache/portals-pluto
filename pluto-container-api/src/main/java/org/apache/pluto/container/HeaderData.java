@@ -201,7 +201,34 @@ public class HeaderData {
                "(?=</(script|style))");     // 0-width lookahead; end tag
          Matcher mat = pat.matcher(src);
          while (mat.find()) {
-            mat.appendReplacement(sb, mat.group().replaceAll("&", "&amp;").replaceAll("<", "&lt;"));
+
+            String group = mat.group();
+            int indexOfBeginCDATA = group.indexOf("<![CDATA[");
+            String replacedGroup = "";
+
+            if (indexOfBeginCDATA < 0) {
+                replacedGroup = group.replaceAll("&", "&amp;").replaceAll("<", "&lt;");
+            }
+
+            // don't convert < brackets within CDATA
+            while (indexOfBeginCDATA > -1) {
+
+                String beforeCDATA = group.substring(0, indexOfBeginCDATA);
+                replacedGroup += beforeCDATA.replaceAll("&", "&amp;").replaceAll("<", "&lt;");
+                int indexOfEndCDATA = group.indexOf("]]>") +  "]]>".length();
+                replacedGroup += group.substring(indexOfBeginCDATA, indexOfEndCDATA);
+                String afterCDATA = group.substring(indexOfEndCDATA);
+                indexOfBeginCDATA = afterCDATA.indexOf("<![CDATA[");
+
+                if (indexOfBeginCDATA > 0) {
+                    indexOfBeginCDATA += indexOfEndCDATA;
+                }
+                else {
+                    replacedGroup += afterCDATA.replaceAll("&", "&amp;").replaceAll("<", "&lt;");
+                }
+            }
+
+            mat.appendReplacement(sb, replacedGroup);
          }
          mat.appendTail(sb);
 
