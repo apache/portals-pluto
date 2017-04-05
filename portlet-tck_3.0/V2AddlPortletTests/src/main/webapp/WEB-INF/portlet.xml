@@ -67,12 +67,12 @@
 		<portlet-info>
 			<title>AddlPortletTests_SPEC2_5_ActionHandling_event</title>
 		</portlet-info>
-		<supported-publishing-event>
-			<qname>tck:AddlPortletTests_SPEC2_5_ActionHandling</qname>
-		</supported-publishing-event>
 		<supported-processing-event>
 			<qname>tck:AddlPortletTests_SPEC2_5_ActionHandling</qname>
 		</supported-processing-event>
+		<supported-publishing-event>
+			<qname>tck:AddlPortletTests_SPEC2_5_ActionHandling</qname>
+		</supported-publishing-event>
 	</portlet>
 
 	<portlet>
@@ -137,15 +137,15 @@
 		<portlet-info>
 			<title>AddlPortletTests_SPEC2_5_RenderGenericPortlet</title>
 		</portlet-info>
+		<supported-processing-event>
+			<name>AddlPortletTests_SPEC2_5_RenderGenericPortlet_localPart</name>
+		</supported-processing-event>
 		<supported-publishing-event>
 			<qname>tck:AddlPortletTests_SPEC2_5_RenderGenericPortlet</qname>
 		</supported-publishing-event>
 		<supported-publishing-event>
 			<name>AddlPortletTests_SPEC2_5_RenderGenericPortlet_localPart</name>
 		</supported-publishing-event>
-		<supported-processing-event>
-			<name>AddlPortletTests_SPEC2_5_RenderGenericPortlet_localPart</name>
-		</supported-processing-event>
 	</portlet>
 
 	<portlet>
@@ -176,16 +176,16 @@
 		<portlet-info>
 			<title>AddlPortletTests_SPEC2_6_RenderConfig</title>
 		</portlet-info>
+		<supported-processing-event>
+			<name>AddlPortletTests_SPEC2_15_EventEventHandling_empty</name>
+		</supported-processing-event>
+		<supported-publishing-event>
+			<name>AddlPortletTests_SPEC2_15_EventEventHandling_empty</name>
+		</supported-publishing-event>
 		<container-runtime-option>
 			<name>javax.portlet.escapeXml</name>
 			<value>true</value>
 		</container-runtime-option>
-		<supported-publishing-event>
-			<name>AddlPortletTests_SPEC2_15_EventEventHandling_empty</name>
-		</supported-publishing-event>
-		<supported-processing-event>
-			<name>AddlPortletTests_SPEC2_15_EventEventHandling_empty</name>
-		</supported-processing-event>
 	</portlet>
 
 	<portlet>
@@ -321,6 +321,12 @@
 		<portlet-info>
 			<title>AddlPortletTests_SPEC2_15_EventEventHandling</title>
 		</portlet-info>
+		<supported-processing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
+		</supported-processing-event>
+		<supported-processing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_eventEvent</qname>
+		</supported-processing-event>
 		<supported-publishing-event>
 			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
 		</supported-publishing-event>
@@ -336,12 +342,6 @@
 		<supported-publishing-event>
 			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_unavailableExceptionEvent</qname>
 		</supported-publishing-event>
-		<supported-processing-event>
-			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
-		</supported-processing-event>
-		<supported-processing-event>
-			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_eventEvent</qname>
-		</supported-processing-event>
 
 	</portlet>
 
@@ -356,9 +356,6 @@
 		<portlet-info>
 			<title>AddlPortletTests_SPEC2_15_EventEventHandling_event</title>
 		</portlet-info>
-		<supported-publishing-event>
-			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_eventEvent</qname>
-		</supported-publishing-event>
 		<supported-processing-event>
 			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
 		</supported-processing-event>
@@ -371,6 +368,9 @@
 		<supported-processing-event>
 			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_exceptionEvent</qname>
 		</supported-processing-event>
+		<supported-publishing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_eventEvent</qname>
+		</supported-publishing-event>
 	</portlet>
 
 	<portlet>
@@ -388,6 +388,31 @@
 			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_unavailableExceptionEvent</qname>
 		</supported-processing-event>
 	</portlet>
+
+	<custom-portlet-mode>
+		<description>For testing custom portlet mode</description>
+		<portlet-mode>custom1</portlet-mode>
+		<portal-managed>false</portal-managed>
+	</custom-portlet-mode>
+	<custom-portlet-mode>
+		<description>For testing custom portlet mode</description>
+		<portlet-mode>custom2</portlet-mode>
+		<portal-managed>true</portal-managed>
+	</custom-portlet-mode> 
+	<custom-portlet-mode>
+		<description>For testing custom portlet mode</description>
+		<portlet-mode>custom3</portlet-mode>
+		<portal-managed>false</portal-managed>
+	</custom-portlet-mode>
+	
+	<custom-window-state>
+		<description>For testing custom window state</description>
+		<window-state>custom_window</window-state>
+	</custom-window-state>
+	<custom-window-state>
+		<description>For testing custom window state</description>
+		<window-state>custom_window2</window-state>
+	</custom-window-state>
 
 	<event-definition>
 		<qname>tck:AddlPortletTests_SPEC2_5_EventHandling_exception4</qname>
@@ -462,28 +487,4 @@
 		<value>false</value>
 	</container-runtime-option>
 
-	<custom-portlet-mode>
-		<description>For testing custom portlet mode</description>
-		<portlet-mode>custom1</portlet-mode>
-		<portal-managed>false</portal-managed>
-	</custom-portlet-mode>
-	<custom-portlet-mode>
-		<description>For testing custom portlet mode</description>
-		<portlet-mode>custom2</portlet-mode>
-		<portal-managed>true</portal-managed>
-	</custom-portlet-mode> 
-	<custom-portlet-mode>
-		<description>For testing custom portlet mode</description>
-		<portlet-mode>custom3</portlet-mode>
-		<portal-managed>false</portal-managed>
-	</custom-portlet-mode>
-	
-	<custom-window-state>
-		<description>For testing custom window state</description>
-		<window-state>custom_window</window-state>
-	</custom-window-state>
-	<custom-window-state>
-		<description>For testing custom window state</description>
-		<window-state>custom_window2</window-state>
-	</custom-window-state>
 </portlet-app>

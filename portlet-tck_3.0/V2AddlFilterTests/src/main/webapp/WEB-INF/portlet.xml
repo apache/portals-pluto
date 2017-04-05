@@ -87,56 +87,6 @@
 		</portlet-info>
 	</portlet>
 
-	<event-definition>
-		<qname>tck:AddlPortletTests_SPEC2_5_EventHandling</qname>
-		<value-type>java.lang.String</value-type>
-	</event-definition>
-
-	<event-definition>
-		<qname>tck:AddlPortletTests_SPEC2_15_Event</qname>
-		<value-type>java.lang.String</value-type>
-	</event-definition>
-
-	<event-definition>
-		<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
-		<value-type>java.lang.String</value-type>
-	</event-definition>
-
-	<event-definition>
-		<qname>tck:AddlEnvironmentTests_SPEC2_17_EventPreferences</qname>
-		<value-type>java.lang.String</value-type>
-	</event-definition>
-
-	<event-definition>
-		<qname>tck:AddlRequestTests_SPEC2_11_Event</qname>
-		<value-type>java.lang.String</value-type>
-	</event-definition>
-
-	<event-definition>
-		<qname>tck:AddlRequestTests_SPEC2_11_EventAttr</qname>
-		<value-type>java.lang.String</value-type>
-	</event-definition>
-
-	<event-definition>
-		<qname>tck:AddlRequestTests_SPEC2_11_EventReq</qname>
-		<value-type>java.lang.String</value-type>
-	</event-definition>
-
-	<event-definition>
-		<qname>tck:AddlResponseTests_SPEC2_12_Event</qname>
-		<value-type>java.lang.String</value-type>
-	</event-definition>
-
-	<event-definition>
-		<qname>tck:AddlFilterTests_SPEC2_20_Event</qname>
-		<value-type>java.lang.String</value-type>
-	</event-definition>
-
-	<public-render-parameter>
-		<identifier>tr11_event</identifier>
-		<qname>tck:tr11_event</qname>
-	</public-render-parameter>
-
 	<filter>
 		<filter-name>AddlFilterTests_SPEC2_20_Filter1</filter-name>
 		<filter-class>javax.portlet.tck.portlets.AddlFilterTests_SPEC2_20_Filter</filter-class>
@@ -209,5 +159,55 @@
 		<filter-name>AddlFilterTests_SPEC2_20_Filter4</filter-name>
 		<portlet-name>AddlFilterTests_SPEC2_20_Ev*</portlet-name>
 	</filter-mapping>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_5_EventHandling</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_15_Event</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlEnvironmentTests_SPEC2_17_EventPreferences</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlRequestTests_SPEC2_11_Event</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlRequestTests_SPEC2_11_EventAttr</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlRequestTests_SPEC2_11_EventReq</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlResponseTests_SPEC2_12_Event</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlFilterTests_SPEC2_20_Event</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<public-render-parameter>
+		<identifier>tr11_event</identifier>
+		<qname>tck:tr11_event</qname>
+	</public-render-parameter>
 
 </portlet-app>
