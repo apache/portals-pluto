@@ -11,13 +11,13 @@
 	<artifactId>generic-portlet-archetype</artifactId>
 	<packaging>maven-archetype</packaging>
 	<name>generic-portlet-archetype</name>
-	<version>3.0.0</version>
+	<version>3.0.1-SNAPSHOT</version>
 	<description>Maven archetype for a generic portlet</description>
 	<scm>
 		<connection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</connection>
 		<developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</developerConnection>
 		<url>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</url>
-		<tag>generic-portlet-archetype-3.0.0</tag>
+		<tag>HEAD</tag>
 	</scm>
 	<licenses>
 		<license>
