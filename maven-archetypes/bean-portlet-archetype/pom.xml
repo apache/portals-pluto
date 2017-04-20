@@ -8,9 +8,9 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.apache.portals.pluto.archetype</groupId>
-	<artifactId>bean-portlet</artifactId>
+	<artifactId>bean-portlet-archetype</artifactId>
 	<packaging>maven-archetype</packaging>
-	<name>bean-portlet</name>
+	<name>bean-portlet-archetype</name>
 	<version>3.0.0-SNAPSHOT</version>
 	<description>Maven archetype for a bean portlet</description>
 	<scm>
