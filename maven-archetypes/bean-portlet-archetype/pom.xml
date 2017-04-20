@@ -19,6 +19,12 @@
 		<url>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</url>
 		<tag>HEAD</tag>
 	</scm>
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
 	<build>
 		<extensions>
 			<extension>
