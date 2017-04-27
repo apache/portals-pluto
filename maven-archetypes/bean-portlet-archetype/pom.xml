@@ -28,13 +28,13 @@
 	<artifactId>bean-portlet-archetype</artifactId>
 	<packaging>maven-archetype</packaging>
 	<name>bean-portlet-archetype</name>
-	<version>3.0.0-SNAPSHOT</version>
+	<version>3.0.0</version>
 	<description>Maven archetype for a bean portlet</description>
 	<scm>
 		<connection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</connection>
 		<developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</developerConnection>
 		<url>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</url>
-		<tag>HEAD</tag>
+		<tag>bean-portlet-archetype-3.0.0</tag>
 	</scm>
 	<licenses>
 		<license>
