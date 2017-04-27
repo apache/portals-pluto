@@ -10,12 +10,12 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HelloWorldPortlet extends GenericPortlet {
 
-	private static final Logger logger = LogManager.getLogger(HelloWorldPortlet.class);
+	private static final Logger logger = LoggerFactory.getLogger(HelloWorldPortlet.class);
 
 	public void renderHeaders(HeaderRequest headerRequest, HeaderResponse headerResponse)
 		throws PortletException, IOException {

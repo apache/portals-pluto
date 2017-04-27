@@ -12,8 +12,8 @@ import javax.portlet.annotations.LocaleString;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.RenderMethod;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @PortletConfiguration(
 	portletName = "hello_world",
@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
 	initParams = @InitParameter(name = "foo", value = "1234"))
 public class HelloWorldPortlet {
 
-	private static final Logger logger = LogManager.getLogger(HelloWorldPortlet.class);
+	private static final Logger logger = LoggerFactory.getLogger(HelloWorldPortlet.class);
 
 	private static final String JSPX = "/WEB-INF/views/portletViewMode.jspx";
 
