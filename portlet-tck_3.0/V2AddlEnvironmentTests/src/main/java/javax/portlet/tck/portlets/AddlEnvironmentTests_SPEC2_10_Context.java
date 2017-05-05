@@ -330,8 +330,15 @@ public class AddlEnvironmentTests_SPEC2_10_Context implements Portlet, ResourceS
       /* Details: "The PortletContext.getRealPath method provides the same */
       /* functionality as the ServletContext.getRealPath method" */
       TestResult tr9 = tcd.getTestResultFailed(JSR286SpecTestCaseDetails.V2ADDLENVIRONMENTTESTS_SPEC2_10_CONTEXT_GETREALPATH);
-      if (servletContext.getRealPath("./").equals(portletContext.getRealPath("./"))) {
-         tr9.setTcSuccess(true);
+      if (servletContext.getRealPath("./") == null) {
+         if (portletContext.getRealPath("./") == null) {
+            tr9.setTcSuccess(true);
+         }
+      } else {
+         if (servletContext.getRealPath("./").equals(
+             portletContext.getRealPath("./"))) {
+            tr9.setTcSuccess(true);
+         }
       }
       tr9.writeTo(writer);
 
