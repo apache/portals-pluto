@@ -26,4 +26,15 @@
 <properties>
 <entry key="V3ResourceAsyncTests_SPEC_21_Async_getThrowable2"></entry>
 <entry key="V3ResourceAsyncTests_SPEC_21_Async_onError"></entry>
+
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter1"></entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter6"></entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter7"></entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter8"></entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter9"></entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter11"></entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter12"></entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter13"></entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter15"></entry>
 </properties>
+
