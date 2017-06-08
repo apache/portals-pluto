@@ -80,7 +80,7 @@ public class PageAdminPortlet extends GenericPlutoPortlet {
         LOG.info("Request: Add [applicationName=" + applicationName + ":portletName=" + portletName + "] to page '" + page + "'");
 
         String contextPath = applicationName;
-        if (contextPath.length() > 0)
+        if (contextPath.length() > 0 && !contextPath.startsWith("/"))
         {
             contextPath = "/" + contextPath;
         }
