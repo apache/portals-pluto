@@ -20,6 +20,7 @@ package javax.portlet.tck.driver;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,8 +41,11 @@ import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -212,6 +216,16 @@ public class TCKSimpleTestDriver {
       dryrun = new Boolean(System.getProperty("test.dryrun"));
       timeout = ((str != null) && str.matches("\\d+")) ? Integer.parseInt(str) : 3; 
       String wd = System.getProperty("test.browser.webDriver");
+      String binary = System.getProperty("test.browser.binary");
+      String headlessString = System.getProperty("test.browser.headless");
+      System.err.println("   headlessString     =" + headlessString);
+
+      // Assume that chrome can run headless unless specified false
+      if ((headlessString == null || "".equalsIgnoreCase(headlessString)) &&
+              browser.equalsIgnoreCase("chrome")) {
+         headlessString = "true";
+      }
+      boolean headless = Boolean.parseBoolean(headlessString);
 
       System.out.println("before class.");
       System.out.println("   Debug        =" + debug);
@@ -228,19 +242,33 @@ public class TCKSimpleTestDriver {
       System.out.println("   PasswordId   =" + passwordId);
       System.out.println("   Browser      =" + browser);
       System.out.println("   Driver       =" + wd);
+      System.out.println("   binary       =" + binary + " ... used for ChromeDriver & FirefoxDriver only, for now");
+      System.out.println("   headless     =" + headless);
 
       if (browser.equalsIgnoreCase("firefox")) {
-         driver = new FirefoxDriver();
+         if (binary == null || "".equalsIgnoreCase(binary)) {
+            driver = new FirefoxDriver(new FirefoxProfile());
+         } else {
+            driver = new FirefoxDriver(new FirefoxBinary(new File(binary)), new FirefoxProfile());
+         }
       } else if (browser.equalsIgnoreCase("internetExplorer")) {
          System.setProperty("webdriver.ie.driver", wd);
          driver = new InternetExplorerDriver();
       } else if (browser.equalsIgnoreCase("chrome")) {
          System.setProperty("webdriver.chrome.driver", wd);
-         driver = new ChromeDriver();
+         ChromeOptions options = new ChromeOptions();
+         if (!(binary == null || "".equalsIgnoreCase(binary))) {
+            options.setBinary(binary);
+         }
+         if (headless) {
+            options.addArguments("--headless");
+            options.addArguments("--disable-infobars");
+         }
+         driver = new ChromeDriver(options);
       } else if (browser.equalsIgnoreCase("phantomjs")) {
          DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
          capabilities.setJavascriptEnabled(true);
-         capabilities.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, wd);
+         capabilities.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, binary);
          driver = new PhantomJSDriver(capabilities);
       } else if (browser.equalsIgnoreCase("htmlUnit")) {
         driver = new HtmlUnitDriver(true);
