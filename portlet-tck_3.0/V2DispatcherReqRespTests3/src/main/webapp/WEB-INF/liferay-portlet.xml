@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 7.0.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_7_0_0.dtd">
+
+<liferay-portlet-app>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionResponse</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_event</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_event</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderResponse</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceResponse</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+</liferay-portlet-app>

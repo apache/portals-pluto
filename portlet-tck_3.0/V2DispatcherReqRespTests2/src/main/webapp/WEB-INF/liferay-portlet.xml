@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 7.0.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_7_0_0.dtd">
+
+<liferay-portlet-app>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletActionResponse</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_event</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_event</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderRequest</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+</liferay-portlet-app>

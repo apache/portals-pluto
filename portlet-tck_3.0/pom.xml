@@ -248,25 +248,6 @@
                   <skipIfEmpty>true</skipIfEmpty>
                </configuration>
             </plugin>
-            <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-war-plugin</artifactId>
-               <configuration>
-                  <archiveClasses>false</archiveClasses>
-                  <failOnMissingWebXml>false</failOnMissingWebXml>
-                  <webResources>
-                     <webResource>
-                       <filtering>true</filtering>
-                       <directory>${project.build.directory}/${test.file.dir}</directory>
-                       <includes>
-                         <include>${project.artifactId}-pages.xml</include>
-                         <include>${project.artifactId}-tests.xml</include>
-                       </includes>
-                       <targetPath>${test.file.dir}</targetPath>
-                     </webResource>
-                  </webResources>
-               </configuration>
-            </plugin>
 
             <!-- For Performing xml translations to create test.xml files -->
             <plugin>
@@ -512,6 +493,61 @@
    <profiles>
       <profile>
          <id>pluto</id>
+			<activation>
+            <activeByDefault>true</activeByDefault>
+         </activation>
+         <build>
+            <plugins>
+               <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-war-plugin</artifactId>
+                  <configuration>
+                     <archiveClasses>false</archiveClasses>
+                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                     <packagingExcludes>
+                        WEB-INF/liferay-portlet.xml
+                     </packagingExcludes>
+                     <webResources>
+                        <webResource>
+                          <filtering>true</filtering>
+                          <directory>${project.build.directory}/${test.file.dir}</directory>
+                          <includes>
+                            <include>${project.artifactId}-pages.xml</include>
+                            <include>${project.artifactId}-tests.xml</include>
+                          </includes>
+                          <targetPath>${test.file.dir}</targetPath>
+                        </webResource>
+                     </webResources>
+                  </configuration>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+      <profile>
+         <id>liferay</id>
+         <build>
+            <plugins>
+               <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-war-plugin</artifactId>
+                  <configuration>
+                     <archiveClasses>false</archiveClasses>
+                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                     <webResources>
+                        <webResource>
+                          <filtering>true</filtering>
+                          <directory>${project.build.directory}/${test.file.dir}</directory>
+                          <includes>
+                            <include>${project.artifactId}-pages.xml</include>
+                            <include>${project.artifactId}-tests.xml</include>
+                          </includes>
+                          <targetPath>${test.file.dir}</targetPath>
+                        </webResource>
+                     </webResources>
+                  </configuration>
+               </plugin>
+            </plugins>
+         </build>
       </profile>
    </profiles>
 
