@@ -493,7 +493,7 @@
    <profiles>
       <profile>
          <id>pluto</id>
-			<activation>
+         <activation>
             <activeByDefault>true</activeByDefault>
          </activation>
          <build>
@@ -504,9 +504,7 @@
                   <configuration>
                      <archiveClasses>false</archiveClasses>
                      <failOnMissingWebXml>false</failOnMissingWebXml>
-                     <packagingExcludes>
-                        WEB-INF/liferay-portlet.xml
-                     </packagingExcludes>
+                     <packagingExcludes>WEB-INF/liferay-portlet.xml</packagingExcludes>
                      <webResources>
                         <webResource>
                           <filtering>true</filtering>
