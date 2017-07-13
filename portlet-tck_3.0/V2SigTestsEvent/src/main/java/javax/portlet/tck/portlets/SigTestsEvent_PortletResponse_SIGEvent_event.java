@@ -18,7 +18,6 @@ package javax.portlet.tck.portlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -34,6 +33,9 @@ import javax.portlet.tck.beans.ClassChecker;
 import javax.portlet.tck.beans.JSR286SignatureTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.constants.Constants;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASADDPROPERTY;
 import static javax.portlet.tck.beans.JSR286SignatureTestCaseDetails.V2SIGTESTSEVENT_PORTLETRESPONSE_SIGEVENT_HASADDPROPERTYA;
@@ -60,7 +62,7 @@ import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
 public class SigTestsEvent_PortletResponse_SIGEvent_event implements Portlet, EventPortlet {
   private static final String LOG_CLASS =
       SigTestsEvent_PortletResponse_SIGEvent_event.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -71,7 +73,7 @@ public class SigTestsEvent_PortletResponse_SIGEvent_event implements Portlet, Ev
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
+    LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
   }
 
   @Override

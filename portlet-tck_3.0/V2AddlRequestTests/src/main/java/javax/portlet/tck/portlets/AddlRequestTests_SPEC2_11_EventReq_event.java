@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Enumeration;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -44,6 +43,9 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -54,7 +56,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class AddlRequestTests_SPEC2_11_EventReq_event implements Portlet, EventPortlet {
    private static final String LOG_CLASS = AddlRequestTests_SPEC2_11_EventReq_event.class.getName();
-   private final Logger        LOGGER    = Logger.getLogger(LOG_CLASS);
+   private final org.slf4j.Logger LOGGER    = LoggerFactory.getLogger(LOG_CLASS);
 
    @Override
    public void init(PortletConfig config) throws PortletException {
@@ -66,7 +68,7 @@ public class AddlRequestTests_SPEC2_11_EventReq_event implements Portlet, EventP
 
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
+      LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
    }
 
    @SuppressWarnings("deprecation")

@@ -20,8 +20,6 @@ package javax.portlet.tck.TestModule2.portlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -33,6 +31,9 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestCaseDetails;
 import javax.portlet.tck.beans.TestMessage;
 import javax.portlet.tck.beans.TestResult;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This test portlet contains several tests to generate render URLs and place them
@@ -52,7 +53,7 @@ public class TestModule2_CompanionPortlet implements Portlet {
       return t;
    }
 
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
 
    @Override
    public void init(PortletConfig config) throws PortletException {
@@ -67,8 +68,8 @@ public class TestModule2_CompanionPortlet implements Portlet {
    public void render(RenderRequest request, RenderResponse response)
          throws PortletException, IOException {
 
-      if (LOGGER.isLoggable(Level.FINE)) {
-         LOGGER.logp(Level.FINE, LOG_CLASS, "render", "Entry");
+      if (LOGGER.isTraceEnabled()) {
+         LOGGER.trace(LOG_CLASS + " render: Entry");
       }
 
       PrintWriter writer = response.getWriter();

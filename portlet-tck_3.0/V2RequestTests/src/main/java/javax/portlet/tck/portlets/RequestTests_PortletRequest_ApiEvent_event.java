@@ -128,7 +128,6 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -155,6 +154,9 @@ import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.constants.Constants;
 import javax.servlet.http.Cookie;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * This is the event processing portlet for the test cases. This portlet processes events, 
  * but does not publish them. Events are published in the main portlet for the test cases. 
@@ -162,7 +164,7 @@ import javax.servlet.http.Cookie;
 public class RequestTests_PortletRequest_ApiEvent_event implements Portlet, EventPortlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
          RequestTests_PortletRequest_ApiEvent_event.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
    
    
    @Override
@@ -177,19 +179,19 @@ public class RequestTests_PortletRequest_ApiEvent_event implements Portlet, Even
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
+      LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
    }
 
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion serveResource - ERROR!!");
+      LOGGER.info(LOG_CLASS + " event companion serveResource - ERROR!!");
    }
 
    @Override
    public void processEvent(EventRequest portletReq, EventResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion processEvent");
+      LOGGER.info(LOG_CLASS + " event companion processEvent");
 
 
       portletResp.setRenderParameters(portletReq);
@@ -1263,7 +1265,7 @@ public class RequestTests_PortletRequest_ApiEvent_event implements Portlet, Even
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
       
-      LOGGER.entering(LOG_CLASS, "event companion render");
+      LOGGER.info(LOG_CLASS + " event companion render");
 
       portletResp.setContentType("text/html");
       PrintWriter writer = portletResp.getWriter();

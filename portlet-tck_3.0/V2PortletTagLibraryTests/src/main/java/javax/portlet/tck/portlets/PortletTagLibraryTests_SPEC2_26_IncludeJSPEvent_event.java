@@ -17,7 +17,6 @@ package javax.portlet.tck.portlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -30,6 +29,9 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
@@ -48,7 +50,7 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent_event
     implements Portlet, EventPortlet {
   private static final String LOG_CLASS =
       PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent_event.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
 
   private PortletConfig portletConfig = null;
 
@@ -63,7 +65,7 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent_event
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
+    LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
   }
 
   @Override

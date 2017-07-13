@@ -18,7 +18,6 @@ package javax.portlet.tck.portlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -34,6 +33,9 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
 import javax.xml.namespace.QName;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENT9;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_15_EVENTEVENTHANDLING_EVENTPROCESSEVENT3;
@@ -63,7 +65,7 @@ import static javax.xml.XMLConstants.NULL_NS_URI;
 public class AddlPortletTests_SPEC2_15_EventEventHandling_event implements Portlet, EventPortlet {
   private static final String LOG_CLASS =
       AddlPortletTests_SPEC2_15_EventEventHandling_event.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
 
   public static boolean tr8 = false;
 
@@ -76,7 +78,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_event implements Portl
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
+    LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
   }
 
   @Override
@@ -93,7 +95,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_event implements Portl
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
     Event event = portletReq.getEvent();
     String qName = event.getName();
-    LOGGER.entering(LOG_CLASS, "Event name is " + event.getQName().getNamespaceURI());
+    LOGGER.info(LOG_CLASS + " Event name is " + event.getQName().getNamespaceURI());
     if (qName.equals("AddlPortletTests_SPEC2_15_EventEventHandling_empty")) {
       /* TestCase: V2AddlPortletTests_SPEC2_15_EventEventHandling_event9 */
       /* Details: "If the Event object does not have a value set when the */

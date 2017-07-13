@@ -21,7 +21,6 @@ import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ANNOTATIONTESTS
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -32,6 +31,9 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -46,7 +48,7 @@ import javax.xml.namespace.QName;
  */
 public class AnnotationTests_ProcessEvent_ApiEvent extends GenericPortlet {
   private static final String LOG_CLASS = AnnotationTests_ProcessEvent_ApiEvent.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
 
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
@@ -60,11 +62,11 @@ public class AnnotationTests_ProcessEvent_ApiEvent extends GenericPortlet {
         .startsWith(V2ANNOTATIONTESTS_PROCESSEVENT_APIEVENT_QNAME)) {
       QName eventQName = new QName(TCKNAMESPACE, "AnnotationTests_ProcessEvent_ApiEvent");
       portletResp.setEvent(eventQName, "Hi!");
-      LOGGER.finest("Firing event: " + eventQName.toString());
+      LOGGER.trace("Firing event: " + eventQName.toString());
     } else if (portletReq.getParameter(BUTTON_PARAM_NAME)
         .startsWith(V2ANNOTATIONTESTS_PROCESSEVENT_APIEVENT_NAME)) {
       portletResp.setEvent("AnnotationTests_ProcessEvent_ApiEvent2", "Hi!");
-      LOGGER.finest("Firing event: AnnotationTests_ProcessEvent_ApiEvent2");
+      LOGGER.trace("Firing event: AnnotationTests_ProcessEvent_ApiEvent2");
     }
   }
 

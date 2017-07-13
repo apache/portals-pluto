@@ -30,7 +30,6 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -44,6 +43,9 @@ import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.TestButton;
 import javax.portlet.tck.beans.TestResult;
 import javax.xml.namespace.QName;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names are defined
@@ -59,7 +61,7 @@ import javax.xml.namespace.QName;
 public class PortletTests_Event_ApiEvent implements Portlet {
   private static final String LOG_CLASS = PortletTests_Event_ApiEvent.class.getName();
   @SuppressWarnings("unused")
-private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
   private PortletConfig portletConfig = null;
 
 

@@ -17,7 +17,6 @@ package javax.portlet.tck.portlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -32,6 +31,9 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.constants.Constants;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLPORTLETTESTS_SPEC2_5_RENDERGENERICPORTLET_EVENTDISPATCHING1;
@@ -52,12 +54,12 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 public class AddlPortletTests_SPEC2_5_RenderGenericPortlet_event extends GenericPortlet {
   private static final String LOG_CLASS =
       AddlPortletTests_SPEC2_5_RenderGenericPortlet_event.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
 
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
+    LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
   }
 
   @ProcessEvent(qname = "AddlPortletTests_SPEC2_5_RenderGenericPortlet")

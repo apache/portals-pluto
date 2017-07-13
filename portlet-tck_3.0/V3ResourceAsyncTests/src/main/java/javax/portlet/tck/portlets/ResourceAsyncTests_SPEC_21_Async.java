@@ -90,7 +90,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3RESOURCEASYNCTESTS_
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.portlet.ActionRequest;
@@ -115,6 +114,9 @@ import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
 import javax.servlet.DispatcherType;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
  * are defined in the /src/main/resources/xml-resources/additionalTCs.xml
@@ -125,7 +127,7 @@ import javax.servlet.DispatcherType;
 
 @PortletConfiguration(portletName = "ResourceAsyncTests_SPEC_21_Async", asyncSupported = true)
 public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServingPortlet {
-   private static final Logger LOGGER = Logger.getLogger(ResourceAsyncTests_SPEC_21_Async.class.getName());
+   private static final Logger LOGGER = LoggerFactory.getLogger(ResourceAsyncTests_SPEC_21_Async.class.getName());
    
    @Inject private AsyncBean           bean;
    @Inject private AsyncBeanRunner     beanRunner;
@@ -1486,7 +1488,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* was called has returned to the container"                                  */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2)) {
             boolean isDispatched = new Boolean((String) session.getAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2));
-            LOGGER.fine("isDispatched: " + isDispatched);
+            LOGGER.trace("isDispatched: " + isDispatched);
             if (isDispatched) {
                // 2nd time thru
                session.removeAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2);
@@ -1510,7 +1512,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
                   pac = req.startPortletAsync();
                   pac.dispatch();
                   session.setAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2, "true");
-                  LOGGER.fine("dispatched to resource method.");
+                  LOGGER.trace("dispatched to resource method.");
                } catch (Throwable t) {
                   result = tcd.getTestResultFailed(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2);
                   result.appendTcDetail("Exception starting or dispatching async: " + t.getMessage());

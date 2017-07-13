@@ -17,7 +17,6 @@ package javax.portlet.tck.portlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -30,6 +29,9 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.PortletSession.APPLICATION_SCOPE;
@@ -41,7 +43,7 @@ import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 public class FilterTests_PortletFilter_ApiEventFilter_event implements Portlet, EventPortlet {
   private static final String LOG_CLASS =
       FilterTests_PortletFilter_ApiEventFilter_event.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
 
   @Override
   public void init(PortletConfig config) throws PortletException {
@@ -54,7 +56,7 @@ public class FilterTests_PortletFilter_ApiEventFilter_event implements Portlet, 
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
+    LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
   }
 
   @Override

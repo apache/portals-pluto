@@ -17,7 +17,6 @@ package javax.portlet.tck.portlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -34,6 +33,9 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceServingPortlet;
 import javax.portlet.UnavailableException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * This is the event processing portlet for the test cases. This portlet processes events, but does
  * not publish them. Events are published in the main portlet for the test cases.
@@ -44,7 +46,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException
     implements Portlet, EventPortlet, ResourceServingPortlet {
   private static final String LOG_CLASS =
       AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
 
 
   @Override
@@ -58,13 +60,13 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
+    LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
   }
 
   @Override
   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion serveResource - ERROR!!");
+    LOGGER.info(LOG_CLASS + " event companion serveResource - ERROR!!");
   }
 
   @Override

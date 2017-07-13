@@ -17,7 +17,6 @@ package javax.portlet.tck.portlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -35,6 +34,9 @@ import javax.portlet.ResourceServingPortlet;
 import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2ADDLFILTERTESTS_SPEC2_20_EVENT_FILTERWRAPPER4;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
@@ -49,7 +51,7 @@ import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 public class AddlFilterTests_SPEC2_20_Event_event
     implements Portlet, EventPortlet, ResourceServingPortlet {
   private static final String LOG_CLASS = AddlFilterTests_SPEC2_20_Event_event.class.getName();
-  private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+  private static final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
 
   @Override
   public void init(PortletConfig config) throws PortletException {
@@ -64,13 +66,13 @@ public class AddlFilterTests_SPEC2_20_Event_event
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
+    LOGGER.error(LOG_CLASS + " event companion processAction - ERROR!!");
   }
 
   @Override
   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.entering(LOG_CLASS, "event companion serveResource - ERROR!!");
+    LOGGER.error(LOG_CLASS + " event companion serveResource - ERROR!!");
   }
 
   @Override
@@ -79,6 +81,7 @@ public class AddlFilterTests_SPEC2_20_Event_event
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
+    LOGGER.info(LOG_CLASS + " event companion processEvent - INFO!!");
 
   }
 

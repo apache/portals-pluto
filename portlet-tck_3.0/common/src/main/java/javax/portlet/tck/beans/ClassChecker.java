@@ -22,11 +22,12 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tool for checking class properties such as implemented interfaces, superclass, methods with signatures, etc.
@@ -35,7 +36,7 @@ import javax.portlet.WindowState;
  */
 public class ClassChecker {
    private static final String LOG_CLASS = ClassChecker.class.getName();
-   private final Logger        LOGGER    = Logger.getLogger(LOG_CLASS);
+   private final Logger        LOGGER    = LoggerFactory.getLogger(LOG_CLASS);
 
    private Class<?>            cut;
    private ArrayList<Class<?>> ifList;
@@ -233,13 +234,13 @@ public class ClassChecker {
          HashSet<Class<?>> mexs = new HashSet<Class<?>>();
          mexs.addAll(Arrays.asList(m.getExceptionTypes()));
 
-         if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.logp(Level.FINE, LOG_CLASS, "hasMethod", "added exception types");
+         if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace(LOG_CLASS + " hasMethod: added exception types");
          }
 
          if (exParm.isEmpty() && mexs.isEmpty()) {
-            if (LOGGER.isLoggable(Level.FINEST)) {
-               LOGGER.logp(Level.FINE, LOG_CLASS, "hasMethod", "no exceptions to check");
+            if (LOGGER.isTraceEnabled()) {
+               LOGGER.trace(LOG_CLASS + " hasMethod: no exceptions to check");
             }
             result = true;
          } else {
@@ -250,14 +251,14 @@ public class ClassChecker {
                sb.append("results of exception check: ").append(result).append("\n");
                sb.append("method exceptions: ").append(mexs).append("\n");
                sb.append("expected exceptions: ").append(exParm).append("\n");
-               LOGGER.logp(Level.WARNING, LOG_CLASS, "hasMethod", sb.toString());
+               LOGGER.warn(LOG_CLASS + " hasMethod: " + sb.toString());
             }
          }
 
       } catch (Exception e) {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Could not get method: ").append(name);
-         LOGGER.log(Level.WARNING, txt.toString(), e);
+         LOGGER.warn(txt.toString(), e);
       }
 
       return result;

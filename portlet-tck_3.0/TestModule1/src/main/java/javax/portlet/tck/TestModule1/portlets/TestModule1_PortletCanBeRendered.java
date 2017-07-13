@@ -21,9 +21,6 @@ package javax.portlet.tck.TestModule1.portlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
@@ -32,6 +29,9 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestResult;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This test portlet contains a single test case. The test case name is 
@@ -43,7 +43,7 @@ public class TestModule1_PortletCanBeRendered implements Portlet {
    private static final String tcName = "TestModule1_PortletCanBeRendered";
    private static final String tcDetail = "The test result text is displayed.";
    
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
 
    @Override
    public void init(PortletConfig config) throws PortletException {
@@ -58,8 +58,8 @@ public class TestModule1_PortletCanBeRendered implements Portlet {
    public void render(RenderRequest request, RenderResponse response)
          throws PortletException, IOException {
       
-      if (LOGGER.isLoggable(Level.FINE)) {
-         LOGGER.logp(Level.FINE, LOG_CLASS, "render", "Entry");
+      if (LOGGER.isTraceEnabled()) {
+         LOGGER.trace(LOG_CLASS + " render: Entry");
       }
 
       PrintWriter writer = response.getWriter();

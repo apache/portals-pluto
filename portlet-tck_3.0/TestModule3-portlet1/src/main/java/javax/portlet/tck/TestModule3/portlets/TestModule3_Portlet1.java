@@ -20,8 +20,6 @@ package javax.portlet.tck.TestModule3.portlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -33,6 +31,9 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestLink;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static javax.portlet.tck.beans.TestModule3Definitions.*;
 
 /**
@@ -43,7 +44,7 @@ import static javax.portlet.tck.beans.TestModule3Definitions.*;
 public class TestModule3_Portlet1 implements Portlet {
    private static final String LOG_CLASS = TestModule3_Portlet1.class.getName();
 
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
 
    @Override
    public void init(PortletConfig config) throws PortletException {
@@ -58,8 +59,8 @@ public class TestModule3_Portlet1 implements Portlet {
    public void render(RenderRequest request, RenderResponse response)
          throws PortletException, IOException {
 
-      if (LOGGER.isLoggable(Level.FINE)) {
-         LOGGER.logp(Level.FINE, LOG_CLASS, "render", "Entry");
+      if (LOGGER.isTraceEnabled()) {
+         LOGGER.trace(LOG_CLASS + " render: Entry");
       }
 
       PrintWriter writer = response.getWriter();

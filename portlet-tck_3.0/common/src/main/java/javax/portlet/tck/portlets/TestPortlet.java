@@ -21,9 +21,6 @@ package javax.portlet.tck.portlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
@@ -32,20 +29,23 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Simplest possible portlet for testing the portlet container implementation
  */
 public class TestPortlet implements Portlet {
    private static final String LOG_CLASS = TestPortlet.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
    
    public TestPortlet() {
    }
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      if (LOGGER.isLoggable(Level.FINE)) {
-         LOGGER.logp(Level.FINE, LOG_CLASS, "init", "Entry");
+      if (LOGGER.isTraceEnabled()) {
+         LOGGER.trace(LOG_CLASS + " init: Entry");
       }
 
    }
@@ -54,8 +54,8 @@ public class TestPortlet implements Portlet {
    public void processAction(ActionRequest request, ActionResponse response)
          throws PortletException, IOException {
 
-      if (LOGGER.isLoggable(Level.FINE)) {
-         LOGGER.logp(Level.FINE, LOG_CLASS, "processAction", "Entry");
+      if (LOGGER.isTraceEnabled()) {
+         LOGGER.trace(LOG_CLASS + " processAction: Entry");
       }
 
       
@@ -65,8 +65,8 @@ public class TestPortlet implements Portlet {
    public void render(RenderRequest request, RenderResponse response)
          throws PortletException, IOException {
       
-      if (LOGGER.isLoggable(Level.FINE)) {
-         LOGGER.logp(Level.FINE, LOG_CLASS, "render", "Entry");
+      if (LOGGER.isTraceEnabled()) {
+         LOGGER.trace(LOG_CLASS + " render: Entry");
       }
 
       PrintWriter writer = response.getWriter();
@@ -77,8 +77,8 @@ public class TestPortlet implements Portlet {
    @Override
    public void destroy() {
       
-      if (LOGGER.isLoggable(Level.FINE)) {
-         LOGGER.logp(Level.FINE, LOG_CLASS, "destroy", "Entry");
+      if (LOGGER.isTraceEnabled()) {
+         LOGGER.trace(LOG_CLASS + " destroy: Entry");
       }
 
    }

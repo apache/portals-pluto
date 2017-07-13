@@ -23,8 +23,6 @@ import java.io.PrintWriter;
 
 import java.util.Enumeration;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -35,6 +33,9 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.TestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This portlet implements several test cases. The portlet name equals the first test case name
@@ -64,7 +65,7 @@ public class TestModule1_PortletConfigTest implements Portlet {
       return t;
    }
    
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
    
    private PortletConfig config = null;
 
@@ -82,8 +83,8 @@ public class TestModule1_PortletConfigTest implements Portlet {
    public void render(RenderRequest request, RenderResponse response)
          throws PortletException, IOException {
       
-      if (LOGGER.isLoggable(Level.FINE)) {
-         LOGGER.logp(Level.FINE, LOG_CLASS, "render", "Entry");
+      if (LOGGER.isTraceEnabled()) {
+         LOGGER.trace(LOG_CLASS + " render: Entry");
       }
 
       PrintWriter writer = response.getWriter();

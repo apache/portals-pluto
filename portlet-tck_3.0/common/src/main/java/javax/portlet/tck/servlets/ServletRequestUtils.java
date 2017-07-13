@@ -20,10 +20,11 @@ package javax.portlet.tck.servlets;
 
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * utilities for tracing information about servlet requests.
@@ -32,11 +33,11 @@ import javax.servlet.http.HttpServletRequest;
  * 
  */
 public class ServletRequestUtils {
-   private static final Logger LOGGER = Logger.getLogger(ServletRequestUtils.class.getName());
+   private static final Logger LOGGER = LoggerFactory.getLogger(ServletRequestUtils.class.getName());
 
    public static void logDebugInfo(HttpServletRequest req, String title) {
 
-      if (LOGGER.isLoggable(Level.FINEST)) {
+      if (LOGGER.isTraceEnabled()) {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Servlet request info: \nAttributes for ").append(title).append(":");
          
@@ -53,7 +54,7 @@ public class ServletRequestUtils {
          txt.append("\nPathInfo:").append(req.getPathInfo());
          txt.append("\nQueryString:").append(req.getQueryString());
 
-         LOGGER.finest(txt.toString());
+         LOGGER.trace(txt.toString());
       }
    }
 

@@ -122,8 +122,6 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.logging.Logger;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
@@ -137,6 +135,9 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceServingPortlet;
 import javax.portlet.tck.beans.TestButton;
 import javax.xml.namespace.QName;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -152,7 +153,7 @@ import javax.xml.namespace.QName;
 public class RequestTests_PortletRequest_ApiEvent implements Portlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
          RequestTests_PortletRequest_ApiEvent.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
    
    
 
@@ -168,7 +169,7 @@ public class RequestTests_PortletRequest_ApiEvent implements Portlet, ResourceSe
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
+      LOGGER.info(LOG_CLASS + " main portlet processAction entry");
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
@@ -184,7 +185,7 @@ public class RequestTests_PortletRequest_ApiEvent implements Portlet, ResourceSe
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
+      LOGGER.info(LOG_CLASS + " main portlet serveResource entry");
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -196,7 +197,7 @@ public class RequestTests_PortletRequest_ApiEvent implements Portlet, ResourceSe
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
+      LOGGER.info(LOG_CLASS + " main portlet render entry");
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);

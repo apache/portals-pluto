@@ -28,13 +28,15 @@ import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_SERVLET_PATH;
 import static javax.portlet.tck.constants.Constants.ATTR_DISPATCH_TARGET;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Servlet for JSR 362 request dispatcher testing.
@@ -50,7 +52,7 @@ public class IncluderForwarderServlet extends HttpServlet {
    private static final long serialVersionUID = -4104376549644600993L;
    private static final String LOG_CLASS = 
          IncluderForwarderServlet.class.getName();
-   private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
+   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
 
    @Override
    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -71,14 +73,14 @@ public class IncluderForwarderServlet extends HttpServlet {
       String action = (String) request.getAttribute(ATTR_DISPATCH_ACTION);
       if (action == null || !action.matches("(include|forward)")) {
          String msg = LOG_CLASS + ": Bad action attribute. action = " + action;
-         LOGGER.severe(msg);
+         LOGGER.error(msg);
          throw new ServletException(msg);
       }
 
       String target = (String) request.getAttribute(ATTR_DISPATCH_TARGET);
       if (target == null) {
          String msg = LOG_CLASS + ": Bad target attribute. target = " + action;
-         LOGGER.severe(msg);
+         LOGGER.error(msg);
          throw new ServletException(msg);
       }
       
@@ -100,7 +102,7 @@ public class IncluderForwarderServlet extends HttpServlet {
       RequestDispatcher rd = request.getRequestDispatcher(target);
       if (rd == null) {
          String msg = LOG_CLASS + ": Could not get request dispatcher.";
-         LOGGER.severe(msg);
+         LOGGER.error(msg);
          throw new ServletException(msg);
       }
       

@@ -496,6 +496,18 @@
          <activation>
             <activeByDefault>true</activeByDefault>
          </activation>
+         <dependencies>
+            <dependency>
+               <groupId>org.slf4j</groupId>
+               <artifactId>slf4j-api</artifactId>
+               <scope>provided</scope>
+            </dependency>
+            <dependency>
+               <groupId>org.slf4j</groupId>
+               <artifactId>slf4j-jdk14</artifactId>
+               <scope>provided</scope>
+            </dependency>
+         </dependencies>
          <build>
             <plugins>
                <plugin>
@@ -504,7 +516,10 @@
                   <configuration>
                      <archiveClasses>false</archiveClasses>
                      <failOnMissingWebXml>false</failOnMissingWebXml>
-                     <packagingExcludes>WEB-INF/liferay-portlet.xml</packagingExcludes>
+                     <packagingExcludes>
+                        WEB-INF/liferay-portlet.xml,
+                        WEB-INF/classes/log4j.properties
+                     </packagingExcludes>
                      <webResources>
                         <webResource>
                           <filtering>true</filtering>
@@ -523,6 +538,20 @@
       </profile>
       <profile>
          <id>liferay</id>
+         <dependencies>
+            <dependency>
+               <groupId>org.slf4j</groupId>
+               <artifactId>slf4j-api</artifactId>
+            </dependency>
+            <dependency>
+               <groupId>org.slf4j</groupId>
+               <artifactId>slf4j-log4j12</artifactId>
+            </dependency>
+            <dependency>
+               <groupId>log4j</groupId>
+               <artifactId>log4j</artifactId>
+            </dependency>
+         </dependencies>
          <build>
             <plugins>
                <plugin>
@@ -531,6 +560,9 @@
                   <configuration>
                      <archiveClasses>false</archiveClasses>
                      <failOnMissingWebXml>false</failOnMissingWebXml>
+                     <packagingExcludes>
+                        WEB-INF/classes/logging.properties
+                     </packagingExcludes>
                      <webResources>
                         <webResource>
                           <filtering>true</filtering>
