@@ -217,15 +217,10 @@ public class TCKSimpleTestDriver {
       timeout = ((str != null) && str.matches("\\d+")) ? Integer.parseInt(str) : 3; 
       String wd = System.getProperty("test.browser.webDriver");
       String binary = System.getProperty("test.browser.binary");
-      String headlessString = System.getProperty("test.browser.headless");
-      System.err.println("   headlessString     =" + headlessString);
-
-      // Assume that chrome can run headless unless specified false
-      if ((headlessString == null || "".equalsIgnoreCase(headlessString)) &&
-              browser.equalsIgnoreCase("chrome")) {
-         headlessString = "true";
-      }
-      boolean headless = Boolean.parseBoolean(headlessString);
+      boolean browserDefaultHeadless = browser.equalsIgnoreCase("chrome") || browser.equalsIgnoreCase("htmlunit") ||
+          browser.equalsIgnoreCase("phantomjs");
+      String headlessProperty = System.getProperty("test.browser.headless");
+      boolean headless = (((headlessProperty == null) || (headlessProperty.length() == 0)) && browserDefaultHeadless);
 
       System.out.println("before class.");
       System.out.println("   Debug        =" + debug);
@@ -246,7 +241,7 @@ public class TCKSimpleTestDriver {
       System.out.println("   headless     =" + headless);
 
       if (browser.equalsIgnoreCase("firefox")) {
-         if (binary == null || "".equalsIgnoreCase(binary)) {
+         if ((binary == null) || (binary.length() == 0)) {
             driver = new FirefoxDriver(new FirefoxProfile());
          } else {
             driver = new FirefoxDriver(new FirefoxBinary(new File(binary)), new FirefoxProfile());
@@ -257,7 +252,7 @@ public class TCKSimpleTestDriver {
       } else if (browser.equalsIgnoreCase("chrome")) {
          System.setProperty("webdriver.chrome.driver", wd);
          ChromeOptions options = new ChromeOptions();
-         if (!(binary == null || "".equalsIgnoreCase(binary))) {
+         if ((binary != null) && (binary.length() > 0)) {
             options.setBinary(binary);
          }
          if (headless) {
