@@ -43,9 +43,8 @@ import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2FILTERTESTS_EVE
  * @author ahmed
  */
 public class FilterTests_EventFilter_ApiEventFilter_event2 implements Portlet, EventPortlet {
-  private static final String LOG_CLASS =
-      FilterTests_EventFilter_ApiEventFilter_event2.class.getName();
-  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+
+  private final Logger LOGGER = LoggerFactory.getLogger(FilterTests_EventFilter_ApiEventFilter_event2.class);
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -56,7 +55,7 @@ public class FilterTests_EventFilter_ApiEventFilter_event2 implements Portlet, E
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
+    LOGGER.trace("event companion processAction - ERROR!!");
   }
 
   @Override

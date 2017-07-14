@@ -50,8 +50,8 @@ import static javax.portlet.PortletSession.APPLICATION_SCOPE;
  */
 public class AddlFilterTests_SPEC2_20_Event_event
     implements Portlet, EventPortlet, ResourceServingPortlet {
-  private static final String LOG_CLASS = AddlFilterTests_SPEC2_20_Event_event.class.getName();
-  private static final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(AddlFilterTests_SPEC2_20_Event_event.class);
 
   @Override
   public void init(PortletConfig config) throws PortletException {
@@ -66,13 +66,13 @@ public class AddlFilterTests_SPEC2_20_Event_event
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.error(LOG_CLASS + " event companion processAction - ERROR!!");
+    LOGGER.trace("event companion processAction - ERROR!!");
   }
 
   @Override
   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.error(LOG_CLASS + " event companion serveResource - ERROR!!");
+    LOGGER.trace("event companion serveResource - ERROR!!");
   }
 
   @Override
@@ -81,7 +81,7 @@ public class AddlFilterTests_SPEC2_20_Event_event
 
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
-    LOGGER.info(LOG_CLASS + " event companion processEvent - INFO!!");
+    LOGGER.trace("event companion processEvent - INFO!!");
 
   }
 

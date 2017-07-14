@@ -49,9 +49,8 @@ import static javax.portlet.PortletSession.APPLICATION_SCOPE;
  * @author ahmed
  */
 public class AddlPortletTests_SPEC2_5_EventHandling_event implements Portlet, EventPortlet {
-  private static final String LOG_CLASS =
-      AddlPortletTests_SPEC2_5_EventHandling_event.class.getName();
-  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+
+  private final Logger LOGGER = LoggerFactory.getLogger(AddlPortletTests_SPEC2_5_EventHandling_event.class);
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -62,7 +61,7 @@ public class AddlPortletTests_SPEC2_5_EventHandling_event implements Portlet, Ev
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
+    LOGGER.trace("event companion processAction - ERROR!!");
   }
 
   @Override

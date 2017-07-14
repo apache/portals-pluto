@@ -52,14 +52,13 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
  * @author ahmed
  */
 public class AddlPortletTests_SPEC2_5_RenderGenericPortlet_event extends GenericPortlet {
-  private static final String LOG_CLASS =
-      AddlPortletTests_SPEC2_5_RenderGenericPortlet_event.class.getName();
-  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+
+  private final Logger LOGGER = LoggerFactory.getLogger(AddlPortletTests_SPEC2_5_RenderGenericPortlet_event.class);
 
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
+    LOGGER.trace("event companion processAction - ERROR!!");
   }
 
   @ProcessEvent(qname = "AddlPortletTests_SPEC2_5_RenderGenericPortlet")

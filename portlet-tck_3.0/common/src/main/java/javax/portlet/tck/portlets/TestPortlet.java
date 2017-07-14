@@ -36,38 +36,29 @@ import org.slf4j.LoggerFactory;
  * Simplest possible portlet for testing the portlet container implementation
  */
 public class TestPortlet implements Portlet {
-   private static final String LOG_CLASS = TestPortlet.class.getName();
-   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+
+   private final Logger LOGGER = LoggerFactory.getLogger(TestPortlet.class);
    
    public TestPortlet() {
    }
 
    @Override
    public void init(PortletConfig config) throws PortletException {
-      if (LOGGER.isTraceEnabled()) {
-         LOGGER.trace(LOG_CLASS + " init: Entry");
-      }
-
+      LOGGER.trace("init: Entry");
    }
 
    @Override
    public void processAction(ActionRequest request, ActionResponse response)
          throws PortletException, IOException {
 
-      if (LOGGER.isTraceEnabled()) {
-         LOGGER.trace(LOG_CLASS + " processAction: Entry");
-      }
-
-      
+      LOGGER.trace("processAction: Entry");
    }
 
    @Override
    public void render(RenderRequest request, RenderResponse response)
          throws PortletException, IOException {
       
-      if (LOGGER.isTraceEnabled()) {
-         LOGGER.trace(LOG_CLASS + " render: Entry");
-      }
+      LOGGER.trace("render: Entry");
 
       PrintWriter writer = response.getWriter();
       writer.write("I am here!");
@@ -76,11 +67,7 @@ public class TestPortlet implements Portlet {
 
    @Override
    public void destroy() {
-      
-      if (LOGGER.isTraceEnabled()) {
-         LOGGER.trace(LOG_CLASS + " destroy: Entry");
-      }
-
+      LOGGER.trace("destroy: Entry");
    }
 
 }

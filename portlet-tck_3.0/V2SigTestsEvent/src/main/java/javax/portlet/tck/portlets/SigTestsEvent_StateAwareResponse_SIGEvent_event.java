@@ -74,9 +74,8 @@ import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
  * not publish them. Events are published in the main portlet for the test cases.
  */
 public class SigTestsEvent_StateAwareResponse_SIGEvent_event implements Portlet, EventPortlet {
-  private static final String LOG_CLASS =
-      SigTestsEvent_StateAwareResponse_SIGEvent_event.class.getName();
-  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+
+  private final Logger LOGGER = LoggerFactory.getLogger(SigTestsEvent_StateAwareResponse_SIGEvent_event.class);
 
   @Override
   public void init(PortletConfig config) throws PortletException {}
@@ -87,7 +86,7 @@ public class SigTestsEvent_StateAwareResponse_SIGEvent_event implements Portlet,
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
+    LOGGER.trace("event companion processAction - ERROR!!");
   }
 
   @Override

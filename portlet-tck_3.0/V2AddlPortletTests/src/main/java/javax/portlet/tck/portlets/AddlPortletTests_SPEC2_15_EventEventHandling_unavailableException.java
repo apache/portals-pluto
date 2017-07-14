@@ -44,9 +44,8 @@ import org.slf4j.LoggerFactory;
  */
 public class AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException
     implements Portlet, EventPortlet, ResourceServingPortlet {
-  private static final String LOG_CLASS =
-      AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException.class.getName();
-  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+
+  private final Logger LOGGER = LoggerFactory.getLogger(AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException.class);
 
 
   @Override
@@ -60,13 +59,13 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
+    LOGGER.trace("event companion processAction - ERROR!!");
   }
 
   @Override
   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.info(LOG_CLASS + " event companion serveResource - ERROR!!");
+    LOGGER.trace("event companion serveResource - ERROR!!");
   }
 
   @Override

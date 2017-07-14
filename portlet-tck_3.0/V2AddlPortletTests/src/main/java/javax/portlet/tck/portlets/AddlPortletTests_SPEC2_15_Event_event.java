@@ -48,9 +48,9 @@ import static javax.portlet.PortletSession.APPLICATION_SCOPE;
  * @author ahmed
  */
 public class AddlPortletTests_SPEC2_15_Event_event implements Portlet, EventPortlet {
-  private static final String LOG_CLASS = AddlPortletTests_SPEC2_15_Event_event.class.getName();
-  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
 
+  @SuppressWarnings("unused")
+  private final Logger LOGGER = LoggerFactory.getLogger(AddlPortletTests_SPEC2_15_Event_event.class);
 
   @Override
   public void init(PortletConfig config) throws PortletException {}

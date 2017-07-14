@@ -84,9 +84,8 @@ import static javax.portlet.PortletSession.APPLICATION_SCOPE;
  * @author ahmed
  */
 public class EnvironmentTests_PortletPreferences_ApiEvent_event implements Portlet, EventPortlet {
-  private static final String LOG_CLASS =
-      EnvironmentTests_PortletPreferences_ApiEvent_event.class.getName();
-  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+
+  private final Logger LOGGER = LoggerFactory.getLogger(EnvironmentTests_PortletPreferences_ApiEvent_event.class);
 
   public static boolean tr32_success = false;
 
@@ -99,7 +98,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent_event implements Portl
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
+    LOGGER.trace("event companion processAction - ERROR!!");
   }
 
   @Override

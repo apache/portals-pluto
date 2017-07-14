@@ -162,10 +162,8 @@ import org.slf4j.LoggerFactory;
  * but does not publish them. Events are published in the main portlet for the test cases. 
  */
 public class RequestTests_PortletRequest_ApiEvent_event implements Portlet, EventPortlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         RequestTests_PortletRequest_ApiEvent_event.class.getName();
-   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
-   
+
+   private final Logger LOGGER = LoggerFactory.getLogger(RequestTests_PortletRequest_ApiEvent_event.class);
    
    @Override
    public void init(PortletConfig config) throws PortletException {
@@ -179,19 +177,19 @@ public class RequestTests_PortletRequest_ApiEvent_event implements Portlet, Even
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
+      LOGGER.trace("event companion processAction - ERROR!!");
    }
 
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.info(LOG_CLASS + " event companion serveResource - ERROR!!");
+      LOGGER.trace("event companion serveResource - ERROR!!");
    }
 
    @Override
    public void processEvent(EventRequest portletReq, EventResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.info(LOG_CLASS + " event companion processEvent");
+      LOGGER.trace("event companion processEvent");
 
 
       portletResp.setRenderParameters(portletReq);
@@ -1265,7 +1263,7 @@ public class RequestTests_PortletRequest_ApiEvent_event implements Portlet, Even
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
       
-      LOGGER.info(LOG_CLASS + " event companion render");
+      LOGGER.trace("event companion render");
 
       portletResp.setContentType("text/html");
       PrintWriter writer = portletResp.getWriter();

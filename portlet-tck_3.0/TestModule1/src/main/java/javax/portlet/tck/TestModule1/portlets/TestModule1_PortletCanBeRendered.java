@@ -39,11 +39,11 @@ import org.slf4j.LoggerFactory;
  * case list automatically during the build process.
  */
 public class TestModule1_PortletCanBeRendered implements Portlet {
-   private static final String LOG_CLASS = TestModule1_PortletCanBeRendered.class.getName();
+
    private static final String tcName = "TestModule1_PortletCanBeRendered";
    private static final String tcDetail = "The test result text is displayed.";
    
-   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+   private final Logger LOGGER = LoggerFactory.getLogger(TestModule1_PortletCanBeRendered.class);
 
    @Override
    public void init(PortletConfig config) throws PortletException {
@@ -58,9 +58,7 @@ public class TestModule1_PortletCanBeRendered implements Portlet {
    public void render(RenderRequest request, RenderResponse response)
          throws PortletException, IOException {
       
-      if (LOGGER.isTraceEnabled()) {
-         LOGGER.trace(LOG_CLASS + " render: Entry");
-      }
+      LOGGER.trace("render: Entry");
 
       PrintWriter writer = response.getWriter();
       

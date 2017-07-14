@@ -42,9 +42,8 @@ import static javax.portlet.tck.beans.TestModule3Definitions.*;
  */
 @SuppressWarnings("deprecation")
 public class TestModule3_Portlet1 implements Portlet {
-   private static final String LOG_CLASS = TestModule3_Portlet1.class.getName();
 
-   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+   private final Logger LOGGER = LoggerFactory.getLogger(TestModule3_Portlet1.class);
 
    @Override
    public void init(PortletConfig config) throws PortletException {
@@ -59,9 +58,7 @@ public class TestModule3_Portlet1 implements Portlet {
    public void render(RenderRequest request, RenderResponse response)
          throws PortletException, IOException {
 
-      if (LOGGER.isTraceEnabled()) {
-         LOGGER.trace(LOG_CLASS + " render: Entry");
-      }
+      LOGGER.trace("render: Entry");
 
       PrintWriter writer = response.getWriter();
 

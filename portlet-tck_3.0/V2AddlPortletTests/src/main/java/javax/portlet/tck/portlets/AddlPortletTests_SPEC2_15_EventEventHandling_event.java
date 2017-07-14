@@ -63,9 +63,8 @@ import static javax.xml.XMLConstants.NULL_NS_URI;
  * @author ahmed
  */
 public class AddlPortletTests_SPEC2_15_EventEventHandling_event implements Portlet, EventPortlet {
-  private static final String LOG_CLASS =
-      AddlPortletTests_SPEC2_15_EventEventHandling_event.class.getName();
-  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+
+  private final Logger LOGGER = LoggerFactory.getLogger(AddlPortletTests_SPEC2_15_EventEventHandling_event.class);
 
   public static boolean tr8 = false;
 
@@ -78,7 +77,7 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_event implements Portl
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
+    LOGGER.trace("event companion processAction - ERROR!!");
   }
 
   @Override
@@ -95,7 +94,9 @@ public class AddlPortletTests_SPEC2_15_EventEventHandling_event implements Portl
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
     Event event = portletReq.getEvent();
     String qName = event.getName();
-    LOGGER.info(LOG_CLASS + " Event name is " + event.getQName().getNamespaceURI());
+    if (LOGGER.isTraceEnabled()) {
+      LOGGER.trace("Event name is {}", event.getQName().getNamespaceURI());
+    }
     if (qName.equals("AddlPortletTests_SPEC2_15_EventEventHandling_empty")) {
       /* TestCase: V2AddlPortletTests_SPEC2_15_EventEventHandling_event9 */
       /* Details: "If the Event object does not have a value set when the */

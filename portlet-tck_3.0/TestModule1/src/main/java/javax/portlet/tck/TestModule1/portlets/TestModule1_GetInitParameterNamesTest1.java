@@ -45,8 +45,6 @@ import org.slf4j.LoggerFactory;
  * additionalTCs.xml file into the complete list of test case names for execution by the driver.
  */
 public class TestModule1_GetInitParameterNamesTest1 implements Portlet {
-   private static final String LOG_CLASS = 
-         TestModule1_GetInitParameterNamesTest1.class.getName();
    
    // Tests defined in this portlet
    private final static String TEST1 = "TestModule1_GetInitParameterNamesTest1"; 
@@ -62,7 +60,7 @@ public class TestModule1_GetInitParameterNamesTest1 implements Portlet {
       return t;
    }
    
-   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+   private final Logger LOGGER = LoggerFactory.getLogger(TestModule1_GetInitParameterNamesTest1.class);
 
    private PortletConfig config = null;
 
@@ -80,9 +78,7 @@ public class TestModule1_GetInitParameterNamesTest1 implements Portlet {
    public void render(RenderRequest request, RenderResponse response)
          throws PortletException, IOException {
       
-      if (LOGGER.isTraceEnabled()) {
-         LOGGER.trace(LOG_CLASS + " render: Entry");
-      }
+      LOGGER.trace("render: Entry");
 
       PrintWriter writer = response.getWriter();
       

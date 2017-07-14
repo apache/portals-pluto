@@ -1488,7 +1488,7 @@ public class ResourceAsyncTests_SPEC_21_Async implements Portlet, ResourceServin
          /* was called has returned to the container"                                  */
          } else if (testcase.equals(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2)) {
             boolean isDispatched = new Boolean((String) session.getAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2));
-            LOGGER.trace("isDispatched: " + isDispatched);
+            LOGGER.trace("isDispatched: {}", isDispatched);
             if (isDispatched) {
                // 2nd time thru
                session.removeAttribute(V3RESOURCEASYNCTESTS_SPEC_21_ASYNC_ADDLISTENER2);

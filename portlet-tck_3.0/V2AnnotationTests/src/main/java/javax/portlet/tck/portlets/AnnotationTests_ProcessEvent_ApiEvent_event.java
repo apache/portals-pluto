@@ -48,20 +48,19 @@ import org.slf4j.LoggerFactory;
  * not publish them. Events are published in the main portlet for the test cases.
  */
 public class AnnotationTests_ProcessEvent_ApiEvent_event extends GenericPortlet {
-  private static final String LOG_CLASS =
-      AnnotationTests_ProcessEvent_ApiEvent_event.class.getName();
-  private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+
+  private final Logger LOGGER = LoggerFactory.getLogger(AnnotationTests_ProcessEvent_ApiEvent_event.class);
 
   @Override
   public void processAction(ActionRequest portletReq, ActionResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.info(LOG_CLASS + " event companion processAction - ERROR!!");
+    LOGGER.trace("event companion processAction - ERROR!!");
   }
 
   @Override
   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
       throws PortletException, IOException {
-    LOGGER.info(LOG_CLASS + " event companion serveResource - ERROR!!");
+    LOGGER.trace("event companion serveResource - ERROR!!");
   }
 
 
@@ -99,9 +98,7 @@ public class AnnotationTests_ProcessEvent_ApiEvent_event extends GenericPortlet 
         Constants.RESULT_ATTR_PREFIX + "AnnotationTests_ProcessEvent_ApiEvent", writer.toString(),
         APPLICATION_SCOPE);
 
-    LOGGER.info(LOG_CLASS + " Resulting String: " + writer.toString());
-
-
+    LOGGER.trace("Resulting String: {}", writer);
   }
 
   @ProcessEvent(name = "AnnotationTests_ProcessEvent_ApiEvent2")

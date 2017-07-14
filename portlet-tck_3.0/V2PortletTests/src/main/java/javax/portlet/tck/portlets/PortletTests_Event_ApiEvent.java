@@ -59,9 +59,10 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class PortletTests_Event_ApiEvent implements Portlet {
-  private static final String LOG_CLASS = PortletTests_Event_ApiEvent.class.getName();
+
   @SuppressWarnings("unused")
-private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+  private final Logger LOGGER = LoggerFactory.getLogger(PortletTests_Event_ApiEvent.class);
+
   private PortletConfig portletConfig = null;
 
 

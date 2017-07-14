@@ -54,11 +54,8 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class RequestTests_RenderRequest_ApiRender implements Portlet, ResourceServingPortlet {
-   private static final String LOG_CLASS = 
-         RequestTests_RenderRequest_ApiRender.class.getName();
-   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
-   
-   
+
+   private final Logger LOGGER = LoggerFactory.getLogger(RequestTests_RenderRequest_ApiRender.class);
 
    @Override
    public void init(PortletConfig config) throws PortletException {
@@ -72,7 +69,7 @@ public class RequestTests_RenderRequest_ApiRender implements Portlet, ResourceSe
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.info(LOG_CLASS + " main portlet processAction entry");
+      LOGGER.trace("main portlet processAction entry");
 
       portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
@@ -85,7 +82,7 @@ public class RequestTests_RenderRequest_ApiRender implements Portlet, ResourceSe
    @Override
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.info(LOG_CLASS + " main portlet serveResource entry");
+      LOGGER.trace("main portlet serveResource entry");
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
@@ -97,7 +94,7 @@ public class RequestTests_RenderRequest_ApiRender implements Portlet, ResourceSe
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.info(LOG_CLASS + " main portlet render entry");
+      LOGGER.trace("main portlet render entry");
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);

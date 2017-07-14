@@ -43,10 +43,9 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class MultipleIncludeServlet extends HttpServlet {
+
    private static final long serialVersionUID = -4104376549644600993L;
-   private static final String LOG_CLASS = 
-         MultipleIncludeServlet.class.getName();
-   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+   private final Logger LOGGER = LoggerFactory.getLogger(MultipleIncludeServlet.class);
 
    @Override
    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -63,7 +62,7 @@ public class MultipleIncludeServlet extends HttpServlet {
    // The tck uses only get & post requests
    protected void processTCKReq(HttpServletRequest request, HttpServletResponse response)
          throws ServletException, IOException {
-      LOGGER.info(LOG_CLASS + "processTCKReq: servlet entry");
+      LOGGER.trace("processTCKReq: servlet entry");
 
       String str = (String) request.getAttribute(MULTIPLE_INCLUDE_ATTR);
       int num = 1;

@@ -41,7 +41,6 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("deprecation")
 public class TestModule2_CompanionPortlet implements Portlet {
-   private static final String LOG_CLASS = TestModule2_CompanionPortlet.class.getName();
 
    // Tests defined in this portlet
    private final static String TEST4 = "TestModule2_PublicRenderParameterCanBeSetThroughUrl";   
@@ -53,7 +52,7 @@ public class TestModule2_CompanionPortlet implements Portlet {
       return t;
    }
 
-   private final Logger LOGGER = LoggerFactory.getLogger(LOG_CLASS);
+   private final Logger LOGGER = LoggerFactory.getLogger(TestModule2_CompanionPortlet.class);
 
    @Override
    public void init(PortletConfig config) throws PortletException {
@@ -68,9 +67,7 @@ public class TestModule2_CompanionPortlet implements Portlet {
    public void render(RenderRequest request, RenderResponse response)
          throws PortletException, IOException {
 
-      if (LOGGER.isTraceEnabled()) {
-         LOGGER.trace(LOG_CLASS + " render: Entry");
-      }
+      LOGGER.trace("render: Entry");
 
       PrintWriter writer = response.getWriter();
       TestResult tr = null;

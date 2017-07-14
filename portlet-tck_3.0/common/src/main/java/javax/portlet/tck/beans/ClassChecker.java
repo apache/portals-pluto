@@ -35,8 +35,7 @@ import org.slf4j.LoggerFactory;
  * @author nick
  */
 public class ClassChecker {
-   private static final String LOG_CLASS = ClassChecker.class.getName();
-   private final Logger        LOGGER    = LoggerFactory.getLogger(LOG_CLASS);
+   private final Logger        LOGGER    = LoggerFactory.getLogger(ClassChecker.class);
 
    private Class<?>            cut;
    private ArrayList<Class<?>> ifList;
@@ -234,14 +233,10 @@ public class ClassChecker {
          HashSet<Class<?>> mexs = new HashSet<Class<?>>();
          mexs.addAll(Arrays.asList(m.getExceptionTypes()));
 
-         if (LOGGER.isTraceEnabled()) {
-            LOGGER.trace(LOG_CLASS + " hasMethod: added exception types");
-         }
+         LOGGER.trace("hasMethod: added exception types");
 
          if (exParm.isEmpty() && mexs.isEmpty()) {
-            if (LOGGER.isTraceEnabled()) {
-               LOGGER.trace(LOG_CLASS + " hasMethod: no exceptions to check");
-            }
+            LOGGER.trace("hasMethod: no exceptions to check");
             result = true;
          } else {
             result = mexs.containsAll(exParm);
@@ -251,7 +246,7 @@ public class ClassChecker {
                sb.append("results of exception check: ").append(result).append("\n");
                sb.append("method exceptions: ").append(mexs).append("\n");
                sb.append("expected exceptions: ").append(exParm).append("\n");
-               LOGGER.warn(LOG_CLASS + " hasMethod: " + sb.toString());
+               LOGGER.warn("hasMethod: {}", sb);
             }
          }
 
