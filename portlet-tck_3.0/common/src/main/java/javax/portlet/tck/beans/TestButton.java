@@ -53,6 +53,7 @@ public class TestButton {
    protected String     actId;
    protected String     title = " Execute Button:";
    protected String     paramName;
+   protected String     encType;
 
 
    /**
@@ -99,6 +100,10 @@ public class TestButton {
       this.actId = tcName + Constants.CLICK_ID;
    }
 
+   public void setEncType(String type) {
+      this.encType = type;
+   }
+
    /**
     * Generates HTML markup representing the test link.
     * 
@@ -120,7 +125,11 @@ public class TestButton {
       sb.append(tcName);
       sb.append(title);
       sb.append("</h4>\n");
-      sb.append("<form  class='portletTCKButton'" + " action='" + urlstr + "' method='post'>\n");
+      sb.append("<form  class='portletTCKButton'" + " action='" + urlstr + "' method='post' ");
+      if (encType != null) {
+         sb.append("enctype='" + encType + "' ");
+      }
+      sb.append(">\n");
       sb.append("<input type='submit' value='").append(paramName);
       sb.append("'  name='").append(Constants.BUTTON_PARAM_NAME);
       sb.append("'  id='").append(actId);
