@@ -52,6 +52,19 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
     public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4_SIZE = "V3PortletParametersTests_SPEC11_4_size";
     public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4_CLONE = "V3PortletParametersTests_SPEC11_4_clone";
 
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4A_ACTION_PHASE_GETNAMES = "V3PortletParametersTests_SPEC11_4A_actionPhaseGetNames";
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4A_ACTION_PHASE_GETVALUES = "V3PortletParametersTests_SPEC11_4A_actionPhaseGetValues";
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4A_ACTION_PHASE_SIZE = "V3PortletParametersTests_SPEC11_4A_actionPhaseSize";
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4A_HEADER_PHASE_GETNAMES = "V3PortletParametersTests_SPEC11_4A_headerPhaseGetNames";
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4A_HEADER_PHASE_GETVALUES = "V3PortletParametersTests_SPEC11_4A_headerPhaseGetValues";
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4A_HEADER_PHASE_SIZE = "V3PortletParametersTests_SPEC11_4A_headerPhaseSize";
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4A_RENDER_PHASE_GETNAMES = "V3PortletParametersTests_SPEC11_4A_renderPhaseGetNames";
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4A_RENDER_PHASE_GETVALUES = "V3PortletParametersTests_SPEC11_4A_renderPhaseGetValues";
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4A_RENDER_PHASE_SIZE = "V3PortletParametersTests_SPEC11_4A_renderPhaseSize";
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4A_RESOURCE_PHASE_GETNAMES = "V3PortletParametersTests_SPEC11_4A_resourcePhaseGetNames";
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4A_RESOURCE_PHASE_GETVALUES = "V3PortletParametersTests_SPEC11_4A_resourcePhaseGetValues";
+    public final static String V3PORTLETPARAMETERSTESTS_SPEC11_4A_RESOURCE_PHASE_SIZE = "V3PortletParametersTests_SPEC11_4A_resourcePhaseSize";
+
     private final static Map<String, String> tcd = new HashMap<String, String>();
 
     static {
@@ -74,6 +87,18 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
         tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4_SIZE, "Returns the number of resource parameters available");
         tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4_CLONE, "Clones the given resource parameters returning a mutable copy of the parameters");
 
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4A_ACTION_PHASE_GETNAMES, "Returns one set of strings containing the action parameter names and another containing the render parameter names");
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4A_ACTION_PHASE_GETVALUES, "Returns one string array of action parameter values for a given name, and another with render parameter values for a different name");
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4A_ACTION_PHASE_SIZE, "Returns the number of action and render parameters available");
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4A_HEADER_PHASE_GETNAMES, "Returns a set of strings containing the render parameter names");
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4A_HEADER_PHASE_GETVALUES, "Returns a string array of render parameter values for a given name");
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4A_HEADER_PHASE_SIZE, "Returns the number of action and render parameters available");
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4A_RENDER_PHASE_GETNAMES, "Returns a set of strings containing the render parameter names");
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4A_RENDER_PHASE_GETVALUES, "Returns a string array of render parameter values for a given name");
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4A_RENDER_PHASE_SIZE, "Returns the number of action and render parameters available");
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4A_RESOURCE_PHASE_GETNAMES, "Returns one set of strings containing the resource parameter names and another containing the render parameter names");
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4A_RESOURCE_PHASE_GETVALUES, "Returns one string array of resource parameter values for a given name, and another with render parameter values for a different name");
+        tcd.put(V3PORTLETPARAMETERSTESTS_SPEC11_4A_RESOURCE_PHASE_SIZE, "Returns the number of resource and render parameters available");
     }
 
     /**

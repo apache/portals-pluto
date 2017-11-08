@@ -32,13 +32,16 @@
 </supports>
 <render-config default="About Apache Pluto">
 <page xmlns="" name="V3PortletParametersTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-<portlet context="/${project.artifactId}-${project.version}" name="PortletParametersTests_SPEC11_1"/>
+    <portlet context="/${project.artifactId}-${project.version}" name="PortletParametersTests_SPEC11_1"/>
 </page>
 <page xmlns="" name="V3ActionParametersTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
     <portlet context="/${project.artifactId}-${project.version}" name="PortletParametersTests_SPEC11_3"/>
 </page>
 <page xmlns="" name="V3ResourceParametersTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
     <portlet context="/${project.artifactId}-${project.version}" name="PortletParametersTests_SPEC11_4"/>
+</page>
+<page xmlns="" name="V3ResourceParametersAddlTests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+    <portlet context="/${project.artifactId}-${project.version}" name="PortletParametersTests_SPEC11_4A"/>
 </page>
 </render-config>
 </pluto-portal-driver>

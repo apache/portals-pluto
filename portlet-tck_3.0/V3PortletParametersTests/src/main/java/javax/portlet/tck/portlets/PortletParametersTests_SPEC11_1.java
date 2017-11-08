@@ -54,6 +54,8 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETPARAMETERSTE
 
 @PortletApplication(
         publicParams = {
+                @PublicRenderParameterDefinition(identifier = "myPRP1", qname = @PortletQName(localPart = "myPRP1", namespaceURI = "")),
+                @PublicRenderParameterDefinition(identifier = "myPRP2", qname = @PortletQName(localPart = "myPRP2", namespaceURI = "")),
                 @PublicRenderParameterDefinition(identifier = "names_public1", qname = @PortletQName(localPart = "names_public1", namespaceURI = ""))
         })
 @PortletConfiguration(portletName = "PortletParametersTests_SPEC11_1", publicParams = {"names_public1"})

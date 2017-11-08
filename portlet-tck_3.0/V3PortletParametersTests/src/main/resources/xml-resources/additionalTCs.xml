@@ -35,4 +35,16 @@
 <entry key="V3PortletParametersTests_SPEC11_4_getValues">V3ResourceParametersTests</entry>
 <entry key="V3PortletParametersTests_SPEC11_4_size">V3ResourceParametersTests</entry>
 <entry key="V3PortletParametersTests_SPEC11_4_clone">V3ResourceParametersTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_4A_actionPhaseGetNames">V3ResourceParametersAddlTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_4A_actionPhaseGetValues">V3ResourceParametersAddlTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_4A_actionPhaseSize">V3ResourceParametersAddlTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_4A_headerPhaseGetNames">V3ResourceParametersAddlTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_4A_headerPhaseGetValues">V3ResourceParametersAddlTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_4A_headerPhaseSize">V3ResourceParametersAddlTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_4A_renderPhaseGetNames">V3ResourceParametersAddlTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_4A_renderPhaseGetValues">V3ResourceParametersAddlTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_4A_renderPhaseSize">V3ResourceParametersAddlTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_4A_resourcePhaseGetNames">V3ResourceParametersAddlTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_4A_resourcePhaseGetValues">V3ResourceParametersAddlTests</entry>
+<entry key="V3PortletParametersTests_SPEC11_4A_resourcePhaseSize">V3ResourceParametersAddlTests</entry>
 </properties>

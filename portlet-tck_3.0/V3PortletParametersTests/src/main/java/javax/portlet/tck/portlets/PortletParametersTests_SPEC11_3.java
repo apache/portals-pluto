@@ -218,7 +218,7 @@ public class PortletParametersTests_SPEC11_3 implements Portlet {
                 result.setTcSuccess(false);
             }
             else {
-                result.appendTcDetail("Found correct count of Render parameters.");
+                result.appendTcDetail("Found correct count of Action parameters.");
             }
             PortletSession session = portletReq.getPortletSession();
             session.setAttribute(SPEC_11_3_SIZE_STATUS, result.isTcSuccess());
@@ -282,8 +282,8 @@ public class PortletParametersTests_SPEC11_3 implements Portlet {
         ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
         {
-            RenderParameters actionParams = portletReq.getRenderParameters();
-            if (actionParams.isEmpty()) {
+            RenderParameters renderParams = portletReq.getRenderParameters();
+            if (renderParams.isEmpty()) {
                 ActionURL actionURL = portletResp.createActionURL();
                 MutableActionParameters mutableActionParameters = actionURL.getActionParameters();
                 // Setup Private Tests

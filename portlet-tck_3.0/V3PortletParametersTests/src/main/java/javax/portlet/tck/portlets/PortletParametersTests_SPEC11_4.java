@@ -18,11 +18,9 @@
 
 package javax.portlet.tck.portlets;
 
-import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.ActionURL;
-import javax.portlet.MutableActionParameters;
+import javax.portlet.MutableResourceParameters;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
@@ -30,9 +28,13 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderParameters;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceParameters;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
+import javax.portlet.ResourceURL;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.tck.beans.TestResult;
-import javax.portlet.tck.beans.TestSetupLink;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -52,7 +54,7 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3PORTLETPARAMETERSTE
  */
 
 @PortletConfiguration(portletName = "PortletParametersTests_SPEC11_4", publicParams = {"names_public1"})
-public class PortletParametersTests_SPEC11_4 implements Portlet {
+public class PortletParametersTests_SPEC11_4 implements Portlet, ResourceServingPortlet {
 
     private PortletConfig portletConfig = null;
 
@@ -77,14 +79,18 @@ public class PortletParametersTests_SPEC11_4 implements Portlet {
     }
 
     @Override
-    public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+    public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
+    }
+
+    @Override
+    public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {
         ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
         /* TestCase: V3PortletParametersTests_SPEC11_4_getNames                        */
         /* Details: "Returns a set of strings representing the resource parameter names */
         {
             TestResult result = tcd.getTestResultFailed(V3PORTLETPARAMETERSTESTS_SPEC11_4_GETNAMES);
-            ActionParameters resourceParameters = portletReq.getActionParameters();
+            ResourceParameters resourceParameters = resourceRequest.getResourceParameters();
             if (!resourceParameters.isEmpty()) {
                 boolean valid = true;
                 if (!resourceParameters.getNames().contains("names_private1")) {
@@ -108,10 +114,10 @@ public class PortletParametersTests_SPEC11_4 implements Portlet {
                     valid = false;
                 }
                 if (valid) {
-                    result.appendTcDetail("successfully set and read ACTION parameter names");
+                    result.appendTcDetail("successfully set and read RESOURCE parameter names");
                     result.setTcSuccess(true);
                 }
-                PortletSession session = portletReq.getPortletSession();
+                PortletSession session = resourceRequest.getPortletSession();
                 session.setAttribute(SPEC_11_4_GETNAMES_STATUS, result.isTcSuccess());
                 session.setAttribute(SPEC_11_4_GETNAMES_MESSAGE, result.getTcDetail());
             }
@@ -121,7 +127,7 @@ public class PortletParametersTests_SPEC11_4 implements Portlet {
         /* Details: "Returns a resource parameter value as a string for a given name    */
         {
             TestResult result = tcd.getTestResultFailed(V3PORTLETPARAMETERSTESTS_SPEC11_4_GETVALUE);
-            ActionParameters resourceParameters = portletReq.getActionParameters();
+            ResourceParameters resourceParameters = resourceRequest.getResourceParameters();
             if (!resourceParameters.isEmpty()) {
                 boolean valid = true;
                 String trPrivate = resourceParameters.getValue("names_private1");
@@ -158,7 +164,7 @@ public class PortletParametersTests_SPEC11_4 implements Portlet {
                     result.appendTcDetail("successfully getValue on resource parameters");
                     result.setTcSuccess(true);
                 }
-                PortletSession session = portletReq.getPortletSession();
+                PortletSession session = resourceRequest.getPortletSession();
                 session.setAttribute(SPEC_11_4_GETVALUE_STATUS, result.isTcSuccess());
                 session.setAttribute(SPEC_11_4_GETVALUE_MESSAGE, result.getTcDetail());
             }
@@ -168,7 +174,7 @@ public class PortletParametersTests_SPEC11_4 implements Portlet {
         /* Details: "Returns all resource parameter values as a string array for a name */
         {
             TestResult result = tcd.getTestResultFailed(V3PORTLETPARAMETERSTESTS_SPEC11_4_GETVALUES);
-            ActionParameters resourceParams = portletReq.getActionParameters();
+            ResourceParameters resourceParams = resourceRequest.getResourceParameters();
             if (!resourceParams.isEmpty()) {
                 boolean valid = true;
                 String[] values = resourceParams.getValues("names_private1");
@@ -201,7 +207,7 @@ public class PortletParametersTests_SPEC11_4 implements Portlet {
                     result.appendTcDetail("successfully getValues on resource parameters");
                     result.setTcSuccess(true);
                 }
-                PortletSession session = portletReq.getPortletSession();
+                PortletSession session = resourceRequest.getPortletSession();
                 session.setAttribute(SPEC_11_4_GETVALUES_STATUS, result.isTcSuccess());
                 session.setAttribute(SPEC_11_4_GETVALUES_MESSAGE, result.getTcDetail());
             }
@@ -211,16 +217,16 @@ public class PortletParametersTests_SPEC11_4 implements Portlet {
         /* Details: "Returns the number of resource parameters available"              */
         {
             TestResult result = tcd.getTestResultSucceeded(V3PORTLETPARAMETERSTESTS_SPEC11_4_SIZE);
-            ActionParameters resourceParams = portletReq.getActionParameters();
+            ResourceParameters resourceParams = resourceRequest.getResourceParameters();
             int expectedCount = (resourceParams.isEmpty()) ? 0 : 7;
             if (expectedCount != resourceParams.size()) {
-                result.appendTcDetail("Failed to get correct Action Parameters count, expected: " + expectedCount + ", found: " + resourceParams.size());
+                result.appendTcDetail("Failed to get correct Resource Parameters count, expected: " + expectedCount + ", found: " + resourceParams.size());
                 result.setTcSuccess(false);
             }
             else {
                 result.appendTcDetail("Found correct count of Render parameters.");
             }
-            PortletSession session = portletReq.getPortletSession();
+            PortletSession session = resourceRequest.getPortletSession();
             session.setAttribute(SPEC_11_4_SIZE_STATUS, result.isTcSuccess());
             session.setAttribute(SPEC_11_4_SIZE_MESSAGE, result.getTcDetail());
         }
@@ -229,8 +235,8 @@ public class PortletParametersTests_SPEC11_4 implements Portlet {
         /* Details: "Clones the given resource parameters returning a mutable copy of  */
         /* the parameters"                                                            */
         {
-            ActionParameters resourceParams = portletReq.getActionParameters();
-            MutableActionParameters mrp = resourceParams.clone();
+            ResourceParameters resourceParams = resourceRequest.getResourceParameters();
+            MutableResourceParameters mrp = resourceParams.clone();
             TestResult result = tcd.getTestResultSucceeded(V3PORTLETPARAMETERSTESTS_SPEC11_4_CLONE);
             // check that original and clone have same parameters
             if (resourceParams.size() == mrp.size()) {
@@ -266,9 +272,9 @@ public class PortletParametersTests_SPEC11_4 implements Portlet {
                 }
             }
             if (result.isTcSuccess()) {
-                result.setTcDetail("Clone on Action parameters successful");
+                result.setTcDetail("Clone on Resource parameters successful");
             }
-            PortletSession session = portletReq.getPortletSession();
+            PortletSession session = resourceRequest.getPortletSession();
             session.setAttribute(SPEC_11_4_CLONE_STATUS, result.isTcSuccess());
             session.setAttribute(SPEC_11_4_CLONE_MESSAGE, result.getTcDetail());
         }
@@ -284,27 +290,40 @@ public class PortletParametersTests_SPEC11_4 implements Portlet {
         {
             RenderParameters resourceParams = portletReq.getRenderParameters();
             if (resourceParams.isEmpty()) {
-                ActionURL resourceURL = portletResp.createActionURL();
-                MutableActionParameters mutableActionParameters = resourceURL.getActionParameters();
+                ResourceURL resourceURL = portletResp.createResourceURL();
+                MutableResourceParameters mutableResourceParameters = resourceURL.getResourceParameters();
                 // Setup Private Tests
-                mutableActionParameters.setValue("names_private1", "one");
-                mutableActionParameters.setValue("names_private2", "two");
-                mutableActionParameters.setValues("names_multi", "a", "b", "c");
+                mutableResourceParameters.setValue("names_private1", "one");
+                mutableResourceParameters.setValue("names_private2", "two");
+                mutableResourceParameters.setValues("names_multi", "a", "b", "c");
                 // Setup Public Test
-                mutableActionParameters.setValue("names_public1", "three");
-                mutableActionParameters.setValue("names_nullok1", null);
-                mutableActionParameters.setValues("names_nullsok2", null, "notnull", null);
+                mutableResourceParameters.setValue("names_public1", "three");
+                mutableResourceParameters.setValue("names_nullok1", null);
+                mutableResourceParameters.setValues("names_nullsok2", null, "notnull", null);
                 // Setup Encoding Test
-                mutableActionParameters.setValue("names_encode1", "url&enco ded");
-                TestSetupLink tb = new TestSetupLink(
-                        V3PORTLETPARAMETERSTESTS_SPEC11_4_GETNAMES,
-                        resourceURL);
-                tb.writeTo(writer);
+                mutableResourceParameters.setValue("names_encode1", "url&enco ded");
+
+                writer.write(
+                    "<div id=\"PortletParametersTests_SPEC11_4_Resource\">no resource output.</div>\n");
+                writer.write("<script>\n");
+                writer.write("(function () {\n");
+                writer.write("   var xhr = new XMLHttpRequest();\n");
+                writer.write("   xhr.onreadystatechange=function() {\n");
+                writer.write("      if (xhr.readyState==4 && xhr.status==200) {\n");
+                writer.write(
+                    "         document.getElementById(\"PortletParametersTests_SPEC11_4_Resource\").innerHTML=xhr.responseText;\n");
+                writer.write("      }\n");
+                writer.write("   };\n");
+                writer.write(
+                    "   xhr.open(\"GET\",\"" + resourceURL.toString() + "\",true);\n");
+                writer.write("   xhr.send();\n");
+                writer.write("})();\n");
+                writer.write("</script>\n");
 
                 // Setup NULL Tests
                 boolean exceptionCaught = false;
                 try {
-                    mutableActionParameters.setValue(null, "bad");
+                    mutableResourceParameters.setValue(null, "bad");
                 } catch (RuntimeException e) {
                     exceptionCaught = true;
                 }
@@ -315,7 +334,7 @@ public class PortletParametersTests_SPEC11_4 implements Portlet {
             }
         }
 
-        /* TestCase: V3ActionParametersTests_SPEC11_4_getNames                        */
+        /* TestCase: V3ResourceParametersTests_SPEC11_4_getNames                        */
         /* Details: "Returns a set of strings representing the portlet parameter names */
         {
             TestResult result = tcd.getTestResultFailed(V3PORTLETPARAMETERSTESTS_SPEC11_4_GETNAMES);
@@ -396,7 +415,7 @@ public class PortletParametersTests_SPEC11_4 implements Portlet {
             }
             else {
                 result.setTcSuccess(true);
-                result.setTcDetail("Action Clone test is setup and ready to run");
+                result.setTcDetail("Resource Clone test is setup and ready to run");
                 result.writeTo(writer);
             }
         }
