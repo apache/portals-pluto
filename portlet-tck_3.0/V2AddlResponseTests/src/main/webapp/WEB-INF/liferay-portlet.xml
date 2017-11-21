@@ -4,10 +4,12 @@
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>AddlResponseTests_SPEC2_12_Action</portlet-name>
+		<action-url-redirect>true</action-url-redirect>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
 		<portlet-name>AddlResponseTests_SPEC2_12_Event</portlet-name>
+		<action-url-redirect>true</action-url-redirect>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
