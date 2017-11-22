@@ -109,9 +109,21 @@ public class ResponseTests_MimeResponse_ApiRender implements Portlet {
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
-
       JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+
+      /* TestCase: V2ResponseTests_MimeResponse_ApiRender_setContentType4 */
+      /* Details: "Method setContentType(String): Throws */
+      /* IllegalArgumentException if the specified MIME type is invalid" */
+      TestResult tr11 = tcd.getTestResultFailed(
+          V2RESPONSETESTS_MIMERESPONSE_APIRENDER_SETCONTENTTYPE4);
+      try {
+         portletResp.setContentType("Invalid");
+         tr11.appendTcDetail("Method did not throw Exception");
+      } catch (IllegalArgumentException iae) {
+         tr11.setTcSuccess(true);
+      }
+      PrintWriter writer = portletResp.getWriter();
+      tr11.writeTo(writer);
 
       // Create result objects for the tests
 
@@ -264,19 +276,6 @@ public class ResponseTests_MimeResponse_ApiRender implements Portlet {
          tr10.appendTcDetail(iae.toString());
       }
       tr10.writeTo(writer);
-
-      /* TestCase: V2ResponseTests_MimeResponse_ApiRender_setContentType4 */
-      /* Details: "Method setContentType(String): Throws */
-      /* IllegalArgumentException if the specified MIME type is invalid" */
-      TestResult tr11 = tcd.getTestResultFailed(
-            V2RESPONSETESTS_MIMERESPONSE_APIRENDER_SETCONTENTTYPE4);
-      try {
-         portletResp.setContentType("Invalid");
-         tr11.appendTcDetail("Method did not throw Exception");
-      } catch (IllegalArgumentException iae) {
-         tr11.setTcSuccess(true);
-      }
-      tr11.writeTo(writer);
 
       /*
        * TestCase: V2ResponseTests_MimeResponse_ApiRender_getCharacterEncoding

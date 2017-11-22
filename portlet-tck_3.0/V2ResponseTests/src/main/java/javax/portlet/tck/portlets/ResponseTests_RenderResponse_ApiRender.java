@@ -77,9 +77,21 @@ public class ResponseTests_RenderResponse_ApiRender implements Portlet {
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
-
       JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+
+      /* TestCase: V2ResponseTests_RenderResponse_ApiRender_setContentType2 */
+      /* Details: "Method setContentType(String): Throws */
+      /* IllegalArgumentException if the content type is not valid" */
+      TestResult tr3 = tcd.getTestResultFailed(
+          V2RESPONSETESTS_RENDERRESPONSE_APIRENDER_SETCONTENTTYPE2);
+      try {
+         portletResp.setContentType("Invalid");
+         tr3.appendTcDetail("Method did not throw Exception");
+      } catch (IllegalArgumentException iae) {
+         tr3.setTcSuccess(true);
+      }
+      PrintWriter writer = portletResp.getWriter();
+      tr3.writeTo(writer);
 
       // Create result objects for the tests
 
@@ -111,19 +123,6 @@ public class ResponseTests_RenderResponse_ApiRender implements Portlet {
             V2RESPONSETESTS_RENDERRESPONSE_APIRENDER_SETCONTENTTYPE1);
       tr2.setTcSuccess(true);
       tr2.writeTo(writer);
-
-      /* TestCase: V2ResponseTests_RenderResponse_ApiRender_setContentType2 */
-      /* Details: "Method setContentType(String): Throws */
-      /* IllegalArgumentException if the content type is not valid" */
-      TestResult tr3 = tcd.getTestResultFailed(
-            V2RESPONSETESTS_RENDERRESPONSE_APIRENDER_SETCONTENTTYPE2);
-      try {
-         portletResp.setContentType("Invalid");
-         tr3.appendTcDetail("Method did not throw Exception");
-      } catch (IllegalArgumentException iae) {
-         tr3.setTcSuccess(true);
-      }
-      tr3.writeTo(writer);
 
    }
 
