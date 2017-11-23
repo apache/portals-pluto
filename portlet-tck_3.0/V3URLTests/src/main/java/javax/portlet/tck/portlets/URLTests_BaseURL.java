@@ -110,13 +110,12 @@ public class URLTests_BaseURL {
       {
          TestResult tr1 = tcd.getTestResultFailed(V3URLTESTS_BASEURL_APPEND2);
          BaseURL baseURL = portletResp.createRenderURL();
-         baseURL.setParameter("tr1", ">&'\"");
+         baseURL.setParameter("tr1", ">'\"");
          StringBuilder sb = new StringBuilder();
          baseURL.append(sb, true);
          String resultingString = sb.toString();
          if (resultingString != null && !resultingString.equals("")
                && !resultingString.contains(">")
-               && !resultingString.contains("&")
                && !resultingString.contains("'")
                && !resultingString.contains("\"")) {
             tr1.setTcSuccess(true);
@@ -141,13 +140,12 @@ public class URLTests_BaseURL {
       {
          TestResult tr2 = tcd.getTestResultFailed(V3URLTESTS_BASEURL_APPEND3);
          BaseURL baseURL = portletResp.createRenderURL();
-         baseURL.setParameter("tr2", ">&'\"");
+         baseURL.setParameter("tr2", ">'\"");
          StringBuilder sb = new StringBuilder();
          baseURL.append(sb, true);
          String resultingString = sb.toString();
          if (resultingString != null && !resultingString.equals("")
                && !resultingString.contains(">")
-               && !resultingString.contains("&")
                && !resultingString.contains("'")
                && !resultingString.contains("\"")) {
             tr2.setTcSuccess(true);
