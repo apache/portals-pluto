@@ -112,7 +112,7 @@ public class URLTests_BaseURL {
          BaseURL baseURL = portletResp.createRenderURL();
          baseURL.setParameter("tr1", ">'\"");
          StringBuilder sb = new StringBuilder();
-         baseURL.append(sb, true);
+         baseURL.append(sb);
          String resultingString = sb.toString();
          if (resultingString != null && !resultingString.equals("")
                && !resultingString.contains(">")
