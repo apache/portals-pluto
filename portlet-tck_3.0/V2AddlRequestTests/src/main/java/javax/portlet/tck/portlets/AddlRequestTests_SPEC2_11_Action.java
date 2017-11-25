@@ -93,9 +93,14 @@ public class AddlRequestTests_SPEC2_11_Action implements Portlet {
           && "V2AddlRequestTests_SPEC2_11_Action_parameters6"
               .equals(portletReq.getParameterMap().get("inputval")[0])) {
         String tr2TestStringArray[] = {"Modified Value"};
-        portletReq.getParameterMap().put("inputval", tr2TestStringArray);
-        if ("V2AddlRequestTests_SPEC2_11_Action_parameters6"
-            .equals(portletReq.getParameterMap().get("inputval")[0])) {
+        try {
+          portletReq.getParameterMap().put("inputval", tr2TestStringArray);
+          if ("V2AddlRequestTests_SPEC2_11_Action_parameters6"
+              .equals(portletReq.getParameterMap().get("inputval")[0])) {
+            tr2.setTcSuccess(true);
+          }
+        }
+        catch (UnsupportedOperationException e) {
           tr2.setTcSuccess(true);
         }
       }
