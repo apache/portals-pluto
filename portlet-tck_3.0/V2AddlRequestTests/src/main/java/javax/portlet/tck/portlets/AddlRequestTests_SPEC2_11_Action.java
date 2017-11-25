@@ -261,7 +261,7 @@ public class AddlRequestTests_SPEC2_11_Action implements Portlet {
       aurl.setParameters(portletReq.getPrivateParameterMap());
       writer.write(
           "<div class=\"portletTCKTestcase\" name=\"V2AddlRequestTests_SPEC2_11_Action_parameters9\">");
-      writer.write("<h4>V2AddlRequestTests_SPEC2_11_Action_parameters9 button (POST):</h4>");
+      writer.write("<h4>V2AddlRequestTests_SPEC2_11_Action_parameters9 button (GET):</h4>");
       writer.write(
           "<form class=\"portletTCKButton\" action=\"" + aurl.toString() + "\" method=\"get\">");
       writer.write("<input type=\"hidden\" name=\"tr4\" value=\"true\"/>");
