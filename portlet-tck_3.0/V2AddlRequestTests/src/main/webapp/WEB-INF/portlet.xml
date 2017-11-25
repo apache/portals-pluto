@@ -25,6 +25,12 @@
    <portlet>
       <portlet-name>AddlRequestTests_SPEC2_11_Action</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_Action</portlet-class>
+      <!-- Liferay: BEGIN V2AddlRequestTests_SPEC2_11_Action_parameters9 -->
+      <init-param>
+         <name>check-auth-token</name>
+         <value>false</value>
+      </init-param>
+      <!-- Liferay:END V2AddlRequestTests_SPEC2_11_Action_parameters9 -->
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
