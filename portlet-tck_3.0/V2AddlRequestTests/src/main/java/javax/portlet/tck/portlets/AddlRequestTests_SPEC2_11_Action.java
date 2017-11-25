@@ -243,7 +243,7 @@ public class AddlRequestTests_SPEC2_11_Action implements Portlet {
           "<div class=\"portletTCKTestcase\" name=\"V2AddlRequestTests_SPEC2_11_Action_parameters8\">");
       writer.write("<h4>V2AddlRequestTests_SPEC2_11_Action_parameters8 button (POST):</h4>");
       writer.write(
-          "<form class=\"portletTCKButton\" action=\"" + aurl.toString() + "\" method=\"post\">");
+          "<form class=\"portletTCKButton\" action=\"" + aurl.toString() + "\" method=\"post\" data-senna-off>");
       writer.write("<input type=\"hidden\" name=\"tr3\" value=\"true\"/>");
       writer
           .write("<input type=\"submit\" value=\"V2AddlRequestTests_SPEC2_11_Action_parameters8\"");
