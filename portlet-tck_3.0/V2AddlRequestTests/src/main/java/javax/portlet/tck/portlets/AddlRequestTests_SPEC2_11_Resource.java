@@ -108,9 +108,13 @@ public class AddlRequestTests_SPEC2_11_Resource implements Portlet, ResourceServ
             && "V2AddlRequestTests_SPEC2_11_Resource_parameters6"
                 .equals(portletReq.getParameterMap().get("action")[0])) {
           String tr2TestStringArray[] = {"Modified Value"};
-          portletReq.getParameterMap().put("action", tr2TestStringArray);
-          if ("V2AddlRequestTests_SPEC2_11_Resource_parameters6"
-              .equals(portletReq.getParameterMap().get("action")[0])) {
+          try {
+            portletReq.getParameterMap().put("action", tr2TestStringArray);
+            if ("V2AddlRequestTests_SPEC2_11_Resource_parameters6"
+                .equals(portletReq.getParameterMap().get("action")[0])) {
+              tr2.setTcSuccess(true);
+            }
+          } catch (UnsupportedOperationException e) {
             tr2.setTcSuccess(true);
           }
         }
