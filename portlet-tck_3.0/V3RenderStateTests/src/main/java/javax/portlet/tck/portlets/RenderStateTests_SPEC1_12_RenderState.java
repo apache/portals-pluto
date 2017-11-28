@@ -207,7 +207,6 @@ public class RenderStateTests_SPEC1_12_RenderState implements Portlet, ResourceS
        * is returned. The portlet mode would not be available in a resource
        * request invoked with a resource URL having FULL cacheability."
        */
-      // TODO: Fix test case. Not working with FULL cacheability
       {
          TestResult result = tcd.getTestResultFailed(
                V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETPORTLETMODE2);
@@ -227,7 +226,6 @@ public class RenderStateTests_SPEC1_12_RenderState implements Portlet, ResourceS
        * is returned. The window state would not be available in a resource
        * request invoked with a resource URL having FULL cacheability."
        */
-       // TODO: Fix test case. Not working with FULL cacheability
       {
          TestResult result = tcd.getTestResultFailed(
                V3RENDERSTATETESTS_SPEC1_12_RENDERSTATE_GETWINDOWSTATE2);
