@@ -70,13 +70,17 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
 
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
 
-    portletResp.setRenderParameters(portletReq.getParameterMap());
+    String streamingPortalParam = portletReq.getParameter("streamingPortal");
+    boolean streamingPortal = "true".equalsIgnoreCase(streamingPortalParam);
+
+    if (streamingPortal) {
+      portletResp.setRenderParameters(portletReq.getParameterMap());
+    }
+
     long tid = Thread.currentThread().getId();
     portletReq.setAttribute(THREADID_ATTR, tid);
 
     StringWriter writer = new StringWriter();
-    String streamingPortalParam = portletReq.getParameter("streamingPortal");
-    boolean streamingPortal = "true".equalsIgnoreCase(streamingPortalParam);
 
     /* TestCase: V2AddlResponseTests_SPEC2_12_Render_cookie9 */
     /* Details: "Cookies set during the Render phase should be available */
@@ -393,31 +397,44 @@ public class AddlResponseTests_SPEC2_12_Render extends GenericPortlet {
     /* TestCase: V2AddlResponseTests_SPEC2_12_Render_cookie12 */
     /* Details: "Cookies set during the Render phase after the response */
     /* has been committed are ignored" */
-    if ("RENDER_MARKUP".equals(renderPartAttribute)
-        && renderRequest.getParameter("tr4") != null
-        && renderRequest.getParameter("tr4").equals("true")) {
-      Cookie[] cookies = renderRequest.getCookies();
+    String streamingPortalRenderURLParam = renderRequest.getParameter("streamingPortal");
+    String testName = renderRequest.getParameter("inputval");
+    if (("V2AddlResponseTests_SPEC2_12_Render_cookie12".equals(testName) && "false".equals(streamingPortalRenderURLParam)) ||
+        ("RENDER_MARKUP".equals(renderPartAttribute) && renderRequest.getParameter("tr4") != null && renderRequest.getParameter("tr4").equals("true"))) {
 
-      StringBuilder txt = new StringBuilder(128);
-      txt.append("<p>Debug info:");
-      txt.append("<br>");
-      txt.append("# Cookies: ").append(cookies.length).append("<br>");
-      TestResult tr2 = tcd.getTestResultSucceeded(V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE12);
-      for (Cookie c : cookies) {
-        txt.append("Name: ").append(c.getName());
-        txt.append(", Value: ").append(c.getValue()).append("<br>");
-        if (c.getName().equals("tr4_cookie") && c.getValue().equals("true")) {
-          txt.append("<br>").append("Failed because still got the cookie!").append("<br>");
-          c.setMaxAge(0);
-          c.setValue("");
-          tr2.setTcSuccess(false);
+      if (streamingPortal) {
+        Cookie[] cookies = renderRequest.getCookies();
+
+        StringBuilder txt = new StringBuilder(128);
+        txt.append("<p>Debug info:");
+        txt.append("<br>");
+        txt.append("# Cookies: ").append(cookies.length).append("<br>");
+        TestResult tr2 = tcd.getTestResultSucceeded(
+            V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE12);
+        for (Cookie c : cookies) {
+          txt.append("Name: ").append(c.getName());
+          txt.append(", Value: ").append(c.getValue()).append("<br>");
+          if (c.getName().equals("tr4_cookie") && c.getValue().equals("true")) {
+            txt.append("<br>").append(
+                "Failed because still got the cookie!").append("<br>");
+            c.setMaxAge(0);
+            c.setValue("");
+            tr2.setTcSuccess(false);
+          }
         }
+        tr2.writeTo(printWriter);
+        txt.append("</p>");
+        printWriter.append(txt.toString());
       }
-      tr2.writeTo(printWriter);
-      txt.append("</p>");
-      printWriter.append(txt.toString());
+      else {
+        TestResult tr2 = tcd.getTestResultSucceeded(
+            V2ADDLRESPONSETESTS_SPEC2_12_RENDER_COOKIE12);
+        tr2.setTcSuccess(true);
+        tr2.appendTcDetail(NON_STREAMING_BUFFERED_PORTAL_DETECTED);
+        tr2.writeTo(printWriter);
+      }
     } else {
-      if ("RENDER_HEADERS".equals(renderPartAttribute)) {
+      if (!streamingPortal || "RENDER_MARKUP".equals(renderPartAttribute)) {
         Cookie c = new Cookie("tr4_cookie", "true");
         c.setMaxAge(100);
         c.setPath("/");
