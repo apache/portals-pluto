@@ -48,6 +48,9 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
  */
 public class AddlRequestTests_SPEC2_11_RenderAttr_RenderHeaders implements Portlet {
 
+  private static final String NON_STREAMING_BUFFERED_PORTAL_DETECTED =
+      "<em>NON-STREAMING (BUFFERED) PORTAL DETECTED</em>";
+
   private Boolean successTr3 = false;
 
   @Override
@@ -76,15 +79,19 @@ public class AddlRequestTests_SPEC2_11_RenderAttr_RenderHeaders implements Portl
     PrintWriter writer = portletResp.getWriter();
 
     JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
+    Object renderPartAttribute = portletReq.getAttribute(PortletRequest.RENDER_PART);
+    boolean streamingPortal = (renderPartAttribute != null);
 
     /* TestCase: V2AddlRequestTests_SPEC2_11_RenderAttr_attributes3 */
     /* Details: "If the portlet container runtime option */
     /* javax.portlet.renderHeaders is set to TRUE, the RENDER_PART */
     /* attribute will be set when the render method is called" */
     TestResult tr2 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RENDERATTR_ATTRIBUTES3);
-    if (portletReq.getAttribute(PortletRequest.RENDER_PART) != null
-        && portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_MARKUP")) {
+    if (!streamingPortal || "RENDER_MARKUP".equals(renderPartAttribute)) {
       tr2.setTcSuccess(true);
+      if (!streamingPortal) {
+        tr2.setTcDetail(NON_STREAMING_BUFFERED_PORTAL_DETECTED);
+      }
       tr2.writeTo(writer);
     }
 
@@ -94,12 +101,18 @@ public class AddlRequestTests_SPEC2_11_RenderAttr_RenderHeaders implements Portl
     /* called first with the RENDER_PART attribute set to */
     /* \"RENDER_HEADERS\"" */
     TestResult tr3 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RENDERATTR_ATTRIBUTES4);
-    if (portletReq.getAttribute(PortletRequest.RENDER_PART) != null
-        && portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_HEADERS")) {
-      successTr3 = true;
-    } else if (portletReq.getAttribute(PortletRequest.RENDER_PART) != null
-        && portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_MARKUP")) {
-      tr3.setTcSuccess(successTr3);
+    if (streamingPortal) {
+      if ("RENDER_HEADERS".equals(renderPartAttribute)) {
+        successTr3 = true;
+      }
+      else if ("RENDER_MARKUP".equals(renderPartAttribute)) {
+        tr3.setTcSuccess(successTr3);
+        tr3.writeTo(writer);
+      }
+    }
+    else {
+      tr3.setTcSuccess(true);
+      tr3.setTcDetail(NON_STREAMING_BUFFERED_PORTAL_DETECTED);
       tr3.writeTo(writer);
     }
 
@@ -109,9 +122,11 @@ public class AddlRequestTests_SPEC2_11_RenderAttr_RenderHeaders implements Portl
     /* called a second time with the RENDER_PART attribute set to */
     /* \"RENDER_MARKUP\"" */
     TestResult tr4 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RENDERATTR_ATTRIBUTES5);
-    if (portletReq.getAttribute(PortletRequest.RENDER_PART) != null
-        && portletReq.getAttribute(PortletRequest.RENDER_PART).equals("RENDER_MARKUP")) {
+    if (!streamingPortal || "RENDER_MARKUP".equals(renderPartAttribute)) {
       tr4.setTcSuccess(true);
+      if (!streamingPortal) {
+        tr4.setTcDetail(NON_STREAMING_BUFFERED_PORTAL_DETECTED);
+      }
       tr4.writeTo(writer);
     }
 
