@@ -4,6 +4,9 @@
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>AddlRequestTests_SPEC2_11_Action</portlet-name>
+		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapping>portlet-tck</friendly-url-mapping>
+		<friendly-url-routes>friendly-url-routes.xml</friendly-url-routes>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
