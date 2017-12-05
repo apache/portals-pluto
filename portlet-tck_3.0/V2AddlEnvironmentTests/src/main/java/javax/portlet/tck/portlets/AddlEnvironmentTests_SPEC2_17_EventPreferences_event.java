@@ -122,9 +122,7 @@ public class AddlEnvironmentTests_SPEC2_17_EventPreferences_event implements Por
          TestResult tr0 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_17_EVENTPREFERENCES_SETVALUES4);
          try {
             portletPrefs.setValues("tr0", (String[])null);
-            if (portletPrefs.getValue("tr0", "tr0") == null) {
-               tr0.setTcSuccess(true);
-            }
+            tr0.setTcSuccess(true);
          } catch (Exception e) {
             tr0.appendTcDetail(e.toString());
          }
