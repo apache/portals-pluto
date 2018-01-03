@@ -144,7 +144,7 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     TestResult tr0 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETSERVERINFO1);
     String servInfo1 = pc.getServerInfo();
-    if (servInfo1 != null && servInfo1.matches("([^ ]+)/([^ ]+) *(.*)")) {
+    if (servInfo1 != null && servInfo1.matches("(.+)/(.+) *(.*)")) {
       tr0.setTcSuccess(true);
     } else {
       tr0.appendTcDetail("The PortletContainer has Invalid Form " + servInfo1);
