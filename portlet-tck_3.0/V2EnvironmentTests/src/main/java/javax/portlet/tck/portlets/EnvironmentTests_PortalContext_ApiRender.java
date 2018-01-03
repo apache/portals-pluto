@@ -293,7 +293,7 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet {
     TestResult tr14 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPORTALINFO1);
     String portal = pcn.getPortalInfo();
-    if (portal != null && portal.matches("([^ ]+)/([^ ]+) *(.*)")) {
+    if (portal != null && portal.matches("(.+)/(.+) *(.*)")) {
       tr14.setTcSuccess(true);
     } else {
       tr14.appendTcDetail("The Portal has Invalid form :" + portal);
