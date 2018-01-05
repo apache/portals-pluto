@@ -36,6 +36,7 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -97,36 +98,41 @@ public class DispatcherTests3S_SPEC2_19_ForwardServletRender implements Portlet,
       portletReq.setAttribute(THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
+      PortletSession portletSession = portletReq.getPortletSession();
+      TestResult tr0 = (TestResult) portletSession.getAttribute(V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRENDER_DISPATCH4);
+      if (tr0 == null) {
 
-      Map<String, String[]> oldmap = new HashMap<String, String[]>();
-      for (String name : portletReq.getParameterMap().keySet()) {
-         String[] vals = portletReq.getParameterValues(name);
-         vals = (vals == null) ? null : vals.clone();
-         oldmap.put(name, vals);
+         Map<String, String[]> oldmap = new HashMap<String, String[]>();
+         for (String name : portletReq.getParameterMap().keySet()) {
+            String[] vals = portletReq.getParameterValues(name);
+            vals = (vals == null) ? null : vals.clone();
+            oldmap.put(name, vals);
+         }
+
+         // Now do the actual dispatch
+         String target = SERVLET_PREFIX + "DispatcherTests3S_SPEC2_19_ForwardServletRender_servlet" + SERVLET_SUFFIX + "?" + QUERY_STRING;
+         PortletRequestDispatcher rd = portletConfig.getPortletContext().getRequestDispatcher(target);
+         rd.forward(portletReq, portletResp);
+
+         Map<String, String[]> newmap = new HashMap<String, String[]>();
+         for (String name : portletReq.getParameterMap().keySet()) {
+            String[] vals = portletReq.getParameterValues(name);
+            vals = (vals == null) ? null : vals.clone();
+            newmap.put(name, vals);
+         }
+
+         JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();
+
+         /* TestCase: DispatcherTests3S_SPEC2_19_ForwardServletRender_dispatch4 */
+         /* Details: "The parameters associated with a request dispatcher are */
+         /* scoped only for the duration of the include or forward call" */
+         tr0 = tcd.getTestResultFailed(V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRENDER_DISPATCH4);
+         CompareUtils.mapsEqual("Before dispatch", oldmap, "After dispatch", newmap, tr0);
+         portletSession.setAttribute(V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRENDER_DISPATCH4, tr0);
+      } else {
+         tr0.writeTo(writer);
+         portletSession.removeAttribute(V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRENDER_DISPATCH4);
       }
-
-      // Now do the actual dispatch
-      String target = SERVLET_PREFIX + "DispatcherTests3S_SPEC2_19_ForwardServletRender_servlet" + SERVLET_SUFFIX + "?"
-            + QUERY_STRING;
-      PortletRequestDispatcher rd = portletConfig.getPortletContext().getRequestDispatcher(target);
-      rd.forward(portletReq, portletResp);
-
-      Map<String, String[]> newmap = new HashMap<String, String[]>();
-      for (String name : portletReq.getParameterMap().keySet()) {
-         String[] vals = portletReq.getParameterValues(name);
-         vals = (vals == null) ? null : vals.clone();
-         newmap.put(name, vals);
-      }
-
-      JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();
-
-      /* TestCase: DispatcherTests3S_SPEC2_19_ForwardServletRender_dispatch4 */
-      /* Details: "The parameters associated with a request dispatcher are */
-      /* scoped only for the duration of the include or forward call" */
-      TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETRENDER_DISPATCH4);
-      CompareUtils.mapsEqual("Before dispatch", oldmap, "After dispatch", newmap, tr0);
-      tr0.writeTo(writer);
-
    }
 
 }
