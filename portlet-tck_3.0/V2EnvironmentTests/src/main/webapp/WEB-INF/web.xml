@@ -74,5 +74,7 @@
 	     javax.portlet.tck.attributes.V2EnvironmentTests_PortletSession_ApiRender_Attribute
 	 </listener-class>
 	</listener>
-
+   <listener>
+      <listener-class>javax.portlet.tck.servlet.StartupListener</listener-class>
+   </listener>
 </web-app>

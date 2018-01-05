@@ -38,6 +38,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
 import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.servlet.StartupListener;
 
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETSERVERINFO1;
 import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREQUESTDISPATCHER1;
@@ -133,6 +134,8 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
 
     JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
     JSR286SpecTestCaseDetails tcd_spec = new JSR286SpecTestCaseDetails();
+
+    String displayName = StartupListener.getDisplayName();
 
     // Create result objects for the tests
 
@@ -746,7 +749,7 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     TestResult tr49 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETPORTLETCONTEXTNAME1);
     String getCntName1 = pc.getPortletContextName();
-    if (getCntName1.equals("javax.portlet-tck-EnvironmentTests")) {
+    if (getCntName1.equals(displayName)) {
       tr49.setTcSuccess(true);
       tr49.appendTcDetail("Portlet Application name is - " + getCntName1);
     } else {
@@ -760,11 +763,11 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     TestResult tr50 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETPORTLETCONTEXTNAME2);
     String getCntName2 = pc.getPortletContextName();
-    if (getCntName2.equals("javax.portlet-tck-EnvironmentTests")) {
+    if (getCntName2.equals(displayName)) {
       tr50.setTcSuccess(true);
     } else {
       tr50.appendTcDetail(
-          "Failed because poetlet context name is not javax.portlet-tck-EnvironmentTests but "
+          "Failed because poetlet context name is not " + displayName + " but "
               + getCntName2);
     }
     tr50.writeTo(writer);
