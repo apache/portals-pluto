@@ -25,16 +25,24 @@ public class WebConfig {
 
 	// Private Data Members
 	private Map<String, String> configuredContextParams;
+	private String displayName;
 
 	public WebConfig() {
 		this.configuredContextParams = new HashMap<String, String>();
 	}
 
-	public WebConfig(Map<String, String> configuredContextParams) {
+	public WebConfig(
+		Map<String, String> configuredContextParams, String displayName) {
+
 		this.configuredContextParams = configuredContextParams;
+		this.displayName = displayName;
 	}
 
 	public Map<String, String> getConfiguredContextParams() {
 		return configuredContextParams;
+	}
+
+	public String getDisplayName() {
+		return displayName;
 	}
 }

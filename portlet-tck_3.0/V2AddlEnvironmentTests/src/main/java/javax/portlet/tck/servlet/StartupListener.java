@@ -32,6 +32,7 @@ import javax.xml.parsers.SAXParserFactory;
 public class StartupListener implements ServletContextListener {
 
 	private static Map<String, String> configuredContextParams;
+	private static String displayName;
 	private static ServletContext servletContext;
 
 	public static ServletContext getServletContext() {
@@ -60,6 +61,7 @@ public class StartupListener implements ServletContextListener {
 					saxParser, resolveEntities, scanWebFragments);
 			WebConfig webConfig = webConfigScanner.scan();
 			configuredContextParams = webConfig.getConfiguredContextParams();
+			displayName = webConfig.getDisplayName();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -67,5 +69,9 @@ public class StartupListener implements ServletContextListener {
 
 	public static Map<String, String> getConfiguredContextParams() {
 		return configuredContextParams;
+	}
+
+	public static String getDisplayName() {
+		return displayName;
 	}
 }

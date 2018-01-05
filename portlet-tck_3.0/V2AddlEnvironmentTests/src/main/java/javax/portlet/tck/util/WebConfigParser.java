@@ -32,12 +32,15 @@ public class WebConfigParser extends SAXHandlerBase {
 
 	// Private Constants
 	private static final String CONTEXT_PARAM = "context-param";
+	private static final String DISPLAY_NAME = "display-name";
 	private static final String PARAM_VALUE = "param-value";
 	private static final String PARAM_NAME = "param-name";
 
 	// Private Data Members
 	private Map<String, String> configuredContextParams;
+	private String displayName;
 	private boolean parsingContextParam;
+	private boolean parsingDisplayName;
 	private boolean parsingParamName;
 	private boolean parsingParamValue;
 	private String paramValue;
@@ -52,7 +55,10 @@ public class WebConfigParser extends SAXHandlerBase {
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 
-		if (parsingContextParam) {
+		if (parsingDisplayName) {
+			displayName = content.toString().trim();
+			parsingDisplayName = false;
+		} else if (parsingContextParam) {
 
 			if (parsingParamName) {
 				paramName = content.toString().trim();
@@ -77,7 +83,7 @@ public class WebConfigParser extends SAXHandlerBase {
 
 		try {
 			saxParser.parse(inputStream, this);
-			webConfig = new WebConfig(this.configuredContextParams);
+			webConfig = new WebConfig(this.configuredContextParams, this.displayName);
 			saxParser.reset();
 
 			return webConfig;
@@ -93,7 +99,9 @@ public class WebConfigParser extends SAXHandlerBase {
 
 		content = new StringBuilder();
 
-		if (localName.equals(CONTEXT_PARAM)) {
+		if (localName.equals(DISPLAY_NAME)) {
+			parsingDisplayName = true;
+		} else if (localName.equals(CONTEXT_PARAM)) {
 			parsingContextParam = true;
 		} else if (localName.equals(PARAM_NAME)) {
 			parsingParamName = true;
