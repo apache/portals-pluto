@@ -88,6 +88,8 @@
       <!-- put all portlets from this module on the same page -->
       <page.file.xsl>plutoMultiPortletPage.xsl</page.file.xsl>
 
+      <portletcontext.getrealpath.supported>true</portletcontext.getrealpath.supported>
+
    </properties>
 
    <build>
@@ -100,6 +102,9 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-war-plugin</artifactId>
+            <configuration>
+               <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+            </configuration>
          </plugin>
          <!-- Transform the portlet XML into test properties XML file -->
          <plugin>
@@ -125,6 +130,12 @@
 
 
    <profiles>
+      <profile>
+         <id>liferay</id>
+         <properties>
+            <portletcontext.getrealpath.supported>false</portletcontext.getrealpath.supported>
+         </properties>
+      </profile>
       <profile>
          <id>pluto</id>
 

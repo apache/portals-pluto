@@ -366,13 +366,18 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet {
     TestResult tr16 =
         tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETREALPATH1);
     try {
-      if (pc.getRealPath(
-          "/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html") != null) {
-        tr16.appendTcDetail(pc
-            .getRealPath("/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html"));
-        tr16.setTcSuccess(true);
+      boolean getRealPathSupported =
+          "true".equalsIgnoreCase(pc.getInitParameter("javax.portlet.portletcontext.GET_REAL_PATH_SUPPORTED"));
+      if (getRealPathSupported) {
+        if (pc.getRealPath("/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html") != null) {
+          tr16.appendTcDetail(pc.getRealPath("/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html"));
+          tr16.setTcSuccess(true);
+        } else {
+          tr16.appendTcDetail("Failed because real path cannot be determined.");
+        }
       } else {
-        tr16.appendTcDetail("Failed because real path cannot be determined.");
+        tr16.appendTcDetail("Portlet container does not support calling PortletContext.getRealPath() for the requested file.");
+        tr16.setTcSuccess(true);
       }
     } catch (Exception e) {
       tr16.appendTcDetail(e.toString());
