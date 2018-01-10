@@ -134,6 +134,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortalContext;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
@@ -172,9 +173,11 @@ public class RequestTests_PortletRequest_ApiAction implements Portlet, ResourceS
 
    private final Logger LOGGER = LoggerFactory.getLogger(RequestTests_PortletRequest_ApiAction.class);
 
+   private PortletConfig portletConfig = null;
+
    @Override
    public void init(PortletConfig config) throws PortletException {
-      
+      this.portletConfig = config;
    }
 
    @Override
@@ -193,6 +196,8 @@ public class RequestTests_PortletRequest_ApiAction implements Portlet, ResourceS
       StringWriter writer = new StringWriter();
 
       JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+
+      PortletContext pc = portletConfig.getPortletContext();
 
       // Create result objects for the tests
 
@@ -614,7 +619,7 @@ public class RequestTests_PortletRequest_ApiAction implements Portlet, ResourceS
       /* the context path associated with the portlet"                        */
       TestResult tr39 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIACTION_GETCONTEXTPATH1);
       String getctxtpath =portletReq.getContextPath();
-      if(getctxtpath!=null && getctxtpath.startsWith("/tck-V2RequestTests")) {
+      if(getctxtpath!=null && getctxtpath.startsWith(pc.getInitParameter("javax.portlet.portletrequest.CONTEXT_PATH"))) {
     	  tr39.setTcSuccess(true);
       } else {
     	  tr39.appendTcDetail("The getContextPath has an Empty path ");

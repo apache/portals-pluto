@@ -85,6 +85,7 @@
       <!-- This module places the portlets on the page through a file. (Page is not generated from the portlet.xml) -->
       <additional.pagefile.only>true</additional.pagefile.only>
 
+      <portletrequest.context.path>/tck-V2RequestTests</portletrequest.context.path>
    </properties>
 
    <build>
@@ -97,6 +98,9 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-war-plugin</artifactId>
+            <configuration>
+               <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+            </configuration>
          </plugin>
          
          <!-- copy page & test case files, renaming properly -->
@@ -109,6 +113,12 @@
 
 
    <profiles>
+      <profile>
+         <id>liferay</id>
+         <properties>
+            <portletrequest.context.path>/o/tck-V2RequestTests</portletrequest.context.path>
+         </properties>
+      </profile>
       <profile>
          <id>pluto</id>
 

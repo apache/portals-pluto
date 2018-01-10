@@ -20,4 +20,8 @@
 <web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
    <display-name>javax.portlet-tck-RequestTests</display-name>
 
+   <context-param>
+      <param-name>javax.portlet.portletrequest.CONTEXT_PATH</param-name>
+      <param-value>${portletrequest.context.path}</param-value>
+   </context-param>
 </web-app>

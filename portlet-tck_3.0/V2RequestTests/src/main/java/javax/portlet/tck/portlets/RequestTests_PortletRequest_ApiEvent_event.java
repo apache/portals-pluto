@@ -137,6 +137,7 @@ import javax.portlet.EventResponse;
 import javax.portlet.PortalContext;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
@@ -164,10 +165,12 @@ import org.slf4j.LoggerFactory;
 public class RequestTests_PortletRequest_ApiEvent_event implements Portlet, EventPortlet, ResourceServingPortlet {
 
    private final Logger LOGGER = LoggerFactory.getLogger(RequestTests_PortletRequest_ApiEvent_event.class);
-   
+
+   private PortletConfig portletConfig = null;
+
    @Override
    public void init(PortletConfig config) throws PortletException {
-  
+      this.portletConfig = config;
    }
 
    @Override
@@ -200,6 +203,8 @@ public class RequestTests_PortletRequest_ApiEvent_event implements Portlet, Even
       StringWriter writer = new StringWriter();
 
       JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+
+      PortletContext pc = portletConfig.getPortletContext();
 
       // Create result objects for the tests
 
@@ -619,7 +624,7 @@ public class RequestTests_PortletRequest_ApiEvent_event implements Portlet, Even
       /* the context path associated with the portlet"                        */
       TestResult tr39 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIEVENT_GETCONTEXTPATH1);
       String getctxtpath =portletReq.getContextPath();
-      if(getctxtpath!=null && getctxtpath.startsWith("/tck-V2RequestTests")) {
+      if(getctxtpath!=null && getctxtpath.startsWith(pc.getInitParameter("javax.portlet.portletrequest.CONTEXT_PATH"))) {
     	  tr39.setTcSuccess(true);
       } else {
     	  tr39.appendTcDetail("The getContextPath has an Empty path ");
