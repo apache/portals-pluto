@@ -137,8 +137,9 @@ public class AddlRequestTests_SPEC2_11_Render implements Portlet {
         /* set on the render URL" */
         TestResult tr2 = tcd.getTestResultFailed(V2ADDLREQUESTTESTS_SPEC2_11_RENDER_PARAMETERS13);
         if (portletReq.getParameter("renderURLTr2") != null
-            && portletReq.getParameter("tr2") != null && portletReq.getParameter("renderURLTr2")
-                .contains("tr2:" + portletReq.getParameter("tr2"))) {
+            && portletReq.getParameter("tr2") != null && (portletReq.getParameter("renderURLTr2")
+                .contains("tr2:" + portletReq.getParameter("tr2")) || portletReq.getParameter("renderURLTr2")
+                    .contains("tr2=" + portletReq.getParameter("tr2")))) {
           tr2.setTcSuccess(true);
           successTr2 = true;
         } else {
