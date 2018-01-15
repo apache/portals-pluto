@@ -85,6 +85,8 @@
       <!-- This module places the portlets on the page through a file. (Page is not generated from the portlet.xml) -->
       <additional.pagefile.only>true</additional.pagefile.only>
 
+      <portal.security.role>pluto</portal.security.role>
+
       <portletrequest.context.path>/tck-V2RequestTests</portletrequest.context.path>
    </properties>
 
@@ -116,6 +118,7 @@
       <profile>
          <id>liferay</id>
          <properties>
+            <portal.security.role>User</portal.security.role>
             <portletrequest.context.path>/o/tck-V2RequestTests</portletrequest.context.path>
          </properties>
       </profile>

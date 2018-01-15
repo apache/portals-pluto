@@ -21,6 +21,11 @@
    <display-name>javax.portlet-tck-RequestTests</display-name>
 
    <context-param>
+      <param-name>javax.portlet.portal.SECURITY_ROLE</param-name>
+      <param-value>${portal.security.role}</param-value>
+   </context-param>
+
+   <context-param>
       <param-name>javax.portlet.portletrequest.CONTEXT_PATH</param-name>
       <param-value>${portletrequest.context.path}</param-value>
    </context-param>

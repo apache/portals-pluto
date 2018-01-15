@@ -697,7 +697,7 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Details: "Method isUserInRole(): Returns true if the authenticated   */
       /* user is in the specified role"                                       */
       TestResult tr46 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_ISUSERINROLE1);
-      boolean usrole=portletReq.isUserInRole("pluto");
+      boolean usrole=portletReq.isUserInRole(pc.getInitParameter("javax.portlet.portal.SECURITY_ROLE"));
       if(usrole==true) {
     	  tr46.setTcSuccess(true);
       } else {
