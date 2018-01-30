@@ -94,6 +94,24 @@
       <finalName>${project.artifactId}</finalName>
       <plugins>
          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>prepare-package</id>
+                  <phase>prepare-package</phase>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+                  <configuration>
+                     <target>
+                        <copy file="${basedir}/${portlet.descriptor.dir}/portlet.xml"
+                              tofile="${project.build.directory}/${project.build.finalName}/WEB-INF/portlet.xml" />
+                     </target>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
          </plugin>
@@ -121,9 +139,10 @@
       <profile>
          <id>pluto</id>
          <properties>
-            <expected.number>2</expected.number>
+            <expected.size>2</expected.size>
             <expected.option>javax.portlet.servletDefaultSessionScope</expected.option>
-            <expected.portlet.value>PORTLET_SCOPE</expected.portlet.value>
+            <expected.value>PORTLET_SCOPE</expected.value>
+            <portlet.descriptor.dir>src/main/webapp/WEB-INF/pluto</portlet.descriptor.dir>
          </properties>
          <dependencies>
             <dependency>
@@ -146,49 +165,11 @@
       <profile>
          <id>liferay</id>
          <properties>
-            <expected.number>1</expected.number>
+            <expected.size>1</expected.size>
             <expected.option>javax.portlet.escapeXml</expected.option>
-            <expected.portlet.value>true</expected.portlet.value>
+            <expected.value>true</expected.value>
+            <portlet.descriptor.dir>src/main/webapp/WEB-INF/liferay</portlet.descriptor.dir>
          </properties>
-         <build>
-            <plugins>
-               <plugin>
-                  <artifactId>maven-antrun-plugin</artifactId>
-                  <executions>
-                     <execution>
-                        <id>prepare-package</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                           <goal>run</goal>
-                        </goals>
-                        <configuration>
-                           <target>
-                              <copy file="${basedir}/src/main/webapp/WEB-INF/portlet.xml"
-                                    tofile="${basedir}/src/main/webapp/WEB-INF/portlet.tmp" />
-                              <copy file="${basedir}/src/main/resources/xml-resources/liferay/portlet.xml"
-                                    tofile="${basedir}/src/main/webapp/WEB-INF/portlet.xml"
-                                    overwrite="true" />
-                           </target>
-                        </configuration>
-                     </execution>
-                     <execution>
-                        <id>package</id>
-                        <phase>package</phase>
-                        <goals>
-                           <goal>run</goal>
-                        </goals>
-                        <configuration>
-                           <target>
-                              <move file="${basedir}/src/main/webapp/WEB-INF/portlet.tmp"
-                                    tofile="${basedir}/src/main/webapp/WEB-INF/portlet.xml"
-                                    overwrite="true" />
-                           </target>
-                        </configuration>
-                     </execution>
-                  </executions>
-               </plugin>
-            </plugins>
-         </build>
       </profile>
    </profiles>
 

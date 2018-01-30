@@ -135,6 +135,7 @@
       <!-- Set to true for modules that define all test pages in a file (page file is not generated from the portlet.xml) -->
       <additional.pagefile.only>false</additional.pagefile.only>
 
+      <portlet.descriptor.dir>src/main/webapp/WEB-INF</portlet.descriptor.dir>
    </properties>
 
    <modules>
@@ -269,7 +270,7 @@
                      
                            <!-- automatically generate test case list for module -->
                            <transformationSet>
-                              <dir>src/main/webapp/WEB-INF</dir>
+                              <dir>${portlet.descriptor.dir}</dir>
                               <includes>
                                  <include>portlet.xml</include>
                               </includes>
@@ -309,7 +310,7 @@
                      
                            <!-- Automatically generate page file for the module -->
                            <transformationSet>
-                              <dir>src/main/webapp/WEB-INF</dir>
+                              <dir>${portlet.descriptor.dir}</dir>
                               <includes>
                                  <include>portlet.xml</include>
                               </includes>
@@ -517,8 +518,7 @@
                      <archiveClasses>false</archiveClasses>
                      <failOnMissingWebXml>false</failOnMissingWebXml>
                      <packagingExcludes>
-                        WEB-INF/classes/xml-resources/liferay,
-                        WEB-INF/classes/xml-resources/liferay/portlet.xml,
+                        WEB-INF/liferay/portlet.xml
                         WEB-INF/liferay-portlet.xml,
                         WEB-INF/classes/log4j.properties
                      </packagingExcludes>
@@ -563,6 +563,7 @@
                      <archiveClasses>false</archiveClasses>
                      <failOnMissingWebXml>false</failOnMissingWebXml>
                      <packagingExcludes>
+                        WEB-INF/pluto/portlet.xml,
                         WEB-INF/classes/logging.properties
                      </packagingExcludes>
                      <webResources>
