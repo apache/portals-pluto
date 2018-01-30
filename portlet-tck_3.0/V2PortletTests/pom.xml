@@ -100,6 +100,9 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-war-plugin</artifactId>
+            <configuration>
+               <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+            </configuration>
          </plugin>
          <!-- Transform the portlet XML into test properties XML file -->
          <plugin>
@@ -117,7 +120,11 @@
    <profiles>
       <profile>
          <id>pluto</id>
-
+         <properties>
+            <expected.number>2</expected.number>
+            <expected.option>javax.portlet.servletDefaultSessionScope</expected.option>
+            <expected.portlet.value>PORTLET_SCOPE</expected.portlet.value>
+         </properties>
          <dependencies>
             <dependency>
                <groupId>org.apache.taglibs</groupId>
@@ -135,7 +142,53 @@
                <scope>compile</scope>
             </dependency>
          </dependencies>
-
+      </profile>
+      <profile>
+         <id>liferay</id>
+         <properties>
+            <expected.number>1</expected.number>
+            <expected.option>javax.portlet.escapeXml</expected.option>
+            <expected.portlet.value>true</expected.portlet.value>
+         </properties>
+         <build>
+            <plugins>
+               <plugin>
+                  <artifactId>maven-antrun-plugin</artifactId>
+                  <executions>
+                     <execution>
+                        <id>prepare-package</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                           <goal>run</goal>
+                        </goals>
+                        <configuration>
+                           <target>
+                              <copy file="${basedir}/src/main/webapp/WEB-INF/portlet.xml"
+                                    tofile="${basedir}/src/main/webapp/WEB-INF/portlet.tmp" />
+                              <copy file="${basedir}/src/main/resources/xml-resources/liferay/portlet.xml"
+                                    tofile="${basedir}/src/main/webapp/WEB-INF/portlet.xml"
+                                    overwrite="true" />
+                           </target>
+                        </configuration>
+                     </execution>
+                     <execution>
+                        <id>package</id>
+                        <phase>package</phase>
+                        <goals>
+                           <goal>run</goal>
+                        </goals>
+                        <configuration>
+                           <target>
+                              <move file="${basedir}/src/main/webapp/WEB-INF/portlet.tmp"
+                                    tofile="${basedir}/src/main/webapp/WEB-INF/portlet.xml"
+                                    overwrite="true" />
+                           </target>
+                        </configuration>
+                     </execution>
+                  </executions>
+               </plugin>
+            </plugins>
+         </build>
       </profile>
    </profiles>
 

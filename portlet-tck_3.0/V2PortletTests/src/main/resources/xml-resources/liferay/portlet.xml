@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2PortletTests">
+
+   <portlet>
+      <portlet-name>PortletTests_PortletConfig_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_PortletConfig_ApiRender</portlet-class>
+      <init-param>
+         <name>param1</name>
+         <value>value1</value>
+      </init-param>
+       <init-param>
+         <name>param2</name>
+         <value>value2</value>
+      </init-param>
+       <init-param>
+         <name>param3</name>
+         <value>value3</value>
+      </init-param>
+       
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en</supported-locale>
+      
+     <resource-bundle>javax.portlet.tck.portlets.TestBundle</resource-bundle>
+     
+      <portlet-info>
+         <title>PortletTests_PortletConfig_ApiRender</title>
+      </portlet-info>
+      
+       <supported-processing-event>
+       <qname>tck:PortletTests_Event_ApiEvent</qname>
+      </supported-processing-event>
+      
+      <supported-publishing-event>
+      
+         <qname>tck:PortletTests_Event_ApiEvent</qname>
+      </supported-publishing-event>
+      
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+     
+  <container-runtime-option> 
+      <name>javax.portlet.escapeXml</name> 
+      <value>true</value> 
+  </container-runtime-option>
+  <container-runtime-option>
+      <name>newruntimeoption</name> 
+      <value>option</value> 
+  </container-runtime-option>
+  
+      
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTests_PortletConfig_ApiRender2</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_PortletConfig_ApiRender2</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <portlet-info>
+         <title>PortletTests_PortletConfig_ApiRender2</title>
+      </portlet-info> 
+    </portlet>
+
+   <portlet>
+      <portlet-name>PortletTests_PortletMode_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_PortletMode_ApiRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>PortletTests_PortletMode_ApiRender</title>
+      </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTests_WindowState_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_WindowState_ApiRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>PortletTests_WindowState_ApiRender</title>
+      </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTests_Portlet_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_Portlet_ApiRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>PortletTests_Portlet_ApiRender</title>
+      </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTests_Portlet_ApiAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_Portlet_ApiAction</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>PortletTests_Portlet_ApiAction</title>
+      </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTests_Event_ApiEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_Event_ApiEvent</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>PortletTests_Event_ApiEvent</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:PortletTests_Event_ApiEvent</qname>
+      </supported-publishing-event>
+      <supported-publishing-event>
+         <qname>tck:PortletTests_Event_ApiEvent2</qname>
+      </supported-publishing-event>
+      <supported-publishing-event>
+         <name>PortletTests_Event_ApiEvent_localPart</name>
+      </supported-publishing-event>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTests_Event_ApiEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_Event_ApiEvent_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>PortletTests_Event_ApiEvent_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:PortletTests_Event_ApiEvent</qname>
+      </supported-processing-event>
+      <supported-processing-event>
+         <qname>tck:PortletTests_Event_ApiEvent2</qname>
+      </supported-processing-event>
+      <supported-processing-event>
+         <name>PortletTests_Event_ApiEvent_localPart</name>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTests_EventPortlet_ApiEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_EventPortlet_ApiEvent</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>PortletTests_EventPortlet_ApiEvent</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:PortletTests_EventPortlet_ApiEvent</qname>
+      </supported-publishing-event>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTests_EventPortlet_ApiEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_EventPortlet_ApiEvent_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>PortletTests_EventPortlet_ApiEvent_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:PortletTests_EventPortlet_ApiEvent</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTests_ResourceServingPortlet_ApiResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_ResourceServingPortlet_ApiResource</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>PortletTests_ResourceServingPortlet_ApiResource</title>
+      </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTests_GenericPortlet_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_GenericPortlet_ApiRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>PortletTests_GenericPortlet_ApiRender</title>
+      </portlet-info>
+   <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
+   </portlet>
+  <default-namespace>https://www.apache.org</default-namespace>
+   <event-definition>
+      <qname>tck:PortletTests_Event_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+   <event-definition>
+      <qname>tck:PortletTests_Event_ApiEvent2</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+   <event-definition>
+      <name>PortletTests_Event_ApiEvent_localPart</name>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+   <event-definition>
+      <qname>tck:PortletTests_EventPortlet_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
+   <container-runtime-option> 
+      <name>javax.portlet.escapeXml</name> 
+      <value>APPLICATION</value> 
+  </container-runtime-option>
+</portlet-app>

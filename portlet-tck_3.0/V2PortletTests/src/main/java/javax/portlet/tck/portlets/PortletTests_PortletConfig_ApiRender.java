@@ -328,6 +328,14 @@ public class PortletTests_PortletConfig_ApiRender implements Portlet {
       tr10.writeTo(writer);
 
       /*
+       * different containers expect different options
+       */
+      PortletContext portletContext = portletConfig.getPortletContext();
+      String expectedNumber = portletContext.getInitParameter("tck.EXPECTED_NUMBER");
+      String expectedOption = portletContext.getInitParameter("tck.EXPECTED_OPTION");
+      String expectedPortletValue = portletContext.getInitParameter("tck.EXPECTED_PORTLET_VALUE");
+
+      /*
        * TestCase:
        * V2PortletTests_PortletConfig_ApiRender_getContainerRuntimeOptions1
        */
@@ -339,9 +347,10 @@ public class PortletTests_PortletConfig_ApiRender implements Portlet {
             V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS1);
       Map<String, String[]> runoption1 = portletConfig
             .getContainerRuntimeOptions();
-      if (runoption1.size() == 2) {
+
+      if (runoption1.size() == Integer.parseInt(expectedNumber)) {
          if (runoption1 != null && runoption1
-               .containsKey("javax.portlet.servletDefaultSessionScope")) {
+               .containsKey(expectedOption)) {
             tr11.setTcSuccess(true);
          } else {
             tr11.appendTcDetail(
@@ -365,13 +374,11 @@ public class PortletTests_PortletConfig_ApiRender implements Portlet {
             V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS2);
       Map<String, String[]> runoption2 = portletConfig
             .getContainerRuntimeOptions();
-      String[] val5 = runoption2
-            .get("javax.portlet.servletDefaultSessionScope");
-      if (runoption2.size() == 2) {
+      String[] val5 = runoption2.get(expectedOption);
+      if (runoption2.size() == Integer.parseInt(expectedNumber)) {
          if (runoption2 != null
-               && runoption2
-                     .containsKey("javax.portlet.servletDefaultSessionScope")
-               && val5[0].equals("PORTLET_SCOPE")) {
+               && runoption2.containsKey(expectedOption)
+               && val5[0].equals(expectedPortletValue)) {
             tr12.setTcSuccess(true);
          } else {
             tr12.appendTcDetail(
@@ -394,8 +401,8 @@ public class PortletTests_PortletConfig_ApiRender implements Portlet {
             V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETCONTAINERRUNTIMEOPTIONS3);
       Map<String, String[]> runoption3 = portletConfig
             .getContainerRuntimeOptions();
-      if (runoption3.size() == 2) {
-         if (runoption3 != null && !runoption3.equals("newruntimeoption")) {
+      if (runoption3.size() == Integer.parseInt(expectedNumber)) {
+         if (runoption3 != null && !runoption3.containsKey("newruntimeoption")) {
             tr13.setTcSuccess(true);
          } else {
             tr13.appendTcDetail(
