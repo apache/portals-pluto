@@ -88,6 +88,8 @@
       <!-- put all portlets from this module on the same page -->
       <page.file.xsl>plutoMultiPortletPage.xsl</page.file.xsl>
 
+      <portlet.descriptor.dir>src/main/webapp/WEB-INF/pluto</portlet.descriptor.dir>
+
    </properties>
 
    <build>
@@ -142,7 +144,6 @@
             <expected.size>2</expected.size>
             <expected.option>javax.portlet.servletDefaultSessionScope</expected.option>
             <expected.value>PORTLET_SCOPE</expected.value>
-            <portlet.descriptor.dir>src/main/webapp/WEB-INF/pluto</portlet.descriptor.dir>
          </properties>
          <dependencies>
             <dependency>
