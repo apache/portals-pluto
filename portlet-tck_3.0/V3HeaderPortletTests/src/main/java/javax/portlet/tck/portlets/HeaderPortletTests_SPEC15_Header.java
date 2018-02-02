@@ -290,9 +290,17 @@ public class HeaderPortletTests_SPEC15_Header
                   && V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS6.equals(
                         portletReq.getParameterMap().get("inputval")[0])) {
                String tr6TestStringArray[] = { "Modified Value" };
-               portletReq.getParameterMap().put("inputval", tr6TestStringArray);
-               if (V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS6
-                     .equals(portletReq.getParameterMap().get("inputval")[0])) {
+               try {
+                  portletReq.getParameterMap().put(
+                      "inputval", tr6TestStringArray);
+                  if (V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS6
+                      .equals(
+                          portletReq.getParameterMap().get("inputval")[0])) {
+                     tr6.setTcSuccess(true);
+                     successTr6 = true;
+                  }
+               }
+               catch (UnsupportedOperationException e) {
                   tr6.setTcSuccess(true);
                   successTr6 = true;
                }
