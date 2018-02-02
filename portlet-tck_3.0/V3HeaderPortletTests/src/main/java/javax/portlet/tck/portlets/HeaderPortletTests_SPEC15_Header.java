@@ -255,8 +255,8 @@ public class HeaderPortletTests_SPEC15_Header
                   V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS13);
             if (portletReq.getParameter("renderURLTr2") != null
                   && portletReq.getParameter("tr2") != null
-                  && portletReq.getParameter("renderURLTr2")
-                        .contains("tr2:" + portletReq.getParameter("tr2"))) {
+                  && (portletReq.getParameter("renderURLTr2").contains("tr2:" + portletReq.getParameter("tr2")) ||
+                      portletReq.getParameter("renderURLTr2").contains("tr2=" + portletReq.getParameter("tr2")))) {
                tr2.setTcSuccess(true);
                successTr2 = true;
             } else {
