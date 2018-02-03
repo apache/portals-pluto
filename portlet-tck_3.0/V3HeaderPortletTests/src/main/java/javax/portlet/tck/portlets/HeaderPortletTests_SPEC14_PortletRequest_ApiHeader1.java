@@ -35,6 +35,7 @@ import javax.portlet.HeaderResponse;
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
@@ -837,11 +838,13 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* in the specified role"                                                     */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISUSERINROLE1);
-         if(portletReq.isUserInRole("tckuser")){
+         PortletContext portletContext = portletReq.getPortletContext();
+         String securityRole = portletContext.getInitParameter("javax.portlet.portal.SECURITY_ROLE");
+         if(portletReq.isUserInRole(securityRole)) {
             result.setTcSuccess(true);
-            result.appendTcDetail("User is in \"tckuser\" role.");
+            result.appendTcDetail("User is in \"" + securityRole + "\" role.");
          } else {
-            result.appendTcDetail("Failed because user is not configured to be in \"tckuser\" role.");
+            result.appendTcDetail("Failed because user is not configured to be in \"" + securityRole + "\" role.");
          }
          result.writeTo(writer);
       }
