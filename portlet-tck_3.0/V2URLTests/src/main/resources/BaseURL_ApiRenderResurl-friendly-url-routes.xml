@@ -4,6 +4,6 @@
 
 <routes>
 	<route>
-		<pattern>/{p_p_lifecycle}/{p_p_state}/{p_p_mode}/{p_p_cacheability}</pattern>
+		<pattern>/{p_p_id}/{p_p_lifecycle}/{p_p_state}/{p_p_mode}/{p_p_cacheability}/{tc}</pattern>
 	</route>
 </routes>
