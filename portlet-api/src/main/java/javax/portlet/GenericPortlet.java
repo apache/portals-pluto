@@ -74,6 +74,15 @@ import javax.xml.namespace.QName;
  */
 public abstract class GenericPortlet implements Portlet, PortletConfig, EventPortlet, ResourceServingPortlet, HeaderPortlet {
 
+   /**
+    * This property is set by the container if the container
+    * has a cached response for the given validation tag. The property can be
+    * retrieved using the <code>getProperty</code> method. 
+    * <P>
+    * The value is <code>"javax.portlet.automaticResourceDispatching"</code>.
+    */
+   public static final String AUTOMATIC_RESOURCE_DISPATCH = "javax.portlet.automaticResourceDispatching";
+
 	private transient PortletConfig config;
 
 	private transient Map<String, Method> processActionHandlingMethodsMap = new HashMap<String, Method>();
@@ -630,21 +639,30 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	/**
 	 * Default resource serving.
 	 * <p>
-	 * The default implemention of this method is to call a
-	 * RequestDispatcher.foward with the ResourceID of the ResourceRequest.
+	 * The default implementation of this method does nothing.
 	 * <p>
+	 * However, if the reserved portlet initialization parameter 
+	 * {@link #AUTOMATIC_RESOURCE_DISPATCH} 
+	 * (= "javax.portlet.automaticResourceDispatching")
+	 * is set to <code>true</code>, the default
+	 * implementation will perform a
+	 * <code>PortletRequestDispatcher.forward</code> to the location designated by
+	 * the ResourceID of the ResourceRequest.
 	 * If no ResourceID is set on the resource URL the default implementation
 	 * does nothing.
 	 * 
 	 * @since 2.0
 	 */
 	public void serveResource(ResourceRequest request, ResourceResponse response) throws PortletException, IOException {
+	   String autofwd = getInitParameter(AUTOMATIC_RESOURCE_DISPATCH);
+	   if (autofwd != null && autofwd.equalsIgnoreCase("true")) {
 		if (request.getResourceID() != null) {
 			PortletRequestDispatcher rd = getPortletConfig().getPortletContext().getRequestDispatcher(
 					request.getResourceID());
 			if (rd != null)
 				rd.forward(request, response);
 		}
+	}
 	}
 
 	/**
