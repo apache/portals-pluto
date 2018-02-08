@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+	version="2.0" id="V2AddlPortletTests">
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_2_Compatibility</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_2_Compatibility</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_2_Compatibility</title>
+		</portlet-info>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_5_Initialization</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_Initialization</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_5_Initialization</title>
+		</portlet-info>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_5_ActionHandling</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_ActionHandling</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_5_ActionHandling</title>
+		</portlet-info>
+		<supported-publishing-event>
+			<qname>tck:AddlPortletTests_SPEC2_5_ActionHandling</qname>
+		</supported-publishing-event>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_5_ActionHandling_event</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_ActionHandling_event</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_5_ActionHandling_event</title>
+		</portlet-info>
+		<supported-processing-event>
+			<qname>tck:AddlPortletTests_SPEC2_5_ActionHandling</qname>
+		</supported-processing-event>
+		<supported-publishing-event>
+			<qname>tck:AddlPortletTests_SPEC2_5_ActionHandling</qname>
+		</supported-publishing-event>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_5_ResourceHandling</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_ResourceHandling</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_5_ResourceHandling</title>
+		</portlet-info>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_5_EventHandling</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_EventHandling</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_5_EventHandling</title>
+		</portlet-info>
+		<supported-publishing-event>
+			<qname>tck:AddlPortletTests_SPEC2_5_EventHandling_exception4</qname>
+		</supported-publishing-event>
+		<supported-publishing-event>
+			<qname>tck:AddlPortletTests_SPEC2_5_EventHandling_exception5</qname>
+		</supported-publishing-event>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_5_EventHandling_event</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_EventHandling_event</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_5_EventHandling_event</title>
+		</portlet-info>
+		<supported-processing-event>
+			<qname>tck:AddlPortletTests_SPEC2_5_EventHandling_exception4</qname>
+		</supported-processing-event>
+		<supported-processing-event>
+			<qname>tck:AddlPortletTests_SPEC2_5_EventHandling_exception5</qname>
+		</supported-processing-event>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_5_RenderGenericPortlet</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_RenderGenericPortlet</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_5_RenderGenericPortlet</title>
+		</portlet-info>
+		<supported-processing-event>
+			<name>AddlPortletTests_SPEC2_5_RenderGenericPortlet_localPart</name>
+		</supported-processing-event>
+		<supported-publishing-event>
+			<qname>tck:AddlPortletTests_SPEC2_5_RenderGenericPortlet</qname>
+		</supported-publishing-event>
+		<supported-publishing-event>
+			<name>AddlPortletTests_SPEC2_5_RenderGenericPortlet_localPart</name>
+		</supported-publishing-event>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_5_RenderGenericPortlet_event</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_RenderGenericPortlet_event</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_5_RenderGenericPortlet_event</title>
+		</portlet-info>
+		<supported-processing-event>
+			<qname>tck:AddlPortletTests_SPEC2_5_RenderGenericPortlet</qname>
+		</supported-processing-event>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_6_RenderConfig</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_6_RenderConfig</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<resource-bundle>javax.portlet.tck.portlets.resource</resource-bundle>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_6_RenderConfig</title>
+		</portlet-info>
+		<supported-processing-event>
+			<name>AddlPortletTests_SPEC2_15_EventEventHandling_empty</name>
+		</supported-processing-event>
+		<supported-publishing-event>
+			<name>AddlPortletTests_SPEC2_15_EventEventHandling_empty</name>
+		</supported-publishing-event>
+		<container-runtime-option>
+			<name>javax.portlet.escapeXml</name>
+			<value>true</value>
+		</container-runtime-option>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_6_RenderConfig2</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_6_RenderConfig2</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_6_RenderConfig2</title>
+			<short-title>AddlPortletTests_SPEC2_6_RenderConfig2_a</short-title>
+			<keywords>AddlPortletTests_SPEC2_6_RenderConfig2_b</keywords>
+		</portlet-info>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_6_RenderConfig3</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_6_RenderConfig3</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<resource-bundle>javax.portlet.tck.portlets.resource-no-title</resource-bundle>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_6_RenderConfig3</title>
+			<short-title>AddlPortletTests_SPEC2_6_RenderConfig3_a</short-title>
+			<keywords>AddlPortletTests_SPEC2_6_RenderConfig3_b</keywords>
+		</portlet-info>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_8_PortletModes</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_8_PortletModes</portlet-class>
+		<expiration-cache>0</expiration-cache>
+
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>help</portlet-mode>
+			<portlet-mode>custom1</portlet-mode>
+			<portlet-mode>custom2</portlet-mode>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<resource-bundle>javax.portlet.tck.portlets.portlet-mode-resource</resource-bundle>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_9_WindowStates</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_9_WindowStates</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<window-state>custom_window</window-state>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_9_WindowStates</title>
+		</portlet-info>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_13_ResourceServing</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_13_ResourceServing</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_13_ResourceServing</title>
+		</portlet-info>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_13_ResourceServingCache</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_13_ResourceServingCache</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+			<portlet-mode>edit</portlet-mode>
+			<portlet-mode>help</portlet-mode>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_13_ResourceServingCache</title>
+		</portlet-info>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_15_Event</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_15_Event</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_15_Event</title>
+		</portlet-info>
+		<supported-publishing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_Event</qname>
+		</supported-publishing-event>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_15_Event_event</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_15_Event_event</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_15_Event_event</title>
+		</portlet-info>
+		<supported-processing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_Event</qname>
+		</supported-processing-event>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_15_EventEventHandling</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_15_EventEventHandling</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_15_EventEventHandling</title>
+		</portlet-info>
+		<supported-processing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
+		</supported-processing-event>
+		<supported-processing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_eventEvent</qname>
+		</supported-processing-event>
+		<supported-publishing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
+		</supported-publishing-event>
+		<supported-publishing-event>
+			<name>AddlPortletTests_SPEC2_15_EventEventHandling_empty</name>
+		</supported-publishing-event>
+		<supported-publishing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_serializableData</qname>
+		</supported-publishing-event>
+		<supported-publishing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_exceptionEvent</qname>
+		</supported-publishing-event>
+		<supported-publishing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_unavailableExceptionEvent</qname>
+		</supported-publishing-event>
+
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_15_EventEventHandling_event</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_15_EventEventHandling_event</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_15_EventEventHandling_event</title>
+		</portlet-info>
+		<supported-processing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
+		</supported-processing-event>
+		<supported-processing-event>
+			<name>AddlPortletTests_SPEC2_15_EventEventHandling_empty</name>
+		</supported-processing-event>
+		<supported-processing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_serializableData</qname>
+		</supported-processing-event>
+		<supported-processing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_exceptionEvent</qname>
+		</supported-processing-event>
+		<supported-publishing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_eventEvent</qname>
+		</supported-publishing-event>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException</portlet-name>
+		<portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<portlet-info>
+			<title>AddlPortletTests_SPEC2_15_EventEventHandling_unavailableException</title>
+		</portlet-info>
+		<supported-processing-event>
+			<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_unavailableExceptionEvent</qname>
+		</supported-processing-event>
+	</portlet>
+
+	<custom-portlet-mode>
+		<description>For testing custom portlet mode</description>
+		<portlet-mode>custom1</portlet-mode>
+		<portal-managed>false</portal-managed>
+	</custom-portlet-mode>
+	<custom-portlet-mode>
+		<description>For testing custom portlet mode</description>
+		<portlet-mode>custom2</portlet-mode>
+		<portal-managed>true</portal-managed>
+	</custom-portlet-mode> 
+	<custom-portlet-mode>
+		<description>For testing custom portlet mode</description>
+		<portlet-mode>custom3</portlet-mode>
+		<portal-managed>false</portal-managed>
+	</custom-portlet-mode>
+	
+	<custom-window-state>
+		<description>For testing custom window state</description>
+		<window-state>custom_window</window-state>
+	</custom-window-state>
+	<custom-window-state>
+		<description>For testing custom window state</description>
+		<window-state>custom_window2</window-state>
+	</custom-window-state>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_5_EventHandling_exception4</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_5_EventHandling_exception5</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_5_ActionHandling</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_15_Event</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<name>AddlPortletTests_SPEC2_15_EventEventHandling_empty</name>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_serializableData</qname>
+		<value-type>javax.portlet.tck.portlets.V2AddlPortletTests_SPEC2_15_EventEventHandling_eventData</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_exceptionEvent</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_unavailableExceptionEvent</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling_eventEvent</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<qname>tck:AddlPortletTests_SPEC2_5_RenderGenericPortlet</qname>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<event-definition>
+		<name>AddlPortletTests_SPEC2_5_RenderGenericPortlet_localPart</name>
+		<value-type>java.lang.String</value-type>
+	</event-definition>
+
+	<public-render-parameter>
+		<identifier>tckPRP1</identifier>
+		<qname>tck:tckPRP1</qname>
+	</public-render-parameter>
+
+	<container-runtime-option>
+		<name>javax.portlet.escapeXml</name>
+		<value>false</value>
+	</container-runtime-option>
+
+</portlet-app>

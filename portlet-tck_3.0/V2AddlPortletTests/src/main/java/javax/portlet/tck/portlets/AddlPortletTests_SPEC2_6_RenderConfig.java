@@ -23,13 +23,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.Portlet;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.*;
 import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
 import javax.portlet.tck.beans.TestResult;
 import javax.xml.namespace.QName;
@@ -193,6 +187,13 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet {
     }
     tr7.writeTo(writer);
 
+    /*
+     * different containers expect different options
+     */
+    PortletContext portletContext = portletConfig.getPortletContext();
+    String expectedOption = portletContext.getInitParameter("javax.portlet.portletConfig.getContainerRuntimeOptions.EXPECTED_OPTION");
+    String expectedValue = portletContext.getInitParameter("javax.portlet.portletConfig.getContainerRuntimeOptions.EXPECTED_VALUE");
+
     /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig_getContainerRuntimeOptions6 */
     /* Details: "The returned Map contains values defined in the */
     /* deployment descriptor &lt;container-runtime-option&gt; elements at */
@@ -202,8 +203,8 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet {
     for (Entry<String, String[]> entry : runtimeOptions.entrySet()) {
       String[] values = entry.getValue();
       for (String e : values) {
-        if (entry.getKey().equals("javax.portlet.servletDefaultSessionScope")
-            && e.equals("PORTLET_SCOPE")) {
+        if (entry.getKey().equals(expectedOption)
+            && e.equals(expectedValue)) {
           tr8.setTcSuccess(true);
         }
       }
@@ -219,7 +220,7 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet {
     for (Entry<String, String[]> entry : runtimeOptions.entrySet()) {
       String[] values = entry.getValue();
       for (String e : values) {
-        if (entry.getKey().equals("javax.portlet.escapeXml") && e.equals("true")) {
+        if (entry.getKey().equals(expectedOption) && e.equals(expectedValue)) {
           tr9.setTcSuccess(true);
         }
       }
@@ -237,7 +238,7 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet {
     for (Entry<String, String[]> entry : runtimeOptions.entrySet()) {
       String[] values = entry.getValue();
       for (String e : values) {
-        if (entry.getKey().equals("javax.portlet.escapeXml") && e.equals("true")) {
+        if (entry.getKey().equals(expectedOption) && e.equals(expectedValue)) {
           tr10a = true;
         }
       }
@@ -246,14 +247,14 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet {
       for (Entry<String, String[]> entry : runtimeOptions.entrySet()) {
         String[] values = entry.getValue();
         for (String e : values) {
-          if (entry.getKey().equals("javax.portlet.servletDefaultSessionScope")
-              && e.equals("PORTLET_SCOPE")) {
+          if (entry.getKey().equals(expectedOption)
+              && e.equals(expectedValue)) {
             tr10.setTcSuccess(true);
           }
         }
       }
     } else {
-      tr10.appendTcDetail("Failed because runtime option javax.portlet.escapeXml is not found");
+      tr10.appendTcDetail("Failed because runtime option " + expectedOption + "is not found");
     }
     tr10.writeTo(writer);
 
@@ -267,7 +268,7 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet {
     for (Entry<String, String[]> entry : runtimeOptions.entrySet()) {
       String[] values = entry.getValue();
       for (String e : values) {
-        if (entry.getKey().equals("javax.portlet.escapeXml") && e.equals("true")) {
+        if (entry.getKey().equals(expectedOption) && e.equals(expectedValue)) {
           tr11.setTcSuccess(true);
         }
       }

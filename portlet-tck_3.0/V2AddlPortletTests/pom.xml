@@ -88,11 +88,31 @@
       <!-- put all portlets from this module on the same page -->
       <page.file.xsl>plutoMultiPortletPage.xsl</page.file.xsl>
 
+      <portlet.descriptor.dir>src/main/webapp/WEB-INF/pluto</portlet.descriptor.dir>
+
    </properties>
 
    <build>
       <finalName>${project.artifactId}</finalName>
       <plugins>
+         <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>prepare-package</id>
+                  <phase>prepare-package</phase>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+                  <configuration>
+                     <target>
+                        <copy file="${basedir}/${portlet.descriptor.dir}/portlet.xml"
+                           tofile="${project.build.directory}/${project.build.finalName}/WEB-INF/portlet.xml" />
+                     </target>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
@@ -100,6 +120,9 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-war-plugin</artifactId>
+            <configuration>
+               <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+            </configuration>
          </plugin>
          <!-- Transform the portlet XML into test properties XML file -->
          <plugin>
@@ -118,6 +141,10 @@
       <profile>
          <id>pluto</id>
 
+         <properties>
+            <expected.option>javax.portlet.servletDefaultSessionScope</expected.option>
+            <expected.value>PORTLET_SCOPE</expected.value>
+         </properties>
          <dependencies>
             <dependency>
                <groupId>org.apache.taglibs</groupId>
@@ -135,7 +162,14 @@
                <scope>compile</scope>
             </dependency>
          </dependencies>
-
+      </profile>
+      <profile>
+         <id>liferay</id>
+         <properties>
+            <expected.option>javax.portlet.escapeXml</expected.option>
+            <expected.value>true</expected.value>
+            <portlet.descriptor.dir>src/main/webapp/WEB-INF/liferay</portlet.descriptor.dir>
+         </properties>
       </profile>
    </profiles>
 
