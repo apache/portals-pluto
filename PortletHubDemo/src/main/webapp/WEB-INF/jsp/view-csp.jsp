@@ -178,7 +178,7 @@ limitations under the License.
          hub.action(fel);
       } else  {
          parms = hub.newParameters();
-         parms.setValue('action', 'send');
+         parms['action'] = ['send'];
          if (document.getElementById(rid).checked) {
             clrs.push("<%=PARAM_FG_RED%>");
          } 
@@ -189,9 +189,9 @@ limitations under the License.
             clrs.push("<%=PARAM_FG_BLUE%>");
          } 
          if (clrs.length > 0) {
-            parms.setValue('<%=PARAM_FG_COLOR%>', clrs);
+            parms['<%=PARAM_FG_COLOR%>'] = clrs;
          }
-         parms.setValue('<%=PARAM_MSG_INPUT%>', document.getElementById(mid).value);
+         parms['<%=PARAM_MSG_INPUT%>'] = [document.getElementById(mid).value];
          hub.action(parms);
       }
       event.preventDefault();
