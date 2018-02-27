@@ -128,13 +128,17 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       TestResult tr1 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM2);
       String getparm2=portletReq.getParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM2);
       if(getparm2!=null && getparm2.equals(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM2)) {
-    	  try {
-    		  portletReq.getReader(); 
-    		  portletReq.getPortletInputStream();
-    		  tr1.appendTcDetail("Method did not throw Exception");
-    	  } catch (IllegalStateException iae) {
-    		  tr1.setTcSuccess(true);
-    	  }
+          try {
+              portletReq.getReader();
+              try {
+                  portletReq.getPortletInputStream();
+                  tr1.appendTcDetail("Method did not throw Exception");
+              } catch (IllegalStateException ise) {
+                  tr1.setTcSuccess(true);
+              }
+          } catch (IllegalStateException ise) {
+              tr1.appendTcDetail("getReader should not throw an exception, but did throw an IllegalStateException.");
+          }
       } else {
     	  portletResp.setRenderParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM2, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM2);
       }
@@ -252,12 +256,17 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
       TestResult tr8 = tcd.getTestResultFailed(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER2);
       String getRead2=portletReq.getParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER2);
       if(getRead2!=null && getRead2.equals(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER2)) {
-    	  try {
-    		  portletReq.getPortletInputStream();
-    		  tr8.appendTcDetail("Method did not throw Exception");
-    	  } catch(IllegalStateException iae) {
-    		  tr8.setTcSuccess(true);
-    	  }
+          try {
+              portletReq.getPortletInputStream();
+              try {
+                  portletReq.getReader();
+                  tr8.appendTcDetail("Method did not throw Exception");
+              } catch (IllegalStateException ise) {
+                  tr8.setTcSuccess(true);
+              }
+          } catch (IllegalStateException ise) {
+              tr1.appendTcDetail("getPortletInputStream should not throw an exception, but did throw an IllegalStateException.");
+          }
       } else {
     	  portletResp.setRenderParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER2, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER2);
       }
@@ -457,6 +466,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM2, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM2);
          TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETPORTLETINPUTSTREAM2, aurl);
+         tb.setEncType("text/plain");
          tb.writeTo(writer);
       }
 
@@ -531,6 +541,7 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameter(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER2, V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER2);
          TestButton tb = new TestButton(V2REQUESTTESTS_CLIENTDATAREQUEST_APIACTION_GETREADER2, aurl);
+         tb.setEncType("text/plain");
          tb.writeTo(writer);
       }
 
