@@ -67,7 +67,6 @@ limitations under the License.
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_ACTIONURL19" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_ACTIONURL20" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_ACTIONURL21" %>
-<%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_ACTIONURL22" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_ACTIONURL23" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_ACTIONURL27" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_ACTIONURL28" %>
@@ -91,7 +90,6 @@ limitations under the License.
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RENDERURL19" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RENDERURL20" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RENDERURL21" %>
-<%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RENDERURL22" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RENDERURL23" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RESOURCEURL1" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RESOURCEURL4" %>
@@ -704,32 +702,7 @@ limitations under the License.
         </FORM>
       </DIV>
       <% }
-      
-      /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL22 */
-      /* Details: "If the \"copyCurrentRenderParameters\" attribute */
-      /* specifies an invalid value, a JspException is thrown" */
-      TestResult tr33 =
-          tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_ACTIONURL22);
-      %>
-      <c:catch var ="exceptionTr33">
-         <portlet:renderURL copyCurrentRenderParameters="invalid"/>
-      </c:catch>
-      <c:if test = "${exceptionTr33 != null}">
-         <%
-         tr33.setTcSuccess(true);
-         String exceptionTr33 = ""; 
-         exceptionTr33 = exceptionTr33 + pageContext.getAttribute("exceptionTr33");
-         tr33.appendTcDetail(exceptionTr33);
-         %>
-      </c:if>
-      <c:if test = "${exceptionTr33 == null}">
-         <%
-         tr33.appendTcDetail("Test case failed as no Exception is raised while defining actionURL with copyCurrentRenderParameters = invalid");
-         %>
-      </c:if>
-      <%
-      tr33.writeTo(writer);
-      
+
       /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL23 */
       /* Details: "The \"copyCurrentRenderParameters\" attribute is not       */
       /* specified, the security setting is retained"                         */
@@ -1157,30 +1130,6 @@ limitations under the License.
         </FORM>
       </DIV>
       <% }
-
-      /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL22 */
-      /* Details: "If the \"copyCurrentRenderParameters\" attribute           */
-      /* specifies an invalid value, a JspException is thrown"                */
-      TestResult tr61 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS3_SPEC2_26_INCLUDEJSPRESOURCE_RENDERURL22);
-      %>
-      <c:catch var ="exceptionTr61">
-         <portlet:renderURL copyCurrentRenderParameters="invalid"/>
-      </c:catch>
-      <c:if test = "${exceptionTr61 != null}">
-         <%
-         tr61.setTcSuccess(true);
-         String exceptionTr61 = ""; 
-         exceptionTr61 = exceptionTr61 + pageContext.getAttribute("exceptionTr61");
-         tr61.appendTcDetail(exceptionTr61);
-         %>
-      </c:if>
-      <c:if test = "${exceptionTr61 == null}">
-         <%
-         tr61.appendTcDetail("Test case failed as no Exception is raised while defining renderURL with copyCurrentRenderParameters = invalid");
-         %>
-      </c:if>
-      <%
-      tr61.writeTo(writer);
 
       /* TestCase: V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL23 */
       /* Details: "The \"copyCurrentRenderParameters\" attribute is not       */
