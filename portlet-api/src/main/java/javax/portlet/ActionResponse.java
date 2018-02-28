@@ -130,7 +130,7 @@ public interface ActionResponse extends StateAwareResponse
     * URL is intended to be used in the sendRedirect(String location) method to allow
     * the portlet to force a redirect to the same page with modified render state.    * Creates a render URL targeting the current portlet. 
     * <p>
-    * The getRedirectURL method cannot be invoked after any of the 
+    * The createRedirectURL method cannot be invoked after any of the 
     * following methods of the ActionResponse interface has been called:
     * <ul>
     * <li>setPortletMode</li>
