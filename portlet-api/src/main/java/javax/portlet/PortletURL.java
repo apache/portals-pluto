@@ -76,10 +76,12 @@ public interface PortletURL extends BaseURL, MutableRenderState
   public void removePublicRenderParameter(String name); 
    
    /**
-    * Sets the value of a {@literal @}RenderStateScoped bean
-    * on an action or render URL. 
-    * Calling this method copies the bean state to the URL so that the values are
-    * available to the portlet when the URL is activated.
+	* <div class="changed_added_3_0">
+    * Sets the value of a {@literal @}RenderStateScoped bean on an action or
+	* render URL.
+	* <p>Calling this method copies the bean state to the URL so that the values
+	* are available to the portlet when the URL is activated.
+	* </div>
     *  
     * @param bean    The {@literal @}RenderStateScoped bean
     * 
@@ -87,6 +89,8 @@ public interface PortletURL extends BaseURL, MutableRenderState
     *                if the bean is not an {@literal @}RenderStateScoped bean.
     *                
     * @see  javax.portlet.annotations.RenderStateScoped
+	*
+	* @since 3.0
     */
    public void setBeanParameter(PortletSerializable bean);
 }
