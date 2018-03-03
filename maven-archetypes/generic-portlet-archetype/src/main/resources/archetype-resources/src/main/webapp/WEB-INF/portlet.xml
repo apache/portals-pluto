@@ -8,14 +8,14 @@
 		<portlet-name>hello_world</portlet-name>
 		<display-name>${artifactId}</display-name>
 		<portlet-class>${package}.HelloWorldPortlet</portlet-class>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
 		<init-param>
 			<name>foo</name>
 			<value>1234</value>
 		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
 		<portlet-info>
 			<title>${artifactId}</title>
 			<short-title>${artifactId}</short-title>
