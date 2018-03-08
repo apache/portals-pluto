@@ -18,7 +18,9 @@ package javax.portlet.tck.portlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -137,8 +139,8 @@ public class AddlFilterTests_SPEC2_20_Filter
     TestResult tr3 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER8);
     if (portletNameAction != null && portletNameAction.equals("AddlFilterTests_SPEC2_20_Action")
         && filterName.equals("AddlFilterTests_SPEC2_20_Filter1")) {
-      Enumeration<String> initParams = config.getInitParameterNames();
-      if (initParams.nextElement().equals("tr2") && initParams.nextElement().equals("tr3")) {
+      List<String> initParams = Collections.list(config.getInitParameterNames());
+      if (initParams.contains("tr2") && initParams.contains("tr3")) {
         tr3.setTcSuccess(true);
       } else {
         tr3.appendTcDetail("Initialization parameters tr2 and tr3 are missing");
@@ -154,8 +156,8 @@ public class AddlFilterTests_SPEC2_20_Filter
     TestResult tr4 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER9);
     if (portletNameAction != null && portletNameAction.equals("AddlFilterTests_SPEC2_20_Action")
         && filterName.equals("AddlFilterTests_SPEC2_20_Filter1")) {
-      Enumeration<String> initParams = config.getInitParameterNames();
-      if (initParams.nextElement().equals("tr2") && initParams.nextElement().equals("tr3")) {
+      List<String> initParams = Collections.list(config.getInitParameterNames());
+      if (initParams.contains("tr2") && initParams.contains("tr3")) {
         tr4.setTcSuccess(true);
       } else {
         tr4.appendTcDetail("Initialization parameters tr2 and tr3 are missing");
@@ -175,8 +177,8 @@ public class AddlFilterTests_SPEC2_20_Filter
     /* parameters defined in the filter declaration" */
     if (portletNameAction != null && portletNameAction.equals("AddlFilterTests_SPEC2_20_Action")
         && filterName.equals("AddlFilterTests_SPEC2_20_Filter1")) {
-      Enumeration<String> initParams = config.getInitParameterNames();
-      if (initParams.nextElement().equals("tr2") && initParams.nextElement().equals("tr3")) {
+      List<String> initParams = Collections.list(config.getInitParameterNames());
+      if (initParams.contains("tr2") && initParams.contains("tr3")) {
         AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr5a_success = true;
         AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr6a_success = true;
       } else {

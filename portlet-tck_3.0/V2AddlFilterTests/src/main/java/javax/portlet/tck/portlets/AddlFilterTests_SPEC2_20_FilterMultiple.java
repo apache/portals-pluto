@@ -17,7 +17,9 @@ package javax.portlet.tck.portlets;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -50,8 +52,8 @@ public class AddlFilterTests_SPEC2_20_FilterMultiple implements ActionFilter {
     /* parameters defined in the filter declaration" */
     if (portletNameAction != null && portletNameAction.equals("AddlFilterTests_SPEC2_20_Action")
         && filterName.equals("AddlFilterTests_SPEC2_20_Filter1a")) {
-      Enumeration<String> initParams = config.getInitParameterNames();
-      if (initParams.nextElement().equals("tr4") && initParams.nextElement().equals("tr5")) {
+      List<String> initParams = Collections.list(config.getInitParameterNames());
+      if (initParams.contains("tr4") && initParams.contains("tr5")) {
         AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr5b_success = true;
         AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr6b_success = true;
       } else {
