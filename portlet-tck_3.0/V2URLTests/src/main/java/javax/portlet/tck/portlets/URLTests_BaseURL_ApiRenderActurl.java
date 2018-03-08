@@ -172,28 +172,6 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet {
       }
 
       // evaluate results for test case
-      // V2URLTests_BaseURL_ApiRenderActurl_setParameterA7
-      {
-         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
-         TestResult tr3 = tcd.getTestResultFailed(
-               V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA7);
-         String tcval = portletReq.getParameter("tc");
-         // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval != null && tcval != null && tcval
-               .equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA7")) {
-            String aval = portletReq.getParameter("parm1");
-            String eval = null;
-            CompareUtils.stringsEqual("Request", aval, " expected: ", eval,
-                  tr3);
-            PortletSession ps = portletReq.getPortletSession();
-            ps.setAttribute(
-                  RESULT_ATTR_PREFIX
-                        + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA7",
-                  tr3);
-         }
-      }
-
-      // evaluate results for test case
       // V2URLTests_BaseURL_ApiRenderActurl_setParameterB1
       {
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
@@ -253,27 +231,6 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet {
                   RESULT_ATTR_PREFIX
                         + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB6",
                   tr7);
-         }
-      }
-
-      // evaluate results for test case
-      // V2URLTests_BaseURL_ApiRenderActurl_setParameterB7
-      {
-         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
-         TestResult tr8 = tcd.getTestResultFailed(
-               V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB7);
-         String tcval = portletReq.getParameter("tc");
-         // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval != null && tcval != null && tcval
-               .equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB7")) {
-            String[] aval = portletReq.getParameterValues("parm1");
-            String[] eval = null;
-            CompareUtils.arraysEqual("Request", aval, " expected: ", eval, tr8);
-            PortletSession ps = portletReq.getPortletSession();
-            ps.setAttribute(
-                  RESULT_ATTR_PREFIX
-                        + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB7",
-                  tr8);
          }
       }
 
@@ -612,35 +569,19 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet {
       tr2.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterA7 */
-      /* Details: "Method setParameter(String, String): If the value is */
-      /* null, all values for the specified key are removed" */
+      /* Details: "Method setParameter(String, String): Throws */
+      /* IllegalArgumentException if the value is null" */
       TestResult tr3 = tcd.getTestResultFailed(
-            V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA7);
+          V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA7);
       try {
-         PortletURL turl = portletResp.createActionURL();
-         turl.setParameter("tc",
-               "V2URLTests_BaseURL_ApiRenderActurl_setParameterA7");
-         turl.setParameter("parm1", "val1");
-         turl.setParameter("parm1", (String) null);
-
-         // add the execution button for an action request
-         TestButton tb = new TestButton(
-               "V2URLTests_BaseURL_ApiRenderActurl_setParameterA7", turl);
-         tb.writeTo(writer);
-
-         // display evaluated results
-         String tcval = portletReq.getParameter("tc");
-         // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval != null && tcval != null && tcval
-               .equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterA7")) {
-            PortletSession ps = portletReq.getPortletSession();
-            TestResult tmp = (TestResult) ps.getAttribute(RESULT_ATTR_PREFIX
-                  + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA7");
-            if (tmp != null) {
-               tr3 = tmp;
-               ps.removeAttribute(RESULT_ATTR_PREFIX
-                     + "V2URLTests_BaseURL_ApiRenderActurl_setParameterA7");
-            }
+         try {
+            PortletURL turl = portletResp.createActionURL();
+            turl.setParameter("parm1", (String) null);
+            tr3.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr3.setTcSuccess(true);
+         } catch (Exception e) {
+            tr3.appendTcDetail(e);
          }
       } catch (Exception e) {
          tr3.appendTcDetail(e);
@@ -774,35 +715,19 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet {
       tr7.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterB7 */
-      /* Details: "Method setParameter(String, String[]): If the value is */
-      /* null, all values for the specified key are removed" */
+      /* Details: "Method setParameter(String, String[]): Throws */
+      /* IllegalArgumentException if the value is null" */
       TestResult tr8 = tcd.getTestResultFailed(
-            V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB7);
+          V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB7);
       try {
-         PortletURL turl = portletResp.createActionURL();
-         turl.setParameter("tc",
-               "V2URLTests_BaseURL_ApiRenderActurl_setParameterB7");
-         turl.setParameter("parm1", new String[] { "val1", "val2", "val3" });
-         turl.setParameter("parm1", (String[]) null);
-
-         // add the execution button for an action request
-         TestButton tb = new TestButton(
-               "V2URLTests_BaseURL_ApiRenderActurl_setParameterB7", turl);
-         tb.writeTo(writer);
-
-         // display evaluated results
-         String tcval = portletReq.getParameter("tc");
-         // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval != null && tcval != null && tcval
-               .equals("V2URLTests_BaseURL_ApiRenderActurl_setParameterB7")) {
-            PortletSession ps = portletReq.getPortletSession();
-            TestResult tmp = (TestResult) ps.getAttribute(RESULT_ATTR_PREFIX
-                  + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB7");
-            if (tmp != null) {
-               tr8 = tmp;
-               ps.removeAttribute(RESULT_ATTR_PREFIX
-                     + "V2URLTests_BaseURL_ApiRenderActurl_setParameterB7");
-            }
+         try {
+            PortletURL turl = portletResp.createActionURL();
+            turl.setParameter("parm1", (String[]) null);
+            tr8.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr8.setTcSuccess(true);
+         } catch (Exception e) {
+            tr8.appendTcDetail(e);
          }
       } catch (Exception e) {
          tr8.appendTcDetail(e);

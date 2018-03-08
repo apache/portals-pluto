@@ -31,6 +31,8 @@ import javax.portlet.ActionURL;
 import javax.portlet.BaseURL;
 import javax.portlet.MimeResponse.Copy;
 import javax.portlet.PortalContext;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.PortletURLGenerationListener;
@@ -226,7 +228,12 @@ public abstract class BaseURLImpl implements BaseURL {
    public void setParameter(String name, String value) {
       ArgumentUtility.validateNotEmpty("name", name);
       if (value == null) {
-         urlProvider.removeParameter(windowId, name);
+         if (getPortletMajorVersion() < 3) {
+            throw new IllegalArgumentException();
+         }
+         else {
+            urlProvider.removeParameter(windowId, name);
+         }
       } else {
          String[] values = new String[] { value };
          urlProvider.setParameter(windowId, name, values);
@@ -239,7 +246,12 @@ public abstract class BaseURLImpl implements BaseURL {
    public void setParameter(String name, String... values) {
       ArgumentUtility.validateNotEmpty("name", name);
       if (values == null) {
-         urlProvider.removeParameter(windowId, name);
+         if (getPortletMajorVersion() < 3) {
+            throw new IllegalArgumentException();
+         }
+         else {
+            urlProvider.removeParameter(windowId, name);
+         }
       } else {
          urlProvider.setParameter(windowId, name, values.clone());
       }
@@ -314,6 +326,12 @@ public abstract class BaseURLImpl implements BaseURL {
     */
    public void setSecure(boolean secure) throws PortletSecurityException {
       urlProvider.setSecure(secure);
+   }
+
+   private int getPortletMajorVersion() {
+      PortletConfig portletConfig = responseContext.getPortletConfig();
+      PortletContext portletContext = portletConfig.getPortletContext();
+      return portletContext.getEffectiveMajorVersion();
    }
 
 }

@@ -33,7 +33,7 @@ public class ActionURLImpl extends PortletURLImpl implements ActionURL {
 
    /**
     * @param responseContext
-    * @param urlProvider
+    * @param copy
     */
    public ActionURLImpl(PortletMimeResponseContext responseContext, Copy copy) {
       super(responseContext, 

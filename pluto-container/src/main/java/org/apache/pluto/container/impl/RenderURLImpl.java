@@ -35,7 +35,6 @@ public class RenderURLImpl extends PortletURLImpl implements RenderURL {
    /**
     * @param responseContext
     * @param copy 
-    * @param urlProvider
     */
    public RenderURLImpl(PortletResponseContext responseContext, Copy copy) {
       super(responseContext,

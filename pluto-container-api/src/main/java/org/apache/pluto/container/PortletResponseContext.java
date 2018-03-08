@@ -18,6 +18,7 @@ package org.apache.pluto.container;
 
 import java.util.Collection;
 
+import javax.portlet.PortletConfig;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,10 +33,11 @@ import org.w3c.dom.Element;
  */
 public interface PortletResponseContext
 {
-    void init(HttpServletRequest servletRequest, HttpServletResponse servletResponse);
+    void init(PortletConfig portletConfig, HttpServletRequest servletRequest, HttpServletResponse servletResponse);
     PortletContainer getContainer();
     HttpServletRequest getContainerRequest();
     HttpServletResponse getContainerResponse();
+    PortletConfig getPortletConfig();
     HttpServletRequest getServletRequest();
     HttpServletResponse getServletResponse();
     PortletWindow getPortletWindow();

@@ -35,7 +35,6 @@ public class ResourceURLImpl extends BaseURLImpl implements ResourceURL {
 
    /**
     * @param responseContext
-    * @param type
     */
    public ResourceURLImpl(PortletMimeResponseContext responseContext) {
       super(responseContext, 

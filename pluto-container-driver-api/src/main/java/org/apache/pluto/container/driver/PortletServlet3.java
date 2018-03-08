@@ -447,7 +447,7 @@ public class PortletServlet3 extends HttpServlet {
 
             requestContext.init(portletConfig, getServletContext(), hreq, hresp, responseContext);
             requestContext.setAsyncServletRequest(request);       // store original request
-            responseContext.init(hreq, hresp);
+            responseContext.init(portletConfig, hreq, hresp);
             
          } else {
             LOG.debug("Couldn't find the portlet async wrapper.");
@@ -462,7 +462,7 @@ public class PortletServlet3 extends HttpServlet {
          
          requestContext.init(portletConfig, getServletContext(), request, response, responseContext);
          requestContext.setExecutingRequestBody(true);
-         responseContext.init(request, response);
+         responseContext.init(portletConfig, request, response);
 
          // enable contextual support
          beforeInvoke(portletRequest, portletResponse, portletConfig);

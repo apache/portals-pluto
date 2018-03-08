@@ -56,10 +56,6 @@ public abstract class PortletURLImpl extends BaseURLImpl implements PortletURL {
    // Constructors
    // ------------------------------------------------------------
 
-   public PortletURLImpl(PortletResponseContext responseContext, PortletURLProvider urlProvider) {
-      super(responseContext, urlProvider);
-   }
-
    public PortletURLImpl(PortletResponseContext responseContext,
          PortletURLProvider portletURLProvider, Copy copy) {
       super(responseContext, portletURLProvider, copy);

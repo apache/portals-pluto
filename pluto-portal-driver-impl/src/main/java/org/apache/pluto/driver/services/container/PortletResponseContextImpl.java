@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.MimeResponse;
+import javax.portlet.PortletConfig;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,6 +65,7 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
    private PortletContainer         container;
    private HttpServletRequest       containerRequest;
    private HttpServletResponse      containerResponse;
+   private PortletConfig            portletConfig;
    private HttpServletRequest       servletRequest;
    private HttpServletResponse      servletResponse;
    private PortletWindow            window;
@@ -105,6 +107,11 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
     */
    public PortletRequestContext getRequestContext() {
       return requestContext;
+   }
+
+   @Override
+   public PortletConfig getPortletConfig() {
+      return portletConfig;
    }
 
    public String getLifecycle() {
@@ -154,7 +161,8 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
       return released;
    }
 
-   public void init(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
+   public void init(PortletConfig portletConfig, HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
+      this.portletConfig = portletConfig;
       this.servletRequest = servletRequest;
       this.servletResponse = servletResponse;
    }
