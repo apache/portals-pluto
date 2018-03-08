@@ -24,6 +24,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>RequestTests_ClientDataRequest_ApiAction</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
