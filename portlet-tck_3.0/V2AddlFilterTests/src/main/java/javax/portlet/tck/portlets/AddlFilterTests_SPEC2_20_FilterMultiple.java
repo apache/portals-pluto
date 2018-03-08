@@ -39,9 +39,15 @@ import javax.portlet.filter.FilterConfig;
  */
 public class AddlFilterTests_SPEC2_20_FilterMultiple implements ActionFilter {
 
-  StringWriter initWriter = new StringWriter();
+  FilterConfig config;
 
   public void init(FilterConfig config) throws PortletException {
+    this.config = config;
+  }
+
+  public void doFilter(ActionRequest portletReq, ActionResponse portletResp, FilterChain chain)
+      throws IOException, PortletException {
+
     String portletNameAction =
         (String) config.getPortletContext().getAttribute("PortletNameAction");
     String filterName = config.getFilterName();
@@ -73,10 +79,6 @@ public class AddlFilterTests_SPEC2_20_FilterMultiple implements ActionFilter {
       AddlFilterTests_SPEC2_20_ActionFilter_TestVariables.actionTr10b_success = true;
     }
 
-  }
-
-  public void doFilter(ActionRequest portletReq, ActionResponse portletResp, FilterChain chain)
-      throws IOException, PortletException {
     chain.doFilter(portletReq, portletResp);
   }
 
