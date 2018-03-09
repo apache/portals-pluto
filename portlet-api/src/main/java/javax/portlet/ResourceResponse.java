@@ -184,6 +184,8 @@ public interface ResourceResponse extends MimeResponse {
      *             triggering this <code>serveResource</code> call
      *             is not <code>PAGE</code> and thus does not allow
      *             for creating render URLs.
+     * 
+     * @since 3.0
      */
   public RenderURL createRenderURL(Copy option);
 
@@ -202,6 +204,8 @@ public interface ResourceResponse extends MimeResponse {
      *             triggering this <code>serveResource</code> call
      *             is not <code>PAGE</code> and thus does not allow
      *             for creating action URLs.
+     * 
+     * @since 3.0
      */
    public ActionURL createActionURL(Copy option);
 

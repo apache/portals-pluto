@@ -41,39 +41,43 @@ import static java.lang.annotation.RetentionPolicy.*;
  * </div>
  *    
  * @see javax.portlet.PortletURLGenerationListener
- *
+ * 
+ * @since 3.0
  */
 
 @Retention(RUNTIME) @Target({TYPE})
 public @interface PortletListener {
    
    /**
+    * <div class='changed_added_3_0'>
     * The listener name. 
     * <p>
     * The listener name is not required. If a listener name is provided, the listener configuration
     * may be addressed through the listener name in the portlet deployment descriptor to modify 
     * or remove the listener.
     * <p>
-    *  
+    * </div>
     * 
     * @return  The listener name
     */
    String   listenerName() default "";
    
    /**
+    * <div class='changed_added_3_0'>
     * The ordinal number for this annotated method.
     * <p>
     * The ordinal number determines the order of execution if multiple methods
     * are annotated for a given URL type.
     * Annotated methods with a lower ordinal number are executed before methods with
     * a higher ordinal number.
+    * </div>
     * 
     * @return     The ordinal number
     */
    int         ordinal() default 0;
    
    /**
-    * <div class='not-supported'>
+    * <div class='not-supported changed_added_3_0'>
     * The display-name type contains a language-specific short name that is intended to be displayed by tools. 
     * </div>
     * 
@@ -82,7 +86,7 @@ public @interface PortletListener {
    LocaleString[]   displayName() default {};
    
    /**
-    * <div class='not-supported'>
+    * <div class='not-supported changed_added_3_0'>
     * The portlet listener description
     * providing locale-specific text describing the portlet listener for use by the portal application or by tools.
     * </div>

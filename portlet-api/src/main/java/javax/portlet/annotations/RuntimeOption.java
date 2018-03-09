@@ -38,19 +38,25 @@ import static java.lang.annotation.RetentionPolicy.*;
  * represent portlet container runtime option name-value pairs.  
  * It cannot be used as a stand-alone portlet annotation.
  * </div>
+ * 
+ * @since 3.0
  */
 @Retention(RUNTIME) @Target({ANNOTATION_TYPE})
 public @interface RuntimeOption {
    
    /**
+    * <div class='changed_added_3_0'>
     * The container runtime option name.
+    * </div>
     * 
     * @return     The parameter name
     */
    String   name();
    
    /**
+    * <div class='changed_added_3_0'>
     * The container runtime options values.
+    * </div>
     * 
     * @return     The parameter values
     */

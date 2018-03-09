@@ -37,13 +37,17 @@ import static java.lang.annotation.RetentionPolicy.*;
  * Annotation for configuration of multiple portlets.
  * @see PortletConfiguration 
  * </div>
+ * 
+ * @since 3.0
  */
 @Retention(RUNTIME) @Target({TYPE})
 public @interface PortletConfigurations {
    
    /**
+    * <div class='changed_added_3_0'>
     * The portlet configurations. Each array entry contains the configuration
     * for a single portlet.
+    * </div>
     * 
     * @return     An array of portlet configurations
     */

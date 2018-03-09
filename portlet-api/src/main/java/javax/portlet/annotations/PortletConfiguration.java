@@ -42,33 +42,41 @@ import static java.lang.annotation.RetentionPolicy.*;
  * Values of configuration parameters appearing in the deployment descriptor have 
  * precedence over the corresponding values defined in the annotation.   
  * </div>
+ * 
+ * @since 3.0
  */
 @Retention(RUNTIME) @Target({TYPE})
 public @interface PortletConfiguration {
    
    /**
+    * <div class='changed_added_3_0'>
     * The portlet name for the annotated type.
+    * </div>
     * 
     * @return  The portlet name
     */
    String   portletName();
    
    /**
+    * <div class='changed_added_3_0'>
     * The portlet initialization parameters.
+    * </div>
     * 
     * @return     An array of initialization parameters
     */
    InitParameter[] initParams() default {};
    
    /**
+    * <div class='changed_added_3_0'>
     * The portlet container runtime options.
+    * </div>
     * 
     * @return     An array of portlet runtime options
     */
    RuntimeOption[] runtimeOptions() default {};
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The locales supported by the portlet.
     * An array of String values, each of which represents a single locale.
     * <p>
@@ -85,7 +93,7 @@ public @interface PortletConfiguration {
    String[]   supportedLocales() default {"en"};
    
    /**
-    * <div class='not-supported'>
+    * <div class='not-supported changed_added_3_0'>
     * Locale specific static title for this portlet.
     * </div>
     * 
@@ -94,7 +102,7 @@ public @interface PortletConfiguration {
    LocaleString[]   title() default {};
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * Locale specific short version of the static title.
     * </div>
     * 
@@ -103,7 +111,7 @@ public @interface PortletConfiguration {
    LocaleString[]   shortTitle() default {};
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The display-name type contains a locale-specific short name that is intended to be displayed by tools. 
     * It is used by display-name elements. 
     * The display name need not be unique.
@@ -114,7 +122,7 @@ public @interface PortletConfiguration {
    LocaleString[]   displayName() default {};
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The portlet description.
     * It provides locale-specific text describing the portlet for use by the portal application or by tools.
     * </div>
@@ -124,7 +132,7 @@ public @interface PortletConfiguration {
    LocaleString[]   description() default {};
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * Locale specific keywords associated with this portlet. 
     * The keywords are separated by commas within the value of the 
     * <code>LocaleString</code> array element.
@@ -135,7 +143,7 @@ public @interface PortletConfiguration {
    LocaleString[]   keywords() default {};
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The portlet preferences.
     * </div>
     * 
@@ -144,7 +152,7 @@ public @interface PortletConfiguration {
    Preference[]  prefs() default {};
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The public render parameter identifiers used by the portlet.
     * </div>
     * 
@@ -153,7 +161,7 @@ public @interface PortletConfiguration {
    String[]  publicParams() default {};
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The resource bundle name for this portlet.
     * Name of the resource bundle containing the language specific 
     * portlet information in different languages.
@@ -167,7 +175,7 @@ public @interface PortletConfiguration {
    String   resourceBundle()  default "";
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The supported portlet modes and window states for a given <code>MIME</code> type.
     * </div>
     * 
@@ -176,7 +184,7 @@ public @interface PortletConfiguration {
    Supports[] supports() default {@Supports(mimeType="text/html")};
    
    /**
-    * <div class='not-supported'>
+    * <div class='not-supported changed_added_3_0'>
     * The cache scope, which defines whether generated portlet content is private
     * for the user or can be shared across different users.
     * <p>
@@ -193,7 +201,7 @@ public @interface PortletConfiguration {
    boolean   cacheScopePublic() default false;
    
    /**
-    * <div class='not-supported'>
+    * <div class='not-supported changed_added_3_0'>
     * Expiration-time defines the time in seconds after which the portlet output expires.
     * A value of -1 indicates that the output never expires.
     * <p>
@@ -205,7 +213,7 @@ public @interface PortletConfiguration {
    int   cacheExpirationTime() default 0;
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The dependencies the portlet may have on external resources.
     * The resources can represent client-side prerequisites such as JavaScript libraries
     * or stylesheet resources that are shared among portlets.
@@ -216,7 +224,7 @@ public @interface PortletConfiguration {
    Dependency[]      dependencies() default {};
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The security role references. 
     * </div>
     * 
@@ -225,21 +233,25 @@ public @interface PortletConfiguration {
    SecurityRoleRef[]   roleRefs() default {};
    
    /**
+    * <div class='changed_added_3_0'>
     * Declares whether the portlet supports asynchronous operation mode.
     * <p>
     * If this flag is set, any resource method used by this portlet will
     * be marked as supporting asynchronous operation.
     * Asynchronous support applies to resource methods only.
-    *  
+    * </div>
+    * 
     * @return  <code>true</code> if the method supports asynchronous mode.
     */
    boolean asyncSupported() default false;
    
    /**
+    * <div class='changed_added_3_0'>
     * Provides multipart configuration data for the portlet. 
     * <p>
     * The <code>{@literal @}Multipart</code> annotation <code>supported</code>
     * element must be set to <code>true</code> to activate multipart form support.
+    * </div>
     * 
     * @return  The multipart configuration data.
     */

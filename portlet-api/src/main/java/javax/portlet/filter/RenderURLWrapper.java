@@ -30,6 +30,7 @@ import javax.portlet.RenderURL;
  * Methods default to calling through to the wrapped request object.
  * </div>
  *
+ * @since 3.0
  */
 public class RenderURLWrapper extends PortletURLWrapper implements RenderURL {
    

@@ -75,8 +75,6 @@ public interface PortletAsyncContext {
     * @see PortletAsyncListener
     * @see PortletAsyncEvent
     * 
-    * @since   3.0
-    * 
     * @param listener   the listener to be added
     * @throws IllegalStateException
     * if this method is called after the container-initiated dispatch, during which
@@ -116,8 +114,6 @@ public interface PortletAsyncContext {
     * @see PortletAsyncListener
     * @see PortletAsyncEvent
     * 
-    * @since   3.0
-    * 
     * @param listener   the listener to be added
     * @param request    the request object to be included in the <code>PortletAsyncEvent</code>
     * @param response   the response object to be included in the <code>PortletAsyncEvent</code>
@@ -150,8 +146,6 @@ public interface PortletAsyncContext {
     * container.
     * </div>
     * 
-    * @since   3.0
-    * 
     * @throws IllegalStateException
     * if this method is called before an asynchronous processing cycle was started, 
     * after it has already been completed, or after a call to 
@@ -175,8 +169,6 @@ public interface PortletAsyncContext {
     * Bean. See the Java EE platform and JSR 299 specifications for additional details
     * about Managed Beans and resource injection.
     * </div>
-    * 
-    * @since   3.0
     * 
     * @param cls     the class to be instantiated
     * @return        the instantiated class
@@ -241,8 +233,6 @@ public interface PortletAsyncContext {
     * <code>complete()</code> method may be called.
     * </div>
     * 
-    * @since   3.0
-    * 
     * @throws IllegalStateException 
     * if called before an asynchronous processing cycle has been started, 
     * if one of the dispatch methods has been called but the <code>startAsync</code> method has not
@@ -271,8 +261,6 @@ public interface PortletAsyncContext {
     * See {@link #dispatch()} for additional details, including error handling.
     * </div>
     * 
-    * @since   3.0
-    * 
     * @param path the path of the dispatch target, scoped to the PortletContext from which 
     * this PortletAsyncContext was initialized 
     * @throws IllegalStateException
@@ -288,8 +276,6 @@ public interface PortletAsyncContext {
     * <code>ResourceRequest.startAsync()</code> or <code>ResourceRequest.startAsync(ServletRequest, ServletResponse)</code>.
     * </div>
     * 
-    * @since   3.0
-    * 
     * @return The resource request object
     * @throws IllegalStateException
     * if one of the dispatch methods has been called but the <code>startAsync</code> method has not
@@ -302,8 +288,6 @@ public interface PortletAsyncContext {
     * Gets the response that was used to initialize this <code>PortletAsyncContext</code> by calling
     * <code>ResourceRequest.startAsync()</code> or <code>ResourceRequest.startAsync(ServletRequest, ServletResponse)</code>.
     * </div>
-    * 
-    * @since   3.0
     * 
     * @return The resource response object
     * @throws IllegalStateException
@@ -323,8 +307,6 @@ public interface PortletAsyncContext {
     * A timeout value of zero or less indicates no timeout.
     * </div>
     * 
-    * @since   3.0
-    * 
     * @return     the timeout in milliseconds
     */
    public long getTimeout();
@@ -339,8 +321,6 @@ public interface PortletAsyncContext {
     * and/or response wrappers that they added during their inbound invocation need to
     * be preserved for the duration of the asynchronous operation, or may be released.
     * </div>
-    * 
-    * @since   3.0
     * 
     * @return
     * <code>true</code> if this <code>PortletAsyncContext</code> was initialized with the original 
@@ -372,8 +352,6 @@ public interface PortletAsyncContext {
     * The default value is 30000 ms.
     * </div>
     * 
-    * @since   3.0
-    * 
     * @param time    the timeout in milliseconds
     */
    public void setTimeout(long time);
@@ -384,8 +362,6 @@ public interface PortletAsyncContext {
     * to run the specified <code>Runnable</code>. The container may propagate appropriate
     * contextual information to the <code>Runnable</code>.
     * </div>
-    * 
-    * @since   3.0
     * 
     * @param run     the asynchronous handler
     * @throws IllegalStateException

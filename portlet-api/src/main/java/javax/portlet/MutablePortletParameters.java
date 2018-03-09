@@ -61,8 +61,6 @@ public interface MutablePortletParameters extends PortletParameters, Mutable {
     *        the name of a parameter; or an 
     *        empty <code>Set</code> if the
     *        MutablePortletParameters object has no parameters.
-    *
-    * @since 3.0
     */
 
    public Set<String> getNames();
@@ -87,8 +85,6 @@ public interface MutablePortletParameters extends PortletParameters, Mutable {
      *
      * @return  The previous parameter value, or 
      *          <code>null</code> if there was no previous value.
-     *
-     * @since  3.0
      *
      * @exception  java.lang.IllegalArgumentException 
      *                            if name is <code>null</code>.
@@ -123,8 +119,6 @@ public interface MutablePortletParameters extends PortletParameters, Mutable {
      * @return  The previous parameter value array, or
      *          <code>null</code> if there was no previous value.
      *
-     * @since  3.0
-     *
      * @exception  java.lang.IllegalArgumentException 
      *                            if name is <code>null</code>
      */
@@ -145,8 +139,6 @@ public interface MutablePortletParameters extends PortletParameters, Mutable {
      *                            if name is <code>null</code>.
      * 
      * @return       <code>true</code> if the parameter name was present.
-     * 
-     * @since  3.0
      */
 
     public boolean removeParameter (String name);
@@ -164,8 +156,6 @@ public interface MutablePortletParameters extends PortletParameters, Mutable {
      * @param params - input portlet parameters
      *
      * @return  MutablePortletParameters object containing the previous values
-     * 
-     * @since  3.0
      */
     
     public MutablePortletParameters set(PortletParameters params);
@@ -185,8 +175,6 @@ public interface MutablePortletParameters extends PortletParameters, Mutable {
      * @param params - input portlet parameters
      *
      * @return  MutablePortletParameters object containing the previous values
-     * 
-     * @since  3.0
      */
     
     public MutablePortletParameters add(PortletParameters params);
@@ -196,7 +184,6 @@ public interface MutablePortletParameters extends PortletParameters, Mutable {
      * <div class="changed_added_3_0">
      * Clears all parameters.
      * </div> 
-     * @since 3.0
      */
     
     public void clear();

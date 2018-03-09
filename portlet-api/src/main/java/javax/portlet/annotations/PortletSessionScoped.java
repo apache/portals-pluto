@@ -44,7 +44,8 @@ import static java.lang.annotation.RetentionPolicy.*;
  * Note that a portlet session scoped bean must implement 
  * <code>java.io.Serializable</code>, since it will be stored in the portlet session.
  * </div>
- *
+ * 
+ * @since 3.0
  */
 
 @Retention(RUNTIME) 
@@ -55,6 +56,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 public @interface PortletSessionScoped {
    
    /**
+    * <div class='changed_added_3_0'>
     * The portlet scope into which the annotated bean is to be placed. Can be set to 
     * the following values:
     * <ul>
@@ -66,6 +68,7 @@ public @interface PortletSessionScoped {
     * The effect of this scope is the same as using the CDI @SessionScoped annotation.
     * </li>
     * </ul>
+    * </div>
     * 
     * @return The portlet scope
     * 

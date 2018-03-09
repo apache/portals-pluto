@@ -52,11 +52,14 @@ import static java.lang.annotation.RetentionPolicy.*;
  * 
  * @see     javax.xml.namespace.QName javax.xml.namespace.QName
  * @see     <a href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#QName">W3C Qname definition</a>
+ * 
+ * @since 3.0
  */
 @Retention(RUNTIME) @Target({ANNOTATION_TYPE})
 public @interface PortletQName {
    
    /**
+    * <div class='changed_added_3_0'>
     * The QName namespace URI.
     * <p>
     * If the QName namespace URI is empty, the default value is used. 
@@ -74,6 +77,7 @@ public @interface PortletQName {
     * The value javax.xml.XMLConstants.NULL_NS_URI
     * </li>
     * </ul>
+    * </div>
     * 
     * @return  The QName namespace URI.
     * 
@@ -82,9 +86,11 @@ public @interface PortletQName {
    String      namespaceURI();
    
    /**
+    * <div class='changed_added_3_0'>
     * The local part.
     * <p>
     * local-part should be a non-empty String.
+    * </div>
     * 
     * @return  The qname local part.
     */

@@ -32,6 +32,7 @@ import javax.portlet.PortletParameters;
  * Methods default to calling through to the wrapped request object.
  * </div>
  *
+ * @since 3.0
  */
 public class MutablePortletParametersWrapper extends PortletParametersWrapper implements MutablePortletParameters,
       Mutable {

@@ -37,12 +37,14 @@ import static java.lang.annotation.RetentionPolicy.*;
  * represent a single security role reference.
  * It cannot be used as a stand-alone portlet annotation.
  * </div>
+ * 
+ * @since 3.0
  */
 @Retention(RUNTIME) @Target({ANNOTATION_TYPE})
 public @interface SecurityRoleRef {
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The role name.
     * </div>
     * 
@@ -51,7 +53,7 @@ public @interface SecurityRoleRef {
    String      roleName();
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The application role that the role name is mapped to. 
     * </div>
     * 
@@ -60,7 +62,7 @@ public @interface SecurityRoleRef {
    String      roleLink() default "";
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The security role ref description.
     * It provides locale-specific text describing the security role ref for use by the portal application or by tools.
     * </div>

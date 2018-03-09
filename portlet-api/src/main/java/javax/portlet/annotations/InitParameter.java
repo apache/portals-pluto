@@ -38,26 +38,32 @@ import static java.lang.annotation.RetentionPolicy.*;
  * represent name-value pairs.
  * It cannot be used as a stand-alone portlet annotation.
  * </div>
+ * 
+ * @since 3.0
  */
 @Retention(RUNTIME) @Target({ANNOTATION_TYPE})
 public @interface InitParameter {
    
    /**
+    * <div class='changed_added_3_0'>
     * The parameter name.
+    * </div>
     * 
     * @return     The parameter name
     */
    String   name();
    
    /**
+    * <div class='changed_added_3_0'>
     * The parameter value
+    * </div>
     * 
     * @return     The parameter value
     */
    String   value();
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * Provides locale-specific text describing the initialization parameter for use by the portal application or by tools.
     * </div>
     * 

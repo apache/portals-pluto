@@ -38,12 +38,14 @@ import static java.lang.annotation.RetentionPolicy.*;
  * represent a custom portlet mode.
  * It cannot be used as a stand-alone portlet annotation.
  * </div>
+ * 
+ * @since 3.0
  */
 @Retention(RUNTIME) @Target({ANNOTATION_TYPE})
 public @interface CustomPortletMode {
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * Provides locale-specific text describing the custom portlet mode for use by the portal application or by tools.
     * </div>
     * 
@@ -52,7 +54,7 @@ public @interface CustomPortletMode {
    LocaleString[]      description() default {};
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The custom portlet mode name.
     * <p>
     * The name by which the portlet mode is identified.
@@ -63,14 +65,14 @@ public @interface CustomPortletMode {
    String      name();
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The portal managed flag.
     * <p>
     * If set to <code>true</code>, the custom portlet mode will be managed by the portal.
     * If set to <code>false</code>, the custom portlet mode will be managed by the portlet.
     * </div>
     * 
-    * @return  The portal managed flag setting 
+    * @return  The portal managed flag setting
     */
    boolean     portalManaged() default true;
 }

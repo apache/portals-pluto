@@ -568,5 +568,7 @@
  * You could then create a new {@literal @}RenderStateScoped bean based on the 
  * current state of the injected bean and then update the fields on the new bean as required.
  * </p>
+ * 
+ * @since 3.0
  */
 package javax.portlet.annotations;

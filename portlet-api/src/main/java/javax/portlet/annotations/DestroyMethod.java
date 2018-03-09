@@ -61,14 +61,17 @@ import static java.lang.annotation.RetentionPolicy.*;
  * </div>
  *    
  * @see javax.portlet.Portlet#destroy()
- *
+ * 
+ * @since 3.0
  */
 
 @Retention(RUNTIME) @Target({METHOD})
 public @interface DestroyMethod {
    
    /**
+    * <div class='changed_added_3_0'>
     * The portlet name for the annotated method.
+    * </div>
     * 
     * @return  The portlet name
     */

@@ -38,6 +38,8 @@ import javax.xml.namespace.QName;
  * This class implements the Wrapper or Decorator pattern. 
  * Methods default to calling through to the wrapped Response object.
  * </div>
+ * 
+ * @since 3.0
  */
 public class StateAwareResponseWrapper extends PortletResponseWrapper implements StateAwareResponse {
 

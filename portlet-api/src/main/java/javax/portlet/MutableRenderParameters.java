@@ -57,7 +57,6 @@ public interface MutableRenderParameters extends
     * Clears all private parameters that are present in the 
     * <code>MutableRenderParameters</code> object.
     * </div> 
-    * @since 3.0
     */
    
    public void clearPrivate();
@@ -68,7 +67,6 @@ public interface MutableRenderParameters extends
     * Clears all public parameters that are present in the 
     * <code>MutableRenderParameters</code> object.
     * </div> 
-    * @since 3.0
     */
    
    public void clearPublic();

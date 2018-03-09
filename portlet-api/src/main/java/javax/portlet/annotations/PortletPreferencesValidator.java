@@ -43,13 +43,15 @@ import static java.lang.annotation.RetentionPolicy.*;
  * </div>
  *    
  * @see javax.portlet.PreferencesValidator
- *
+ * 
+ * @since 3.0
  */
 
 @Retention(RUNTIME) @Target({TYPE})
 public @interface PortletPreferencesValidator {
    
    /**
+    * <div class='changed_added_3_0'>
     * The portlet names for which the validator applies.
     * <p>
     * The annotated validator method can apply to multiple portlets within the portlet
@@ -59,6 +61,7 @@ public @interface PortletPreferencesValidator {
     * A wildcard character '*' can be specified in the first portletName array element 
     * to indicate that the validator is to apply to all portlets in the portlet application.
     * If specified, the wildcard character must appear alone in the first array element.
+    * </div>
     * 
     * @return     The portlet names
     */

@@ -59,14 +59,17 @@ import static java.lang.annotation.RetentionPolicy.*;
  * </div>
  *    
  * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
- *
+ * 
+ * @since 3.0
  */
 
 @Retention(RUNTIME) @Target({METHOD})
 public @interface InitMethod {
    
    /**
+    * <div class='changed_added_3_0'>
     * The portlet name for the annotated method.
+    * </div>
     * 
     * @return  The portlet name
     */

@@ -36,6 +36,8 @@ package javax.portlet;
  *
  *@see HeaderResponse
  *@see HeaderPortlet
+ * 
+ * @since 3.0
  */
 public interface HeaderRequest extends RenderRequest {
 

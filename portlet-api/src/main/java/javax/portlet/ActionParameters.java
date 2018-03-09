@@ -52,8 +52,6 @@ public interface ActionParameters extends PortletParameters
     * </div>
     * 
     * @return Mutable clone of ActionParameters object
-    * 
-    * @since  3.0
     */
    
    public MutableActionParameters clone();

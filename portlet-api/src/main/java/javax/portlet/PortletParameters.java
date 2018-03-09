@@ -136,7 +136,6 @@ public interface PortletParameters
    *
    * @see 		#getValues
    * @see      #getNames
-   * @since    3.0
    *
    * @exception  java.lang.IllegalArgumentException 
    *                            if name is <code>null</code>.
@@ -164,7 +163,6 @@ public interface PortletParameters
    *			empty <code>Set</code> if the
    *			PortletParameters object has no parameters.
    *
-   * @since 3.0
    */
 
   public Set<String> getNames();
@@ -191,7 +189,6 @@ public interface PortletParameters
    *        if the parameter does not exist.
    *
    * @see		#getValue
-   * @since    3.0
    *
    * @exception  java.lang.IllegalArgumentException 
    *                            if name is <code>null</code>.
@@ -209,7 +206,6 @@ public interface PortletParameters
    * @return  <code>true</code> if the object contains no parameters.
    *          <code>false</code> otherwise
    * 
-   * @since    3.0
    */
 
   public boolean isEmpty ();
@@ -222,7 +218,6 @@ public interface PortletParameters
    *
    * @return  the number of parameters in this object
    * 
-   * @since    3.0
    */
 
   public int size();
@@ -237,7 +232,6 @@ public interface PortletParameters
    * 
    * @return Mutable clone of PortletParameters object
    * 
-   * @since  3.0
    */
   
   public MutablePortletParameters clone();

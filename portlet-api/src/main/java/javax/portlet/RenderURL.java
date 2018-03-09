@@ -66,7 +66,6 @@ public interface RenderURL extends PortletURL
     * @param fragment
     *            The fragment identifier to be added to the URL
     *                
-    * @since 3.0
     * 
     * @see #getFragmentIdentifier
     */
@@ -87,7 +86,6 @@ public interface RenderURL extends PortletURL
     *         The fragment identifier set on the URL, or 
     *         <code>null</code> if no fragment identifier has been set.
     *
-    * @since 3.0
     * @see #setFragmentIdentifier
     */
    public String getFragmentIdentifier();

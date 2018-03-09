@@ -187,6 +187,8 @@ public interface ResourceRequest extends ClientDataRequest {
     *           The portlet mode UNDEFINED will be returned if the cache level is
     *           set to <code>ResourceURL.FULL</code>.  
     * </span>
+    * 
+    * @since 3.0
     */
 
    public PortletMode getPortletMode ();
@@ -207,6 +209,8 @@ public interface ResourceRequest extends ClientDataRequest {
     *           The window state UNDEFINED will be returned if the cache level is
     *           set to <code>ResourceURL.FULL</code>.  
     * </span>
+    * 
+    * @since 3.0
     */
 
    public WindowState getWindowState ();

@@ -41,7 +41,8 @@ import javax.enterprise.context.NormalScope;
  * <div class='changed_added_3_0'>
  * Provides a CDI custom scope for the portlet request.
  * </div>
- *
+ * 
+ * @since 3.0
  */
 
 @Retention(RUNTIME) 

@@ -51,6 +51,8 @@ import static java.lang.annotation.RetentionPolicy.*;
  * </div>
  * 
  * @see javax.portlet.PortletRequest#getContextPath() getContextPath
+ * 
+ * @since 3.0
  */
 
 @Qualifier @Retention(RUNTIME) @Target({METHOD, FIELD, PARAMETER})

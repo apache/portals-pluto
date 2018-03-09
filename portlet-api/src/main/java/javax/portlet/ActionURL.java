@@ -54,7 +54,6 @@ public interface ActionURL extends PortletURL
     * 
     * @return   a <code>MutableActionParameters</code> object representing
     *           the action parameters.
-    * @since    3.0
     * @see      ActionParameters 
     * @see      MutableActionParameters 
     */

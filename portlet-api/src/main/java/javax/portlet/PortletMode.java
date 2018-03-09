@@ -50,6 +50,8 @@ public class PortletMode {
     * This mode may not be used to set the portlet mode in the <code>setPortletMode</code> method.
     * <p>
     * The string value for this mode is <code>"undefined"</code>. </div>
+    * 
+    * @since 3.0
     */
    public final static PortletMode UNDEFINED = new PortletMode("undefined");
 
@@ -92,7 +94,11 @@ public class PortletMode {
    private String                  _name;
 
    /**
+    * <div class="changed_added_3_0">
     * No-arg constructor to make object proxyable
+    * </div>
+    * 
+    * @since 3.0
     */
    public PortletMode() {
       _name = "undefined";

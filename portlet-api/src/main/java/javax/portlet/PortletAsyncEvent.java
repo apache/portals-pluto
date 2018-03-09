@@ -47,8 +47,6 @@ public class PortletAsyncEvent {
     * and <code>Throwable</code>.
     * </div>
     * 
-    * @since   3.0
-    * 
     * @param context
     * @param request
     * @param response
@@ -67,7 +65,6 @@ public class PortletAsyncEvent {
     * <code>PortletAsyncContext</code>, <code>ResourceRequest</code>, and <code>ResourceResponse</code>.
     * </div>
     * 
-    * @since   3.0
     * @param context
     * @param request
     * @param response
@@ -85,8 +82,6 @@ public class PortletAsyncEvent {
     * <code>PortletAsyncContext</code> and <code>Throwable</code>.
     * </div>
     * 
-    * @since   3.0
-    * 
     * @param context
     * @param throwable
     */
@@ -103,8 +98,6 @@ public class PortletAsyncEvent {
     * <code>PortletAsyncContext</code>.
     * </div>
     * 
-    * @since   3.0
-    * 
     * @param context
     */
    public PortletAsyncEvent(PortletAsyncContext context) {
@@ -118,8 +111,6 @@ public class PortletAsyncEvent {
     * <div class="changed_added_3_0">
     * Gets the portlet asynchronous context object associated with the event.
     * </div>
-    * 
-    * @since   3.0
     * 
     * @return the portlet asynchronous context
     */
@@ -137,8 +128,6 @@ public class PortletAsyncEvent {
     * <code>PortletAsyncContext#addListener(PortletAsyncListener)</code> method,
     * the returned resource request will be <code>null</code>.
     * </div>
-    * 
-    * @since   3.0
     * 
     * @return the resource request provided to the constructor, or <code>null</code>
     * if no resource request was provided.
@@ -158,8 +147,6 @@ public class PortletAsyncEvent {
     * the returned resource response will be <code>null</code>.
     * </div>
     * 
-    * @since   3.0
-    * 
     * @return the resource response provided to the constructor, or <code>null</code>
     * if no resource response was provided.
     */
@@ -171,8 +158,6 @@ public class PortletAsyncEvent {
     * <div class="changed_added_3_0">
     * Gets the <code>Throwable</code> associated with the event.
     * </div>
-    * 
-    * @since   3.0
     * 
     * @return The <code>Throwable</code> that was used to initialize the event, or <code>null</code>
     * if no <code>Throwable</code> was provided.

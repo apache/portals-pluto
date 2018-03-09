@@ -62,7 +62,8 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @see javax.portlet.filter.EventFilter
  * @see javax.portlet.filter.RenderFilter
  * @see javax.portlet.filter.ResourceFilter
- *
+ * 
+ * @since 3.0
  */
 
 @Retention(RUNTIME) @Target({TYPE})
@@ -82,7 +83,7 @@ public @interface PortletLifecycleFilter {
    String   filterName() default "";
    
    /**
-    * <div class='not-supported'>
+    * <div class='not-supported changed_added_3_0'>
     * The portlet names for which the request filter applies.
     * <p>
     * The annotated request filter can apply to multiple portlets within the portlet
@@ -99,7 +100,7 @@ public @interface PortletLifecycleFilter {
    String[]   portletNames() default "*";
    
    /**
-    * <div class='not-supported'>
+    * <div class='not-supported changed_added_3_0'>
     * The filter initialization parameters.
     * </div>
     * 
@@ -108,7 +109,7 @@ public @interface PortletLifecycleFilter {
    InitParameter[] initParams() default {};
    
    /**
-    * <div class='not-supported'>
+    * <div class='not-supported changed_added_3_0'>
     * The display-name type contains a language-specific short name that is intended to be displayed by tools. 
     * </div>
     * 
@@ -117,7 +118,7 @@ public @interface PortletLifecycleFilter {
    LocaleString[]   displayName() default {};
    
    /**
-    * <div class='not-supported'>
+    * <div class='not-supported changed_added_3_0'>
     * The portlet filter description
     * providing locale-specific text describing the portlet filter for use by the portal application or by tools.
     * </div>
@@ -127,7 +128,7 @@ public @interface PortletLifecycleFilter {
    LocaleString[]   description() default {};
    
    /**
-    * <div class='not-supported'>
+    * <div class='not-supported changed_added_3_0'>
     * The ordinal number for this annotated method.
     * <p>
     * The ordinal number determines the order of execution if multiple methods

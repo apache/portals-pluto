@@ -45,8 +45,6 @@ public interface RenderParameters extends PortletParameters
     * </div>
     * 
     * @return Mutable clone of RenderParameters object
-    * 
-    * @since  3.0
     */
    
    public MutableRenderParameters clone();
@@ -69,8 +67,6 @@ public interface RenderParameters extends PortletParameters
     *
     * @exception  java.lang.IllegalArgumentException 
     *                            if name is <code>null</code>.
-    * 
-    * @since    3.0
     */
 
    public boolean isPublic (String name);

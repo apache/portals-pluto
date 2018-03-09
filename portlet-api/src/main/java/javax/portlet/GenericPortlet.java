@@ -75,11 +75,15 @@ import javax.xml.namespace.QName;
 public abstract class GenericPortlet implements Portlet, PortletConfig, EventPortlet, ResourceServingPortlet, HeaderPortlet {
 
    /**
+    * <div class="changed_added_3_0">
     * This property is set by the container if the container
     * has a cached response for the given validation tag. The property can be
     * retrieved using the <code>getProperty</code> method. 
     * <P>
     * The value is <code>"javax.portlet.automaticResourceDispatching"</code>.
+    * </div>
+    * 
+    * @since 3.0
     */
    public static final String AUTOMATIC_RESOURCE_DISPATCH = "javax.portlet.automaticResourceDispatching";
 
@@ -941,6 +945,8 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
     *                if the streaming causes an I/O problem
     * 
     * @see #processAction(ActionRequest, ActionResponse)
+    * 
+    * @since 3.0
     */
 	protected boolean dispatchAnnotatedActionMethod(String name, ActionRequest request, 
 	      ActionResponse response) throws PortletException, java.io.IOException {
@@ -1004,6 +1010,8 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
     *                if the streaming causes an I/O problem
     * 
     * @see #processEvent(EventRequest, EventResponse)
+    * 
+    * @since 3.0
     */
    protected boolean dispatchAnnotatedEventMethod(String name, EventRequest request, 
          EventResponse response) throws PortletException, java.io.IOException {
@@ -1070,6 +1078,8 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
     *                if the streaming causes an I/O problem
     * 
     * @see #doDispatch(RenderRequest, RenderResponse)
+    * 
+    * @since 3.0
     */
    protected boolean dispatchAnnotatedRenderMethod(String name, RenderRequest request, 
          RenderResponse response) throws PortletException, java.io.IOException {

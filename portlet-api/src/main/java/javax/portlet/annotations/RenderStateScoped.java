@@ -71,6 +71,8 @@ import static java.lang.annotation.RetentionPolicy.*;
  * </div>
  *
  * @see PortletSerializable
+ * 
+ * @since 3.0
  */
 
 @Retention(RUNTIME) 
@@ -80,6 +82,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 public @interface RenderStateScoped {
    
    /**
+    * <div class='changed_added_3_0'>
     * The name of the render parameter under which the bean state is to be stored.
     * <p>
     * If the name is not specified through the annotation, the portlet container
@@ -89,7 +92,8 @@ public @interface RenderStateScoped {
     * portlet application configuration,
     * the render parameter represented by the annotated class will be treated as 
     * a public render parameter.
-    *  
+    * </div>
+    * 
     * @return  The parameter name
     */
    String   paramName() default "";

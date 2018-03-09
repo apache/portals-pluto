@@ -35,6 +35,7 @@ import javax.portlet.PortletSecurityException;
  * Methods default to calling through to the wrapped object.
  * </div>
  *
+ * @since 3.0
  */
 public class BaseURLWrapper extends RenderStateWrapper implements BaseURL {
    

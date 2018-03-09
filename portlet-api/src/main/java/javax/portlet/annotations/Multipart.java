@@ -43,41 +43,53 @@ import static java.lang.annotation.RetentionPolicy.*;
  * </div>
  * 
  * @see     javax.servlet.annotation.MultipartConfig
+ * 
+ * @since 3.0
  */
 @Retention(RUNTIME) @Target({ANNOTATION_TYPE})
 public @interface Multipart {
    
    /**
+    * <div class='changed_added_3_0'>
     * Flag indicating if the portlet supports multipart forms.
     * Must be set to <code>true</code> to activate multipart forms support.
+    * </div>
     * 
     * @return <code>true</code> if multipart forms are supported; <code>false</code> otherwise.
     */
    boolean supported();
    
    /**
+    * <div class='changed_added_3_0'>
     * The size threshold after which the file will be written to disk.
+    * </div>
     * 
     * @return The file size threshold
     */
    int fileSizeThreshold() default 0;
    
    /**
+    * <div class='changed_added_3_0'>
     * The directory location where files will be stored.
+    * </div>
     * 
     * @return  The directory location
     */
    String location() default "";
    
    /**
+    * <div class='changed_added_3_0'>
     * The maximum size allowed for uploaded files.
+    * </div>
     * 
     * @return The maximum size allowed for uploaded files
     */
    long maxFileSize() default -1L;
    
    /**
+    * <div class='changed_added_3_0'>
     * The maximum size allowed for multipart/form-data requests.
+    * </div>
     * 
     * @return The maximum size allowed for multipart/form-data requests
     */

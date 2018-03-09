@@ -52,7 +52,6 @@ public interface ResourceParameters extends PortletParameters
     * 
     * @return Mutable clone of ResourceParameters object
     * 
-    * @since  3.0
     */
    
    public MutableResourceParameters clone();

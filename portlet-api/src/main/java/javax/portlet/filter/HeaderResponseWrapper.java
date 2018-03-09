@@ -26,6 +26,8 @@ import javax.portlet.HeaderResponse;
  * interface that can be subclassed by developers.
  * This class implements the Wrapper or Decorator pattern. Methods default to
  * calling through to the wrapped Response object. </div>
+ * 
+ * @since 3.0
  */
 public class HeaderResponseWrapper extends MimeResponseWrapper implements HeaderResponse {
 

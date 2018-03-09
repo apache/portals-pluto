@@ -45,11 +45,12 @@ import javax.portlet.PortletException;
  * portlet application.
  * </div> 
  * 
- * @since 2.0
+ * @since 3.0
  */
 public interface HeaderFilter extends PortletFilter {
 
     /**
+     * <div class="changed_added_3_0">
      * The <code>doFilter</code> method of the Filter is called by the 
      * portlet container each time a header request/response pair is passed 
      * through the chain due to a client request for a portlet method 
@@ -99,6 +100,7 @@ public interface HeaderFilter extends PortletFilter {
      *      component accessed is the target method on the portlet at 
      *      the end of the chain.</li>
      * </ul>
+     * </div>
      * 
      * @param request  the current header request 
      * @param response  the current header response 

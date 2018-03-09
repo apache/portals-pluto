@@ -38,12 +38,14 @@ import static java.lang.annotation.RetentionPolicy.*;
  * represent a custom window state.
  * It cannot be used as a stand-alone portlet annotation.
  * </div>
+ * 
+ * @since 3.0
  */
 @Retention(RUNTIME) @Target({ANNOTATION_TYPE})
 public @interface CustomWindowState {
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * Provides locale-specific text describing the custom window state for use by the portal application or by tools.
     * </div>
     * 
@@ -52,7 +54,7 @@ public @interface CustomWindowState {
    LocaleString[]      description() default {};
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The custom window state name.
     * <p>
     * The name by which the window state is identified.

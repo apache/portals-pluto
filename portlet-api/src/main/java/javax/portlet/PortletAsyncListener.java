@@ -54,8 +54,6 @@ public interface PortletAsyncListener {
     * within this method.
     * </div>
     * 
-    * @since   3.0
-    * 
     * @param evt  the <code>PortletAsyncEvent</code> indicating that an asynchronous operation has been completed 
     * @throws IOException  if an I/O related error has occurred during the processing
     */
@@ -80,8 +78,6 @@ public interface PortletAsyncListener {
     * The <code>PortletAsyncContext</code> dispatch and complete methods may be invoked
     * within this method.
     * </div>
-    * 
-    * @since   3.0
     * 
     * @param evt  the PortletAsyncEvent indicating that an asynchronous operation has 
     * encountered an error
@@ -113,8 +109,6 @@ public interface PortletAsyncListener {
     * event.
     * </div>
     * 
-    * @since   3.0
-    * 
     * @param evt  the PortletAsyncEvent indicating that an asynchronous operation 
     * is being initiated
     * @throws IOException  if an I/O related error has occurred during the processing
@@ -141,8 +135,6 @@ public interface PortletAsyncListener {
     * within this method.
     * 
     * </div>
-    * 
-    * @since   3.0
     * 
     * @param evt  the PortletAsyncEvent indicating that an asynchronous operation has
     * timed out

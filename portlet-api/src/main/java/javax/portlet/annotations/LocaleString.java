@@ -38,12 +38,14 @@ import static java.lang.annotation.RetentionPolicy.*;
  * represent information describing the portlet.
  * It cannot be used as a stand-alone portlet annotation.
  * </div>
+ * 
+ * @since 3.0
  */
 @Retention(RUNTIME) @Target({ANNOTATION_TYPE})
 public @interface LocaleString {
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The locale for the locale-specific string.
     * <p>
     * The locale is specified as a language tag as defined in 
@@ -59,7 +61,9 @@ public @interface LocaleString {
    String   locale() default "en";
    
    /**
+    * <div class='changed_added_3_0'>
     * The parameter value
+    * </div>
     * 
     * @return     The parameter value
     */

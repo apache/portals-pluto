@@ -34,6 +34,7 @@ import javax.portlet.WindowState;
  * Methods default to calling through to the wrapped object.
  * </div>
  *
+ * @since 3.0
  */
 public class PortalContextWrapper implements PortalContext {
    
@@ -50,7 +51,9 @@ public class PortalContextWrapper implements PortalContext {
    
 
    /**
+    * <div class="changed_added_3_0">
     * Gets the wrapped object.
+    * </div>
     * 
     * @return the wrapped object.
     */
@@ -60,7 +63,9 @@ public class PortalContextWrapper implements PortalContext {
 
 
    /**
+    * <div class="changed_added_3_0">
     * Sets the wrapped object.
+    * </div>
     * 
     * @param wrapped   the wrapped object to set.
     * @throws java.lang.IllegalArgumentException   if the request is null.

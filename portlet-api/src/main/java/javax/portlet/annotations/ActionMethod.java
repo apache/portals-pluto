@@ -50,19 +50,23 @@ import static java.lang.annotation.RetentionPolicy.*;
  *    
  * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse) processAction
  *
+ * @since 3.0
  */
 
 @Retention(RUNTIME) @Target({METHOD})
 public @interface ActionMethod {
    
    /**
+    * <div class='changed_added_3_0'>
     * The portlet name for the annotated method.
+    * </div>
     * 
     * @return  The portlet name
     */
    String   portletName();
    
    /**
+    * <div class='changed_added_3_0'>
     * The action name. 
     * <p> 
     * If an action name is specified, the bean enabler will dispatch Action requests with 
@@ -70,13 +74,14 @@ public @interface ActionMethod {
     * <p>
     * An ActionMethod with an empty action name will receive all  
     * Action requests not dispatched to other named ActionMethods.
+    * </div>
     * 
     * @return  The action name
     */
    String   actionName() default "";
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The QName definitions of the events published by this method.
     * </div>
     * 

@@ -38,11 +38,14 @@ import static java.lang.annotation.RetentionPolicy.*;
  * represent a single event.
  * It cannot be used as a stand-alone portlet annotation.
  * </div>
+ * 
+ * @since 3.0
  */
 @Retention(RUNTIME) @Target({ANNOTATION_TYPE})
 public @interface EventDefinition {
    
    /**
+    * <div class='changed_added_3_0'>
     * The event Qname.
     * <p>
     * The local part of the QName should be a non-empty String.
@@ -50,6 +53,7 @@ public @interface EventDefinition {
     * event handling methods.
     * <p>
     * The event qname must be unique within the portlet application. 
+    * </div>
     * 
     * @see     javax.portlet.Event
     * @see     javax.portlet.StateAwareResponse#setEvent(javax.xml.namespace.QName, java.io.Serializable)
@@ -62,11 +66,13 @@ public @interface EventDefinition {
    PortletQName   qname();
 
    /**
+    * <div class='changed_added_3_0'>
     * The event payload type associated with the specified QName.
     * Each QName may have only a single event payload type associated with it.
     * The payload type must be serializable and must have a valid JAXB binding.
     * <p>
     * The default value <code>void.class</code> indicates that the event has no payload. 
+    * </div>
     * 
     * @see     javax.portlet.Event
     * @see     javax.portlet.StateAwareResponse#setEvent(javax.xml.namespace.QName, java.io.Serializable)
@@ -77,7 +83,7 @@ public @interface EventDefinition {
    Class<?>    payloadType() default void.class;
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * Provides locale-specific text describing the event for use by the portal application or by tools.
     * </div>
     * 
@@ -86,7 +92,7 @@ public @interface EventDefinition {
    LocaleString[]      description() default {};
    
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The display-name type contains a locale-specific short name that is intended to be displayed by tools. 
     * It is used by display-name elements. 
     * The display name need not be unique.
@@ -97,7 +103,7 @@ public @interface EventDefinition {
    LocaleString[]   displayName() default {};
 
    /**
-    * <div class='container-change'>
+    * <div class='container-change changed_added_3_0'>
     * The qualified name aliases for this event.
     * </div>
     * 

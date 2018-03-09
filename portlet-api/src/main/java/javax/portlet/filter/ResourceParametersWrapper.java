@@ -31,6 +31,7 @@ import javax.portlet.ResourceParameters;
  * Methods default to calling through to the wrapped request object.
  * </div>
  *
+ * @since 3.0
  */
 public class ResourceParametersWrapper extends PortletParametersWrapper implements ResourceParameters {
    

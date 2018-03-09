@@ -63,7 +63,6 @@ public interface MutableRenderState extends RenderState, Mutable {
     * 
     * @return   a <code>MutableRenderParameters</code> object representing
     *           the private and public render parameters
-    * @since    3.0
     * @see      PortletParameters 
     * @see      RenderParameters 
     * @see      MutablePortletParameters 
@@ -110,8 +109,6 @@ public interface MutableRenderState extends RenderState, Mutable {
     *                has been called.
     * @exception java.lang.IllegalArgumentException
     *                if the input parameter is <code>null</code>.
-    *                
-    * @since 3.0
     */
 
    public void setPortletMode(PortletMode portletMode)
@@ -150,8 +147,6 @@ public interface MutableRenderState extends RenderState, Mutable {
     *                has been called.
     * @exception java.lang.IllegalArgumentException
     *                if the input parameter is <code>null</code>.
-    * 
-    * @since 3.0
     * 
     */
 

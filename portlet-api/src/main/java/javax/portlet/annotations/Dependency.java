@@ -41,26 +41,34 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p> 
  * This annotation cannot be used as a stand-alone portlet annotation.
  * </div>
+ * 
+ * @since 3.0
  */
 @Retention(RUNTIME) @Target({ANNOTATION_TYPE})
 public @interface Dependency {
    
    /**
+    * <div class='changed_added_3_0'>
     * The resource name.
+    * </div>
     * 
     * @return     The resource name
     */
    String   name();
    
    /**
+    * <div class='changed_added_3_0'>
     * The scope name.
+    * </div>
     * 
     * @return     The name of the scope containing the resource
     */
    String   scope() default "";
   
    /**
+    * <div class='changed_added_3_0'>
     * The minimum acceptable module version.
+    * </div>
     * 
     * @return     The minimum acceptable module version
     */

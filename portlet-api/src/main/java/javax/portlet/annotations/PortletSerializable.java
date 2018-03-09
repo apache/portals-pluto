@@ -43,10 +43,13 @@ package javax.portlet.annotations;
  * </div>
  * 
  * @see RenderStateScoped
+ * 
+ * @since 3.0
  */
 public interface PortletSerializable {
    
    /**
+    * <div class='changed_added_3_0'>
     * The portlet bean container calls this method after {@link ActionMethod}
     * or {@link EventMethod} execution to obtain the bean state.
     * <p>
@@ -57,12 +60,14 @@ public interface PortletSerializable {
     * <p>
     * If no bean data has been set, this method should return an empty array or 
     * <code>null</code> in order to avoid setting extraneous parameters.
+    * </div>
     * 
     * @return     The bean state as a string array.
     */
    public String[]   serialize();
    
    /**
+    * <div class='changed_added_3_0'>
     * The bean portlet container calls this method at the beginning of every portlet
     * request method that uses the bean. 
     * <p> 
@@ -76,7 +81,8 @@ public interface PortletSerializable {
     * <p>
     * If the state array is empty, the bean implementation should provide approriate 
     * default values for its internal variables.
-    *  
+    * </div>
+    * 
     * @param state      The bean state as string array.
     *                   The array will be empty if bean data has not yet been set.
     */

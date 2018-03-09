@@ -56,7 +56,6 @@ public interface RenderState {
     * 
     * @return   an immutable <code>RenderParameters</code> object representing
     *           the private and public render parameters
-    * @since    3.0
     * @see      PortletParameters 
     * @see      RenderParameters 
     */
@@ -72,7 +71,6 @@ public interface RenderState {
     * @return     the portlet mode. If the portlet mode is not available, 
     *             {@link PortletMode#UNDEFINED} is returned.
     * @see        PortletMode
-    * @since      3.0
     */
 
    public PortletMode getPortletMode();
@@ -86,7 +84,6 @@ public interface RenderState {
     * @return     the window state. If the window state is not available, 
     *             {@link WindowState#UNDEFINED} is returned.
     * @see        WindowState
-    * @since      3.0
     */
 
    public WindowState getWindowState();

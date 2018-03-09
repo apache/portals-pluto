@@ -45,6 +45,8 @@ public class WindowState {
     * This mode may not be used to set the window state in the <code>setWindowState</code> method.
     * <p>
     * The string value for this mode is <code>"undefined"</code>. </div>
+    * 
+    * @since 3.0
     */
    public final static WindowState UNDEFINED = new WindowState("undefined");
 
@@ -77,7 +79,11 @@ public class WindowState {
    private String                  _name;
 
    /**
+    * <div class="changed_added_3_0">
     * No-arg constructor to make object proxyable
+    * </div>
+    * 
+    * @since 3.0
     */
    public WindowState() {
       _name = "undefined";
