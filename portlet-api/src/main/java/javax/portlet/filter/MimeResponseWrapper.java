@@ -69,148 +69,146 @@ public class MimeResponseWrapper extends PortletResponseWrapper implements MimeR
       super.setResponse(response);
    }
 
-   /**
-    * The default behavior of this method is to call <code>flushBuffer()</code>
-    * on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#flushBuffer()
     */
+   @Override
    public void flushBuffer() throws IOException {
       ((MimeResponse)response).flushBuffer();
    }
 
-   /**
-    * The default behavior of this method is to call
-    * <code>getBufferSize()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#getBufferSize()
     */
+   @Override
    public int getBufferSize() {
       return ((MimeResponse)response).getBufferSize();
    }
 
-   /**
-    * The default behavior of this method is to call
-    * <code>getCharacterEncoding()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#getCharacterEncoding()
     */
+   @Override
    public String getCharacterEncoding() {
       return ((MimeResponse)response).getCharacterEncoding();
    }
 
-   /**
-    * The default behavior of this method is to call
-    * <code>getContentType()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#getContentType()
     */
+   @Override
    public String getContentType() {
       return ((MimeResponse)response).getContentType();
    }
 
-   /**
-    * The default behavior of this method is to call <code>getLocale()</code> on
-    * the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#getLocale()
     */
+   @Override
    public Locale getLocale() {
       return ((MimeResponse)response).getLocale();
    }
 
-   /**
-    * The default behavior of this method is to call
-    * <code>getPortletOutputStream()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#getPortletOutputStream()
     */
+   @Override
    public OutputStream getPortletOutputStream() throws IOException {
       return ((MimeResponse)response).getPortletOutputStream();
    }
 
-   /**
-    * The default behavior of this method is to call <code>getWriter()</code> on
-    * the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#getWriter()
     */
+   @Override
    public PrintWriter getWriter() throws IOException {
       return ((MimeResponse)response).getWriter();
    }
 
-   /**
-    * The default behavior of this method is to call <code>isCommitted()</code>
-    * on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#isCommitted()
     */
+   @Override
    public boolean isCommitted() {
       return ((MimeResponse)response).isCommitted();
    }
 
-   /**
-    * The default behavior of this method is to call <code>reset()</code> on the
-    * wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#reset()
     */
+   @Override
    public void reset() {
       ((MimeResponse)response).reset();
    }
 
-   /**
-    * The default behavior of this method is to call <code>resetBuffer()</code>
-    * on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#resetBuffer()
     */
+   @Override
    public void resetBuffer() {
       ((MimeResponse)response).resetBuffer();
    }
 
-   /**
-    * The default behavior of this method is to call
-    * <code>setBufferSize(size)</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#setBufferSize(int)
     */
+   @Override
    public void setBufferSize(int size) {
       ((MimeResponse)response).setBufferSize(size);
    }
 
-   /**
-    * The default behavior of this method is to call
-    * <code>getCacheControl()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#getCacheControl()
     */
+   @Override
    public CacheControl getCacheControl() {
       return ((MimeResponse)response).getCacheControl();
    }
 
-   /**
-    * The default behavior of this method is to call
-    * <code>createActionURL()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#createActionURL()
     */
+   @Override
    public <T extends PortletURL & ActionURL> T createActionURL() throws IllegalStateException {
       return ((MimeResponse)response).createActionURL();
    }
 
-   /**
-    * <span class="changed_added_3_0">The default behavior of this method is to
-    * call <code>createActionURL(ParameterCopyOption)</code> on the wrapped
-    * response object.</span>
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#createActionURL(javax.portlet.MimeResponse.Copy)
     */
+   @Override
    public ActionURL createActionURL(Copy option) throws IllegalStateException {
       return ((MimeResponse)response).createActionURL(option);
    }
 
-   /**
-    * The default behavior of this method is to call
-    * <code>createRenderURL()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#createRenderURL()
     */
+   @Override
    public <T extends PortletURL & RenderURL> T createRenderURL() throws IllegalStateException {
       return ((MimeResponse)response).createRenderURL();
    }
 
-   /**
-    * <span class="changed_added_3_0">The default behavior of this method is to
-    * call <code>createRenderURL(ParameterCopyOption)</code> on the wrapped
-    * response object.</span>
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#createRenderURL(javax.portlet.MimeResponse.Copy)
     */
+   @Override
    public RenderURL createRenderURL(Copy option) throws IllegalStateException {
       return ((MimeResponse)response).createRenderURL(option);
    }
 
-   /**
-    * The default behavior of this method is to call
-    * <code>createResourceURL()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#createResourceURL()
     */
+   @Override
    public ResourceURL createResourceURL() throws IllegalStateException {
       return ((MimeResponse)response).createResourceURL();
    }
 
-   /**
-    * The default behavior of this method is to call
-    * <code>setContentType(type)</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.MimeResponse#setContentType(java.lang.String)
     */
+   @Override
    public void setContentType(String type) {
       ((MimeResponse)response).setContentType(type);
    }

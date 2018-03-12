@@ -72,19 +72,19 @@ public class RenderResponseWrapper extends MimeResponseWrapper implements Render
       super.setResponse(response);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>setTitle(title)</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.RenderResponse#setTitle(java.lang.String)
     */
    @Deprecated
+   @Override
    public void setTitle(String title) {
       ((RenderResponse)response).setTitle(title);
    }
 
-   /**
-    *  <span class="changed_modified_3_0">The</span> default behavior of this method is to call 
-    * <code>setNextPossiblePortletModes()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.RenderResponse#setNextPossiblePortletModes(java.util.Collection)
     */
+   @Override
    public void setNextPossiblePortletModes(Collection<? extends PortletMode> portletModes) {
       ((RenderResponse)response).setNextPossiblePortletModes(portletModes);
    }

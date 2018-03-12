@@ -56,32 +56,34 @@ public class PortletResponseWrapper implements PortletResponse {
       this.response = response;
    }
 
-   /**
-    * The default behavior of this method is to call <code>addProperty(key, value)</code> on the wrapped response
-    * object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletResponse#addProperty(java.lang.String, java.lang.String)
     */
+   @Override
    public void addProperty(String key, String value) {
       response.addProperty(key, value);
    }
 
-   /**
-    * The default behavior of this method is to call <code>encodeURL(path)</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletResponse#encodeURL(java.lang.String)
     */
+   @Override
    public String encodeURL(String path) {
       return response.encodeURL(path);
    }
 
-   /**
-    * The default behavior of this method is to call <code>getNamespace()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletResponse#getNamespace()
     */
+   @Override
    public String getNamespace() {
       return response.getNamespace();
    }
 
-   /**
-    * The default behavior of this method is to call <code>setProperty(key, value)</code> on the wrapped response
-    * object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletResponse#setProperty(java.lang.String, java.lang.String)
     */
+   @Override
    public void setProperty(String key, String value) {
       response.setProperty(key, value);
    }
@@ -110,37 +112,49 @@ public class PortletResponseWrapper implements PortletResponse {
       this.response = response;
    }
 
-   /**
-    * The default behavior of this method is to call <code>addProperty()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletResponse#addProperty(java.lang.String, org.w3c.dom.Element)
     */
+   @Override
    public void addProperty(String key, org.w3c.dom.Element element) {
       response.addProperty(key, element);
    }
 
-   /**
-    * The default behavior of this method is to call <code>createElement()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletResponse#createElement(java.lang.String)
     */
+   @Override
    public org.w3c.dom.Element createElement(String tagName) {
       return response.createElement(tagName);
    }
 
-   /**
-    * The default behavior of this method is to call <code>addProperty()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletResponse#addProperty(javax.servlet.http.Cookie)
     */
+   @Override
    public void addProperty(Cookie cookie) {
       response.addProperty(cookie);
    }
 
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletResponse#getProperty(java.lang.String)
+    */
    @Override
    public String getProperty(String key) {
       return response.getProperty(key);
    }
 
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletResponse#getPropertyValues(java.lang.String)
+    */
    @Override
    public Collection<String> getPropertyValues(String name) {
       return response.getPropertyValues(name);
    }
 
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletResponse#getPropertyNames()
+    */
    @Override
    public Collection<String> getPropertyNames() {
       return response.getPropertyNames();

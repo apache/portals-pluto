@@ -83,331 +83,335 @@ public class PortletRequestWrapper extends RenderStateWrapper implements Portlet
       super.setWrapped(request);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getAttribute(String name)</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getAttribute(java.lang.String)
     */
+   @Override
    public Object getAttribute(String name) {
       return ((PortletRequest)wrapped).getAttribute(name);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getAttributeNames()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getAttributeNames()
     */
+   @Override
    public Enumeration<String> getAttributeNames() {
       return ((PortletRequest)wrapped).getAttributeNames();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getAuthType()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getAuthType()
     */
+   @Override
    public String getAuthType() {
       return ((PortletRequest)wrapped).getAuthType();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getContextPath()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getContextPath()
     */
+   @Override
    public String getContextPath() {
       return ((PortletRequest)wrapped).getContextPath();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getLocale()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getLocale()
     */
+   @Override
    public Locale getLocale() {
       return ((PortletRequest)wrapped).getLocale();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getLocales()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getLocales()
     */
+   @Override
    public Enumeration<Locale> getLocales() {
       return ((PortletRequest)wrapped).getLocales();
    }
 
-   /**
-    * <div class="changed_modified_3_0"> 
-    * The default behavior of this method is to call 
-    * <code>getRenderParameters()</code> on the wrapped request object.
-    * </div>
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getRenderParameters()
     */
+   @Override
    public RenderParameters getRenderParameters() {
       return ((PortletRequest)wrapped).getRenderParameters();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getParameter(String name)</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getParameter(java.lang.String)
     */
    @Deprecated
+   @Override
    public String getParameter(String name) {
       return ((PortletRequest)wrapped).getParameter(name);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getParameterMap()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getParameterMap()
     */
    @Deprecated
+   @Override
    public Map<String, String[]> getParameterMap() {
       return ((PortletRequest)wrapped).getParameterMap();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getParameterNames()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getParameterNames()
     */
    @Deprecated
+   @Override
    public Enumeration<String> getParameterNames() {
       return ((PortletRequest)wrapped).getParameterNames();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getParameterValues(name)</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getParameterValues(java.lang.String)
     */
    @Deprecated
+   @Override
    public String[] getParameterValues(String name) {
       return ((PortletRequest)wrapped).getParameterValues(name);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getPortalContext()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getPortalContext()
     */
+   @Override
    public PortalContext getPortalContext() {
       return ((PortletRequest)wrapped).getPortalContext();
    }
 
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getPortletContext()
+    */
    @Override
    public PortletContext getPortletContext() {
       return ((PortletRequest)wrapped).getPortletContext();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getPortletMode()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getPortletMode()
     */
+   @Override
    public PortletMode getPortletMode() {
       return ((PortletRequest)wrapped).getPortletMode();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getPortletSession()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getPortletSession()
     */
+   @Override
    public PortletSession getPortletSession() {
       return ((PortletRequest)wrapped).getPortletSession();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getPortletSession(create)</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getPortletSession(boolean)
     */
+   @Override
    public PortletSession getPortletSession(boolean create) {
       return ((PortletRequest)wrapped).getPortletSession(create);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getPreferences()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getPreferences()
     */
+   @Override
    public PortletPreferences getPreferences() {
       return ((PortletRequest)wrapped).getPreferences();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getProperteis(name)</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getProperties(java.lang.String)
     */
+   @Override
    public Enumeration<String> getProperties(String name) {
       return ((PortletRequest)wrapped).getProperties(name);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getProperty(name)</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getProperty(java.lang.String)
     */
+   @Override
    public String getProperty(String name) {
       return ((PortletRequest)wrapped).getProperty(name);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getPropertyNames()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getPropertyNames()
     */
+   @Override
    public Enumeration<String> getPropertyNames() {
       return ((PortletRequest)wrapped).getPropertyNames();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getRemoteUser()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getRemoteUser()
     */
+   @Override
    public String getRemoteUser() {
       return ((PortletRequest)wrapped).getRemoteUser();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getRequestedSessionId()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getRequestedSessionId()
     */
+   @Override
    public String getRequestedSessionId() {
       return ((PortletRequest)wrapped).getRequestedSessionId();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getResponseContentType()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getResponseContentType()
     */
+   @Override
    public String getResponseContentType() {
       return ((PortletRequest)wrapped).getResponseContentType();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getResponseContentTypes()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getResponseContentTypes()
     */
+   @Override
    public Enumeration<String> getResponseContentTypes() {
       return ((PortletRequest)wrapped).getResponseContentTypes();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getScheme()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getScheme()
     */
+   @Override
    public String getScheme() {
       return ((PortletRequest)wrapped).getScheme();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getServerName()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getServerName()
     */
+   @Override
    public String getServerName() {
       return ((PortletRequest)wrapped).getServerName();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getServerPort()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getServerPort()
     */
+   @Override
    public int getServerPort() {
       return ((PortletRequest)wrapped).getServerPort();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getUserPrincipal()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getUserPrincipal()
     */
+   @Override
    public Principal getUserPrincipal() {
       return ((PortletRequest)wrapped).getUserPrincipal();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getWindowId()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getWindowID()
     */
+   @Override
    public String getWindowID() {
       return ((PortletRequest)wrapped).getWindowID();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getWindowState()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getWindowState()
     */
+   @Override
    public WindowState getWindowState() {
       return ((PortletRequest)wrapped).getWindowState();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>isPortletModeAllowed(mode)</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#isPortletModeAllowed(javax.portlet.PortletMode)
     */
+   @Override
    public boolean isPortletModeAllowed(PortletMode mode) {
       return ((PortletRequest)wrapped).isPortletModeAllowed(mode);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>isRequestedSessionIdValid()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#isRequestedSessionIdValid()
     */
+   @Override
    public boolean isRequestedSessionIdValid() {
       return ((PortletRequest)wrapped).isRequestedSessionIdValid();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>isSecure()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#isSecure()
     */
+   @Override
    public boolean isSecure() {
       return ((PortletRequest)wrapped).isSecure();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>isUserInRole(role)</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#isUserInRole(java.lang.String)
     */
+   @Override
    public boolean isUserInRole(String role) {
       return ((PortletRequest)wrapped).isUserInRole(role);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>isWindowStateAllowed(state)</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#isWindowStateAllowed(javax.portlet.WindowState)
     */
+   @Override
    public boolean isWindowStateAllowed(WindowState state) {
       return ((PortletRequest)wrapped).isWindowStateAllowed(state);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>removeAttribute(name)</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#removeAttribute(java.lang.String)
     */
+   @Override
    public void removeAttribute(String name) {
       ((PortletRequest)wrapped).removeAttribute(name);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>setAttribute(name, o)</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#setAttribute(java.lang.String, java.lang.Object)
     */
+   @Override
    public void setAttribute(String name, Object o) {
       ((PortletRequest)wrapped).setAttribute(name, o);
    }
 
-   /**
-    *  The default behavior of this method is to call 
-    * <code>getCookies()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getCookies()
     */
+   @Override
    public Cookie[] getCookies() {
       return ((PortletRequest)wrapped).getCookies();
    }
 
-   /**
-    *  The default behavior of this method is to call 
-    * <code>getPrivateParameterMap()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getPrivateParameterMap()
     */
    @Deprecated 
+   @Override
    public Map<String, String[]> getPrivateParameterMap() {
       return ((PortletRequest)wrapped).getPrivateParameterMap();
    }
 
-   /**
-    *  The default behavior of this method is to call 
-    * <code>getPublicParameterMap()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getPublicParameterMap()
     */
    @Deprecated
+   @Override
    public Map<String, String[]> getPublicParameterMap() {
       return ((PortletRequest)wrapped).getPublicParameterMap();
    }
 
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletRequest#getUserAgent()
+    */
    @Override
    public String getUserAgent() {
       return ((PortletRequest)wrapped).getUserAgent();

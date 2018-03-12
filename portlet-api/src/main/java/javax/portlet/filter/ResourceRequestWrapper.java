@@ -75,74 +75,90 @@ public class ResourceRequestWrapper extends ClientDataRequestWrapper implements 
       super.setRequest(request);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getETag()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceRequest#getETag()
     */
+   @Override
    public String getETag() {
       return ((ResourceRequest)wrapped).getETag();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getResourceID()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceRequest#getResourceID()
     */
+   @Override
    public String getResourceID() {
       return ((ResourceRequest)wrapped).getResourceID();
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getPrivateRenderParameterMap()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceRequest#getPrivateRenderParameterMap()
     */
    @Deprecated
+   @Override
    public Map<String, String[]> getPrivateRenderParameterMap() {
       return ((ResourceRequest)wrapped).getPrivateRenderParameterMap();
    }
 
-   /**
-    *  The default behavior of this method is to call 
-    * <code>getCacheability()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceRequest#getCacheability()
     */
+   @Override
    public String getCacheability() {
       return ((ResourceRequest)wrapped).getCacheability();
    }
 
-   /**
-    * <div class="changed_modified_3_0">  
-    *  The default behavior of this method is to call 
-    * <code>getResourceParameters()</code> on the wrapped response object.
-    * </div>
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceRequest#getResourceParameters()
     */
+   @Override
    public ResourceParameters getResourceParameters() {
       return ((ResourceRequest)wrapped).getResourceParameters();
    }
 
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceRequest#startPortletAsync()
+    */
    @Override
    public PortletAsyncContext startPortletAsync() throws IllegalStateException {
       return ((ResourceRequest)wrapped).startPortletAsync();
    }
 
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceRequest#startPortletAsync()
+    */
    @Override
    public PortletAsyncContext startPortletAsync(ResourceRequest request, ResourceResponse response) throws IllegalStateException {
       return ((ResourceRequest)wrapped).startPortletAsync(request, response);
    }
 
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceRequest#isAsyncStarted()
+    */
    @Override
    public boolean isAsyncStarted() {
       return ((ResourceRequest)wrapped).isAsyncStarted();
    }
 
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceRequest#isAsyncSupported()
+    */
    @Override
    public boolean isAsyncSupported() {
       return ((ResourceRequest)wrapped).isAsyncSupported();
    }
 
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceRequest#getPortletAsyncContext()
+    */
    @Override
    public PortletAsyncContext getPortletAsyncContext() {
       return ((ResourceRequest)wrapped).getPortletAsyncContext();
    }
 
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceRequest#getDispatcherType()
+    */
    @Override
    public DispatcherType getDispatcherType() {
       return ((ResourceRequest)wrapped).getDispatcherType();

@@ -70,12 +70,10 @@ public class ActionRequestWrapper extends ClientDataRequestWrapper implements Ac
       super.setRequest(request);
    }
 
-   /**
-    * <div class="changed_added_3_0">
-    *  The default behavior of this method is to call 
-    * <code>getActionParameters()</code> on the wrapped request object.
-    * </div>
+   /* (non-Javadoc)
+    * @see javax.portlet.ActionRequest#getActionParameters()
     */
+   @Override
    public ActionParameters getActionParameters() {
       return ((ActionRequest)wrapped).getActionParameters();
    }

@@ -73,25 +73,26 @@ public class ActionResponseWrapper extends StateAwareResponseWrapper implements 
       super.setResponse(response);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>sendRedirect(location)</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.ActionResponse#sendRedirect(java.lang.String)
     */
+   @Override
    public void sendRedirect(String location) throws IOException {
       ((ActionResponse)response).sendRedirect(location);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>sendRedirect(location, renderUrlParamName)</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.ActionResponse#sendRedirect(java.lang.String, java.lang.String)
     */
+   @Override
    public void sendRedirect(String location, String renderUrlParamName) throws IOException {
       ((ActionResponse)response).sendRedirect(location, renderUrlParamName);
    }
 
-   /**
-    * call wrapped object.
+   /* (non-Javadoc)
+    * @see javax.portlet.ActionResponse#createRedirectURL(javax.portlet.MimeResponse.Copy)
     */
+   @Override
    public RenderURL createRedirectURL(Copy option) throws IllegalStateException {
       return ((ActionResponse)response).createRedirectURL(option);
    }

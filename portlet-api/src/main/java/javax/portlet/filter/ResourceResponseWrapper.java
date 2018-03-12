@@ -73,45 +73,49 @@ public class ResourceResponseWrapper extends MimeResponseWrapper implements Reso
    }
 
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>setCharacterEncoding(String charset)</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceResponse#setCharacterEncoding(java.lang.String)
     */
+   @Override
    public void setCharacterEncoding(String charset) {
       ((ResourceResponse)response).setCharacterEncoding(charset);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>setLocale(Locale loc)</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceResponse#setLocale(java.util.Locale)
     */
+   @Override
    public void setLocale(Locale loc) {
       ((ResourceResponse)response).setLocale(loc);
    }
 
-   /**
-    *  The default behavior of this method is to call 
-    * <code>setContentLength()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceResponse#setContentLength(int)
     */
+   @Override
    public void setContentLength(int len) {
       ((ResourceResponse)response).setContentLength(len);
    }
 
-   /**
-    * <div class="changed_added_3_0">
-    *  The default behavior of this method is to call 
-    * <code>setStatus()</code> on the wrapped response object.
-    * </div>
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceResponse#setStatus(int)
     */
+   @Override
    public void setStatus(int sc) {
       ((ResourceResponse)response).setStatus(sc);
    }
 
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceResponse#getStatus()
+    */
    @Override
    public int getStatus() {
       return ((ResourceResponse)response).getStatus();
    }
 
+   /* (non-Javadoc)
+    * @see javax.portlet.ResourceResponse#setContentLengthLong(long)
+    */
    @Override
    public void setContentLengthLong(long len) {
       ((ResourceResponse)response).setContentLengthLong(len);

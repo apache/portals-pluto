@@ -71,11 +71,11 @@ public class EventResponseWrapper extends StateAwareResponseWrapper implements E
       super.setResponse(response);
    }
 
-   /**
-    *  The default behavior of this method is to call 
-    * <code>setRenderParameters()</code> on the wrapped response object.
+   /* (non-Javadoc)
+    * @see javax.portlet.EventResponse#setRenderParameters(javax.portlet.EventRequest)
     */
    @Deprecated
+   @Override
    public void setRenderParameters(EventRequest request) {
       ((EventResponse)response).setRenderParameters(request);         
    }

@@ -71,10 +71,10 @@ public class RenderRequestWrapper extends PortletRequestWrapper implements Rende
       super.setRequest(request);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getETag()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.RenderRequest#getETag()
     */
+   @Override
    public String getETag() {
       return ((RenderRequest)wrapped).getETag();
    }

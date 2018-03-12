@@ -71,18 +71,18 @@ public class EventRequestWrapper extends PortletRequestWrapper implements EventR
       super.setRequest(request);
    }
 
-   /**
-    * The default behavior of this method is to call 
-    * <code>getEvent()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.EventRequest#getEvent()
     */
+   @Override
    public Event getEvent() {
       return ((EventRequest)wrapped).getEvent();
    }
 
-   /**
-    *  The default behavior of this method is to call 
-    * <code>getMethod()</code> on the wrapped request object.
+   /* (non-Javadoc)
+    * @see javax.portlet.EventRequest#getMethod()
     */
+   @Override
    public String getMethod() {
       return ((EventRequest)wrapped).getMethod();
    }

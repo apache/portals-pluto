@@ -240,25 +240,33 @@ public class PortletContextWrapper implements PortletContext {
       return wrapped.getContainerRuntimeOptions();
    }
 
-
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletContext#getEffectiveMajorVersion()
+    */
    @Override
    public int getEffectiveMajorVersion() {
       return wrapped.getEffectiveMajorVersion();
    }
 
-
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletContext#getEffectiveMinorVersion()
+    */
    @Override
    public int getEffectiveMinorVersion() {
       return wrapped.getEffectiveMinorVersion();
    }
 
-
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletContext#getContextPath()
+    */
    @Override
    public String getContextPath() {
       return wrapped.getContextPath();
    }
 
-
+   /* (non-Javadoc)
+    * @see javax.portlet.PortletContext#getClassLoader()
+    */
    @Override
    public ClassLoader getClassLoader() {
       return wrapped.getClassLoader();
