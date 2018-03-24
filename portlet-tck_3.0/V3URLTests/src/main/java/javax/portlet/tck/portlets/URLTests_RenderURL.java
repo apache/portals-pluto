@@ -46,7 +46,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_RENDERURL_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_RENDERURL_SETFRAGMENTIDENTIFIER5;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_RENDERURL_GETFRAGMENTIDENTIFIER;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_RENDERURL_GETFRAGMENTIDENTIFIER2;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_RENDERURL_SETPARAMETERA7;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_RENDERURL_SETPARAMETERB7;
 
 /**
@@ -245,38 +244,6 @@ public class URLTests_RenderURL {
          }
          tr4.writeTo(writer);
       }
-
-      /* TestCase: V3URLTests_RenderURL_setParameterA7 */
-      /* Details: "Method setParameter(String, String): If the value is */
-      /* null, all values for the specified key are removed" */
-      TestResult tr4 = tcd.getTestResultFailed(
-          V3URLTESTS_RENDERURL_SETPARAMETERA7);
-      try {
-         PortletURL turl = portletResp.createRenderURL();
-         turl.setParameter("tc",
-             "V3URLTests_RenderURL_setParameterA7");
-         turl.setParameter("parm1", "val1");
-         turl.setParameter("parm1", (String) null);
-
-         // add the execution link
-         TestLink tl = new TestLink(
-             "V3URLTests_RenderURL_setParameterA7", turl);
-         tl.writeTo(writer);
-
-         // evaluate results
-         String tcval = portletReq.getParameter("tc");
-         // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval != null && tcval
-             .equals("V3URLTests_RenderURL_setParameterA7")) {
-            String aval = portletReq.getParameter("parm1");
-            String eval = null;
-            CompareUtils.stringsEqual("Request", aval, " expected: ", eval,
-                tr4);
-         }
-      } catch (Exception e) {
-         tr4.appendTcDetail(e);
-      }
-      tr4.writeTo(writer);
 
       /* TestCase: V3URLTests_RenderURL_setParameterB7 */
       /* Details: "Method setParameter(String, String[]): If the value is */

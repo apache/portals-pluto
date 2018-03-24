@@ -3488,7 +3488,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERA6,
             "Method setParameter(String, String): All previously existing values for the specified key are removed");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERA7,
-            "Method setParameter(String, String): Throws IllegalArgumentException if the value is null");
+            "Method setParameter(String, String): If the value is null, all values for the specified key are removed");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERA8,
             "Method setParameter(String, String): Throws IllegalArgumentException if the name is null");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERB1,
@@ -3553,7 +3553,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA6,
             "Method setParameter(String, String): All previously existing values for the specified key are removed");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA7,
-            "Method setParameter(String, String): Throws IllegalArgumentException if the value is null");
+            "Method setParameter(String, String): If the value is null, all values for the specified key are removed");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA8,
             "Method setParameter(String, String): Throws IllegalArgumentException if the name is null");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB1,
@@ -3614,7 +3614,7 @@ public class JSR286ApiTestCaseDetails extends TestCaseDetails {
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERA6,
             "Method setParameter(String, String): All previously existing values for the specified key are removed");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERA7,
-            "Method setParameter(String, String): Throws IllegalArgumentException if the value is null");
+            "String): If the value is null, all values for the specified key are removed");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERA8,
             "Method setParameter(String, String): Throws IllegalArgumentException if the name is null");
       tcd.put(V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERB1,

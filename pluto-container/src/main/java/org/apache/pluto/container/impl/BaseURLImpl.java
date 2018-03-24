@@ -228,12 +228,7 @@ public abstract class BaseURLImpl implements BaseURL {
    public void setParameter(String name, String value) {
       ArgumentUtility.validateNotEmpty("name", name);
       if (value == null) {
-         if (getPortletMajorVersion() < 3) {
-            throw new IllegalArgumentException();
-         }
-         else {
-            urlProvider.removeParameter(windowId, name);
-         }
+         urlProvider.removeParameter(windowId, name);
       } else {
          String[] values = new String[] { value };
          urlProvider.setParameter(windowId, name, values);

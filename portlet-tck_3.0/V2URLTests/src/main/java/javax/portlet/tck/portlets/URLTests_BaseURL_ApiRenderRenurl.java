@@ -246,19 +246,31 @@ public class URLTests_BaseURL_ApiRenderRenurl implements Portlet {
       tr3.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderRenurl_setParameterA7 */
-      /* Details: "Method setParameter(String, String): Throws */
-      /* IllegalArgumentException if the value is null" */
+      /* Details: "Method setParameter(String, String): If the value is */
+      /* null, all values for the specified key are removed" */
       TestResult tr4 = tcd.getTestResultFailed(
           V2URLTESTS_BASEURL_APIRENDERRENURL_SETPARAMETERA7);
       try {
-         try {
-            PortletURL turl = portletResp.createRenderURL();
-            turl.setParameter("parm1", (String) null);
-            tr4.appendTcDetail("Method did not throw an exception.");
-         } catch (IllegalArgumentException iae) {
-            tr4.setTcSuccess(true);
-         } catch (Exception e) {
-            tr4.appendTcDetail(e);
+         PortletURL turl = portletResp.createRenderURL();
+         turl.setParameter("tc",
+             "V2URLTests_BaseURL_ApiRenderRenurl_setParameterA7");
+         turl.setParameter("parm1", "val1");
+         turl.setParameter("parm1", (String) null);
+
+         // add the execution link
+         TestLink tl = new TestLink(
+             "V2URLTests_BaseURL_ApiRenderRenurl_setParameterA7", turl);
+         tl.writeTo(writer);
+
+         // evaluate results
+         String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
+         if (tcval != null && tcval
+             .equals("V2URLTests_BaseURL_ApiRenderRenurl_setParameterA7")) {
+            String aval = portletReq.getParameter("parm1");
+            String eval = null;
+            CompareUtils.stringsEqual("Request", aval, " expected: ", eval,
+                tr4);
          }
       } catch (Exception e) {
          tr4.appendTcDetail(e);

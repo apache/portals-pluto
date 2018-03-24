@@ -176,6 +176,24 @@ public class URLTests_BaseURL_ApiRenderResurl
       }
 
       // evaluate results for test case
+      // V2URLTests_BaseURL_ApiRenderResurl_setParameterA7
+      {
+         JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+         TestResult tr3 = tcd.getTestResultFailed(
+             V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERA7);
+         String tcval = portletReq.getParameter("tc");
+         // let exception be thrown if tc parm isn't set (test case error)
+         if (tcval != null && tcval
+             .equals("V2URLTests_BaseURL_ApiRenderResurl_setParameterA7")) {
+            String aval = portletReq.getParameter("parm1");
+            String eval = null;
+            CompareUtils.stringsEqual("Request", aval, " expected: ", eval,
+                tr3);
+            tr3.writeTo(writer);
+         }
+      }
+
+      // evaluate results for test case
       // V2URLTests_BaseURL_ApiRenderResurl_setParameterB1
       {
          JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
@@ -474,24 +492,25 @@ public class URLTests_BaseURL_ApiRenderResurl
       }
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderResurl_setParameterA7 */
-      /* Details: "Method setParameter(String, String): Throws */
-      /* IllegalArgumentException if the value is null" */
+      /* Details: "Method setParameter(String, String): If the value is */
+      /* null, all values for the specified key are removed" */
       TestResult tr3 = tcd.getTestResultFailed(
           V2URLTESTS_BASEURL_APIRENDERRESURL_SETPARAMETERA7);
       try {
-         try {
-            ResourceURL turl = portletResp.createResourceURL();
-            turl.setParameter("parm1", (String) null);
-            tr3.appendTcDetail("Method did not throw an exception.");
-         } catch (IllegalArgumentException iae) {
-            tr3.setTcSuccess(true);
-         } catch (Exception e) {
-            tr3.appendTcDetail(e);
-         }
+         ResourceURL turl = portletResp.createResourceURL();
+         turl.setParameter("tc",
+             "V2URLTests_BaseURL_ApiRenderResurl_setParameterA7");
+         turl.setParameter("parm1", "val1");
+         turl.setParameter("parm1", (String) null);
+
+         // add the resource results fetcher to the output stream
+         ResourceLink rl = new ResourceLink(
+             "V2URLTests_BaseURL_ApiRenderResurl_setParameterA7", turl);
+         rl.writeResourceFetcher(writer);
       } catch (Exception e) {
          tr3.appendTcDetail(e);
+         tr3.writeTo(writer);
       }
-      tr3.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderResurl_setParameterA8 */
       /* Details: "Method setParameter(String, String): Throws */

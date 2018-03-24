@@ -44,7 +44,6 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_RESOURCEURL_GETRESOURCEPARAMETERS;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_RESOURCEURL_GETRESOURCEPARAMETERS2;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_RESOURCEURL_GETRESOURCEPARAMETERS3;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_RESOURCEURL_SETPARAMETERA7;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_RESOURCEURL_SETPARAMETERB7;
 
 /**
@@ -74,24 +73,6 @@ public class URLTests_ResourceURL {
          ResourceResponse portletResp) throws PortletException, IOException {
 
       PrintWriter writer = portletResp.getWriter();
-
-      // evaluate results for test case
-      // V3URLTests_ResourceURL_setParameterA7
-      {
-         ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
-         TestResult tr3 = tcd.getTestResultFailed(
-             V3URLTESTS_RESOURCEURL_SETPARAMETERA7);
-         String tcval = portletReq.getParameter("tc");
-         // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval != null && tcval
-             .equals("V3URLTests_ResourceURL_setParameterA7")) {
-            String aval = portletReq.getParameter("parm1");
-            String eval = null;
-            CompareUtils.stringsEqual("Request", aval, " expected: ", eval,
-                tr3);
-            tr3.writeTo(writer);
-         }
-      }
 
       // evaluate results for test case
       // V3URLTests_ResourceURL_setParameterB7
@@ -180,27 +161,6 @@ public class URLTests_ResourceURL {
                   "Failed because resource parameter tr2 set in resourceURL cannot be found.");
          }
          tr2.writeTo(writer);
-      }
-
-      /* TestCase: V3URLTests_ResourceURL_setParameterA7 */
-      /* Details: "Method setParameter(String, String): If the value is */
-      /* null, all values for the specified key are removed" */
-      TestResult tr3 = tcd.getTestResultFailed(
-          V3URLTESTS_RESOURCEURL_SETPARAMETERA7);
-      try {
-         ResourceURL turl = portletResp.createResourceURL();
-         turl.setParameter("tc",
-             "V3URLTests_ResourceURL_setParameterA7");
-         turl.setParameter("parm1", "val1");
-         turl.setParameter("parm1", (String) null);
-
-         // add the resource results fetcher to the output stream
-         ResourceLink rl = new ResourceLink(
-             "V3URLTests_ResourceURL_setParameterA7", turl);
-         rl.writeResourceFetcher(writer);
-      } catch (Exception e) {
-         tr3.appendTcDetail(e);
-         tr3.writeTo(writer);
       }
 
       /* TestCase: V3URLTests_ResourceURL_setParameterB7 */

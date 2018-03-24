@@ -47,7 +47,6 @@ import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_ACTIONURL_GETACTIONPARAMETERS;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_ACTIONURL_GETACTIONPARAMETERS2;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_ACTIONURL_GETACTIONPARAMETERS3;
-import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_ACTIONURL_SETPARAMETERA7;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3URLTESTS_ACTIONURL_SETPARAMETERB7;
 
 /**
@@ -71,29 +70,6 @@ public class URLTests_ActionURL {
    @ActionMethod(portletName = "ActionURLTests")
    public void processAction(ActionRequest portletReq,
          ActionResponse portletResp) throws PortletException, IOException {
-
-      // evaluate results for test case
-      // V3URLTests_ActionURL_setParameterA7
-      {
-         ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
-         TestResult tr3 = tcd.getTestResultFailed(
-             V3URLTESTS_ACTIONURL_SETPARAMETERA7);
-         String tcval = portletReq.getParameter("tc");
-         // let exception be thrown if tc parm isn't defined (test case error)
-         if (tcval != null && tcval != null && tcval
-             .equals("V3URLTests_ActionURL_setParameterA7")) {
-            String aval = portletReq.getParameter("parm1");
-            String eval = null;
-            CompareUtils.stringsEqual("Request", aval, " expected: ", eval,
-                tr3);
-            PortletSession ps = portletReq.getPortletSession();
-            ps.setAttribute(
-                RESULT_ATTR_PREFIX
-                + "V3URLTests_ActionURL_setParameterA7",
-                tr3);
-            portletResp.setRenderParameter("tc", tcval);
-         }
-      }
 
       // evaluate results for test case
       // V3URLTests_ActionURL_setParameterB7
@@ -192,42 +168,6 @@ public class URLTests_ActionURL {
          }
          tr2.writeTo(writer);
       }
-
-      /* TestCase: V3URLTests_ActionURL_setParameterA7 */
-      /* Details: "Method setParameter(String, String): If the value is */
-      /* null, all values for the specified key are removed" */
-      TestResult tr3 = tcd.getTestResultFailed(
-          V3URLTESTS_ACTIONURL_SETPARAMETERA7);
-      try {
-         PortletURL turl = portletResp.createActionURL();
-         turl.setParameter("tc",
-             "V3URLTests_ActionURL_setParameterA7");
-         turl.setParameter("parm1", "val1");
-         turl.setParameter("parm1", (String) null);
-
-         // add the execution button for an action request
-         TestButton tb = new TestButton(
-             "V3URLTests_ActionURL_setParameterA7", turl);
-         tb.writeTo(writer);
-
-         // display evaluated results
-         String tcval = portletReq.getParameter("tc");
-         // let exception be thrown if tc parm isn't set (test case error)
-         if (tcval != null && tcval != null && tcval
-             .equals("V3URLTests_ActionURL_setParameterA7")) {
-            PortletSession ps = portletReq.getPortletSession();
-            TestResult tmp = (TestResult) ps.getAttribute(RESULT_ATTR_PREFIX
-                                                          + "V3URLTests_ActionURL_setParameterA7");
-            if (tmp != null) {
-               tr3 = tmp;
-               ps.removeAttribute(RESULT_ATTR_PREFIX
-                                  + "V3URLTests_ActionURL_setParameterA7");
-            }
-         }
-      } catch (Exception e) {
-         tr3.appendTcDetail(e);
-      }
-      tr3.writeTo(writer);
 
       /* TestCase: V3URLTests_ActionURL_setParameterB7 */
       /* Details: "Method setParameter(String, String[]): If the value is */
