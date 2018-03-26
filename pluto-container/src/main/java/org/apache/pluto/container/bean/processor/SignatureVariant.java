@@ -20,7 +20,7 @@
 package org.apache.pluto.container.bean.processor;
 
 /**
- * Enum to identify the signature variant for annotated methods that alloe
+ * Enum to identify the signature variant for annotated methods that allow
  * multiple method signatures.
  * 
  * @author Scott Nicklous
