@@ -191,7 +191,7 @@ public interface ResourceRequest extends ClientDataRequest {
     * @since 3.0
     */
 
-   public PortletMode getPortletMode ();
+   public PortletMode getPortletMode();
 
 
    /**
@@ -213,7 +213,7 @@ public interface ResourceRequest extends ClientDataRequest {
     * @since 3.0
     */
 
-   public WindowState getWindowState ();
+   public WindowState getWindowState();
 
 
    /**
