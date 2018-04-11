@@ -18,6 +18,7 @@ package org.apache.pluto.container.impl;
 
 import java.util.Enumeration;
 
+import javax.enterprise.inject.spi.Bean;
 import javax.portlet.MimeResponse.Copy;
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
@@ -26,9 +27,11 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 import javax.portlet.annotations.PortletSerializable;
+import javax.portlet.annotations.RenderStateScoped;
 
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletURLProvider;
+import org.apache.pluto.container.bean.processor.PortletStateScopedBeanHolder;
 import org.apache.pluto.container.om.portlet.CustomPortletMode;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.Supports;
@@ -145,28 +148,54 @@ public abstract class PortletURLImpl extends BaseURLImpl implements PortletURL {
    
    @SuppressWarnings("unused")
    @Override
-   public void setBeanParameter(PortletSerializable bean) {
-      if (bean == null) {
+   public void setBeanParameter(PortletSerializable portletSerializable) {
+      if (portletSerializable == null) {
          StringBuilder txt = new StringBuilder(128);
          txt.append("Required parameter is null.");
-         txt.append(", bean: ").append(bean);
+         txt.append(", portletSerializable: ").append(portletSerializable);
          LOGGER.info(txt.toString());
          throw new IllegalArgumentException(txt.toString());
       }
-      
-      // TODO: must be fixed when the bean implementation is integrated!!
-      String name = "Bob";
-      //String name = PortletStateScopedBeanHolder.getParameterName(bean.getClass());
-      
+
+      PortletStateScopedBeanHolder portletStateScopedBeanHolder =
+          PortletStateScopedBeanHolder.getBeanHolder();
+      Class<? extends PortletSerializable> beanClass = portletSerializable.getClass();
+      String name;
+
+      if (portletStateScopedBeanHolder == null) {
+         RenderStateScoped renderStateScoped = beanClass.getAnnotation(RenderStateScoped.class);
+         if (renderStateScoped == null) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("Given portletSerializable is not @RenderStateScoped.");
+            txt.append(", portletSerializable: ").append(portletSerializable);
+            LOGGER.info(txt.toString());
+            throw new IllegalArgumentException(txt.toString());
+         }
+
+         name = renderStateScoped.paramName();
+
+         if ((name == null) || (name.trim().length() == 0)) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("@RenderStateScoped portletSerializable does not have a paramName.");
+            txt.append(", portletSerializable: ").append(portletSerializable);
+            LOGGER.info(txt.toString());
+            throw new IllegalArgumentException(txt.toString());
+         }
+      }
+      else {
+         beanClass = portletSerializable.getClass();
+         name = portletStateScopedBeanHolder.getParameterName(beanClass);
+      }
+
       if (name == null) {
          StringBuilder txt = new StringBuilder(128);
-         txt.append("Given bean is not @RenderStateScoped.");
-         txt.append(", bean: ").append(bean);
+         txt.append("Given portletSerializable is not @RenderStateScoped.");
+         txt.append(", portletSerializable: ").append(portletSerializable);
          LOGGER.info(txt.toString());
          throw new IllegalArgumentException(txt.toString());
       }
       
-      getRenderParameters().setValues(name, bean.serialize());
+      getRenderParameters().setValues(name, portletSerializable.serialize());
       
    }
 

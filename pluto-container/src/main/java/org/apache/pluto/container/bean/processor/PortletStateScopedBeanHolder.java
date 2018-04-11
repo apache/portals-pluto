@@ -208,7 +208,11 @@ public class PortletStateScopedBeanHolder implements Serializable {
   
       return (T) bi.instance;
    }
-   
+
+   public String getParameterName(Class<?> beanClass) {
+      return config.getParamName(beanClass);
+   }
+
    /**
     * Removes & destroys the given bean
     * @param bean

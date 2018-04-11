@@ -178,7 +178,7 @@ public class PortletStateScopedConfig  implements Serializable {
       for (Contextual<?> b : context2Anno.keySet()) {
          if (b instanceof Bean) {
             Bean<?> bean = (Bean<?>)b;
-            if (beanClass.isAssignableFrom(bean.getBeanClass())) {
+            if (beanClass.isAssignableFrom(bean.getBeanClass()) || bean.getBeanClass().isAssignableFrom(beanClass)) {
                name = context2Anno.get(b).paramName;
                break;
             }
