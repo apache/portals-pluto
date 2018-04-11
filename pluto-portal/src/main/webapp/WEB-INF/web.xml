@@ -161,9 +161,6 @@ limitations under the License.
       <web-resource-name>portal</web-resource-name>
       <url-pattern>/portal</url-pattern>
       <url-pattern>/portal/*</url-pattern>
-      <http-method>GET</http-method>
-      <http-method>POST</http-method>
-      <http-method>PUT</http-method>
     </web-resource-collection>
     <auth-constraint>
       <role-name>pluto</role-name>

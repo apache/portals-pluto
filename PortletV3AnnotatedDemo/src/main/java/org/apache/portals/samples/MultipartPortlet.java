@@ -63,6 +63,7 @@ public class MultipartPortlet {
 
    private static final String JSP    = "/WEB-INF/jsp/multipartDialog.jsp";
    private static final String TMP    = "/MultipartPortlet/temp/";
+   private static final String TFILE  = "uploadFile";
 
    @ActionMethod(portletName = "MultipartPortlet")
    public void handleDialog(ActionRequest req, ActionResponse resp) throws IOException, PortletException {
@@ -104,22 +105,29 @@ public class MultipartPortlet {
          LOGGER.fine(txt.toString());
 
          // Store the file in a temporary location in the webapp where it can be served. 
-         // Note that this is, in general, not what you want to do in production, as
-         // there can be problems serving the resource. Did it this way for a 
-         // quick solution that doesn't require additional Tomcat configuration.
 
          try {
             String fn = part.getSubmittedFileName();
-            File img = getFile(fn);
-            if (img.exists()) {
-               lines.add("deleting existing temp file: " + img.getCanonicalPath());
-               img.delete();
+            String ct = part.getContentType();
+            
+            if (ct != null && (ct.equals("text/plain") || ct.matches("image/(?:png|gif|jpg|jpeg)"))) {
+               
+               String ext = ct.replaceAll("\\w+/", "");
+               lines.add("determined extension " + ext + " from content type " + ct);
+               File img = getFile();
+               if (img.exists()) {
+                  lines.add("deleting existing temp file: " + img.getCanonicalPath());
+                  img.delete();
+               }
+               InputStream is = part.getInputStream();
+               Files.copy(is, img.toPath(), StandardCopyOption.REPLACE_EXISTING);
+               
+            } else {
+               lines.add("Bad file type. Must be plain text or image (gif, jpeg, png).");
             }
-            InputStream is = part.getInputStream();
-            Files.copy(is, img.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
             resp.getRenderParameters().setValue("fn", fn);
-            resp.getRenderParameters().setValue("ct", part.getContentType());
+            resp.getRenderParameters().setValue("ct", ct);
 
          } catch (Exception e) {
             lines.add("Exception doing I/O: " + e.toString());
@@ -164,7 +172,7 @@ public class MultipartPortlet {
          lines.add("No file stored.");
       } else {
          StringBuilder txt = new StringBuilder(128);
-         txt.append("Rendering with file: ").append(fn);
+         txt.append("Rendering for uploaded file: ").append(fn);
          txt.append(", type: ").append(ct);
          lines.add(txt.toString());
 
@@ -174,7 +182,7 @@ public class MultipartPortlet {
          FileInputStream fis = null;
          BufferedReader rdr = null;
          try {
-            File file = getFile(fn);
+            File file = getFile();
             fis = new FileInputStream(file);
 
             if (ct.equals("text/plain")) {
@@ -191,7 +199,7 @@ public class MultipartPortlet {
                } else {
                   flist.add("Sorry, file size > 2000 and is too big.");
                }
-            } else if (ct.matches("image/(?:gif|jpg|jpeg)")) {
+            } else if (ct.matches("image/(?:png|gif|jpg|jpeg)")) {
                lines.add("Processing image.");
 
                BufferedImage bimg = ImageIO.read(fis);
@@ -228,13 +236,12 @@ public class MultipartPortlet {
    
    @ServeResourceMethod(portletNames="MultipartPortlet")
    public void serveImage(ResourceRequest req, ResourceResponse resp) throws IOException {
-      String fn = req.getRenderParameters().getValue("fn");
       String ct = req.getRenderParameters().getValue("ct");
       
       resp.setContentType(ct);
 
       try {
-         File file = getFile(fn);
+         File file = getFile();
          OutputStream os = resp.getPortletOutputStream();
          Files.copy(file.toPath(), os);
          os.flush();
@@ -255,12 +262,10 @@ public class MultipartPortlet {
     * Returns a File object representing the uploaded temporary file location. Note that the file may or may not exist.
     * The temp directories are created as necessary.
     * 
-    * @param fn
-    *           the file name
     * @return the File object
     * @throws IOException 
     */
-   private File getFile(String fn) throws IOException {
+   private File getFile() throws IOException {
       File tmp = null;
 
       String path = System.getProperty("java.io.tmpdir") + TMP;
@@ -269,7 +274,7 @@ public class MultipartPortlet {
          LOGGER.fine("Creating directory. Path: " + dir.getCanonicalPath());
          Files.createDirectories(dir.toPath());
       }
-      tmp = new File(dir, fn);
+      tmp = new File(dir, TFILE);
       LOGGER.fine("Temp file: " + tmp.getCanonicalPath());
 
       return tmp;
