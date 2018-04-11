@@ -54,7 +54,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * An <code>{@literal @}RenderStateScoped</code> bean is similar to an 
  * <code>{@literal @}RequestScoped</code> bean in that a new instance is created at the
  * beginning of each request.
- * However, for <code>{@literal @}PortletStateScopedScoped</code> beans, the portlet bean 
+ * However, for <code>{@literal @}RenderStateScopedScoped</code> beans, the portlet bean
  * container calls the 
  * {@link PortletSerializable#deserialize(String[]) PortletSerializable#deserialize}
  * method at the beginning of each request to initialize the bean and the  
