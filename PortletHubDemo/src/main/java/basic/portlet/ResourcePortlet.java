@@ -29,6 +29,7 @@ import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
@@ -52,6 +53,7 @@ import javax.portlet.annotations.Supports;
 /**
  * A demo portlet that displays images
  */
+@ApplicationScoped
 @PortletApplication(
       events = {
             @EventDefinition(
