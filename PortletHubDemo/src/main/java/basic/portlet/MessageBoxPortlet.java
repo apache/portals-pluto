@@ -18,6 +18,9 @@
 
 package basic.portlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static basic.portlet.Constants.ATTRIB_MSGS;
 import static basic.portlet.Constants.DELIM;
 import static basic.portlet.Constants.PARAM_COLOR;
@@ -26,8 +29,6 @@ import static basic.portlet.Constants.PARAM_NUM_MSGS;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.portlet.ActionRequest;
@@ -57,14 +58,13 @@ import javax.portlet.annotations.PortletQName;
 public class MessageBoxPortlet extends GenericPortlet {
 
    // Set up logging
-   private static final String LOG_CLASS = MessageBoxPortlet.class.getName();
-   private final Logger logger = Logger.getLogger(LOG_CLASS);
+   private final Logger logger = LoggerFactory.getLogger(MessageBoxPortlet.class);
 
    protected void doView(RenderRequest req, RenderResponse resp)
          throws PortletException, IOException {
       
-      if (logger.isLoggable(Level.FINE)) {
-         logger.logp(Level.FINE, this.getClass().getName(), "doView", "Entry");
+      if (logger.isDebugEnabled()) {
+         logger.debug(this.getClass().getName(), "doView", "Entry");
       }
       
       resp.setContentType("text/html");
@@ -82,7 +82,7 @@ public class MessageBoxPortlet extends GenericPortlet {
       // the only action for this portlet is to reset the stored messages
       
       String actionName = req.getActionParameters().getValue(ActionRequest.ACTION_NAME);
-      logger.fine("MBP: Resetting messages. numMsgs = 0,  actionName = " + actionName);
+      logger.debug("MBP: Resetting messages. numMsgs = 0,  actionName = " + actionName);
 
       ArrayList<String> msgs = new ArrayList<String>();
       StringBuffer sb = new StringBuffer();
@@ -119,7 +119,7 @@ public class MessageBoxPortlet extends GenericPortlet {
          msgs.clear();
       }
       
-      logger.fine("Processing message event. Current # messages = " + msgs.size());
+      logger.debug("Processing message event. Current # messages = " + msgs.size());
 
       try {
          // Both pieces of info are transported in a delimted string rather than 
@@ -144,7 +144,7 @@ public class MessageBoxPortlet extends GenericPortlet {
       
       msgs.add(sb.toString());
       
-      logger.fine("Adding message: " + sb.toString());
+      logger.debug("Adding message: " + sb.toString());
 
       resp.getRenderParameters().setValue(PARAM_NUM_MSGS, Integer.toString(msgs.size()));
       req.getPortletSession().setAttribute(ATTRIB_MSGS, msgs);
@@ -178,7 +178,7 @@ public class MessageBoxPortlet extends GenericPortlet {
       }
 
       int n = msgs.size();
-      logger.fine("Served messages. latest message: " + (n > 0 ? msgs.get(n-1) : "null"));
+      logger.debug("Served messages. latest message: " + (n > 0 ? msgs.get(n-1) : "null"));
    }
 
 }

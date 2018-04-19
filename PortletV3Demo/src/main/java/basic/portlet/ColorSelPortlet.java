@@ -39,10 +39,6 @@ import javax.xml.namespace.QName;
  */
 public class ColorSelPortlet extends GenericPortlet {
 
-   // Set up logging
-   // private static final String LOG_CLASS = ColorSelPortlet.class.getName();
-   // private final Logger logger = Logger.getLogger(LOG_CLASS);
-
    protected void doView(RenderRequest req, RenderResponse resp)
          throws PortletException, IOException {
 

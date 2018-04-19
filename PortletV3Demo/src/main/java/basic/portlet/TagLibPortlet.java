@@ -18,10 +18,12 @@
 
 package basic.portlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -77,7 +79,7 @@ public class TagLibPortlet {
 
    private static final String PROXY = "/ActEvtProxy";
 
-   private static final Logger LOGGER     = Logger.getLogger(TagLibPortlet.class.getName());
+   private static final Logger logger     = LoggerFactory.getLogger(TagLibPortlet.class);
 
    public static final String  PHASE      = "phase";
    public static final String  PHASE_HDR  = "header";
@@ -161,7 +163,7 @@ public class TagLibPortlet {
       txt.append("Portlet name: ").append(pcfg.getPortletName());
       txt.append(", phase: ").append(phase);
       txt.append(", test type: ").append(ttype);
-      LOGGER.fine(txt.toString());
+      logger.debug(txt.toString());
 
       if (phase.equals(PHASE_REN)) {
          req.setAttribute(ATTRIB_PHASE_TITLE, req.getAttribute(LIFECYCLE_PHASE));
@@ -257,7 +259,7 @@ public class TagLibPortlet {
       StringBuilder txt = new StringBuilder(128);
       txt.append("Parameter: ").append(PHASE);
       txt.append(", value: ").append(phase);
-      LOGGER.fine(txt.toString());
+      logger.debug(txt.toString());
 
    }
    

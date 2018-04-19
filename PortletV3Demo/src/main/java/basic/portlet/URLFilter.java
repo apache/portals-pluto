@@ -19,8 +19,9 @@
 
 package basic.portlet;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.portlet.ActionURL;
 import javax.portlet.PortletURLGenerationListener;
@@ -32,16 +33,15 @@ import javax.portlet.ResourceURL;
  *
  */
 public class URLFilter implements PortletURLGenerationListener<RenderURL, ActionURL> {
-   private static final String LOG_CLASS = URLFilter.class.getName();
-   private static final Logger logger = Logger.getLogger(LOG_CLASS);
+   private static final Logger logger = LoggerFactory.getLogger(URLFilter.class);
 
    /* (non-Javadoc)
     * @see javax.portlet.PortletURLGenerationListener#filterActionURL(javax.portlet.PortletURL)
     */
    @Override
    public void filterActionURL(ActionURL actionURL) {
-      if (logger.isLoggable(Level.FINE)) {
-         logger.logp(Level.FINE, this.getClass().getName(), "filterActionURL", 
+      if (logger.isDebugEnabled()) {
+         logger.debug(this.getClass().getName(), "filterActionURL",
                "Filtered action URL. argument class: " + actionURL.getClass().getCanonicalName());
       }
    }

@@ -18,6 +18,9 @@
 
 package org.apache.portals.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.inject.Inject;
 import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletConfig;
@@ -26,7 +29,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.logging.Logger;
+
 
 /**
  * Implements the async resource method for the async portlet.
@@ -36,7 +39,7 @@ import java.util.logging.Logger;
  */
 public class AsyncRunnable implements Runnable {
 
-	private static final Logger LOGGER = Logger.getLogger(AsyncRunnable.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(AsyncRunnable.class);
 
 	private PortletAsyncContext portletAsyncContext;
 	private int delay;
@@ -55,17 +58,17 @@ public class AsyncRunnable implements Runnable {
 		txt.append("Initializing runnable.");
 		txt.append(" delay: ").append(delay);
 		txt.append(", outputType: ").append(outputType);
-		LOGGER.fine(txt.toString());
+		logger.debug(txt.toString());
 	}
 
 	@Override
 	public void run() {
-		LOGGER.fine("AsyncRunnable.run() BEGIN");
+		logger.debug("AsyncRunnable.run() BEGIN");
 		try {
 			Thread.sleep(delay);
 
 			if (asyncCompleteBean.isComplete()) {
-				LOGGER.warning("Request completed before work was finished. processing will be aborted.");
+				logger.warn("Request completed before work was finished. processing will be aborted.");
 				return;
 			}
 
@@ -83,7 +86,7 @@ public class AsyncRunnable implements Runnable {
 
 			switch (outputType) {
 				case TEXT:
-					LOGGER.fine("Producing text output.");
+					logger.debug("Producing text output.");
 					StringBuilder txt = new StringBuilder(128);
 					txt.append("<h5>Thread producing text output for portlet: " + portletName + "</h5>");
 					txt.append("<p>Dispatcher outputType: ").append(resourceRequest.getDispatcherType().toString());
@@ -99,24 +102,24 @@ public class AsyncRunnable implements Runnable {
 					StringBuilder str = new StringBuilder(128);
 					str.append("Dispatching to resource method.");
 					str.append(" context path: ").append(resourceRequest.getPortletContext().getContextPath());
-					LOGGER.fine(str.toString());
+					logger.debug(str.toString());
 					resourceRequest.setAttribute(AsyncConstants.ATTRIB_AUTO, new Boolean(true));
 					portletAsyncContext.dispatch();
 					break;
 				case DISPATCH:
-					LOGGER.fine("Dispatching to JSP.");
+					logger.debug("Dispatching to JSP.");
 					resourceRequest.setAttribute(AsyncConstants.ATTRIB_TITLE, "Thread dispatching to JSP");
 					portletAsyncContext.dispatch(AsyncConstants.JSP);
 					break;
 				case FWD:
-					LOGGER.fine("Doing request dispatcher forward to JSP: " + AsyncConstants.JSP);
+					logger.debug("Doing request dispatcher forward to JSP: " + AsyncConstants.JSP);
 					resourceRequest.setAttribute(AsyncConstants.ATTRIB_TITLE, "Thread forwarding to JSP");
 					rd.forward(resourceRequest, resourceResponse);
-					LOGGER.fine("After request dispatcher forward to JSP.");
+					logger.debug("After request dispatcher forward to JSP.");
 					portletAsyncContext.complete();
 					break;
 				case INC:
-					LOGGER.fine("Including JSP: " + AsyncConstants.JSP);
+					logger.debug("Including JSP: " + AsyncConstants.JSP);
 					resourceRequest.setAttribute(AsyncConstants.ATTRIB_TITLE, "Thread including JSP");
 					rd.include(resourceRequest, resourceResponse);
 					portletAsyncContext.complete();
@@ -124,19 +127,19 @@ public class AsyncRunnable implements Runnable {
 			}
 
 		} catch (IllegalStateException e) {
-			LOGGER.warning("Request may have timed out before it could complete. Exception: " + e.toString());
+			logger.warn("Request may have timed out before it could complete. Exception: " + e.toString());
 		} catch (Exception e) {
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
 			e.printStackTrace(pw);
 			pw.flush();
-			LOGGER.fine("Exception during runner execution: \n" + sw.toString());
+			logger.debug("Exception during runner execution: \n" + sw.toString());
 		}
-		LOGGER.fine("AsyncRunnable.run() END");
+		logger.debug("AsyncRunnable.run() END");
 	}
 
 	@Override
 	protected void finalize() throws Throwable {
-		LOGGER.fine("AsyncRunnable.finalize() called");
+		logger.debug("AsyncRunnable.finalize() called");
 	}
 }

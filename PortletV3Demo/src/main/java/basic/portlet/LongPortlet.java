@@ -18,13 +18,14 @@
 
 package basic.portlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static basic.portlet.Constants.ATTRIB_LONGLINES;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.portlet.ActionParameters;
@@ -48,9 +49,8 @@ import javax.portlet.ResourceResponse;
 public class LongPortlet extends GenericPortlet {
 
    // Set up logging
-   private static final String LOG_CLASS = LongPortlet.class.getName();
-   private static final Logger logger = Logger.getLogger(LOG_CLASS);
-   private static final boolean isDebug = logger.isLoggable(Level.FINE);
+   private static final Logger logger = LoggerFactory.getLogger(LongPortlet.class);
+   private static final boolean isDebug = logger.isDebugEnabled();
    
    private static final ArrayList<String> lines = new ArrayList<String>();
    static {
@@ -180,7 +180,7 @@ public class LongPortlet extends GenericPortlet {
             sb.append("\nName: ").append(k);
             sb.append(", Values: ").append(Arrays.toString(ap.getValues(k)));
          }
-         logger.fine(sb.toString());
+         logger.debug(sb.toString());
       }
 
    }

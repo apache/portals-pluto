@@ -18,12 +18,13 @@
 
 package basic.portlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static basic.portlet.Constants.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.portlet.ActionRequest;
@@ -36,8 +37,6 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
-
-import static javax.portlet.ResourceRequest.*;
 
 import javax.portlet.ResourceResponse;
 import javax.portlet.annotations.Dependency;
@@ -54,14 +53,13 @@ import javax.portlet.annotations.PortletConfiguration;
 public class PartialActionPortlet extends GenericPortlet {
 
    // Set up logging
-   private static final String LOG_CLASS = PartialActionPortlet.class.getName();
-   private final Logger logger = Logger.getLogger(LOG_CLASS);
+   private final Logger logger = LoggerFactory.getLogger(PartialActionPortlet.class);
 
    protected void doView(RenderRequest req, RenderResponse resp)
          throws PortletException, IOException {
       
-      if (logger.isLoggable(Level.FINE)) {
-         logger.logp(Level.FINE, this.getClass().getName(), "doView", "Entry");
+      if (logger.isDebugEnabled()) {
+         logger.debug(this.getClass().getName(), "doView", "Entry");
       }
       
       resp.setContentType("text/html");
@@ -88,7 +86,7 @@ public class PartialActionPortlet extends GenericPortlet {
       }
       
       String actionName = req.getParameter("action");
-      logger.fine("PAP: executing partial action. action number = " + na + ", name =  " + actionName);
+      logger.debug("PAP: executing partial action. action number = " + na + ", name =  " + actionName);
 
       resp.setRenderParameter(PARAM_NUM_ACTIONS, Integer.toString(na));
    }

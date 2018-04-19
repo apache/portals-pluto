@@ -18,6 +18,9 @@
 
 package org.apache.portals.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,7 +35,6 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.portlet.ActionRequest;
@@ -56,10 +58,10 @@ import javax.servlet.http.Part;
  * @author Scott Nicklous
  * 
  */
-@PortletConfiguration(portletName="MultipartPortlet", cacheExpirationTime=5,
+@PortletConfiguration(portletName="MultipartPortlet", cacheExpirationTime=0,
       title=@LocaleString("Multipart Form Test"))
 public class MultipartPortlet {
-   private static final Logger LOGGER = Logger.getLogger(MultipartPortlet.class.getName());
+   private static final Logger logger = LoggerFactory.getLogger(MultipartPortlet.class);
 
    private static final String JSP    = "/WEB-INF/jsp/multipartDialog.jsp";
    private static final String TMP    = "/MultipartPortlet/temp/";
@@ -76,7 +78,7 @@ public class MultipartPortlet {
       String clr = req.getActionParameters().getValue("color");
       txt.append("Color: ").append(clr);
       lines.add(txt.toString());
-      LOGGER.fine(txt.toString());
+      logger.debug(txt.toString());
 
       resp.getRenderParameters().setValue("color", clr);
 
@@ -93,7 +95,7 @@ public class MultipartPortlet {
          txt.append(", size: ").append(part.getSize());
          txt.append(", content type: ").append(part.getContentType());
          lines.add(txt.toString());
-         LOGGER.fine(txt.toString());
+         logger.debug(txt.toString());
          txt.setLength(0);
          txt.append("Headers: ");
          String sep = "";
@@ -102,7 +104,7 @@ public class MultipartPortlet {
             sep = ", ";
          }
          lines.add(txt.toString());
-         LOGGER.fine(txt.toString());
+         logger.debug(txt.toString());
 
          // Store the file in a temporary location in the webapp where it can be served. 
 
@@ -139,7 +141,7 @@ public class MultipartPortlet {
             e.printStackTrace(pw);
             pw.flush();
             txt.append(sw.toString());
-            LOGGER.warning(txt.toString());
+            logger.warn(txt.toString());
          }
       } else {
          lines.add("file part was null");
@@ -253,7 +255,7 @@ public class MultipartPortlet {
          e.printStackTrace(pw);
          pw.flush();
          txt.append(sw.toString());
-         LOGGER.warning(txt.toString());
+         logger.warn(txt.toString());
       }
       
    }
@@ -271,11 +273,11 @@ public class MultipartPortlet {
       String path = System.getProperty("java.io.tmpdir") + TMP;
       File dir = new File(path);
       if (!dir.exists()) {
-         LOGGER.fine("Creating directory. Path: " + dir.getCanonicalPath());
+         logger.debug("Creating directory. Path: " + dir.getCanonicalPath());
          Files.createDirectories(dir.toPath());
       }
       tmp = new File(dir, TFILE);
-      LOGGER.fine("Temp file: " + tmp.getCanonicalPath());
+      logger.debug("Temp file: " + tmp.getCanonicalPath());
 
       return tmp;
    }

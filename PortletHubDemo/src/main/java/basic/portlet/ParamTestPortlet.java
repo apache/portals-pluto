@@ -27,7 +27,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.portlet.ActionRequest;
@@ -55,11 +54,6 @@ import javax.portlet.annotations.PortletConfiguration;
                         dependencies = @Dependency(name="PortletHub", scope="javax.portlet", version="3.0.0"))
 public class ParamTestPortlet extends GenericPortlet {
 
-   // Set up logging
-   private static final String LOG_CLASS = ParamTestPortlet.class.getName();
-   @SuppressWarnings("unused")
-   private final Logger logger = Logger.getLogger(LOG_CLASS);
-   
    private final HashSet<String> prpNames = new HashSet<String>();
    
    @Override

@@ -18,6 +18,9 @@
 
 package basic.portlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static basic.portlet.Constants.ATTRIB_PARAMS;
 import static basic.portlet.Constants.ATTRIB_RENURLS;
 import static basic.portlet.Constants.PARAM_AURLCOPY;
@@ -39,8 +42,6 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
@@ -65,9 +66,8 @@ import javax.portlet.ResourceResponse;
 public class UrlRPTestPortlet extends GenericPortlet {
 
    // Set up logging
-   private static final String LOG_CLASS = UrlRPTestPortlet.class.getName();
-   private static final Logger logger = Logger.getLogger(LOG_CLASS);
-   private static final boolean isDebug = logger.isLoggable(Level.FINE);
+   private static final Logger logger = LoggerFactory.getLogger(UrlRPTestPortlet.class);
+   private static final boolean isDebug = logger.isDebugEnabled();
    
    private final HashSet<String> prpNames = new HashSet<String>();
    
@@ -92,7 +92,7 @@ public class UrlRPTestPortlet extends GenericPortlet {
       if (isDebug) {
          StringBuilder txt = new StringBuilder();
          txt.append("Render parameter names: ").append(pnSet.toString());
-         logger.fine(txt.toString());
+         logger.debug(txt.toString());
       }
       
       // don't display the control parameters
@@ -182,13 +182,13 @@ public class UrlRPTestPortlet extends GenericPortlet {
       
       rurl = resp.createRenderURL(ALL);
       mrp = rurl.getRenderParameters().clone();
-      logger.fine("MRP from request # entries: " + mrp.getNames().size());
+      logger.debug("MRP from request # entries: " + mrp.getNames().size());
       
       {
          rurl = resp.createRenderURL(ALL);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clearPrivate();
-         logger.fine("MRP2 afer clearPrivate # entries: " + mrp2.getNames().size());
+         logger.debug("MRP2 afer clearPrivate # entries: " + mrp2.getNames().size());
          rurl.getRenderParameters().set(mrp2);
          urls.put(" 7 Clear clone private", rurl.toString());
       }
@@ -197,7 +197,7 @@ public class UrlRPTestPortlet extends GenericPortlet {
          rurl = resp.createRenderURL(ALL);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clearPublic();
-         logger.fine("MRP2 afer clearPublic # entries: " + mrp2.getNames().size());
+         logger.debug("MRP2 afer clearPublic # entries: " + mrp2.getNames().size());
          rurl.getRenderParameters().set(mrp2);
          urls.put(" 8 Clear clone public", rurl.toString());
       }
@@ -206,7 +206,7 @@ public class UrlRPTestPortlet extends GenericPortlet {
          rurl = resp.createRenderURL(ALL);
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clear();
-         logger.fine("MRP2 afer clear # entries: " + mrp2.getNames().size());
+         logger.debug("MRP2 afer clear # entries: " + mrp2.getNames().size());
          rurl.getRenderParameters().set(mrp2);
          urls.put(" 9 Clear clone all", rurl.toString());
       }
@@ -216,7 +216,7 @@ public class UrlRPTestPortlet extends GenericPortlet {
          MutableRenderParameters mrp2 = mrp.clone();
          mrp2.clear();
          mrp2.setValue(name1, val1);
-         logger.fine("MRP2 afer adding 1: # entries: " + mrp2.getNames().size());
+         logger.debug("MRP2 afer adding 1: # entries: " + mrp2.getNames().size());
          rurl.getRenderParameters().add(mrp2);
          urls.put(" A Add thru clone 1", rurl.toString());
       }
@@ -227,7 +227,7 @@ public class UrlRPTestPortlet extends GenericPortlet {
          mrp2.clear();
          mrp2.setValue(name1, val1);
          mrp2.setValue(name2, val2);
-         logger.fine("MRP2 afer adding 2: # entries: " + mrp2.getNames().size());
+         logger.debug("MRP2 afer adding 2: # entries: " + mrp2.getNames().size());
          rurl.getRenderParameters().add(mrp2);
          urls.put(" B Add thru clone 2", rurl.toString());
       }
@@ -239,7 +239,7 @@ public class UrlRPTestPortlet extends GenericPortlet {
          mrp2.setValue(name1, val1);
          mrp2.setValue(name2, val2);
          mrp2.setValue(name3, val3);
-         logger.fine("MRP2 afer adding 3: # entries: " + mrp2.getNames().size());
+         logger.debug("MRP2 afer adding 3: # entries: " + mrp2.getNames().size());
          rurl.getRenderParameters().add(mrp2);
          urls.put(" C Add thru clone 3", rurl.toString());
       }
@@ -274,7 +274,7 @@ public class UrlRPTestPortlet extends GenericPortlet {
             sb.append("\nName: ").append(k);
             sb.append(", Values: ").append(Arrays.toString(ap.getValues(k)));
          }
-         logger.fine(sb.toString());
+         logger.debug(sb.toString());
       }
 
       // Handle the control parameters
@@ -347,12 +347,12 @@ public class UrlRPTestPortlet extends GenericPortlet {
       }
       
       if (isDebug) {
-         logger.fine(txt.toString());
+         logger.debug(txt.toString());
          txt = new StringBuilder("Parsed Action Parameters: ");
          txt.append(", Name: ").append(pn);
          txt.append(", Value string: >>").append(pv).append("<<");
          txt.append(", Parsed Values: ").append(Arrays.toString(parsedVals));
-         logger.fine(txt.toString());
+         logger.debug(txt.toString());
       }
 
    }

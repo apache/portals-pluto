@@ -19,10 +19,12 @@
 
 package basic.portlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -46,7 +48,7 @@ import javax.portlet.annotations.RenderMethod;
  */
 @ApplicationScoped
 public class DependencyPortlet {
-   private static final Logger LOGGER = Logger.getLogger(DependencyPortlet.class.getName());
+   private static final Logger logger = LoggerFactory.getLogger(DependencyPortlet.class);
    
    public static final String PARAM_VER     = "version";
    public static final String PARAM_VER_1   = "1.12.3";
@@ -132,7 +134,7 @@ public class DependencyPortlet {
       txt.append("Portlet name: ").append(pcfg.getPortletName());
       txt.append(", parameter: ").append(PARAM_VER);
       txt.append(", value: ").append(vers);
-      LOGGER.fine(txt.toString());
+      logger.debug(txt.toString());
       
    }
 
@@ -146,7 +148,7 @@ public class DependencyPortlet {
       StringBuilder txt = new StringBuilder(128);
       txt.append("Parameter: ").append(PARAM_VER);
       txt.append(", value: ").append(vers);
-      LOGGER.fine(txt.toString());
+      logger.debug(txt.toString());
 
    }
 

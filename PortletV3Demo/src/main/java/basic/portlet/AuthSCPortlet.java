@@ -18,13 +18,14 @@
 
 package basic.portlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static basic.portlet.Constants.PARAM_STATUSCODE;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.portlet.ActionParameters;
@@ -48,9 +49,8 @@ import javax.portlet.ResourceResponse;
 public class AuthSCPortlet extends GenericPortlet {
 
    // Set up logging
-   private static final String LOG_CLASS = AuthSCPortlet.class.getName();
-   private static final Logger logger = Logger.getLogger(LOG_CLASS);
-   private static final boolean isDebug = logger.isLoggable(Level.FINE);
+   private static final Logger logger = LoggerFactory.getLogger(AuthSCPortlet.class);
+   private static final boolean isDebug = logger.isDebugEnabled();
 
    @Override
    public void init() throws PortletException {
@@ -84,7 +84,7 @@ public class AuthSCPortlet extends GenericPortlet {
       if (scText != null && scText.matches("\\d+")) {
          int sc = Integer.parseInt(scText);
          if (isDebug) {
-            logger.fine("Setting HTTP status code to: " + sc);
+            logger.debug("Setting HTTP status code to: " + sc);
          }
          resp.setStatus(sc);
       }
@@ -116,7 +116,7 @@ public class AuthSCPortlet extends GenericPortlet {
             sb.append("\nName: ").append(k);
             sb.append(", Values: ").append(Arrays.toString(ap.getValues(k)));
          }
-         logger.fine(sb.toString());
+         logger.debug(sb.toString());
       }
 
    }

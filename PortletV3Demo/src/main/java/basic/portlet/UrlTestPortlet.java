@@ -18,6 +18,9 @@
 
 package basic.portlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static basic.portlet.Constants.*;
 
 import java.io.IOException;
@@ -28,8 +31,6 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
@@ -60,9 +61,8 @@ import static javax.portlet.ResourceURL.*;
 public class UrlTestPortlet extends GenericPortlet {
 
    // Set up logging
-   private static final String LOG_CLASS = UrlTestPortlet.class.getName();
-   private static final Logger logger = Logger.getLogger(LOG_CLASS);
-   private static final boolean isDebug = logger.isLoggable(Level.FINE);
+   private static final Logger logger = LoggerFactory.getLogger(UrlTestPortlet.class);
+   private static final boolean isDebug = logger.isDebugEnabled();
    
    private final HashSet<String> prpNames = new HashSet<String>();
    
@@ -87,7 +87,7 @@ public class UrlTestPortlet extends GenericPortlet {
       if (isDebug) {
          StringBuilder txt = new StringBuilder();
          txt.append("Render parameter names: ").append(pnSet.toString());
-         logger.fine(txt.toString());
+         logger.debug(txt.toString());
       }
       
       // don't display the control parameters
@@ -301,7 +301,7 @@ public class UrlTestPortlet extends GenericPortlet {
             sb.append("\nName: ").append(k);
             sb.append(", Values: ").append(Arrays.toString(ap.getValues(k)));
          }
-         logger.fine(sb.toString());
+         logger.debug(sb.toString());
       }
       
       // get the action request render & action parameters; put them into 
@@ -427,12 +427,12 @@ public class UrlTestPortlet extends GenericPortlet {
       }
       
       if (isDebug) {
-         logger.fine(txt.toString());
+         logger.debug(txt.toString());
          txt = new StringBuilder("Parsed Action Parameters: ");
          txt.append(", Name: ").append(pn);
          txt.append(", Value string: >>").append(pv).append("<<");
          txt.append(", Parsed Values: ").append(Arrays.toString(parsedVals));
-         logger.fine(txt.toString());
+         logger.debug(txt.toString());
       }
 
    }

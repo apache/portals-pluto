@@ -23,8 +23,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -38,6 +36,8 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.annotations.ServeResourceMethod;
 
 import org.apache.portals.samples.AsyncDialogBean.OutputType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements the async resource method for the async portlet.
@@ -47,8 +47,8 @@ import org.apache.portals.samples.AsyncDialogBean.OutputType;
  */
 public class AsyncPortlet {
 
-   private static final Logger LOGGER = Logger.getLogger(AsyncPortlet.class.getName());
-   private static final boolean isTrace = LOGGER.isLoggable(Level.FINEST);
+   private static final Logger logger = LoggerFactory.getLogger(AsyncPortlet.class);
+   private static final boolean isTrace = logger.isDebugEnabled();
    
    private final static String ATTRIB_REPS = "reps";
    public  final static String ATTRIB_TIMEOUT = "timeout";
@@ -59,12 +59,12 @@ public class AsyncPortlet {
 
    @PostConstruct
    public void postConstruct() {
-      LOGGER.fine("AsyncPortlet @PostConstruct called");
+      logger.debug("AsyncPortlet @PostConstruct called");
    }
 
    @PreDestroy
    public void preDestroy() {
-      LOGGER.fine("AsyncPortlet @PreDestroy called");
+      logger.debug("AsyncPortlet @PreDestroy called");
    }
 
    @ServeResourceMethod(portletNames = "AsyncPortlet", asyncSupported = true)
@@ -107,7 +107,7 @@ public class AsyncPortlet {
       txt.append(", total reps: ").append(asyncDialogBean.getReps());
       txt.append(", auto: ").append(asyncDialogBean.isAutoDispatch());
       txt.append(", auto-dispatch: ").append(auto);
-      LOGGER.fine(txt.toString());
+      logger.debug(txt.toString());
       
       PortletAsyncContext portletAsyncContext = resourceRequest.startPortletAsync();
       portletAsyncContext.setTimeout(4000);
@@ -118,7 +118,7 @@ public class AsyncPortlet {
          PrintWriter pw = new PrintWriter(sw);
          e.printStackTrace(pw);
          pw.flush();
-         LOGGER.fine("Exception adding listener: \n" + sw.toString());
+         logger.debug("Exception adding listener: \n" + sw.toString());
       }
 
       if (auto || (asyncDialogBean.getDelay() <= 0)) {
@@ -137,12 +137,12 @@ public class AsyncPortlet {
 
          switch (asyncDialogBean.getType()) {
          case DISPATCH:
-            LOGGER.fine("Dispatching to JSP.");
+            logger.debug("Dispatching to JSP.");
             resourceRequest.setAttribute(AsyncConstants.ATTRIB_TITLE, "Resource Method dispatching to JSP");
             portletAsyncContext.dispatch(AsyncConstants.JSP);
             break;
          case FWD:
-            LOGGER.fine("Doing request dispatcher forward to JSP.");
+            logger.debug("Doing request dispatcher forward to JSP.");
             resourceRequest.setAttribute(AsyncConstants.ATTRIB_TITLE, "Resource Method forwarding to JSP");
             portletRequestDispatcher = resourceRequest.getPortletContext().getRequestDispatcher(AsyncConstants.JSP);
             portletRequestDispatcher.forward(resourceRequest, resourceResponse);
@@ -152,7 +152,7 @@ public class AsyncPortlet {
             }
             break;
          case INC:
-            LOGGER.fine("Doing request dispatcher include of JSP.");
+            logger.debug("Doing request dispatcher include of JSP.");
             resourceRequest.setAttribute(AsyncConstants.ATTRIB_TITLE, "Resource Method including JSP");
             portletRequestDispatcher = resourceRequest.getPortletContext().getRequestDispatcher(AsyncConstants.JSP);
             portletRequestDispatcher.include(resourceRequest, resourceResponse);
@@ -162,7 +162,7 @@ public class AsyncPortlet {
             }
             break;
          default:
-            LOGGER.fine("Producing text output.");
+            logger.debug("Producing text output.");
             txt.setLength(0);
             txt.append("<h5>Resource method producing text output for portlet: " + portletName + "</h5>");
             txt.append("<p>DispatcherType: ").append(resourceRequest.getDispatcherType().toString());
@@ -214,7 +214,7 @@ public class AsyncPortlet {
          txt.append("\ninclude_path_info:      ").append((String) req.getAttribute("javax.servlet.include.path_info"));
          txt.append("\ninclude_query_string:      ").append((String) req.getAttribute("javax.servlet.include.query_string"));
          txt.append("\nmethod_context_path:      ").append(req.getContextPath());
-         LOGGER.fine(txt.toString());
+         logger.debug(txt.toString());
       }
 
    }

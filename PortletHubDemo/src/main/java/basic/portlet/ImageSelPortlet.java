@@ -18,6 +18,9 @@
 
 package basic.portlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static basic.portlet.Constants.PARAM_IMGNAME;
 import static basic.portlet.Constants.PARAM_SELTYPE;
 import static basic.portlet.Constants.PARAM_SELTYPE_RADIO;
@@ -26,8 +29,6 @@ import static basic.portlet.Constants.imgMap;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.portlet.ActionRequest;
@@ -54,14 +55,13 @@ import javax.portlet.annotations.PortletConfiguration;
 public class ImageSelPortlet extends GenericPortlet {
 
    // Set up logging
-   private static final String LOG_CLASS = ImageSelPortlet.class.getName();
-   private final Logger logger = Logger.getLogger(LOG_CLASS);
+   private final Logger logger = LoggerFactory.getLogger(ImageSelPortlet.class);
 
    protected void doView(RenderRequest req, RenderResponse resp)
          throws PortletException, IOException {
       
-      if (logger.isLoggable(Level.FINE)) {
-         logger.logp(Level.FINE, this.getClass().getName(), "doView", "Entry");
+      if (logger.isDebugEnabled()) {
+         logger.debug(this.getClass().getName(), "doView", "Entry");
       }
       
       resp.setContentType("text/html");

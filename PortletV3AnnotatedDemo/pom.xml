@@ -45,6 +45,10 @@
          <artifactId>tomcat-servlet-api</artifactId>
          <scope>provided</scope>
       </dependency>
+      <dependency>
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-api</artifactId>
+      </dependency>
 
       <!-- for eclipse JSP tooling purposes -->
       <dependency>
@@ -52,21 +56,6 @@
          <artifactId>jsp-api</artifactId>
          <version>2.1</version>
          <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.taglibs</groupId>
-         <artifactId>taglibs-standard-spec</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-          <groupId>org.apache.taglibs</groupId>
-          <artifactId>taglibs-standard-impl</artifactId>
-          <scope>provided</scope>
-      </dependency>
-      <dependency>
-          <groupId>org.apache.taglibs</groupId>
-          <artifactId>taglibs-standard-jstlel</artifactId>
-          <scope>provided</scope>
       </dependency>
    </dependencies>
 
@@ -131,6 +120,16 @@
                 <artifactId>taglibs-standard-jstlel</artifactId>
                 <scope>compile</scope>
             </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-jdk14</artifactId>
+                <scope>provided</scope>
+            </dependency>
          </dependencies>
          
          <build>
@@ -138,7 +137,9 @@
                <plugin>
                  <artifactId>maven-war-plugin</artifactId>
                  <configuration>
-                   <archiveClasses>false</archiveClasses>
+                   <packagingExcludes>
+                      WEB-INF/classes/log4j.properties
+                   </packagingExcludes>
                  </configuration>
                </plugin>
                <!-- workaround for war processing of m-r-r-plugin causing the generated NOTICE and LICENSE file to be put under WEB-INF/classes/META-INF -->

@@ -18,9 +18,11 @@
 
 package org.apache.portals.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.logging.Logger;
 
 import javax.inject.Named;
 import javax.portlet.ActionRequest;
@@ -38,7 +40,7 @@ import javax.portlet.annotations.RenderStateScoped;
 @RenderStateScoped
 @Named("adb")
 public class AsyncDialogBean implements PortletSerializable {
-   private static final Logger LOGGER = Logger.getLogger(AsyncDialogBean.class.getName());
+   private static final Logger logger = LoggerFactory.getLogger(AsyncDialogBean.class);
 
    // defines how output is to be generated
    public enum OutputType {
@@ -102,7 +104,7 @@ public class AsyncDialogBean implements PortletSerializable {
          handleTimeout = TimeoutType.valueOf(state[6]);
          showListener = Boolean.parseBoolean(state[7]);
       }
-      LOGGER.fine("deserialized: " + Arrays.asList(state).toString());
+      logger.debug("deserialized: " + Arrays.asList(state).toString());
    }
 
    /**
@@ -113,7 +115,7 @@ public class AsyncDialogBean implements PortletSerializable {
    public String[] serialize() {
       String[] state = { "" + delay, "" + reps, type.toString(), msg, 
             ""+autoDispatch, ""+showFilter, handleTimeout.toString(), ""+showListener };
-      LOGGER.fine("serialized: " + Arrays.asList(state).toString());
+      logger.debug("serialized: " + Arrays.asList(state).toString());
       return state;
    }
 
@@ -332,7 +334,7 @@ public class AsyncDialogBean implements PortletSerializable {
 
       String[] state = { "" + delay, "" + reps, type.toString(), msg, 
             ""+autoDispatch, ""+showFilter, handleTimeout.toString() };
-      LOGGER.fine("Resulting params: " + Arrays.asList(state).toString());
+      logger.debug("Resulting params: " + Arrays.asList(state).toString());
    }
 
 }

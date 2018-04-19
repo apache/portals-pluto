@@ -17,8 +17,10 @@
  */
 package org.apache.portals.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
-import java.util.logging.Logger;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
@@ -35,7 +37,7 @@ public class LoggingInterceptor implements Serializable {
 
    private static final long serialVersionUID = -73481963162413796L;
 
-   private static final Logger logger = Logger.getLogger(LoggingInterceptor.class.getCanonicalName());
+   private static final Logger logger = LoggerFactory.getLogger(LoggingInterceptor.class.getCanonicalName());
 
    /**
     * Method called for use as an interceptor. Called before the intercepted method is 
@@ -52,17 +54,17 @@ public class LoggingInterceptor implements Serializable {
       String meth = ic.getMethod().getName();
       
       // Log method entry
-      Logger mlogger = Logger.getLogger(cls);
-      mlogger.entering(cls, meth);
+      Logger mlogger = LoggerFactory.getLogger(cls);
+      mlogger.debug("ENTERING: " + cls, meth);
       
       // Continue through chain until actual bean method is executed
       Object obj = ic.proceed(); 
    
       // this logging statement is only for debugging.
-      logger.fine("Method " + meth + " has been called.");
+      logger.debug("Method " + meth + " has been called.");
       
       // Now log the exit
-      mlogger.exiting(cls, meth);
+      mlogger.debug("EXITING: " + cls, meth);
 
       return obj;
    }

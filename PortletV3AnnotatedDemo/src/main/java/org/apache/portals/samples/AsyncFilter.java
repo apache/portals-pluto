@@ -18,8 +18,10 @@
 
 package org.apache.portals.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.portlet.PortletException;
@@ -40,7 +42,7 @@ import javax.servlet.DispatcherType;
  */
 @PortletLifecycleFilter(portletNames="AsyncPortlet")
 public class AsyncFilter implements ResourceFilter {
-   private static final Logger LOGGER = Logger.getLogger(AsyncFilter.class.getName());
+   private static final Logger logger = LoggerFactory.getLogger(AsyncFilter.class);
    
    @Inject private PortletRequestRandomNumberBean reqnum;
    @Inject private AsyncDialogBean asyncDialogBean;
@@ -62,7 +64,7 @@ public class AsyncFilter implements ResourceFilter {
       StringBuilder txt = new StringBuilder(128);
       txt.append("Entering request. DispatcherType: ").append(dispatcherType);
       txt.append(", request #: ").append(reqnum.getRandomNumber());
-      LOGGER.fine(txt.toString());
+      logger.debug(txt.toString());
       
       if (asyncDialogBean.isShowFilter()) {
          txt.setLength(0);
@@ -75,7 +77,7 @@ public class AsyncFilter implements ResourceFilter {
       
       chain.doFilter(resourceRequest, resourceResponse);
       
-      LOGGER.fine("Exiting request. DispatcherType: " + resourceRequest.getDispatcherType());
+      logger.debug("Exiting request. DispatcherType: " + resourceRequest.getDispatcherType());
       
    }
 

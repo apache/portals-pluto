@@ -18,9 +18,10 @@
 
 package basic.portlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
@@ -46,8 +47,8 @@ import static basic.portlet.Constants.*;
 @PortletConfiguration(portletName="V3RedirectPortlet")
 public class RedirectPortlet extends GenericPortlet {
 
-   private static final Logger  LOGGER  = Logger.getLogger(RedirectPortlet.class.getName());
-   private static final boolean isDebug = LOGGER.isLoggable(Level.FINE);
+   private static final Logger logger  = LoggerFactory.getLogger(RedirectPortlet.class);
+   private static final boolean isDebug = logger.isDebugEnabled();
 
    protected void doView(RenderRequest req, RenderResponse resp) throws PortletException, IOException {
 
@@ -102,7 +103,7 @@ public class RedirectPortlet extends GenericPortlet {
       resp.sendRedirect(url);
       
       if (isDebug) {
-         LOGGER.fine(txt.toString());
+         logger.debug(txt.toString());
       }
 
    }

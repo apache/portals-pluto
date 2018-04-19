@@ -18,13 +18,14 @@
 
 package basic.portlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static basic.portlet.Constants.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -44,14 +45,13 @@ import javax.portlet.ResourceResponse;
 public class MessageBoxPortlet extends GenericPortlet {
 
    // Set up logging
-   private static final String LOG_CLASS = MessageBoxPortlet.class.getName();
-   private final Logger logger = Logger.getLogger(LOG_CLASS);
+   private final Logger logger = LoggerFactory.getLogger(MessageBoxPortlet.class);
 
    protected void doView(RenderRequest req, RenderResponse resp)
          throws PortletException, IOException {
       
-      if (logger.isLoggable(Level.FINE)) {
-         logger.logp(Level.FINE, this.getClass().getName(), "doView", "Entry");
+      if (logger.isDebugEnabled()) {
+         logger.debug(this.getClass().getName(), "doView", "Entry");
       }
       
       resp.setContentType("text/html");
@@ -70,7 +70,7 @@ public class MessageBoxPortlet extends GenericPortlet {
       // the only action for this portlet is to reset the stored messages
       
       String actionName = req.getParameter("action");
-      logger.fine("MBP: Resetting messages. numMsgs = 0,  actionName = " + actionName);
+      logger.debug("MBP: Resetting messages. numMsgs = 0,  actionName = " + actionName);
 
       ArrayList<String> msgs = new ArrayList<String>();
       StringBuffer sb = new StringBuffer();
@@ -104,7 +104,7 @@ public class MessageBoxPortlet extends GenericPortlet {
          msgs.clear();
       }
       
-      logger.fine("MBP: Processing message event. Current # messages = " + msgs.size());
+      logger.debug("MBP: Processing message event. Current # messages = " + msgs.size());
 
       try {
          // Both pieces of info are transported in a delimted string rather than 
@@ -129,7 +129,7 @@ public class MessageBoxPortlet extends GenericPortlet {
       
       msgs.add(sb.toString());
       
-      logger.fine("Adding message: " + sb.toString());
+      logger.debug("Adding message: " + sb.toString());
 
       resp.setRenderParameter(PARAM_NUM_MSGS, Integer.toString(msgs.size()));
       req.getPortletSession().setAttribute(ATTRIB_MSGS, msgs);

@@ -18,6 +18,9 @@
 
 package basic.portlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static basic.portlet.Constants.ATTRIB_PMS;
 import static basic.portlet.Constants.ATTRIB_PRPS;
 import static basic.portlet.Constants.ATTRIB_WS;
@@ -28,8 +31,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -54,8 +55,7 @@ import javax.xml.namespace.QName;
 public class PortletConfigPortlet extends GenericPortlet {
 
    // Set up logging
-   private static final String LOG_CLASS = PortletConfigPortlet.class.getName();
-   private final Logger logger = Logger.getLogger(LOG_CLASS);
+   private final Logger logger = LoggerFactory.getLogger(PortletConfigPortlet.class);
    
    @Override
    protected void doHelp(RenderRequest request, RenderResponse response) throws PortletException, IOException {
@@ -80,8 +80,8 @@ public class PortletConfigPortlet extends GenericPortlet {
    protected void doView(RenderRequest req, RenderResponse resp)
          throws PortletException, IOException {
       
-      if (logger.isLoggable(Level.FINE)) {
-         logger.logp(Level.FINE, this.getClass().getName(), "doView", "Entry");
+      if (logger.isDebugEnabled()) {
+         logger.debug(this.getClass().getName(), "doView", "Entry");
       }
       
       resp.setContentType("text/html");

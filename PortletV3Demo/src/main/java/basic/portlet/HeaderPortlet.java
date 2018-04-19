@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -47,6 +45,8 @@ import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.LocaleString;
 import javax.servlet.http.Cookie;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
 /**
@@ -56,8 +56,8 @@ import org.w3c.dom.Element;
                       title=@LocaleString("Header Phase Test Portlet"))
 public class HeaderPortlet extends GenericPortlet {
 
-   private static final Logger  LOGGER  = Logger.getLogger(HeaderPortlet.class.getName());
-   private static final boolean isDebug = LOGGER.isLoggable(Level.FINE);
+   private static final Logger logger  = LoggerFactory.getLogger(HeaderPortlet.class);
+   private static final boolean isDebug = logger.isDebugEnabled();
    
    @Override
    public void renderHeaders(HeaderRequest req, HeaderResponse resp) throws PortletException, IOException {
@@ -71,7 +71,7 @@ public class HeaderPortlet extends GenericPortlet {
          txt.append(req.getPortalContext().getProperty(PortalContext.MARKUP_HEAD_ELEMENT_SUPPORT));
          txt.append(", RENDER_PART: ");
          txt.append((String)req.getAttribute(PortletRequest.RENDER_PART));
-         LOGGER.fine(txt.toString());
+         logger.debug(txt.toString());
       }
 
       // Add link tag to head section to include the style sheet
@@ -124,7 +124,7 @@ public class HeaderPortlet extends GenericPortlet {
          txt.append("Rendering. ");
          txt.append("RENDER_PART: ");
          txt.append((String)req.getAttribute(PortletRequest.RENDER_PART));
-         LOGGER.fine(txt.toString());
+         logger.debug(txt.toString());
       }
 
       resp.setContentType("text/html");

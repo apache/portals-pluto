@@ -18,6 +18,9 @@
 
 package basic.portlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static basic.portlet.Constants.DELIM;
 import static basic.portlet.Constants.PARAM_FG_BLUE;
 import static basic.portlet.Constants.PARAM_FG_COLOR;
@@ -29,8 +32,6 @@ import static basic.portlet.Constants.PARAM_SUBTYPE;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.portlet.ActionRequest;
@@ -61,16 +62,12 @@ import javax.xml.namespace.QName;
 public class ColorSelPortlet extends GenericPortlet {
 
    // Set up logging
-   private static final String LOG_CLASS = ColorSelPortlet.class.getName();
-   private final Logger logger = Logger.getLogger(LOG_CLASS);
-
-   // private static final String LOG_CLASS = ColorSelPortlet.class.getName();
-   // private final Logger logger = Logger.getLogger(LOG_CLASS);
+   private final Logger logger = LoggerFactory.getLogger(ColorSelPortlet.class);
 
    protected void doView(RenderRequest req, RenderResponse resp)
          throws PortletException, IOException {
 
-      logger.fine("Doing view.");
+      logger.debug("Doing view.");
       
       resp.setContentType("text/html");
 
@@ -133,26 +130,26 @@ public class ColorSelPortlet extends GenericPortlet {
       if (eqn.hasMoreElements()) {
          QName qn = eqn.nextElement(); 
          resp.setEvent(qn, msg);
-         logger.fine("Firing event with QName: " + qn.toString());
+         logger.debug("Firing event with QName: " + qn.toString());
       } else {
-         logger.warning("No publishing event QName available. Check portlet configuration.");
+         logger.warn("No publishing event QName available. Check portlet configuration.");
       }
       
       StringBuilder sb = new StringBuilder("Color: ").append(Arrays.toString(vals));
       sb.append(", Submission type: ").append(subType);
       sb.append(", Text: ").append(text);
-      logger.fine(sb.toString());
+      logger.debug(sb.toString());
    }
    
    private void dumpParameters(String type, PortletParameters parms) {
-      if (logger.isLoggable(Level.FINEST)) {
+      if (logger.isDebugEnabled()) {
          StringBuilder sb = new StringBuilder();
          sb.append("Portlet ").append(type).append(" parameters:");
          for (String name : parms.getNames()) {
             sb.append("\nName: ").append(name);
             sb.append(", Values: ").append(Arrays.toString(parms.getValues(name)));
          }
-         logger.finest(sb.toString());
+         logger.debug(sb.toString());
       }
    }
 

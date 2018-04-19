@@ -23,7 +23,6 @@ import static org.apache.portals.samples.AsyncPortlet.ATTRIB_TIMEOUT;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.portlet.PortletAsyncContext;
@@ -33,13 +32,15 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.apache.portals.samples.AsyncDialogBean.TimeoutType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Scott Nicklous
  * 
  */
 public class AsyncListener implements PortletAsyncListener {
-   private static final Logger            LOGGER = Logger.getLogger(AsyncListener.class.getName());
+   private static final Logger logger = LoggerFactory.getLogger(AsyncListener.class);
 
    private long                           start  = System.currentTimeMillis();
 
@@ -58,7 +59,7 @@ public class AsyncListener implements PortletAsyncListener {
 
       StringBuilder txt = new StringBuilder(128);
       txt.append("Listener: Completed. Execution time: ").append(delta).append(" milliseconds.");
-      LOGGER.fine(txt.toString());
+      logger.debug(txt.toString());
       
       asyncCompleteBean.setComplete(true);
    }
@@ -86,7 +87,7 @@ public class AsyncListener implements PortletAsyncListener {
       
       txt.append(", Exception: ").append(msg);
 
-      LOGGER.fine(txt.toString());
+      logger.debug(txt.toString());
       evt.getPortletAsyncContext().complete();
    }
 
@@ -100,7 +101,7 @@ public class AsyncListener implements PortletAsyncListener {
       long delta = System.currentTimeMillis() - start;
       StringBuilder txt = new StringBuilder(128);
       txt.append("Async started again after ").append(delta).append(" milliseconds.");
-      LOGGER.fine(txt.toString());
+      logger.debug(txt.toString());
 
       // need to add this listener again so it gets called when finally
       // complete.
@@ -131,7 +132,7 @@ public class AsyncListener implements PortletAsyncListener {
          PrintWriter pw = new PrintWriter(sw);
          e.printStackTrace(pw);
          pw.flush();
-         LOGGER.fine("Exception producing output: \n" + sw.toString());
+         logger.debug("Exception producing output: \n" + sw.toString());
       }
    }
 
@@ -171,7 +172,7 @@ public class AsyncListener implements PortletAsyncListener {
             evt.getPortletAsyncContext().dispatch();
          }
       } catch (Exception e) {
-         LOGGER.warning(" Couldn't get response to generate output. Exception: " + e.toString());
+         logger.warn(" Couldn't get response to generate output. Exception: " + e.toString());
       }
    }
 

@@ -18,6 +18,9 @@
 
 package basic.portlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static basic.portlet.Constants.PARAM_BORDER_COLOR;
 import static basic.portlet.Constants.PARAM_COLOR;
 import static basic.portlet.Constants.PARAM_IMGNAME;
@@ -26,8 +29,6 @@ import static basic.portlet.Constants.DEFAULT_IMAGE;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -47,15 +48,14 @@ import javax.portlet.ResourceResponse;
 public class ResourcePortlet extends GenericPortlet {
 
    // Set up logging
-   private static final String LOG_CLASS = ResourcePortlet.class.getName();
-   private final Logger logger = Logger.getLogger(LOG_CLASS);
+   private final Logger logger = LoggerFactory.getLogger(ResourcePortlet.class);
 
 
    protected void doView(RenderRequest req, RenderResponse resp)
          throws PortletException, IOException {
       
-      if (logger.isLoggable(Level.FINE)) {
-         logger.logp(Level.FINE, this.getClass().getName(), "doView", "Entry");
+      if (logger.isDebugEnabled()) {
+         logger.debug(this.getClass().getName(), "doView", "Entry");
       }
       
       resp.setContentType("text/html");
@@ -96,8 +96,8 @@ public class ResourcePortlet extends GenericPortlet {
       String clr = req.getParameter(PARAM_COLOR);
       clr = (clr == null) ? "#FFFFFF" : clr;
       
-      if (logger.isLoggable(Level.FINE)) {
-         logger.logp(Level.FINE, this.getClass().getName(), "serveResource", "photo=" + key + ", bgcolor=" + clr + ", border=" + bc);
+      if (logger.isDebugEnabled()) {
+         logger.debug(this.getClass().getName(), "serveResource", "photo=" + key + ", bgcolor=" + clr + ", border=" + bc);
       }
       
       // add action button if cacheability allows -
