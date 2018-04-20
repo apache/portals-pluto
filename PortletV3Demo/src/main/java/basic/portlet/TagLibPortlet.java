@@ -55,13 +55,6 @@ import javax.portlet.annotations.PortletQName;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
 import javax.portlet.filter.HeaderResponseWrapper;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 import javax.xml.namespace.QName;
 
 /**
@@ -77,7 +70,7 @@ import javax.xml.namespace.QName;
 public class TagLibPortlet {
 
 
-   private static final String PROXY = "/ActEvtProxy";
+   public static final String PROXY = "/ActEvtProxy";
 
    private static final Logger logger     = LoggerFactory.getLogger(TagLibPortlet.class);
 
@@ -90,15 +83,12 @@ public class TagLibPortlet {
    
    public static final String  TEST       = "test";
    public static final String  TEST_OBJ   = "obj";
-   public static final String  TEST_BEAN  = "bean";
 
    public static final String  ATTRIB_TXT          = "text";
    public static final String  ATTRIB_PHASE_TITLE  = "phaseTitle";
 
    private static final String JSPDLG     = "/WEB-INF/jsp/tagLibDialog.jsp";
-   private static final String JSPOBJ     = "/WEB-INF/jsp/tagLibObjects.jsp";
-   private static final String JSPBEANS   = "/WEB-INF/jsp/tagLibBeans.jsp";
-   
+
    // for event processing
    private static final String URI     = "http://www.apache.org/portals/pluto";
    private static final String LPART   = "TagLibPortlet";
@@ -108,17 +98,6 @@ public class TagLibPortlet {
    @Inject
    @Namespace
    private String              pid;
-   
-   /**
-    * for selecting the JSP based on parameter value
-    */
-   private static String getJsp(String ttype) {
-      String jsp = JSPOBJ;
-      if (ttype != null && ttype.equals(TEST_BEAN)) {
-         jsp = JSPBEANS;
-      }
-      return jsp;
-   }
 
    /**
     * Adds required dynamic dependencies
@@ -167,7 +146,7 @@ public class TagLibPortlet {
 
       if (phase.equals(PHASE_REN)) {
          req.setAttribute(ATTRIB_PHASE_TITLE, req.getAttribute(LIFECYCLE_PHASE));
-         prd = req.getPortletContext().getRequestDispatcher(getJsp(ttype));
+         prd = req.getPortletContext().getRequestDispatcher(ParamUtil.getJsp(ttype));
          prd.include(req, resp);
       } else if (phase.equals(PHASE_RES)) {
          ResourceURL resurl = resp.createResourceURL();
@@ -216,7 +195,7 @@ public class TagLibPortlet {
    public void getTable(ResourceRequest req, ResourceResponse resp) throws PortletException, IOException {
       req.setAttribute(ATTRIB_PHASE_TITLE, req.getAttribute(LIFECYCLE_PHASE));
       String ttype = req.getRenderParameters().getValue(TEST);
-      PortletRequestDispatcher prd = req.getPortletContext().getRequestDispatcher(getJsp(ttype));
+      PortletRequestDispatcher prd = req.getPortletContext().getRequestDispatcher(ParamUtil.getJsp(ttype));
       prd.include(req, resp);
    }
 
@@ -227,7 +206,7 @@ public class TagLibPortlet {
       if (phase != null && phase.equals(PHASE_HDR)) {
          req.setAttribute(ATTRIB_PHASE_TITLE, req.getAttribute(LIFECYCLE_PHASE));
          HdrRespWrapper wrapped = new HdrRespWrapper(resp);
-         PortletRequestDispatcher prd = req.getPortletContext().getRequestDispatcher(getJsp(ttype));
+         PortletRequestDispatcher prd = req.getPortletContext().getRequestDispatcher(ParamUtil.getJsp(ttype));
          prd.include(req, wrapped);
          req.getPortletSession().setAttribute(ATTRIB_TXT, wrapped.getOutput());
       }
@@ -297,49 +276,6 @@ public class TagLibPortlet {
       @Override
       public PrintWriter getWriter() throws IOException {
          return pw;
-      }
-   }
-
-   private static class ProxyRespWrapper extends HttpServletResponseWrapper {
-
-      StringWriter sw = new StringWriter();
-      PrintWriter  pw = new PrintWriter(sw);
-
-      public ProxyRespWrapper(HttpServletResponse response) {
-         super(response);
-      }
-
-      public String getOutput() {
-         pw.flush();
-         return sw.toString();
-      }
-
-      @Override
-      public PrintWriter getWriter() throws IOException {
-         return pw;
-      }
-
-   }
-
-   @WebServlet(urlPatterns = PROXY)
-   public static class ActEvtProxyServlet extends HttpServlet {
-      private static final long serialVersionUID = -1798128019502989930L;
-      private static final Logger logger = Logger.getLogger(ActEvtProxyServlet.class);
-
-      @Override
-      protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-         ProxyRespWrapper wrapped = new ProxyRespWrapper(resp);
-         String ttype = req.getParameter(TEST);
-         RequestDispatcher rd = req.getRequestDispatcher(getJsp(ttype));
-         rd.include(req, wrapped);
-         String output = wrapped.getOutput();
-         req.getSession().setAttribute(ATTRIB_TXT, output);
-         LOGGER.fine("Proxy executed. Output length: " + ((output == null) ? "null" : output.length()));
-      }
-      
-      @Override
-      protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-         doGet(req, resp);
       }
    }
 }
