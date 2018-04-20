@@ -518,7 +518,7 @@
                      <archiveClasses>false</archiveClasses>
                      <failOnMissingWebXml>false</failOnMissingWebXml>
                      <packagingExcludes>
-                        WEB-INF/liferay/portlet.xml
+                        WEB-INF/liferay/portlet.xml,
                         WEB-INF/liferay-portlet.xml,
                         WEB-INF/classes/log4j.properties
                      </packagingExcludes>
