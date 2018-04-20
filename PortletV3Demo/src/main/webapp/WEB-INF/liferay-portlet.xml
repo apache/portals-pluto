@@ -21,27 +21,59 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>SigTestsRender_MimeResponse_SIGRender</portlet-name>
+		<portlet-name>V3ImageViewer</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_PortletRequest$P3PUserInfos_SIGRender</portlet-name>
+		<portlet-name>MessageBoxPortlet</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_PortletRequest_SIGRender</portlet-name>
+		<portlet-name>V3ImageSelector</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_PortletResponse_SIGRender</portlet-name>
+		<portlet-name>V3ColorSelector</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_RenderRequest_SIGRender</portlet-name>
+		<portlet-name>PortletConfigPortlet1</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_RenderResponse_SIGRender</portlet-name>
+		<portlet-name>PortletConfigPortlet2</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>ParamTestPortlet</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>UrlTestPortlet</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>UrlRPTestPortlet</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>UrlAPTestPortlet</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>LongPortlet</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>AuthSCPortlet</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>V3RedirectPortlet</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>V3HeaderPortlet</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 </liferay-portlet-app>

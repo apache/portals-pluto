@@ -21,27 +21,33 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>SigTestsRender_MimeResponse_SIGRender</portlet-name>
+		<portlet-name>PH-ColorSelPortlet</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_PortletRequest$P3PUserInfos_SIGRender</portlet-name>
+		<portlet-name>ImageSelPortlet</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_PortletRequest_SIGRender</portlet-name>
+		<portlet-name>MessageBoxPortlet</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_PortletResponse_SIGRender</portlet-name>
+		<portlet-name>ParamTestPortlet</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_RenderRequest_SIGRender</portlet-name>
+		<portlet-name>PartialActionPortlet</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_RenderResponse_SIGRender</portlet-name>
+		<portlet-name>PH-ResourcePortlet-PRP</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 </liferay-portlet-app>

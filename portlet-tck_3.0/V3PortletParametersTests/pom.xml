@@ -120,8 +120,20 @@
 
    <profiles>
       <profile>
+         <id>liferay</id>
+         <dependencies>
+            <dependency>
+               <groupId>com.liferay.portal</groupId>
+			   <artifactId>com.liferay.bean.portlet.extension</artifactId>
+            </dependency>
+            <dependency>
+               <groupId>org.jboss.weld.servlet</groupId>
+               <artifactId>weld-servlet</artifactId>
+            </dependency>
+         </dependencies>
+      </profile>
+      <profile>
          <id>pluto</id>
-
          <dependencies>
             <dependency>
                <groupId>org.apache.taglibs</groupId>
@@ -139,7 +151,19 @@
                <scope>compile</scope>
             </dependency>
          </dependencies>
-        
+         <build>
+            <plugins>
+               <plugin>
+                  <artifactId>maven-war-plugin</artifactId>
+                  <configuration>
+                     <packagingExcludes>
+                        WEB-INF/beans.xml,
+                        WEB-INF/liferay-portlet.xml
+                     </packagingExcludes>
+                  </configuration>
+               </plugin>
+            </plugins>
+         </build>
       </profile>
    </profiles>
 

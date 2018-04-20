@@ -21,27 +21,20 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>SigTestsRender_MimeResponse_SIGRender</portlet-name>
+		<portlet-name>AsyncPortlet</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_PortletRequest$P3PUserInfos_SIGRender</portlet-name>
+		<portlet-name>BeanPortlet</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_PortletRequest_SIGRender</portlet-name>
+		<portlet-name>MultipartPortlet</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_PortletResponse_SIGRender</portlet-name>
-		<requires-namespaced-parameters>false</requires-namespaced-parameters>
-	</portlet>
-	<portlet>
-		<portlet-name>SigTestsRender_RenderRequest_SIGRender</portlet-name>
-		<requires-namespaced-parameters>false</requires-namespaced-parameters>
-	</portlet>
-	<portlet>
-		<portlet-name>SigTestsRender_RenderResponse_SIGRender</portlet-name>
+		<portlet-name>PathInfoPortlet</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 </liferay-portlet-app>

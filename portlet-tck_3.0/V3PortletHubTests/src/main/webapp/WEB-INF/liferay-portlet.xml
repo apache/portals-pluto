@@ -21,27 +21,53 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>SigTestsRender_MimeResponse_SIGRender</portlet-name>
+		<portlet-name>PortletHubTests_SPEC_23_JS</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_PortletRequest$P3PUserInfos_SIGRender</portlet-name>
+		<portlet-name>PortletHubTests_SPEC_23_JSAction</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_PortletRequest_SIGRender</portlet-name>
+		<portlet-name>PortletHubTests_SPEC_23_JSExc</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_PortletResponse_SIGRender</portlet-name>
+		<portlet-name>PortletHubTests_SPEC_23_JSListener</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_RenderRequest_SIGRender</portlet-name>
+		<portlet-name>PortletHubTests_SPEC_23_JSPA</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_RenderResponse_SIGRender</portlet-name>
+		<portlet-name>PortletHubTests_SPEC_23_JSPRP_RX</portlet-name>
+		<single-page-application>false</single-page-application>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>PortletHubTests_SPEC_23_JSPRP_TX</portlet-name>
+		<single-page-application>false</single-page-application>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>PortletHubTests_SPEC_23_JSRS</portlet-name>
+		<single-page-application>false</single-page-application>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>PortletHubTests_SPEC_23_JSState</portlet-name>
+		<single-page-application>false</single-page-application>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>PortletHubTests_SPEC_23_JSURL</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 </liferay-portlet-app>

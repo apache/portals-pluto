@@ -85,13 +85,7 @@
                <target>1.7</target>
             </configuration>
          </plugin>
-         <plugin>
-            <artifactId>maven-war-plugin</artifactId>
-            <configuration>
-               <archiveClasses>false</archiveClasses>
-            </configuration>
-         </plugin>
-         
+
          <!-- Don't attach source or javadoc archive (for release plugin)-->
          <plugin>
            <artifactId>maven-source-plugin</artifactId>
@@ -105,19 +99,58 @@
              <skip>true</skip>
            </configuration>
          </plugin>
-         
+
+         <!-- workaround for war processing of m-r-r-plugin causing the generated NOTICE and LICENSE file to be put under WEB-INF/classes/META-INF -->
+         <plugin>
+             <groupId>org.apache.maven.plugins</groupId>
+             <artifactId>maven-remote-resources-plugin</artifactId>
+             <executions>
+                 <execution>
+                     <goals>
+                         <goal>process</goal>
+                     </goals>
+                     <configuration>
+                         <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+                         <attached>false</attached>
+                     </configuration>
+                 </execution>
+             </executions>
+         </plugin>
       </plugins>
    </build>
 
    <profiles>
+       <profile>
+           <id>liferay</id>
+           <dependencies>
+               <dependency>
+                   <groupId>com.liferay.portal</groupId>
+                   <artifactId>com.liferay.bean.portlet.extension</artifactId>
+               </dependency>
+               <dependency>
+                   <groupId>org.jboss.weld.servlet</groupId>
+                   <artifactId>weld-servlet</artifactId>
+               </dependency>
+               <dependency>
+                   <groupId>org.slf4j</groupId>
+                   <artifactId>slf4j-log4j12</artifactId>
+               </dependency>
+           </dependencies>
+           <build>
+               <plugins>
+                   <plugin>
+                       <artifactId>maven-war-plugin</artifactId>
+                       <configuration>
+                           <packagingExcludes>
+                               WEB-INF/classes/logging.properties
+                           </packagingExcludes>
+                       </configuration>
+                   </plugin>
+               </plugins>
+           </build>
+       </profile>
       <profile>
          <id>pluto</id>
-         <activation>
-           <property>
-             <name>!alwaysActivate</name>
-           </property>
-         </activation>
-    
          <dependencies>
             <dependency>
                 <groupId>org.apache.taglibs</groupId>
@@ -145,32 +178,16 @@
                 <scope>provided</scope>
             </dependency>
          </dependencies>
-         
          <build>
             <plugins>
                <plugin>
                  <artifactId>maven-war-plugin</artifactId>
                  <configuration>
                    <packagingExcludes>
+                       WEB-INF/liferay-portlet.xml,
                        WEB-INF/classes/log4j.properties
                    </packagingExcludes>
                  </configuration>
-               </plugin>
-               <!-- workaround for war processing of m-r-r-plugin causing the generated NOTICE and LICENSE file to be put under WEB-INF/classes/META-INF -->
-               <plugin>
-                   <groupId>org.apache.maven.plugins</groupId>
-                   <artifactId>maven-remote-resources-plugin</artifactId>
-                   <executions>
-                       <execution>
-                           <goals>
-                               <goal>process</goal>
-                           </goals>
-                           <configuration>
-                               <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
-                               <attached>false</attached>
-                           </configuration>
-                       </execution>
-                   </executions>
                </plugin>
             </plugins>
          </build>

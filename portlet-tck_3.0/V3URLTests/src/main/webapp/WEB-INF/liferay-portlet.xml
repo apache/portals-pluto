@@ -21,27 +21,19 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>SigTestsRender_MimeResponse_SIGRender</portlet-name>
+		<portlet-name>ActionURLTests</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_PortletRequest$P3PUserInfos_SIGRender</portlet-name>
+		<portlet-name>BaseURLTests</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_PortletRequest_SIGRender</portlet-name>
+		<portlet-name>RenderURLTests</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>SigTestsRender_PortletResponse_SIGRender</portlet-name>
-		<requires-namespaced-parameters>false</requires-namespaced-parameters>
-	</portlet>
-	<portlet>
-		<portlet-name>SigTestsRender_RenderRequest_SIGRender</portlet-name>
-		<requires-namespaced-parameters>false</requires-namespaced-parameters>
-	</portlet>
-	<portlet>
-		<portlet-name>SigTestsRender_RenderResponse_SIGRender</portlet-name>
+		<portlet-name>ResourceURLTests</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 </liferay-portlet-app>

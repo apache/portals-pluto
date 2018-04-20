@@ -722,7 +722,19 @@ TODO: Check if we need all of them. -->
         <module>portlet-tck_3.0</module>
       </modules>
     </profile>
-    
+
+    <profile>
+      <id>liferay</id>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>com.liferay.portal</groupId>
+            <artifactId>com.liferay.bean.portlet.extension</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+    </profile>
     <profile>
       <id>website</id>
       <!-- For building website documentation, there's no need to include modules. -->
