@@ -130,13 +130,6 @@ limitations under the License.
    </portlet>
 
    <portlet>
-      <portlet-name>V3RedirectPortlet</portlet-name>
-      <portlet-info>
-         <title>Redirect Test Portlet</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
       <portlet-name>PortletConfigPortlet1</portlet-name>
       <display-name>Portlet Config Portlet #1</display-name>
       

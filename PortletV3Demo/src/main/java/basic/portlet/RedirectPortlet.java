@@ -36,6 +36,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.annotations.LocaleString;
 import javax.portlet.annotations.PortletConfiguration;
 
 import static javax.portlet.MimeResponse.Copy.*;
@@ -44,7 +45,7 @@ import static basic.portlet.Constants.*;
 /**
  * Portlet for testing the redirect funtionality, including the new getRedirectURL API.
  */
-@PortletConfiguration(portletName="V3RedirectPortlet")
+@PortletConfiguration(portletName="V3RedirectPortlet", title = @LocaleString(value = "Redirect Test Portlet"))
 public class RedirectPortlet extends GenericPortlet {
 
    private static final Logger logger  = LoggerFactory.getLogger(RedirectPortlet.class);
