@@ -324,7 +324,7 @@ public class TagLibPortlet {
    @WebServlet(urlPatterns = PROXY)
    public static class ActEvtProxyServlet extends HttpServlet {
       private static final long serialVersionUID = -1798128019502989930L;
-      private static final Logger LOGGER = Logger.getLogger(TagLibPortlet.ActEvtProxyServlet.class.getName());
+      private static final Logger logger = Logger.getLogger(ActEvtProxyServlet.class);
 
       @Override
       protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
