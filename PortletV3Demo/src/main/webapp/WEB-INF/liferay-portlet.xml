@@ -62,6 +62,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>LongPortlet</portlet-name>
+		<action-url-redirect>true</action-url-redirect>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
