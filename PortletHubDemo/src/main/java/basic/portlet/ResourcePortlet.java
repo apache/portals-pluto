@@ -30,7 +30,6 @@ import static basic.portlet.Constants.DEFAULT_IMAGE;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
@@ -54,7 +53,6 @@ import javax.portlet.annotations.Supports;
 /**
  * A demo portlet that displays images
  */
-@ApplicationScoped
 @PortletApplication(
       events = {
             @EventDefinition(

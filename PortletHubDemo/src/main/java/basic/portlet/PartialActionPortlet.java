@@ -26,7 +26,6 @@ import static basic.portlet.Constants.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
@@ -46,7 +45,6 @@ import javax.portlet.annotations.PortletConfiguration;
 /**
  * A demo portlet exercising the partial action processing sequence
  */
-@ApplicationScoped
 @PortletConfiguration(portletName = "PartialActionPortlet", publicParams = "color",
                         title = @LocaleString("PH Partial Action Portlet"),
                         dependencies = @Dependency(name="PortletHub", scope="javax.portlet", version="3.0.0"))

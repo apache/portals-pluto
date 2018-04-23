@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Set;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
@@ -48,7 +47,6 @@ import javax.portlet.annotations.PortletConfiguration;
 /**
  * A demo portlet for selecting images
  */
-@ApplicationScoped
 @PortletConfiguration(portletName = "ImageSelPortlet", publicParams = "imgName", 
                       title = @LocaleString("PH Image Selection Portlet"),
                       dependencies = @Dependency(name="PortletHub", scope="javax.portlet", version="3.0.0"))

@@ -33,7 +33,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Enumeration;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
@@ -55,7 +54,6 @@ import javax.xml.namespace.QName;
 /**
  * An example color selection portlet that uses the portlet hub.
  */
-@ApplicationScoped
 @PortletConfiguration(portletName = "PH-ColorSelPortlet", publicParams = "color", 
                       title = @LocaleString("PH Color Selection Portlet"),
                       dependencies = @Dependency(name="PortletHub", scope="javax.portlet", version="3.0.0"))

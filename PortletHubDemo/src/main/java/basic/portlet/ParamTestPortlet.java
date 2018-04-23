@@ -28,7 +28,6 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
@@ -48,7 +47,6 @@ import javax.portlet.annotations.PortletConfiguration;
  * 
  * @author Scott Nicklous
  */
-@ApplicationScoped
 @PortletConfiguration(portletName = "ParamTestPortlet", publicParams = {"color", "imgName"},
                         title = @LocaleString("PH Parameter Test Portlet"),
                         dependencies = @Dependency(name="PortletHub", scope="javax.portlet", version="3.0.0"))

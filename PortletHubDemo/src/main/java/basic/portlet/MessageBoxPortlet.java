@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
@@ -51,7 +50,6 @@ import javax.portlet.annotations.PortletQName;
 /**
  * A demo portlet that displays messages sent via event
  */
-@ApplicationScoped
 @PortletConfiguration(portletName = "MessageBoxPortlet", publicParams = "color", 
                       title = @LocaleString("PH Message Box Portlet"),
                       dependencies = @Dependency(name="PortletHub", scope="javax.portlet", version="3.0.0"))
