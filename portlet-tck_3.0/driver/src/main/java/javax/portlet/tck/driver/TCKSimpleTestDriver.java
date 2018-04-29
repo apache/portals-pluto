@@ -20,7 +20,6 @@ package javax.portlet.tck.driver;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,9 +42,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -217,7 +215,9 @@ public class TCKSimpleTestDriver {
       timeout = ((str != null) && str.matches("\\d+")) ? Integer.parseInt(str) : 3; 
       String wd = System.getProperty("test.browser.webDriver");
       String binary = System.getProperty("test.browser.binary");
-      boolean browserDefaultHeadless = browser.equalsIgnoreCase("chrome") || browser.equalsIgnoreCase("htmlunit") ||
+      boolean browserDefaultHeadless = browser.equalsIgnoreCase("chrome") ||
+          browser.equalsIgnoreCase("firefox") ||
+          browser.equalsIgnoreCase("htmlunit") ||
           browser.equalsIgnoreCase("phantomjs");
       String headlessProperty = System.getProperty("test.browser.headless");
       boolean headless = (((headlessProperty == null) || (headlessProperty.length() == 0)) && browserDefaultHeadless);
@@ -241,25 +241,43 @@ public class TCKSimpleTestDriver {
       System.out.println("   headless     =" + headless);
 
       if (browser.equalsIgnoreCase("firefox")) {
-         if ((binary == null) || (binary.length() == 0)) {
-            driver = new FirefoxDriver(new FirefoxProfile());
-         } else {
-            driver = new FirefoxDriver(new FirefoxBinary(new File(binary)), new FirefoxProfile());
+
+         System.setProperty("webdriver.gecko.driver", wd);
+         FirefoxOptions options = new FirefoxOptions();
+         options.setLegacy(true);
+         options.setAcceptInsecureCerts(true);
+
+         if ((binary != null) && (binary.length() != 0)) {
+            options.setBinary(binary);
          }
+
+         if (headless) {
+            options.setHeadless(true);
+         }
+
+         driver = new FirefoxDriver(options);
+
       } else if (browser.equalsIgnoreCase("internetExplorer")) {
          System.setProperty("webdriver.ie.driver", wd);
          driver = new InternetExplorerDriver();
       } else if (browser.equalsIgnoreCase("chrome")) {
+
          System.setProperty("webdriver.chrome.driver", wd);
          ChromeOptions options = new ChromeOptions();
+
          if ((binary != null) && (binary.length() > 0)) {
             options.setBinary(binary);
          }
+
          if (headless) {
             options.addArguments("--headless");
-            options.addArguments("--disable-infobars");
          }
+
+         options.addArguments("--disable-infobars");
+         options.setAcceptInsecureCerts(true);
+
          driver = new ChromeDriver(options);
+
       } else if (browser.equalsIgnoreCase("phantomjs")) {
          DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
          capabilities.setJavascriptEnabled(true);
