@@ -17,6 +17,7 @@ package javax.portlet.tck.attributes;
 
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
+import java.io.Serializable;
 
 /**
  * Listener for JSR 362 portlet preferences attribute testing. This validator tests for HttpSessionBindingListener
@@ -25,7 +26,9 @@ import javax.servlet.http.HttpSessionBindingListener;
  *
  */
 public class V2EnvironmentTests_PortletSession_ApiRender_Binding
-    implements HttpSessionBindingListener {
+    implements HttpSessionBindingListener, Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   private boolean tr34;
 
