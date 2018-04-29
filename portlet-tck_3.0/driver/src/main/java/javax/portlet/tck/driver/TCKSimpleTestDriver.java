@@ -421,7 +421,9 @@ public class TCKSimpleTestDriver {
          WebElement pwEl = pwels.get(0);
 
          // perform login
+         userEl.clear();
          userEl.sendKeys(username);
+         pwEl.clear();
          pwEl.sendKeys(password);
          pwEl.submit();
 
