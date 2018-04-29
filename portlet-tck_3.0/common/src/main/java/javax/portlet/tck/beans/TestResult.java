@@ -34,10 +34,7 @@
  */
 package javax.portlet.tck.beans;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 
 import javax.portlet.tck.constants.Constants;
 
@@ -47,7 +44,9 @@ import javax.portlet.tck.constants.Constants;
  * 
  * @author nick
  */
-public class TestResult {
+public class TestResult implements Serializable {
+
+   private static final long serialVersionUID = 1L;
 
    private String  tcName;
    private String  tcDetail;
