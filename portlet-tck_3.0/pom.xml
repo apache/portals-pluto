@@ -218,9 +218,15 @@
          </dependency>
          <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <version>3.11.0</version>
+            <scope>compile</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>2.53.0</version>
-            <scope>test</scope>
+            <version>3.11.0</version>
+            <scope>compile</scope>
          </dependency>
          <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -497,6 +503,9 @@
          <activation>
             <activeByDefault>true</activeByDefault>
          </activation>
+         <properties>
+            <test.tck.driver>**/javax/portlet/tck/driver/TCKSimpleTestDriver.java</test.tck.driver>
+         </properties>
          <dependencies>
             <dependency>
                <groupId>org.slf4j</groupId>
@@ -540,6 +549,10 @@
       </profile>
       <profile>
          <id>liferay</id>
+         <properties>
+            <test.tck.driver>**/javax/portlet/tck/driver/TCKLiferayTestDriver.java</test.tck.driver>
+            <test.server.login.url>http://${test.server.host}:${test.server.port}/group/portlet-tck</test.server.login.url>
+         </properties>
          <dependencies>
             <dependency>
                <groupId>org.slf4j</groupId>

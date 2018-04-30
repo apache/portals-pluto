@@ -20,7 +20,6 @@ package javax.portlet.tck.driver;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,9 +42,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -65,15 +63,15 @@ import javax.portlet.tck.constants.Constants;
 @RunWith(value = Parameterized.class)
 public class TCKSimpleTestDriver {
 
-   private static String loginUrl, host, port, testFile, browser, 
+   protected static String loginUrl, host, port, testFile, browser,
    username, usernameId, password, passwordId, testContextBase, module;
-   private static int timeout = 3; // for waiting on page load
-   private static boolean useGeneratedUrl = true, debug = false, dryrun = false;
+   protected static int timeout = 3; // for waiting on page load
+   protected static boolean useGeneratedUrl = true, debug = false, dryrun = false;
 
-   private static WebDriver driver;
-   private String page, tcName;
+   protected static WebDriver driver;
+   protected String page, tcName;
    
-   private List<String> debugLines = new ArrayList<>();
+   protected List<String> debugLines = new ArrayList<>();
 
    /**
     * Reads the consolidated list of test cases and provides the list to Junit
@@ -81,7 +79,7 @@ public class TCKSimpleTestDriver {
     * @return  a Collection of test cases to run
     */
    @SuppressWarnings("rawtypes")
-   @Parameters
+   @Parameters (name = "{1}")
    public static Collection getTestList () {
       System.out.println("getTestList");
       testFile = System.getProperty("test.list.file");
@@ -217,7 +215,9 @@ public class TCKSimpleTestDriver {
       timeout = ((str != null) && str.matches("\\d+")) ? Integer.parseInt(str) : 3; 
       String wd = System.getProperty("test.browser.webDriver");
       String binary = System.getProperty("test.browser.binary");
-      boolean browserDefaultHeadless = browser.equalsIgnoreCase("chrome") || browser.equalsIgnoreCase("htmlunit") ||
+      boolean browserDefaultHeadless = browser.equalsIgnoreCase("chrome") ||
+          browser.equalsIgnoreCase("firefox") ||
+          browser.equalsIgnoreCase("htmlunit") ||
           browser.equalsIgnoreCase("phantomjs");
       String headlessProperty = System.getProperty("test.browser.headless");
       boolean headless = (((headlessProperty == null) || (headlessProperty.length() == 0)) && browserDefaultHeadless);
@@ -237,29 +237,47 @@ public class TCKSimpleTestDriver {
       System.out.println("   PasswordId   =" + passwordId);
       System.out.println("   Browser      =" + browser);
       System.out.println("   Driver       =" + wd);
-      System.out.println("   binary       =" + binary + " ... used for ChromeDriver & FirefoxDriver only, for now");
+      System.out.println("   binary       =" + binary);
       System.out.println("   headless     =" + headless);
 
       if (browser.equalsIgnoreCase("firefox")) {
-         if ((binary == null) || (binary.length() == 0)) {
-            driver = new FirefoxDriver(new FirefoxProfile());
-         } else {
-            driver = new FirefoxDriver(new FirefoxBinary(new File(binary)), new FirefoxProfile());
+
+         System.setProperty("webdriver.gecko.driver", wd);
+         FirefoxOptions options = new FirefoxOptions();
+         options.setLegacy(true);
+         options.setAcceptInsecureCerts(true);
+
+         if ((binary != null) && (binary.length() != 0)) {
+            options.setBinary(binary);
          }
+
+         if (headless) {
+            options.setHeadless(true);
+         }
+
+         driver = new FirefoxDriver(options);
+
       } else if (browser.equalsIgnoreCase("internetExplorer")) {
          System.setProperty("webdriver.ie.driver", wd);
          driver = new InternetExplorerDriver();
       } else if (browser.equalsIgnoreCase("chrome")) {
+
          System.setProperty("webdriver.chrome.driver", wd);
          ChromeOptions options = new ChromeOptions();
+
          if ((binary != null) && (binary.length() > 0)) {
             options.setBinary(binary);
          }
+
          if (headless) {
             options.addArguments("--headless");
-            options.addArguments("--disable-infobars");
          }
+
+         options.addArguments("--disable-infobars");
+         options.setAcceptInsecureCerts(true);
+
          driver = new ChromeDriver(options);
+
       } else if (browser.equalsIgnoreCase("phantomjs")) {
          DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
          capabilities.setJavascriptEnabled(true);
@@ -360,7 +378,7 @@ public class TCKSimpleTestDriver {
     * 
     * @return  a list of elements for the TC (should only be one)
     */
-   private List<WebElement> accessPage() throws Exception {
+   protected List<WebElement> accessPage() throws Exception {
       List<WebElement> wels = driver.findElements(By.linkText(page));
       debugLines.add("   Access page, link found: " + !wels.isEmpty() + ", page===" + page + "===");
      
@@ -388,7 +406,7 @@ public class TCKSimpleTestDriver {
    /**
     * Called to login to the portal if necessary. 
     */
-   private static void login() {
+   protected static void login() {
 
       driver.get(loginUrl);
       
@@ -403,7 +421,9 @@ public class TCKSimpleTestDriver {
          WebElement pwEl = pwels.get(0);
 
          // perform login
+         userEl.clear();
          userEl.sendKeys(username);
+         pwEl.clear();
          pwEl.sendKeys(password);
          pwEl.submit();
 
@@ -413,7 +433,7 @@ public class TCKSimpleTestDriver {
    /**
     * Analyzes the page based on the test case name and records success or failure.
     */
-   private void checkResults(List<WebElement> tcels) {
+   protected void checkResults(List<WebElement> tcels) {
       String resultId = tcName + Constants.RESULT_ID;
       String detailId = tcName + Constants.DETAIL_ID;
 
@@ -445,7 +465,7 @@ public class TCKSimpleTestDriver {
     * @throws Exception 
     */
    @SuppressWarnings("unused")
-   private List<WebElement> processClickable(List<WebElement> wels) throws Exception {
+   protected List<WebElement> processClickable(List<WebElement> wels) throws Exception {
       String setupId = tcName + Constants.SETUP_ID;
       String actionId = tcName + Constants.CLICK_ID;
       String resultId = tcName + Constants.RESULT_ID;
@@ -522,7 +542,7 @@ public class TCKSimpleTestDriver {
     * @return  <code>true</code> if async was handled; <code>false</code> otherwise.
     * @throws Exception 
     */
-   private boolean processAsync() throws Exception {
+   protected boolean processAsync() throws Exception {
       String asyncId = tcName + Constants.ASYNC_ID;
       String resultId = tcName + Constants.RESULT_ID;
 
