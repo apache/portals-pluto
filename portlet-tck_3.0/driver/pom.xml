@@ -600,7 +600,7 @@
                   <configuration>
                      <testClassesDirectory>${project.build.directory}/classes</testClassesDirectory>
                      <includes>
-                        <include>**/javax/**</include>
+                        <include>${test.tck.driver}</include>
                      </includes>
                      <useFile>true</useFile>
                      <argLine>-Xms512m -Xmx512m</argLine>

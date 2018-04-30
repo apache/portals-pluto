@@ -503,6 +503,9 @@
          <activation>
             <activeByDefault>true</activeByDefault>
          </activation>
+         <properties>
+            <test.tck.driver>**/javax/portlet/tck/driver/TCKSimpleTestDriver.java</test.tck.driver>
+         </properties>
          <dependencies>
             <dependency>
                <groupId>org.slf4j</groupId>
