@@ -63,15 +63,15 @@ import javax.portlet.tck.constants.Constants;
 @RunWith(value = Parameterized.class)
 public class TCKSimpleTestDriver {
 
-   private static String loginUrl, host, port, testFile, browser, 
+   protected static String loginUrl, host, port, testFile, browser,
    username, usernameId, password, passwordId, testContextBase, module;
-   private static int timeout = 3; // for waiting on page load
-   private static boolean useGeneratedUrl = true, debug = false, dryrun = false;
+   protected static int timeout = 3; // for waiting on page load
+   protected static boolean useGeneratedUrl = true, debug = false, dryrun = false;
 
-   private static WebDriver driver;
-   private String page, tcName;
+   protected static WebDriver driver;
+   protected String page, tcName;
    
-   private List<String> debugLines = new ArrayList<>();
+   protected List<String> debugLines = new ArrayList<>();
 
    /**
     * Reads the consolidated list of test cases and provides the list to Junit
@@ -79,7 +79,7 @@ public class TCKSimpleTestDriver {
     * @return  a Collection of test cases to run
     */
    @SuppressWarnings("rawtypes")
-   @Parameters
+   @Parameters (name = "{1}")
    public static Collection getTestList () {
       System.out.println("getTestList");
       testFile = System.getProperty("test.list.file");
@@ -237,7 +237,7 @@ public class TCKSimpleTestDriver {
       System.out.println("   PasswordId   =" + passwordId);
       System.out.println("   Browser      =" + browser);
       System.out.println("   Driver       =" + wd);
-      System.out.println("   binary       =" + binary + " ... used for ChromeDriver & FirefoxDriver only, for now");
+      System.out.println("   binary       =" + binary);
       System.out.println("   headless     =" + headless);
 
       if (browser.equalsIgnoreCase("firefox")) {
@@ -378,7 +378,7 @@ public class TCKSimpleTestDriver {
     * 
     * @return  a list of elements for the TC (should only be one)
     */
-   private List<WebElement> accessPage() throws Exception {
+   protected List<WebElement> accessPage() throws Exception {
       List<WebElement> wels = driver.findElements(By.linkText(page));
       debugLines.add("   Access page, link found: " + !wels.isEmpty() + ", page===" + page + "===");
      
@@ -406,7 +406,7 @@ public class TCKSimpleTestDriver {
    /**
     * Called to login to the portal if necessary. 
     */
-   private static void login() {
+   protected static void login() {
 
       driver.get(loginUrl);
       
@@ -421,7 +421,9 @@ public class TCKSimpleTestDriver {
          WebElement pwEl = pwels.get(0);
 
          // perform login
+         userEl.clear();
          userEl.sendKeys(username);
+         pwEl.clear();
          pwEl.sendKeys(password);
          pwEl.submit();
 
@@ -431,7 +433,7 @@ public class TCKSimpleTestDriver {
    /**
     * Analyzes the page based on the test case name and records success or failure.
     */
-   private void checkResults(List<WebElement> tcels) {
+   protected void checkResults(List<WebElement> tcels) {
       String resultId = tcName + Constants.RESULT_ID;
       String detailId = tcName + Constants.DETAIL_ID;
 
@@ -463,7 +465,7 @@ public class TCKSimpleTestDriver {
     * @throws Exception 
     */
    @SuppressWarnings("unused")
-   private List<WebElement> processClickable(List<WebElement> wels) throws Exception {
+   protected List<WebElement> processClickable(List<WebElement> wels) throws Exception {
       String setupId = tcName + Constants.SETUP_ID;
       String actionId = tcName + Constants.CLICK_ID;
       String resultId = tcName + Constants.RESULT_ID;
@@ -540,7 +542,7 @@ public class TCKSimpleTestDriver {
     * @return  <code>true</code> if async was handled; <code>false</code> otherwise.
     * @throws Exception 
     */
-   private boolean processAsync() throws Exception {
+   protected boolean processAsync() throws Exception {
       String asyncId = tcName + Constants.ASYNC_ID;
       String resultId = tcName + Constants.RESULT_ID;
 
