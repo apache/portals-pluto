@@ -549,6 +549,10 @@
       </profile>
       <profile>
          <id>liferay</id>
+         <properties>
+            <test.tck.driver>**/javax/portlet/tck/driver/TCKLiferayTestDriver.java</test.tck.driver>
+            <test.server.login.url>http://${test.server.host}:${test.server.port}/group/portlet-tck</test.server.login.url>
+         </properties>
          <dependencies>
             <dependency>
                <groupId>org.slf4j</groupId>

@@ -400,6 +400,7 @@
             <targetPath>${test.list.dir}</targetPath>
             <includes>
                <include>ignoredTestCases.xml</include>
+               <include>nonExclusiveTestCases.xml</include>
             </includes>
          </resource>
       </resources>
@@ -648,6 +649,10 @@
                         <property>
                            <name>test.ignore.list.file</name>
                            <value>${project.build.directory}/classes/${test.list.dir}/${test.ignore.list.name}</value>
+                        </property>
+                        <property>
+                           <name>test.non.exclusive.file</name>
+                           <value>${project.build.directory}/classes/${test.list.dir}/nonExclusiveTestCases.xml</value>
                         </property>
                         <property>
                            <name>test.ignore</name>
