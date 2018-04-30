@@ -34,9 +34,14 @@
  */
 package javax.portlet.tck.beans;
 
-import java.io.*;
 
 import javax.portlet.tck.constants.Constants;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.io.StringWriter;
+import java.io.Writer;
 
 /**
  * Encapsulates test results containint the test case name, the test case detail description, and the test case result (
