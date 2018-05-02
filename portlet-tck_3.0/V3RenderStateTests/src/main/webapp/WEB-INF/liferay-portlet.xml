@@ -21,11 +21,11 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>RenderStateTests_SPEC2_12_RenderState</portlet-name>
+		<portlet-name>RenderStateTests_SPEC1_12_RenderState</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>RenderStateTests_SPEC2_12_RenderState2</portlet-name>
+		<portlet-name>RenderStateTests_SPEC1_12_RenderState2</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
