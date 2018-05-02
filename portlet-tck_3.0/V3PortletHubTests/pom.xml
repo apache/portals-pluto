@@ -155,7 +155,6 @@
                   <artifactId>maven-war-plugin</artifactId>
                   <configuration>
                      <packagingExcludes>
-                        WEB-INF/beans.xml,
                         WEB-INF/liferay-portlet.xml
                      </packagingExcludes>
                   </configuration>
