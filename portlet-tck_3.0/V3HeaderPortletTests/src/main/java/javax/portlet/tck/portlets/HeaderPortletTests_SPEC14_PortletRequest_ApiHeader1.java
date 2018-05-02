@@ -1401,10 +1401,14 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
              && "true"
                  .equals(portletReq.getParameterMap().get("trPrivate2")[0])) {
            String trPrivate2[] = {"false"};
-           portletReq.getParameterMap().put("trPrivate2", trPrivate2);
-           if ("true"
-               .equals(portletReq.getParameterMap().get("trPrivate2")[0])) {
-             result.setTcSuccess(true);
+           try {
+              portletReq.getParameterMap().put("trPrivate2", trPrivate2);
+              if ("true"
+                  .equals(portletReq.getParameterMap().get("trPrivate2")[0])) {
+                 result.setTcSuccess(true);
+              }
+           } catch (UnsupportedOperationException e) {
+              result.setTcSuccess(true);
            }
          }
          result.writeTo(writer);
@@ -1441,10 +1445,16 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
              && "true"
                  .equals(portletReq.getParameterMap().get("trPublic2")[0])) {
            String trPublic2[] = {"false"};
-           portletReq.getPublicParameterMap().put("trPublic2", trPublic2);
-           if ("true"
-               .equals(portletReq.getPublicParameterMap().get("trPublic2")[0])) {
-             result.setTcSuccess(true);
+           try {
+              portletReq.getPublicParameterMap().put("trPublic2", trPublic2);
+              if ("true"
+                  .equals(
+                      portletReq.getPublicParameterMap().get("trPublic2")[0])) {
+                 result.setTcSuccess(true);
+              }
+           }
+           catch (UnsupportedOperationException e) {
+              result.setTcSuccess(true);
            }
          }
          result.writeTo(writer);
