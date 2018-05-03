@@ -23,7 +23,6 @@ import java.io.PrintWriter;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -43,22 +42,16 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETCO
  *
  */
 
-@PortletConfiguration(
-   portletName = "AnnotationPortletConfigTests_SPEC2_28_SecurityRole",
-   roleRefs = @SecurityRoleRef(roleName = "tckuser", roleLink = "tckuser")
-)
-public class AnnotationPortletConfigTests_SPEC2_28_SecurityRole implements Portlet {
+public abstract class AnnotationPortletConfigTests_SPEC2_28_SecurityRoleBase {
 
-   @Override
    public void init(PortletConfig config) throws PortletException {}
 
-   @Override
    public void destroy() {}
 
-   @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {}
 
-   @Override
+   public abstract String getRoleName();
+
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
 
       PrintWriter writer = portletResp.getWriter();
@@ -69,11 +62,11 @@ public class AnnotationPortletConfigTests_SPEC2_28_SecurityRole implements Portl
       /* @PortletConfiguration annotation using @SecurityRoleRef annotation."       */
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETCONFIGTESTS_SPEC2_28_SECURITYROLE_DECLARINGSECURITYROLE1);
-         if(portletReq.isUserInRole("tckuser")){
+         if(portletReq.isUserInRole(getRoleName())){
             result.setTcSuccess(true);
-            result.appendTcDetail("User is in \"tckuser\" role.");
+            result.appendTcDetail("User is in \"" + getRoleName() + "\" role.");
          } else {
-            result.appendTcDetail("Failed because user is not configured to be in \"tckuser\" role.");
+            result.appendTcDetail("Failed because user is not configured to be in \"" + getRoleName() + "\" role.");
          }
          result.writeTo(writer);
       }
