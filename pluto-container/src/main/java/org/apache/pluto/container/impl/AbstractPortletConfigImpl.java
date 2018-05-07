@@ -163,10 +163,10 @@ public abstract class AbstractPortletConfigImpl implements PortletConfig
 		// for each String entry in SupportedLocales (portletDD)
 		// add an entry in the resut list (new Locale(string))
 		List<Locale> locals = new ArrayList<Locale>();
-		List<String> localsAsStrings = portlet.getSupportedLocales();
-		if (localsAsStrings!=null){
-			for (String string : localsAsStrings) {
-				locals.add(new Locale(string));
+		List<String> languageIds = portlet.getSupportedLocales();
+		if (languageIds!=null){
+			for (String languageId : languageIds) {
+				locals.add(getLocale(languageId));
 			}
 		}
 		return Collections.enumeration(locals);
@@ -223,5 +223,37 @@ public abstract class AbstractPortletConfigImpl implements PortletConfig
             return Collections.unmodifiableMap(result);
         }
         return Collections.emptyMap();
+	}
+
+	private Locale getLocale(String languageId) {
+
+    	Locale locale;
+
+		int pos = languageId.indexOf("_");
+
+		if (pos == -1) {
+			locale = Locale.forLanguageTag(languageId);
+		}
+		else {
+			String[] languageIdParts = languageId.split("_");
+
+			String languageCode = languageIdParts[0];
+			String countryCode = languageIdParts[1];
+
+			String variant = null;
+
+			if (languageIdParts.length > 2) {
+				variant = languageIdParts[2];
+			}
+
+			if ((variant != null) && (variant.trim().length() > 0)) {
+				locale = new Locale(languageCode, countryCode, variant);
+			}
+			else {
+				locale = new Locale(languageCode, countryCode);
+			}
+		}
+
+		return locale;
 	}
 }
