@@ -729,7 +729,7 @@ TODO: Check if we need all of them. -->
         <dependencies>
           <dependency>
             <groupId>com.liferay.portal</groupId>
-            <artifactId>com.liferay.bean.portlet.extension</artifactId>
+            <artifactId>com.liferay.cdi.bean.portlet.extension</artifactId>
             <version>1.0.0-SNAPSHOT</version>
           </dependency>
         </dependencies>
