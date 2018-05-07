@@ -81,8 +81,8 @@ public class AnnotationPortletConfigTests_SPEC2_28_SupportedLocales implements P
          Enumeration<Locale> supportedLocales = portletConfig.getSupportedLocales();
          List<Locale> supportedLocalesList = Collections.list(supportedLocales);
          if(supportedLocalesList.size()==2
-               && supportedLocalesList.get(0).toString().equals("en_us")
-               && supportedLocalesList.get(1).toString().equals("de")){
+               && supportedLocalesList.get(0).equals(Locale.US)
+               && supportedLocalesList.get(1).equals(Locale.GERMAN)) {
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail("Failed because more than 2 supported locales are found - "+supportedLocalesList.size()
