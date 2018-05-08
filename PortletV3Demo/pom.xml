@@ -130,7 +130,7 @@
            <dependencies>
                <dependency>
                    <groupId>com.liferay.portal</groupId>
-                   <artifactId>com.liferay.bean.portlet.extension</artifactId>
+                   <artifactId>com.liferay.cdi.bean.portlet.extension</artifactId>
                </dependency>
                <dependency>
                    <groupId>org.jboss.weld.servlet</groupId>
