@@ -43,9 +43,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAP
  *
  */
 
-@PortletApplication(
-   defaultNamespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
-)
 @PortletConfiguration(portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI")
 public class AnnotationPortletApplicationConfigTests_SPEC1_28_DefaultNamespaceURI implements Portlet {
    
