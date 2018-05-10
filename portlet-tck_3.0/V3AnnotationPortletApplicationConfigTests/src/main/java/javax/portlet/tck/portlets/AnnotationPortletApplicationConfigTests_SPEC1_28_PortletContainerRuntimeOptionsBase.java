@@ -24,12 +24,10 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.tck.beans.TestResult;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
 
@@ -43,25 +41,18 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETAP
  *
  */
 
-@PortletConfiguration(
-   portletName = "AnnotationPortletApplicationConfigTests_SPEC1_28_PortletContainerRuntimeOptions"
-)
-public class AnnotationPortletApplicationConfigTests_SPEC1_28_PortletContainerRuntimeOptions implements Portlet {
+public abstract class AnnotationPortletApplicationConfigTests_SPEC1_28_PortletContainerRuntimeOptionsBase {
 
    private PortletConfig portletConfig = null;
    
-   @Override
    public void init(PortletConfig config) throws PortletException {
       this.portletConfig = config;
    }
 
-   @Override
    public void destroy() {}
 
-   @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {}
 
-   @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
 
       PrintWriter writer = portletResp.getWriter();
@@ -73,10 +64,7 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_PortletContainerRu
       {
          TestResult result = tcd.getTestResultFailed(V3ANNOTATIONPORTLETAPPLICATIONCONFIGTESTS_SPEC1_28_PORTLETCONTAINERRUNTIMEOPTIONS_DECLARINGPCRO1);
          Map<String, String[]> runtimeOptions = portletConfig.getContainerRuntimeOptions();
-         if(runtimeOptions.containsKey("javax.portlet.escapeXml") 
-               && runtimeOptions.containsKey("javax.portlet.actionScopedRequestAttributes")
-               && runtimeOptions.get("javax.portlet.escapeXml")[0].equals("true")
-               && runtimeOptions.get("javax.portlet.actionScopedRequestAttributes")[0].equals("true")){
+         if (isRuntimeOptionsCorrect(runtimeOptions)) {
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
@@ -84,4 +72,5 @@ public class AnnotationPortletApplicationConfigTests_SPEC1_28_PortletContainerRu
 
    }
 
+   public abstract boolean isRuntimeOptionsCorrect(Map<String, String[]> runtimeOptions);
 }
