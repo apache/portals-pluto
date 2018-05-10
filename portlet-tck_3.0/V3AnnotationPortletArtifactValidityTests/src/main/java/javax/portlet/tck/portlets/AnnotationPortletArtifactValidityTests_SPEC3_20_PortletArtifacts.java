@@ -102,14 +102,6 @@ import javax.xml.namespace.QName;
  *
  */
 
-@PortletApplication(
-   events = @EventDefinition(
-      qname = @PortletQName(
-         localPart = "AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts", 
-         namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
-      ), payloadType = java.lang.String.class
-   )
-)
 @PortletConfiguration(
    portletName = "AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts",
    supportedLocales = {"en_US", "de"}

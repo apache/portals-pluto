@@ -87,14 +87,6 @@ import static javax.portlet.tck.portlets.Utils.STATEAWARERESPONSEARTIFACTKEY;;
  *
  */
 
-@PortletApplication(
-   events = @EventDefinition(
-      qname = @PortletQName(
-         localPart = "AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts", 
-         namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
-      ), payloadType = java.lang.String.class
-   )
-)
 @RequestScoped
 public class AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts {
    
