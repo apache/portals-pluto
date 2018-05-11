@@ -606,7 +606,7 @@ TODO: Check if we need all of them. -->
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>2.9</version>
           <configuration>
-             <additionalparam>${javadoc.opts}</additionalparam>
+             <additionalparam>-Xdoclint:none -Xdoclint:-missing</additionalparam>
              <!-- link to Java EE APIs for cross-references -->
              <links>
                 <link>http://docs.oracle.com/javaee/7/api/</link>
@@ -735,16 +735,6 @@ TODO: Check if we need all of them. -->
         <module>portlet-tck_3.0</module>
       </modules>
     </profile>
-
-    <profile>
-        <id>java8-doclint-disabled</id>
-        <activation>
-           <jdk>[1.8,)</jdk>
-        </activation>
-        <properties>
-           <javadoc.opts>-Xdoclint:none -Xdoclint:-missing</javadoc.opts>
-        </properties>
-     </profile>
 
     <profile>
       <id>liferay</id>
