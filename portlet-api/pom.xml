@@ -264,7 +264,7 @@
             <jdk>[1.8,)</jdk>
          </activation>
          <properties>
-            <javadoc.opts>-Xdoclint:none</javadoc.opts>
+            <javadoc.opts>-Xdoclint:none -Xdoclint:-missing</javadoc.opts>
          </properties>
       </profile>
       <profile>
