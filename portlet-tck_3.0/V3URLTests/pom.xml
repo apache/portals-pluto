@@ -121,16 +121,6 @@
    <profiles>
       <profile>
          <id>liferay</id>
-         <dependencies>
-            <dependency>
-               <groupId>com.liferay.portal</groupId>
-               <artifactId>com.liferay.cdi.bean.portlet.extension</artifactId>
-            </dependency>
-            <dependency>
-               <groupId>org.jboss.weld.servlet</groupId>
-               <artifactId>weld-servlet</artifactId>
-            </dependency>
-         </dependencies>
          <build>
             <plugins>
                <plugin>
