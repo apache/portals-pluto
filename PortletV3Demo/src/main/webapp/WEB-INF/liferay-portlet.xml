@@ -21,7 +21,27 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>V3ImageViewer</portlet-name>
+		<portlet-name>AuthSCPortlet</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>ColorSelPortlet</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>DependencyPortlet</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>HeaderPortlet</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>ImageSelPortlet</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>LongPortlet</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
@@ -29,31 +49,28 @@
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>V3ImageSelector</portlet-name>
-		<requires-namespaced-parameters>false</requires-namespaced-parameters>
-	</portlet>
-	<portlet>
-		<portlet-name>V3ColorSelector</portlet-name>
-		<requires-namespaced-parameters>false</requires-namespaced-parameters>
-	</portlet>
-	<portlet>
-		<portlet-name>PortletConfigPortlet1</portlet-name>
-		<requires-namespaced-parameters>false</requires-namespaced-parameters>
-	</portlet>
-	<portlet>
-		<portlet-name>PortletConfigPortlet2</portlet-name>
-		<requires-namespaced-parameters>false</requires-namespaced-parameters>
-	</portlet>
-	<portlet>
 		<portlet-name>ParamTestPortlet</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>UrlTestPortlet</portlet-name>
+		<portlet-name>PortletConfigPortlet</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>UrlRPTestPortlet</portlet-name>
+		<portlet-name>RedirectPortlet</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>ResourcePortlet</portlet-name>
+		<action-url-redirect>true</action-url-redirect>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>TagLibPortlet</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>TagLibTagsPortlet</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
@@ -61,20 +78,11 @@
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>LongPortlet</portlet-name>
-		<action-url-redirect>true</action-url-redirect>
+		<portlet-name>UrlRPTestPortlet</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
-		<portlet-name>AuthSCPortlet</portlet-name>
-		<requires-namespaced-parameters>false</requires-namespaced-parameters>
-	</portlet>
-	<portlet>
-		<portlet-name>V3RedirectPortlet</portlet-name>
-		<requires-namespaced-parameters>false</requires-namespaced-parameters>
-	</portlet>
-	<portlet>
-		<portlet-name>V3HeaderPortlet</portlet-name>
+		<portlet-name>UrlTestPortlet</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 </liferay-portlet-app>
