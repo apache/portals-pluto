@@ -84,7 +84,7 @@ Since 3.0.0
 6. CLEANUP AND START OVER
 	Cleanup the release prepare files again:
 
-	$ mvn -P apache-release release:clean
+	$ mvn -P all,apache-release release:clean
 
 7. PREPARE THE RELEASE
 	Run the "release:prepare" step for real this time. You'll be prompted for the same version information.
