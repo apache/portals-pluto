@@ -567,13 +567,6 @@
          </plugin>
 
          <plugin>
-            <artifactId>maven-install-plugin</artifactId>
-            <configuration>
-               <skip>false</skip>
-            </configuration>
-         </plugin>
-
-         <plugin>
             <groupId>org.apache.rat</groupId>
             <artifactId>apache-rat-plugin</artifactId>
             <configuration>
