@@ -22,7 +22,7 @@
    <parent>
       <groupId>javax.portlet</groupId>
       <artifactId>portlet-tck</artifactId>
-      <version>3.0.1-SNAPSHOT</version>
+      <version>3.0.1</version>
    </parent>
 
    <artifactId>tck-V2PortletTests</artifactId>
@@ -106,8 +106,7 @@
                   </goals>
                   <configuration>
                      <target>
-                        <copy file="${basedir}/${portlet.descriptor.dir}/portlet.xml"
-                              tofile="${project.build.directory}/${project.build.finalName}/WEB-INF/portlet.xml" />
+                        <copy file="${basedir}/${portlet.descriptor.dir}/portlet.xml" tofile="${project.build.directory}/${project.build.finalName}/WEB-INF/portlet.xml" />
                      </target>
                   </configuration>
                </execution>
