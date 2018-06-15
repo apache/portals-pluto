@@ -229,13 +229,13 @@
 
    <target name="run-maven-exclude-demos" if="installNoDemos" description="Runs the install goal and excludes the demos from pluto-portal-driver-config.xml">
       <exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
-         <arg line="install -Ppluto,excludeDemos -DskipTests=true"/>
+         <arg line="install -Pall,pluto,excludeDemos -DskipTests=true"/>
       </exec>
    </target>
 
    <target name="run-maven-include-demos" if="installDemos" description="Runs the install goal and includes the demos in pluto-portal-driver-config.xml">
       <exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
-         <arg line="install -Ppluto -DskipTests=true"/>
+         <arg line="install -Pall,pluto -DskipTests=true"/>
       </exec>
    </target>
 
