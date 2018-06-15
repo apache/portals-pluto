@@ -21,7 +21,7 @@ Since 3.0.0
 1. Environmental Setup
 	* Increase the default Java heap available to Maven
 	* export MAVEN_OPTS="-Xmx256m -XX:MaxPermSize=128m"
-	* Use the JDK 1.7.
+	* Use the JDK 1.8.
 	* Use Maven 3.3.1 or higher
 	* edit $HOME/.m2/settings.xml, make sure your Apache account credentials are setup in the servers section:
         <servers>
