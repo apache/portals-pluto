@@ -94,15 +94,29 @@ Since 3.0.0
 	Backup (zip or tar) your local release candidate directory in case you need to rollback the release after the next step is performed.
 
 8. PERFORM THE RELEASE
-	This step will create a maven staging repository and site for use in testing and voting.
+	a. This step will create a maven staging repository and site for use in testing and voting.
 
 	$ mvn -P all,apache-release release:perform -Duser.name=[your_apache_uid]
 
 	If your local OS userid doesn't match your Apache userid, then you'll have to also override the value provided
 	by the OS to Maven for the site-deploy step to work. This is known to work for Linux, but not for Mac and unknown for Windows.
 
+	b. Release Archetypes (OPTIONAL)
+
+	$ cd maven-archetypes/bean-portlet-archetype
+	$ mvn -P apache-release release:prepare
+	$ mvn -P apache-release release:perform
+
+	$ cd maven-archetypes/generic-portlet-archetype
+	$ mvn -P apache-release release:prepare
+	$ mvn -P apache-release release:perform
+
 9. VERIFY THE RELEASE
-    a. Verify the Nexus release artifacts
+	a. Verify signatures (Verifying release signatures)
+
+	$ gpg --verify target/pluto-3.0.1-source-release.zip.asc target/pluto-3.0.1-source-release.zip
+
+    b. Verify the Nexus release artifacts
 
     Verify the staged artifacts in the nexus repo
         https://repository.apache.org/index.html
@@ -112,11 +126,7 @@ Since 3.0.0
         .md5 files
     See http://people.apache.org/~henkp/repo/faq.html and http://www.apache.org/dev/release-signing.html#openpgp-ascii-detach-sig
 
-    b. Close the nexus staging repo
-
-        https://repository.apache.org/index.html
-        Staging repositories (under Build Promotion) --> Name column --> org.apache.portals-XXX
-        Click checkbox for the open staging repo (org.apache.portals-XXX) and press Close in the menu bar.
+    c. Remove the all of the TCK related modules using the Nexus web UI
 
 10. Checkout the new tag, since the repository will be set to a later commit
 
@@ -127,6 +137,8 @@ Since 3.0.0
         ant -f dist-build.xml -DincludeDemos=true -DpackageOnly=true -DnoClean=true
 
 12. Release the bundle Zip file
+
+	a. Use Maven command-line to release pluto-3.0.1-bundle.zip
 
         #
         # NOTE: This will release a file with the following identification:
@@ -144,6 +156,12 @@ Since 3.0.0
           -Dversion=3.0.1 \
           -Durl=https://repository.apache.org/service/local/staging/deploy/maven2 \
           -DrepositoryId=apache.releases.https
+
+    b. Close the nexus staging repo
+
+        https://repository.apache.org/index.html
+        Staging repositories (under Build Promotion) --> Name column --> org.apache.portals-XXX
+        Click checkbox for the open staging repo (org.apache.portals-XXX) and press Close in the menu bar.
 
 13. PUT THE RELEASE CANDIDATE UP FOR A VOTE
 
