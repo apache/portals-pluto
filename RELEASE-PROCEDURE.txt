@@ -57,7 +57,7 @@ Since 3.0.0
 4. DRY RUN
 	Do a dry run of the release:prepare step:
 
-		$ mvn -P apache-release release:prepare -DautoVersionSubmodules=true -DdryRun=true
+		$ mvn -P all,apache-release -DrunOnlyAtExecutionRoot=true release:prepare -DdryRun=true
 
 	The dry run will not commit any changes back to Git and gives you the opportunity to verify that the release process will complete as expected.
 	You will be prompted for the following information :
