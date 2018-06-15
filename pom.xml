@@ -586,6 +586,9 @@ TODO: Check if we need all of them. -->
           <groupId>org.apache.rat</groupId>
           <artifactId>apache-rat-plugin</artifactId>
           <version>0.12</version>
+          <configuration>
+            <excludes>maven-archetypes/**/archetype-resources/**/*</excludes>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
