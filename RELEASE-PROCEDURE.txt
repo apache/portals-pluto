@@ -73,13 +73,13 @@ Since 3.0.0
 5. VERIFY RELEASE
 	Verify that the release process completed as expected
 
-	The release plugin will create pom.xml.tag files which contain the changes that would have been committed to SVN.
+	The release plugin will create pom.xml.tag files which contain the changes that would have been committed to Git.
 	The only differences between pom.xml.tag and it's corresponding pom.xml file should be the version number(s) and git location(s) (e.g., /trunk vs /tags).
 
 	Check release.properties and make sure that the scm properties have the right version. Sometimes the scm location can be the previous version not the next version.
 
 	Verify signatures (Verifying release signatures)
-        gpg --verify target/pluto-3.0-SNAPSHOT-source-release.zip.asc target/pluto-3.0-SNAPSHOT-source-release.zip
+        gpg --verify target/pluto-3.0.1-SNAPSHOT-source-release.zip.asc target/pluto-3.0.1-SNAPSHOT-source-release.zip
 
 6. CLEANUP AND START OVER
 	Cleanup the release prepare files again:
