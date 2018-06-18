@@ -126,8 +126,6 @@ Since 3.0.0
         .md5 files
     See http://people.apache.org/~henkp/repo/faq.html and http://www.apache.org/dev/release-signing.html#openpgp-ascii-detach-sig
 
-    c. Remove the all of the TCK related modules using the Nexus web UI
-
 10. Checkout the new tag, since the repository will be set to a later commit
 
         git checkout pluto-3.0.1
@@ -163,6 +161,58 @@ Since 3.0.0
         Staging repositories (under Build Promotion) --> Name column --> org.apache.portals-XXX
         Click checkbox for the open staging repo (org.apache.portals-XXX) and press Close in the menu bar.
 
+    c. Create a temporary directory for working with Apache's Subversion repository (svnpubsub) for release artifacts:
+
+        $ mkdir ~/asf-svn
+        $ cd ~/asf-svn
+
+    d. Checkout the "dev" folder for Apache Pluto:
+
+        $ mkdir dev
+        $ cd dev
+        $ svn co https://dist.apache.org/repos/dist/dev/portals/pluto
+        $ cd pluto
+
+    e. Edit and then execute the following script in order to download the release artifacts from Nexus and
+       commit them to Subversion:
+
+    #!/bin/sh
+    #
+    # NOTE: SET USER NAME TO YOUR APACHE ID
+    #
+    USER_NAME=asfgriff
+    #
+    # NOTE: SET BASE URL TO THE NEXUS STAGING REPOSITORY
+    #
+    BASE_URL="https://repository.apache.org/service/local/repositories/orgapacheportals-1022/content"
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.0.1/pluto-3.0.1-source-release.zip
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.0.1/pluto-3.0.1-source-release.zip.asc
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.0.1/pluto-3.0.1-source-release.zip.md5
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.0.1/pluto-3.0.1-source-release.zip.sha1
+    svn add pluto-3.0.1-source-release*
+    wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-sources.jar
+    wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-sources.jar.asc
+    wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-sources.jar.md5
+    wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-sources.jar.sha1
+    wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-javadoc.jar
+    wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-javadoc.jar.asc
+    wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-javadoc.jar.md5
+    wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-javadoc.jar.sha1
+    svn add portlet-api-3.0.1*
+    svn commit -m "PLUTO-716 Committing Source Release for pluto-3.0.1" --username $USER_NAME
+    wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1.jar
+    wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1.jar.asc
+    wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1.jar.md5
+    wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1.jar.sha1
+    svn add portlet-api-3.0.1.jar*
+    svn commit -m "PLUTO-716 Committing Binary Release for pluto-3.0.1" --username $USER_NAME
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.0.1/pluto-bundle-3.0.1.zip
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.0.1/pluto-bundle-3.0.1.zip.asc
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.0.1/pluto-bundle-3.0.1.zip.md5
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.0.1/pluto-bundle-3.0.1.zip.sha1
+    svn add pluto-bundle-3.0.1.zip*
+    svn commit -m "PLUTO-716 Committing Binary Release for Pluto 3.0.1" --username $USER_NAME
+
 13. PUT THE RELEASE CANDIDATE UP FOR A VOTE
 
     a. Create a VOTE email thread on dev@ to record votes as replies. (See Example VOTE e-mail message)
@@ -188,42 +238,29 @@ Since 3.0.0
         Staging repositories (under Build Promotion) --> Name column --> org.apache.portals
         Click checkbox of the closed staging repo (org.apache.portals-XXX) and select Release.
 
-    b. Copy the source/binary artifacts over to the distribution area (managed by svnpubsub)
+    b. Move the source/binary artifacts over to the distribution area
        Command line examples to distribute artifacts (pluto-3.0.1-source-release.zip as an example below.):
 
-    $ cd ~/apache/portals/dist/ALL/portals
-    $ svn co https://dist.apache.org/repos/dist/release/portals/pluto 
-    $ cd pluto
-    $ echo "Copying source artifacts..."
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/pluto/3.0.1/pluto-3.0.1-source-release.zip
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/pluto/3.0.1/pluto-3.0.1-source-release.zip.asc
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/pluto/3.0.1/pluto-3.0.1-source-release.zip.md5
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/pluto/3.0.1/pluto-3.0.1-source-release.zip.sha1   
-    $ svn add pluto-3.0.1-source-release*
-    # portlet-api source, portlet-api javadoc 
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-sources.jar
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-sources.jar.asc
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-sources.jar.md5
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-sources.jar.sha1
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-javadoc.jar
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-javadoc.jar.asc
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-javadoc.jar.md5
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1-javadoc.jar.sha1
-    $ svn add portlet-api-3.0.1*
-    $ svn commit -m "Committing Source Release for pluto-3.0.1"
-
-    # portlet-api binary
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1.jar
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1.jar.asc
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1.jar.md5
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/javax/portlet/portlet-api/3.0.1/portlet-api-3.0.1.jar.sha1
-    $ svn add portlet-api-3.0.1.jar*
-    $ svn commit -m "Committing Binary Release for pluto-3.0.1"
-
-    # bundle
-    $ wget --no-check-certificate https://repository.apache.org/content/repositories/releases/org/apache/portals/pluto/pluto-bundle/3.0.1/pluto-bundle-3.0.1.zip*
-    $ svn add pluto-bundle-3.0.1.zip*
-    $ svn commit -m "Committing Binary Release for Pluto 3.0.1"
+        $ cd ~/asf/svn
+        $ mkdir release
+        $ cd release
+        $ svn co https://dist.apache.org/repos/dist/release/portals/pluto
+        $ cd pluto
+        $ mv ../dev/pluto/pluto-3.0.1-source-release*
+        $ svn add pluto-3.0.1-source-release*
+        $ mv ../dev/pluto/portlet-api-3.0.1*
+        $ svn add portlet-api-3.0.1*
+        $ svn commit -m "PLUTO-716 Committing Source Release for pluto-3.0.1" --username $USER_NAME
+        $ mv ../dev/pluto/portlet-api-3.0.1.jar*
+        $ svn add portlet-api-3.0.1.jar*
+        $ svn commit -m "PLUTO-716 Committing Binary Release for pluto-3.0.1" --username $USER_NAME
+        $ mv ../dev/pluto/pluto-bundle-3.0.1.zip* .
+        $ svn add pluto-bundle-3.0.1.zip*
+        $ svn commit -m "PLUTO-716 Committing Binary Release for Pluto 3.0.1" --username $USER_NAME
+        $ cd ../dev/pluto
+        $ FILES=`svn status | grep pluto | awk '{print $2}'`
+        $ svn rm $FILES
+        $ svn commit -m "PLUTO-716 Promoted artifacts from dev to release for Pluto 3.0.1" --username $USER_NAME
 
     WAIT 24hrs after committing releases for mirrors to replicate before announcing release
 
