@@ -269,18 +269,31 @@ Since 3.0.0
     Generate the Release Notes from the Version page
 
 16. UPDATE SITE DOCS
-    a. copy site/pluto/src/site/xdoc/release-notes.xml to site/pluto/src/site/xdoc/release-notes-[last version].xml
-    b. edit site/pluto/src/site/xdoc/v30/release-notes.xml
-        include generated release notes from step 13
-    c. edit site/pluto/src/site/xdoc/v3Features.xml
-    d. edit site/pluto/src/site/xdoc/
-    e. edit site/pluto/src/site/xdoc/getting-started.xml
-    f. edit site/pluto/src/site/xdoc/deploying.xml
-    g. edit site/pluto/src/site/xdoc/portlet-api.xml
-    f. edit Portals main site: site/src/site/xdoc/news.xml
-    g. mvn site
 
-    i. publish the docs to LIVE SITE
+    a. Copy the previous xdoc version folder to a new one which matches the release version, for example:
+        $ cd ~/asf/svn
+        $ svn checkout https://svn.apache.org/repos/asf/portals/site/
+        $ cp -r pluto/src/site/xdoc/v30 pluto/src/site/xdoc/v301
+
+    b. Edit the following files, replacing "v30" with "v301" and "3.0.0" with "3.0.1":
+        pluto/src/site/xdoc/v301/*
+        pluto/src/site/fml/faq.fml
+        pluto/src/site/site.xml
+        pluto/src/site/xdoc/download.xml
+        pluto/src/site/xdoc/index.xml
+        pluto/src/site/xdoc/news.xml
+        src/site/xdoc/news.xml
+
+    c. Edit site/pluto/src/site/xdoc/v30/release-notes.xml
+        include generated release notes from step 15
+
+    d. Generate the site:
+        $ cd ~/asf/svn/site
+        $ mvn site
+        $ cd pluto
+        $ mvn site
+
+    e. Publish the docs to LIVE SITE
 
     Commit changes into the SVN location of Apache Portals Maven Site documentation:
         https://svn.apache.org/repos/asf/portals/site/
@@ -329,41 +342,37 @@ Subject: [VOTE] Release Apache Portals Pluto 3.0.1
 
 Dear Apache Portals Pluto Team and community,
 
-I've staged a release candidate for the new Apache Portals Pluto 3.0.1 release. 
+I've staged a release candidate for the new Apache Portals Pluto 3.0.1 release.
 
 This release candidate includes:
 
-* a fully compliant Reference Implementation of the new Portlet 3.0 Specification per JCR-362
-    https://www.jcp.org/en/jsr/detail?id=362
-* a completed TCK (Test Compatibility Kit) for Portlet Spec 3.0
+* Fully compliant Reference Implementation of the new Portlet 3.0 Specification per JCR-362
+      https://www.jcp.org/en/jsr/detail?id=362
+* Fully completed TCK (Test Compatibility Kit) for Portlet Spec 3.0
 
-The Portlet API 3.0 specification has been approved by the JCP (JSR 362 Public Review Ballot), see:
-https://www.jcp.org/en/jsr/results?id=5896
-
-Please review the release candidate for this project which is available from the following maven staging repository:
-
+Please review the release candidate for this project which is found in the following maven staging repository:
 https://repository.apache.org/content/repositories/orgapacheportals-****/
 
-The full source distributions are also available from the above staging repository from the following locations:
+The source and other artifacts have been made available at the /dist/dev directory:
+https://dist.apache.org/repos/dist/dev/portals/pluto/
 
-https://repository.apache.org/content/repositories/orgapacheportals-****/org/apache/portals/pluto/pluto/3.0.1/pluto-3.0.1-source-release.zip
-https://repository.apache.org/content/repositories/orgapacheportals-****/org/apache/portals/pluto/portlet-api/3.0.1/portlet-api-3.0.1-sources.jar
-https://repository.apache.org/content/repositories/orgapacheportals-****/org/apache/portals/pluto/portlet-api/3.0.1/portlet-api-3.0.1-javadoc.jar
-https://repository.apache.org/content/repositories/orgapacheportals-****/org/apache/portals/pluto/portlet-api/3.0.1/portlet-api-3.0.1.jar
+(These files will be promoted to /dist/release if the vote passes)
 
-The release notes are available here:
-
+The Release Notes are available here:
 https://issues.apache.org/jira/secure/ReleaseNote.jspa?projectId=****&version=******
 
-In addition, we are providing a binary bundle of the Pluto Container with an Tomcat8 ready to use, based on this release candidate here:
-
-http://www.bluesunrise.com/downloads/pluto-3.0.1-bundle.zip
-
-The bundle can be tested by unzipping it, and running start.sh from the bin directory
-
 The KEYS file to verify the release artifacts signature can be found here:
-
 https://dist.apache.org/repos/dist/release/portals/pluto/KEYS
+
+Please review the release candidates and vote on releasing Apache Portals Pluto 3.0.1
+
+REMINDER: According to the following policy:
+http://www.apache.org/legal/release-policy.html#release-approval
+   "Before casting +1 binding votes, individuals are REQUIRED to download all
+    signed source code packages onto their own hardware, verify that they meet
+    all requirements of ASF policy on releases as described below, validate all
+    cryptographic signatures, compile as provided, and test the result on their
+    own platform."
 
 Please review the release candidates and vote on releasing Apache Portals Pluto 3.0.1
 
