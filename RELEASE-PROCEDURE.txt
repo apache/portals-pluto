@@ -246,15 +246,13 @@ Since 3.0.0
         $ cd release
         $ svn co https://dist.apache.org/repos/dist/release/portals/pluto
         $ cd pluto
-        $ mv ../dev/pluto/pluto-3.0.1-source-release*
+        $ mv ../../dev/portals/pluto/pluto-3.0.1-source-release* .
         $ svn add pluto-3.0.1-source-release*
-        $ mv ../dev/pluto/portlet-api-3.0.1*
-        $ svn add portlet-api-3.0.1*
         $ svn commit -m "PLUTO-716 Committing Source Release for pluto-3.0.1" --username $USER_NAME
-        $ mv ../dev/pluto/portlet-api-3.0.1.jar*
-        $ svn add portlet-api-3.0.1.jar*
+        $ mv ../../dev/portals/pluto/portlet-api-3.0.1* .
+        $ svn add portlet-api-3.0.1*
         $ svn commit -m "PLUTO-716 Committing Binary Release for pluto-3.0.1" --username $USER_NAME
-        $ mv ../dev/pluto/pluto-bundle-3.0.1.zip* .
+        $ mv ../../dev/portals/pluto/pluto-bundle-3.0.1.zip* .
         $ svn add pluto-bundle-3.0.1.zip*
         $ svn commit -m "PLUTO-716 Committing Binary Release for Pluto 3.0.1" --username $USER_NAME
         $ cd ../dev/pluto
@@ -398,7 +396,7 @@ Thank you all for voting!
 
 We will promote the release candidates to the Maven Central Repository and upload the source and binary distributions to the official download area.
 
-An announcement about the new release will be send out as soon as the Jetspeed website is updated and the source and binary distributions have been mirrored.
+An announcement about the new release will be send out as soon as the Pluto website is updated and the source and binary distributions have been mirrored.
 
 Regards,
 
