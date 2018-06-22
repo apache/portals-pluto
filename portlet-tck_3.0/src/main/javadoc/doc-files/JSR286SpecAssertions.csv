@@ -802,7 +802,6 @@ SPEC2_26;Include JSP Render;actionURL18;TRUE;If the optional actionURL "copyCurr
 SPEC2_26;Include JSP Render;actionURL19;TRUE;If the optional actionURL "copyCurrentRenderParameters" attribute is set to true, additional parameters specified with the <portlet:param> element are merged with the render parameters
 SPEC2_26;Include JSP Render;actionURL20;TRUE;If the optional actionURL "copyCurrentRenderParameters" attribute is set to true, additional parameters specified with the <portlet:param> element appear in the values array before the render parameter values if there is a name conflict
 SPEC2_26;Include JSP Render;actionURL21;TRUE;If the optional actionURL "copyCurrentRenderParameters" attribute is set to false, the current render parameters are not attached to the URL
-SPEC2_26;Include JSP Render;actionURL22;TRUE;If the "copyCurrentRenderParameters" attribute specifies an invalid value, a JspException is thrown
 SPEC2_26;Include JSP Render;actionURL23;TRUE;The "copyCurrentRenderParameters" attribute is not specified, the security setting is retained
 SPEC2_26;Include JSP Render;actionURL24;FALSE;If the optional actionURL "escapeXML" attribute is set to true, the characters "<>&'\"" are converted to their entity codes
 SPEC2_26;Include JSP Render;actionURL25;TRUE;If the optional actionURL "escapeXML" attribute is set to false, the characters "<>&'\"" are not converted to their entity codes
@@ -832,7 +831,6 @@ SPEC2_26;Include JSP Render;renderURL18;TRUE;If the optional renderURL "copyCurr
 SPEC2_26;Include JSP Render;renderURL19;TRUE;If the optional renderURL "copyCurrentRenderParameters" attribute is set to true, additional parameters specified with the <portlet:param> element are merged with the render parameters
 SPEC2_26;Include JSP Render;renderURL20;TRUE;If the optional renderURL "copyCurrentRenderParameters" attribute is set to true, additional parameters specified with the <portlet:param> element appear in the values array before the render parameter values if there is a name conflict
 SPEC2_26;Include JSP Render;renderURL21;TRUE;If the optional renderURL "copyCurrentRenderParameters" attribute is set to false, the current render parameters are not attached to the URL
-SPEC2_26;Include JSP Render;renderURL22;TRUE;If the "copyCurrentRenderParameters" attribute specifies an invalid value, a JspException is thrown
 SPEC2_26;Include JSP Render;renderURL23;TRUE;The "copyCurrentRenderParameters" attribute is not specified, the security setting is retained
 SPEC2_26;Include JSP Render;renderURL24;FALSE;If the optional renderURL "escapeXML" attribute is set to true, the characters "<>&'\"" are converted to their entity codes
 SPEC2_26;Include JSP Render;renderURL25;TRUE;If the optional renderURL "escapeXML" attribute is set to false, the characters "<>&'\"" are not converted to their entity codes
@@ -852,7 +850,6 @@ SPEC2_26;Include JSP Render;resourceURL12;TRUE;If the optional resourceURL "copy
 SPEC2_26;Include JSP Render;resourceURL13;TRUE;If the optional resourceURL "copyCurrentRenderParameters" attribute is set to true, additional parameters specified with the <portlet:param> element are merged with the render parameters
 SPEC2_26;Include JSP Render;resourceURL14;TRUE;If the optional resourceURL "copyCurrentRenderParameters" attribute is set to true, additional parameters specified with the <portlet:param> element appear in the values array before the render parameter values if there is a name conflict
 SPEC2_26;Include JSP Render;resourceURL15;TRUE;If the optional resourceURL "copyCurrentRenderParameters" attribute is set to false, the current render parameters are not attached to the URL
-SPEC2_26;Include JSP Render;resourceURL16;TRUE;If the "copyCurrentRenderParameters" attribute specifies an invalid value, a JspException is thrown
 SPEC2_26;Include JSP Render;resourceURL17;TRUE;The "copyCurrentRenderParameters" attribute is not specified, the security setting is retained
 SPEC2_26;Include JSP Render;resourceURL18;FALSE;If the optional resourceURL "escapeXML" attribute is set to true, the characters "<>&'\"" are converted to their entity codes
 SPEC2_26;Include JSP Render;resourceURL19;TRUE;If the optional resourceURL "escapeXML" attribute is set to false, the characters "<>&'\"" are not converted to their entity codes
@@ -935,7 +932,6 @@ SPEC2_26;Include JSP Resource;actionURL18;TRUE;If the optional actionURL "copyCu
 SPEC2_26;Include JSP Resource;actionURL19;TRUE;If the optional actionURL "copyCurrentRenderParameters" attribute is set to true, additional parameters specified with the <portlet:param> element are merged with the render parameters
 SPEC2_26;Include JSP Resource;actionURL20;TRUE;If the optional actionURL "copyCurrentRenderParameters" attribute is set to true, additional parameters specified with the <portlet:param> element appear in the values array before the render parameter values if there is a name conflict
 SPEC2_26;Include JSP Resource;actionURL21;TRUE;If the optional actionURL "copyCurrentRenderParameters" attribute is set to false, the current render parameters are not attached to the URL
-SPEC2_26;Include JSP Resource;actionURL22;TRUE;If the "copyCurrentRenderParameters" attribute specifies an invalid value, a JspException is thrown
 SPEC2_26;Include JSP Resource;actionURL23;TRUE;The "copyCurrentRenderParameters" attribute is not specified, the security setting is retained
 SPEC2_26;Include JSP Resource;actionURL24;FALSE;If the optional actionURL "escapeXML" attribute is set to true, the characters "<>&'\"" are converted to their entity codes
 SPEC2_26;Include JSP Resource;actionURL25;TRUE;If the optional actionURL "escapeXML" attribute is set to false, the characters "<>&'\"" are not converted to their entity codes
@@ -965,7 +961,6 @@ SPEC2_26;Include JSP Resource;renderURL18;TRUE;If the optional renderURL "copyCu
 SPEC2_26;Include JSP Resource;renderURL19;TRUE;If the optional renderURL "copyCurrentRenderParameters" attribute is set to true, additional parameters specified with the <portlet:param> element are merged with the render parameters
 SPEC2_26;Include JSP Resource;renderURL20;TRUE;If the optional renderURL "copyCurrentRenderParameters" attribute is set to true, additional parameters specified with the <portlet:param> element appear in the values array before the render parameter values if there is a name conflict
 SPEC2_26;Include JSP Resource;renderURL21;TRUE;If the optional renderURL "copyCurrentRenderParameters" attribute is set to false, the current render parameters are not attached to the URL
-SPEC2_26;Include JSP Resource;renderURL22;TRUE;If the "copyCurrentRenderParameters" attribute specifies an invalid value, a JspException is thrown
 SPEC2_26;Include JSP Resource;renderURL23;TRUE;The "copyCurrentRenderParameters" attribute is not specified, the security setting is retained
 SPEC2_26;Include JSP Resource;renderURL24;FALSE;If the optional renderURL "escapeXML" attribute is set to true, the characters "<>&'\"" are converted to their entity codes
 SPEC2_26;Include JSP Resource;renderURL25;TRUE;If the optional renderURL "escapeXML" attribute is set to false, the characters "<>&'\"" are not converted to their entity codes
@@ -985,7 +980,6 @@ SPEC2_26;Include JSP Resource;resourceURL12;TRUE;If the optional resourceURL "co
 SPEC2_26;Include JSP Resource;resourceURL13;TRUE;If the optional resourceURL "copyCurrentRenderParameters" attribute is set to true, additional parameters specified with the <portlet:param> element are merged with the render parameters
 SPEC2_26;Include JSP Resource;resourceURL14;TRUE;If the optional resourceURL "copyCurrentRenderParameters" attribute is set to true, additional parameters specified with the <portlet:param> element appear in the values array before the render parameter values if there is a name conflict
 SPEC2_26;Include JSP Resource;resourceURL15;TRUE;If the optional resourceURL "copyCurrentRenderParameters" attribute is set to false, the current render parameters are not attached to the URL
-SPEC2_26;Include JSP Resource;resourceURL16;TRUE;If the "copyCurrentRenderParameters" attribute specifies an invalid value, a JspException is thrown
 SPEC2_26;Include JSP Resource;resourceURL17;TRUE;The "copyCurrentRenderParameters" attribute is not specified, the security setting is retained
 SPEC2_26;Include JSP Resource;resourceURL18;FALSE;If the optional resourceURL "escapeXML" attribute is set to true, the characters "<>&'\"" are converted to their entity codes
 SPEC2_26;Include JSP Resource;resourceURL19;TRUE;If the optional resourceURL "escapeXML" attribute is set to false, the characters "<>&'\"" are not converted to their entity codes
