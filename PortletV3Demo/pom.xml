@@ -129,6 +129,14 @@
            <id>liferay</id>
            <dependencies>
                <dependency>
+                   <groupId>com.liferay.portal</groupId>
+                   <artifactId>com.liferay.cdi.bean.portlet.extension</artifactId>
+               </dependency>
+               <dependency>
+                   <groupId>org.jboss.weld.servlet</groupId>
+                   <artifactId>weld-servlet</artifactId>
+               </dependency>
+               <dependency>
                    <groupId>org.slf4j</groupId>
                    <artifactId>slf4j-log4j12</artifactId>
                </dependency>
