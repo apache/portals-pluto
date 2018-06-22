@@ -419,33 +419,27 @@ To      announce@apache.org
 
 Subject: [ANNOUNCE] Apache Portals Pluto 3.0.1 release
 
-The Apache Portals team is pleased to announce the General Availability of Apache Pluto version 3.0.1
+The Apache Portals team is pleased to announce the General Availability of
+Apache Pluto version 3.0.1.
 
-The JSR 362 Portlet Specification 3.0 introduces many improvements to the portlet programming model.
-It adds configuration through annotation, asynchronous support similar to the servlet asynchronous support,
-multipart form support, support for CDI beans, method annotation support allowing portlet methods to
-reside in different classes, and a JavaScript API that allows portal pages to function as single-page applications.
-
-The Pluto 3.0 portlet container implements all JSR 362 features and passes the TCK. While doing so,
-Pluto 3.0 remains fully compliant to the 2.0 Portlet Specification, meaning that version 2.0 portlets can run on
-the version 3.0 portlet container.
+This is a maintenance release that builds on the success of version 3.0.0,
+which was the first release to implement all JSR 362 features and pass the new
+Portlet 3.0 TCK.
 
 Additional Resources:
 
-The Java Community Process JSR 362 page will allow you to access the complete specification for full details.
+The Java Community Process JSR 362 page will allow you to access the complete
+specification for full details.
 
 http://jcp.org/en/jsr/detail?id=362
-
-The JavaOne 2016 presentation "Portlet Specification 3.0 Is Here!" provides a version 3.0 overview.
-
-https://static.rainfocus.com/oracle/oow16/sess/1462801563632001pOv8/ppt/JSR362-JavaOne-2016a.pdf
 
 The Portlet API Version 3.0 page documents the portlet programming interface.
 
 http://portals.apache.org/pluto/portlet-3.0-apidocs/index.html
 
-For a full overview of all the Pluto features, see the online documentation. To get up and running quickly,
-download the bundle which comes with a bundled latest Tomcat 8 ready to run.
+For a full overview of all the Pluto features, see the online documentation.
+To get up and running quickly, download the bundle which comes with a bundled
+latest Tomcat 8 ready to run.
 
 Features:
 http://portals.apache.org/pluto/v30/v3Features.html
