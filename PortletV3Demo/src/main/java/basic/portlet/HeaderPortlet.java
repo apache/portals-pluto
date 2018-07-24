@@ -83,7 +83,7 @@ public class HeaderPortlet extends GenericPortlet {
       resp.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, link);
       
       // Add cookies
-      Cookie c = new Cookie(this.getPortletName(), "something special");
+      Cookie c = new Cookie(this.getPortletName(), "something-special");
       c.setMaxAge(60);
       resp.addProperty(c);
       c = new Cookie("Author", "Scott");
