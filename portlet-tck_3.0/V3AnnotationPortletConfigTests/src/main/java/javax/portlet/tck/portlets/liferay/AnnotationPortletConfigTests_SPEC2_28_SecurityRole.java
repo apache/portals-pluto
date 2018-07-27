@@ -25,7 +25,7 @@ import javax.portlet.tck.portlets.AnnotationPortletConfigTests_SPEC2_28_Security
 
 @PortletConfiguration(
 	portletName = "AnnotationPortletConfigTests_SPEC2_28_SecurityRole",
-	roleRefs = @SecurityRoleRef(roleName = "User", roleLink = "User")
+	roleRefs = @SecurityRoleRef(roleName = "user", roleLink = "user")
 )
 public class AnnotationPortletConfigTests_SPEC2_28_SecurityRole extends
 	AnnotationPortletConfigTests_SPEC2_28_SecurityRoleBase implements

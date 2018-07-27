@@ -68,4 +68,8 @@
 		<portlet-name>AnnotationPortletConfigTests_SPEC2_28_SupportedLocales</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
+	<role-mapper>
+		<role-name>user</role-name>
+		<role-link>User</role-link>
+	</role-mapper>
 </liferay-portlet-app>
