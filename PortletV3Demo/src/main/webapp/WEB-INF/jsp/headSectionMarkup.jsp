@@ -40,6 +40,7 @@ headerResponse.addProperty("JspHeader", "Set in included JSP.");
 </style>
    
 <script type="text/javascript">
+//<![CDATA[
 (function () {
    'use strict';
    var cdiv = '<portlet:namespace/>cookieDiv',
@@ -57,6 +58,7 @@ bootstrap = function () {
 // execute when document has been loaded 
 window.addEventListener('load', bootstrap, false);
 }());
+//]]>
 </script>
 
 <p>Hi</p>
