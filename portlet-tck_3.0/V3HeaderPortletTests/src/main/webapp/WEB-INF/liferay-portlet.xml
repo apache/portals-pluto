@@ -63,6 +63,7 @@
 	<portlet>
 		<portlet-name>HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+		<header-request-attribute-prefix>trAttr1</header-request-attribute-prefix>
 	</portlet>
 	<portlet>
 		<portlet-name>HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2</portlet-name>
