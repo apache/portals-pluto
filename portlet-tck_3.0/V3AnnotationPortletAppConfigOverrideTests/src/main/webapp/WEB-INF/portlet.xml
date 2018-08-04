@@ -53,7 +53,29 @@
       </portlet-info>
       <supported-public-render-parameter>tr2_public</supported-public-render-parameter>
    </portlet>
-   
+
+	<custom-portlet-mode>
+		<description>For testing custom portlet mode</description>
+		<portlet-mode>custom1</portlet-mode>
+		<portal-managed>false</portal-managed>
+	</custom-portlet-mode>
+	<custom-portlet-mode>
+		<description>For testing custom portlet mode</description>
+		<portlet-mode>custom2</portlet-mode>
+		<portal-managed>false</portal-managed>
+	</custom-portlet-mode>
+
+	<custom-window-state>
+		<description>For testing custom window state</description>
+		<window-state>custom1</window-state>
+	</custom-window-state>
+	<custom-window-state>
+		<description>For testing custom window state</description>
+		<window-state>custom2</window-state>
+	</custom-window-state>
+
+   <default-namespace>http://www.apache.org/portals/pluto/portlet-tck_3.0/overridden</default-namespace>
+
    <event-definition>
       <qname>tck:AnnotationPortletAppConfigOverrideTests_SPEC1_28_EventConfiguration1</qname>
       <value-type>java.lang.String</value-type>
@@ -73,32 +95,10 @@
 		<identifier>tr2_public</identifier>
 		<qname>tck:tr2_public</qname>
 	</public-render-parameter>
-   
-   <default-namespace>http://www.apache.org/portals/pluto/portlet-tck_3.0/overridden</default-namespace>
-   
+
    <container-runtime-option>
 		<name>javax.portlet.escapeXml</name>
 		<value>true</value>
 	</container-runtime-option>
-	
-	<custom-portlet-mode>
-		<description>For testing custom portlet mode</description>
-		<portlet-mode>custom1</portlet-mode>
-		<portal-managed>false</portal-managed>
-	</custom-portlet-mode>
-	<custom-portlet-mode>
-		<description>For testing custom portlet mode</description>
-		<portlet-mode>custom2</portlet-mode>
-		<portal-managed>false</portal-managed>
-	</custom-portlet-mode> 
-	
-	<custom-window-state>
-		<description>For testing custom window state</description>
-		<window-state>custom1</window-state>
-	</custom-window-state>
-	<custom-window-state>
-		<description>For testing custom window state</description>
-		<window-state>custom2</window-state>
-	</custom-window-state>
-   
+
 </portlet-app>
