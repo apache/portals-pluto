@@ -104,7 +104,9 @@ public class DependencyPortlet {
             resp.addDependency("Invalid", "attempt", "1.1.1", dep);
             xmap.put(disp, "No exception");
          } catch (Exception e) {
-            xmap.put(disp, e.toString());
+            String exceptionMsg = e.toString();
+            exceptionMsg = exceptionMsg.replaceAll("&", "&amp;").replaceAll("<", "&lt;");
+            xmap.put(disp, exceptionMsg);
          }
       }
       req.getPortletSession().setAttribute(ATTRIB_XMAP, xmap);
