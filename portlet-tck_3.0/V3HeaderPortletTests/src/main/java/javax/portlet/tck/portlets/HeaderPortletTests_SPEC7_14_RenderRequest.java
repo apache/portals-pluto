@@ -38,7 +38,6 @@ import javax.portlet.tck.util.ModuleTestCaseDetails;
 
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC7_14_RENDERREQUEST_GETETAG;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -60,25 +59,23 @@ public class HeaderPortletTests_SPEC7_14_RenderRequest implements Portlet, Heade
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+   public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException, IOException {
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
+   public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException, IOException {
 
-      PrintWriter writer = portletResp.getWriter();
-      String msg = (String) portletReq.getPortletSession().getAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC7_14_RenderRequest",
-            PORTLET_SCOPE);
+      PrintWriter writer = renderResponse.getWriter();
+      String msg = (String) renderRequest.getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC7_14_RenderRequest");
       writer.write("<p>" + msg + "</p>\n");
-      portletReq.getPortletSession().removeAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC7_14_RenderRequest",
-            PORTLET_SCOPE);
+      renderRequest.removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC7_14_RenderRequest");
    }
    
    @Override
-   public void renderHeaders(HeaderRequest portletReq,
-         HeaderResponse PortletResp) throws PortletException, IOException {
+   public void renderHeaders(HeaderRequest headerRequest,
+         HeaderResponse headerResponse) throws PortletException, IOException {
       
       StringWriter writer = new StringWriter();
 
@@ -88,15 +85,15 @@ public class HeaderPortletTests_SPEC7_14_RenderRequest implements Portlet, Heade
       /* Details: "Method getETag(): Returns null if there is no cached response."  */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC7_14_RENDERREQUEST_GETETAG);
-         if(portletReq.getETag()==null){
+         if(headerRequest.getETag()==null){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
       }
       
-      portletReq.getPortletSession().setAttribute(
+      headerRequest.setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC7_14_RenderRequest",
-            writer.toString(), PORTLET_SCOPE);
+            writer.toString());
    }
 
 }

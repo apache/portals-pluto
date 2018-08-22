@@ -77,28 +77,26 @@ public class HeaderPortletTests_SPEC14_HeaderReq
    }
 
    @Override
-   public void processAction(ActionRequest portletReq,
-         ActionResponse portletResp) throws PortletException, IOException {
+   public void processAction(ActionRequest actionRequest,
+         ActionResponse actionResponse) throws PortletException, IOException {
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp)
+   public void render(RenderRequest renderRequest, RenderResponse renderResponse)
          throws PortletException, IOException {
 
-      PrintWriter writer = portletResp.getWriter();
-      String msg = (String) portletReq.getPortletSession().getAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_HeaderReq",
-            PORTLET_SCOPE);
+      PrintWriter writer = renderResponse.getWriter();
+      String msg = (String) renderRequest.getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_HeaderReq");
       writer.write("<p>" + msg + "</p>\n");
-      portletReq.getPortletSession().removeAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_HeaderReq",
-            PORTLET_SCOPE);
+      renderRequest.removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_HeaderReq");
 
    }
 
    @Override
-   public void renderHeaders(HeaderRequest portletReq,
-         HeaderResponse portletResp) throws PortletException, IOException {
+   public void renderHeaders(HeaderRequest headerRequest,
+         HeaderResponse headerResponse) throws PortletException, IOException {
 
       StringWriter writer = new StringWriter();
 
@@ -113,8 +111,8 @@ public class HeaderPortletTests_SPEC14_HeaderReq
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE1);
-         if (portletReq.getResponseContentType() != null
-               && !portletReq.getResponseContentType().isEmpty())
+         if (headerRequest.getResponseContentType() != null
+               && !headerRequest.getResponseContentType().isEmpty())
             result.setTcSuccess(true);
          result.writeTo(writer);
       }
@@ -129,7 +127,7 @@ public class HeaderPortletTests_SPEC14_HeaderReq
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE2);
-         Enumeration<String> contentTypesTr1 = portletReq
+         Enumeration<String> contentTypesTr1 = headerRequest
                .getResponseContentTypes();
          if (contentTypesTr1 != null && contentTypesTr1.hasMoreElements()
                && !contentTypesTr1.nextElement().isEmpty())
@@ -144,8 +142,8 @@ public class HeaderPortletTests_SPEC14_HeaderReq
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE3);
-         if (portletReq.getResponseContentTypes().nextElement()
-               .equals(portletReq.getResponseContentType()))
+         if (headerRequest.getResponseContentTypes().nextElement()
+               .equals(headerRequest.getResponseContentType()))
             result.setTcSuccess(true);
          result.writeTo(writer);
       }
@@ -158,11 +156,11 @@ public class HeaderPortletTests_SPEC14_HeaderReq
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE4);
          result.appendTcDetail("Cannot really test this. ");
-         if (portletReq.getResponseContentType().equals("text/html")) {
+         if (headerRequest.getResponseContentType().equals("text/html")) {
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail(
-                  "Content type is " + portletReq.getResponseContentType());
+                  "Content type is " + headerRequest.getResponseContentType());
          }
          result.writeTo(writer);
       }
@@ -174,11 +172,11 @@ public class HeaderPortletTests_SPEC14_HeaderReq
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE5);
-         if (portletReq.getResponseContentType().equals("text/html")) {
+         if (headerRequest.getResponseContentType().equals("text/html")) {
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail(
-                  "Content type is " + portletReq.getResponseContentType());
+                  "Content type is " + headerRequest.getResponseContentType());
          }
          result.writeTo(writer);
       }
@@ -191,7 +189,7 @@ public class HeaderPortletTests_SPEC14_HeaderReq
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_WINDOWID1);
-         String windowId = portletReq.getWindowID();
+         String windowId = headerRequest.getWindowID();
          if (windowId != null) {
             result.setTcSuccess(true);
             result.appendTcDetail("Window ID is " + windowId);
@@ -209,18 +207,18 @@ public class HeaderPortletTests_SPEC14_HeaderReq
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_WINDOWID4);
-         portletReq.getPortletSession().setAttribute("tr5",
-               portletReq.getWindowID(), PORTLET_SCOPE);
-         String tr5SessionAttribute = (String) portletReq.getPortletSession()
+         headerRequest.getPortletSession().setAttribute("tr5",
+               headerRequest.getWindowID(), PORTLET_SCOPE);
+         String tr5SessionAttribute = (String) headerRequest.getPortletSession()
                .getAttribute(
-                     "javax.portlet.p." + portletReq.getWindowID() + "?tr5",
+                     "javax.portlet.p." + headerRequest.getWindowID() + "?tr5",
                      APPLICATION_SCOPE);
          if (tr5SessionAttribute != null
-               && tr5SessionAttribute.equals(portletReq.getWindowID())) {
+               && tr5SessionAttribute.equals(headerRequest.getWindowID())) {
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail("Couldn't find javax.portlet.p."
-                  + portletReq.getWindowID() + ".tr5 attribute");
+                  + headerRequest.getWindowID() + ".tr5 attribute");
          }
          result.writeTo(writer);
       }
@@ -234,8 +232,8 @@ public class HeaderPortletTests_SPEC14_HeaderReq
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE10);
          if (!StringUtils.containsIgnoreCase(
-               portletReq.getResponseContentType(),
-               portletResp.getCharacterEncoding()))
+               headerRequest.getResponseContentType(),
+               headerResponse.getCharacterEncoding()))
             result.setTcSuccess(true);
          result.writeTo(writer);
       }
@@ -249,7 +247,7 @@ public class HeaderPortletTests_SPEC14_HeaderReq
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE11);
-         Enumeration<String> contentTypesTr7 = portletReq
+         Enumeration<String> contentTypesTr7 = headerRequest
                .getResponseContentTypes();
          if (contentTypesTr7.nextElement().equals("text/html")
                && !contentTypesTr7.hasMoreElements())
@@ -263,7 +261,7 @@ public class HeaderPortletTests_SPEC14_HeaderReq
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC14_HEADERREQ_CONTENTTYPE13);
-         if (portletResp.getCharacterEncoding() != null) {
+         if (headerResponse.getCharacterEncoding() != null) {
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail("Character Encoding is null");
@@ -271,9 +269,9 @@ public class HeaderPortletTests_SPEC14_HeaderReq
          result.writeTo(writer);
       }
 
-      portletReq.getPortletSession().setAttribute(
+      headerRequest.setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_HeaderReq",
-            writer.toString(), PORTLET_SCOPE);
+            writer.toString());
    }
 
 }

@@ -44,7 +44,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY3;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -69,22 +68,20 @@ public class HeaderPortletTests_SPEC15_HeaderResponse2 implements Portlet, Heade
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+   public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException, IOException {
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
+   public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException, IOException {
       
-      PrintWriter writer = portletResp.getWriter();
+      PrintWriter writer = renderResponse.getWriter();
       
-      String msg = (String) portletReq.getPortletSession().getAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_HeaderResponse2",
-            PORTLET_SCOPE);
+      String msg = (String) renderRequest.getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_HeaderResponse2");
       writer.write("<p>" + msg + "</p>\n");
-      portletReq.getPortletSession().removeAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_HeaderResponse2",
-            PORTLET_SCOPE);
-      
+      renderRequest.removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_HeaderResponse2");
+
       /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_getPortletOutputStream */
       /* Details: "Data written to the HeaderResponse writer is added to the        */
       /* aggregated portal document HEAD section."                                  */
@@ -111,7 +108,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse2 implements Portlet, Heade
    }
 
    @Override
-   public void renderHeaders(HeaderRequest portletReq, HeaderResponse portletResp)
+   public void renderHeaders(HeaderRequest headerRequest, HeaderResponse headerResponse)
          throws PortletException, IOException {
       
       StringWriter writer = new StringWriter();
@@ -122,7 +119,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse2 implements Portlet, Heade
       /* aggregated portal document HEAD section."                                  */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_GETPORTLETOUTPUTSTREAM);
-         OutputStream os = portletResp.getPortletOutputStream();
+         OutputStream os = headerResponse.getPortletOutputStream();
          String script = "<script class='output-stream-tag'></script>";
          os.write(script.getBytes(Charset.forName("UTF-8")));
          os.close();
@@ -135,14 +132,14 @@ public class HeaderPortletTests_SPEC15_HeaderResponse2 implements Portlet, Heade
       /* portal."                                                                   */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY);
-         portletResp.addDependency("PortletHub", "javax.portlet", "3.0.0");
+         headerResponse.addDependency("PortletHub", "javax.portlet", "3.0.0");
          result.writeTo(writer);
       }
 
       /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency2        */
       /* Details: "Method addDependency(String name, String scope, String version)  */
       /* - The dependency added by this method can be shared with other portlets."  */
-      portletResp.addDependency("PortletHub", "javax.portlet", "3.0.0");
+      headerResponse.addDependency("PortletHub", "javax.portlet", "3.0.0");
       
       /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_addDependency3        */
       /* Details: "Method addDependency(String name, String scope, String version)  */
@@ -156,9 +153,9 @@ public class HeaderPortletTests_SPEC15_HeaderResponse2 implements Portlet, Heade
          result.writeTo(writer);
       }
       
-      portletReq.getPortletSession().setAttribute(
+      headerRequest.setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_HeaderResponse2",
-            writer.toString(), PORTLET_SCOPE);
+            writer.toString());
    }
 
 }

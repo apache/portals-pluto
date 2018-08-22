@@ -41,7 +41,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPRIVATEPARAMETERMAP3;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPUBLICPARAMETERMAP3;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 
 /**
@@ -64,26 +63,24 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2 implements Port
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+   public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException, IOException {
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
+   public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException, IOException {
       
-      PrintWriter writer = portletResp.getWriter();
+      PrintWriter writer = renderResponse.getWriter();
       
-      String msg = (String) portletReq.getPortletSession().getAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2",
-            PORTLET_SCOPE);
+      String msg = (String) renderRequest.getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2");
       writer.write("<p>" + msg + "</p>\n");
-      portletReq.getPortletSession().removeAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2",
-            PORTLET_SCOPE);
+      renderRequest.removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2");
 
    }
 
    @Override
-   public void renderHeaders(HeaderRequest portletReq, HeaderResponse portletResp)
+   public void renderHeaders(HeaderRequest headerRequest, HeaderResponse headerResponse)
          throws PortletException, IOException {
       
       StringWriter writer = new StringWriter();
@@ -95,7 +92,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2 implements Port
       /* there are no parameters available"                                         */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETERNAMES2);
-         if(!portletReq.getParameterNames().hasMoreElements()){
+         if(!headerRequest.getParameterNames().hasMoreElements()){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
@@ -106,7 +103,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2 implements Port
       /* exist"                                                                     */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETERMAP3);
-         if(portletReq.getParameterMap().isEmpty()){
+         if(headerRequest.getParameterMap().isEmpty()){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
@@ -117,7 +114,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2 implements Port
       /* private parameters exist"                                                  */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPRIVATEPARAMETERMAP3);
-         if(portletReq.getPrivateParameterMap().isEmpty()){
+         if(headerRequest.getPrivateParameterMap().isEmpty()){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
@@ -128,15 +125,15 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2 implements Port
       /* public parameters exist"                                                   */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPUBLICPARAMETERMAP3);
-         if(portletReq.getPublicParameterMap().isEmpty()){
+         if(headerRequest.getPublicParameterMap().isEmpty()){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
       }
       
-      portletReq.getPortletSession().setAttribute(
+      headerRequest.setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2",
-            writer.toString(), PORTLET_SCOPE);
+            writer.toString());
       
    }
 

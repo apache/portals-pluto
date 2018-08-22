@@ -49,7 +49,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_RENDERSTATE_APIHEADER_GETPORTLETMODE;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_RENDERSTATE_APIHEADER_GETWINDOWSTATE;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -73,25 +72,23 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet,
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+   public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException, IOException {
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
+   public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException, IOException {
      
-      PrintWriter writer = portletResp.getWriter();
-      String msg = (String) portletReq.getPortletSession().getAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",
-            PORTLET_SCOPE);
+      PrintWriter writer = renderResponse.getWriter();
+      String msg = (String) renderRequest.getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader");
       writer.write("<p>" + msg + "</p>\n");
-      portletReq.getPortletSession().removeAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",
-            PORTLET_SCOPE);
+      renderRequest.removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader");
 
    }
 
    @Override
-   public void renderHeaders(HeaderRequest portletReq, HeaderResponse portletResp)
+   public void renderHeaders(HeaderRequest headerRequest, HeaderResponse headerResponse)
          throws PortletException, IOException {
       StringWriter writer = new StringWriter();
       
@@ -101,7 +98,7 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet,
       /* Details: "Method getPortletMode(): Returns current PortletMode "           */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_RENDERSTATE_APIHEADER_GETPORTLETMODE);
-         if(portletReq.getPortletMode().equals(PortletMode.VIEW)){
+         if(headerRequest.getPortletMode().equals(PortletMode.VIEW)){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
@@ -111,7 +108,7 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet,
       /* Details: "Method getWindowState(): Returns current WindowState"            */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_RENDERSTATE_APIHEADER_GETWINDOWSTATE);
-         if(portletReq.getWindowState().equals(WindowState.NORMAL)){
+         if(headerRequest.getWindowState().equals(WindowState.NORMAL)){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
@@ -121,7 +118,7 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet,
       /* Details: "Method getRenderParameters(): Returns an immutable               */
       /* RenderParameters object representing the private and public render         */
       /* parameters"                                                                */
-      RenderParameters renderParams = portletReq.getRenderParameters();
+      RenderParameters renderParams = headerRequest.getRenderParameters();
       if (!renderParams.isEmpty() && renderParams.isPublic("tr3_public")
             && renderParams.getValue("tr3_public") != null
             && renderParams.getValue("tr3_public").equals("true")
@@ -132,7 +129,7 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet,
          result.setTcSuccess(true);
          result.writeTo(writer);
       } else {
-         RenderURL renderURL = portletResp.createRenderURL();
+         RenderURL renderURL = headerResponse.createRenderURL();
          MutableRenderParameters mutableRenderParams = renderURL
                .getRenderParameters();
          mutableRenderParams.setValue("tr3_private", "true");
@@ -143,9 +140,9 @@ public class HeaderPortletTests_SPEC14_RenderState_ApiHeader implements Portlet,
          tb.writeTo(writer);
       }
       
-      portletReq.getPortletSession().setAttribute(
+      headerRequest.setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_RenderState_ApiHeader",
-            writer.toString(), PORTLET_SCOPE);
+            writer.toString());
             
    }
 

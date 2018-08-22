@@ -60,7 +60,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_CREATEELEMENT5;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_CREATEELEMENT6;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -82,21 +81,19 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+   public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException, IOException {
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
+   public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException, IOException {
 
-      PrintWriter writer = portletResp.getWriter();
-      String msg = ((String) portletReq.getPortletSession().getAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_PortletResponse_ApiHeader",
-            PORTLET_SCOPE));
+      PrintWriter writer = renderResponse.getWriter();
+      String msg = (String) renderRequest.getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_PortletResponse_ApiHeader");
       writer.write("<p>" + msg + "</p>");
-      portletReq.getPortletSession().removeAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_PortletResponse_ApiHeader",
-            PORTLET_SCOPE);
-      
+      renderRequest.removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_PortletResponse_ApiHeader");
+
       /* TestCase: V3HeaderPortletTests_SPEC15_PortletResponse_ApiHeader_addPropertyB1 */
       /* Details: "Method addProperty(String, org.w3c.dom.Element): Adds an XML DOM */
       /* Element to the response for the specified key"                             */
@@ -125,7 +122,7 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
    }
 
    @Override
-   public void renderHeaders(HeaderRequest portletReq, HeaderResponse portletResp)
+   public void renderHeaders(HeaderRequest headerRequest, HeaderResponse headerResponse)
          throws PortletException, IOException {
       
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
@@ -138,7 +135,7 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_ADDPROPERTYA2);
          try{
-            portletResp.addProperty(null);
+            headerResponse.addProperty(null);
             result.appendTcDetail("Failed because no exception is raised.");
          } catch (IllegalArgumentException e){
            result.setTcSuccess(true);
@@ -152,13 +149,13 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* Element to the response for the specified key"                             */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_ADDPROPERTYB1);
-         if(portletReq.getPortalContext().getProperty(PortalContext.MARKUP_HEAD_ELEMENT_SUPPORT)==null){
+         if(headerRequest.getPortalContext().getProperty(PortalContext.MARKUP_HEAD_ELEMENT_SUPPORT)==null){
             result.setTcSuccess(true);
             result.appendTcDetail("addProperty(String, org.w3c.dom.Element) is not supported by portlal");
          } else {
-            Element element = portletResp.createElement("script");
+            Element element = headerResponse.createElement("script");
             element.setAttribute("class", "testProperty1");
-            portletResp.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, element);
+            headerResponse.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, element);
          } 
          result.writeTo(writer);
       }
@@ -169,13 +166,13 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* addition to the existing element"                                          */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_ADDPROPERTYB2);
-         if(portletReq.getPortalContext().getProperty(PortalContext.MARKUP_HEAD_ELEMENT_SUPPORT)==null){
+         if(headerRequest.getPortalContext().getProperty(PortalContext.MARKUP_HEAD_ELEMENT_SUPPORT)==null){
             result.setTcSuccess(true);
             result.appendTcDetail("addProperty(String, org.w3c.dom.Element) is not supported by portlal");
          } else {
-            Element element = portletResp.createElement("script");
+            Element element = headerResponse.createElement("script");
             element.setAttribute("class", "testProperty2");
-            portletResp.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, element);
+            headerResponse.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, element);
          } 
          result.writeTo(writer);
       }
@@ -186,8 +183,8 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_ADDPROPERTYB4);
          try{
-            Element testElement = portletResp.createElement("script");
-            portletResp.addProperty(null,testElement);
+            Element testElement = headerResponse.createElement("script");
+            headerResponse.addProperty(null,testElement);
             result.appendTcDetail("Failed because no exception is raised.");
          } catch (IllegalArgumentException e){
            result.setTcSuccess(true);
@@ -201,9 +198,9 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* existing key to allow the key to have multiple values"                     */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_ADDPROPERTYC1);
-         portletResp.addProperty("Access-Control-Allow-Origin", "/test1");
-         portletResp.addProperty("Access-Control-Allow-Origin", "/test2");
-         Collection<String> corsHeader = portletResp.getPropertyValues("Access-Control-Allow-Origin");
+         headerResponse.addProperty("Access-Control-Allow-Origin", "/test1");
+         headerResponse.addProperty("Access-Control-Allow-Origin", "/test2");
+         Collection<String> corsHeader = headerResponse.getPropertyValues("Access-Control-Allow-Origin");
          if(corsHeader.contains("/test1") && corsHeader.contains("/test2")){
             result.setTcSuccess(true);
          } else {
@@ -218,7 +215,7 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_ADDPROPERTYC2);
          try{
-            portletResp.addProperty(null,"/test1");
+            headerResponse.addProperty(null,"/test1");
             result.appendTcDetail("Failed because no exception is raised.");
          } catch (IllegalArgumentException e){
            result.setTcSuccess(true);
@@ -232,9 +229,9 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* the specified key"                                                         */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_SETPROPERTY1);
-         portletResp.setProperty("Access-Control-Allow-Origin", "/test3");
-         if(portletResp.getProperty("Access-Control-Allow-Origin")!=null 
-               && portletResp.getProperty("Access-Control-Allow-Origin").equals("/test3")){
+         headerResponse.setProperty("Access-Control-Allow-Origin", "/test3");
+         if(headerResponse.getProperty("Access-Control-Allow-Origin")!=null
+               && headerResponse.getProperty("Access-Control-Allow-Origin").equals("/test3")){
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail("Failed because Access-Control-Allow-Origin response header is not set");
@@ -247,7 +244,7 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* values for the specified key"                                              */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_SETPROPERTY2);
-         Collection<String> corsHeader = portletResp.getPropertyValues("Access-Control-Allow-Origin");
+         Collection<String> corsHeader = headerResponse.getPropertyValues("Access-Control-Allow-Origin");
          
          if(corsHeader.contains("/test3") && !corsHeader.contains("/test1") && !corsHeader.contains("/test2")){
             result.setTcSuccess(true);
@@ -262,7 +259,7 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* encoded URL"                                                               */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_ENCODEURL1);
-         String encodedURL = portletResp.encodeURL("/testing special$chars#in<url>");
+         String encodedURL = headerResponse.encodeURL("/testing special$chars#in<url>");
          if(encodedURL!=null){
             result.setTcSuccess(true);
             result.appendTcDetail("/testing special$chars#in<url> is encoded as - " + encodedURL);
@@ -279,7 +276,7 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_ENCODEURL2);
          try{
-            portletResp.encodeURL("invalidURL");
+            headerResponse.encodeURL("invalidURL");
             result.appendTcDetail("Failed because no exception is raised.");
          } catch (IllegalArgumentException e){
            result.setTcSuccess(true);
@@ -293,9 +290,9 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* value"                                                                     */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_GETNAMESPACE1);
-         if(portletResp.getNamespace()!=null){
+         if(headerResponse.getNamespace()!=null){
             result.setTcSuccess(true);
-            result.appendTcDetail("Namespace is found to be - "+portletResp.getNamespace());
+            result.appendTcDetail("Namespace is found to be - "+headerResponse.getNamespace());
          } else {
             result.appendTcDetail("Failed because namespace is null");
          }
@@ -307,7 +304,7 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* object for the specified tag name"                                         */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_CREATEELEMENT1);
-         Element testElement = portletResp.createElement("testTag");
+         Element testElement = headerResponse.createElement("testTag");
          if(testElement.getTagName().equals("testTag")){
             result.setTcSuccess(true);
          } else {
@@ -321,7 +318,7 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* set to the the specified tag name "                                        */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_CREATEELEMENT2);
-         Element testElement = portletResp.createElement("testTag");
+         Element testElement = headerResponse.createElement("testTag");
          if(testElement.getNodeName().equals("testTag")){
             result.setTcSuccess(true);
          } else {
@@ -335,7 +332,7 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* set to null"                                                               */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_CREATEELEMENT3);
-         Element testElement = portletResp.createElement("testTag");
+         Element testElement = headerResponse.createElement("testTag");
          if(testElement.getLocalName()==null){
             result.setTcSuccess(true);
          } else {
@@ -349,7 +346,7 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* set to null"                                                               */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_CREATEELEMENT4);
-         Element testElement = portletResp.createElement("testTag");
+         Element testElement = headerResponse.createElement("testTag");
          if(testElement.getPrefix()==null){
             result.setTcSuccess(true);
          } else {
@@ -363,7 +360,7 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       /* namespaceURI set to null"                                                  */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_CREATEELEMENT5);
-         Element testElement = portletResp.createElement("testTag");
+         Element testElement = headerResponse.createElement("testTag");
          if(testElement.getNamespaceURI()==null){
             result.setTcSuccess(true);
          } else {
@@ -379,7 +376,7 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_PORTLETRESPONSE_APIHEADER_CREATEELEMENT6);
          try{
-            portletResp.createElement("<invalidTag>");
+            headerResponse.createElement("<invalidTag>");
             result.appendTcDetail("Failed because no exception is raised while creating element with name <invalidTag>");
          } catch (DOMException e) {
             result.setTcSuccess(true);
@@ -388,9 +385,9 @@ public class HeaderPortletTests_SPEC15_PortletResponse_ApiHeader implements Port
          result.writeTo(writer);
       }
       
-      portletReq.getPortletSession().setAttribute(
+      headerRequest.setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_PortletResponse_ApiHeader",
-            writer.toString(), PORTLET_SCOPE);
+            writer.toString());
    }
 
 }

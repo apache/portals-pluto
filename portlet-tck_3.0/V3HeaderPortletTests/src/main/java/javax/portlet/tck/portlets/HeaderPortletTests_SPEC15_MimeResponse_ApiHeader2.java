@@ -42,7 +42,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETWRITER2 ;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETBUFFERSIZE2 ;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -65,35 +64,30 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2 implements Portle
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+   public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException, IOException {
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
+   public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException, IOException {
 
-      PrintWriter writer = portletResp.getWriter();
+      PrintWriter writer = renderResponse.getWriter();
 
-      String msg = (String) portletReq.getPortletSession().getAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2",
-            PORTLET_SCOPE);
+      String msg = (String) renderRequest.getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2");
       writer.write("<p>" + msg + "</p>\n");
-      portletReq.getPortletSession().removeAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2",
-            PORTLET_SCOPE);
-      
-      
-
+      renderRequest.removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2");
    }
 
    @Override
-   public void renderHeaders(HeaderRequest portletReq, HeaderResponse portletResp)
+   public void renderHeaders(HeaderRequest headerRequest, HeaderResponse headerResponse)
          throws PortletException, IOException {
       
       StringWriter writer = new StringWriter();
       
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
       
-      portletResp.setContentType("text/html");
+      headerResponse.setContentType("text/html");
       
       /* TestCase: V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_getPortletOutputStream1 */
       /* Details: "Method getPortletOutputStream(): Returns a PortletOutputStream   */
@@ -101,7 +95,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2 implements Portle
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETPORTLETOUTPUTSTREAM1);
          try{
-            OutputStream outputStream = portletResp.getPortletOutputStream();
+            OutputStream outputStream = headerResponse.getPortletOutputStream();
             if(outputStream!=null){
                result.setTcSuccess(true);
             }
@@ -117,7 +111,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2 implements Portle
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETWRITER2);
          try {
-            portletResp.getWriter();
+            headerResponse.getWriter();
          } catch (IllegalStateException ise) {
             result.appendTcDetail(ise.toString());
             result.setTcSuccess(true);
@@ -134,9 +128,9 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2 implements Portle
          result.writeTo(writer);
       }
       
-      portletReq.getPortletSession().setAttribute(
+      headerRequest.setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2",
-            writer.toString(), PORTLET_SCOPE);
+            writer.toString());
    }
 
 }

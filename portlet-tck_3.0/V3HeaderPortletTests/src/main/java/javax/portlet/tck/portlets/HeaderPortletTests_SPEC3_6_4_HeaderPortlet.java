@@ -41,7 +41,6 @@ import javax.portlet.tck.util.ModuleTestCaseDetails;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC3_6_4_HEADERPORTLET_RENDERHEADERS2;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case
@@ -71,15 +70,15 @@ public class HeaderPortletTests_SPEC3_6_4_HeaderPortlet
    }
 
    @Override
-   public void processAction(ActionRequest portletReq,
-         ActionResponse portletResp) throws PortletException, IOException {
+   public void processAction(ActionRequest actionRequest,
+         ActionResponse actionResponse) throws PortletException, IOException {
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp)
+   public void render(RenderRequest renderRequest, RenderResponse renderResponse)
          throws PortletException, IOException {
 
-      PrintWriter writer = portletResp.getWriter();
+      PrintWriter writer = renderResponse.getWriter();
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
       /* TestCase: V3HeaderPortletTests_SPEC3_6_4_HeaderPortlet_renderHeaders */
@@ -95,19 +94,17 @@ public class HeaderPortletTests_SPEC3_6_4_HeaderPortlet
          tr0_success = false;
       }
 
-      String msg = (String) portletReq.getPortletSession().getAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC3_6_4_HeaderPortlet",
-            PORTLET_SCOPE);
+      String msg = (String) renderRequest.getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC3_6_4_HeaderPortlet");
       writer.write("<p>" + msg + "</p>\n");
-      portletReq.getPortletSession().removeAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC3_6_4_HeaderPortlet",
-            PORTLET_SCOPE);
+      renderRequest.removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC3_6_4_HeaderPortlet");
 
    }
 
    @Override
-   public void renderHeaders(HeaderRequest portletReq,
-         HeaderResponse portletResp) throws PortletException, IOException {
+   public void renderHeaders(HeaderRequest headerRequest,
+         HeaderResponse headerResponse) throws PortletException, IOException {
 
       StringWriter writer = new StringWriter();
 
@@ -139,9 +136,9 @@ public class HeaderPortletTests_SPEC3_6_4_HeaderPortlet
          result.writeTo(writer);
       }
 
-      portletReq.getPortletSession().setAttribute(
+      headerRequest.setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC3_6_4_HeaderPortlet",
-            writer.toString(), PORTLET_SCOPE);
+            writer.toString());
    }
 
 }

@@ -70,7 +70,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_CONTENTTYPE5;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE8;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.PORTLET_SCOPE;
 import static javax.portlet.ResourceURL.PAGE;
 import static javax.portlet.tck.constants.Constants.THREADID_ATTR;
 
@@ -100,40 +99,40 @@ public class HeaderPortletTests_SPEC15_Header
    }
 
    @Override
-   public void processAction(ActionRequest portletReq,
-         ActionResponse portletResp) throws PortletException, IOException {
-      String action = portletReq.getParameter("inputval");
+   public void processAction(ActionRequest actionRequest,
+         ActionResponse actionResponse) throws PortletException, IOException {
+      String action = actionRequest.getParameter("inputval");
       if (action != null) {
          if (V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS10.equals(action)
-               && portletReq.getParameter("actionURLTr0") != null
-               && portletReq.getParameter("actionURLTr0").equals("true")) {
+               && actionRequest.getParameter("actionURLTr0") != null
+               && actionRequest.getParameter("actionURLTr0").equals("true")) {
             /* TestCase: V2AddlRequestTests_SPEC2_11_Render_parameters10 */
             /* Details: "The portlet-container must not propagate parameters */
             /* received in an action or event request to subsequent render */
             /* requests of the portlet" */
-            portletResp.setRenderParameter("tr0", "true");
+            actionResponse.setRenderParameter("tr0", "true");
          } else if (V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS15
-               .equals(action) && portletReq.getParameter("tr3a") != null
-               && portletReq.getParameter("tr3a").equals("true")) {
+               .equals(action) && actionRequest.getParameter("tr3a") != null
+               && actionRequest.getParameter("tr3a").equals("true")) {
             /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters15 */
             /*
              * Details: "Render parameters get automatically cleared if the
              * portlet receives a processAction or processEvent call"
              */
-            portletResp.setRenderParameter("tr3b", "true");
+            actionResponse.setRenderParameter("tr3b", "true");
          } else if (V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE9.equals(action)) {
             /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie9 */
             /*
              * Details: "Cookies set during the Header phase should be available
              * to the portlet during a subsequent Action phase"
              */
-            Cookie[] cookies = portletReq.getCookies();
+            Cookie[] cookies = actionRequest.getCookies();
             for (Cookie c : cookies) {
                if (c.getName().equals("header_tr1_cookie")
                      && c.getValue().equals("true")) {
                   c.setMaxAge(0);
                   c.setValue("");
-                  portletResp.setRenderParameter("trCookie1", "true");
+                  actionResponse.setRenderParameter("trCookie1", "true");
                }
             }
          }
@@ -141,12 +140,12 @@ public class HeaderPortletTests_SPEC15_Header
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp)
+   public void render(RenderRequest renderRequest, RenderResponse renderResponse)
          throws PortletException, IOException {
 
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
-      PrintWriter writer = portletResp.getWriter();
+      PrintWriter writer = renderResponse.getWriter();
 
       /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie8 */
       /*
@@ -155,7 +154,7 @@ public class HeaderPortletTests_SPEC15_Header
        */
       writer.write(
             "<div id=\"V3HeaderPortletTests_SPEC15_Header\">no resource output.</div>\n");
-      ResourceURL resurl = portletResp.createResourceURL();
+      ResourceURL resurl = renderResponse.createResourceURL();
       resurl.setCacheability(PAGE);
       writer.write("<script>\n");
       writer.write("(function () {\n");
@@ -177,7 +176,7 @@ public class HeaderPortletTests_SPEC15_Header
        * Details: "Cookies set during the Header phase should be available to
        * the portlet during a subsequent Render phase"
        */
-      Cookie[] cookies = portletReq.getCookies();
+      Cookie[] cookies = renderRequest.getCookies();
       StringBuilder txt = new StringBuilder(128);
       txt.append("<p>Debug info:");
       txt.append("<br>");
@@ -199,25 +198,23 @@ public class HeaderPortletTests_SPEC15_Header
       txt.append("</p>");
       writer.append(txt.toString());
 
-      String msg = ((String) portletReq.getPortletSession().getAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_Header",
-            PORTLET_SCOPE));
+      String msg = (String) renderRequest.getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_Header");
       writer.write("<p>" + msg + "</p>");
-      portletReq.getPortletSession().removeAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_Header",
-            PORTLET_SCOPE);
+      renderRequest.removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_Header");
 
    }
 
    @Override
-   public void renderHeaders(HeaderRequest portletReq,
-         HeaderResponse portletResp) throws PortletException, IOException {
+   public void renderHeaders(HeaderRequest headerRequest,
+         HeaderResponse headerResponse) throws PortletException, IOException {
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
       StringWriter writer = new StringWriter();
 
-      RenderParameters renderParams = portletReq.getRenderParameters();
-      String action = portletReq.getParameter("inputval");
+      RenderParameters renderParams = headerRequest.getRenderParameters();
+      String action = headerRequest.getParameter("inputval");
       Boolean successTr2 = false, successTr5 = false, successTr6 = false;
       Boolean successTr7 = false, successTr8 = false, successTr13 = false;
 
@@ -235,7 +232,7 @@ public class HeaderPortletTests_SPEC15_Header
          tr0.setTcSuccess(true);
          tr0.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          aurl.setParameter("actionURLTr0", "true");
          TestButton tb = new TestButton(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS10, aurl);
@@ -253,10 +250,10 @@ public class HeaderPortletTests_SPEC15_Header
              */
             TestResult tr2 = tcd.getTestResultFailed(
                   V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS13);
-            if (portletReq.getParameter("renderURLTr2") != null
-                  && portletReq.getParameter("tr2") != null
-                  && (portletReq.getParameter("renderURLTr2").contains("tr2:" + portletReq.getParameter("tr2")) ||
-                      portletReq.getParameter("renderURLTr2").contains("tr2=" + portletReq.getParameter("tr2")))) {
+            if (headerRequest.getParameter("renderURLTr2") != null
+                  && headerRequest.getParameter("tr2") != null
+                  && (headerRequest.getParameter("renderURLTr2").contains("tr2:" + headerRequest.getParameter("tr2")) ||
+                      headerRequest.getParameter("renderURLTr2").contains("tr2=" + headerRequest.getParameter("tr2")))) {
                tr2.setTcSuccess(true);
                successTr2 = true;
             } else {
@@ -271,8 +268,8 @@ public class HeaderPortletTests_SPEC15_Header
             /* \"x-www-form-urlencoded\" decoded" */
             TestResult tr5 = tcd.getTestResultFailed(
                   V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS2);
-            if (portletReq.getParameter("tr5") != null
-                  && portletReq.getParameter("tr5").equals("true&<>'")) {
+            if (headerRequest.getParameter("tr5") != null
+                  && headerRequest.getParameter("tr5").equals("true&<>'")) {
                tr5.setTcSuccess(true);
                successTr5 = true;
             }
@@ -286,16 +283,16 @@ public class HeaderPortletTests_SPEC15_Header
              */
             TestResult tr6 = tcd.getTestResultFailed(
                   V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS6);
-            if (portletReq.getParameterMap().containsKey("inputval")
+            if (headerRequest.getParameterMap().containsKey("inputval")
                   && V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS6.equals(
-                        portletReq.getParameterMap().get("inputval")[0])) {
+                        headerRequest.getParameterMap().get("inputval")[0])) {
                String tr6TestStringArray[] = { "Modified Value" };
                try {
-                  portletReq.getParameterMap().put(
+                  headerRequest.getParameterMap().put(
                       "inputval", tr6TestStringArray);
                   if (V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS6
                       .equals(
-                          portletReq.getParameterMap().get("inputval")[0])) {
+                          headerRequest.getParameterMap().get("inputval")[0])) {
                      tr6.setTcSuccess(true);
                      successTr6 = true;
                   }
@@ -318,7 +315,7 @@ public class HeaderPortletTests_SPEC15_Header
              */
             TestResult tr7 = tcd.getTestResultFailed(
                   V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS15);
-            Map<String, String[]> privateParamMap = portletReq
+            Map<String, String[]> privateParamMap = headerRequest
                   .getPrivateParameterMap();
             if (privateParamMap != null && privateParamMap.containsKey("tr7")
                   && privateParamMap.get("tr7")[0].equals("true")) {
@@ -338,7 +335,7 @@ public class HeaderPortletTests_SPEC15_Header
              */
             TestResult tr8 = tcd.getTestResultFailed(
                   V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS16);
-            if (portletReq.getPublicParameterMap() != null && portletReq
+            if (headerRequest.getPublicParameterMap() != null && headerRequest
                   .getPublicParameterMap().containsKey("tckPRP3")) {
                tr8.setTcSuccess(true);
                successTr8 = true;
@@ -356,7 +353,7 @@ public class HeaderPortletTests_SPEC15_Header
             /* removePublicRenderParameter method on the PortletURL" */
             TestResult tr13 = tcd.getTestResultFailed(
                   V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS13A);
-            if (portletReq.getPublicParameterMap() != null && !portletReq
+            if (headerRequest.getPublicParameterMap() != null && !headerRequest
                   .getPublicParameterMap().containsKey("tckPRP3")) {
                tr13.setTcSuccess(true);
                successTr13 = true;
@@ -375,8 +372,8 @@ public class HeaderPortletTests_SPEC15_Header
           * parameters received with the render request must be the parameters
           * set on the render URL"
           */
-         PortletURL rurl = portletResp.createRenderURL();
-         rurl.setParameters(portletReq.getPrivateParameterMap());
+         PortletURL rurl = headerResponse.createRenderURL();
+         rurl.setParameters(headerRequest.getPrivateParameterMap());
          rurl.setParameter("tr2", "true");
          rurl.setParameter("renderURLTr2", rurl.toString());
          TestButton tb = new TestButton(
@@ -388,7 +385,7 @@ public class HeaderPortletTests_SPEC15_Header
          /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters2 */
          /* Details: "The parameters the request object returns must be */
          /* \"x-www-form-urlencoded\" decoded" */
-         PortletURL purl = portletResp.createRenderURL();
+         PortletURL purl = headerResponse.createRenderURL();
          purl.setParameter("tr5", "true&<>'");
          TestButton tb = new TestButton(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS2, purl);
@@ -401,7 +398,7 @@ public class HeaderPortletTests_SPEC15_Header
           * Details: "The getParameterMap method must return an unmodifiable Map
           * object"
           */
-         PortletURL purl = portletResp.createRenderURL();
+         PortletURL purl = headerResponse.createRenderURL();
          TestButton tb = new TestButton(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS6, purl);
          tb.writeTo(writer);
@@ -414,7 +411,7 @@ public class HeaderPortletTests_SPEC15_Header
           */
          /* Details: "A map of private parameters can be obtained through the */
          /* getPrivateParameterMap method" */
-         PortletURL purl = portletResp.createRenderURL();
+         PortletURL purl = headerResponse.createRenderURL();
          purl.setParameter("tr7", "true");
          TestButton tb = new TestButton(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS15,
@@ -429,16 +426,16 @@ public class HeaderPortletTests_SPEC15_Header
           */
          /* Details: "A map of public parameters can be obtained through the */
          /* getPublicParameterMap method" */
-         if (portletReq.getParameter("tckPRP3") == null) {
-            PortletURL purl = portletResp.createRenderURL();
+         if (headerRequest.getParameter("tckPRP3") == null) {
+            PortletURL purl = headerResponse.createRenderURL();
             purl.setParameter("tckPRP3", "true");
             TestSetupLink tl = new TestSetupLink(
                   V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS16,
                   purl);
             tl.writeTo(writer);
          } else {
-            PortletURL aurl = portletResp.createRenderURL();
-            aurl.setParameters(portletReq.getPrivateParameterMap());
+            PortletURL aurl = headerResponse.createRenderURL();
+            aurl.setParameters(headerRequest.getPrivateParameterMap());
             TestButton tb = new TestButton(
                   V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS16,
                   aurl);
@@ -453,16 +450,16 @@ public class HeaderPortletTests_SPEC15_Header
           */
          /* Details: "A public render parameter can be deleted using the */
          /* removePublicRenderParameter method on the PortletURL" */
-         if (portletReq.getParameter("tckPRP3") == null) {
-            PortletURL purl = portletResp.createRenderURL();
+         if (headerRequest.getParameter("tckPRP3") == null) {
+            PortletURL purl = headerResponse.createRenderURL();
             purl.setParameter("tckPRP3", "true");
             TestSetupLink tl = new TestSetupLink(
                   V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS13A,
                   purl);
             tl.writeTo(writer);
          } else {
-            PortletURL purl = portletResp.createRenderURL();
-            purl.setParameters(portletReq.getPrivateParameterMap());
+            PortletURL purl = headerResponse.createRenderURL();
+            purl.setParameters(headerRequest.getPrivateParameterMap());
             purl.removePublicRenderParameter("tckPRP3");
             TestButton tb = new TestButton(
                   V3HEADERPORTLETTESTS_SPEC15_HEADER_PUBLICRENDERPARAMETERS13A,
@@ -474,21 +471,21 @@ public class HeaderPortletTests_SPEC15_Header
       /* TestCase: V3HeaderPortletTests_SPEC15_Header_parameters15 */
       /* Details: "Render parameters get automatically cleared if the portlet */
       /* receives a processAction or processEvent call" */
-      if (portletReq.getParameter("tr3a") != null) {
-         PortletURL aurl = portletResp.createActionURL();
+      if (headerRequest.getParameter("tr3a") != null) {
+         PortletURL aurl = headerResponse.createActionURL();
          aurl.setParameter("tr3a", "true");
          TestButton tb = new TestButton(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS15, aurl);
          tb.writeTo(writer);
       } else {
-         if (portletReq.getParameter("tr3b") != null
-               && portletReq.getParameter("tr3b").equals("true")) {
+         if (headerRequest.getParameter("tr3b") != null
+               && headerRequest.getParameter("tr3b").equals("true")) {
             TestResult tr3 = tcd.getTestResultFailed(
                   V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS15);
             tr3.setTcSuccess(true);
             tr3.writeTo(writer);
          } else {
-            PortletURL purl = portletResp.createRenderURL();
+            PortletURL purl = headerResponse.createRenderURL();
             purl.setParameter("tr3a", "true");
             TestSetupLink tl = new TestSetupLink(
                   V3HEADERPORTLETTESTS_SPEC15_HEADER_PARAMETERS15, purl);
@@ -504,7 +501,7 @@ public class HeaderPortletTests_SPEC15_Header
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES1);
-         if (portletReq.getProperty("Accept") != null) {
+         if (headerRequest.getProperty("Accept") != null) {
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail(
@@ -522,7 +519,7 @@ public class HeaderPortletTests_SPEC15_Header
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES2);
-         if (portletReq.getProperties("Accept").hasMoreElements()) {
+         if (headerRequest.getProperties("Accept").hasMoreElements()) {
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail(
@@ -540,7 +537,7 @@ public class HeaderPortletTests_SPEC15_Header
 
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES3);
-         if (portletReq.getPropertyNames().hasMoreElements()) {
+         if (headerRequest.getPropertyNames().hasMoreElements()) {
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail(
@@ -557,7 +554,7 @@ public class HeaderPortletTests_SPEC15_Header
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_PROPERTIES4);
-         if (portletReq.getCookies().length > 0) {
+         if (headerRequest.getCookies().length > 0) {
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail(
@@ -575,7 +572,7 @@ public class HeaderPortletTests_SPEC15_Header
          Cookie c = new Cookie("header_tr0_cookie", "true");
          c.setMaxAge(100);
          c.setPath("/");
-         portletResp.addProperty(c);
+         headerResponse.addProperty(c);
       }
 
       /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie9 */
@@ -583,8 +580,8 @@ public class HeaderPortletTests_SPEC15_Header
        * Details: "Cookies set during the Header phase should be available to
        * the portlet during a subsequent Action phase"
        */
-      if (portletReq.getParameter("trCookie1") != null
-            && portletReq.getParameter("trCookie1").equals("true")) {
+      if (headerRequest.getParameter("trCookie1") != null
+            && headerRequest.getParameter("trCookie1").equals("true")) {
          TestResult tr1 = tcd
                .getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE9);
          tr1.setTcSuccess(true);
@@ -593,8 +590,8 @@ public class HeaderPortletTests_SPEC15_Header
          Cookie c = new Cookie("header_tr1_cookie", "true");
          c.setMaxAge(100);
          c.setPath("/");
-         portletResp.addProperty(c);
-         PortletURL aurl = portletResp.createActionURL();
+         headerResponse.addProperty(c);
+         PortletURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE9, aurl);
          tb.writeTo(writer);
@@ -609,8 +606,8 @@ public class HeaderPortletTests_SPEC15_Header
          Cookie c = new Cookie("header_tr2_cookie", "true");
          c.setMaxAge(100);
          c.setPath("/");
-         portletResp.addProperty(c);
-         PortletURL rurl = portletResp.createRenderURL();
+         headerResponse.addProperty(c);
+         PortletURL rurl = headerResponse.createRenderURL();
          TestButton tb = new TestButton(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE10, rurl);
          tb.writeTo(writer);
@@ -621,9 +618,9 @@ public class HeaderPortletTests_SPEC15_Header
        * Details: "Cookies set during the Header phase should be available to
        * the portlet during a subsequent request triggered by a URL"
        */
-      if (portletReq.getParameter("tr3") != null
-            && portletReq.getParameter("tr3").equals("true")) {
-         Cookie[] cookies = portletReq.getCookies();
+      if (headerRequest.getParameter("tr3") != null
+            && headerRequest.getParameter("tr3").equals("true")) {
+         Cookie[] cookies = headerRequest.getCookies();
 
          StringBuilder txt = new StringBuilder(128);
          txt.append("<p>Debug info:");
@@ -649,8 +646,8 @@ public class HeaderPortletTests_SPEC15_Header
          Cookie c = new Cookie("header_tr3_cookie", "true");
          c.setMaxAge(100);
          c.setPath("/");
-         portletResp.addProperty(c);
-         PortletURL rurl = portletResp.createRenderURL();
+         headerResponse.addProperty(c);
+         PortletURL rurl = headerResponse.createRenderURL();
          rurl.setParameter("tr3", "true");
          TestButton tb = new TestButton(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_COOKIE11, rurl);
@@ -666,10 +663,10 @@ public class HeaderPortletTests_SPEC15_Header
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_CONTENTTYPE5);
-         if (portletReq.getResponseContentType() != null) {
+         if (headerRequest.getResponseContentType() != null) {
             result.setTcSuccess(true);
             result.appendTcDetail(
-                  "Content type is - " + portletReq.getResponseContentType());
+                  "Content type is - " + headerRequest.getResponseContentType());
          } else {
             result.appendTcDetail(
                   "Failed because getResponseContentType() method returned null");
@@ -685,39 +682,39 @@ public class HeaderPortletTests_SPEC15_Header
       {
          TestResult result = tcd.getTestResultFailed(
                V3HEADERPORTLETTESTS_SPEC15_HEADER_CHARACTERENCODING4);
-         if (portletResp.getCharacterEncoding().equals("UTF-8")) {
+         if (headerResponse.getCharacterEncoding().equals("UTF-8")) {
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail(
                   "Failed because default character encoding is not UTF-8 but "
-                        + portletResp.getCharacterEncoding());
+                        + headerResponse.getCharacterEncoding());
          }
          result.writeTo(writer);
       }
 
-      portletReq.getPortletSession().setAttribute(
+      headerRequest.setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_Header",
-            writer.toString(), PORTLET_SCOPE);
+            writer.toString());
 
    }
 
    @Override
-   public void serveResource(ResourceRequest portletReq,
-         ResourceResponse portletResp) throws PortletException, IOException {
+   public void serveResource(ResourceRequest resourceRequest,
+         ResourceResponse resourceResponse) throws PortletException, IOException {
 
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
 
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute(THREADID_ATTR, tid);
+      resourceRequest.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
+      PrintWriter writer = resourceResponse.getWriter();
 
       /* TestCase: V3HeaderPortletTests_SPEC15_Header_cookie8 */
       /*
        * Details: "Cookies set during the Header phase should be available to
        * the portlet during the Resource phase"
        */
-      Cookie[] cookies = portletReq.getCookies();
+      Cookie[] cookies = resourceRequest.getCookies();
 
       StringBuilder txt = new StringBuilder(128);
       txt.append("<p>Debug info:");

@@ -149,7 +149,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPUBLICPARAMETERMAP2;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_EXISTS;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.PORTLET_SCOPE;
 import static javax.portlet.PortletSession.APPLICATION_SCOPE;
 
 /**
@@ -180,8 +179,8 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
-      MutableRenderParameters renderParams = portletResp.getRenderParameters();
+   public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException, IOException {
+      MutableRenderParameters renderParams = actionResponse.getRenderParameters();
       renderParams.setValue("trB3", "true");
       renderParams.setValue("trB1", "true");
       renderParams.setValue("trA1", "true");
@@ -201,18 +200,18 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
+   public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException, IOException {
 
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
       
-      PrintWriter writer = portletResp.getWriter();
+      PrintWriter writer = renderResponse.getWriter();
       
       /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_setAttribute1 */
       /* Details: "Method setAttribute(String, Object): Stores an attribute object  */
       /* under the specified name in the request"                                   */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_SETATTRIBUTE1);
-         String trAttr1 = (String) portletReq.getAttribute("trAttr1");
+         String trAttr1 = (String) renderRequest.getAttribute("trAttr1");
          if(trAttr1!=null && trAttr1.equals("true")){
             result.setTcSuccess(true);
          } else {
@@ -226,7 +225,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* the specified name if the object is null"                                  */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_SETATTRIBUTE2);
-         String trAttr2 = (String) portletReq.getAttribute("trAttr2");
+         String trAttr2 = (String) renderRequest.getAttribute("trAttr2");
          if(trAttr2==null){
             result.setTcSuccess(true);
          } else {
@@ -240,7 +239,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* by the name from the request"                                              */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_REMOVEATTRIBUTE1);
-         String trAttr4 = (String) portletReq.getAttribute("trAttr4");
+         String trAttr4 = (String) renderRequest.getAttribute("trAttr4");
          if(trAttr4==null){
             result.setTcSuccess(true);
          } else {
@@ -249,18 +248,16 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
          result.writeTo(writer);
       }
       
-      String msg = (String) portletReq.getPortletSession().getAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1",
-            PORTLET_SCOPE);
+      String msg = (String) renderRequest.getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1");
       writer.write("<p>" + msg + "</p>\n");
-      portletReq.getPortletSession().removeAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1",
-            PORTLET_SCOPE);
+      renderRequest.removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1");
 
    }
 
    @Override
-   public void renderHeaders(HeaderRequest portletReq, HeaderResponse portletResp)
+   public void renderHeaders(HeaderRequest headerRequest, HeaderResponse headerResponse)
          throws PortletException, IOException {
       
       StringWriter writer = new StringWriter();
@@ -269,9 +266,9 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
       
-      ClassChecker cc = new ClassChecker(portletReq.getClass());
+      ClassChecker cc = new ClassChecker(headerRequest.getClass());
       
-      RenderParameters renderParams = portletReq.getRenderParameters();
+      RenderParameters renderParams = headerRequest.getRenderParameters();
 
       /* TestCase: V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_fieldUSER_INFO */
       /* Details: "Has String field USER_INFO with value of                         */
@@ -446,7 +443,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* specified WindowState is allowed"                                          */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISWINDOWSTATEALLOWED1);
-         result.setTcSuccess(portletReq.isWindowStateAllowed(WindowState.NORMAL));
+         result.setTcSuccess(headerRequest.isWindowStateAllowed(WindowState.NORMAL));
          result.writeTo(writer);
       }
 
@@ -455,7 +452,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* specified WindowState is not allowed"                                      */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISWINDOWSTATEALLOWED2);
-         result.setTcSuccess(!portletReq.isWindowStateAllowed(WindowState.UNDEFINED));
+         result.setTcSuccess(!headerRequest.isWindowStateAllowed(WindowState.UNDEFINED));
          result.writeTo(writer);
       }
 
@@ -464,7 +461,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* specified PortletMode is allowed"                                          */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISPORTLETMODEALLOWED1);
-         result.setTcSuccess(portletReq.isPortletModeAllowed(PortletMode.VIEW));
+         result.setTcSuccess(headerRequest.isPortletModeAllowed(PortletMode.VIEW));
          result.writeTo(writer);
       }
 
@@ -473,7 +470,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* specified PortletMode is not allowed"                                      */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISPORTLETMODEALLOWED2);
-         result.setTcSuccess(!portletReq.isPortletModeAllowed(PortletMode.UNDEFINED));
+         result.setTcSuccess(!headerRequest.isPortletModeAllowed(PortletMode.UNDEFINED));
          result.writeTo(writer);
       }
 
@@ -482,7 +479,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* associated with the portlet"                                               */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPREFERENCES);
-         PortletPreferences pp = portletReq.getPreferences();
+         PortletPreferences pp = headerRequest.getPreferences();
          if(pp!=null){
             result.setTcSuccess(true);
          }
@@ -496,7 +493,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* returns current PortletSession if one already exists"                      */
       if(renderParams.getValue("trB3")!=null && renderParams.getValue("trB3").equals("true")) {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPORTLETSESSIONB3);
-         PortletSession ps = portletReq.getPortletSession(false);
+         PortletSession ps = headerRequest.getPortletSession(false);
          if(!ps.isNew()){
             result.setTcSuccess(true);
          } else {
@@ -504,7 +501,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
          }
          result.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPORTLETSESSIONB3, aurl);
          tb.writeTo(writer);
       }
@@ -514,7 +511,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* returns current PortletSession if one already exists"                      */
       if(renderParams.getValue("trB1")!=null && renderParams.getValue("trB1").equals("true")) {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPORTLETSESSIONB1);
-         PortletSession ps = portletReq.getPortletSession(false);
+         PortletSession ps = headerRequest.getPortletSession(false);
          if(!ps.isNew()){
             result.setTcSuccess(true);
          } else {
@@ -522,7 +519,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
          }
          result.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPORTLETSESSIONB1, aurl);
          tb.writeTo(writer);
       }
@@ -532,7 +529,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* one already exists"                                                        */
       if(renderParams.getValue("trA1")!=null && renderParams.getValue("trA1").equals("true")) {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPORTLETSESSIONA1);
-         PortletSession ps = portletReq.getPortletSession();
+         PortletSession ps = headerRequest.getPortletSession();
          if(!ps.isNew()){
             result.setTcSuccess(true);
          } else {
@@ -540,7 +537,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
          }
          result.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPORTLETSESSIONA1, aurl);
          tb.writeTo(writer);
       }
@@ -550,14 +547,14 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* ID is not valid"                                                           */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISREQUESTEDSESSIONIDVALID2);
-         PortletSession ps = portletReq.getPortletSession();
+         PortletSession ps = headerRequest.getPortletSession();
          
          // Take backup of attributes set in APPLICATION_SCOPE by other portlets. 
          // We will restore them as soon as we initialize a new session
          // in test case V3HeaderPortletTests_SPEC14_PortletRequest_ApiHeader_getPortletSessionB2.
          sessionAttributes = ps.getAttributeMap(APPLICATION_SCOPE);
          ps.invalidate();
-         if(!portletReq.isRequestedSessionIdValid()){
+         if(!headerRequest.isRequestedSessionIdValid()){
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail("Failed because Session ID is still valid.");
@@ -570,7 +567,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* returns null if one does not already exist"                                */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPORTLETSESSIONB4);
-         PortletSession ps = portletReq.getPortletSession(false);
+         PortletSession ps = headerRequest.getPortletSession(false);
          if(ps==null){
             result.setTcSuccess(true);
          } else {
@@ -584,7 +581,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* returns new PortletSession if one does not already exist"                  */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPORTLETSESSIONB2);
-         PortletSession ps = portletReq.getPortletSession(true);
+         PortletSession ps = headerRequest.getPortletSession(true);
          
          // Since session is restored now, we now restore all APPLICATION_SCOPED attributes 
          // set by other portlets in header phase.
@@ -605,7 +602,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* does not already exist"                                                    */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPORTLETSESSIONA2);
-         PortletSession ps = portletReq.getPortletSession();
+         PortletSession ps = headerRequest.getPortletSession();
          if(ps.isNew()){
             result.setTcSuccess(true);
          } else {
@@ -619,9 +616,9 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* exists, returns its value "                                                */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPROPERTY1);
-         if(portletReq.getProperty("Accept")!=null){
+         if(headerRequest.getProperty("Accept")!=null){
             result.setTcSuccess(true);
-            result.appendTcDetail("Accept property is found to be "+portletReq.getProperty("Accept"));
+            result.appendTcDetail("Accept property is found to be "+headerRequest.getProperty("Accept"));
          } else {
             result.appendTcDetail("Failed because there is no \"Accept\" property in HeaderRequest");
          }
@@ -633,7 +630,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* not exist, returns null"                                                   */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPROPERTY2);
-         if(portletReq.getProperty("NeverMind")==null){
+         if(headerRequest.getProperty("NeverMind")==null){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
@@ -645,7 +642,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPROPERTY3);
          try{
-            portletReq.getProperty(null);
+            headerRequest.getProperty(null);
             result.setTcDetail("Failed because no exception is thrown");
          } catch (IllegalArgumentException e){
             result.setTcSuccess(true);
@@ -659,7 +656,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* exists, returns its values as an Enumeration "                             */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPROPERTIES1);
-         Enumeration<String> properties = portletReq.getProperties("Accept");
+         Enumeration<String> properties = headerRequest.getProperties("Accept");
          if(properties.hasMoreElements()){
             result.setTcSuccess(true);
             result.appendTcDetail("Got \"Accept\" property as an enumeration");
@@ -674,7 +671,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* not exist, returns an empty Enumeration"                                   */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPROPERTIES2);
-         Enumeration<String> properties = portletReq.getProperties("NeverMind");
+         Enumeration<String> properties = headerRequest.getProperties("NeverMind");
          if(!properties.hasMoreElements()){
             result.setTcSuccess(true);
          }
@@ -687,7 +684,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPROPERTIES3);
          try{
-            portletReq.getProperties(null);
+            headerRequest.getProperties(null);
             result.appendTcDetail("Failed because no exception is thrown");
          } catch (IllegalArgumentException e){
             result.setTcSuccess(true);
@@ -701,7 +698,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* property names"                                                            */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPROPERTYNAMES1);
-         if(portletReq.getPropertyNames().hasMoreElements()){
+         if(headerRequest.getPropertyNames().hasMoreElements()){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
@@ -721,7 +718,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* Details: "Method getPortalContext(): Returns the context of the portal"    */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPORTALCONTEXT);
-         if(portletReq.getPortalContext()!=null){
+         if(headerRequest.getPortalContext()!=null){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
@@ -732,7 +729,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* authentication type if the request was authenticated"                      */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETAUTHTYPE1);
-         String authType = portletReq.getAuthType();
+         String authType = headerRequest.getAuthType();
          if(authType!=null){
             result.setTcSuccess(true);
             result.appendTcDetail("Auth type is - "+authType);
@@ -754,7 +751,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* context path associated with the portlet"                                  */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETCONTEXTPATH1);
-         String contextPath = portletReq.getContextPath();
+         String contextPath = headerRequest.getContextPath();
          if(contextPath!=null){
             result.setTcSuccess(true);
             result.appendTcDetail("Context path is found to be - "+contextPath);
@@ -777,7 +774,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* must start with \"/\" and may not end with \"/\""                          */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETCONTEXTPATH3);
-         String getcntxtpath=portletReq.getContextPath();
+         String getcntxtpath=headerRequest.getContextPath();
          if(getcntxtpath!=null && getcntxtpath.startsWith("/") && !getcntxtpath.endsWith("/")) {
            result.setTcSuccess(true);
          } else {
@@ -791,7 +788,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* of the user if the request is authenticated"                               */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETREMOTEUSER1);
-         String loguser=portletReq.getRemoteUser();
+         String loguser=headerRequest.getRemoteUser();
          if(loguser!=null) {
            result.setTcSuccess(true);
            result.appendTcDetail("Remote user is - "+loguser);
@@ -815,7 +812,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* object representing the user if the request has been authenticated"        */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETUSERPRINCIPAL1);
-         Principal getusrp=portletReq.getUserPrincipal();
+         Principal getusrp=headerRequest.getUserPrincipal();
          if(getusrp!=null) {
            result.setTcSuccess(true);
          } else {
@@ -838,9 +835,9 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* in the specified role"                                                     */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISUSERINROLE1);
-         PortletContext portletContext = portletReq.getPortletContext();
+         PortletContext portletContext = headerRequest.getPortletContext();
          String securityRole = portletContext.getInitParameter("javax.portlet.portal.SECURITY_ROLE");
-         if(portletReq.isUserInRole(securityRole)) {
+         if(headerRequest.isUserInRole(securityRole)) {
             result.setTcSuccess(true);
             result.appendTcDetail("User is in \"" + securityRole + "\" role.");
          } else {
@@ -854,7 +851,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* is not in the specified role"                                              */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISUSERINROLE2);
-         result.setTcSuccess(!portletReq.isUserInRole("TestRole"));
+         result.setTcSuccess(!headerRequest.isUserInRole("TestRole"));
          result.writeTo(writer);
       }
 
@@ -872,7 +869,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* specified attribute name"                                                  */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETATTRIBUTE1);
-         if(portletReq.getAttribute("javax.portlet.lifecycle_phase")!=null){
+         if(headerRequest.getAttribute("javax.portlet.lifecycle_phase")!=null){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
@@ -883,7 +880,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* the specified name exists"                                                 */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETATTRIBUTE2);
-         if(portletReq.getAttribute("InvalidAttribute")==null){
+         if(headerRequest.getAttribute("InvalidAttribute")==null){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
@@ -895,7 +892,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETATTRIBUTE3);
          try{
-            portletReq.getAttribute(null);
+            headerRequest.getAttribute(null);
             result.appendTcDetail("Failed because no exception is raised.");
          } catch(IllegalArgumentException e){
             result.setTcSuccess(true);
@@ -910,7 +907,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* names"                                                                     */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETATTRIBUTENAMES1);
-         Enumeration<String> attributes = portletReq.getAttributeNames();
+         Enumeration<String> attributes = headerRequest.getAttributeNames();
          if(attributes.hasMoreElements()){
             result.setTcSuccess(true);
          }
@@ -933,12 +930,12 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       if(renderParams.getValue("trPara1")!=null && renderParams.getValue("trPara1").equals("true"))
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETER1);
-         if(portletReq.getParameter("trPara1")!=null && portletReq.getParameter("trPara1").equals("true")){
+         if(headerRequest.getParameter("trPara1")!=null && headerRequest.getParameter("trPara1").equals("true")){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETER1, aurl);
          tb.writeTo(writer);
       }
@@ -950,12 +947,12 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
             && renderParams.getValue("trPara2").equals("true")
             && renderParams.isPublic("trPara2")) {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETER2);
-         if(portletReq.getParameter("trPara2")!=null && portletReq.getParameter("trPara2").equals("true")){
+         if(headerRequest.getParameter("trPara2")!=null && headerRequest.getParameter("trPara2").equals("true")){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETER2, aurl);
          tb.writeTo(writer);
       }
@@ -965,7 +962,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* for the specified name"                                                    */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETER3);
-         if(portletReq.getParameter("invalidParam")==null){
+         if(headerRequest.getParameter("invalidParam")==null){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
@@ -977,12 +974,12 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       if(renderParams.getValue("trPara4")!=null
             && renderParams.getValue("trPara4").equals("true")) {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETER4);
-         if(portletReq.getParameter("trPara4")!=null && portletReq.getParameter("trPara4").equals("true")){
+         if(headerRequest.getParameter("trPara4")!=null && headerRequest.getParameter("trPara4").equals("true")){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETER4, aurl);
          tb.writeTo(writer);
       }
@@ -993,7 +990,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETER5);
          try{
-            portletReq.getParameter(null);
+            headerRequest.getParameter(null);
             result.appendTcDetail("Failed because no exception is raised");
          } catch (IllegalArgumentException e){
             result.setTcSuccess(true);
@@ -1009,13 +1006,13 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       if(renderParams.getValue("trPara6")!=null
             && renderParams.getValue("trPara6").equals("true")) {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETERNAMES1);
-         Enumeration<String> params = portletReq.getParameterNames();
+         Enumeration<String> params = headerRequest.getParameterNames();
          if(params.hasMoreElements()){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETERNAMES1, aurl);
          tb.writeTo(writer);
       }
@@ -1026,13 +1023,13 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       if(renderParams.getValue("trPara7")!=null
             && renderParams.getValue("trPara7").equals("true")) {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETERVALUES1);
-         String[] params = portletReq.getParameterValues("trPara7");
+         String[] params = headerRequest.getParameterValues("trPara7");
          if(params.length==2 && params[0].equals("true") && params[1].equals("false")){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETERVALUES1, aurl);
          tb.writeTo(writer);
       }
@@ -1043,13 +1040,13 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       if(renderParams.getValue("trPara8")!=null
             && renderParams.getValue("trPara8").equals("true") && renderParams.isPublic("trPara8")) {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETERVALUES2);
-         String[] params = portletReq.getParameterValues("trPara8");
+         String[] params = headerRequest.getParameterValues("trPara8");
          if(params.length==2 && params[0].equals("true") && params[1].equals("false")){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETERVALUES2, aurl);
          tb.writeTo(writer);
       }
@@ -1059,7 +1056,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* exists for the specified name"                                             */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETERVALUES3);
-         if(portletReq.getParameterValues("invalidParam")==null){
+         if(headerRequest.getParameterValues("invalidParam")==null){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
@@ -1071,7 +1068,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETERVALUES4);
          try{
-            portletReq.getParameterValues(null);
+            headerRequest.getParameterValues(null);
             result.appendTcDetail("Failed because no exception is raised");
          } catch (IllegalArgumentException e){
             result.setTcSuccess(true);
@@ -1087,13 +1084,13 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       if(renderParams.getValue("trPara9")!=null
             && renderParams.getValue("trPara9").equals("true")) {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETERMAP1);
-         Map<String, String[]> params = portletReq.getParameterMap();
+         Map<String, String[]> params = headerRequest.getParameterMap();
          if(!params.isEmpty()){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETERMAP1, aurl);
          tb.writeTo(writer);
       }
@@ -1106,14 +1103,14 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
             && renderParams.getValue("trPara10b")!=null
                   && renderParams.getValue("trPara10b").equals("true")) {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETERMAP2);
-         Map<String, String[]> params = portletReq.getParameterMap();
+         Map<String, String[]> params = headerRequest.getParameterMap();
          if(params.containsKey("trPara10a") && params.get("trPara10a")[0].equals("true")
                && params.containsKey("trPara10b") && params.get("trPara10b")[0].equals("true")){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPARAMETERMAP2, aurl);
          tb.writeTo(writer);
       }
@@ -1142,8 +1139,8 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* Details: "Method setAttribute(String, Object): Stores an attribute object  */
       /* under the specified name in the request"                                   */
       {
-         portletReq.setAttribute("trAttr1", (String)"true");
-         RenderURL rurl = portletResp.createRenderURL();
+         headerRequest.setAttribute("trAttr1", (String)"true");
+         RenderURL rurl = headerResponse.createRenderURL();
          TestLink tb = new TestLink(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_SETATTRIBUTE1, rurl);
          tb.writeTo(writer);
       }
@@ -1152,9 +1149,9 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* Details: "Method setAttribute(String, Object): Removes the attribute by    */
       /* the specified name if the object is null"                                  */
       {
-         portletReq.setAttribute("trAttr2", (String)"true");
-         portletReq.setAttribute("trAttr2", null);
-         RenderURL rurl = portletResp.createRenderURL();
+         headerRequest.setAttribute("trAttr2", (String)"true");
+         headerRequest.setAttribute("trAttr2", null);
+         RenderURL rurl = headerResponse.createRenderURL();
          TestLink tb = new TestLink(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_SETATTRIBUTE2, rurl);
          tb.writeTo(writer);
       }
@@ -1165,7 +1162,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_SETATTRIBUTE3);
          try{
-            portletReq.setAttribute(null, "true");
+            headerRequest.setAttribute(null, "true");
             result.appendTcDetail("Failed because no exception is raised");
          } catch (IllegalArgumentException e){
             result.setTcSuccess(true);
@@ -1178,9 +1175,9 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* Details: "Method removeAttribute(String): Removes the attribute specified  */
       /* by the name from the request"                                              */
       {
-         portletReq.setAttribute("trAttr4", (String)"true");
-         portletReq.removeAttribute("trAttr4");
-         RenderURL rurl = portletResp.createRenderURL();
+         headerRequest.setAttribute("trAttr4", (String)"true");
+         headerRequest.removeAttribute("trAttr4");
+         RenderURL rurl = headerResponse.createRenderURL();
          TestLink tb = new TestLink(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_REMOVEATTRIBUTE1, rurl);
          tb.writeTo(writer);
       }
@@ -1191,7 +1188,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_REMOVEATTRIBUTE2);
          try{
-            portletReq.removeAttribute(null);
+            headerRequest.removeAttribute(null);
             result.appendTcDetail("Failed because no exception is raised");
          } catch (IllegalArgumentException e){
             result.setTcSuccess(true);
@@ -1205,7 +1202,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* in the client request"                                                     */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETREQUESTEDSESSIONID1);
-         String sesid=portletReq.getRequestedSessionId();
+         String sesid=headerRequest.getRequestedSessionId();
          if(sesid!=null) {
             result.appendTcDetail("Session ID is - "+sesid);
             result.setTcSuccess(true);
@@ -1229,7 +1226,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* ID is valid"                                                               */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_ISREQUESTEDSESSIONIDVALID1);
-         if(portletReq.isRequestedSessionIdValid()){
+         if(headerRequest.isRequestedSessionIdValid()){
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail("Failed because session ID is invalid.");
@@ -1243,7 +1240,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* defined in the portlet descriptor "                                        */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPE1);
-         String contentType = portletReq.getResponseContentType();
+         String contentType = headerRequest.getResponseContentType();
          if(contentType!=null){
             result.setTcSuccess(true);
             result.appendTcDetail("Response content type is found to be - "+contentType);
@@ -1260,7 +1257,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* defined in the portlet descriptor"                                         */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETRESPONSECONTENTTYPES1);
-         if(portletReq.getResponseContentTypes().hasMoreElements()){
+         if(headerRequest.getResponseContentTypes().hasMoreElements()){
             result.setTcSuccess(true);
          } else {
             result.appendTcDetail("Failed because empty enumeration is returned");
@@ -1273,7 +1270,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* representing the preferred Locale for the response"                        */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETLOCALE);
-         Locale lc = portletReq.getLocale();
+         Locale lc = headerRequest.getLocale();
          if(lc!=null){
             result.setTcSuccess(true);
             result.appendTcDetail("Locale is - "+lc.toString());
@@ -1289,7 +1286,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* portal will accept content"                                                */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETLOCALES);
-         if(portletReq.getLocales().hasMoreElements()){
+         if(headerRequest.getLocales().hasMoreElements()){
             result.setTcSuccess(true);
          } else {
             result.setTcDetail("Failed because the returned enumeration is empty");
@@ -1302,7 +1299,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* scheme name for the request"                                               */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETSCHEME);
-         String scheme=portletReq.getScheme();
+         String scheme=headerRequest.getScheme();
          if(scheme!=null) {
            result.setTcSuccess(true);
          } else {
@@ -1316,7 +1313,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* host name for the request"                                                 */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETSERVERNAME);
-         String servname=portletReq.getServerName();
+         String servname=headerRequest.getServerName();
          if(servname!=null) {
             result.setTcSuccess(true);
          } else {
@@ -1331,7 +1328,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETSERVERPORT);
          try{
-            int servport=portletReq.getServerPort();
+            int servport=headerRequest.getServerPort();
             result.appendTcDetail("Server Port is "+servport);
             result.setTcSuccess(true);
          } catch (Exception e){
@@ -1345,7 +1342,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* portlet window ID"                                                         */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETWINDOWID);
-         String windowId = portletReq.getWindowID();
+         String windowId = headerRequest.getWindowID();
          if(windowId!=null){
             result.setTcSuccess(true);
             result.appendTcDetail("Window ID is - "+windowId);
@@ -1360,7 +1357,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* containing the cookies for this request"                                   */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETCOOKIES1);
-         if(portletReq.getCookies()!=null){
+         if(headerRequest.getCookies()!=null){
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
@@ -1381,14 +1378,14 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* private parameter names and values if available"                           */
       if(renderParams.getValue("trPrivate1")!=null && renderParams.getValue("trPrivate1").equals("true")){
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPRIVATEPARAMETERMAP1);
-         if (portletReq.getParameterMap().containsKey("trPrivate1")
+         if (headerRequest.getParameterMap().containsKey("trPrivate1")
              && "true"
-                 .equals(portletReq.getParameterMap().get("trPrivate1")[0])) {
+                 .equals(headerRequest.getParameterMap().get("trPrivate1")[0])) {
              result.setTcSuccess(true);
          }
          result.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPRIVATEPARAMETERMAP1, aurl);
          tb.writeTo(writer);
       }
@@ -1397,14 +1394,14 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* Details: "Method getPrivateParameterMap(): The returned map is immutable"  */
       if(renderParams.getValue("trPrivate2")!=null && renderParams.getValue("trPrivate2").equals("true")){
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPRIVATEPARAMETERMAP2);
-         if (portletReq.getParameterMap().containsKey("trPrivate2")
+         if (headerRequest.getParameterMap().containsKey("trPrivate2")
              && "true"
-                 .equals(portletReq.getParameterMap().get("trPrivate2")[0])) {
+                 .equals(headerRequest.getParameterMap().get("trPrivate2")[0])) {
            String trPrivate2[] = {"false"};
            try {
-              portletReq.getParameterMap().put("trPrivate2", trPrivate2);
+              headerRequest.getParameterMap().put("trPrivate2", trPrivate2);
               if ("true"
-                  .equals(portletReq.getParameterMap().get("trPrivate2")[0])) {
+                  .equals(headerRequest.getParameterMap().get("trPrivate2")[0])) {
                  result.setTcSuccess(true);
               }
            } catch (UnsupportedOperationException e) {
@@ -1413,7 +1410,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
          }
          result.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPRIVATEPARAMETERMAP2, aurl);
          tb.writeTo(writer);
       }
@@ -1425,14 +1422,14 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       if(renderParams.getValue("trPublic1")!=null && renderParams.getValue("trPublic1").equals("true") 
             && renderParams.isPublic("trPublic1")){
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPUBLICPARAMETERMAP1);
-         if (portletReq.getPublicParameterMap().containsKey("trPublic1")
+         if (headerRequest.getPublicParameterMap().containsKey("trPublic1")
              && "true"
-                 .equals(portletReq.getPublicParameterMap().get("trPublic1")[0])) {
+                 .equals(headerRequest.getPublicParameterMap().get("trPublic1")[0])) {
              result.setTcSuccess(true);
          }
          result.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPUBLICPARAMETERMAP1, aurl);
          tb.writeTo(writer);
       }
@@ -1441,15 +1438,15 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
       /* Details: "Method getPublicParameterMap(): The returned map is immutable"   */
       if(renderParams.getValue("trPublic2")!=null && renderParams.getValue("trPublic2").equals("true")){
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPUBLICPARAMETERMAP2);
-         if (portletReq.getPublicParameterMap().containsKey("trPublic2")
+         if (headerRequest.getPublicParameterMap().containsKey("trPublic2")
              && "true"
-                 .equals(portletReq.getParameterMap().get("trPublic2")[0])) {
+                 .equals(headerRequest.getParameterMap().get("trPublic2")[0])) {
            String trPublic2[] = {"false"};
            try {
-              portletReq.getPublicParameterMap().put("trPublic2", trPublic2);
+              headerRequest.getPublicParameterMap().put("trPublic2", trPublic2);
               if ("true"
                   .equals(
-                      portletReq.getPublicParameterMap().get("trPublic2")[0])) {
+                      headerRequest.getPublicParameterMap().get("trPublic2")[0])) {
                  result.setTcSuccess(true);
               }
            }
@@ -1459,7 +1456,7 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
          }
          result.writeTo(writer);
       } else {
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          TestButton tb = new TestButton(V3HEADERPORTLETTESTS_SPEC14_PORTLETREQUEST_APIHEADER_GETPUBLICPARAMETERMAP2, aurl);
          tb.writeTo(writer);
       }
@@ -1476,9 +1473,9 @@ public class HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1 implements Port
          result.writeTo(writer);
       }
       
-      portletReq.getPortletSession().setAttribute(
+      headerRequest.setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1",
-            writer.toString(), PORTLET_SCOPE);
+            writer.toString());
       
    }
 

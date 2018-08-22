@@ -50,7 +50,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY11;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY12;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -73,22 +72,20 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+   public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException, IOException {
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
+   public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException, IOException {
       
-      PrintWriter writer = portletResp.getWriter();
+      PrintWriter writer = renderResponse.getWriter();
       
-      String msg = (String) portletReq.getPortletSession().getAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_HeaderResponse1",
-            PORTLET_SCOPE);
+      String msg = (String) renderRequest.getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_HeaderResponse1");
       writer.write("<p>" + msg + "</p>\n");
-      portletReq.getPortletSession().removeAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_HeaderResponse1",
-            PORTLET_SCOPE);
-      
+      renderRequest.removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_HeaderResponse1");
+
       /* TestCase: V3HeaderPortletTests_SPEC15_HeaderResponse_getWriter             */
       /* Details: "Data written to the HeaderResponse writer is added to the        */
       /* aggregated portal document HEAD section."                                  */
@@ -144,7 +141,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
    }
 
    @Override
-   public void renderHeaders(HeaderRequest portletReq, HeaderResponse portletResp)
+   public void renderHeaders(HeaderRequest headerRequest, HeaderResponse headerResponse)
          throws PortletException, IOException {
       
       StringWriter writer = new StringWriter();
@@ -154,7 +151,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       /* Details: "This method sets the title of the portlet."                      */
       {
          TestResult result = tcd.getTestResultSucceeded(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE);
-         portletResp.setTitle("some title");
+         headerResponse.setTitle("some title");
          result.appendTcDetail("Cannot be tested as a portal is not required to display the portlet title."
                + " Also there is no method to get the changed title.");
          result.writeTo(writer);
@@ -164,7 +161,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       /* Details: "An empty string can be set as title of portlet."                 */
       {
          TestResult result = tcd.getTestResultSucceeded(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE2);
-         portletResp.setTitle("");
+         headerResponse.setTitle("");
          result.appendTcDetail("Cannot be tested as a portal is not required to display the portlet title."
                + " Also there is no method to get the changed title.");
          result.writeTo(writer);
@@ -174,7 +171,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       /* Details: "Setting title as null restores the original title."              */
       {
          TestResult result = tcd.getTestResultSucceeded(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_SETTITLE3);
-         portletResp.setTitle(null);
+         headerResponse.setTitle(null);
          result.appendTcDetail("Cannot be tested as a portal is not required to display the portlet title."
                + " Also there is no method to get the changed title.");
          result.writeTo(writer);
@@ -185,7 +182,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       /* aggregated portal document HEAD section."                                  */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_GETWRITER);
-         PrintWriter pw = portletResp.getWriter();
+         PrintWriter pw = headerResponse.getWriter();
          pw.write("<script class='jquery-tag'></script>");
          pw.close();
          result.writeTo(writer);
@@ -205,7 +202,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY5);
          try{
-            portletResp.addDependency(null, "testDependency", "1.0");
+            headerResponse.addDependency(null, "testDependency", "1.0");
             result.appendTcDetail("Failed because no exception is raised.");
          } catch (IllegalArgumentException e){
            result.setTcSuccess(true);
@@ -220,7 +217,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY6);
          try{
-            portletResp.addDependency("", "testDependency", "1.0");
+            headerResponse.addDependency("", "testDependency", "1.0");
             result.appendTcDetail("Failed because no exception is raised.");
          } catch (IllegalArgumentException e){
            result.setTcSuccess(true);
@@ -236,7 +233,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       /* dependency."                                                               */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY7);
-         portletResp.addDependency("testDependency", "testDependency", "1.0", "<script class='dependency-test'></script>");
+         headerResponse.addDependency("testDependency", "testDependency", "1.0", "<script class='dependency-test'></script>");
          result.writeTo(writer);
       }
 
@@ -247,8 +244,8 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       /* declared."                                                                 */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY8);
-         portletResp.addDependency("testDependency2", "testDependency2", "1.0", "<script class='dependency-test2-1'></script>");
-         portletResp.addDependency("testDependency2", "testDependency2", "2.0", "<script class='dependency-test2-2'></script>");
+         headerResponse.addDependency("testDependency2", "testDependency2", "1.0", "<script class='dependency-test2-1'></script>");
+         headerResponse.addDependency("testDependency2", "testDependency2", "2.0", "<script class='dependency-test2-2'></script>");
          result.writeTo(writer);
       }
 
@@ -258,7 +255,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY10);
          try{
-            portletResp.addDependency(null, "testDependency", "1.0", "<script class='dependency-test'></script>");
+            headerResponse.addDependency(null, "testDependency", "1.0", "<script class='dependency-test'></script>");
             result.appendTcDetail("Failed because no exception is raised.");
          } catch (IllegalArgumentException e){
            result.setTcSuccess(true);
@@ -273,7 +270,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY11);
          try{
-            portletResp.addDependency("", "testDependency", "1.0", "<script class='dependency-test'></script>");
+            headerResponse.addDependency("", "testDependency", "1.0", "<script class='dependency-test'></script>");
             result.appendTcDetail("Failed because no exception is raised.");
          } catch (IllegalArgumentException e){
            result.setTcSuccess(true);
@@ -289,7 +286,7 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_HEADERRESPONSE_ADDDEPENDENCY12);
          try{
-            portletResp.addDependency("testDependency", "testDependency", "1.0", "<invalid class='dependency-test'></invalid>");
+            headerResponse.addDependency("testDependency", "testDependency", "1.0", "<invalid class='dependency-test'></invalid>");
             result.appendTcDetail("Failed because no exception is raised.");
          } catch (IllegalArgumentException e){
            result.setTcSuccess(true);
@@ -298,9 +295,9 @@ public class HeaderPortletTests_SPEC15_HeaderResponse1 implements Portlet, Heade
          result.writeTo(writer);
       }
       
-      portletReq.getPortletSession().setAttribute(
+      headerRequest.setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_HeaderResponse1",
-            writer.toString(), PORTLET_SCOPE);
+            writer.toString());
    }
 
 }

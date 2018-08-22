@@ -74,7 +74,6 @@ import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_CREATERESOURCEURL;
 import static javax.portlet.tck.util.ModuleTestCaseDetails.V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETCACHECONTROL;
 import static javax.portlet.tck.constants.Constants.RESULT_ATTR_PREFIX;
-import static javax.portlet.PortletSession.PORTLET_SCOPE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -97,35 +96,30 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
    }
 
    @Override
-   public void processAction(ActionRequest portletReq, ActionResponse portletResp) throws PortletException, IOException {
+   public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException, IOException {
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp) throws PortletException, IOException {
+   public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException, IOException {
 
-      PrintWriter writer = portletResp.getWriter();
+      PrintWriter writer = renderResponse.getWriter();
 
-      String msg = (String) portletReq.getPortletSession().getAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1",
-            PORTLET_SCOPE);
+      String msg = (String) renderRequest.getAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1");
       writer.write("<p>" + msg + "</p>\n");
-      portletReq.getPortletSession().removeAttribute(
-            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1",
-            PORTLET_SCOPE);
-      
-      
-
+      renderRequest.removeAttribute(
+            RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1");
    }
 
    @Override
-   public void renderHeaders(HeaderRequest portletReq, HeaderResponse portletResp)
+   public void renderHeaders(HeaderRequest headerRequest, HeaderResponse headerResponse)
          throws PortletException, IOException {
       
       StringWriter writer = new StringWriter();
       
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
       
-      ClassChecker cc = new ClassChecker(portletResp.getClass());
+      ClassChecker cc = new ClassChecker(headerResponse.getClass());
 
       /* TestCase: V3HeaderPortletTests_SPEC15_MimeResponse_ApiHeader_fieldEXPIRATION_CACHE  */
       /* Details: "Has String field EXPIRATION_CACHE with value of                  */
@@ -239,7 +233,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       /* Details: "Method getContentType(): Returns null if no content type is set" */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETCONTENTTYPE2);
-         String getType2 = portletResp.getContentType();
+         String getType2 = headerResponse.getContentType();
          if (getType2 == null) {
             result.setTcSuccess(true);
          } else {
@@ -254,8 +248,8 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETCONTENTTYPE1);
          try {
-            portletResp.setContentType("text/html");
-            String type = portletResp.getContentType();
+            headerResponse.setContentType("text/html");
+            String type = headerResponse.getContentType();
             if (type.equals("text/html")) {
                result.setTcSuccess(true);
                result.appendTcDetail("Mime Type set to text/html");
@@ -271,7 +265,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       /* type that can be used with the response"                                   */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETCONTENTTYPE1);
-         String getType1 = portletResp.getContentType();
+         String getType1 = headerResponse.getContentType();
          if (getType1 != null) {
             result.setTcSuccess(true);
             result.appendTcDetail("Mime Type is "+getType1);
@@ -285,7 +279,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETCONTENTTYPE4);
          try {
-            portletResp.setContentType("invalid");
+            headerResponse.setContentType("invalid");
             result.appendTcDetail("Method did not throw Exception");
          } catch (IllegalArgumentException iae) {
             result.appendTcDetail(iae.toString());
@@ -299,7 +293,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       /* name of the charset used for the response body"                            */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETCHARACTERENCODING);
-         String getChar = portletResp.getCharacterEncoding();
+         String getChar = headerResponse.getCharacterEncoding();
          if (getChar != null) {
             result.setTcSuccess(true);
             result.appendTcDetail("Charset is "+getChar);
@@ -312,7 +306,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETWRITER1);
          try {
-            PrintWriter pw = portletResp.getWriter();
+            PrintWriter pw = headerResponse.getWriter();
             if (pw != null) {
                result.setTcSuccess(true);
             }
@@ -329,7 +323,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       /* locale assigned to the response"                                           */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETLOCALE);
-         Locale lc = portletResp.getLocale();
+         Locale lc = headerResponse.getLocale();
          if (lc != null) {
             result.appendTcDetail("Locale is "+lc);
             result.setTcSuccess(true);
@@ -342,7 +336,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       /* committed"                                                                 */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_ISCOMMITTED2);
-         result.setTcSuccess(!portletResp.isCommitted());
+         result.setTcSuccess(!headerResponse.isCommitted());
          result.writeTo(writer);
       }
 
@@ -351,12 +345,12 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       /* the response body"                                                         */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETBUFFERSIZE1);
-         portletResp.setBufferSize(256);
-         if(portletResp.getBufferSize()==256){
+         headerResponse.setBufferSize(256);
+         if(headerResponse.getBufferSize()==256){
             result.setTcSuccess(true);
-            result.appendTcDetail("Buffer size is set to "+portletResp.getBufferSize());
+            result.appendTcDetail("Buffer size is set to "+headerResponse.getBufferSize());
          } else {
-            result.appendTcDetail("Failed because buffer size is not set to 256 but "+portletResp.getBufferSize());
+            result.appendTcDetail("Failed because buffer size is not set to 256 but "+headerResponse.getBufferSize());
          }
          result.writeTo(writer);
       }
@@ -367,9 +361,9 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_RESETBUFFER1);
          try{
-            PrintWriter pw = portletResp.getWriter();
+            PrintWriter pw = headerResponse.getWriter();
             pw.write("This will not be printed.");
-            portletResp.resetBuffer();
+            headerResponse.resetBuffer();
             result.setTcSuccess(true);
          } catch(Exception e) {
             result.appendTcDetail(e.toString());
@@ -383,9 +377,9 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_RESET1);
          try{
-            PrintWriter pw = portletResp.getWriter();
+            PrintWriter pw = headerResponse.getWriter();
             pw.write("This will not be printed.");
-            portletResp.reset();
+            headerResponse.reset();
             result.setTcSuccess(true);
          } catch(Exception e) {
             result.appendTcDetail(e.toString());
@@ -398,9 +392,9 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       /* called after content has been written"                                     */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_SETBUFFERSIZE2);
-         portletResp.flushBuffer();
+         headerResponse.flushBuffer();
          try{
-            portletResp.setBufferSize(128);
+            headerResponse.setBufferSize(128);
          } catch(IllegalStateException e){
             result.setTcSuccess(true);
             result.appendTcDetail(e.toString());
@@ -413,7 +407,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       /* buffer size used for the response"                                         */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETBUFFERSIZE1);
-         int size = portletResp.getBufferSize();
+         int size = headerResponse.getBufferSize();
          if (size != 0) {
             result.appendTcDetail("BufferSize is found to be "+size);
             result.setTcSuccess(true);
@@ -427,7 +421,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_FLUSHBUFFER1);
          try{
-            portletResp.flushBuffer();
+            headerResponse.flushBuffer();
             result.setTcSuccess(true);
          } catch (Exception e){
             result.appendTcDetail(e.toString());
@@ -443,7 +437,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_RESETBUFFER2);
          try{
-            portletResp.resetBuffer();
+            headerResponse.resetBuffer();
          } catch(IllegalStateException e){
             result.setTcSuccess(true);
             result.appendTcDetail(e.toString());
@@ -456,7 +450,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       /* committed"                                                                 */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_ISCOMMITTED1);
-         result.setTcSuccess((portletResp.isCommitted()));
+         result.setTcSuccess((headerResponse.isCommitted()));
          result.writeTo(writer);
       }
 
@@ -466,7 +460,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_RESET2);
          try{
-            portletResp.reset();
+            headerResponse.reset();
          } catch(IllegalStateException e){
             result.setTcSuccess(true);
             result.appendTcDetail(e.toString());
@@ -480,7 +474,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETPORTLETOUTPUTSTREAM2);
          try {
-            portletResp.getPortletOutputStream();
+            headerResponse.getPortletOutputStream();
             result.appendTcDetail("Method did not throw Exception");
          } catch (IllegalStateException ise) {
             result.appendTcDetail(ise.toString());
@@ -494,7 +488,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       /* representing a render URL targeting the portlet"                           */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_CREATERENDERURL);
-         RenderURL rurl = portletResp.createRenderURL();
+         RenderURL rurl = headerResponse.createRenderURL();
          if(rurl!=null && !rurl.equals("")){
             result.setTcSuccess(true);
             result.appendTcDetail("RenderURL created successfully - "+rurl.toString());
@@ -509,7 +503,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       /* representing an action URL targeting the portlet"                          */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_CREATEACTIONURL);
-         ActionURL aurl = portletResp.createActionURL();
+         ActionURL aurl = headerResponse.createActionURL();
          if(aurl!=null && !aurl.equals("")){
             result.setTcSuccess(true);
             result.appendTcDetail("ActionURL created successfully - "+aurl.toString());
@@ -524,7 +518,7 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       /* targeting the portlet"                                                     */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_CREATERESOURCEURL);
-         ResourceURL resurl = portletResp.createResourceURL();
+         ResourceURL resurl = headerResponse.createResourceURL();
          if(resurl!=null && !resurl.equals("")){
             result.setTcSuccess(true);
             result.appendTcDetail("ResourceURL created successfully - "+resurl.toString());
@@ -538,16 +532,16 @@ public class HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1 implements Portle
       /* Details: "Method getCacheControl(): Returns a CacheControl object"         */
       {
          TestResult result = tcd.getTestResultFailed(V3HEADERPORTLETTESTS_SPEC15_MIMERESPONSE_APIHEADER_GETCACHECONTROL);
-         CacheControl gcc = portletResp.getCacheControl();
+         CacheControl gcc = headerResponse.getCacheControl();
          if (gcc != null) {
             result.setTcSuccess(true);
          }
          result.writeTo(writer);
       }
       
-      portletReq.getPortletSession().setAttribute(
+      headerRequest.setAttribute(
             RESULT_ATTR_PREFIX + "HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1",
-            writer.toString(), PORTLET_SCOPE);
+            writer.toString());
    }
 
 }
