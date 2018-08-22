@@ -38,6 +38,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -393,6 +394,8 @@ public class TCKSimpleTestDriver {
       } 
       
       WebElement wel = wels.get(0);
+      JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+      javascriptExecutor.executeScript("window.scrollTo(0, (arguments[0].getBoundingClientRect().top + window.pageYOffset) - (window.innerHeight / 2));", wel);
       wel.click();
       WebDriverWait wdw = new WebDriverWait(driver, timeout);
       wdw.until(ExpectedConditions.visibilityOfElementLocated(By.name(tcName)));
@@ -492,6 +495,8 @@ public class TCKSimpleTestDriver {
       // Click setup link if found
       if ((tcels != null) && !tcels.isEmpty()) {
          WebElement wel = tcels.get(0);
+         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+         javascriptExecutor.executeScript("window.scrollTo(0, (arguments[0].getBoundingClientRect().top + window.pageYOffset) - (window.innerHeight / 2));", wel);
          wel.click();
          debugLines.add("   Clicked setup link.");
 
@@ -519,6 +524,8 @@ public class TCKSimpleTestDriver {
       
       if (tcels != null && !tcels.isEmpty()) {
          WebElement wel = tcels.get(0);
+         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+         javascriptExecutor.executeScript("window.scrollTo(0, (arguments[0].getBoundingClientRect().top + window.pageYOffset) - (window.innerHeight / 2));", wel);
          wel.click();
          WebDriverWait wdw = new WebDriverWait(driver, timeout);
          wdw.until(ExpectedConditions.visibilityOfElementLocated(By.id(resultId)));
