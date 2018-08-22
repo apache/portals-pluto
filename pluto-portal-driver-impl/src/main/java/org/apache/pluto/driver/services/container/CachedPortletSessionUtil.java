@@ -16,26 +16,15 @@
  */
 package org.apache.pluto.driver.services.container;
 
-import javax.portlet.PortletSession;
-import javax.portlet.filter.PortletSessionWrapper;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class CachedPortletSessionImpl extends PortletSessionWrapper implements CachedPortletSession {
+/**
+ * This class contains a ClassLoader singleton {@link Map} named {@link #INVALIDATED_SESSIONS} that is used to work-
+ * around a Tomcat issue such that invalidated {@link javax.servlet.http.HttpSession} objects are recycled in a cross-
+ * context environment.
+ */
+public class CachedPortletSessionUtil {
 
-   private boolean invalidated;
-
-   public CachedPortletSessionImpl(PortletSession wrapped) {
-      super(wrapped);
-   }
-
-   @Override
-   public boolean isInvalidated() {
-      return invalidated;
-   }
-
-   @Override
-   public void invalidate() {
-      invalidated = true;
-      CachedPortletSessionUtil.INVALIDATED_SESSIONS.put(getId(), true);
-      super.invalidate();
-   }
+	public static final Map<String, Boolean> INVALIDATED_SESSIONS = new ConcurrentHashMap<>();
 }

@@ -23,6 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import javax.portlet.ActionParameters;
 import javax.portlet.PortletConfig;
@@ -416,6 +419,20 @@ public class PortletRequestContextImpl implements PortletRequestContext {
 
          cachedPortletSession = new CachedPortletSessionImpl(portletEnvironmentService.createPortletSession(
              portletConfig.getPortletContext(), getPortletWindow(), httpSession));
+
+         if (CachedPortletSessionUtil.INVALIDATED_SESSIONS.containsKey(httpSession.getId())) {
+
+            synchronized (httpSession) {
+               Enumeration<String> attributeNames = httpSession.getAttributeNames();
+               if (attributeNames.hasMoreElements()) {
+                  while (attributeNames.hasMoreElements()) {
+                     String attributeName = attributeNames.nextElement();
+                     httpSession.removeAttribute(attributeName);
+                  }
+                  CachedPortletSessionUtil.INVALIDATED_SESSIONS.remove(httpSession.getId());
+               }
+            }
+         }
       }
 
       return cachedPortletSession;
