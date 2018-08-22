@@ -79,12 +79,32 @@ import static javax.portlet.tck.portlets.Utils.RESOURCEPARAMETERSARTIFACTKEY;
  */
 
 @PortletApplication(
-   events = @EventDefinition(
-      qname = @PortletQName(
-         localPart = "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts", 
-         namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
-      ), payloadType = java.lang.String.class
-   )
+   events = {
+       @EventDefinition(
+           qname = @PortletQName(
+               localPart = "AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts",
+               namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
+           ), payloadType = java.lang.String.class
+       ),
+       @EventDefinition(
+           qname = @PortletQName(
+               localPart = "AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts",
+               namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
+           ), payloadType = java.lang.String.class
+       ),
+       @EventDefinition(
+           qname = @PortletQName(
+               localPart = "AnnotationPortletArtifactValidityTests_SPEC3_20_RequestArtifacts",
+               namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
+           ), payloadType = java.lang.String.class
+       ),
+       @EventDefinition(
+           qname = @PortletQName(
+             localPart = "AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts",
+             namespaceURI = "http://www.apache.org/portals/pluto/portlet-tck_3.0"
+          ), payloadType = java.lang.String.class
+       )
+   }
 )
 public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts {
 
