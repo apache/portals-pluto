@@ -163,10 +163,10 @@ SPEC_23;JS URL;createResourceUrlC;TRUE;The portlet hub createResourceUrl functio
 SPEC_23;JS URL;createResourceUrlD;TRUE;The portlet hub createResourceUrl function returns a URL with no render state set when cacheability = cacheLevelFull
 
 SPEC_23;JS RS;setRenderState1;TRUE;The portlet hub setRenderState function causes the onStateChange listener to be called
-SPEC_23;JS RS;setRenderState2;TRUE;The portlet hub setRenderState function allows the portlet mode to be set to "EDIT"
-SPEC_23;JS RS;setRenderState3;TRUE;The portlet hub setRenderState function allows the portlet mode to be set to "VIEW"
-SPEC_23;JS RS;setRenderState4;TRUE;The portlet hub setRenderState function allows the window state to be set to "MAXIMIZED"
-SPEC_23;JS RS;setRenderState5;TRUE;The portlet hub setRenderState function allows the window state to be set to "NORMAL"
+SPEC_23;JS RS;setRenderState2;TRUE;The portlet hub setRenderState function allows the portlet mode to be set to "edit"
+SPEC_23;JS RS;setRenderState3;TRUE;The portlet hub setRenderState function allows the portlet mode to be set to "view"
+SPEC_23;JS RS;setRenderState4;TRUE;The portlet hub setRenderState function allows the window state to be set to "maximized"
+SPEC_23;JS RS;setRenderState5;TRUE;The portlet hub setRenderState function allows the window state to be set to "normal"
 SPEC_23;JS RS;setRenderState6;TRUE;The portlet hub setRenderState function allows a new parameter "NewParm" to be set to "NewVal"
 SPEC_23;JS RS;setRenderState7;TRUE;The portlet hub setRenderState function allows parameter "NewParm" to be set to ["NewVal1", "NewVal2"]
 SPEC_23;JS RS;setRenderState8;TRUE;The portlet hub setRenderState function allows a new parameter "NewParm" to be deleted

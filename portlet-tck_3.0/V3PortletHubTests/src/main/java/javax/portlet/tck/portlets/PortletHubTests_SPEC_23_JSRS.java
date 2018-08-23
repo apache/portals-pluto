@@ -91,7 +91,7 @@ public class PortletHubTests_SPEC_23_JSRS implements Portlet {
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState2                   */
       /* Details: "The portlet hub setRenderState function allows the portlet mode  */
-      /* to be set to \"EDIT\""                                                     */
+      /* to be set to \"edit\""                                                     */
       {
          TestButtonAsync button = new TestButtonAsync(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE2);
          button.writeTo(writer);
@@ -101,7 +101,7 @@ public class PortletHubTests_SPEC_23_JSRS implements Portlet {
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState3                   */
       /* Details: "The portlet hub setRenderState function allows the portlet mode  */
-      /* to be set to \"VIEW\""                                                     */
+      /* to be set to \"view\""                                                     */
       {
          TestButtonAsync button = new TestButtonAsync(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE3);
          button.writeTo(writer);
@@ -111,7 +111,7 @@ public class PortletHubTests_SPEC_23_JSRS implements Portlet {
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState4                   */
       /* Details: "The portlet hub setRenderState function allows the window state  */
-      /* to be set to \"MAXIMIZED\""                                                */
+      /* to be set to \"maximized\""                                                */
       {
          TestButtonAsync button = new TestButtonAsync(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE4);
          button.writeTo(writer);
@@ -121,7 +121,7 @@ public class PortletHubTests_SPEC_23_JSRS implements Portlet {
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState5                   */
       /* Details: "The portlet hub setRenderState function allows the window state  */
-      /* to be set to \"NORMAL\""                                                   */
+      /* to be set to \"normal\""                                                   */
       {
          TestButtonAsync button = new TestButtonAsync(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE5);
          button.writeTo(writer);

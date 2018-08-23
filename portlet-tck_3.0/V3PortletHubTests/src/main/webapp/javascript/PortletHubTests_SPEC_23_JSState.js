@@ -211,8 +211,8 @@
          /* Details: "The RenderState object clone function returns a new object       */
          /* instance"                                                                  */
          state = hub.newState();
-         state.setPortletMode('VIEW');
-         state.setWindowState('NORMAL');
+         state.setPortletMode('view');
+         state.setWindowState('normal');
          newState = state.clone();
          msg = null;
          if (state === newState) {
@@ -259,11 +259,11 @@
          /* Details: "The RenderState object clone function returns a RenderState      */
          /* object with the same portlet mode"                                         */
          state = hub.newState();
-         state.setPortletMode('VIEW');
-         state.setWindowState('NORMAL');
+         state.setPortletMode('view');
+         state.setWindowState('normal');
          newState = state.clone();
          msg = null;
-         if (state.portletMode !== 'VIEW' || state.portletMode !== newState.portletMode) {
+         if (state.portletMode !== 'view' || state.portletMode !== newState.portletMode) {
             msg = 'Portlet mode invalid: ' + newState.portletMode;
          }
          setSuccess('V3PortletHubTests_SPEC_23_JSState_clone3', msg);
@@ -272,11 +272,11 @@
          /* Details: "The RenderState object clone function returns a RenderState      */
          /* object with the same window state"                                         */
          state = hub.newState();
-         state.setPortletMode('VIEW');
-         state.setWindowState('NORMAL');
+         state.setPortletMode('view');
+         state.setWindowState('normal');
          newState = state.clone();
          msg = null;
-         if (state.windowState !== 'NORMAL' || state.windowState !== newState.windowState) {
+         if (state.windowState !== 'normal' || state.windowState !== newState.windowState) {
             msg = 'Window State invalid: ' + newState.windowState;
          }
          setSuccess('V3PortletHubTests_SPEC_23_JSState_clone4', msg);
@@ -285,8 +285,8 @@
          /* Details: "The RenderState object clone function returns a RenderState      */
          /* object with no parameters if the original had no parameters"               */
          state = hub.newState();
-         state.setPortletMode('VIEW');
-         state.setWindowState('NORMAL');
+         state.setPortletMode('view');
+         state.setWindowState('normal');
          newState = state.clone();
          msg = null;
          params = hub.newParameters();
@@ -325,9 +325,9 @@
          /* TestCase: V3PortletHubTests_SPEC_23_JSState_setPortletMode2                */
          /* Details: "The RenderState object setPortletMode function sets the portlet  */
          /* mode"                                                                      */
-         state.setPortletMode('HELP');
+         state.setPortletMode('help');
          msg = null;
-         if (state.portletMode !== 'HELP') {
+         if (state.portletMode !== 'help') {
             msg = 'Portlet mode incorrectly set: ' + state.portletMode;
          }
          setSuccess('V3PortletHubTests_SPEC_23_JSState_setPortletMode2', msg);
@@ -335,9 +335,9 @@
          /* TestCase: V3PortletHubTests_SPEC_23_JSState_getPortletMode1                */
          /* Details: "The RenderState object getPortletMode function returns the       */
          /* portlet mode"                                                              */
-         state.portletMode = 'EDIT';
+         state.portletMode = 'edit';
          msg = null;
-         if (state.getPortletMode() !== 'EDIT') {
+         if (state.getPortletMode() !== 'edit') {
             msg = 'Portlet mode incorrectly retrieved: ' + state.getPortletMode();
          }
          setSuccess('V3PortletHubTests_SPEC_23_JSState_getPortletMode1', msg);
@@ -354,9 +354,9 @@
          /* TestCase: V3PortletHubTests_SPEC_23_JSState_setWindowState2                */
          /* Details: "The RenderState object setWindowState function sets the window   */
          /* state"                                                                     */
-         state.setWindowState('NORMAL');
+         state.setWindowState('normal');
          msg = null;
-         if (state.windowState !== 'NORMAL') {
+         if (state.windowState !== 'normal') {
             msg = 'Window state incorrectly set: ' + state.windowState;
          }
          setSuccess('V3PortletHubTests_SPEC_23_JSState_setWindowState2', msg);
@@ -364,9 +364,9 @@
          /* TestCase: V3PortletHubTests_SPEC_23_JSState_getWindowState1                */
          /* Details: "The RenderState object getWindowState function returns the       */
          /* window state"                                                              */
-         state.windowState = 'NORMAL';
+         state.windowState = 'normal';
          msg = null;
-         if (state.getWindowState() !== 'NORMAL') {
+         if (state.getWindowState() !== 'normal') {
             msg = 'Window state incorrectly retrieved: ' + state.getWindowState();
          }
          setSuccess('V3PortletHubTests_SPEC_23_JSState_getWindowState1', msg);

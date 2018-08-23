@@ -351,10 +351,10 @@ public class ModuleTestCaseDetails extends TestCaseDetails {
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURLC, "The portlet hub createResourceUrl function returns a URL with the render state set when cacheability = cacheLevelPortlet");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSURL_CREATERESOURCEURLD, "The portlet hub createResourceUrl function returns a URL with no render state set when cacheability = cacheLevelFull");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE1, "The portlet hub setRenderState function causes the onStateChange listener to be called");
-      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE2, "The portlet hub setRenderState function allows the portlet mode to be set to \"EDIT\"");
-      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE3, "The portlet hub setRenderState function allows the portlet mode to be set to \"VIEW\"");
-      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE4, "The portlet hub setRenderState function allows the window state to be set to \"MAXIMIZED\"");
-      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE5, "The portlet hub setRenderState function allows the window state to be set to \"NORMAL\"");
+      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE2, "The portlet hub setRenderState function allows the portlet mode to be set to \"edit\"");
+      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE3, "The portlet hub setRenderState function allows the portlet mode to be set to \"view\"");
+      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE4, "The portlet hub setRenderState function allows the window state to be set to \"maximized\"");
+      tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE5, "The portlet hub setRenderState function allows the window state to be set to \"normal\"");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE6, "The portlet hub setRenderState function allows a new parameter \"NewParm\" to be set to \"NewVal\"");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE7, "The portlet hub setRenderState function allows parameter \"NewParm\" to be set to [\"NewVal1\", \"NewVal2\"]");
       tcd.put(V3PORTLETHUBTESTS_SPEC_23_JSRS_SETRENDERSTATE8, "The portlet hub setRenderState function allows a new parameter \"NewParm\" to be deleted");

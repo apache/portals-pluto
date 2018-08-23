@@ -95,7 +95,7 @@
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState2                   */
       /* Details: "The portlet hub setRenderState function allows the portlet mode  */
-      /* to be set to \"EDIT\""                                                     */
+      /* to be set to \"edit\""                                                     */
       document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState2-clickme').onclick = function () {
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSRS_setRenderState2');
@@ -106,7 +106,7 @@
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState3                   */
       /* Details: "The portlet hub setRenderState function allows the portlet mode  */
-      /* to be set to \"VIEW\""                                                     */
+      /* to be set to \"view\""                                                     */
       document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState3-clickme').onclick = function () {
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSRS_setRenderState3');
@@ -117,7 +117,7 @@
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState4                   */
       /* Details: "The portlet hub setRenderState function allows the window state  */
-      /* to be set to \"MAXIMIZED\""                                                */
+      /* to be set to \"maximized\""                                                */
       document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState4-clickme').onclick = function () {
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSRS_setRenderState4');
@@ -128,7 +128,7 @@
 
       /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState5                   */
       /* Details: "The portlet hub setRenderState function allows the window state  */
-      /* to be set to \"NORMAL\""                                                   */
+      /* to be set to \"normal\""                                                   */
       document.getElementById('V3PortletHubTests_SPEC_23_JSRS_setRenderState5-clickme').onclick = function () {
          var state = hub.newState();
          state.setValue('testcase', 'V3PortletHubTests_SPEC_23_JSRS_setRenderState5');
@@ -214,7 +214,7 @@
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState2                   */
          /* Details: "The portlet hub setRenderState function allows the portlet mode  */
-         /* to be set to \"EDIT\""                                                     */
+         /* to be set to \"edit\""                                                     */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSRS_setRenderState2') {
             msg = null;
             if (state.getPortletMode().toLowerCase() !== 'edit') {
@@ -225,7 +225,7 @@
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState3                   */
          /* Details: "The portlet hub setRenderState function allows the portlet mode  */
-         /* to be set to \"VIEW\""                                                     */
+         /* to be set to \"view\""                                                     */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSRS_setRenderState3') {
             msg = null;
             if (state.getPortletMode().toLowerCase() !== 'view') {
@@ -236,7 +236,7 @@
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState4                   */
          /* Details: "The portlet hub setRenderState function allows the window state  */
-         /* to be set to \"MAXIMIZED\""                                                */
+         /* to be set to \"maximized\""                                                */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSRS_setRenderState4') {
             msg = null;
             if (state.getWindowState().toLowerCase() !== 'maximized') {
@@ -247,7 +247,7 @@
    
          /* TestCase: V3PortletHubTests_SPEC_23_JSRS_setRenderState5                   */
          /* Details: "The portlet hub setRenderState function allows the window state  */
-         /* to be set to \"NORMAL\""                                                   */
+         /* to be set to \"normal\""                                                   */
          if (state.getValue('testcase') === 'V3PortletHubTests_SPEC_23_JSRS_setRenderState5') {
             msg = null;
             if (state.getWindowState().toLowerCase() !== 'normal') {
