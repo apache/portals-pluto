@@ -213,6 +213,12 @@ the ignore list, set the command line flag 'test.ignore' to false:
 
 mvn test -Prun-tck -Dtest.ignore=false
 
+Under certain circumstances such as a very fast CPU or a large display size,
+Selenium throws a WebDriverException claiming that a button or link  is not
+clickable. If this happens, the window scrolling workarond can be enabled:
+
+mvn test -Prun-tck -Dtest.scroll=true
+
 Passing the TCK:
 ================
 

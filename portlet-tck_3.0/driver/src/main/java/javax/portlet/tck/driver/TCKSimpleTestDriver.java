@@ -67,7 +67,7 @@ public class TCKSimpleTestDriver {
    protected static String loginUrl, host, port, testFile, browser,
    username, usernameId, password, passwordId, testContextBase, module;
    protected static int timeout = 3; // for waiting on page load
-   protected static boolean useGeneratedUrl = true, debug = false, dryrun = false;
+   protected static boolean useGeneratedUrl = true, debug = false, dryrun = false, scroll;
 
    protected static WebDriver driver;
    protected String page, tcName;
@@ -87,6 +87,8 @@ public class TCKSimpleTestDriver {
       System.out.println("   TestFile=" + testFile);
       module = System.getProperty("test.module");
       System.out.println("   Module       =" + module);
+      scroll = Boolean.valueOf(System.getProperty("test.scroll"));
+      System.out.println("   Scroll       =" + scroll);
       
       String ignoreFile = System.getProperty("test.ignore.list.file");
       System.out.println("   Ignore file  =" + ignoreFile);
@@ -394,8 +396,10 @@ public class TCKSimpleTestDriver {
       } 
       
       WebElement wel = wels.get(0);
-      JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
-      javascriptExecutor.executeScript("window.scrollTo(0, (arguments[0].getBoundingClientRect().top + window.pageYOffset) - (window.innerHeight / 2));", wel);
+      if (scroll) {
+         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+         javascriptExecutor.executeScript("window.scrollTo(0, (arguments[0].getBoundingClientRect().top + window.pageYOffset) - (window.innerHeight / 2));", wel);
+      }
       wel.click();
       WebDriverWait wdw = new WebDriverWait(driver, timeout);
       wdw.until(ExpectedConditions.visibilityOfElementLocated(By.name(tcName)));
@@ -495,8 +499,10 @@ public class TCKSimpleTestDriver {
       // Click setup link if found
       if ((tcels != null) && !tcels.isEmpty()) {
          WebElement wel = tcels.get(0);
-         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
-         javascriptExecutor.executeScript("window.scrollTo(0, (arguments[0].getBoundingClientRect().top + window.pageYOffset) - (window.innerHeight / 2));", wel);
+         if (scroll) {
+            JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+            javascriptExecutor.executeScript("window.scrollTo(0, (arguments[0].getBoundingClientRect().top + window.pageYOffset) - (window.innerHeight / 2));", wel);
+         }
          wel.click();
          debugLines.add("   Clicked setup link.");
 
@@ -524,8 +530,10 @@ public class TCKSimpleTestDriver {
       
       if (tcels != null && !tcels.isEmpty()) {
          WebElement wel = tcels.get(0);
-         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
-         javascriptExecutor.executeScript("window.scrollTo(0, (arguments[0].getBoundingClientRect().top + window.pageYOffset) - (window.innerHeight / 2));", wel);
+         if (scroll) {
+            JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+            javascriptExecutor.executeScript("window.scrollTo(0, (arguments[0].getBoundingClientRect().top + window.pageYOffset) - (window.innerHeight / 2));", wel);
+         }
          wel.click();
          WebDriverWait wdw = new WebDriverWait(driver, timeout);
          wdw.until(ExpectedConditions.visibilityOfElementLocated(By.id(resultId)));
