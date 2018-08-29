@@ -27,6 +27,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.ActionURL;
 import javax.portlet.GenericPortlet;
+import javax.portlet.MimeResponse;
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
@@ -36,6 +37,7 @@ import javax.portlet.RenderMode;
 import javax.portlet.RenderParameters;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.RenderURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 import javax.portlet.tck.beans.TestButton;
@@ -58,15 +60,15 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
       extends GenericPortlet {
 
    @Override
-   public void processAction(ActionRequest portletReq,
-         ActionResponse portletResp) throws PortletException, IOException {
+   public void processAction(ActionRequest actionRequest,
+         ActionResponse actionResponse) throws PortletException, IOException {
 
       ModuleTestCaseDetails tcd = new ModuleTestCaseDetails();
       StringWriter writer = new StringWriter();
 
-      ActionParameters actionParams = portletReq.getActionParameters();
+      ActionParameters actionParams = actionRequest.getActionParameters();
       String action = actionParams.getValue(Constants.BUTTON_PARAM_NAME);
-      MutableRenderParameters renderParams = portletResp.getRenderParameters();
+      MutableRenderParameters renderParams = actionResponse.getRenderParameters();
 
       if (action != null) {
          if (action.equals(
@@ -110,7 +112,7 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
              * Details:
              * "Sets the portlet mode of a portlet to the given portlet mode."
              */
-            portletResp.setPortletMode(PortletMode.HELP);
+            actionResponse.setPortletMode(PortletMode.HELP);
          } else if (action.equals(
                V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETPORTLETMODE2)) {
             /*
@@ -121,7 +123,7 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
              * Details:
              * "A custom portlet mode declared in deployment descriptor could be set."
              */
-            portletResp.setPortletMode(new PortletMode("custom1"));
+            actionResponse.setPortletMode(new PortletMode("custom1"));
             renderParams.setValue("tr_setPortlet2", "true");
          } else if (action.equals(
                V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETPORTLETMODE3)) {
@@ -133,8 +135,8 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
              * Details:
              * "Not more than one portlet mode can be set. If more than one portlet mode is set, only the last one set is valid."
              */
-            portletResp.setPortletMode(PortletMode.EDIT);
-            portletResp.setPortletMode(PortletMode.HELP);
+            actionResponse.setPortletMode(PortletMode.EDIT);
+            actionResponse.setPortletMode(PortletMode.HELP);
          } else if (action.equals(
                V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETPORTLETMODE4)) {
             /*
@@ -148,7 +150,7 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
             TestResult result = tcd.getTestResultFailed(
                   V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETPORTLETMODE4);
             try {
-               portletResp.setPortletMode(PortletMode.UNDEFINED);
+               actionResponse.setPortletMode(PortletMode.UNDEFINED);
             } catch (PortletModeException e) {
                result.setTcSuccess(true);
                result.appendTcDetail(e.toString());
@@ -167,9 +169,10 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
             TestResult result = tcd.getTestResultFailed(
                   V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETPORTLETMODE5);
             try {
-               String referer = portletReq.getProperty("Referer");
-               portletResp.sendRedirect(referer);
-               portletResp.setPortletMode(PortletMode.UNDEFINED);
+               RenderURL redirectURL = actionResponse.createRedirectURL(
+                   MimeResponse.Copy.NONE);
+               actionResponse.sendRedirect(redirectURL.toString());
+               actionResponse.setPortletMode(PortletMode.UNDEFINED);
             } catch (IllegalStateException e) {
                result.setTcSuccess(true);
                result.appendTcDetail(e.toString());
@@ -188,7 +191,7 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
             TestResult result = tcd.getTestResultFailed(
                   V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETPORTLETMODE6);
             try {
-               portletResp.setPortletMode(null);
+               actionResponse.setPortletMode(null);
             } catch (IllegalArgumentException e) {
                result.setTcSuccess(true);
                result.appendTcDetail(e.toString());
@@ -204,7 +207,7 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
              * Details:
              * "Sets the window state of a portlet to the given window state."
              */
-            portletResp.setWindowState(WindowState.NORMAL);
+            actionResponse.setWindowState(WindowState.NORMAL);
             renderParams.setValue("tr_setWindow", "true");
          } else if (action.equals(
                V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETWINDOWSTATE2)) {
@@ -227,8 +230,8 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
              * Details:
              * "Not more than one window state can be set. If more than one window state is set, only the last one set is valid."
              */
-            portletResp.setWindowState(WindowState.MAXIMIZED);
-            portletResp.setWindowState(WindowState.NORMAL);
+            actionResponse.setWindowState(WindowState.MAXIMIZED);
+            actionResponse.setWindowState(WindowState.NORMAL);
             renderParams.setValue("tr_setWindow3", "true");
          } else if (action.equals(
                V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETWINDOWSTATE4)) {
@@ -243,7 +246,7 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
             TestResult result = tcd.getTestResultFailed(
                   V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETWINDOWSTATE4);
             try {
-               portletResp.setWindowState(WindowState.UNDEFINED);
+               actionResponse.setWindowState(WindowState.UNDEFINED);
             } catch (WindowStateException e) {
                result.setTcSuccess(true);
                result.appendTcDetail(e.toString());
@@ -262,9 +265,9 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
             TestResult result = tcd.getTestResultFailed(
                   V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETWINDOWSTATE5);
             try {
-               String referer = portletReq.getProperty("Referer");
-               portletResp.sendRedirect(referer);
-               portletResp.setWindowState(WindowState.UNDEFINED);
+               String referer = actionRequest.getProperty("Referer");
+               actionResponse.sendRedirect(referer);
+               actionResponse.setWindowState(WindowState.UNDEFINED);
             } catch (IllegalStateException e) {
                result.setTcSuccess(true);
                result.appendTcDetail(e.toString());
@@ -283,7 +286,7 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
             TestResult result = tcd.getTestResultFailed(
                   V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETWINDOWSTATE6);
             try {
-               portletResp.setWindowState(null);
+               actionResponse.setWindowState(null);
             } catch (IllegalArgumentException e) {
                result.setTcSuccess(true);
                result.appendTcDetail(e.toString());
@@ -292,7 +295,7 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
          }
       }
 
-      PortletSession ps = portletReq.getPortletSession();
+      PortletSession ps = actionRequest.getPortletSession();
       ps.setAttribute(
             Constants.RESULT_ATTR_PREFIX
                   + "RenderStateTests_SPEC2_12_MutableRenderState",
