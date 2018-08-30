@@ -265,8 +265,8 @@ public class RenderStateTests_SPEC2_12_MutableRenderState
             TestResult result = tcd.getTestResultFailed(
                   V3RENDERSTATETESTS_SPEC2_12_MUTABLERENDERSTATE_SETWINDOWSTATE5);
             try {
-               String referer = actionRequest.getProperty("Referer");
-               actionResponse.sendRedirect(referer);
+               RenderURL redirectURL = actionResponse.createRedirectURL(MimeResponse.Copy.NONE);
+               actionResponse.sendRedirect(redirectURL.toString());
                actionResponse.setWindowState(WindowState.UNDEFINED);
             } catch (IllegalStateException e) {
                result.setTcSuccess(true);
