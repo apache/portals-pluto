@@ -34,9 +34,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>AnnotationPortletArtifactValidityTests_SPEC3_20_ResponseArtifacts</portlet-name>
-		<!--
-		<action-url-redirect>true</action-url-redirect>
-		-->
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 </liferay-portlet-app>
