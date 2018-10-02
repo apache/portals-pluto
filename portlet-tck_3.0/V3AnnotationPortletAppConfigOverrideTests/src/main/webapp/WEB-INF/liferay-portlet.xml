@@ -25,7 +25,35 @@
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
+		<portlet-name>AnnotationPortletAppConfigOverrideTests_SPEC1_28_EventConfiguration1</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>AnnotationPortletAppConfigOverrideTests_SPEC1_28_EventConfiguration2</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>AnnotationPortletAppConfigOverrideTests_SPEC1_28_PortletContainerRuntimeOptions</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>AnnotationPortletAppConfigOverrideTests_SPEC1_28_PortletModes</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters1</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
 		<portlet-name>AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters2</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>AnnotationPortletAppConfigOverrideTests_SPEC1_28_PublicRenderParameters3</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
+		<portlet-name>AnnotationPortletAppConfigOverrideTests_SPEC1_28_WindowStates</portlet-name>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 </liferay-portlet-app>
