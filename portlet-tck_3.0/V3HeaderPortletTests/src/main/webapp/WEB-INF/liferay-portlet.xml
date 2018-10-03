@@ -75,6 +75,7 @@
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<header-request-attribute-prefix>HeaderPortletTests_</header-request-attribute-prefix>
 		<header-request-attribute-prefix>trAttr1</header-request-attribute-prefix>
+		<header-request-attribute-prefix>attr.result</header-request-attribute-prefix>
 	</portlet>
 	<portlet>
 		<portlet-name>HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2</portlet-name>
