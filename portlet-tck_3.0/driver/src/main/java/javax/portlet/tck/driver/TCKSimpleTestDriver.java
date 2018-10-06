@@ -39,6 +39,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -358,7 +359,7 @@ public class TCKSimpleTestDriver {
          // wait for any async JavaScript tests to complete
          processAsync();
          
-         checkResults(wels);
+         checkResults();
 
       } catch(Exception e) {
          
@@ -423,7 +424,7 @@ public class TCKSimpleTestDriver {
       // If there is no login or password fields, don't need to login.
       if (!uels.isEmpty() && !pwels.isEmpty()) {
 
-         System.out.println("   No userid / password fields");
+         System.out.println("login: found userid and password fields");
          WebElement userEl = uels.get(0);
          WebElement pwEl = pwels.get(0);
 
@@ -440,19 +441,38 @@ public class TCKSimpleTestDriver {
    /**
     * Analyzes the page based on the test case name and records success or failure.
     */
-   protected void checkResults(List<WebElement> tcels) {
+   protected void checkResults() {
+
       String resultId = tcName + Constants.RESULT_ID;
       String detailId = tcName + Constants.DETAIL_ID;
 
-      debugLines.add("   Checking results, #TC elements: " + tcels.size());
-
-      List<WebElement> rels = driver.findElements(By.id(resultId)); 
-      List<WebElement> dels = driver.findElements(By.id(detailId)); 
+      List<WebElement> rels = driver.findElements(By.id(resultId));
+      List<WebElement> dels = driver.findElements(By.id(detailId));
       
       if (!rels.isEmpty()) {
-         String res = rels.get(0).getText();
+
+         String res = "";
+         try {
+            res = rels.get(0).getText();
+         } catch(StaleElementReferenceException e) {
+            System.out.println(e.getClass().getName() + " caught when trying to use WebElements found with the resultId.");
+	        WebDriverWait wdw = new WebDriverWait(driver, timeout);
+            wdw.until(ExpectedConditions.visibilityOfElementLocated(By.id(resultId)));
+            rels = driver.findElements(By.id(resultId));
+            res = rels.get(0).getText();
+         }
+
          String det = "Test case " + tcName + ": ";
-         det += dels.isEmpty() ? "No details provided." : dels.get(0).getText(); 
+         try {
+            det += dels.isEmpty() ? "No details provided." : dels.get(0).getText();
+         } catch(StaleElementReferenceException e) {
+            System.out.println(e.getClass().getName() + " caught when trying to use WebElements found with the detailId.");
+	        WebDriverWait wdw = new WebDriverWait(driver, timeout);
+            wdw.until(ExpectedConditions.visibilityOfElementLocated(By.id(detailId)));
+            dels = driver.findElements(By.id(detailId));
+            det += dels.isEmpty() ? "No details provided." : dels.get(0).getText();
+         }
+
          boolean ok = res.contains(Constants.SUCCESS);
          debugLines.add("   Test OK: " + ok + ", results: " + res + ", details: " + det);
          assertTrue(det, ok);

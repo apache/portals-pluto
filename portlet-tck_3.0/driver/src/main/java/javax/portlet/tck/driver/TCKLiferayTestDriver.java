@@ -188,7 +188,7 @@ public class TCKLiferayTestDriver extends TCKSimpleTestDriver {
          // wait for any async JavaScript tests to complete
          processAsync();
 
-         checkResults(wels);
+         checkResults();
 
       } catch(Exception e) {
 
