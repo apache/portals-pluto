@@ -288,7 +288,7 @@ public class TCKSimpleTestDriver {
          capabilities.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, binary);
          driver = new PhantomJSDriver(capabilities);
       } else if (browser.equalsIgnoreCase("htmlUnit")) {
-        driver = new HtmlUnitDriver(true);
+        driver = new HtmlUnitDriver();
       } else if (browser.equalsIgnoreCase("safari")) {
          driver = new SafariDriver();
       } else {
