@@ -25,6 +25,9 @@
 
 <properties>
 
+<entry key="V3ResourceAsyncTests_SPEC_21_Async_getThrowable2"></entry>
+<entry key="V3ResourceAsyncTests_SPEC_21_Async_onError"></entry>
+
 <entry key="V3ResourceAsyncTests_SPEC_21_Async_addListener1"></entry>
 <entry key="V3ResourceAsyncTests_SPEC_21_Async_addListener2"></entry>
 <entry key="V3ResourceAsyncTests_SPEC_21_Async_addListener3"></entry>
