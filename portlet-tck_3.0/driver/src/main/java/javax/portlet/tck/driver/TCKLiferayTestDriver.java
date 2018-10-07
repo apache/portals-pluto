@@ -210,4 +210,28 @@ public class TCKLiferayTestDriver extends TCKSimpleTestDriver {
 
       }
    }
+
+   protected void click(WebElement wel) {
+
+	   boolean magic = false;
+	   String url = "";
+	   String tagName = "";
+
+	   if (wel != null) {
+          tagName = wel.getTagName();
+          url = wel.getAttribute("href");
+
+	      if ("a".equals(tagName)) {
+             if (url.contains("v3headerportlettests")) {
+                magic = true;
+             }
+          }
+	   }
+
+	   if (magic) {
+		   driver.get(url);
+	   } else {
+		   wel.click();
+	   }
+   }
 }

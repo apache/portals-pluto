@@ -388,7 +388,7 @@ public class TCKSimpleTestDriver {
      
       if (wels.isEmpty()) {
          // retry through login page
-         debugLines.add("   logging in ... ");
+         debugLines.add("accessPage: debugLines:   logging in ... ");
          login();
          wels = driver.findElements(By.linkText(page));
          if (wels.isEmpty()) {
@@ -401,7 +401,7 @@ public class TCKSimpleTestDriver {
          JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
          javascriptExecutor.executeScript("window.scrollTo(0, (arguments[0].getBoundingClientRect().top + window.pageYOffset) - (window.innerHeight / 2));", wel);
       }
-      wel.click();
+      click(wel);
       WebDriverWait wdw = new WebDriverWait(driver, timeout);
       wdw.until(ExpectedConditions.visibilityOfElementLocated(By.name(tcName)));
       wels = driver.findElements(By.name(tcName));
@@ -409,6 +409,10 @@ public class TCKSimpleTestDriver {
          throw new Exception("For test case " + tcName + ": no elements found.");
       }
       return wels;
+   }
+
+   protected void click(WebElement wel) {
+	   wel.click();
    }
 
    /**
@@ -448,7 +452,7 @@ public class TCKSimpleTestDriver {
 
       List<WebElement> rels = driver.findElements(By.id(resultId));
       List<WebElement> dels = driver.findElements(By.id(detailId));
-      
+
       if (!rels.isEmpty()) {
 
          String res = "";

@@ -47,31 +47,37 @@
 	</portlet>
 	<portlet>
 		<portlet-name>HeaderPortletTests_SPEC15_MimeResponse_ApiHeader1</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<header-request-attribute-prefix>HeaderPortletTests_</header-request-attribute-prefix>
 	</portlet>
 	<portlet>
 		<portlet-name>HeaderPortletTests_SPEC15_MimeResponse_ApiHeader2</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<header-request-attribute-prefix>HeaderPortletTests_</header-request-attribute-prefix>
 	</portlet>
 	<portlet>
 		<portlet-name>HeaderPortletTests_SPEC15_Header</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<header-request-attribute-prefix>HeaderPortletTests_</header-request-attribute-prefix>
 	</portlet>
 	<portlet>
 		<portlet-name>HeaderPortletTests_SPEC15_HeaderResponse1</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<header-request-attribute-prefix>HeaderPortletTests_</header-request-attribute-prefix>
 	</portlet>
 	<portlet>
 		<portlet-name>HeaderPortletTests_SPEC15_HeaderResponse2</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<header-request-attribute-prefix>HeaderPortletTests_</header-request-attribute-prefix>
 	</portlet>
 	<portlet>
 		<portlet-name>HeaderPortletTests_SPEC14_PortletRequest_ApiHeader1</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<header-request-attribute-prefix>HeaderPortletTests_</header-request-attribute-prefix>
 		<header-request-attribute-prefix>trAttr1</header-request-attribute-prefix>
@@ -79,11 +85,13 @@
 	</portlet>
 	<portlet>
 		<portlet-name>HeaderPortletTests_SPEC14_PortletRequest_ApiHeader2</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<header-request-attribute-prefix>HeaderPortletTests_</header-request-attribute-prefix>
 	</portlet>
 	<portlet>
 		<portlet-name>HeaderPortletTests_SPEC15_PortletResponse_ApiHeader</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<header-request-attribute-prefix>HeaderPortletTests_</header-request-attribute-prefix>
 	</portlet>
