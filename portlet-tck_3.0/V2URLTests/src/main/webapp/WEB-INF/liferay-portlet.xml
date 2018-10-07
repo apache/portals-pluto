@@ -22,6 +22,7 @@
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>URLTests_BaseURL_ApiRenderRenurl</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
@@ -36,6 +37,7 @@
 		<friendly-url-mapping>BaseURL_ApiRenderResurl-friendly</friendly-url-mapping>
 		<friendly-url-routes>BaseURL_ApiRenderResurl-friendly-url-routes.xml</friendly-url-routes>
 		<instanceable>false</instanceable>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
@@ -48,6 +50,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>URLTests_ResourceURL_ApiRenderResurl</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>

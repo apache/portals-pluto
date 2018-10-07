@@ -222,7 +222,10 @@ public class TCKLiferayTestDriver extends TCKSimpleTestDriver {
           url = wel.getAttribute("href");
 
 	      if ("a".equals(tagName)) {
-             if (url.contains("v3headerportlettests")) {
+             if (url.contains("v3headerportlettests".toLowerCase())) {
+                magic = true;
+             }
+             if (url.contains("v3portlethubtests".toLowerCase())) {
                 magic = true;
              }
           }

@@ -1948,4 +1948,19 @@
 <entry key="V2WrapperTests_EventRequestWrapper_ApiEvent_getRequest"></entry>
 <entry key="V2WrapperTests_EventRequestWrapper_ApiEvent_setRequest"></entry>
 
+<entry key="V2WrapperTests_EventResponseWrapper_ApiEvent_getPortletMode"></entry>
+<entry key="V2WrapperTests_EventResponseWrapper_ApiEvent_getRenderParameterMap1"></entry>
+<entry key="V2WrapperTests_EventResponseWrapper_ApiEvent_getResponse"></entry>
+<entry key="V2WrapperTests_EventResponseWrapper_ApiEvent_getWindowState"></entry>
+<entry key="V2WrapperTests_EventResponseWrapper_ApiEvent_removePublicRenderParameter"></entry>
+<entry key="V2WrapperTests_EventResponseWrapper_ApiEvent_setEventA"></entry>
+<entry key="V2WrapperTests_EventResponseWrapper_ApiEvent_setEventB"></entry>
+<entry key="V2WrapperTests_EventResponseWrapper_ApiEvent_setPortletMode"></entry>
+<entry key="V2WrapperTests_EventResponseWrapper_ApiEvent_setRenderParameterA"></entry>
+<entry key="V2WrapperTests_EventResponseWrapper_ApiEvent_setRenderParameterB"></entry>
+<entry key="V2WrapperTests_EventResponseWrapper_ApiEvent_setRenderParametersA"></entry>
+<entry key="V2WrapperTests_EventResponseWrapper_ApiEvent_setRenderParametersB"></entry>
+<entry key="V2WrapperTests_EventResponseWrapper_ApiEvent_setResponse"></entry>
+<entry key="V2WrapperTests_EventResponseWrapper_ApiEvent_setWindowState"></entry>
+
 </properties>

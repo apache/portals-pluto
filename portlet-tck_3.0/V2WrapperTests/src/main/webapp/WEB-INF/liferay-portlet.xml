@@ -38,6 +38,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>WrapperTests_EventResponseWrapper_ApiEvent</portlet-name>
+		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
