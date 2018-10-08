@@ -213,28 +213,22 @@ public class TCKLiferayTestDriver extends TCKSimpleTestDriver {
 
    protected void click(WebElement wel) {
 
-	   boolean magic = false;
-	   String url = "";
-	   String tagName = "";
+	   boolean sennaJS = true;
+	   String url = null;
 
 	   if (wel != null) {
-          tagName = wel.getTagName();
-          url = wel.getAttribute("href");
+          String tagName = wel.getTagName();
 
 	      if ("a".equals(tagName)) {
-             if (url.contains("v3headerportlettests".toLowerCase())) {
-                magic = true;
-             }
-             if (url.contains("v3portlethubtests".toLowerCase())) {
-                magic = true;
-             }
+             url = wel.getAttribute("href");
+             sennaJS = !url.contains("v3headerportlettests") && !url.contains("v3portlethubtests");
           }
 	   }
 
-	   if (magic) {
-		   driver.get(url);
-	   } else {
-		   wel.click();
+	   if (sennaJS) {
+          wel.click();
+       } else {
+          driver.get(url);
 	   }
    }
 }
