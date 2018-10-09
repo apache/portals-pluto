@@ -39,6 +39,11 @@
          <scope>compile</scope>
       </dependency>
       <dependency>
+        <groupId>org.apache.portals.pluto</groupId>
+        <artifactId>test-base</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
          <groupId>org.seleniumhq.selenium</groupId>
          <artifactId>selenium-java</artifactId>
          <scope>compile</scope>

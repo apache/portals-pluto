@@ -38,30 +38,13 @@ import static org.junit.Assert.assertTrue;
  *
  */
 @RunWith(value = Parameterized.class)
-public class TCKLiferayTestDriver extends TCKSimpleTestDriver {
+public class TCKLiferayTestDriver extends TCKTestDriver {
 
    private static Properties nonExclusiveTCs = new Properties();
-   private static String baseUrl;
    private static boolean hadToGet = false;
    private static boolean wasExclusive = false;
    private static boolean stillExclusive = false;
    private static boolean exclusive = false;
-
-   private void getBaseUrl() {
-
-      if (baseUrl == null || "".equals(baseUrl)) {
-         StringBuilder sb = new StringBuilder();
-         sb.append("http://");
-         sb.append(host);
-         if (port != null && !port.isEmpty()) {
-            sb.append(":");
-            sb.append(port);
-         }
-         sb.append("/");
-         sb.append(testContextBase);
-         baseUrl = sb.toString();
-      }
-   }
 
    private void getNonExclusiveTCs() {
       String nonExclusiveTCsFile = System.getProperty("test.non.exclusive.file", "");
@@ -83,9 +66,6 @@ public class TCKLiferayTestDriver extends TCKSimpleTestDriver {
 
    public TCKLiferayTestDriver(String p, String t) {
       super(p, t);
-      if (baseUrl == null) {
-         getBaseUrl();
-      }
       if (nonExclusiveTCs.size() == 0) {
          getNonExclusiveTCs();
       }

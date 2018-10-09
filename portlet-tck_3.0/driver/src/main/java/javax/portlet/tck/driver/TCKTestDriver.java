@@ -29,10 +29,9 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.apache.portals.pluto.test.utilities.SimpleTestDriver;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -40,18 +39,7 @@ import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.safari.SafariDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -63,14 +51,8 @@ import javax.portlet.tck.constants.Constants;
  *
  */
 @RunWith(value = Parameterized.class)
-public class TCKSimpleTestDriver {
+public class TCKTestDriver extends SimpleTestDriver {
 
-   protected static String loginUrl, host, port, testFile, browser,
-   username, usernameId, password, passwordId, testContextBase, module;
-   protected static int timeout = 3; // for waiting on page load
-   protected static boolean useGeneratedUrl = true, debug = false, dryrun = false, scroll;
-
-   protected static WebDriver driver;
    protected String page, tcName;
    
    protected List<String> debugLines = new ArrayList<>();
@@ -178,134 +160,10 @@ public class TCKSimpleTestDriver {
       return tests;
    }
 
-   public TCKSimpleTestDriver(String p, String t) {
+   public TCKTestDriver(String p, String t) {
       page = p;
       tcName = t;
-      StringBuilder sb = new StringBuilder();
-      sb.append("http://");
-      sb.append(host);
-      if (port != null && !port.isEmpty()) {
-         sb.append(":");
-         sb.append(port);
-      }
-      sb.append("/");
-      sb.append(testContextBase);
-      sb.append(page);
-      sb.toString();
       System.out.println("Testing: " + tcName);
-   }
-
-   /**
-    * @throws java.lang.Exception
-    */
-   @BeforeClass
-   public static void setUpBeforeClass() throws Exception {
-      
-      loginUrl = System.getProperty("test.server.login.url");
-      host = System.getProperty("test.server.host");
-      port = System.getProperty("test.server.port");
-      username = System.getProperty("test.server.username");
-      usernameId = System.getProperty("test.server.username.id");
-      password = System.getProperty("test.server.password");
-      passwordId = System.getProperty("test.server.password.id");
-      browser = System.getProperty("test.browser");
-      testContextBase = System.getProperty("test.context.base");
-      String str = System.getProperty("test.url.strategy");
-      useGeneratedUrl = str.equalsIgnoreCase("generateURLs");
-      str = System.getProperty("test.debug");
-      debug = str.equalsIgnoreCase("true");
-      str = System.getProperty("test.timeout");
-      dryrun = new Boolean(System.getProperty("test.dryrun"));
-      timeout = ((str != null) && str.matches("\\d+")) ? Integer.parseInt(str) : 3; 
-      String wd = System.getProperty("test.browser.webDriver");
-      String binary = System.getProperty("test.browser.binary");
-      String headlessProperty = System.getProperty("test.browser.headless");
-      boolean headless = (((headlessProperty == null) || (headlessProperty.length() == 0) || Boolean.valueOf(headlessProperty)));
-
-      System.out.println("before class.");
-      System.out.println("   Debug        =" + debug);
-      System.out.println("   Dryrun       =" + dryrun);
-      System.out.println("   Timeout      =" + timeout);
-      System.out.println("   Login URL    =" + loginUrl);
-      System.out.println("   Host         =" + host);
-      System.out.println("   Port         =" + port);
-      System.out.println("   Context      =" + testContextBase);
-      System.out.println("   Generate URL =" + useGeneratedUrl);
-      System.out.println("   Username     =" + username);
-      System.out.println("   UsernameId   =" + usernameId);
-      System.out.println("   Password     =" + password);
-      System.out.println("   PasswordId   =" + passwordId);
-      System.out.println("   Browser      =" + browser);
-      System.out.println("   Driver       =" + wd);
-      System.out.println("   binary       =" + binary);
-      System.out.println("   headless     =" + headless);
-
-      if (browser.equalsIgnoreCase("firefox")) {
-
-         System.setProperty("webdriver.gecko.driver", wd);
-         FirefoxOptions options = new FirefoxOptions();
-         options.setLegacy(true);
-         options.setAcceptInsecureCerts(true);
-
-         if ((binary != null) && (binary.length() != 0)) {
-            options.setBinary(binary);
-         }
-
-         if (headless) {
-            options.setHeadless(true);
-         }
-
-         driver = new FirefoxDriver(options);
-
-      } else if (browser.equalsIgnoreCase("internetExplorer")) {
-         System.setProperty("webdriver.ie.driver", wd);
-         driver = new InternetExplorerDriver();
-      } else if (browser.equalsIgnoreCase("chrome")) {
-
-         System.setProperty("webdriver.chrome.driver", wd);
-         ChromeOptions options = new ChromeOptions();
-
-         if ((binary != null) && (binary.length() > 0)) {
-            options.setBinary(binary);
-         }
-
-         if (headless) {
-            options.addArguments("--headless");
-         }
-
-         options.addArguments("--disable-infobars");
-         options.setAcceptInsecureCerts(true);
-
-         driver = new ChromeDriver(options);
-
-      } else if (browser.equalsIgnoreCase("phantomjs")) {
-         DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
-         capabilities.setJavascriptEnabled(true);
-         capabilities.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, binary);
-         driver = new PhantomJSDriver(capabilities);
-      } else if (browser.equalsIgnoreCase("htmlUnit")) {
-        driver = new HtmlUnitDriver();
-      } else if (browser.equalsIgnoreCase("safari")) {
-         driver = new SafariDriver();
-      } else {
-         throw new Exception("Unsupported browser: " + browser);
-      }
-
-      if (!dryrun) {
-         login();
-      }
-
-   }
-
-   /**
-    * @throws java.lang.Exception
-    */
-   @AfterClass
-   public static void tearDownAfterClass() throws Exception {
-      if (driver != null) {
-         driver.quit();
-      }
-      System.out.println("   after class.");
    }
 
    /**
@@ -409,33 +267,6 @@ public class TCKSimpleTestDriver {
 
    protected void click(WebElement wel) {
 	   wel.click();
-   }
-
-   /**
-    * Called to login to the portal if necessary. 
-    */
-   protected static void login() {
-
-      driver.get(loginUrl);
-      
-      List<WebElement> uels = driver.findElements(By.id(usernameId));
-      List<WebElement> pwels = driver.findElements(By.id(passwordId));
-
-      // If there is no login or password fields, don't need to login.
-      if (!uels.isEmpty() && !pwels.isEmpty()) {
-
-         System.out.println("login: found userid and password fields");
-         WebElement userEl = uels.get(0);
-         WebElement pwEl = pwels.get(0);
-
-         // perform login
-         userEl.clear();
-         userEl.sendKeys(username);
-         pwEl.clear();
-         pwEl.sendKeys(password);
-         pwEl.submit();
-
-      }
    }
 
    /**

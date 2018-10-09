@@ -492,6 +492,30 @@ TODO: Check if we need all of them. -->
         <version>${taglibs.standard.version}</version>
       </dependency>
       <dependency>
+         <groupId>org.seleniumhq.selenium</groupId>
+         <artifactId>selenium-api</artifactId>
+         <version>3.11.0</version>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.seleniumhq.selenium</groupId>
+         <artifactId>selenium-java</artifactId>
+         <version>3.11.0</version>
+         <scope>test</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.seleniumhq.selenium</groupId>
+         <artifactId>htmlunit-driver</artifactId>
+         <version>2.21</version>
+         <scope>test</scope>
+      </dependency>
+      <dependency>
+         <groupId>com.codeborne</groupId>
+         <artifactId>phantomjsdriver</artifactId>
+         <version>1.3.0</version>
+         <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-core</artifactId>
         <version>${springframework.version}</version>
@@ -735,7 +759,9 @@ TODO: Check if we need all of them. -->
         <module>pluto-site-skin</module>
         
         <!-- the Technology Compliance Kit -->
+        <module>test-base</module>
         <module>portlet-tck_3.0</module>
+        <module>demo-integration-tests</module>
       </modules>
     </profile>
 
