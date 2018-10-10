@@ -55,124 +55,132 @@ public class SimpleTestDriver {
    @BeforeClass
    public static void setUpBeforeClass() throws Exception {
 
-      loginUrl = System.getProperty("test.server.login.url");
-      host = System.getProperty("test.server.host");
-      port = System.getProperty("test.server.port");
-      username = System.getProperty("test.server.username");
-      usernameId = System.getProperty("test.server.username.id");
-      password = System.getProperty("test.server.password");
-      passwordId = System.getProperty("test.server.password.id");
-      browser = System.getProperty("test.browser");
-      testContextBase = System.getProperty("test.context.base");
-      StringBuilder sb = new StringBuilder();
-      sb.append("http://");
-      sb.append(host);
-      if (port != null && !port.isEmpty()) {
-         sb.append(":");
-         sb.append(port);
-      }
-      sb.append("/");
-      sb.append(testContextBase);
-      baseUrl = sb.toString();
-      String str = System.getProperty("test.url.strategy");
-      useGeneratedUrl = str.equalsIgnoreCase("generateURLs");
-      str = System.getProperty("test.debug");
-      debug = str.equalsIgnoreCase("true");
-      str = System.getProperty("test.timeout");
-      dryrun = new Boolean(System.getProperty("test.dryrun"));
-      timeout = ((str != null) && str.matches("\\d+")) ? Integer.parseInt(str) : 3;
-      String wd = System.getProperty("test.browser.webDriver");
-      String binary = System.getProperty("test.browser.binary");
-      String headlessProperty = System.getProperty("test.browser.headless");
-      boolean headless = (((headlessProperty == null) || (headlessProperty.length() == 0) ||
-            Boolean.valueOf(headlessProperty)));
-      String maximizedProperty = System.getProperty("test.browser.maximized");
-      boolean maximized = "true".equalsIgnoreCase(maximizedProperty);
+      if (driver == null) {
+         loginUrl = System.getProperty("test.server.login.url");
+         host = System.getProperty("test.server.host");
+         port = System.getProperty("test.server.port");
+         username = System.getProperty("test.server.username");
+         usernameId = System.getProperty("test.server.username.id");
+         password = System.getProperty("test.server.password");
+         passwordId = System.getProperty("test.server.password.id");
+         browser = System.getProperty("test.browser");
+         testContextBase = System.getProperty("test.context.base");
+         StringBuilder sb = new StringBuilder();
+         sb.append("http://");
+         sb.append(host);
+         if (port != null && !port.isEmpty()) {
+            sb.append(":");
+            sb.append(port);
+         }
+         sb.append("/");
+         sb.append(testContextBase);
+         baseUrl = sb.toString();
+         String str = System.getProperty("test.url.strategy");
+         useGeneratedUrl = str.equalsIgnoreCase("generateURLs");
+         str = System.getProperty("test.debug");
+         debug = str.equalsIgnoreCase("true");
+         str = System.getProperty("test.timeout");
+         dryrun = Boolean.valueOf(System.getProperty("test.dryrun"));
+         timeout = ((str != null) && str.matches("\\d+")) ? Integer.parseInt(str) : 3;
+         String wd = System.getProperty("test.browser.webDriver");
+         String binary = System.getProperty("test.browser.binary");
+         String headlessProperty = System.getProperty("test.browser.headless");
+         boolean headless = (((headlessProperty == null) || (headlessProperty.length() == 0) ||
+               Boolean.valueOf(headlessProperty)));
+         String maximizedProperty = System.getProperty("test.browser.maximized");
+         boolean maximized = Boolean.valueOf(maximizedProperty);
 
-      System.out.println("before class.");
-      System.out.println("   Debug        =" + debug);
-      System.out.println("   Dryrun       =" + dryrun);
-      System.out.println("   Timeout      =" + timeout);
-      System.out.println("   Login URL    =" + loginUrl);
-      System.out.println("   Host         =" + host);
-      System.out.println("   Port         =" + port);
-      System.out.println("   Context      =" + testContextBase);
-      System.out.println("   Generate URL =" + useGeneratedUrl);
-      System.out.println("   Username     =" + username);
-      System.out.println("   UsernameId   =" + usernameId);
-      System.out.println("   Password     =" + password);
-      System.out.println("   PasswordId   =" + passwordId);
-      System.out.println("   Browser      =" + browser);
-      System.out.println("   Driver       =" + wd);
-      System.out.println("   binary       =" + binary);
-      System.out.println("   headless     =" + headless);
-      System.out.println("   maximized    =" + maximized);
+         System.out.println("before class.");
+         System.out.println("   Debug        =" + debug);
+         System.out.println("   Dryrun       =" + dryrun);
+         System.out.println("   Timeout      =" + timeout);
+         System.out.println("   Login URL    =" + loginUrl);
+         System.out.println("   Host         =" + host);
+         System.out.println("   Port         =" + port);
+         System.out.println("   Context      =" + testContextBase);
+         System.out.println("   Generate URL =" + useGeneratedUrl);
+         System.out.println("   Username     =" + username);
+         System.out.println("   UsernameId   =" + usernameId);
+         System.out.println("   Password     =" + password);
+         System.out.println("   PasswordId   =" + passwordId);
+         System.out.println("   Browser      =" + browser);
+         System.out.println("   Driver       =" + wd);
+         System.out.println("   binary       =" + binary);
+         System.out.println("   headless     =" + headless);
+         System.out.println("   maximized    =" + maximized);
 
-      if (browser.equalsIgnoreCase("firefox")) {
+         if (browser.equalsIgnoreCase("firefox")) {
 
-         System.setProperty("webdriver.gecko.driver", wd);
-         FirefoxOptions options = new FirefoxOptions();
-         options.setLegacy(true);
-         options.setAcceptInsecureCerts(true);
+            System.setProperty("webdriver.gecko.driver", wd);
+            FirefoxOptions options = new FirefoxOptions();
+            options.setLegacy(true);
+            options.setAcceptInsecureCerts(true);
 
-         if ((binary != null) && (binary.length() != 0)) {
-            options.setBinary(binary);
+            if ((binary != null) && (binary.length() != 0)) {
+               options.setBinary(binary);
+            }
+
+            if (headless) {
+               options.setHeadless(true);
+            }
+
+            driver = new FirefoxDriver(options);
+
+         } else if (browser.equalsIgnoreCase("internetExplorer")) {
+            System.setProperty("webdriver.ie.driver", wd);
+            driver = new InternetExplorerDriver();
+         } else if (browser.equalsIgnoreCase("chrome")) {
+
+            System.setProperty("webdriver.chrome.driver", wd);
+            ChromeOptions options = new ChromeOptions();
+
+            if ((binary != null) && (binary.length() > 0)) {
+               options.setBinary(binary);
+            }
+
+            if (headless) {
+               options.addArguments("--headless");
+            }
+
+            options.addArguments("--disable-infobars");
+            options.setAcceptInsecureCerts(true);
+
+            if (maximized) {
+               // The webDriver.manage().window().maximize() feature does not work correctly in headless mode, so set the
+               // window size to 1920x1200 (resolution of a 15.4 inch screen).
+               options.addArguments("--window-size=1920,1200");
+            }
+
+            driver = new ChromeDriver(options);
+
+         } else if (browser.equalsIgnoreCase("phantomjs")) {
+            DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
+            capabilities.setJavascriptEnabled(true);
+            capabilities.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, binary);
+            driver = new PhantomJSDriver(capabilities);
+         } else if (browser.equalsIgnoreCase("htmlUnit")) {
+           driver = new HtmlUnitDriver();
+         } else if (browser.equalsIgnoreCase("safari")) {
+            driver = new SafariDriver();
+         } else {
+            throw new Exception("Unsupported browser: " + browser);
          }
 
-         if (headless) {
-            options.setHeadless(true);
-         }
-
-         driver = new FirefoxDriver(options);
-
-      } else if (browser.equalsIgnoreCase("internetExplorer")) {
-         System.setProperty("webdriver.ie.driver", wd);
-         driver = new InternetExplorerDriver();
-      } else if (browser.equalsIgnoreCase("chrome")) {
-
-         System.setProperty("webdriver.chrome.driver", wd);
-         ChromeOptions options = new ChromeOptions();
-
-         if ((binary != null) && (binary.length() > 0)) {
-            options.setBinary(binary);
-         }
-
-         if (headless) {
-            options.addArguments("--headless");
-         }
-
-         options.addArguments("--disable-infobars");
-         options.setAcceptInsecureCerts(true);
+         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+               driver.quit();
+            }
+         }));
 
          if (maximized) {
-            // The webDriver.manage().window().maximize() feature does not work correctly in headless mode, so set the
-            // window size to 1920x1200 (resolution of a 15.4 inch screen).
-            options.addArguments("--window-size=1920,1200");
+            driver.manage().window().maximize();
          }
 
-         driver = new ChromeDriver(options);
-
-      } else if (browser.equalsIgnoreCase("phantomjs")) {
-         DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
-         capabilities.setJavascriptEnabled(true);
-         capabilities.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, binary);
-         driver = new PhantomJSDriver(capabilities);
-      } else if (browser.equalsIgnoreCase("htmlUnit")) {
-        driver = new HtmlUnitDriver();
-      } else if (browser.equalsIgnoreCase("safari")) {
-         driver = new SafariDriver();
-      } else {
-         throw new Exception("Unsupported browser: " + browser);
+         if (!dryrun) {
+            login();
+         }
       }
-
-      if (maximized) {
-         driver.manage().window().maximize();
-      }
-
-      if (!dryrun) {
-         login();
-      }
-
    }
 
    /**
@@ -207,9 +215,6 @@ public class SimpleTestDriver {
     */
    @AfterClass
    public static void tearDownAfterClass() throws Exception {
-      if (driver != null) {
-         driver.quit();
-      }
       System.out.println("   after class.");
    }
 

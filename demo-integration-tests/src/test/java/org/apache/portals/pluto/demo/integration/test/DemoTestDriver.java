@@ -30,6 +30,9 @@ public class DemoTestDriver extends SimpleTestDriver {
 
    @BeforeClass
    public static void setUpBeforeDemoSimpleTestDriverClass() {
-      waitingAsserter = new WaitingAsserter(driver, timeout);
+
+      if (waitingAsserter == null) {
+         waitingAsserter = new WaitingAsserter(driver, timeout);
+      }
    }
 }
