@@ -21,6 +21,7 @@ package org.apache.portals.samples;
 
 import javax.inject.Inject;
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.annotations.RenderMethod;
 
 /**
@@ -53,6 +54,9 @@ public class HelloWorldRender {
    
    @Inject
    private RenderRequest req;
+   
+   @Inject
+   private RenderResponse res;
 
    /**
     * Bean portlet render method for "BeanHelloWorld" portlet.
@@ -74,7 +78,8 @@ public class HelloWorldRender {
       }
       txt.append("!!</h3>\n");
       
-      txt.append("<p><table cellspacing='2' cellpadding='0'><tr><td align='left'>\n");
+      txt.append("<p><table id=\"").append(res.getNamespace());
+      txt.append("_scope_info\" cellspacing='2' cellpadding='0'><tr><td align='left'>\n");
       txt.append("Application Scoped number:</td><td>").append(apprn.getRandomNumber());
       txt.append("</td></tr><tr><td>\n");
       txt.append("Session scoped number:</td><td>").append(sessrn.getRandomNumber());

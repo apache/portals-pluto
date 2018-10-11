@@ -43,7 +43,7 @@ public class PathInfoDemoIT extends DemoTestDriver{
    public void testPathInfoDemo() {
       navigateToPage("Async Tests");
       By linksByXpath = By.xpath("//h3[text()='Path Info Portlet']/parent::div[@class='body']//a");
-      waitingAsserter.waitFor(visibilityOfElementLocated(linksByXpath));
+      waitingAsserter.waitFor(visibilityOfAllElementsLocatedBy(linksByXpath));
       List<WebElement> links = driver.findElements(linksByXpath);
       List<String> urls = new ArrayList<>();
 
