@@ -137,7 +137,8 @@ public class ResourcePortlet extends GenericPortlet {
          aurl = resp.createActionURL();
       } catch (Exception e) {}
       if (aurl != null) {
-         bmu = "<form  METHOD='POST' ACTION='" + aurl + "'><input id='<portlet:namespace/>-clear' type='submit' name='action' value='Action' /></form>";
+         bmu = "<form  METHOD='POST' ACTION='" + aurl + "'>" +
+               "<input id='" + resp.getNamespace() + "-clear' type='submit' name='action' value='Action' /></form>";
       }
 
       writer.write("<div style='background-color:" + clr + ";'>\n");
