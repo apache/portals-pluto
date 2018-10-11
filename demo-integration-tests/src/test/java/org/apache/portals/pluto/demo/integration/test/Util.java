@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -39,8 +40,18 @@ public final class Util {
       throw new AssertionError();
    }
 
-   public static String encodeURL(String url) throws UnsupportedEncodingException {
-	   return URLEncoder.encode(url, StandardCharsets.UTF_8.toString());
+   public static String encodeURL(String url) {
+
+      try {
+         return URLEncoder.encode(url, StandardCharsets.UTF_8.toString());
+      }
+      catch (UnsupportedEncodingException e) {
+        throw new RuntimeException(e);
+      }
+   }
+
+   public static Object executeScript(WebDriver webDriver, String script, Object... arguments) {
+      return ((JavascriptExecutor)webDriver).executeScript(script, arguments);
    }
 
    public static <T> List<T> unmodifiableList(T... items) {

@@ -45,7 +45,7 @@ public class ChatRoomDemoIT extends DemoTestDriver {
 
       // 2. Open a new window/tab to the same page.
       String originalWindowHandle = driver.getWindowHandle();
-      ((JavascriptExecutor)driver).executeScript("window.open('" + chatDemoURL + "');");
+      executeScript(driver, "window.open('" + chatDemoURL + "');");
 
       // 3. In the current window/tab, add a user named "me".
       // 4. Verify that an image appears for the user.

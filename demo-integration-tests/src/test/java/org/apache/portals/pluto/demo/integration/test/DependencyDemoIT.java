@@ -32,7 +32,7 @@ public class DependencyDemoIT extends DemoTestDriver{
 
    @Test
    public void testDependencyDemo() {
-      driver.get(baseUrl + "Dependencies");
+      navigateToPage("Dependencies");
       assertBadDependencyStringThrewException("String: Hi there!",
             "Exception: java.lang.IllegalArgumentException:");
       assertBadDependencyStringThrewException("String: <script dffsfssf",

@@ -35,4 +35,8 @@ public class DemoTestDriver extends SimpleTestDriver {
          waitingAsserter = new WaitingAsserter(driver, timeout);
       }
    }
+
+   protected void navigateToPage(String pageName) {
+      driver.get(baseUrl + Util.encodeURL(pageName));
+   }
 }

@@ -51,7 +51,7 @@ public class PortletHubDemoIT extends DemoTestDriver {
 
    @Test
    public void testPortletHubDemo() throws UnsupportedEncodingException {
-      driver.get(baseUrl + Util.encodeURL("V3.0 Portlet Hub Demo"));
+      navigateToPage("V3.0 Portlet Hub Demo");
 
       // Verify that all the different images appear when clicking each radio button.
       By imageByXpath = By.xpath(IMAGE_XPATH_TEMPLATE.replace(TOKEN, "FullMoon"));
