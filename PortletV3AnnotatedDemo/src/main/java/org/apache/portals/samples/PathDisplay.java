@@ -58,6 +58,7 @@ public class PathDisplay {
    private String method_path_xlated;
    private String method_query_string;
    
+   private String title;
    private String type;
    private String caller;
    private boolean isAsyncSupported = false;
@@ -68,7 +69,7 @@ public class PathDisplay {
 
    public PathDisplay(HttpServletRequest req, String caller) {
       this.caller = caller;
-      
+      title = (String) req.getAttribute("title");
       async_request_uri = (String) req.getAttribute("javax.servlet.async.request_uri");
       async_context_path = (String) req.getAttribute("javax.servlet.async.context_path");
       async_servlet_path = (String) req.getAttribute("javax.servlet.async.servlet_path");
@@ -105,7 +106,7 @@ public class PathDisplay {
 
    public PathDisplay(PortletRequest req, String caller) {
       this.caller = caller;
-      
+      title = (String) req.getAttribute("title");
       async_request_uri = (String) req.getAttribute("javax.servlet.async.request_uri");
       async_context_path = (String) req.getAttribute("javax.servlet.async.context_path");
       async_servlet_path = (String) req.getAttribute("javax.servlet.async.servlet_path");
@@ -155,6 +156,9 @@ public class PathDisplay {
 
    public String toMarkup() {
       StringBuilder txt = new StringBuilder(128);
+      if (title != null) {
+         txt.append("<p id=\"path_info_title\">").append(title).append("</p>");
+      }
       txt.append("<hr>");
       txt.append("<h5>").append(caller).append(" Path Info:</h5>");
       txt.append("<table border='0' cellpadding='0'><tr>");

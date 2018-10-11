@@ -129,13 +129,14 @@ public class PathInfoPortlet {
          if (op.equals("fwd")) {
             RenderLink renlink = new RenderLink("back", cntlurl);
             req.setAttribute("renderLink", renlink);
+            req.setAttribute("title", "Forwarded to Servlet by render method.");
             PortletRequestDispatcher rd = pcfg.getPortletContext().getRequestDispatcher(SERVLET);
             rd.forward(req, resp);
             return;
          } else if (op.equals("fwdjsp")) {
             RenderLink renlink = new RenderLink("back", cntlurl);
             req.setAttribute("renderLink", renlink);
-            req.setAttribute("jsptitle", "Forwarded by render method.");
+            req.setAttribute("jsptitle", "Forwarded to JSP by render method.");
             PortletRequestDispatcher rd = pcfg.getPortletContext().getRequestDispatcher(JSP);
             rd.forward(req, resp);
             return;
@@ -144,6 +145,7 @@ public class PathInfoPortlet {
          writer.append("<div class='infobox'>");
 
          if (op.equals("nested")) {
+            req.setAttribute("title", "Included nested in Portlet -> Servlet -> JSP.");
             PathDisplay pd = new PathDisplay(req, "Render Method (Before)");
             writer.write(pd.toMarkup());
             PortletRequestDispatcher rd = pcfg.getPortletContext().getRequestDispatcher(SERVLET);
@@ -198,6 +200,7 @@ public class PathInfoPortlet {
             writer.append("</script>\n");
          } else if (op.equals("named")) {
             writer.write("Including named servlet:");
+            req.setAttribute("title", "Included named Servlet.");
             PortletRequestDispatcher rd = req.getPortletContext().getNamedDispatcher(NAME);
             rd.include(req, resp);
          } else {

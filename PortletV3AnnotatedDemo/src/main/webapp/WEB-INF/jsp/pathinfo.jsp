@@ -25,7 +25,7 @@ limitations under the License.
 <portlet:defineObjects />
 
 <div class='bluebox'>
-<p>${jsptitle}</p>
+<p id="path_info_title">${jsptitle}</p>
 <%
 
 RenderLink rl = (RenderLink) request.getAttribute("renderLink");
