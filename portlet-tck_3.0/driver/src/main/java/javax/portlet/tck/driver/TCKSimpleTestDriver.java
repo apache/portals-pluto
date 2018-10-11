@@ -455,9 +455,7 @@ public class TCKSimpleTestDriver {
          try {
             res = rels.get(0).getText();
          } catch(StaleElementReferenceException e) {
-            System.out.println(e.getClass().getName() + " caught when trying to use WebElements found with the resultId.");
-	        WebDriverWait wdw = new WebDriverWait(driver, timeout);
-            wdw.until(ExpectedConditions.visibilityOfElementLocated(By.id(resultId)));
+            System.out.println(e.getClass().getName() + " caught when trying to use WebElements found with " + resultId);
             rels = driver.findElements(By.id(resultId));
             res = rels.get(0).getText();
          }
@@ -466,9 +464,7 @@ public class TCKSimpleTestDriver {
          try {
             det += dels.isEmpty() ? "No details provided." : dels.get(0).getText();
          } catch(StaleElementReferenceException e) {
-            System.out.println(e.getClass().getName() + " caught when trying to use WebElements found with the detailId.");
-	        WebDriverWait wdw = new WebDriverWait(driver, timeout);
-            wdw.until(ExpectedConditions.visibilityOfElementLocated(By.id(detailId)));
+            System.out.println(e.getClass().getName() + " caught when trying to use WebElements found with " + detailId);
             dels = driver.findElements(By.id(detailId));
             det += dels.isEmpty() ? "No details provided." : dels.get(0).getText();
          }
@@ -523,7 +519,18 @@ public class TCKSimpleTestDriver {
             JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
             javascriptExecutor.executeScript("window.scrollTo(0, (arguments[0].getBoundingClientRect().top + window.pageYOffset) - (window.innerHeight / 2));", wel);
          }
-         wel.click();
+         try {
+            wel.click();
+         } catch(StaleElementReferenceException e) {
+            System.out.println("setup link: " + e.getClass().getName() + " caught when trying to use WebElements found with " + tcName);
+            wels = driver.findElements(By.name(tcName));
+            for (WebElement welly : wels) {
+               tcels = welly.findElements(By.id(setupId));
+               if (!tcels.isEmpty()) break;
+            }
+            wel = tcels.get(0);
+            wel.click();
+         }
          debugLines.add("   Clicked setup link.");
 
          WebDriverWait wdw = new WebDriverWait(driver, timeout);
@@ -554,7 +561,18 @@ public class TCKSimpleTestDriver {
             JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
             javascriptExecutor.executeScript("window.scrollTo(0, (arguments[0].getBoundingClientRect().top + window.pageYOffset) - (window.innerHeight / 2));", wel);
          }
-         wel.click();
+         try {
+            wel.click();
+         } catch(StaleElementReferenceException e) {
+            System.out.println("action link: " + e.getClass().getName() + " caught when trying to use WebElements found with " + tcName);
+            wels = driver.findElements(By.name(tcName));
+            for (WebElement welly : wels) {
+               tcels = welly.findElements(By.id(actionId));
+               if (!tcels.isEmpty()) break;
+            }
+            wel = tcels.get(0);
+            wel.click();
+         }
          WebDriverWait wdw = new WebDriverWait(driver, timeout);
          wdw.until(ExpectedConditions.visibilityOfElementLocated(By.id(resultId)));
          wels = driver.findElements(By.name(tcName));
