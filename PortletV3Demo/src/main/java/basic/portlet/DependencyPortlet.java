@@ -81,7 +81,7 @@ public class DependencyPortlet {
 
       String vers = req.getRenderParameters().getValue(PARAM_VER);
       if (vers == null) {
-         resp.addDependency("jQuery", "com.jquery", "1.23.3");
+         resp.addDependency("jQuery", "com.jquery", PARAM_VER_1);
       } else {
          switch (vers) {
          case PARAM_VER_2:
@@ -91,7 +91,7 @@ public class DependencyPortlet {
             resp.addDependency("jQuery", "com.jquery", PARAM_VER_3, DEP_VER_3);
             break;
          default:
-            resp.addDependency("jQuery", "com.jquery", "1.23.3");
+            resp.addDependency("jQuery", "com.jquery", PARAM_VER_1);
          }
       }
       

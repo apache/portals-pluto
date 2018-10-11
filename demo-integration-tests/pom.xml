@@ -49,6 +49,7 @@
 
       <!-- test.context.base context string used when addressing test pages. Used by module stylesheet -->
       <test.context.base>pluto/portal/</test.context.base>
+      <test.dependency.portlet.default.jquery.version>1.12.3</test.dependency.portlet.default.jquery.version>
 
       <!-- This variable is used by the test driver to determine how test
       page links are to be found. Values: generateURLs the driver generates URLs
@@ -329,6 +330,10 @@
                               <property>
                                  <name>test.timeout</name>
                                  <value>${test.timeout}</value>
+                              </property>
+                              <property>
+                                 <name>test.dependency.portlet.default.jquery.version</name>
+                                 <value>${test.dependency.portlet.default.jquery.version}</value>
                               </property>
                            </systemProperties>
                         </configuration>

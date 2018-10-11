@@ -30,7 +30,7 @@ limitations under the License.
 
    jQuery version:
    </td><td>
-   <input type='radio' name='<%=PARAM_VER%>' value='<%=PARAM_VER_1%>' ${version == "1.12.3" ? "checked" : "" } > <%=PARAM_VER_1%>
+   <input type='radio' name='<%=PARAM_VER%>' value='<%=PARAM_VER_1%>' ${version == "1.12.3" ? "checked" : "" } > default
    </td><td>
    <input type='radio' name='<%=PARAM_VER%>' value='<%=PARAM_VER_2%>' ${version == "2.2.3" ? "checked" : "" } > <%=PARAM_VER_2%>
    </td><td>
