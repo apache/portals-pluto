@@ -137,9 +137,9 @@ public final class Util {
 
       waitingAsserter.waitFor(and(visibilityOfElementLocated(locator), new ElementEnabled(locator)));
 
-     if (clearBeforeSendingKeys) {
-        clearElement(webDriver, waitingAsserter, locator);
-     }
+      if (clearBeforeSendingKeys) {
+         clearElement(webDriver, waitingAsserter, locator);
+      }
 
       locator.findElement(webDriver).sendKeys(keys);
    }
