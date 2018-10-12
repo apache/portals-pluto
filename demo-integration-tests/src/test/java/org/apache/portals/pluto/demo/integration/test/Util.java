@@ -35,6 +35,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
  * @author Kyle Stiemann
  */
 public final class Util {
+   private static final int COLOR_HEX_STRING_LENGTH = 2;
 
    private Util() {
       throw new AssertionError();
@@ -54,6 +55,18 @@ public final class Util {
       return ((JavascriptExecutor)webDriver).executeScript(script, arguments);
    }
 
+   public static String getColorCode(int red, int green, int blue) {
+
+      return "#" +
+            getHexString(red, COLOR_HEX_STRING_LENGTH) +
+            getHexString(green, COLOR_HEX_STRING_LENGTH) +
+            getHexString(blue, COLOR_HEX_STRING_LENGTH);
+   }
+
+   public static String getZeroPaddedString(String string, int stringLength) {
+      return String.format("%" + stringLength + "s", string).replace(" ", "0");
+   }
+
    public static <T> List<T> unmodifiableList(T... items) {
       return Collections.unmodifiableList(Arrays.asList(items));
    }
@@ -61,6 +74,16 @@ public final class Util {
    // Expected Conditions
    public static ExpectedCondition<Boolean> attributeEmpty(By locator, String attributeName) {
       return or(attributeToBe(locator, attributeName, null), attributeToBe(locator, attributeName, ""));
+   }
+
+   public static ExpectedCondition<Boolean> backgroundColor(By locator, int red, int green, int blue) {
+
+      String colorCode = getColorCode(red, green, blue);
+
+      return and(visibilityOfElementLocated(locator),
+            or(attributeContains(locator, "style", "background-color:" + colorCode + ";"),
+                  attributeContains(locator, "style",
+                        "background-color: rgb(" + red + ", " + green + ", " + blue + ");")));
    }
 
    public static ExpectedCondition<Boolean> elementNotPresentOrNotVisible(By locator) {
@@ -147,5 +170,9 @@ public final class Util {
    public static void sendKeysToElement(WebDriver webDriver, WaitingAsserter waitingAsserter,
          boolean clearBeforeSendingKeys, String elementXpath, CharSequence... keys) {
       sendKeysToElement(webDriver, waitingAsserter, clearBeforeSendingKeys, By.xpath(elementXpath), keys);
+   }
+
+   private static String getHexString(int toHexValue, int stringLength) {
+      return getZeroPaddedString(Integer.toHexString(toHexValue), stringLength);
    }
 }

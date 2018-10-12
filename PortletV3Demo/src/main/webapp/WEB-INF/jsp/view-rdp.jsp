@@ -56,7 +56,7 @@ redirect.
    </td></tr><tr><td>
    Enter URL:
    </td><td colspan=3>
-   <input id='<portlet:namespace/>-msg' name='<%=PARAM_URL_INPUT%>' type='text' value='' size='50' maxlength='50'>
+   <input id='<portlet:namespace/>-msg' name='<%=PARAM_URL_INPUT%>' type='text' value=''>
    </td></tr><tr><td>
    <INPUT id ='<portlet:namespace/>-send' VALUE='redirect' TYPE='submit'>
    </td></tr></table>

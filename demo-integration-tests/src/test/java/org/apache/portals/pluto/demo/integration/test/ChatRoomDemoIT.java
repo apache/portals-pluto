@@ -30,12 +30,16 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
  * @author Kyle Stiemann
  */
 public class ChatRoomDemoIT extends DemoTestDriver {
+
+   // Public Constants
+   public static final String CHAT_ROOM_DEMO_URL = baseUrl + Util.encodeURL("Chat Room Demo");
+
+   // Private Constants
    private static final String CHAT_ROOM_PORTLET_NAMESPACE = "Pluto_chatRoomDemo_BeanPortletDemo";
 
    @Test
    public void testChatRoomDemos() throws UnsupportedEncodingException {
-      String chatDemoURL = baseUrl + Util.encodeURL("Chat Room Demo");
-      driver.get(chatDemoURL);
+      driver.get(CHAT_ROOM_DEMO_URL);
 
       // 1. Clear any previous chat history.
       clickElement(driver, waitingAsserter, "input", CHAT_ROOM_PORTLET_NAMESPACE, "clear");
@@ -45,7 +49,7 @@ public class ChatRoomDemoIT extends DemoTestDriver {
 
       // 2. Open a new window/tab to the same page.
       String originalWindowHandle = driver.getWindowHandle();
-      executeScript(driver, "window.open('" + chatDemoURL + "');");
+      executeScript(driver, "window.open('" + CHAT_ROOM_DEMO_URL + "');");
 
       // 3. In the current window/tab, add a user named "me".
       // 4. Verify that an image appears for the user.

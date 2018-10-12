@@ -37,8 +37,6 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
  * @author Kyle Stiemann
  */
 public class PortletHubDemoIT extends DemoTestDriver {
-
-   private static final int COLOR_HEX_STRING_LENGTH = 2;
    private static final String COLOR_SELECTION_PORTLET_NAMESPACE = "Pluto_PortletHubDemo_PH_ColorSelPortlet";
    private static final String IMAGE_SELECTION_PORTLET_NAMESPACE = "Pluto_PortletHubDemo_ImageSelPortlet";
    private static final List<String> IMAGE_OPTIONS = Util.unmodifiableList("golfball", "baseball", "fussball");
@@ -174,27 +172,6 @@ public class PortletHubDemoIT extends DemoTestDriver {
       waitingAsserter.assertTrue(and(visibilityOfElementLocated(messageOutputByXpath),
             or(attributeContains(messageOutputByXpath, "style", "color:#" + message + ";"),
                   attributeContains(messageOutputByXpath, "style", "color: " + colorCombo.getCSS_RGBString() + ";"))));
-   }
-
-   private static ExpectedCondition<Boolean> backgroundColor(By locator, int red, int green, int blue) {
-
-      String colorCode = "#" +
-            getHexString(red, COLOR_HEX_STRING_LENGTH) +
-            getHexString(green, COLOR_HEX_STRING_LENGTH) +
-            getHexString(blue, COLOR_HEX_STRING_LENGTH);
-
-      return and(visibilityOfElementLocated(locator),
-            or(attributeContains(locator, "style", "background-color:" + colorCode + ";"),
-                  attributeContains(locator, "style",
-                        "background-color: rgb(" + red + ", " + green + ", " + blue + ");")));
-   }
-
-   private static String getHexString(int toHexValue, int stringLength) {
-      return getZeroPaddedString(Integer.toHexString(toHexValue), stringLength);
-   }
-
-   private static String getZeroPaddedString(String string, int stringLength) {
-      return String.format("%" + stringLength + "s", string).replace(" ", "0");
    }
 
    private void handleColorCheckbox(String colorName, boolean colorSelected) {
