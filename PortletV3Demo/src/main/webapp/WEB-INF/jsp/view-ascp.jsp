@@ -40,7 +40,7 @@ limitations under the License.
    </td><td <%=colStyle %>>
    <input name='<%=PARAM_STATUSCODE%>' type='text' value='' size='10' maxlength='10'>
    </td><td <%=colStyle %>>
-   <INPUT VALUE='send' TYPE='submit'>
+   <INPUT ID='<portlet:namespace />-send' VALUE='send' TYPE='submit'>
    </td></tr></table>
 </FORM>
 <p><hr/></p>

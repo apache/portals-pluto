@@ -30,26 +30,18 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
  *
  * @author Kyle Stiemann
  */
-public class FragmentIdentifierDemoIT extends DemoTestDriver {
+public class StatusCodeDemoIT extends DemoTestDriver {
 
    @Test
-   public void testFragmentIdentifierDemo() {
-      navigateToPage("V3.0 Misc Tests - HTTP SC, fragment id");
-
-      String fragmentId = "fragmentId";
-      sendKeysToElement(driver, waitingAsserter, "//input[@name='frag'][@type='text']", fragmentId);
-      sendKeysToElement(driver, waitingAsserter, "//input[@name='line'][@type='text']", "3");
-      clickElement(driver, waitingAsserter,
-         "//input[contains(@id,'Pluto_PortletV3Demo_LongPortlet')][@value='send'][@type='submit']");
-      clickElement(driver, waitingAsserter, "//a[text()='Jump to line 3']");
-      waitingAsserter.assertTrue(new ExpectedCondition<Boolean>() {
-         @Override
-         public Boolean apply(WebDriver webDriver) {
-            Long pageYOffset = (Long) executeScript(webDriver,
-                  "return (document.documentElement.scrollTop || window.pageYOffset);");
-            return (pageYOffset > 0);
-         }
-      });
-      waitingAsserter.assertTrue(visibilityOfElementLocated(By.id(fragmentId)));
+   public void testStatusCodeDemo() {
+      for (String statusCode : unmodifiableList("404", "200", "500")) {
+         navigateToPage("V3.0 Misc Tests - HTTP SC, fragment id");
+         sendKeysToElement(driver, waitingAsserter, "//input[@name='statusCode'][@type='text']", statusCode);
+         clickElement(driver, waitingAsserter,
+               "//input[contains(@id,'Pluto_PortletV3Demo_AuthSCPortlet')][@value='send'][@type='submit']");
+         clickElement(driver, waitingAsserter, "//a[text()='Resource URL, status code = " + statusCode + "']");
+         waitingAsserter.assertTrue(visibilityOfElementLocated(By.xpath(
+               "//p[contains(text(),'Status code: " + statusCode + "')]")));
+      }
    }
 }

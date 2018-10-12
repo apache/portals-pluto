@@ -43,7 +43,7 @@ limitations under the License.
    </td><td>
    <input name='<%=PARAM_LINE%>' type='text' value='' size='10' maxlength='10'>
    </td></tr><tr><td>
-   <INPUT VALUE='send' TYPE='submit'>
+   <INPUT ID='<portlet:namespace />-send' VALUE='send' TYPE='submit'>
    </td></tr></table>
 </FORM>
 <%
