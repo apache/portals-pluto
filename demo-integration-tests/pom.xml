@@ -47,6 +47,8 @@
    <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+      <test.portal.name>Pluto</test.portal.name>
+
       <!-- test.context.base context string used when addressing test pages. Used by module stylesheet -->
       <test.context.base>pluto/portal/</test.context.base>
       <test.dependency.portlet.default.jquery.version>1.12.3</test.dependency.portlet.default.jquery.version>
@@ -241,6 +243,7 @@
       <profile>
          <id>liferay</id>
          <properties>
+            <test.portal.name>Liferay</test.portal.name>
             <test.server.login.url>http://${test.server.host}:${test.server.port}/group/pluto-demos</test.server.login.url>
          </properties>
       </profile>
@@ -263,6 +266,10 @@
                            <argLine>-Xms512m -Xmx512m</argLine>
                            <trimStackTrace>false</trimStackTrace>
                            <systemProperties>
+                              <property>
+                                 <name>test.portal.name</name>
+                                 <value>${test.portal.name}</value>
+                              </property>
                               <property>
                                  <name>test.server.login.url</name>
                                  <value>${test.server.login.url}</value>
