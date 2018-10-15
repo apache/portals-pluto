@@ -219,12 +219,8 @@ public class TCKSimpleTestDriver {
       timeout = ((str != null) && str.matches("\\d+")) ? Integer.parseInt(str) : 3; 
       String wd = System.getProperty("test.browser.webDriver");
       String binary = System.getProperty("test.browser.binary");
-      boolean browserDefaultHeadless = browser.equalsIgnoreCase("chrome") ||
-          browser.equalsIgnoreCase("firefox") ||
-          browser.equalsIgnoreCase("htmlunit") ||
-          browser.equalsIgnoreCase("phantomjs");
       String headlessProperty = System.getProperty("test.browser.headless");
-      boolean headless = (((headlessProperty == null) || (headlessProperty.length() == 0)) && browserDefaultHeadless);
+      boolean headless = (((headlessProperty == null) || (headlessProperty.length() == 0) || Boolean.valueOf(headlessProperty)));
 
       System.out.println("before class.");
       System.out.println("   Debug        =" + debug);
