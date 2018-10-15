@@ -23,6 +23,7 @@
     <artifactId>pluto</artifactId>
     <groupId>org.apache.portals.pluto</groupId>
     <version>3.0.2-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>pluto-util</artifactId>

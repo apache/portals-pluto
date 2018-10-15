@@ -23,6 +23,7 @@
       <groupId>javax.portlet</groupId>
       <artifactId>portlet-tck</artifactId>
       <version>3.0.2-SNAPSHOT</version>
+      <relativePath>../pom.xml</relativePath>
    </parent>
 
    <artifactId>tck-V2DispatcherReqRespTests4</artifactId>

@@ -22,6 +22,7 @@
         <groupId>org.apache.portals.pluto</groupId>
         <artifactId>pluto</artifactId>
         <version>3.0.2-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
    <artifactId>PortletHubDemo</artifactId>
@@ -123,6 +124,18 @@
        <profile>
            <id>liferay</id>
            <dependencies>
+               <dependency>
+                   <groupId>com.liferay</groupId>
+                   <artifactId>com.liferay.bean.portlet.api</artifactId>
+               </dependency>
+               <dependency>
+                   <groupId>com.liferay</groupId>
+                   <artifactId>com.liferay.bean.portlet.cdi.extension</artifactId>
+               </dependency>
+               <dependency>
+                   <groupId>org.jboss.weld.servlet</groupId>
+                   <artifactId>weld-servlet</artifactId>
+               </dependency>
                <dependency>
                    <groupId>org.slf4j</groupId>
                    <artifactId>slf4j-log4j12</artifactId>

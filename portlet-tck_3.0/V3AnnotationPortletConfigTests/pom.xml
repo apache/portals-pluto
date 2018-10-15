@@ -22,6 +22,7 @@
       <groupId>javax.portlet</groupId>
       <artifactId>portlet-tck</artifactId>
       <version>3.0.2-SNAPSHOT</version>
+      <relativePath>../pom.xml</relativePath>
    </parent>
 
    <artifactId>tck-V3AnnotationPortletConfigTests</artifactId>
@@ -126,6 +127,20 @@
    <profiles>
       <profile>
          <id>liferay</id>
+         <dependencies>
+            <dependency>
+               <groupId>com.liferay</groupId>
+               <artifactId>com.liferay.bean.portlet.api</artifactId>
+            </dependency>
+            <dependency>
+               <groupId>com.liferay</groupId>
+               <artifactId>com.liferay.bean.portlet.cdi.extension</artifactId>
+            </dependency>
+            <dependency>
+               <groupId>org.jboss.weld.servlet</groupId>
+               <artifactId>weld-servlet</artifactId>
+            </dependency>
+         </dependencies>
          <build>
             <plugins>
                <plugin>

@@ -24,6 +24,7 @@
     <groupId>org.apache.portals.pluto</groupId>
     <artifactId>pluto</artifactId>
     <version>3.0.2-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>pluto-ant-tasks</artifactId>
