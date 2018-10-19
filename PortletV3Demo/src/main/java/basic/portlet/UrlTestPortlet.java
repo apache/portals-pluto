@@ -97,7 +97,7 @@ public class UrlTestPortlet extends GenericPortlet {
       
       StringBuilder txt = new StringBuilder();
       txt.append("<h3>Currently set render parameters:</h3>\n");
-      txt.append("<p>\n");
+      txt.append("<div>\n");
       txt.append("   <table>");
 
       for (String pn : pnSet) {
@@ -116,7 +116,7 @@ public class UrlTestPortlet extends GenericPortlet {
       }
       
       txt.append("   </table>");
-      txt.append("</p>\n");
+      txt.append("</div>\n");
       
       req.setAttribute(ATTRIB_PARAMS, txt.toString());
       
@@ -240,7 +240,7 @@ public class UrlTestPortlet extends GenericPortlet {
       String style = "style='min-width: 100px;'";
       
       txt.append("<h3>Render parameters for the ResourceRequest:</h3>\n");
-      txt.append("<p>\n");
+      txt.append("<div>\n");
       txt.append("   <table>");
 
       // don't display the control parameters
@@ -261,10 +261,10 @@ public class UrlTestPortlet extends GenericPortlet {
       }
       
       txt.append("   </table>");
-      txt.append("</p>\n");
+      txt.append("</div>\n");
       
       txt.append("<h3>Resource parameters for the ResourceRequest:</h3>\n");
-      txt.append("<p>\n");
+      txt.append("<div>\n");
       txt.append("   <table>");
 
       for (String pn : rsp.getNames()) {
@@ -282,7 +282,7 @@ public class UrlTestPortlet extends GenericPortlet {
       }
       
       txt.append("   </table>");
-      txt.append("</p>\n");
+      txt.append("</div>\n");
       
       writer.write(txt.toString());
    }
@@ -311,7 +311,7 @@ public class UrlTestPortlet extends GenericPortlet {
       String style = "style='min-width: 100px;'";
       
       txt.append("<h3>Render parameters for the last ActionRequest:</h3>\n");
-      txt.append("<p>\n");
+      txt.append("<div>\n");
       txt.append("   <table>");
 
       // don't display the control parameters
@@ -332,10 +332,10 @@ public class UrlTestPortlet extends GenericPortlet {
       }
       
       txt.append("   </table>");
-      txt.append("</p>\n");
+      txt.append("</div>\n");
       
       txt.append("<h3>Action parameters for the last ActionRequest:</h3>\n");
-      txt.append("<p>\n");
+      txt.append("<div>\n");
       txt.append("   <table>");
 
       for (String pn : ap.getNames()) {
@@ -353,7 +353,7 @@ public class UrlTestPortlet extends GenericPortlet {
       }
       
       txt.append("   </table>");
-      txt.append("</p>\n");
+      txt.append("</div>\n");
 
       req.getPortletSession().setAttribute(ATTRIB_ACTPARAMS, txt.toString());
 

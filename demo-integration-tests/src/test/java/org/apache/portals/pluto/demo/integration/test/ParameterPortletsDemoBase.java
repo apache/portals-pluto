@@ -211,7 +211,7 @@ public class ParameterPortletsDemoBase extends DemoTestDriver {
 
       stringBuilder.append("]");
 
-      return getXpath(stringBuilder.toString(), portletNumber) + "/following-sibling::p/table";
+      return getXpath(stringBuilder.toString(), portletNumber) + "/following-sibling::div/table";
    }
 
    protected static String getXpath(String xpath, int portletNumber) {

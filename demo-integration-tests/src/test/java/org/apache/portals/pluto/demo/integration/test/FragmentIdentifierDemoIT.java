@@ -40,7 +40,7 @@ public class FragmentIdentifierDemoIT extends DemoTestDriver {
       sendKeysToElement(driver, waitingAsserter, "//input[@name='frag'][@type='text']", fragmentId);
       sendKeysToElement(driver, waitingAsserter, "//input[@name='line'][@type='text']", "3");
       clickElement(driver, waitingAsserter,
-         "//input[contains(@id,'Pluto_PortletV3Demo_LongPortlet')][@value='send'][@type='submit']");
+         "//input[contains(@id,'PortletV3Demo')][contains(@id,'LongPortlet')][@value='send'][@type='submit']");
       clickElement(driver, waitingAsserter, "//a[text()='Jump to line 3']");
       waitingAsserter.assertTrue(new ExpectedCondition<Boolean>() {
          @Override

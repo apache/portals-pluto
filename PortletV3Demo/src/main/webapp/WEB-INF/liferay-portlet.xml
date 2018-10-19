@@ -46,6 +46,10 @@
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
+		<portlet-name>PortletConfigPortlet2</portlet-name>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+	<portlet>
 		<portlet-name>TagLibPortlet</portlet-name>
 		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>

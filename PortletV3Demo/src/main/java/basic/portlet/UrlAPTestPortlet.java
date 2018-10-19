@@ -94,7 +94,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
       
       StringBuilder txt = new StringBuilder();
       txt.append("<h3>Currently set render parameters:</h3>\n");
-      txt.append("<p>\n");
+      txt.append("<div>\n");
       txt.append("   <table>");
 
       for (String pn : pnSet) {
@@ -116,7 +116,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
       }
       
       txt.append("   </table>");
-      txt.append("</p>\n");
+      txt.append("</div>\n");
       
       req.setAttribute(ATTRIB_PARAMS, txt.toString());
       
@@ -328,7 +328,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
       String style = "style='min-width: 100px;'";
       
       txt.append("<h3>Render parameters for the last ActionRequest:</h3>\n");
-      txt.append("<p>\n");
+      txt.append("<div>\n");
       if (mrp.isEmpty()) {
          txt.append("Render parameters is empty.");
       } else {
@@ -353,10 +353,10 @@ public class UrlAPTestPortlet extends GenericPortlet {
          
          txt.append("   </table>");
       }
-      txt.append("</p>\n");
+      txt.append("</div>\n");
       
       txt.append("<h3>Action parameters for the last ActionRequest:</h3>\n");
-      txt.append("<p>\n");
+      txt.append("<div>\n");
       if (ap.isEmpty()) {
          txt.append("Action parameters is empty.");
       } else {
@@ -378,7 +378,7 @@ public class UrlAPTestPortlet extends GenericPortlet {
          
          txt.append("   </table>");
       }
-      txt.append("</p>\n");
+      txt.append("</div>\n");
 
       req.getPortletSession().setAttribute(ATTRIB_ACTPARAMS, txt.toString());
 

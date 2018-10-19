@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -43,11 +44,18 @@ public final class Util {
 
    public static String encodeURL(String url) {
 
-      try {
-         return URLEncoder.encode(url, StandardCharsets.UTF_8.toString());
+      String portalName = System.getProperty("test.portal.name", "Pluto");
+
+      if ("Pluto".equalsIgnoreCase(portalName)) {
+         try {
+            return URLEncoder.encode(url, StandardCharsets.UTF_8.toString());
+         }
+         catch (UnsupportedEncodingException e) {
+           throw new RuntimeException(e);
+         }
       }
-      catch (UnsupportedEncodingException e) {
-        throw new RuntimeException(e);
+      else {
+         return url.replace(" ", "-").toLowerCase(Locale.ENGLISH);
       }
    }
 

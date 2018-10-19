@@ -26,10 +26,10 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
 
 import static org.apache.portals.pluto.demo.integration.test.Util.*;
+import org.openqa.selenium.JavascriptExecutor;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 /**
@@ -37,15 +37,10 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
  * @author Kyle Stiemann
  */
 public class PortletHubDemoIT extends DemoTestDriver {
-   private static final String COLOR_SELECTION_PORTLET_NAMESPACE = "Pluto_PortletHubDemo_PH_ColorSelPortlet";
-   private static final String IMAGE_SELECTION_PORTLET_NAMESPACE = "Pluto_PortletHubDemo_ImageSelPortlet";
    private static final List<String> IMAGE_OPTIONS = Util.unmodifiableList("golfball", "baseball", "fussball");
-   private static final String MESSAGE_BOX_PORTLET_NAMESPACE = "Pluto_PortletHubDemo_MessageBoxPortlet";
-   private static final String PARTIAL_ACTION_PORTLET_NAMESPACE = "Pluto_PortletHubDemo_PartialActionPortlet";
-   private static final String RESOURCE_PORTLET_NAMESPACE = "Pluto_PortletHubDemo_PH_ResourcePortlet_PRP";
    private static final String TOKEN = "{0}";
    private static final String IMAGE_XPATH_TEMPLATE =
-         "//img[@src='/PortletHubDemo/resources/images/" + TOKEN + ".gif']";
+         "//img[contains(@src,'/PortletHubDemo/resources/images/" + TOKEN + ".gif')]";
 
    @Test
    public void testPortletHubDemo() throws UnsupportedEncodingException {
@@ -58,15 +53,15 @@ public class PortletHubDemoIT extends DemoTestDriver {
       for (String imageName : IMAGE_OPTIONS) {
 
          clickElement(driver, waitingAsserter,
-               getXpath("div", IMAGE_SELECTION_PORTLET_NAMESPACE) + "/input[@value='" + imageName + "']");
+               getXpath("div", "PortletHubDemo", "ImageSelPortlet") + "/input[@value='" + imageName + "']");
          waitingAsserter.assertTrue(elementNotPresentOrNotVisible(imageByXpath));
          imageByXpath = By.xpath(IMAGE_XPATH_TEMPLATE.replace(TOKEN, imageName + "-trans"));
          waitingAsserter.assertTrue(visibilityOfElementLocated(imageByXpath));
       }
 
       // Verify that all the different images appear when clicking each dropdown option.
-      clickElement(driver, waitingAsserter, "input", IMAGE_SELECTION_PORTLET_NAMESPACE, "dropdown");
-      By imageSelectByXpath = By.xpath(getXpath("select", IMAGE_SELECTION_PORTLET_NAMESPACE) + "[@name='imgName']");
+      clickElement(driver, waitingAsserter, "input", "PortletHubDemo", "ImageSelPortlet", "dropdown");
+      By imageSelectByXpath = By.xpath(getXpath("select", "PortletHubDemo", "ImageSelPortlet") + "[@name='imgName']");
       waitingAsserter.waitFor(elementToBeClickable(imageSelectByXpath));
       Select select = new Select(driver.findElement(imageSelectByXpath));
       select.selectByValue("default");
@@ -84,14 +79,14 @@ public class PortletHubDemoIT extends DemoTestDriver {
 
       // Verify that the border checkbox shows and hides the border on the image.
       waitingAsserter.assertTrue(and(visibilityOfElementLocated(imageByXpath), attributeEmpty(imageByXpath, "style")));
-      clickElement(driver, waitingAsserter, "input", RESOURCE_PORTLET_NAMESPACE, "border");
+      clickElement(driver, waitingAsserter, "input", "PortletHubDemo", "PH", "ResourcePortlet", "PRP", "border");
       waitingAsserter.assertTrue(and(visibilityOfElementLocated(imageByXpath),
             attributeContains(imageByXpath, "style", "border:")));
 
       // Verify that the different cacheability radion buttons change the visible cacheability text.
       String cacheabilityRadioButtonXpathTemplate =
-            getXpath("input", RESOURCE_PORTLET_NAMESPACE) + "[@value='" + TOKEN + "']";
-      String resourcePortletDivXpath = getXpath("div", RESOURCE_PORTLET_NAMESPACE);
+            getXpath("input", "PortletHubDemo", "PH", "ResourcePortlet", "PRP") + "[@value='" + TOKEN + "']";
+      String resourcePortletDivXpath = getXpath("div", "PortletHubDemo", "PH", "ResourcePortlet", "PRP");
       By actionButtonByXpath = By.xpath(resourcePortletDivXpath + "//input[@value='Action']");
 
       for (String cacheability : Util.unmodifiableList("Portlet", "Full", "Page")) {
@@ -119,11 +114,15 @@ public class PortletHubDemoIT extends DemoTestDriver {
       waitingAsserter.assertTrue(visibilityOfElementLocated(actionButtonByXpath));
 
       // Verify the background color changes.
+      navigateToPage("V3.0 Portlet Hub Demo");
+      ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,document.body.scrollHeight);");
+
       By coloredTableByXpath =
-            By.xpath(getXpath("div", RESOURCE_PORTLET_NAMESPACE, "putResourceHere") + "//table[@style]");
+            By.xpath(getXpath("div", "PortletHubDemo", "PH", "ResourcePortlet", "PRP", "putResourceHere") +
+			"//table[@style]");
       waitingAsserter.assertTrue(and(visibilityOfElementLocated(coloredTableByXpath),
             backgroundColor(coloredTableByXpath, 0xFF, 0xFF, 0xFF)));
-      String colorInputXpath = getXpath("input", COLOR_SELECTION_PORTLET_NAMESPACE, "color");
+      String colorInputXpath = getXpath("input", "PortletHubDemo", "PH", "ColorSelPortlet", "color");
       sendKeysToElement(driver, waitingAsserter, colorInputXpath, "#FF0000", Keys.ENTER);
       waitingAsserter.assertTrue(and(visibilityOfElementLocated(coloredTableByXpath),
             backgroundColor(coloredTableByXpath, 0xFF, 0, 0)));
@@ -134,21 +133,21 @@ public class PortletHubDemoIT extends DemoTestDriver {
          for (ColorCombo colorCombo : ColorCombo.getAllPossibleCombos()) {
 
             String lowerCaseFormSubmissionMethod = formSubmissionMethod.toLowerCase(Locale.ENGLISH);
-            clickElement(driver, waitingAsserter, "input", COLOR_SELECTION_PORTLET_NAMESPACE,
+            clickElement(driver, waitingAsserter, "input", "PortletHubDemo", "PH", "ColorSelPortlet",
                   lowerCaseFormSubmissionMethod);
             testMessageSent(colorCombo);
          }
 
-         clickElement(driver, waitingAsserter, "input", MESSAGE_BOX_PORTLET_NAMESPACE, "clear");
+         clickElement(driver, waitingAsserter, "input", "PortletHubDemo", "MessageBoxPortlet", "clear");
       }
 
       // Click the Do Partial Action button and check that the reponse text appears.
-      By responseDivByXpath = By.xpath(getXpath("div", PARTIAL_ACTION_PORTLET_NAMESPACE, "responseDiv"));
+      By responseDivByXpath = By.xpath(getXpath("div", "PortletHubDemo", "PartialActionPortlet", "responseDiv"));
       waitingAsserter.assertTrue(textEmpty(responseDivByXpath));
 
       for (int i = 1; i <= 10; i++) {
 
-         clickElement(driver, waitingAsserter, "input", PARTIAL_ACTION_PORTLET_NAMESPACE, "doPA");
+         clickElement(driver, waitingAsserter, "input", "PortletHubDemo", "PartialActionPortlet", "doPA");
          waitingAsserter.assertTrue(and(visibilityOfElementLocated(responseDivByXpath),
                textToBePresentInElementLocated(responseDivByXpath,
                      "Partial Action has been executed " + i + " times.")));
@@ -161,13 +160,13 @@ public class PortletHubDemoIT extends DemoTestDriver {
       handleColorCheckbox("green", colorCombo.isGreenSelected());
       handleColorCheckbox("blue", colorCombo.isBlueSelected());
 
-      String messageInputXpath = getXpath("input", COLOR_SELECTION_PORTLET_NAMESPACE, "msg");
+      String messageInputXpath = getXpath("input", "PortletHubDemo", "PH", "ColorSelPortlet", "msg");
       String message = colorCombo.getHexString();
       sendKeysToElement(driver, waitingAsserter, messageInputXpath, message);
-      clickElement(driver, waitingAsserter, "input", COLOR_SELECTION_PORTLET_NAMESPACE, "send");
+      clickElement(driver, waitingAsserter, "input", "PortletHubDemo", "PH", "ColorSelPortlet", "send");
 
       By messageOutputByXpath =
-            By.xpath(getXpath("div", MESSAGE_BOX_PORTLET_NAMESPACE, "responseDiv") +
+            By.xpath(getXpath("div", "PortletHubDemo", "MessageBoxPortlet", "responseDiv") +
                   "/p[contains(text(),'" + colorCombo.getIndex() + ": " + message + "')]");
       waitingAsserter.assertTrue(and(visibilityOfElementLocated(messageOutputByXpath),
             or(attributeContains(messageOutputByXpath, "style", "color:#" + message + ";"),
@@ -177,7 +176,7 @@ public class PortletHubDemoIT extends DemoTestDriver {
    private void handleColorCheckbox(String colorName, boolean colorSelected) {
 
       WebElement colorCheckbox =
-            driver.findElement(By.xpath(getXpath("input", COLOR_SELECTION_PORTLET_NAMESPACE, colorName)));
+            driver.findElement(By.xpath(getXpath("input", "PortletHubDemo", "PH", "ColorSelPortlet", colorName)));
 
       if ((colorSelected && !colorCheckbox.isSelected()) || (!colorSelected && colorCheckbox.isSelected())) {
          colorCheckbox.click();

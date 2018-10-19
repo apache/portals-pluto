@@ -102,7 +102,7 @@ public class UrlRPTestPortlet extends GenericPortlet {
       
       StringBuilder txt = new StringBuilder();
       txt.append("<h3>Currently set render parameters:</h3>\n");
-      txt.append("<p>\n");
+      txt.append("<div>\n");
       txt.append("   <table>");
 
       for (String pn : pnSet) {
@@ -124,7 +124,7 @@ public class UrlRPTestPortlet extends GenericPortlet {
       }
       
       txt.append("   </table>");
-      txt.append("</p>\n");
+      txt.append("</div>\n");
       
       req.setAttribute(ATTRIB_PARAMS, txt.toString());
       

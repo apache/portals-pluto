@@ -38,7 +38,7 @@ public class StatusCodeDemoIT extends DemoTestDriver {
          navigateToPage("V3.0 Misc Tests - HTTP SC, fragment id");
          sendKeysToElement(driver, waitingAsserter, "//input[@name='statusCode'][@type='text']", statusCode);
          clickElement(driver, waitingAsserter,
-               "//input[contains(@id,'Pluto_PortletV3Demo_AuthSCPortlet')][@value='send'][@type='submit']");
+               "//input[contains(@id,'PortletV3Demo')][contains(@id,'AuthSCPortlet')][@value='send'][@type='submit']");
          clickElement(driver, waitingAsserter, "//a[text()='Resource URL, status code = " + statusCode + "']");
          waitingAsserter.assertTrue(visibilityOfElementLocated(By.xpath(
                "//p[contains(text(),'Status code: " + statusCode + "')]")));

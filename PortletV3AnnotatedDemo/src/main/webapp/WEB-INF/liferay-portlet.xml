@@ -26,6 +26,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>BeanPortlet</portlet-name>
+		<instanceable>true</instanceable>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
 	<portlet>
