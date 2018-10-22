@@ -202,8 +202,8 @@ public class TCKLiferayTestDriver extends TCKSimpleTestDriver {
             System.out.println(line);
          }
 
-         assertTrue("Test case " + tcName + " failed. " +
-               " Setup link could not be accessed. \nException: " + e.toString(), false);
+         throw new AssertionError("Test case " + tcName + " failed. " +
+                 "\nException: ", e);
       } finally {
 
          wasExclusive = exclusive;

@@ -366,9 +366,9 @@ public class TCKSimpleTestDriver {
          for (String line : debugLines) {
             System.out.println(line);
          }
-         
-         assertTrue("Test case " + tcName + " failed. " +  
-               " Setup link could not be accessed. \nException: " + e.toString(), false);
+
+         throw new AssertionError("Test case " + tcName + " failed. " +
+            "\nException: ", e);
       }
    }
 
