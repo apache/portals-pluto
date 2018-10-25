@@ -120,23 +120,6 @@
 
    <profiles>
       <profile>
-         <id>liferay</id>
-         <dependencies>
-            <dependency>
-               <groupId>com.liferay</groupId>
-               <artifactId>com.liferay.bean.portlet.api</artifactId>
-            </dependency>
-            <dependency>
-               <groupId>com.liferay</groupId>
-               <artifactId>com.liferay.bean.portlet.cdi.extension</artifactId>
-            </dependency>
-            <dependency>
-               <groupId>org.jboss.weld.servlet</groupId>
-               <artifactId>weld-servlet</artifactId>
-            </dependency>
-         </dependencies>
-      </profile>
-      <profile>
          <id>pluto</id>
          <dependencies>
             <dependency>
@@ -162,6 +145,7 @@
                   <configuration>
                      <packagingExcludes>
                         WEB-INF/beans.xml,
+                        WEB-INF/liferay-plugin-package.properties,
                         WEB-INF/liferay-portlet.xml
                      </packagingExcludes>
                   </configuration>
