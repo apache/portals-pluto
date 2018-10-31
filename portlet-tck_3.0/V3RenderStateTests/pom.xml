@@ -145,7 +145,6 @@
                   <configuration>
                      <packagingExcludes>
                         WEB-INF/beans.xml,
-                        WEB-INF/liferay-plugin-package.properties,
                         WEB-INF/liferay-portlet.xml
                      </packagingExcludes>
                   </configuration>
