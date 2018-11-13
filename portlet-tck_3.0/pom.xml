@@ -75,9 +75,13 @@
       <test.list.xsl>testCombiner.xsl</test.list.xsl>
       <test.list.dir>generated-resources/xml/final</test.list.dir>
       <test.list.name>test.xml</test.list.name>
+      <test.list.file>${project.build.directory}/classes/${test.list.dir}/${test.list.name}</test.list.file>
       
       <!-- The name of the file containing the test cases to be ignored -->
       <test.ignore.list.name>ignoredTestCases.xml</test.ignore.list.name>
+      <test.ignore.list.file>${project.build.directory}/classes/${test.list.dir}/${test.ignore.list.name}</test.ignore.list.file>
+
+      <test.non.exclusive.file></test.non.exclusive.file>
 
       <!-- This variable is used by the test driver to determine how test 
          page links are to be found. Values: generateURLs the driver generates URLs 
