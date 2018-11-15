@@ -17,7 +17,13 @@
  */
 package org.apache.portals.pluto.test.utilities;
 
+import com.gargoylesoftware.htmlunit.SilentCssErrorHandler;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.WebClientOptions;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.logging.LogFactory;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -34,6 +40,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import sun.util.logging.resources.logging;
 
 
 /**
@@ -159,7 +166,22 @@ public class SimpleTestDriver {
             capabilities.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, binary);
             driver = new PhantomJSDriver(capabilities);
          } else if (browser.equalsIgnoreCase("htmlUnit")) {
-           driver = new HtmlUnitDriver();
+           LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log",
+              "org.apache.commons.logging.impl.NoOpLog");
+           Logger.getLogger("com.gargoylesoftware").setLevel(Level.SEVERE); 
+           Logger.getLogger("org.apache.commons.httpclient").setLevel(Level.SEVERE);
+           driver = new HtmlUnitDriver() {
+               @Override
+               protected WebClient getWebClient() {
+                   WebClient webClient = super.getWebClient();
+                   WebClientOptions options = webClient.getOptions();
+                   options.setThrowExceptionOnFailingStatusCode(false);
+                   options.setThrowExceptionOnScriptError(false);
+                   options.setPrintContentOnFailingStatusCode(false);
+                   webClient.setCssErrorHandler(new SilentCssErrorHandler());
+                   return webClient;
+               }
+           };
          } else if (browser.equalsIgnoreCase("safari")) {
             driver = new SafariDriver();
          } else {
