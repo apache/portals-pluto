@@ -21,8 +21,10 @@ package javax.portlet.tck.driver;
 import static org.junit.Assert.*;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -44,6 +46,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.portlet.tck.constants.Constants;
+import org.junit.Assume;
 
 
 /**
@@ -53,9 +56,31 @@ import javax.portlet.tck.constants.Constants;
 @RunWith(value = Parameterized.class)
 public class TCKTestDriver extends SimpleTestDriver {
 
+   protected static final Set<String> IGNORED_TC_NAMES;
+
    protected String page, tcName;
    
    protected List<String> debugLines = new ArrayList<>();
+
+   static {
+
+      String ignoreFile = System.getProperty("test.ignore.list.file");
+      System.out.println("   Ignore file  =" + ignoreFile);
+      boolean doIgnore = Boolean.parseBoolean(System.getProperty("test.ignore"));
+      System.out.println("   Ignore TCs   =" + doIgnore);
+
+      Properties ignoredTCs = new Properties();
+      if (doIgnore) {
+         try {
+            FileInputStream fis = new FileInputStream(ignoreFile);
+            ignoredTCs.loadFromXML(fis);
+         } catch (IOException e) {
+            throw new RuntimeException("Could not read test cases file. Attempted to read file " + ignoreFile, e);
+         }
+      }
+      System.out.println("   # ignore TCs =" + ignoredTCs.size());
+      IGNORED_TC_NAMES = Collections.unmodifiableSet(ignoredTCs.stringPropertyNames());
+   }
 
    /**
     * Reads the consolidated list of test cases and provides the list to Junit
@@ -72,12 +97,7 @@ public class TCKTestDriver extends SimpleTestDriver {
       System.out.println("   Module       =" + module);
       scroll = Boolean.valueOf(System.getProperty("test.scroll"));
       System.out.println("   Scroll       =" + scroll);
-      
-      String ignoreFile = System.getProperty("test.ignore.list.file");
-      System.out.println("   Ignore file  =" + ignoreFile);
-      boolean doIgnore = new Boolean(System.getProperty("test.ignore"));
-      System.out.println("   Ignore TCs   =" + doIgnore);
-      
+
       boolean filterTCs = (module != null && module.length() > 0);
       boolean excTCs = true;        // include or exclude TCs
       String filterStr = module;
@@ -92,24 +112,9 @@ public class TCKTestDriver extends SimpleTestDriver {
       try {
          FileInputStream fis = new FileInputStream(testFile);
          tprops.loadFromXML(fis);
-      } catch (Exception e) {
-         System.out.println("Could not read test cases file. Attempted to read file " + testFile);
-         e.printStackTrace();
-         return null;
+      } catch (IOException e) {
+         throw new RuntimeException("Could not read test cases file. Attempted to read file " + testFile, e);
       }
-
-      Properties ignoredTCs = new Properties();
-      if (doIgnore) {
-         try {
-            FileInputStream fis = new FileInputStream(ignoreFile);
-            ignoredTCs.loadFromXML(fis);
-         } catch (Exception e) {
-            System.out.println("Could not read test cases file. Attempted to read file " + ignoreFile);
-            e.printStackTrace();
-            return null;
-         }
-      }
-      System.out.println("   # ignore TCs =" + ignoredTCs.size());
       
       // See if performance can be improved by sorting the test cases by
       // the page to be accessed. The map uses the page as key and has a 
@@ -127,15 +132,6 @@ public class TCKTestDriver extends SimpleTestDriver {
             boolean c = tcase.contains(filterStr);
             if (excTCs && c) continue;       // exclude matches
             if (!excTCs && !c) continue;     // exclude non-matches
-         }
-         // handle ignore list
-         if (doIgnore) {
-            for (Object itc : ignoredTCs.keySet()) {
-               if (tcase.equalsIgnoreCase((String)itc)) {
-                  System.out.println("   Ignoring     :" + tcase);
-                  continue tcloop;
-               }
-            }
          }
          if (!pages.containsKey(tpage)) {
             pages.put(tpage, new TreeSet<String>());
@@ -171,6 +167,7 @@ public class TCKTestDriver extends SimpleTestDriver {
     */
    @Before
    public void setUp() throws Exception {
+      Assume.assumeFalse("   Ignoring     :" + tcName, IGNORED_TC_NAMES.contains(tcName));
       debugLines.add("   before test.");
    }
 
@@ -266,7 +263,7 @@ public class TCKTestDriver extends SimpleTestDriver {
    }
 
    protected void click(WebElement wel) {
-	   wel.click();
+      wel.click();
    }
 
    /**
