@@ -106,6 +106,28 @@
 
    <profiles>
 
+       <profile>
+           <id>liferay</id>
+           <dependencies>
+               <dependency>
+                   <groupId>org.slf4j</groupId>
+                   <artifactId>slf4j-api</artifactId>
+                   <scope>provided</scope>
+               </dependency>
+           </dependencies>
+           <build>
+               <plugins>
+                   <plugin>
+                       <artifactId>maven-war-plugin</artifactId>
+                       <configuration>
+                           <packagingExcludes>
+                               WEB-INF/classes/logging.properties
+                           </packagingExcludes>
+                       </configuration>
+                   </plugin>
+               </plugins>
+           </build>
+       </profile>
       <profile>
          <id>pluto</id>
          <activation>
@@ -138,6 +160,10 @@
                  <artifactId>maven-war-plugin</artifactId>
                  <configuration>
                    <archiveClasses>false</archiveClasses>
+                   <packagingExcludes>
+                       WEB-INF/liferay-portlet.xml,
+                       WEB-INF/classes/log4j.properties
+                   </packagingExcludes>
                  </configuration>
                </plugin>
                <!-- workaround for war processing of m-r-r-plugin causing the generated NOTICE and LICENSE file to be put under WEB-INF/classes/META-INF -->
