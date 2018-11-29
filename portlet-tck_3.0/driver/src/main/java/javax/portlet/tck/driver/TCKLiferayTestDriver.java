@@ -75,10 +75,8 @@ public class TCKLiferayTestDriver extends TCKTestDriver {
 
       String[] tokens = tcName.split("_");
       String liferayWar = "_WAR_tck" + tokens[0];
-
-      String noV = tcName.substring(2);
-      StringBuilder b = new StringBuilder(noV);
-      String portletName = b.substring(0, noV.lastIndexOf("_"));
+      String noV = tcName.replaceFirst("^V[0-9]+", "");
+      String portletName = noV.substring(0, noV.lastIndexOf("_"));
       String portletId =  portletName + liferayWar;
 
       String url = baseUrl +
