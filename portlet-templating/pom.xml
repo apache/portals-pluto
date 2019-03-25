@@ -24,6 +24,7 @@
 
 	<modules>
 		<module>thymeleaf-portlet-api</module>
+		<module>thymeleaf-mvc-portlet-api</module>
 	</modules>
 
 </project>
