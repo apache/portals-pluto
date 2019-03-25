@@ -757,6 +757,7 @@ TODO: Check if we need all of them. -->
         <module>maven-pluto-plugin</module>
         <module>pluto-ant-tasks</module>
         <module>pluto-site-skin</module>
+        <module>portlet-servlet-adapter</module>
         
         <!-- the Technology Compliance Kit -->
         <module>test-base</module>
