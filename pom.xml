@@ -557,6 +557,11 @@ TODO: Check if we need all of them. -->
         </exclusions>
       </dependency>
       <dependency>
+        <groupId>org.thymeleaf</groupId>
+        <artifactId>thymeleaf</artifactId>
+        <version>3.0.11.RELEASE</version>
+      </dependency>
+      <dependency>
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
         <version>${commons-io.version}</version>
@@ -765,6 +770,7 @@ TODO: Check if we need all of them. -->
         <module>pluto-ant-tasks</module>
         <module>pluto-site-skin</module>
         <module>portlet-servlet-adapter</module>
+        <module>portlet-templating</module>
         
         <!-- the Technology Compliance Kit -->
         <module>test-base</module>
