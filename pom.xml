@@ -268,7 +268,8 @@ generate mailto links. -->
     <javax.portlet.version.major>3</javax.portlet.version.major>
     <javax.portlet.version.minor>0</javax.portlet.version.minor>
     <portals.portlet-api.version>${project.version}</portals.portlet-api.version>
-    <servlet-api.version>8.0.28</servlet-api.version>
+    <servlet-api.version>3.1.0</servlet-api.version>
+    <tomcat.servlet-api.version>8.0.28</tomcat.servlet-api.version>
     <jsp-api.version>8.0.28</jsp-api.version>
     <jstl.version>8.0.28</jstl.version>
     <el-api.version>8.0.28</el-api.version>
@@ -355,9 +356,15 @@ TODO: Check if we need all of them. -->
          <scope>provided</scope>
       </dependency>
       <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>${servlet-api.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
         <groupId>org.apache.tomcat</groupId>
         <artifactId>tomcat-servlet-api</artifactId>
-        <version>${servlet-api.version}</version>
+        <version>${tomcat.servlet-api.version}</version>
         <scope>provided</scope>
       </dependency>
 
