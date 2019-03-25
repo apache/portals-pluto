@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import static basic.portlet.Constants.PARAM_IMGNAME;
 import static basic.portlet.Constants.PARAM_SELTYPE;
 import static basic.portlet.Constants.PARAM_SELTYPE_RADIO;
-import static basic.portlet.Constants.imgMap;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,6 +41,7 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.annotations.Dependency;
 import javax.portlet.annotations.LocaleString;
 import javax.portlet.annotations.PortletConfiguration;
+import static basic.portlet.Constants.IMG_MAP;
 
 
 /**
@@ -81,7 +81,7 @@ public class ImageSelPortlet extends GenericPortlet {
 	      PrintWriter writer = resp.getWriter();
 
 	      String pid = resp.getNamespace();
-	      Set<String> names = imgMap.keySet();
+	      Set<String> names = IMG_MAP.keySet();
 	      String selType = req.getRenderParameters().getValue(PARAM_SELTYPE);
 	      selType = (selType == null) ? PARAM_SELTYPE_RADIO : selType;
 	      String imgName = req.getRenderParameters().getValue(PARAM_IMGNAME);

@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import static basic.portlet.Constants.PARAM_BORDER_COLOR;
 import static basic.portlet.Constants.PARAM_COLOR;
 import static basic.portlet.Constants.PARAM_IMGNAME;
-import static basic.portlet.Constants.imgMap;
 import static basic.portlet.Constants.DEFAULT_IMAGE;
 
 import java.io.IOException;
@@ -48,6 +47,7 @@ import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.PortletQName;
 import javax.portlet.annotations.PublicRenderParameterDefinition;
 import javax.portlet.annotations.Supports;
+import static basic.portlet.Constants.IMG_MAP;
 
 
 /**
@@ -111,8 +111,8 @@ public class ResourcePortlet extends GenericPortlet {
 
       String key = req.getRenderParameters().getValue(PARAM_IMGNAME);
       String imgDir = DEFAULT_IMAGE;
-      if ((key != null) && imgMap.containsKey(key)) {
-         imgDir = imgMap.get(key);
+      if ((key != null) && IMG_MAP.containsKey(key)) {
+         imgDir = IMG_MAP.get(key);
       }
       
       String bc = req.getResourceParameters().getValue(PARAM_BORDER_COLOR);

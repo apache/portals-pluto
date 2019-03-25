@@ -18,19 +18,22 @@
 
 package basic.portlet;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Constants {
-   
+
    // maps the names of the images to the paths to the images -
-   public final static Map<String, String> imgMap = new HashMap<String, String>() {
-      private static final long serialVersionUID = 1L;
-   {
-      put("baseball", "/resources/images/baseball-trans.gif");
-      put("golfball", "/resources/images/golfball-trans.gif");
-      put("fussball", "/resources/images/fussball-trans.gif");
-   }};
+   public final static Map<String, String> IMG_MAP;
+
+   static {
+      Map<String, String> imgMap = new HashMap<String, String>();
+      imgMap.put("baseball", "/resources/images/baseball-trans.gif");
+      imgMap.put("golfball", "/resources/images/golfball-trans.gif");
+      imgMap.put("fussball", "/resources/images/fussball-trans.gif");
+      IMG_MAP = Collections.unmodifiableMap(imgMap);
+   }
 
    public final static String DEFAULT_IMAGE = "/resources/images/FullMoon.gif";
 
