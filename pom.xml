@@ -350,6 +350,18 @@ TODO: Check if we need all of them. -->
 
       <!-- Specification Libraries =========================================== -->
       <dependency>
+        <groupId>javax.inject</groupId>
+        <artifactId>javax.inject</artifactId>
+        <version>1</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>javax.mvc</groupId>
+        <artifactId>javax.mvc-api</artifactId>
+        <version>1.0-pfd</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
          <groupId>javax.portlet</groupId>
          <artifactId>portlet-api</artifactId>
          <version>${project.version}</version>
@@ -359,6 +371,12 @@ TODO: Check if we need all of them. -->
         <groupId>javax.servlet</groupId>
         <artifactId>javax.servlet-api</artifactId>
         <version>${servlet-api.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>javax.ws.rs</groupId>
+        <artifactId>javax.ws.rs-api</artifactId>
+        <version>2.1.1</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
