@@ -467,6 +467,11 @@ TODO: Check if we need all of them. -->
         <version>${ant.version}</version>
       </dependency>
       <dependency>
+        <groupId>ognl</groupId>
+        <artifactId>ognl</artifactId>
+        <version>3.1.2</version>
+      </dependency>
+      <dependency>
         <groupId>org.apache.maven</groupId>
         <artifactId>maven-core</artifactId>
         <version>${maven.version}</version>
