@@ -45,7 +45,6 @@ import javax.portlet.annotations.EventDefinition;
 import javax.portlet.annotations.EventMethod;
 import javax.portlet.annotations.HeaderMethod;
 import javax.portlet.annotations.PortletApplication;
-import javax.portlet.annotations.PortletName;
 import javax.portlet.annotations.PortletQName;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
@@ -111,9 +110,8 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
    private Utils                   utils = new Utils();
 
    @Inject
-   @PortletName
-   private String                  portletName;
-   
+   private PortletRequestScopedArtifacts portletRequestScopedArtifacts;
+
    @Inject
    private PortletSession          portletSession;
 
@@ -459,6 +457,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
    public void setAttribute(String artifactKey, String phase,
          boolean validity) {
 
+   	  String portletName = portletRequestScopedArtifacts.getPortletName();
       portletSession.setAttribute(portletName + artifactKey + phase, validity,
             PORTLET_SCOPE);
 
@@ -466,6 +465,7 @@ public class AnnotationPortletArtifactValidityTests_SPEC3_20_ParameterArtifacts 
 
    private ArtifactValidationResult getValidationTestResult(
          String artifactKey) {
+      String portletName = portletRequestScopedArtifacts.getPortletName();
       boolean artifactInActionPhase = (boolean) portletSession.getAttribute(
             portletName + artifactKey + ACTIONPHASE, PORTLET_SCOPE);
       boolean artifactInRenderPhase = (boolean) portletSession.getAttribute(
