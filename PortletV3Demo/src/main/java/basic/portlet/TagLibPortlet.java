@@ -49,7 +49,6 @@ import javax.portlet.annotations.ActionMethod;
 import javax.portlet.annotations.EventDefinition;
 import javax.portlet.annotations.EventMethod;
 import javax.portlet.annotations.HeaderMethod;
-import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletQName;
 import javax.portlet.annotations.RenderMethod;
@@ -95,9 +94,6 @@ public class TagLibPortlet {
 
    @Inject
    private PortletConfig       pcfg;
-   @Inject
-   @Namespace
-   private String              pid;
 
    /**
     * Adds required dynamic dependencies
@@ -152,6 +148,7 @@ public class TagLibPortlet {
          ResourceURL resurl = resp.createResourceURL();
 
          txt.setLength(0);
+         String pid = resp.getNamespace();
          txt.append("<div id='").append(pid).append("-putResourceHere'></div>\n");
          txt.append("<script>\n");
          txt.append("(function () {\n");
@@ -231,7 +228,7 @@ public class TagLibPortlet {
             prd.include(req, resp);
          } else if (phase.equals(PHASE_EVT)) {
             QName qn = new QName(URI, LPART);
-            resp.setEvent(qn, pid);
+            resp.setEvent(qn, resp.getNamespace());
          }
       } 
 
@@ -249,8 +246,8 @@ public class TagLibPortlet {
       String payload = (String) req.getEvent().getValue();
       
       // make sure event came from this instance
-      
-      if (payload != null && payload.equals(pid)) {
+
+      if (payload != null && payload.equals(resp.getNamespace())) {
          req.setAttribute(ATTRIB_PHASE_TITLE, req.getAttribute(LIFECYCLE_PHASE));
          PortletRequestDispatcher prd = req.getPortletContext().getRequestDispatcher(PROXY);
          prd.include(req, resp);
