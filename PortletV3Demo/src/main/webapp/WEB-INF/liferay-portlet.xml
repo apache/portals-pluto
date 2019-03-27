@@ -93,7 +93,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>V3RedirectPortlet</portlet-name>
-		<action-url-redirect>true</action-url-redirect>
 		<single-page-application>false</single-page-application>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 	</portlet>
