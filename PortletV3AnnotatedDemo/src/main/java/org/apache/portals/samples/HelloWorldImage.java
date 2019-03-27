@@ -23,8 +23,6 @@ import javax.inject.Inject;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceURL;
-import javax.portlet.annotations.ContextPath;
-import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
 import javax.portlet.MimeResponse;
@@ -37,12 +35,7 @@ public class HelloWorldImage {
 
    public static final String RESPARAM_DISPLAY = "display";
    
-   // Injecting the namespace & MimeResponse
-   @Inject @Namespace private String pid;
    @Inject private            MimeResponse mimeresp;
-   
-   @Inject @ContextPath
-   String ctxPath;
    
    @Inject
    PortletRequest req;
@@ -67,6 +60,7 @@ public class HelloWorldImage {
          resurl.getResourceParameters().setValue(RESPARAM_DISPLAY, "true");
       }
       
+      String pid = mimeresp.getNamespace();
       txt.append("<div class='infobox' id='").append(pid).append("-putResourceHere'></div>\n");
       txt.append("<script>\n");
       txt.append("(function () {\n");
@@ -105,7 +99,7 @@ public class HelloWorldImage {
          // pick a chimp
          
          int ind = (int) (Math.random() * chimps.length);
-         String imgSrc = ctxPath + chimps[ind];
+         String imgSrc = req.getContextPath() + chimps[ind];
          imgSrc = mimeresp.encodeURL(imgSrc);
          req.setAttribute("imgSrc", imgSrc);
          

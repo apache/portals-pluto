@@ -34,7 +34,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
-import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
@@ -52,11 +51,7 @@ public class PathInfoPortlet {
    private static final String SERVLET = "/Named/Bob/Some/Path/Info?mix1&qp1=qval1&mix2=qmix2";
    private static final String NAME = "Bob";
 
-   // Injecting the namespace & MimeResponse
    @Inject
-   @Namespace
-   private String             pid;
-   @Inject 
    private PortletConfig      pcfg;
    @Inject
    private MimeResponse         mimeresp;
@@ -163,6 +158,7 @@ public class PathInfoPortlet {
             resparms.setValue("resp1", "resval1");
             resparms.setValue("mix1", "resval2");
 
+            String pid = resp.getNamespace();
             writer.append("<div id='").append(pid).append("-putResourceHere'></div>\n");
             writer.append("<script>\n");
             writer.append("(function () {\n");
