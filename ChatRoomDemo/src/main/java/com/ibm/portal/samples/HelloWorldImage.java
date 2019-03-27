@@ -25,8 +25,6 @@ import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
-import javax.portlet.annotations.ContextPath;
-import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.HeaderMethod;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
@@ -37,16 +35,8 @@ import javax.portlet.annotations.ServeResourceMethod;
  */
 public class HelloWorldImage {
 
-   // Injecting the namespace & MimeResponse
-   @Inject
-   @Namespace
-   private String                pid;
    @Inject
    private MimeResponse          mimeresp;
-
-   @Inject
-   @ContextPath
-   String                        ctxPath;
 
    @Inject
    PortletRequest                req;
@@ -109,7 +99,7 @@ public class HelloWorldImage {
             ind += 0xFF & b;
          }
          ind = ind % chimps.length;
-         String path = ctxPath + chimps[ind];
+         String path = req.getContextPath() + chimps[ind];
          path = mimeresp.encodeURL(path);
       
          txt.append("<p>Your image appears here:</p>\n");
