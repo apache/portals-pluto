@@ -100,7 +100,22 @@
              <skip>true</skip>
            </configuration>
          </plugin>
-         
+          <!-- workaround for war processing of m-r-r-plugin causing the generated NOTICE and LICENSE file to be put under WEB-INF/classes/META-INF -->
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-remote-resources-plugin</artifactId>
+              <executions>
+                  <execution>
+                      <goals>
+                          <goal>process</goal>
+                      </goals>
+                      <configuration>
+                          <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+                          <attached>false</attached>
+                      </configuration>
+                  </execution>
+              </executions>
+          </plugin>
       </plugins>
    </build>
 
@@ -115,12 +130,16 @@
                    <scope>provided</scope>
                </dependency>
            </dependencies>
+       </profile>
+       <profile>
+           <id>liferay-cdi</id>
            <build>
                <plugins>
                    <plugin>
                        <artifactId>maven-war-plugin</artifactId>
                        <configuration>
                            <packagingExcludes>
+                               WEB-INF/applicationContext.xml,
                                WEB-INF/classes/logging.properties
                            </packagingExcludes>
                        </configuration>
@@ -128,14 +147,61 @@
                </plugins>
            </build>
        </profile>
+       <profile>
+           <id>liferay-spring</id>
+           <build>
+               <plugins>
+                   <plugin>
+                       <artifactId>maven-war-plugin</artifactId>
+                       <configuration>
+                           <packagingExcludes>
+                               WEB-INF/beans.xml,
+                               WEB-INF/classes/logging.properties
+                           </packagingExcludes>
+                       </configuration>
+                   </plugin>
+               </plugins>
+           </build>
+           <dependencies>
+               <dependency>
+                   <groupId>${liferay.spring.group.id}</groupId>
+                   <artifactId>${liferay.spring.artifact.id}</artifactId>
+                   <version>${liferay.spring.artifact.version}</version>
+               </dependency>
+               <dependency>
+                   <groupId>org.hibernate</groupId>
+                   <artifactId>hibernate-validator</artifactId>
+                   <exclusions>
+                       <exclusion>
+                           <groupId>javax.validation</groupId>
+                           <artifactId>validation-api</artifactId>
+                       </exclusion>
+                   </exclusions>
+               </dependency>
+               <dependency>
+                   <groupId>org.springframework</groupId>
+                   <artifactId>spring-beans</artifactId>
+                   <version>${springframework.liferay.version}</version>
+               </dependency>
+               <dependency>
+                   <groupId>org.springframework</groupId>
+                   <artifactId>spring-context</artifactId>
+                   <version>${springframework.liferay.version}</version>
+               </dependency>
+               <dependency>
+                   <groupId>org.springframework</groupId>
+                   <artifactId>spring-core</artifactId>
+                   <version>${springframework.liferay.version}</version>
+               </dependency>
+               <dependency>
+                   <groupId>org.springframework</groupId>
+                   <artifactId>spring-web</artifactId>
+                   <version>${springframework.liferay.version}</version>
+               </dependency>
+           </dependencies>
+       </profile>
       <profile>
          <id>pluto</id>
-         <activation>
-           <property>
-             <name>!alwaysActivate</name>
-           </property>
-         </activation>
-
          <dependencies>
             <dependency>
                <groupId>org.apache.taglibs</groupId>
@@ -161,8 +227,9 @@
                  <configuration>
                    <archiveClasses>false</archiveClasses>
                    <packagingExcludes>
-                       WEB-INF/liferay-portlet.xml,
-                       WEB-INF/classes/log4j.properties
+                       WEB-INF/applicationContext.xml,
+                       WEB-INF/classes/log4j.properties,
+                       WEB-INF/liferay-portlet.xml
                    </packagingExcludes>
                  </configuration>
                </plugin>

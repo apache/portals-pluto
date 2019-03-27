@@ -21,6 +21,7 @@ package org.apache.portals.samples;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletConfig;
@@ -37,6 +38,7 @@ import java.io.StringWriter;
  * @author Scott Nicklous
  *
  */
+@Dependent
 public class AsyncRunnable implements Runnable {
 
 	private static final Logger logger = LoggerFactory.getLogger(AsyncRunnable.class);

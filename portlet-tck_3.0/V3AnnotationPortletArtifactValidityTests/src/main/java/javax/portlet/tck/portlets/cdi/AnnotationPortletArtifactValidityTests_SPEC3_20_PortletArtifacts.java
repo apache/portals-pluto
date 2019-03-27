@@ -16,7 +16,7 @@
  *  under the License.
  */
 
-package javax.portlet.tck.portlets;
+package javax.portlet.tck.portlets.cdi;
 
 import static javax.portlet.PortletSession.PORTLET_SCOPE;
 import static javax.portlet.ResourceURL.PAGE;
@@ -90,9 +90,49 @@ import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
 import javax.portlet.tck.beans.TestButton;
 import javax.portlet.tck.beans.TestResult;
+import javax.portlet.tck.portlets.ArtifactValidationResult;
+import javax.portlet.tck.portlets.PortletRequestScopedArtifacts;
+import javax.portlet.tck.portlets.Utils;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
 import javax.servlet.http.Cookie;
 import javax.xml.namespace.QName;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+
+import static javax.portlet.PortletSession.PORTLET_SCOPE;
+import static javax.portlet.ResourceURL.PAGE;
+import static javax.portlet.tck.portlets.Utils.ACTIONPHASE;
+import static javax.portlet.tck.portlets.Utils.CONTEXTPATHARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.COOKIESARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.EVENTPHASE;
+import static javax.portlet.tck.portlets.Utils.HEADERPHASE;
+import static javax.portlet.tck.portlets.Utils.LOCALESARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.NAMESPACEARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.PORTLETCONFIGARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.PORTLETCONTEXTARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.PORTLETMODEARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.PORTLETNAMEARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.PORTLETPREFERENCESARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.PORTLETSESSIONARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.RENDERPHASE;
+import static javax.portlet.tck.portlets.Utils.WINDOWIDARTIFACTKEY;
+import static javax.portlet.tck.portlets.Utils.WINDOWSTATEARTIFACTKEY;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_CONTEXTPATH;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_COOKIES;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_LOCALES;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_NAMESPACE;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETCONFIG;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETCONTEXT;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETMODE;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETNAME;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETPREFERENCES;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_PORTLETSESSION;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_WINDOWID;
+import static javax.portlet.tck.util.ModuleTestCaseDetails.V3ANNOTATIONPORTLETARTIFACTVALIDITYTESTS_SPEC3_20_PORTLETARTIFACTS_WINDOWSTATE;
 
 /**
  * This portlet implements several test cases for the JSR 362 TCK. The test case names
@@ -108,7 +148,7 @@ import javax.xml.namespace.QName;
 )
 public class AnnotationPortletArtifactValidityTests_SPEC3_20_PortletArtifacts implements Portlet {
    
-   private Utils                   utils = new Utils();
+   private Utils utils = new Utils();
 
    private PortletConfig initPortletConfig = null;
    

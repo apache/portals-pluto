@@ -281,7 +281,6 @@ generate mailto links. -->
     <commons-cli.version>1.0</commons-cli.version>
     <slf4j.version>1.7.5</slf4j.version>
     <springframework.version>2.0.2</springframework.version>
-<!--     <springframework.version>4.2.3.RELEASE</springframework.version> -->
     <maven.version>2.0.5</maven.version>
     <ant.version>1.6.5</ant.version>
     <commons-lang.version>3.4</commons-lang.version>
@@ -520,6 +519,11 @@ TODO: Check if we need all of them. -->
         <groupId>org.apache.taglibs</groupId>
         <artifactId>taglibs-standard-jstlel</artifactId>
         <version>${taglibs.standard.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>6.0.14.Final</version>
       </dependency>
       <dependency>
          <groupId>org.seleniumhq.selenium</groupId>
@@ -800,6 +804,13 @@ TODO: Check if we need all of them. -->
         <module>portlet-tck_3.0</module>
         <module>demo-integration-tests</module>
       </modules>
+    </profile>
+
+    <profile>
+      <id>liferay-spring</id>
+      <properties>
+		  <springframework.liferay.version>5.1.4.RELEASE</springframework.liferay.version>
+	  </properties>
     </profile>
 
     <profile>
