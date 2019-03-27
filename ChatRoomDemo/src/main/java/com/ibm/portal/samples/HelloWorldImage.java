@@ -18,14 +18,9 @@
 
 package com.ibm.portal.samples;
 
-import java.io.IOException;
-
 import javax.inject.Inject;
-import javax.portlet.HeaderRequest;
-import javax.portlet.HeaderResponse;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
-import javax.portlet.annotations.HeaderMethod;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
 
@@ -56,20 +51,6 @@ public class HelloWorldImage {
       "/resources/images/gorilla2.gif", 
       "/resources/images/gorilla1.gif" };
    
-   /**
-    * Header method to add dependency on the portlet hub. The markup for the image
-    * is loaded and added to the DOM through an Ajax call on the client. The client-side 
-    * code makes use of the portlet hub, so a header method is used to add a page-level
-    * resource dependency on the portlet hub.
-    * 
-    * With the portletNames attribute specified as '*', this header method will be 
-    * applied to all portlets in the portlet application.
-    */
-   @HeaderMethod(portletNames="*")
-   public void header(HeaderRequest req, HeaderResponse resp) throws IOException {
-      resp.addDependency("PortletHub", "javax.portlet", "3.0.0");
-   }
-
    /**
     * Render method using automatic include. If a render method has multiple render methods,
     * the render methods are executed in the order of ascending ordinal number.

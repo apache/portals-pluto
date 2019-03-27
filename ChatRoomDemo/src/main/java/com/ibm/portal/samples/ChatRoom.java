@@ -30,6 +30,8 @@ import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.annotations.ActionMethod;
+import javax.portlet.annotations.Dependency;
+import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
 
@@ -39,6 +41,12 @@ import javax.portlet.annotations.ServeResourceMethod;
  * @author Scott Nicklous
  */
 @ApplicationScoped
+@PortletConfiguration(
+    portletName = "BeanPortletDemo",
+    dependencies = {
+        @Dependency(name="PortletHub", scope = "javax.portlet", version="3.0.0")
+    }
+)
 public class ChatRoom {
    
    @Inject private ChatHistory history;
