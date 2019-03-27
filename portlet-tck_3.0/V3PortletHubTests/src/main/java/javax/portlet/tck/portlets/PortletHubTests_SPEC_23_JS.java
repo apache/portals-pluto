@@ -60,6 +60,7 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.annotations.Dependency;
 import javax.portlet.annotations.PortletConfiguration;
 import javax.portlet.tck.beans.TestResultAsync;
 import javax.portlet.tck.util.ModuleTestCaseDetails;
@@ -72,7 +73,8 @@ import javax.portlet.tck.util.ModuleTestCaseDetails;
  *
  */
 
-@PortletConfiguration(portletName = "PortletHubTests_SPEC_23_JS")
+@PortletConfiguration(portletName = "PortletHubTests_SPEC_23_JS",
+    dependencies = @Dependency(name = "PortletHub", scope = "javax.portlet", version="3.0.0"))
 public class PortletHubTests_SPEC_23_JS implements Portlet {
    
    private PortletConfig portletConfig = null;

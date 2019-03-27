@@ -45,7 +45,6 @@ public class HeaderSetter {
       txt.append(contextRoot);
       txt.append("/javascript/promise.js'></script>\n");
       resp.addDependency("promise", "org.apache.pluto", "0.3.0", txt.toString());
-      resp.addDependency("PortletHub", "javax.portlet", "3.0.0");
    }
 
 }
