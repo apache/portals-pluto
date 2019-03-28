@@ -451,7 +451,7 @@ public class PortalURLParserImpl implements PortalURLParser {
          pids.add(pid);
          buffer.append(TOKEN_DELIM).append(PREFIX).append(PORTLET_ID);
          try {
-            buffer.append(URLEncoder.encode(pid, "UTF-8"));
+            buffer.append(urlEncode(pid));
          } catch(Exception e) {
             LOG.warn("Could not encode pid=" + pid);
          }
