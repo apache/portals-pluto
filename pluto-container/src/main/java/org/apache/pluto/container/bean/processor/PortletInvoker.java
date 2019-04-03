@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -382,6 +383,12 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
 
    @Override
    public void render(RenderRequest req, RenderResponse resp) throws PortletException, IOException {
+
+      // https://issues.apache.org/jira/browse/PLUTO-765
+      ResourceBundle resourceBundle = config.getResourceBundle(req.getLocale());
+      if (isDebug) {
+         LOG.debug("PLUTO-765 resourceBundle={}", resourceBundle);
+      }
 
       String pm = req.getPortletMode().toString();
       String id = (pm != null) ? pm.toUpperCase() : "";
