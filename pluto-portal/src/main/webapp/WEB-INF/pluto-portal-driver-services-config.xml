@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
-        "http://www.springframework.org/dtd/spring-beans.dtd">
-<!-- 
+
+<!--
 Licensed to the Apache Software Foundation (ASF) under one or more
 contributor license agreements.  See the NOTICE file distributed with
 this work for additional information regarding copyright ownership.
@@ -42,12 +41,15 @@ limitations under the License.
 
   -->
 
-<beans>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <bean id="PortletContainer"
         class="org.apache.pluto.container.impl.PortletContainerImpl"
-        init-method="init"
-        singleton="true">
+        init-method="init">
     <constructor-arg>
       <bean factory-bean="DriverConfiguration" factory-method="getPortalName"/>
     </constructor-arg>
@@ -57,16 +59,14 @@ limitations under the License.
   </bean>
 
   <bean id="PlutoServices"
-        class="org.apache.pluto.container.driver.PlutoServices"
-        singleton="true">
+        class="org.apache.pluto.container.driver.PlutoServices">
     <constructor-arg>
       <ref bean="PortalDriverServices"/>
     </constructor-arg>
   </bean>
 
   <bean id="PortalDriverServices"
-        class="org.apache.pluto.driver.container.PortalDriverServicesImpl"
-        singleton="true">
+        class="org.apache.pluto.driver.container.PortalDriverServicesImpl">
     <constructor-arg>
       <ref bean="PortalContext"/>
     </constructor-arg>
@@ -157,8 +157,7 @@ limitations under the License.
   </bean>
   <bean id="PortalURLParser"
         class="org.apache.pluto.driver.url.impl.PortalURLParserImpl"
-        factory-method="getParser"
-        singleton="true">
+        factory-method="getParser">
   </bean>
 
   <!--<bean id="ResourceConfigFactory"-->
@@ -170,16 +169,14 @@ limitations under the License.
   <!--</bean>-->
 
   <bean id="RenderConfigService"
-        class="org.apache.pluto.driver.services.impl.resource.RenderConfigServiceImpl"
-        singleton="true">
+        class="org.apache.pluto.driver.services.impl.resource.RenderConfigServiceImpl">
     <constructor-arg>
       <ref bean="ResourceConfigFactory"/>
     </constructor-arg>
   </bean>
 
   <bean id="PublicRenderParameterService"
-        class="org.apache.pluto.driver.services.impl.resource.PublicRenderParameterServiceImpl"
-        singleton="true">
+        class="org.apache.pluto.driver.services.impl.resource.PublicRenderParameterServiceImpl">
     <constructor-arg>
       <ref bean="RenderConfigService"/>
     </constructor-arg>
@@ -189,8 +186,7 @@ limitations under the License.
   </bean>
 
   <bean id="SupportedModesService"
-        class="org.apache.pluto.driver.services.impl.resource.SupportedModesServiceImpl"
-        singleton="true">
+        class="org.apache.pluto.driver.services.impl.resource.SupportedModesServiceImpl">
     <constructor-arg>
       <ref bean="ResourceConfigFactory"/>
     </constructor-arg>
@@ -203,8 +199,7 @@ limitations under the License.
   </bean>
 
   <bean id="SupportedWindowStatesService"
-        class="org.apache.pluto.driver.services.impl.resource.SupportedWindowStateServiceImpl"
-        singleton="true">
+        class="org.apache.pluto.driver.services.impl.resource.SupportedWindowStateServiceImpl">
     <constructor-arg>
       <ref bean="ResourceConfigFactory"/>
     </constructor-arg>
@@ -217,12 +212,10 @@ limitations under the License.
   <!-- Container Services injected into  Configuration  -->
   <!-- ================================================ -->
   <bean id="PortletRequestContextService"
-        class="org.apache.pluto.driver.services.container.PortletRequestContextServiceImpl"
-        singleton="true">
+        class="org.apache.pluto.driver.services.container.PortletRequestContextServiceImpl">
   </bean>
   <bean id="EventCoordinationService"
-        class="org.apache.pluto.driver.services.container.EventCoordinationServiceImpl"
-        singleton="true">
+        class="org.apache.pluto.driver.services.container.EventCoordinationServiceImpl">
     <constructor-arg>
       <ref bean="PortletContextService"/>
     </constructor-arg>
@@ -231,12 +224,10 @@ limitations under the License.
     </constructor-arg>
   </bean>
   <bean id="FilterManagerService"
-        class="org.apache.pluto.driver.services.container.FilterManagerServiceImpl"
-        singleton="true">
+        class="org.apache.pluto.driver.services.container.FilterManagerServiceImpl">
   </bean>
   <bean id="PortletURLListenerService"
-        class="org.apache.pluto.driver.services.container.PortletURLListenerServiceImpl"
-        singleton="true">
+        class="org.apache.pluto.driver.services.container.PortletURLListenerServiceImpl">
   </bean>
   <bean id="PortletContextService"
         class="org.apache.pluto.driver.container.PortletContextManager">
