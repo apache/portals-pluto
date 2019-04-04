@@ -521,9 +521,15 @@ TODO: Check if we need all of them. -->
         <version>${taglibs.standard.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.hibernate</groupId>
+        <groupId>org.hibernate.validator</groupId>
         <artifactId>hibernate-validator</artifactId>
         <version>6.0.14.Final</version>
+        <exclusions>
+          <exclusion>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
          <groupId>org.seleniumhq.selenium</groupId>
