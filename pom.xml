@@ -280,7 +280,7 @@ generate mailto links. -->
     <commons-digester.version>1.8</commons-digester.version>
     <commons-cli.version>1.0</commons-cli.version>
     <slf4j.version>1.7.5</slf4j.version>
-    <springframework.version>5.1.6.RELEASE</springframework.version>
+    <springframework.version>5.1.5.RELEASE</springframework.version>
     <maven.version>2.0.5</maven.version>
     <ant.version>1.6.5</ant.version>
     <commons-lang.version>3.4</commons-lang.version>
