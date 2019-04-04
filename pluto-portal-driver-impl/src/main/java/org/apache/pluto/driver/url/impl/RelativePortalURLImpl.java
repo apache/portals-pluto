@@ -45,6 +45,7 @@ import org.apache.pluto.driver.url.PortalURLPublicParameter;
 import org.apache.pluto.driver.url.PortletParameterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.web.csrf.CsrfToken;
 
 /**
  * The portal URL.
@@ -68,6 +69,9 @@ public class RelativePortalURLImpl implements PortalURL {
 
    private int                         cloneId        = 0;
    private static int                  cloneCtr       = 0;
+
+   private String                      csrfParameterName;
+   private String                      csrfParameterValue;
 
    // provides the defined public render parameters and their relationships to
    // one another for the current page
@@ -124,6 +128,9 @@ public class RelativePortalURLImpl implements PortalURL {
       this.urlParser = urlParser;
       this.servletRequest = req;
       this.cloneId = (++cloneCtr) + 10000;
+      CsrfToken csrfToken = (CsrfToken)req.getAttribute(CsrfToken.class.getName());
+      this.csrfParameterName = csrfToken.getParameterName();
+      this.csrfParameterValue = csrfToken.getToken();
       if (isDebug) {
          LOG.debug("Constructed URL, clone ID: " + cloneId);
       }
@@ -218,6 +225,14 @@ public class RelativePortalURLImpl implements PortalURL {
 
    public void setRenderPath(String renderPath) {
       this.renderPath = renderPath;
+   }
+
+   public String getCsrfParameterName() {
+      return csrfParameterName;
+   }
+
+   public String getCsrfParameterValue() {
+      return csrfParameterValue;
    }
 
    public String getRenderPath() {
@@ -357,6 +372,9 @@ public class RelativePortalURLImpl implements PortalURL {
       portalURL.renderPath = renderPath;
       portalURL.cacheLevel = cacheLevel;
       portalURL.resourceID = resourceID;
+
+      portalURL.csrfParameterName = csrfParameterName;
+      portalURL.csrfParameterValue = csrfParameterValue;
 
       portalURL.prpMapper = (prpMapper == null) ? null : prpMapper.clone();
       portalURL.portletIds = new HashSet<String>(portletIds);

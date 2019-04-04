@@ -514,6 +514,13 @@ public class PortalURLParserImpl implements PortalURLParser {
                .append(urlEncode(String.valueOf(portalURL.getAuthenticated())));
       }
 
+      // Add the Spring Security CSRF token
+      buffer.append(TOKEN_DELIM);
+      buffer.append(PREFIX);
+      buffer.append(portalURL.getCsrfParameterName());
+      buffer.append(DELIM);
+      buffer.append(portalURL.getCsrfParameterValue());
+
       String reswin = null;
       boolean isCacheabilityFull = false;
       if (portalURL.getType() == URLType.Resource) {
