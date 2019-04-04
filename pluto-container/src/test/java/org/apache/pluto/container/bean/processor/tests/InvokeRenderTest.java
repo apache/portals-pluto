@@ -37,6 +37,7 @@ import org.apache.pluto.container.bean.processor.AnnotatedMethodStore;
 import org.apache.pluto.container.bean.processor.ConfigSummary;
 import org.apache.pluto.container.bean.processor.PortletInvoker;
 import org.apache.pluto.container.bean.processor.fixtures.InvocationResults;
+import org.apache.pluto.container.bean.processor.fixtures.mocks.MockPortletConfig;
 import org.apache.pluto.container.bean.processor.fixtures.mocks.MockRenderRequest;
 import org.apache.pluto.container.bean.processor.fixtures.mocks.MockRenderResponse;
 import org.apache.pluto.container.bean.processor.fixtures.render.Render1;
@@ -54,7 +55,8 @@ import org.junit.Test;
 public class InvokeRenderTest {
    
    private InvocationResults meths = InvocationResults.getInvocationResults();
-   
+
+   private static final MockPortletConfig cfg = new MockPortletConfig();
    private static final MockRenderRequest req = new MockRenderRequest();
    private static final MockRenderResponse resp = new MockRenderResponse();
    
@@ -80,7 +82,7 @@ public class InvokeRenderTest {
    @Test
    public void invoke1() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet1");
+      PortletInvoker i = new PortletInvoker(ams, "portlet1", cfg);
       PortletMode mode = PortletMode.VIEW;
       req.setMode(mode);
       i.render(req, resp);
@@ -100,7 +102,7 @@ public class InvokeRenderTest {
    @Test
    public void invoke1a() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet1");
+      PortletInvoker i = new PortletInvoker(ams, "portlet1", cfg);
       PortletMode mode = PortletMode.HELP;
       req.setMode(mode);
       i.render(req, resp);
@@ -112,7 +114,7 @@ public class InvokeRenderTest {
    @Test
    public void invoke1b() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet1");
+      PortletInvoker i = new PortletInvoker(ams, "portlet1", cfg);
       PortletMode mode = new PortletMode("CustomMode");
       req.setMode(mode);
       i.render(req, resp);
@@ -124,7 +126,7 @@ public class InvokeRenderTest {
    @Test
    public void invoke2() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet2");
+      PortletInvoker i = new PortletInvoker(ams, "portlet2", cfg);
       PortletMode mode = PortletMode.VIEW;
       req.setMode(mode);
       i.render(req, resp);
@@ -136,7 +138,7 @@ public class InvokeRenderTest {
    @Test
    public void invoke2a() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet2");
+      PortletInvoker i = new PortletInvoker(ams, "portlet2", cfg);
       PortletMode mode = PortletMode.HELP;
       req.setMode(mode);
       i.render(req, resp);
@@ -154,7 +156,7 @@ public class InvokeRenderTest {
    @Test
    public void invoke2b() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet2");
+      PortletInvoker i = new PortletInvoker(ams, "portlet2", cfg);
       PortletMode mode = new PortletMode("Config");
       req.setMode(mode);
       i.render(req, resp);
@@ -172,7 +174,7 @@ public class InvokeRenderTest {
    @Test
    public void invoke2c() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet2");
+      PortletInvoker i = new PortletInvoker(ams, "portlet2", cfg);
       PortletMode mode = PortletMode.EDIT;
       req.setMode(mode);
       i.render(req, resp);
@@ -190,7 +192,7 @@ public class InvokeRenderTest {
    @Test
    public void invoke3a() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet3");
+      PortletInvoker i = new PortletInvoker(ams, "portlet3", cfg);
       PortletMode mode = PortletMode.HELP;
       req.setMode(mode);
       i.render(req, resp);
@@ -206,7 +208,7 @@ public class InvokeRenderTest {
    @Test
    public void invoke3b() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet3");
+      PortletInvoker i = new PortletInvoker(ams, "portlet3", cfg);
       PortletMode mode = PortletMode.VIEW;
       req.setMode(mode);
       i.render(req, resp);
@@ -224,7 +226,7 @@ public class InvokeRenderTest {
    @Test
    public void invoke3c() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet3");
+      PortletInvoker i = new PortletInvoker(ams, "portlet3", cfg);
       PortletMode mode = PortletMode.EDIT;
       req.setMode(mode);
       i.render(req, resp);
@@ -240,7 +242,7 @@ public class InvokeRenderTest {
    @Test
    public void invoke6() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet6");
+      PortletInvoker i = new PortletInvoker(ams, "portlet6", cfg);
       PortletMode mode = PortletMode.VIEW;
       req.setMode(mode);
       i.render(req, resp);
@@ -256,7 +258,7 @@ public class InvokeRenderTest {
    @Test
    public void invoke6a() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet6");
+      PortletInvoker i = new PortletInvoker(ams, "portlet6", cfg);
       PortletMode mode = PortletMode.HELP;
       req.setMode(mode);
       i.render(req, resp);
@@ -267,7 +269,7 @@ public class InvokeRenderTest {
    @Test
    public void invoke7() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet7");
+      PortletInvoker i = new PortletInvoker(ams, "portlet7", cfg);
       PortletMode mode = PortletMode.HELP;
       req.setMode(mode);
       i.render(req, resp);
@@ -279,7 +281,7 @@ public class InvokeRenderTest {
    @Test
    public void invokeAdmin1() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet1");
+      PortletInvoker i = new PortletInvoker(ams, "portlet1", cfg);
       PortletMode mode = new PortletMode("admin");
       req.setMode(mode);
       i.render(req, resp);
@@ -295,7 +297,7 @@ public class InvokeRenderTest {
    @Test
    public void invokeAdmin2() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet2");
+      PortletInvoker i = new PortletInvoker(ams, "portlet2", cfg);
       PortletMode mode = new PortletMode("admin");
       req.setMode(mode);
       i.render(req, resp);
@@ -311,7 +313,7 @@ public class InvokeRenderTest {
    @Test
    public void invokeAdmin3() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet3");
+      PortletInvoker i = new PortletInvoker(ams, "portlet3", cfg);
       PortletMode mode = new PortletMode("admin");
       req.setMode(mode);
       i.render(req, resp);
@@ -327,7 +329,7 @@ public class InvokeRenderTest {
    @Test
    public void invokeAdmin4() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet4");
+      PortletInvoker i = new PortletInvoker(ams, "portlet4", cfg);
       PortletMode mode = new PortletMode("admin");
       req.setMode(mode);
       i.render(req, resp);
@@ -339,7 +341,7 @@ public class InvokeRenderTest {
    @Test
    public void invokeAdmin5() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet5");
+      PortletInvoker i = new PortletInvoker(ams, "portlet5", cfg);
       PortletMode mode = new PortletMode("admin");
       req.setMode(mode);
       i.render(req, resp);
@@ -351,7 +353,7 @@ public class InvokeRenderTest {
    @Test
    public void invokeAdmin8() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet8");
+      PortletInvoker i = new PortletInvoker(ams, "portlet8", cfg);
       PortletMode mode = new PortletMode("admin");
       req.setMode(mode);
       i.render(req, resp);
@@ -363,7 +365,7 @@ public class InvokeRenderTest {
    @Test
    public void invokeAdmin7() throws Exception {
       meths.reset();
-      PortletInvoker i = new PortletInvoker(ams, "portlet7");
+      PortletInvoker i = new PortletInvoker(ams, "portlet7", cfg);
       PortletMode mode = new PortletMode("admin");
       req.setMode(mode);
       i.render(req, resp);

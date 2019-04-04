@@ -83,6 +83,12 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
       this.portletName = portletName;
    }
 
+   public PortletInvoker(
+       AnnotatedMethodStore ams, String portlet, PortletConfig config) {
+      this(ams, portlet);
+      this.config = config;
+   }
+
    // =======================================================================
 
    /**
