@@ -34,7 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Configuration for RenderStateScoped CDI beans.
+ * Configuration for PortletSessionScoped CDI beans.
  * 
  * @author Scott Nicklous
  *
@@ -61,7 +61,7 @@ public class PortletSessionScopedConfig  implements Serializable {
    
    /**
     * Called by the CDI extension during the scanning phase to add information about 
-    * a <code>{@literal @}RenderStateScoped</code> bean.
+    * a <code>{@literal @}PortletSessionScoped</code> bean.
     * 
     * @param beanClass     The bean class
     * @param anno          The annotation
@@ -100,7 +100,7 @@ public class PortletSessionScopedConfig  implements Serializable {
    }
    
    /**
-    * Returns the render state scoped annotated classes. 
+    * Returns the portlet session scoped annotated classes.
     * <p>
     * Used for test / validation purposes.
     * 
@@ -111,7 +111,7 @@ public class PortletSessionScopedConfig  implements Serializable {
    }
    
    /**
-    * Returns a render state scoped bean summary for display
+    * Returns a portlet session scoped bean summary for display
     * 
     * @return  The configuration summary string
     * 
