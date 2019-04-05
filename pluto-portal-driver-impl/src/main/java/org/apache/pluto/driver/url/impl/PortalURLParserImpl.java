@@ -459,7 +459,8 @@ public class PortalURLParserImpl implements PortalURLParser {
       }
 
       //Append the resource window definition, if it exists.
-      if (portalURL.getType() == URLType.Resource) {
+      URLType portalURLType = portalURL.getType();
+      if (portalURLType == URLType.Resource) {
          int index = pids.indexOf(targetWindow);
          if (index < 0) {
             StringBuilder txt = new StringBuilder();
@@ -475,7 +476,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       }
 
       //Append the render window definition, if it exists.
-      if (portalURL.getType() == URLType.Render) {
+      if (portalURLType == URLType.Render) {
          int index = pids.indexOf(targetWindow);
          if (index < 0) {
             StringBuilder txt = new StringBuilder();
@@ -491,7 +492,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       }
       
       // Append the action window definition, if it exists.
-      if (portalURL.getType() == URLType.Action) {
+      if (portalURLType == URLType.Action) {
          int index = pids.indexOf(targetWindow);
          if (index < 0) {
             StringBuilder txt = new StringBuilder();
@@ -514,16 +515,9 @@ public class PortalURLParserImpl implements PortalURLParser {
                .append(urlEncode(String.valueOf(portalURL.getAuthenticated())));
       }
 
-      // Add the Spring Security CSRF token
-      buffer.append(TOKEN_DELIM);
-      buffer.append(PREFIX);
-      buffer.append(portalURL.getCsrfParameterName());
-      buffer.append(DELIM);
-      buffer.append(portalURL.getCsrfParameterValue());
-
       String reswin = null;
       boolean isCacheabilityFull = false;
-      if (portalURL.getType() == URLType.Resource) {
+      if (portalURLType == URLType.Resource) {
          if (portalURL.getCacheability() != null) {
             buffer.append(TOKEN_DELIM);
             buffer.append(PREFIX).append(CACHE_LEVEL)
@@ -587,6 +581,18 @@ public class PortalURLParserImpl implements PortalURLParser {
             buffer.append(TOKEN_DELIM).append(PREFIX).append(WINDOW_STATE)
             .append(String.valueOf(index)).append(DELIM).append(urlEncode(ws.toString()));
          }
+      }
+
+      // Add the Spring Security CSRF token
+      if ((portalURLType == URLType.Action) || (portalURLType == URLType.PartialAction)) {
+         buffer.append(TOKEN_DELIM);
+         buffer.append(PREFIX);
+         buffer.append(ACTION_PARAM);
+         buffer.append(String.valueOf(pids.indexOf(targetWindow)));
+         buffer.append(DELIM);
+         buffer.append(portalURL.getCsrfParameterName());
+         buffer.append(VALUE_DELIM);
+         buffer.append(portalURL.getCsrfParameterValue());
       }
 
       // Append action and render parameters.
@@ -659,7 +665,7 @@ public class PortalURLParserImpl implements PortalURLParser {
       }
       
       // Add fragment identifier if present on render URL
-      if (portalURL.getType() == URLType.Render) {
+      if (portalURLType == URLType.Render) {
          String frag = portalURL.getFragmentIdentifier();
          if (frag != null) {
             if (isTrace) {

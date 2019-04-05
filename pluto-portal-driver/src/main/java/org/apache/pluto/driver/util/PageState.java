@@ -19,20 +19,15 @@
 
 package org.apache.pluto.driver.util;
 
-import static java.util.logging.Level.*;
-
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
-import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -42,14 +37,15 @@ import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.services.portal.PageConfig;
-import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PublicRenderParameterMapper;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLPublicParameter;
+import org.springframework.security.web.csrf.CsrfToken;
 
 /**
  * @author Scott Nicklous
+ * @author Neil Griffin
  * 
  * This is a utility class that collects all data needed by the portlet
  * hub in one location. The data is formatted appropriately for transmission to 
@@ -57,9 +53,8 @@ import org.apache.pluto.driver.url.PortalURLPublicParameter;
  *
  */
 public class PageState {
-   private static final String LOG_CLASS = PageState.class.getName();
-   private final Logger        LOGGER    = Logger.getLogger(LOG_CLASS);
 
+   private CsrfToken               csrfToken;
    private DriverConfiguration     drvrConfig;
    private PageConfig              pageConfig;
    private PortalRequestContext    portalRC;
@@ -79,13 +74,30 @@ public class PageState {
             .getAttribute(AttributeKeys.DRIVER_CONFIG);
       servletContext = portalRC.getServletContext();
       pageConfig = portalUrl.getPageConfig(servletContext);
+      csrfToken = (CsrfToken)request.getAttribute(CsrfToken.class.getName());
    }
 
    public PageState(HttpServletRequest request, Map<String, RenderData> renderDataMap) {
       this(request);
       this.renderDataMap = renderDataMap;
    }
-   
+
+   public String getCsrfParameterName() {
+      if (csrfToken == null) {
+         return "";
+      }
+
+      return csrfToken.getParameterName();
+   }
+
+   public String getCsrfParameterValue() {
+      if (csrfToken == null) {
+         return "";
+      }
+
+      return csrfToken.getToken();
+   }
+
    /**
     * Returns the portal URL parameters that are set on the current URL.
     * 

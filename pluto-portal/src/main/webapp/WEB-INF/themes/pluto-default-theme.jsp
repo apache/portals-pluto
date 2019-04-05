@@ -52,8 +52,14 @@ group (the left column) displays portlets with odd IDs, while the second group
        portlet.impl.getInitData = function () {
           return <%=ps.toJSONString()%>;
        }
-       portlet.impl.getUrlBase = function () {
-          return '<%=response.encodeURL(ps.getUrlBase())%>';
+	   portlet.impl.getUrlBase = function () {
+		   return '<%=response.encodeURL(ps.getUrlBase())%>';
+	   }
+	   portlet.impl.getCsrfParameterName = function () {
+		   return '<%=ps.getCsrfParameterName()%>';
+	   }
+       portlet.impl.getCsrfParameterValue = function () {
+          return '<%=ps.getCsrfParameterValue()%>';
        }
     </script>
 

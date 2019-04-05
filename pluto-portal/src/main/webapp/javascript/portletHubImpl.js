@@ -542,6 +542,11 @@ var portlet = portlet || {};
     	  url += str;
       }
 
+      if (isAction) {
+          url += TOKEN_DELIM + PREFIX + ptype + pidMap[pid] + DELIM;
+          url += portlet.impl.getCsrfParameterName() + VALUE_DELIM + portlet.impl.getCsrfParameterValue();
+      }
+
       // Use Promise to allow for potential server communication - 
       return new Promise(function (resolve) {
          resolve(url);

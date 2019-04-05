@@ -54,6 +54,7 @@ limitations under the License.
 
   <bean id="strictHttpFirewall" class="org.apache.pluto.driver.security.PortalStrictHttpFirewall">
     <property name="allowSemicolon" value="true"/>
+    <property name="allowUrlEncodedPercent" value="true"/>
   </bean>
 
   <bean id="filterChainProxy" class="org.springframework.security.web.FilterChainProxy">

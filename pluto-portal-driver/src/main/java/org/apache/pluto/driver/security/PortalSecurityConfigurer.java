@@ -22,12 +22,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.enterprise.inject.Vetoed;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This class is automatically picked up by Spring due to the presence of the annotation-config and component-scan
@@ -41,6 +44,8 @@ import java.io.IOException;
 @Vetoed
 public class PortalSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
+	private static RequestMatcher ACTION_REQUEST_MATCHER = new ActionRequestMatcher();
+
 	public PortalSecurityConfigurer() {
 
 		// Disable defaults so that the configure(HttpSecurity) method can selectively enable features that are
@@ -50,17 +55,49 @@ public class PortalSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.csrf().and().exceptionHandling().accessDeniedHandler(new PortletAccessDeniedHandler());
+		httpSecurity.csrf().requireCsrfProtectionMatcher(ACTION_REQUEST_MATCHER).and().exceptionHandling().accessDeniedHandler(new PortletAccessDeniedHandler());
 	}
 
-	private static class PortletAccessDeniedHandler implements
-		AccessDeniedHandler {
+	private static class PortletAccessDeniedHandler implements AccessDeniedHandler {
 
 		@Override
 		public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 						   AccessDeniedException accessDeniedException) throws
 			IOException, ServletException {
 			throw accessDeniedException;
+		}
+	}
+
+	private static class ActionRequestMatcher implements RequestMatcher {
+
+		private static final Pattern ACTION_URL_PATTERN = Pattern.compile(".*[/]__ac[0-9]+.*");
+		private static final Pattern AJAX_ACTION_URL_PATTERN = Pattern.compile(".*[/]__aa[0-9]+.*");
+		private static final Pattern PARTIAL_ACTION_URL_PATTERN = Pattern.compile(".*[/]__pa[0-9]+.*");
+
+		@Override
+		public boolean matches(HttpServletRequest httpServletRequest) {
+
+			String requestURI = httpServletRequest.getRequestURI();
+
+			Matcher actionURLMatcher = ACTION_URL_PATTERN.matcher(requestURI);
+
+			if (actionURLMatcher.matches()) {
+				return true;
+			}
+
+			Matcher ajaxActionURLMatcher = AJAX_ACTION_URL_PATTERN.matcher(requestURI);
+
+			if (ajaxActionURLMatcher.matches()) {
+				return true;
+			}
+
+			Matcher partialActionURLMatcher = PARTIAL_ACTION_URL_PATTERN.matcher(requestURI);
+
+			if (partialActionURLMatcher.matches()) {
+				return true;
+			}
+
+			return false;
 		}
 	}
 }

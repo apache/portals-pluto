@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
  * so that the {@link FirewalledRequest#getParameter(String)} method can return the value of the
  * Spring "_csrf" URL parameter. This is necessary because Apache Pluto's portlet URLs do not follow
  * a conventional name=value URL parameter syntax. Instead, are delimited by forward slashes and
- * have a "name;value" type of syntax.
+ * have a "lifecycle;name:value" type of syntax.
  *
  * @author Neil Griffin
  */
@@ -45,7 +45,7 @@ public class PortalStrictHttpFirewall extends StrictHttpFirewall {
 	private static class PortalHttpServletRequest extends
 		HttpServletRequestWrapper {
 
-		private static final String DEFAULT_CSRF_PARAM_PATTERN = CsrfRequestDataValueProcessor.DEFAULT_CSRF_ATTR_NAME + ";";
+		private static final String DEFAULT_CSRF_PARAM_PATTERN = CsrfRequestDataValueProcessor.DEFAULT_CSRF_ATTR_NAME + ":";
 
 		public PortalHttpServletRequest(HttpServletRequest request) {
 			super(request);

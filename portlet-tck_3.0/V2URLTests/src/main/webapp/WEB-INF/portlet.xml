@@ -158,7 +158,15 @@
    <supported-public-render-parameter>tckPRP1</supported-public-render-parameter>
    </portlet>
 
-
+   <filter>
+      <filter-name>plutoTckPortletFilter</filter-name>
+      <filter-class>javax.portlet.tck.filter.PlutoTckPortletFilter</filter-class>
+      <lifecycle>ACTION_PHASE</lifecycle>
+   </filter>
+   <filter-mapping>
+      <filter-name>plutoTckPortletFilter</filter-name>
+      <portlet-name>URLTests_BaseURL_ApiRenderActurl</portlet-name>
+   </filter-mapping>
 
    <public-render-parameter>
       <identifier>tckPRP1</identifier>
