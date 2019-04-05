@@ -21,6 +21,8 @@ import javax.portlet.annotations.PortletLifecycleFilter;
 
 @PortletLifecycleFilter(
 	filterName = "portletParametersPlutoTckPortletFilter",
-	portletNames = {"PortletParametersTests_SPEC11_3"})
+	portletNames = {
+		"PortletParametersTests_SPEC11_3",
+		"PortletParametersTests_SPEC11_4A"})
 public class PortletParametersPlutoTckPortletFilter extends PlutoTckPortletFilter {
 }
