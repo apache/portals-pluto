@@ -196,7 +196,10 @@
          value="common.loader=&quot;${catalina.home}/lib/weld-servlet-2.3.1.Final.jar&quot;,"
          summary="true"
       />
-      
+
+      <concat append="true"
+              destfile="${dist.dir}/conf/catalina.properties">org.apache.catalina.STRICT_SERVLET_COMPLIANCE=true</concat>
+
       <!-- Add 'pluto' and 'tomcat' users to tomcat-users.xml -->
       <replace file="${dist.dir}/conf/tomcat-users.xml"
          token="&lt;/tomcat-users&gt;" 
@@ -205,7 +208,7 @@
       />
    </target>
    
-   <!-- Only do mvn install if 'packageOnly' is not set -->
+   <!-- Determine whether or not to include the demo portlets -->
    <condition property="installDemos">
      <and>
        <equals casesensitive="false" arg1="${includeDemos}" arg2="true"/>
