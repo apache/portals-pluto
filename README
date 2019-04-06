@@ -63,3 +63,26 @@ http://localhost:8080/pluto/portal
 
 Use the credentials pluto/pluto to log on to the application.
 
+Third-Party Licensing
+=====================
+
+The Apache Pluto software is compiled against version 2.1.1 of the JAX-RS API
+which is made available under the Eclipse Public License, version 2.0 (EPL 2.0).
+
+In addition, the software is compiled against version 1.3.1 of the Common
+Annotations for the Java(TM) Platform API (Commons-Annotations API) which is
+made available under the Common Development and Distribution License (CDDL).
+
+According to the [ASF 3RD PARTY LICENSE POLICY]
+(https://apache.org/legal/resolved.html#weak-copyleft-licenses), third-party
+software that is licensed under the EPL 2.0 or CDDL licenses may be included
+in binary form. To that end, the binary version of the JAX-RS API dependency
+is found in the following path of the Pluto+Tomcat bundle:
+
+    <tomcat-home>/lib/javax.ws.rs-api-2.1.1.jar
+
+Apache Tomcat includes its own version of the Commons-Annotations API (which is
+licensed under the Apache License, Version 2.0) in the following-path of the
+Pluto-Tomcat bundle:
+
+    <tomcat-home>/lib/annotations-api.jar

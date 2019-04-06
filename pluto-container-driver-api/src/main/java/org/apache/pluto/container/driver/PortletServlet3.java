@@ -70,6 +70,7 @@ import org.apache.pluto.container.bean.processor.PortletInvoker;
 import org.apache.pluto.container.bean.processor.PortletRequestScopedBeanHolder;
 import org.apache.pluto.container.bean.processor.PortletSessionBeanHolder;
 import org.apache.pluto.container.bean.processor.PortletStateScopedBeanHolder;
+import org.apache.pluto.container.bean.processor.RedirectScopedBeanHolder;
 import org.apache.pluto.container.impl.HttpServletPortletRequestWrapper;
 import org.apache.pluto.container.om.portlet.impl.ConfigurationHolder;
 import org.slf4j.Logger;
@@ -187,6 +188,7 @@ public class PortletServlet3 extends HttpServlet {
             Bean<?> bean = beanmgr.resolve(beans);
             acb = (AnnotatedConfigBean) beanmgr.getReference(bean, bean.getBeanClass(), beanmgr.createCreationalContext(bean));
             LOG.debug("ACB instance: " + acb + ", RS config: " + ((acb==null) ? "null" : acb.getSessionScopedConfig()));
+            acb.getRedirectScopedConfig().activate(beanmgr);
             acb.getSessionScopedConfig().activate(beanmgr);
             acb.getStateScopedConfig().activate(beanmgr);
          } catch (Throwable t) {
@@ -580,7 +582,7 @@ public class PortletServlet3 extends HttpServlet {
             request.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
             request.removeAttribute(PortletInvokerService.FILTER_MANAGER);
 
-            afterInvoke(portletResponse);
+            afterInvoke(portletRequest, portletResponse);
 
          } else {
             LOG.debug("Async started, not releasing resources. executing req body: " + requestContext.isExecutingRequestBody());
@@ -630,6 +632,9 @@ public class PortletServlet3 extends HttpServlet {
          // Set the portlet session bean holder for the thread & session
          PortletSessionBeanHolder.setBeanHolder(req, acb.getSessionScopedConfig());
 
+         // Set the redirect scoped bean holder
+         RedirectScopedBeanHolder.setBeanHolder(req);
+
          // Set the render state scoped bean holder
          PortletStateScopedBeanHolder.setBeanHolder(req, acb.getStateScopedConfig());
 
@@ -652,7 +657,7 @@ public class PortletServlet3 extends HttpServlet {
     * must be called after all method invocations have taken place, even if an
     * exception occurs.
     */
-   private void afterInvoke(PortletResponse resp) {
+   private void afterInvoke(PortletRequest portletRequest, PortletResponse portletResponse) {
 
       if (acb != null) {
 
@@ -662,13 +667,17 @@ public class PortletServlet3 extends HttpServlet {
          // Remove the portlet session bean holder for the thread
          PortletSessionBeanHolder.removeBeanHolder();
 
+         // Remove the redirect bean holder for the thread
+         RedirectScopedBeanHolder.removeBeanHolder(
+             (portletRequest instanceof RenderRequest) && !(portletRequest instanceof HeaderRequest));
+
          // Remove the render state bean holder. pass response if we're
          // dealing with a StateAwareResponse. The response is used for state
          // storage.
 
          StateAwareResponse sar = null;
-         if (resp instanceof StateAwareResponse) {
-            sar = (StateAwareResponse) resp;
+         if (portletResponse instanceof StateAwareResponse) {
+            sar = (StateAwareResponse) portletResponse;
          }
          PortletStateScopedBeanHolder.removeBeanHolder(sar);
 

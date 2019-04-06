@@ -32,6 +32,7 @@ public class AnnotatedConfigBean {
 
    private AnnotatedMethodStore methodStore = null;
    private ConfigSummary summary = null;
+   private RedirectScopedConfig redirectScopedConfig = null;
    private PortletStateScopedConfig stateScopedConfig = null;
    private PortletSessionScopedConfig sessionScopedConfig = null;
    
@@ -61,6 +62,20 @@ public class AnnotatedConfigBean {
     */
    public void setSummary(ConfigSummary summary) {
       this.summary = summary;
+   }
+
+   /**
+    * @return the redirectScopedConfig
+    */
+   public RedirectScopedConfig getRedirectScopedConfig() {
+      return redirectScopedConfig;
+   }
+
+   /**
+    * @param redirectScopedConfig the redirectScopedConfig to set
+    */
+   public void setRedirectScopedConfig(RedirectScopedConfig redirectScopedConfig) {
+      this.redirectScopedConfig = redirectScopedConfig;
    }
 
    /**

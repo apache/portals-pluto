@@ -338,13 +338,24 @@ public class ConfigurationHolder {
    }
    
    /**
+    * Scans list of files for method annotations that do not conform to MVC signatures.
+    * (unit test execution path)
+    *
+    * @param files   the set of files to scan
+    */
+   public void scanMethodAnnotations(Set<File> files) {
+      scanMethodAnnotations(files, false);
+   }
+
+   /**
     * Scans list of files for method annotations.
     * (unit test execution path)
     * 
     * @param files   the set of files to scan
+    * @param mvc     flag indicating whether or not MVC method signatures are permitted
     */
-   public void scanMethodAnnotations(Set<File> files) {
-      MethodAnnotationRecognizer mar = new MethodAnnotationRecognizer(methodStore, configSummary);
+   public void scanMethodAnnotations(Set<File> files, boolean mvc) {
+      MethodAnnotationRecognizer mar = new MethodAnnotationRecognizer(methodStore, configSummary, mvc);
       mar.scanFiles(files);
       LOG.debug("Scan complete: \n" + methodStore.getMethodsAsString());
    }

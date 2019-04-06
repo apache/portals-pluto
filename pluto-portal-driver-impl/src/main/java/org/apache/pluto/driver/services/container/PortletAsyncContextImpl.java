@@ -43,6 +43,7 @@ import org.apache.pluto.container.bean.processor.PortletArtifactProducer;
 import org.apache.pluto.container.bean.processor.PortletRequestScopedBeanHolder;
 import org.apache.pluto.container.bean.processor.PortletSessionBeanHolder;
 import org.apache.pluto.container.bean.processor.PortletStateScopedBeanHolder;
+import org.apache.pluto.container.bean.processor.RedirectScopedBeanHolder;
 import org.apache.pluto.container.impl.HttpServletPortletRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +72,7 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
    private PortletSessionBeanHolder            sessbh;
    private PortletStateScopedBeanHolder        statebh;
    private PortletRequestScopedBeanHolder      reqbh;
+   private RedirectScopedBeanHolder            redbh;
    private BeanManager                         beanmgr;
    private Runnable                            pendingRunner;
    private boolean                             doDeregister       = true;
@@ -128,6 +130,7 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
          PortletSessionBeanHolder.register(sessbh);
          PortletStateScopedBeanHolder.register(statebh);
          PortletRequestScopedBeanHolder.register(reqbh);
+         RedirectScopedBeanHolder.register(redbh);
          PortletArtifactProducer.setPrecursors(resreq, prctx.getResponse(), prctx.getPortletConfig());
       }
 
@@ -149,6 +152,7 @@ public class PortletAsyncContextImpl implements PortletAsyncManager, AsyncContex
    public void deregisterContext(boolean isListener) {
       if (!complete && (!isListener || doDeregister)) {
          this.sessbh = PortletSessionBeanHolder.deregister();
+         this.redbh = RedirectScopedBeanHolder.deregister();
          this.statebh = PortletStateScopedBeanHolder.deregister();
          this.reqbh = PortletRequestScopedBeanHolder.deregister();
          PortletArtifactProducer.remove();

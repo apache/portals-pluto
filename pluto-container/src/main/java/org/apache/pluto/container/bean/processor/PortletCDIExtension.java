@@ -39,6 +39,7 @@ import javax.enterprise.inject.spi.Extension;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.portlet.PortletConfig;
 
+import org.apache.pluto.container.bean.mvc.MvcExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,6 +73,7 @@ public class PortletCDIExtension implements Extension {
     */
    void processType(@Observes ProcessAnnotatedType<?> pat) throws InvalidAnnotationException {
       par.checkAnnotatedType(pat);
+      MvcExtension.processAnnotatedType(pat);
    }
    
    
@@ -154,6 +156,9 @@ public class PortletCDIExtension implements Extension {
     * @param abd
     */
    void addPortletCustomScopeContexts(@Observes AfterBeanDiscovery abd) {
+      RedirectScopedContext rsc = new RedirectScopedContext();
+      abd.addContext(rsc);
+
       PortletSessionScopedContext pssc = new PortletSessionScopedContext();
       abd.addContext(pssc);
       
@@ -191,6 +196,7 @@ public class PortletCDIExtension implements Extension {
             LOG.trace("Got AnnotatedConfigBean instance.");
             acb.setMethodStore(ams);
             acb.setSummary(summary);
+            acb.setRedirectScopedConfig(par.getRedirectScopedConfig());
             acb.setStateScopedConfig(par.getStateScopedConfig());
             acb.setSessionScopedConfig(par.getSessionScopedConfig());
          } catch (Exception e) {

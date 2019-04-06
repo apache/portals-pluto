@@ -200,4 +200,23 @@ public class PortletSessionScopedBeanMap implements HttpSessionBindingListener, 
          beans.clear();
       }
    }
+
+   public void removeByWindowId(String windowId) {
+
+      if (isTrace) {
+         LOG.trace("Removing beans associated with windowId=" + windowId);
+      }
+
+      synchronized(beans) {
+         for (String curWindowId : beans.keySet()) {
+         	if (curWindowId.equals(windowId)) {
+               Map<Contextual<?>, BeanInstance<?>> beanMap =
+                   beans.get(curWindowId);
+               for (Contextual<?> bean : beanMap.keySet()) {
+                  remove(curWindowId, beanMap, bean);
+               }
+            }
+         }
+      }
+   }
 }

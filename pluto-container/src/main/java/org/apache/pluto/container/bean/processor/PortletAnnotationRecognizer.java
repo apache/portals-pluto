@@ -27,6 +27,7 @@ import static org.apache.pluto.container.bean.processor.MethodDescription.METH_R
 import static org.apache.pluto.container.bean.processor.MethodDescription.METH_DES;
 import static org.apache.pluto.container.bean.processor.MethodDescription.METH_INI;
 
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -41,8 +42,15 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.BeanManager;
+import javax.mvc.RedirectScoped;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.portlet.annotations.ActionMethod;
 import javax.portlet.annotations.DestroyMethod;
 import javax.portlet.annotations.EventMethod;
@@ -69,6 +77,7 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
          new HashSet<Class<? extends Annotation>>();
    
    static {
+      classAnnotations.add(RedirectScoped.class);
       classAnnotations.add(RenderStateScoped.class);
       classAnnotations.add(PortletSessionScoped.class);
       classAnnotations.add(SessionScoped.class);
@@ -87,34 +96,52 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
 
       // Add method definitions for init methods
       
-      list = new ArrayList<MethodDescription>();
+      list = new ArrayList<>();
       list.add(METH_INI);
       descriptions.put(InitMethod.class, list);
       
       // Add method definitions for destroy methods
       
-      list = new ArrayList<MethodDescription>();
+      list = new ArrayList<>();
       list.add(METH_DES);
       descriptions.put(DestroyMethod.class, list);
       
       // Add method definitions for action methods
       
-      list = new ArrayList<MethodDescription>();
+      list = new ArrayList<>();
       list.add(METH_ACT);
+
+      md = new MethodDescription(String.class,
+          new Class<?>[] {ActionRequest.class, ActionResponse.class},
+          new Class<?>[] {PortletException.class, java.io.IOException.class},
+          MethodType.ACTION);
+      md.setMvc(true);
+      md.setVariant(SignatureVariant.STRING_ACTIONREQ_ACTIONRESP);
+      list.add(md);
+
       descriptions.put(ActionMethod.class, list);
       
       // Add method definitions for event methods
       
-      list = new ArrayList<MethodDescription>();
+      list = new ArrayList<>();
       list.add(METH_EVT);
       descriptions.put(EventMethod.class, list);
       
       // Add method definitions for serve resource
       
-      list = new ArrayList<MethodDescription>();
+      list = new ArrayList<>();
       
       list.add(METH_RES);
-      
+
+      md = new MethodDescription(String.class,
+          new Class<?>[] {ResourceRequest.class, ResourceResponse.class},
+          new Class<?>[] {PortletException.class, java.io.IOException.class},
+          MethodType.RESOURCE);
+      md.setAllowMultiple(true);
+      md.setMvc(true);
+      md.setVariant(SignatureVariant.STRING_RESOURCEREQ_RESOURCERESP);
+      list.add(md);
+
       md = new MethodDescription(String.class, 
             new Class<?>[] {},  
             new Class<?>[] {PortletException.class, java.io.IOException.class}, 
@@ -135,16 +162,25 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
       
       // Add method definitions for render
       
-      list = new ArrayList<MethodDescription>();
+      list = new ArrayList<>();
       
       list.add(METH_REN);
-      
+
+      md = new MethodDescription(String.class,
+          new Class<?>[] {},
+          new Class<?>[] {PortletException.class, java.io.IOException.class},
+          MethodType.RENDER);
+      md.setAllowMultiple(true);
+      md.setVariant(SignatureVariant.STRING_VOID);
+      list.add(md);
+
       md = new MethodDescription(String.class, 
-            new Class<?>[] {},  
+            new Class<?>[] {RenderRequest.class, RenderResponse.class},
             new Class<?>[] {PortletException.class, java.io.IOException.class}, 
             MethodType.RENDER);
       md.setAllowMultiple(true);
-      md.setVariant(SignatureVariant.STRING_VOID);
+      md.setMvc(true);
+      md.setVariant(SignatureVariant.STRING_RENDERREQ_RENDERRESP);
       list.add(md);
       
       md = new MethodDescription(void.class, 
@@ -159,7 +195,7 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
       
       // Add method definitions for header methods
       
-      list = new ArrayList<MethodDescription>();
+      list = new ArrayList<>();
       list.add(METH_HDR);
       
       md = new MethodDescription(String.class, 
@@ -183,17 +219,48 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
    }
 
    private final AnnotatedMethodStore ams;
+   private final boolean mvc;
+   private final RedirectScopedConfig redirectScopedConfig = new RedirectScopedConfig();
    private final PortletStateScopedConfig stateScopedConfig = new PortletStateScopedConfig();
    private final PortletSessionScopedConfig sessionScopedConfig = new PortletSessionScopedConfig();
-   
+
    /**
-    * @param cla
-    * @param metha
+    * @param pms
+    * @param summary
     */
    public PortletAnnotationRecognizer(AnnotatedMethodStore pms, ConfigSummary summary) {
-      super(classAnnotations, descriptions, summary);
+      this(pms, summary, true);
+   }
+
+   /**
+    * @param pms
+    * @param summary
+    */
+   public PortletAnnotationRecognizer(AnnotatedMethodStore pms, ConfigSummary summary, boolean mvc) {
+      super(classAnnotations, filterDescriptions(descriptions, mvc), summary);
       this.ams = pms;
+      this.mvc = mvc;
       LOG.trace("Created the PortletAnnotationRecognizer.");
+   }
+
+   private static Map<Class<? extends Annotation>,List<MethodDescription>> filterDescriptions(Map<Class<? extends Annotation>, List<MethodDescription>> descriptions, boolean mvc) {
+      if (mvc) {
+         return descriptions;
+      }
+
+      Map<Class<? extends Annotation>, List<MethodDescription>> filteredDescriptions = new HashMap<>();
+
+      for (Map.Entry<Class<? extends Annotation>, List<MethodDescription>> entry : descriptions.entrySet()) {
+      	 List<MethodDescription> filteredMethodDescriptions = new ArrayList<>();
+         for (MethodDescription methodDescription: entry.getValue()) {
+            if (!methodDescription.isMvc()) {
+               filteredMethodDescriptions.add(methodDescription);
+            }
+         }
+         filteredDescriptions.put(entry.getKey(), filteredMethodDescriptions);
+      }
+
+      return filteredDescriptions;
    }
 
    /**
@@ -209,8 +276,24 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
    protected AnnotatedType<?> handleClassAnnotation(Annotation anno, AnnotatedType<?> aType) throws InvalidAnnotationException {
       String typeName = aType.getJavaClass().getCanonicalName();
       Class<?> theClass = aType.getJavaClass();
-      
-      if (anno instanceof RenderStateScoped) {
+
+      if (anno instanceof RedirectScoped) {
+
+         // Verify the redirect scoped class, store the annotation &
+         // bean type with the corresponding bean holder.
+
+         if (!Serializable.class.isAssignableFrom(theClass)) {
+            StringBuilder txt = new StringBuilder(128);
+            txt.append("Annotation problem: An @RedirectScoped bean must implement java.io.Serializable.");
+            txt.append("Annotation: ").append(anno.annotationType().getSimpleName());
+            txt.append(", Class: ").append(typeName);
+            LOG.debug(txt.toString());
+            summary.addStateBeanErrorString(theClass, txt.toString());
+         } else {
+            redirectScopedConfig.addAnnotation(theClass, (RedirectScoped) anno);
+         }
+	  }
+      else if (anno instanceof RenderStateScoped) {
          
          // Verify the render state scoped class, store the annotation &
          // bean type with the corresponding bean holder.
@@ -387,8 +470,16 @@ public class PortletAnnotationRecognizer extends AnnotationRecognizer {
    protected void activateCustomScopes(BeanManager bm) {
       
       // Activate the custom scoped beans
+      redirectScopedConfig.activate(bm);
       stateScopedConfig.activate(bm);
       sessionScopedConfig.activate(bm);
+   }
+
+   /**
+    * @return the stateScopedConfig
+    */
+   public RedirectScopedConfig getRedirectScopedConfig() {
+      return redirectScopedConfig;
    }
 
    /**

@@ -110,15 +110,18 @@ public class MethodDescription {
    
    // If true, multiple methods of this type are allowed
    private boolean            allowMultiple = false;
+
+   // If true, it is a method signature required for MVC
+   private boolean            mvc = false;
    
    // Message string used during method matching.
    private final StringBuilder errtxt = new StringBuilder(128);
 
    public MethodDescription(Class<?> rt, Class<?>[] at, Class<?>[] et, MethodType mt) {
-      retType = rt;
-      argTypes = at;
-      expTypes = et;
-      type = mt;
+      this.retType = rt;
+      this.argTypes = at;
+      this.expTypes = et;
+      this.type = mt;
    }
    
    /**
@@ -238,7 +241,14 @@ public class MethodDescription {
 
       return ok;
    }
-   
+
+   public boolean isMvc() {
+      return mvc;
+   }
+
+   public void setMvc(boolean mvc) {
+      this.mvc = mvc;
+   }
 
    /**
     * Returns the expected method signature in string form, optionally

@@ -59,7 +59,11 @@ public class MethodAnnotationRecognizer extends PortletAnnotationRecognizer impl
 
 
    public MethodAnnotationRecognizer(AnnotatedMethodStore pms, ConfigSummary summary) {
-      super(pms, summary);
+      this(pms, summary, true);
+   }
+
+   public MethodAnnotationRecognizer(AnnotatedMethodStore pms, ConfigSummary summary, boolean mvc) {
+      super(pms, summary, mvc);
       ad = new AnnotationDetector(this);
    }
 

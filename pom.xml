@@ -291,24 +291,15 @@ generate mailto links. -->
     <xmlunit.version>1.1</xmlunit.version>
     <cdi.version>2.3.1.Final</cdi.version>
     <annotation-detector.version>3.0.5</annotation-detector.version>
+    <!-- MVC ================================================== -->
+    <classmate.version>1.3.4</classmate.version>
+    <hibernate-validator.version>6.0.14.Final</hibernate-validator.version>
+    <jaxrs-api.version>2.1.1</jaxrs-api.version>
+    <mvc-api.version>1.0-pfd</mvc-api.version>
+    <jboss-logging.version>3.3.2.Final</jboss-logging.version>
+    <validation-api.version>2.0.1.Final</validation-api.version>
 
-    <!-- The following properties are not directly used as maven
-dependencies, they're used by the maven pluto plugin for
-handling installation dependencies
-TODO: Check if we need all of them. -->
-    <xerces.version>2.6.2</xerces.version>
-    <xalan.version>2.7.0</xalan.version>
-    <castor.version>1.1.1</castor.version>
-    <commons-collections.version>3.2</commons-collections.version>
-    <commons-httpclient.version>3.0</commons-httpclient.version>
-    <commons-beanutils.version>1.7.0</commons-beanutils.version>
-    <log4j.version>1.2.14</log4j.version>
-    <activation.version>1.1</activation.version>
-    <ccpp-ri.version>1.0</ccpp-ri.version>
-    <rdffilter.version>1.0</rdffilter.version>
-    <jena.version>1.4.0</jena.version>
-
-    <!-- scope of certain dependencies is "compile" for deployment on tomcat, 
+    <!-- scope of certain dependencies is "compile" for deployment on tomcat,
          but "provided" for deployment on tomee. See tomee profile. -->
     <dependency.scope>compile</dependency.scope>
     
@@ -349,15 +340,15 @@ TODO: Check if we need all of them. -->
 
       <!-- Specification Libraries =========================================== -->
       <dependency>
-        <groupId>javax.inject</groupId>
-        <artifactId>javax.inject</artifactId>
-        <version>1</version>
+        <groupId>javax.annotation</groupId>
+        <artifactId>javax.annotation-api</artifactId>
+        <version>1.3.1</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
-        <groupId>javax.mvc</groupId>
-        <artifactId>javax.mvc-api</artifactId>
-        <version>1.0-pfd</version>
+        <groupId>javax.inject</groupId>
+        <artifactId>javax.inject</artifactId>
+        <version>1</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -370,12 +361,6 @@ TODO: Check if we need all of them. -->
         <groupId>javax.servlet</groupId>
         <artifactId>javax.servlet-api</artifactId>
         <version>${servlet-api.version}</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>javax.ws.rs</groupId>
-        <artifactId>javax.ws.rs-api</artifactId>
-        <version>2.1.1</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -459,6 +444,51 @@ TODO: Check if we need all of them. -->
         <version>${xmlunit.version}</version>
         <scope>test</scope>
       </dependency>
+      <!-- MVC ================================================== -->
+      <dependency>
+        <groupId>com.fasterxml</groupId>
+        <artifactId>classmate</artifactId>
+        <version>${classmate.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate.validator</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>${hibernate-validator.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate.validator</groupId>
+        <artifactId>hibernate-validator-cdi</artifactId>
+        <version>${hibernate-validator.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.logging</groupId>
+        <artifactId>jboss-logging</artifactId>
+        <version>${jboss-logging.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.mvc</groupId>
+        <artifactId>javax.mvc-api</artifactId>
+        <version>${mvc-api.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>javax.validation</groupId>
+        <artifactId>validation-api</artifactId>
+        <version>${validation-api.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>javax.ws.rs</groupId>
+        <artifactId>javax.ws.rs-api</artifactId>
+        <version>${jaxrs-api.version}</version>
+        <scope>provided</scope>
+      </dependency>
       <!-- Misc ================================================= -->
       <dependency>
         <groupId>ant</groupId>
@@ -519,17 +549,6 @@ TODO: Check if we need all of them. -->
         <groupId>org.apache.taglibs</groupId>
         <artifactId>taglibs-standard-jstlel</artifactId>
         <version>${taglibs.standard.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.hibernate.validator</groupId>
-        <artifactId>hibernate-validator</artifactId>
-        <version>6.0.14.Final</version>
-        <exclusions>
-          <exclusion>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-          </exclusion>
-        </exclusions>
       </dependency>
       <dependency>
          <groupId>org.seleniumhq.selenium</groupId>
@@ -604,6 +623,7 @@ TODO: Check if we need all of them. -->
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
         <version>${commons-lang.version}</version>
+        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>commons-digester</groupId>

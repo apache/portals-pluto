@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventPortlet;
@@ -60,6 +61,9 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPortlet, HeaderPortlet {
+
+   public static final String LAST_METHOD = PortletInvoker.class.getName() + ".LAST_METHOD";
+
    private static final Logger       LOG     = LoggerFactory.getLogger(PortletInvoker.class);
    private static final boolean      isDebug = LOG.isDebugEnabled();
 
@@ -252,7 +256,8 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
          meths = getMethods(mi);
       }
 
-      if (meths.size() == 0) {
+      int totalMethods = meths.size();
+      if (totalMethods == 0) {
 
          // If a resource URL was activated, but no resource method could be
          // found, add appropriate error string.
@@ -265,9 +270,14 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
 
       // now do the invocation
 
-      for (AnnotatedMethod meth : meths) {
+      for (int i = 0; i < totalMethods; i++) {
+
+         if (i == (totalMethods - 1)) {
+            req.setAttribute(LAST_METHOD, Boolean.TRUE);
+         }
 
          // Set the character encoding & content type, if available
+         AnnotatedMethod meth = meths.get(i);
 
          ServeResourceMethod rm = (ServeResourceMethod) meth.getAnnotation();
          if (rm != null) {
@@ -283,7 +293,10 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
 
          Object[] args = {};
          Object result;
-         if (meth.getDescription().getVariant() == SignatureVariant.VOID_RESOURCEREQ_RESOURCERESP) {
+         MethodDescription methDescription = meth.getDescription();
+         SignatureVariant signatureVariant = methDescription.getVariant();
+         if ((signatureVariant == SignatureVariant.STRING_RESOURCEREQ_RESOURCERESP) ||
+             (signatureVariant == SignatureVariant.VOID_RESOURCEREQ_RESOURCERESP)) {
             args = new Object[] { req, resp };
          }
 
@@ -308,7 +321,7 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
             // No async processing.
             // If output is to be expected, write it to the writer
 
-            if (meth.getDescription().getVariant() == SignatureVariant.STRING_VOID) {
+            if (signatureVariant == SignatureVariant.STRING_VOID) {
                if (result != null) {
                   assert result instanceof String;
                   resp.getWriter().write((String) result);
@@ -361,7 +374,14 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
    @Override
    public void processAction(ActionRequest req, ActionResponse resp) throws PortletException, IOException {
 
-      String an = req.getActionParameters().getValue(ACTION_NAME);
+      ActionParameters actionParameters = req.getActionParameters();
+
+      String an = actionParameters.getValue(ACTION_NAME);
+
+      if (an == null) {
+         an = actionParameters.getValue(resp.getNamespace() + ACTION_NAME);
+      }
+
       String id = (an != null) ? an : "";
       MethodIdentifier mi = new MethodIdentifier(portletName, id, MethodType.ACTION);
 
@@ -409,10 +429,16 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
          return;
       }
 
-      for (AnnotatedMethod meth : meths) {
+      int totalMethods = meths.size();
+      for (int i = 0; i < totalMethods; i++) {
+
+         if (i == (totalMethods - 1)) {
+            req.setAttribute(LAST_METHOD, Boolean.TRUE);
+         }
 
          // Set the content type, if available (determined by first render
          // method)
+         AnnotatedMethod meth = meths.get(i);
 
          RenderMethod rm = (RenderMethod) meth.getAnnotation();
          if ((rm != null) && !rm.contentType().matches("(^$|\\*|\\*/\\*|text/\\*)")) {
@@ -423,7 +449,10 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
 
          Object[] args = {};
          Object result;
-         if (meth.getDescription().getVariant() == SignatureVariant.VOID_RENDERREQ_RENDERRESP) {
+         MethodDescription methodDescription = meth.getDescription();
+         SignatureVariant variant = methodDescription.getVariant();
+         if ((variant == SignatureVariant.DEFAULT.STRING_RENDERREQ_RENDERRESP) ||
+             (variant == SignatureVariant.VOID_RENDERREQ_RENDERRESP)) {
             args = new Object[] { req, resp };
          }
 
@@ -433,7 +462,7 @@ public class PortletInvoker implements Portlet, ResourceServingPortlet, EventPor
 
          // If output is to be expected, write it to the writer
 
-         if (meth.getDescription().getVariant() == SignatureVariant.STRING_VOID) {
+         if (variant == SignatureVariant.STRING_VOID) {
             if (result != null) {
                assert result instanceof String;
                resp.getWriter().write((String) result);
