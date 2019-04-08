@@ -169,59 +169,59 @@ limitations under the License.
          <scope>org.apache.portals</scope>
          <version>3.0.1</version>
       </dependency>
-      <portlet context="/PortletHubDemo" name="ImageSelPortlet"/>
-      <portlet context="/PortletHubDemo" name="PH-ResourcePortlet-PRP"/>
-      <portlet context="/PortletHubDemo" name="PH-ColorSelPortlet"/>
-      <portlet context="/PortletHubDemo" name="MessageBoxPortlet"/>
-      <portlet context="/PortletHubDemo" name="PartialActionPortlet"/>
+      <portlet context="/hub-demo-portlet" name="ImageSelPortlet"/>
+      <portlet context="/hub-demo-portlet" name="PH-ResourcePortlet-PRP"/>
+      <portlet context="/hub-demo-portlet" name="PH-ColorSelPortlet"/>
+      <portlet context="/hub-demo-portlet" name="MessageBoxPortlet"/>
+      <portlet context="/hub-demo-portlet" name="PartialActionPortlet"/>
     </page>
     <page name="V3.0 PM and WS" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/PortletV3Demo" name="PortletConfigPortlet1"/>
-      <portlet context="/PortletV3Demo" name="PortletConfigPortlet2"/>
+      <portlet context="/v3-demo-portlet" name="PortletConfigPortlet1"/>
+      <portlet context="/v3-demo-portlet" name="PortletConfigPortlet2"/>
     </page>
     <page name="V3.0 Parameter Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/PortletV3Demo" name="ParamTestPortlet"/>
+      <portlet context="/v3-demo-portlet" name="ParamTestPortlet"/>
     </page>
     <page name="V3.0 URL Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/PortletV3Demo" name="UrlTestPortlet"/>
+      <portlet context="/v3-demo-portlet" name="UrlTestPortlet"/>
     </page>
     <page name="V3.0 Render URL Parameter Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/PortletV3Demo" name="UrlRPTestPortlet"/>
-      <portlet context="/PortletV3Demo" name="UrlAPTestPortlet"/>
+      <portlet context="/v3-demo-portlet" name="UrlRPTestPortlet"/>
+      <portlet context="/v3-demo-portlet" name="UrlAPTestPortlet"/>
     </page>
     <page name="V3.0 Misc Tests - HTTP SC, fragment id" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/PortletV3Demo" name="LongPortlet"/>
-      <portlet context="/PortletV3Demo" name="AuthSCPortlet"/>
+      <portlet context="/v3-demo-portlet" name="LongPortlet"/>
+      <portlet context="/v3-demo-portlet" name="AuthSCPortlet"/>
     </page>
     <page name="V3.0 Misc Tests - redirect" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/PortletV3Demo" name="V3RedirectPortlet"/>
+      <portlet context="/v3-demo-portlet" name="V3RedirectPortlet"/>
     </page>
     <page name="V2 and V3 Header Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/PortletV3Demo" name="V3HeaderPortlet"/>
+      <portlet context="/v3-demo-portlet" name="V3HeaderPortlet"/>
       <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
     </page>
     <page name="Bean Portlet Demo" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/PortletV3AnnotatedDemo" name="BeanPortlet"/>
-      <portlet context="/PortletV3AnnotatedDemo" name="BeanPortlet"/>
+      <portlet context="/v3-annotated-demo-portlet" name="BeanPortlet"/>
+      <portlet context="/v3-annotated-demo-portlet" name="BeanPortlet"/>
     </page>
     <page name="Async Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/PortletV3AnnotatedDemo" name="PathInfoPortlet"/>
-      <portlet context="/PortletV3AnnotatedDemo" name="AsyncPortlet"/>
+      <portlet context="/v3-annotated-demo-portlet" name="PathInfoPortlet"/>
+      <portlet context="/v3-annotated-demo-portlet" name="AsyncPortlet"/>
     </page>
     <page name="File Upload" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/PortletV3AnnotatedDemo" name="MultipartPortlet"/>
+      <portlet context="/v3-annotated-demo-portlet" name="MultipartPortlet"/>
     </page>
     <page name="Dependencies" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/PortletV3Demo" name="DependencyPortlet"/>
-      <portlet context="/PortletV3AnnotatedDemo" name="AsyncPortlet"/>
+      <portlet context="/v3-demo-portlet" name="DependencyPortlet"/>
+      <portlet context="/v3-annotated-demo-portlet" name="AsyncPortlet"/>
     </page>
     <page name="Tag Library" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/PortletV3Demo" name="TagLibPortlet"/>
-      <portlet context="/PortletV3Demo" name="TagLibTagsPortlet"/>
+      <portlet context="/v3-demo-portlet" name="TagLibPortlet"/>
+      <portlet context="/v3-demo-portlet" name="TagLibTagsPortlet"/>
     </page>
     <page name="Chat Room Demo" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/chatRoomDemo" name="BeanPortletDemo"/>
-      <portlet context="/chatRoomDemo" name="BeanPortletDemo"/>
+      <portlet context="/chat-room-demo-portlet" name="BeanPortletDemo"/>
+      <portlet context="/chat-room-demo-portlet" name="BeanPortletDemo"/>
     </page>
     ${includeDemosEnd}
   </render-config>

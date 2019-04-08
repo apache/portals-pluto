@@ -791,12 +791,9 @@ TODO: Check if we need all of them. -->
 
         <!-- Aggregated common jar for shared library location -->
         <module>pluto-common</module>
-        
-        <!-- PortletHub demo portlets -->
-        <module>ChatRoomDemo</module>
-        <module>PortletHubDemo</module>
-        <module>PortletV3Demo</module>
-        <module>PortletV3AnnotatedDemo</module>
+
+        <!-- Demonstration portlets -->
+        <module>demo</module>
 
         <!-- Pluto Utilities, Maven Plugins and Ant Tasks -->
         <module>pluto-util</module>

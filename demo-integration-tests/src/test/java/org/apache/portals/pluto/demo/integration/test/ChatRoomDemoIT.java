@@ -20,7 +20,6 @@ package org.apache.portals.pluto.demo.integration.test;
 import java.io.UnsupportedEncodingException;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 
 import static org.apache.portals.pluto.demo.integration.test.Util.*;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
@@ -39,9 +38,9 @@ public class ChatRoomDemoIT extends DemoTestDriver {
       driver.get(CHAT_ROOM_DEMO_URL);
 
       // 1. Clear any previous chat history.
-      clickElement(driver, waitingAsserter, "input", "chatRoomDemo", "BeanPortletDemo", "clear");
+      clickElement(driver, waitingAsserter, "input", "chat_room_demo_portlet", "BeanPortletDemo", "clear");
 
-      String chatHistoryXpath = "(" + getXpath("div", "chatRoomDemo", "BeanPortletDemo", "chatHistory") + ")[1]";
+      String chatHistoryXpath = "(" + getXpath("div", "chat_room_demo_portlet", "BeanPortletDemo", "chatHistory") + ")[1]";
       waitingAsserter.assertTrue(textEmpty(By.xpath(chatHistoryXpath)));
 
       // 2. Open a new window/tab to the same page.
@@ -81,17 +80,17 @@ public class ChatRoomDemoIT extends DemoTestDriver {
          }
 
          // See #3 and #9.
-         String formXpath = getXpath("form", "chatRoomDemo", "BeanPortletDemo", "setParams");
+         String formXpath = getXpath("form", "chat_room_demo_portlet", "BeanPortletDemo", "setParams");
          sendKeysToElement(driver, waitingAsserter, "(" + formXpath + "//input[@name='name'])[1]", name);
          clickElement(driver, waitingAsserter, "(" + formXpath + "//input[@value='send'][@type='submit'])[1]");
 
          // See #4 and #10.
-         waitingAsserter.assertTrue(elementToBeClickable(By.xpath(getXpath("div", "chatRoomDemo", "BeanPortletDemo", "image") + "/img")));
+         waitingAsserter.assertTrue(elementToBeClickable(By.xpath(getXpath("div", "chat_room_demo_portlet", "BeanPortletDemo", "image") + "/img")));
 
          // See #5 and #11.
-         String messageInputXpath = "(" + getXpath("input", "chatRoomDemo", "BeanPortletDemo", "msg") + ")[1]";
+         String messageInputXpath = "(" + getXpath("input", "chat_room_demo_portlet", "BeanPortletDemo", "msg") + ")[1]";
          sendKeysToElement(driver, waitingAsserter, messageInputXpath, message);
-         clickElement(driver, waitingAsserter, "input", "chatRoomDemo", "BeanPortletDemo", "send");
+         clickElement(driver, waitingAsserter, "input", "chat_room_demo_portlet", "BeanPortletDemo", "send");
 
          // See #6 and #12.
          assertMessageVisible(chatHistoryMessageByXpath, name, message);

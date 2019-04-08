@@ -126,10 +126,10 @@
    </target>
 
    <target name="include-demos" if="includeDemos">
-      <copy file="ChatRoomDemo/target/chatRoomDemo.war" todir="${dist.dir}/webapps" />
-      <copy file="PortletHubDemo/target/PortletHubDemo.war" todir="${dist.dir}/webapps" />
-      <copy file="PortletV3Demo/target/PortletV3Demo.war" todir="${dist.dir}/webapps" />
-      <copy file="PortletV3AnnotatedDemo/target/PortletV3AnnotatedDemo.war" todir="${dist.dir}/webapps" />
+      <copy file="demo/chat-room-demo-portlet/target/chat-room-demo-portlet.war" todir="${dist.dir}/webapps" />
+      <copy file="demo/hub-demo-portlet/target/hub-demo-portlet.war" todir="${dist.dir}/webapps" />
+      <copy file="demo/v3-annotated-demo-portlet/target/v3-annotated-demo-portlet.war" todir="${dist.dir}/webapps" />
+      <copy file="demo/v3-demo-portlet/target/v3-demo-portlet.war" todir="${dist.dir}/webapps" />
    </target>
    
    <target name="tar-nocompress" description="Creates tar bundled distribution">

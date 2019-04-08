@@ -56,8 +56,8 @@ public class DependencyDemoIT extends DemoTestDriver{
          versionRadioButtons.get(i).click();
          clickElement(driver, waitingAsserter,
                By.xpath("//button[contains(text(),'render with selected version')]"));
-         clickElement(driver, waitingAsserter, "button", "PortletV3Demo", "DependencyPortlet", "button");
-         By versionTextByXpath = By.xpath(getXpath("p", "PortletV3Demo", "DependencyPortlet", "fadeText") +
+         clickElement(driver, waitingAsserter, "button", "v3_demo_portlet", "DependencyPortlet", "button");
+         By versionTextByXpath = By.xpath(getXpath("p", "v3_demo_portlet", "DependencyPortlet", "fadeText") +
                "[text()]");
          waitingAsserter.assertTrue(and(visibilityOfElementLocated(versionTextByXpath),
                textToBe(versionTextByXpath, "jQuery version: " + expectedVersion)));
