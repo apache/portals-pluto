@@ -69,7 +69,7 @@ public class PortletConfigDemoIT extends DemoTestDriver {
       // Portlet Context Info for Portlet 1:
       assertTextVisible("Portlet Context Info:", "Portlet application version: 3.0", 1);
       assertTextVisible("Portlet Context Info:", "ClassLoader:", 1);
-      assertTextVisible("Portlet Context Info:", "Portlet context path: /PortletV3Demo", 1);
+      assertTextVisible("Portlet Context Info:", "Portlet context path: /v3-demo-portlet", 1);
 
       // Portlet Modes for Portlet 2:
       assertTextVisible("Portlet Modes:", "MIME type: text/html, PortletMode: help, Allowed: true", 2);
@@ -98,7 +98,7 @@ public class PortletConfigDemoIT extends DemoTestDriver {
       // Portlet Context Info for Portlet 2:
       assertTextVisible("Portlet Context Info:", "Portlet application version: 3.0", 2);
       assertTextVisible("Portlet Context Info:", "ClassLoader:", 2);
-      assertTextVisible("Portlet Context Info:", "Portlet context path: /PortletV3Demo", 2);
+      assertTextVisible("Portlet Context Info:", "Portlet context path: /v3-demo-portlet", 2);
    }
 
    private void assertTextVisible(String title, String text, int portlet) {

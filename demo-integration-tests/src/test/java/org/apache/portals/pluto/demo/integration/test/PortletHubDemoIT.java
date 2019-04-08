@@ -40,7 +40,7 @@ public class PortletHubDemoIT extends DemoTestDriver {
    private static final List<String> IMAGE_OPTIONS = Util.unmodifiableList("golfball", "baseball", "fussball");
    private static final String TOKEN = "{0}";
    private static final String IMAGE_XPATH_TEMPLATE =
-         "//img[contains(@src,'/PortletHubDemo/resources/images/" + TOKEN + ".gif')]";
+         "//img[contains(@src,'/hub-demo-portlet/resources/images/" + TOKEN + ".gif')]";
 
    @Test
    public void testPortletHubDemo() throws UnsupportedEncodingException {
