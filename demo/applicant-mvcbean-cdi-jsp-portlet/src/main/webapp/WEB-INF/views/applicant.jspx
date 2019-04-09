@@ -162,7 +162,7 @@ limitations under the License.
 									<label for="${namespace}firstName">
 										<fmt:message bundle="${i18n}" key="first-name" />
 									</label>
-									<input id="${namespace}firstName" class="form-control" name="${namespace}firstName" type="text" value="${applicant.firstName}"/>
+									<input id="${namespace}firstName" class="form-control" name="${namespace}firstName" type="text" value="${mvc.encoders.html(applicant.firstName)}"/>
 									<c:if test="${fields.hasErrors('firstName')}">
 										<span class="portlet-msg-error">${fields.error('firstName')}</span>
 									</c:if>
@@ -171,7 +171,7 @@ limitations under the License.
 									<label for="${namespace}lastName">
 										<fmt:message bundle="${i18n}" key="last-name" />
 									</label>
-									<input id="${namespace}lastName" class="form-control" name="${namespace}lastName" type="text" value="${applicant.lastName}"/>
+									<input id="${namespace}lastName" class="form-control" name="${namespace}lastName" type="text" value="${mvc.encoders.html(applicant.lastName)}"/>
 									<c:if test="${fields.hasErrors('lastName')}">
 										<span class="portlet-msg-error">${fields.error('lastName')}</span>
 									</c:if>
@@ -180,7 +180,7 @@ limitations under the License.
 									<label for="${namespace}emailAddress">
 										<fmt:message bundle="${i18n}" key="email-address" />
 									</label>
-									<input id="${namespace}emailAddress" class="form-control" name="${namespace}emailAddress" type="email" value="${applicant.emailAddress}"/>
+									<input id="${namespace}emailAddress" class="form-control" name="${namespace}emailAddress" type="email" value="${mvc.encoders.html(applicant.emailAddress)}"/>
 									<c:if test="${fields.hasErrors('emailAddress')}">
 										<span class="portlet-msg-error">${fields.error('emailAddress')}</span>
 									</c:if>
@@ -189,7 +189,7 @@ limitations under the License.
 									<label for="${namespace}phoneNumber">
 										<fmt:message bundle="${i18n}" key="phone-number" />
 									</label>
-									<input id="${namespace}phoneNumber" class="form-control" name="${namespace}phoneNumber" type="tel" value="${applicant.phoneNumber}"/>
+									<input id="${namespace}phoneNumber" class="form-control" name="${namespace}phoneNumber" type="tel" value="${mvc.encoders.html(applicant.phoneNumber)}"/>
 									<c:if test="${fields.hasErrors('phoneNumber')}">
 										<span class="portlet-msg-error">${fields.error('phoneNumber')}</span>
 									</c:if>
@@ -200,7 +200,7 @@ limitations under the License.
 									<label for="${namespace}dateOfBirth">
 										<fmt:message bundle="${i18n}" key="date-of-birth" />
 									</label>
-									<input id="${namespace}dateOfBirth" class="form-control" name="${namespace}dateOfBirth" type="text" value="${converter.convert('applicant.dateOfBirth')}"/>
+									<input id="${namespace}dateOfBirth" class="form-control" name="${namespace}dateOfBirth" type="text" value="${mvc.encoders.html(converter.convert('applicant.dateOfBirth'))}"/>
 									<c:if test="${fields.hasErrors('dateOfBirth')}">
 										<span class="portlet-msg-error">${fields.error('dateOfBirth')}</span>
 									</c:if>
@@ -209,7 +209,7 @@ limitations under the License.
 									<label for="${namespace}city">
 										<fmt:message bundle="${i18n}" key="city" />
 									</label>
-									<input id="${namespace}city" class="form-control" name="${namespace}city" type="text" value="${applicant.city}"/>
+									<input id="${namespace}city" class="form-control" name="${namespace}city" type="text" value="${mvc.encoders.html(applicant.city)}"/>
 									<c:if test="${fields.hasErrors('city')}">
 										<span class="portlet-msg-error">${fields.error('city')}</span>
 									</c:if>
@@ -219,15 +219,15 @@ limitations under the License.
 										<fmt:message bundle="${i18n}" key="state-province" />
 									</label>
 									<fmt:message bundle="${i18n}" key="select" var="select" />
-									<select id="${namespace}provinceId" class="form-control" name="${namespace}provinceId" value="${applicant.provinceId}">
+									<select id="${namespace}provinceId" class="form-control" name="${namespace}provinceId" value="${mvc.encoders.html(applicant.provinceId)}">
 										<option value="">${select}</option>
 										<c:forEach items="${provinces}" var="province">
 											<c:choose>
 												<c:when test="${applicant.provinceId == province.provinceId}">
-													<option selected="selected" value="${province.provinceId}">${province.provinceName}</option>
+													<option selected="selected" value="${mvc.encoders.html(province.provinceId)}">${province.provinceName}</option>
 												</c:when>
 												<c:otherwise>
-													<option value="${province.provinceId}">${province.provinceName}</option>
+													<option value="${mvc.encoders.html(province.provinceId)}">${province.provinceName}</option>
 												</c:otherwise>
 											</c:choose>
 										</c:forEach>
@@ -241,7 +241,7 @@ limitations under the License.
 									<label for="${namespace}postalCode">
 										<fmt:message bundle="${i18n}" key="zip-postal" />
 									</label>
-									<input id="${namespace}postalCode" class="form-control" name="${namespace}postalCode" type="text" value="${applicant.postalCode}"/>
+									<input id="${namespace}postalCode" class="form-control" name="${namespace}postalCode" type="text" value="${mvc.encoders.html(applicant.postalCode)}"/>
 									<img src="${contextPath}/images/icon-help.png" title="${postalCodeHint}"/>
 									<c:if test="${fields.hasErrors('postalCode')}">
 										<span class="portlet-msg-error">${fields.error('postalCode')}</span>
@@ -294,7 +294,7 @@ limitations under the License.
 											<input name="attachmentIndex" src="${contextPath}/images/icon-delete.png" value="${attachmentStatus.index}" type="image"/>
 										</td>
 										<td>
-											<c:out value="${attachment.name}"/>
+											<c:out value="${mvc.encoders.html(attachment.name)}"/>
 										</td>
 										<td>
 											<c:out value="${attachment.size}"/>

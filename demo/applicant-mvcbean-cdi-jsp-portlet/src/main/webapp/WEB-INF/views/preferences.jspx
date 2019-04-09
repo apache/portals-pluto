@@ -31,7 +31,7 @@ limitations under the License.
 				<label for="${namespace}datePattern" path="datePattern">
 					<fmt:message bundle="${i18n}" key="date-format" />
 				</label>
-				<input id="${namespace}datePattern" class="form-control" name="${namespace}datePattern" value="${preferences.datePattern}"/>
+				<input id="${namespace}datePattern" class="form-control" name="${namespace}datePattern" value="${mvc.encoders.html(preferences.datePattern)}"/>
 				<c:if test="${fields.hasErrors('datePattern')}">
 					<span class="portlet-msg-error">${fields.error('datePattern')}</span>
 				</c:if>
