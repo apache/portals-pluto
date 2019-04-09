@@ -13,7 +13,7 @@
 				<label for="${namespace}firstName">
 					<fmt:message bundle="${i18n}" key="first-name" />
 				</label>
-				<input id="${namespace}firstName" class="form-control" name="${namespace}firstName" type="text" value="${user.firstName}"/>
+				<input id="${namespace}firstName" class="form-control" name="${namespace}firstName" type="text" value="${mvc.encoders.html(user.firstName)}"/>
 				<c:if test="${fields.hasErrors('firstName')}">
 					<span class="portlet-msg-error">${fields.error('firstName')}</span>
 				</c:if>
@@ -22,7 +22,7 @@
 				<label for="${namespace}lastName">
 					<fmt:message bundle="${i18n}" key="last-name" />
 				</label>
-				<input id="${namespace}lastName" class="form-control" name="${namespace}lastName" type="text" value="${user.lastName}"/>
+				<input id="${namespace}lastName" class="form-control" name="${namespace}lastName" type="text" value="${mvc.encoders.html(user.lastName)}"/>
 				<c:if test="${fields.hasErrors('lastName')}">
 					<span class="portlet-msg-error">${fields.error('lastName')}</span>
 				</c:if>
