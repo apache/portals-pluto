@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	version="2.1">
+	<jsp:directive.page contentType="text/html" pageEncoding="UTF-8" />
+	<fmt:setBundle basename="content.portlet1" var="i18n" />
+	<p class="user-greeting">
+		<span><fmt:message bundle="${i18n}" key="greetings" />, </span>
+		<span>${user.firstName} ${user.lastName}! </span>
+	</p>
+	<p>
+		<span><fmt:message bundle="${i18n}" key="todays-date-is" /></span>
+		<span> ${todaysDate}.</span>
+	</p>
+</jsp:root>

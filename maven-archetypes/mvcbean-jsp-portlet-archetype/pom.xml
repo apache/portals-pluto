@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<groupId>org.apache.portals</groupId>
+		<artifactId>portals-pom</artifactId>
+		<version>1.4</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.apache.portals.pluto.archetype</groupId>
+	<artifactId>mvcbean-jsp-portlet-archetype</artifactId>
+	<packaging>maven-archetype</packaging>
+	<name>mvcbean-jsp-portlet-archetype</name>
+	<version>3.0.2-SNAPSHOT</version>
+	<description>Maven archetype for an MVCBean JSP portlet</description>
+	<scm>
+		<connection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</connection>
+		<developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</developerConnection>
+		<url>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</url>
+		<tag>HEAD</tag>
+	</scm>
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.archetype</groupId>
+				<artifactId>archetype-packaging</artifactId>
+				<version>2.4</version>
+			</extension>
+		</extensions>
+		<plugins>
+			<plugin>
+				<artifactId>maven-archetype-plugin</artifactId>
+				<version>2.4</version>
+				<extensions>true</extensions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.1</version>
+					<configuration>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+						<pushChanges>false</pushChanges>
+						<localCheckout>true</localCheckout>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.scm</groupId>
+					<artifactId>maven-scm-providers-git</artifactId>
+					<!-- http://jira.codehaus.org/browse/SCM-444 -->
+					<version>(,1.4]</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

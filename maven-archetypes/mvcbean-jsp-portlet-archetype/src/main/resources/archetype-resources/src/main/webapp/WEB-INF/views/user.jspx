@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:portlet="http://xmlns.jcp.org/portlet_3_0"
+	version="2.1">
+	<jsp:directive.page contentType="text/html" pageEncoding="UTF-8" />
+	<portlet:defineObjects/>
+	<fmt:setBundle basename="content.portlet1" var="i18n" />
+	<form action="${submitUserActionURL}" method="post">
+		<fieldset>
+			<div class="form-group">
+				<label for="${namespace}firstName">
+					<fmt:message bundle="${i18n}" key="first-name" />
+				</label>
+				<input id="${namespace}firstName" class="form-control" name="${namespace}firstName" type="text" value="${user.firstName}"/>
+				<c:if test="${fields.hasErrors('firstName')}">
+					<span class="portlet-msg-error">${fields.error('firstName')}</span>
+				</c:if>
+			</div>
+			<div class="form-group">
+				<label for="${namespace}lastName">
+					<fmt:message bundle="${i18n}" key="last-name" />
+				</label>
+				<input id="${namespace}lastName" class="form-control" name="${namespace}lastName" type="text" value="${user.lastName}"/>
+				<c:if test="${fields.hasErrors('lastName')}">
+					<span class="portlet-msg-error">${fields.error('lastName')}</span>
+				</c:if>
+			</div>
+		</fieldset>
+		<input name="${mvc.csrf.name}" value="${mvc.csrf.token}" type="hidden"/>
+		<fmt:message bundle="${i18n}" key="submit" var="submit" />
+		<input class="btn btn-primary" value="${submit}" type="submit"/>
+	</form>
+</jsp:root>
