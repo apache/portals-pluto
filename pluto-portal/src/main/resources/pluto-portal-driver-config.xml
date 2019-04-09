@@ -223,6 +223,9 @@ limitations under the License.
       <portlet context="/chat-room-demo-portlet" name="BeanPortletDemo"/>
       <portlet context="/chat-room-demo-portlet" name="BeanPortletDemo"/>
     </page>
+    <page name="Applicant MVCBean Demo" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="applicant-mvcbean-cdi-jsp-portlet" name="portlet1"/>
+    </page>
     ${includeDemosEnd}
   </render-config>
   

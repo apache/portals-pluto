@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
+		  xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+		  xmlns:jsp="http://java.sun.com/JSP/Page"
+		  xmlns:portlet="http://xmlns.jcp.org/portlet_3_0"
+		  version="2.1">
+	<jsp:directive.page contentType="text/html" pageEncoding="UTF-8" />
+	<portlet:defineObjects/>
+	<fmt:setBundle basename="content.portlet1" var="i18n" />
+	<script type="text/javascript">
+		/*<![CDATA[*/
+		var ${namespace}_updateAttachments = function(responseJSON) {
+			$('#${namespace}attachmentsTableBody').empty();
+			$('#${namespace}inputFile').val('');
+			$.each(responseJSON, function(i, item) {
+				$('<tr>').append(
+					$('<td>').append(
+						$('<input>').attr(
+							'type', 'image').attr(
+							'src',
+							'${contextPath}/images/icon-delete.png').attr(
+							'name', 'attachmentIndex').attr('value', i)),
+					$('<td>').text(item.fileName),
+					$('<td>').text(item.size)
+				).appendTo('#${namespace}attachmentsTableBody');
+			});
+		}
+		/*]]>*/
+	</script>
+	<portlet:resourceURL id="autoFill" var="autoFillResourceURL"/>
+	<script type="text/javascript">
+		/*<![CDATA[*/
+		$(document).ready(function(){
+			$('#${namespace}postalCode').on('change', function submitXHR(){
+				$.ajax({
+					data: {
+						${mvc.csrf.name}: '${mvc.csrf.token}',
+						${namespace}postalCode: $(this).val()
+					},
+					type: 'post',
+					url: '${autoFillResourceURL}'
+				}).done(function(responseData) {
+					var responseJSON = JSON.parse(responseData);
+					$('#${namespace}city').val(responseJSON['cityName']).change();
+					$('#${namespace}provinceId').val(responseJSON['provinceId']).change();
+				}).fail(function() {
+					console.log('XHR failed');
+				});
+			});
+		});
+		/*]]>*/
+	</script>
+	<fmt:message bundle="${i18n}" key="are-you-sure-you-want-to-delete-this" var="areYouSure"/>
+	<portlet:resourceURL id="deleteFile" var="deleteFileResourceURL"/>
+	<script type="text/javascript">
+		/*<![CDATA[*/
+		$(document).ready(function(){
+			$('#${namespace}deleteFileForm').on('click', 'input', function (event) {
+				event.preventDefault();
+				if (confirm('${areYouSure}')) {
+					$.ajax({
+						data: {
+							${namespace}attachmentIndex: event.target.value,
+							${mvc.csrf.name}: '${mvc.csrf.token}'
+						},
+						type: 'post',
+						url: '${deleteFileResourceURL}'
+					}).done(function (responseData) {
+						${namespace}_updateAttachments(JSON.parse(responseData));
+					}).fail(function () {
+						console.log('XHR failed');
+					});
+				}
+			});
+		});
+		/*]]>*/
+	</script>
+	<portlet:resourceURL id="uploadFiles" var="uploadFilesResourceURL"/>
+	<script type="text/javascript">
+		/*<![CDATA[*/
+		$(document).ready(function(){
+			$('#${namespace}fileUploadForm').submit(function (event) {
+				event.preventDefault();
+				var formData = new FormData($(this)[0]);
+				$.ajax({
+					async: false,
+					cache: false,
+					contentType: false,
+					data: formData,
+					processData: false,
+					type: 'post',
+					url: '${uploadFilesResourceURL}'
+				}).done(function(responseData) {
+					${namespace}_updateAttachments(JSON.parse(responseData));
+				}).fail(function() {
+					console.log('XHR failed');
+				});
+			});
+		});
+		/*]]>*/
+	</script>
+	<fmt:message bundle="${i18n}" key="value-is-required" var="valueIsRequired"/>
+	<script type="text/javascript">
+		/*<![CDATA[*/
+		$(document).ready(function(){
+			$('#${namespace}mainForm input[type=email],input[type=tel],input[type=text],select').on('blur change', function(event) {
+				$(event.target).parent().children('span').remove();
+				if ($.trim(event.target.value) == 0) {
+					$('<span>').attr(
+						'class', 'portlet-msg-error').text(
+							'${valueIsRequired}').appendTo(
+								$(event.target).parent());
+				}
+			});
+			$('#${namespace}dateOfBirth').datepicker({dateFormat:'${jQueryDatePattern}'});
+			$('#${namespace}hideComments').click(function(){
+				$('#${namespace}comments').hide();
+				$('#${namespace}hideComments').hide();
+				$('#${namespace}showComments').show();
+			});
+			$('#${namespace}showComments').click(function(){
+				$('#${namespace}comments').show();
+				$('#${namespace}hideComments').show();
+				$('#${namespace}showComments').hide();
+			});
+		});
+		/*]]>*/
+	</script>
+	<div class="container">
+		<div class="row">
+			<div class="col-6">
+				<portlet:actionURL var="mainFormActionURL"/>
+				<form id="${namespace}mainForm" action="${mainFormActionURL}" method="post">
+					<c:if test="${not empty globalInfoMessage}">
+						<span class="portlet-msg-info">${globalInfoMessage}</span>
+					</c:if>
+					<c:if test="${not empty globalErrorMessage}">
+						<span class="portlet-msg-error">${globalErrorMessage}</span>
+					</c:if>
+					<fieldset>
+						<div class="row">
+							<div class="col-6">
+								<div class="form-group">
+									<label for="${namespace}firstName">
+										<fmt:message bundle="${i18n}" key="first-name" />
+									</label>
+									<input id="${namespace}firstName" class="form-control" name="${namespace}firstName" type="text" value="${applicant.firstName}"/>
+									<c:if test="${fields.hasErrors('firstName')}">
+										<span class="portlet-msg-error">${fields.error('firstName')}</span>
+									</c:if>
+								</div>
+								<div class="form-group">
+									<label for="${namespace}lastName">
+										<fmt:message bundle="${i18n}" key="last-name" />
+									</label>
+									<input id="${namespace}lastName" class="form-control" name="${namespace}lastName" type="text" value="${applicant.lastName}"/>
+									<c:if test="${fields.hasErrors('lastName')}">
+										<span class="portlet-msg-error">${fields.error('lastName')}</span>
+									</c:if>
+								</div>
+								<div class="form-group">
+									<label for="${namespace}emailAddress">
+										<fmt:message bundle="${i18n}" key="email-address" />
+									</label>
+									<input id="${namespace}emailAddress" class="form-control" name="${namespace}emailAddress" type="email" value="${applicant.emailAddress}"/>
+									<c:if test="${fields.hasErrors('emailAddress')}">
+										<span class="portlet-msg-error">${fields.error('emailAddress')}</span>
+									</c:if>
+								</div>
+								<div class="form-group">
+									<label for="${namespace}phoneNumber">
+										<fmt:message bundle="${i18n}" key="phone-number" />
+									</label>
+									<input id="${namespace}phoneNumber" class="form-control" name="${namespace}phoneNumber" type="tel" value="${applicant.phoneNumber}"/>
+									<c:if test="${fields.hasErrors('phoneNumber')}">
+										<span class="portlet-msg-error">${fields.error('phoneNumber')}</span>
+									</c:if>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="form-group">
+									<label for="${namespace}dateOfBirth">
+										<fmt:message bundle="${i18n}" key="date-of-birth" />
+									</label>
+									<input id="${namespace}dateOfBirth" class="form-control" name="${namespace}dateOfBirth" type="text" value="${converter.convert('applicant.dateOfBirth')}"/>
+									<c:if test="${fields.hasErrors('dateOfBirth')}">
+										<span class="portlet-msg-error">${fields.error('dateOfBirth')}</span>
+									</c:if>
+								</div>
+								<div class="form-group">
+									<label for="${namespace}city">
+										<fmt:message bundle="${i18n}" key="city" />
+									</label>
+									<input id="${namespace}city" class="form-control" name="${namespace}city" type="text" value="${applicant.city}"/>
+									<c:if test="${fields.hasErrors('city')}">
+										<span class="portlet-msg-error">${fields.error('city')}</span>
+									</c:if>
+								</div>
+								<div class="form-group">
+									<label for="${namespace}provinceId">
+										<fmt:message bundle="${i18n}" key="state-province" />
+									</label>
+									<fmt:message bundle="${i18n}" key="select" var="select" />
+									<select id="${namespace}provinceId" class="form-control" name="${namespace}provinceId" value="${applicant.provinceId}">
+										<option value="">${select}</option>
+										<c:forEach items="${provinces}" var="province">
+											<c:choose>
+												<c:when test="${applicant.provinceId == province.provinceId}">
+													<option selected="selected" value="${province.provinceId}">${province.provinceName}</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${province.provinceId}">${province.provinceName}</option>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</select>
+									<fmt:message bundle="${i18n}" key="postal-code-hint" var="postalCodeHint" />
+									<c:if test="${fields.hasErrors('provinceId')}">
+										<span class="portlet-msg-error">${fields.error('provinceId')}</span>
+									</c:if>
+								</div>
+								<div class="form-group">
+									<label for="${namespace}postalCode">
+										<fmt:message bundle="${i18n}" key="zip-postal" />
+									</label>
+									<input id="${namespace}postalCode" class="form-control" name="${namespace}postalCode" type="text" value="${applicant.postalCode}"/>
+									<img src="${contextPath}/images/icon-help.png" title="${postalCodeHint}"/>
+									<c:if test="${fields.hasErrors('postalCode')}">
+										<span class="portlet-msg-error">${fields.error('postalCode')}</span>
+									</c:if>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<div class="row">
+							<div class="col">
+								<div class="form-group">
+									<label for="${namespace}comments">
+										<fmt:message bundle="${i18n}" key="comments" />
+									</label>
+									<div>
+										<a id="${namespace}hideComments" href="javascript:;"><fmt:message bundle="${i18n}" key="hide"/></a>
+									</div>
+									<div>
+										<a id="${namespace}showComments" href="javascript:;" style="display:none;"><fmt:message bundle="${i18n}" key="show"/></a>
+									</div>
+									<textarea id="${namespace}comments" class="form-control" name="${namespace}comments">${applicant.comments}</textarea>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+					<input name="${mvc.csrf.name}" value="${mvc.csrf.token}" type="hidden"/>
+					<input name="${namespace}javax.portlet.action" value="submitApplicant" type="hidden"/>
+					<fmt:message bundle="${i18n}" key="submit" var="submit" />
+					<input class="btn btn-primary" value="${submit}" type="submit"/>
+				</form>
+			</div>
+			<div class="col-6">
+				<div class="row">
+					<div class="col">
+						<form id="${namespace}deleteFileForm" method="post" action="${deleteFileResourceURL}">
+							<h3><fmt:message bundle="${i18n}" key="attachments"/></h3>
+							<table class="table">
+								<thead>
+								<tr>
+									<th><img src="${contextPath}/images/icon-delete.png" style="display:none;"/></th>
+									<th><fmt:message bundle="${i18n}" key="file-name"/></th>
+									<th><fmt:message bundle="${i18n}" key="size"/></th>
+								</tr>
+								</thead>
+								<tbody id="${namespace}attachmentsTableBody">
+								<c:forEach items="${applicant.attachments}" var="attachment" varStatus="attachmentStatus">
+									<tr>
+										<td>
+											<input name="attachmentIndex" src="${contextPath}/images/icon-delete.png" value="${attachmentStatus.index}" type="image"/>
+										</td>
+										<td>
+											<c:out value="${attachment.name}"/>
+										</td>
+										<td>
+											<c:out value="${attachment.size}"/>
+										</td>
+									</tr>
+								</c:forEach>
+								</tbody>
+							</table>
+						</form>
+						<hr/>
+						<form id="${namespace}fileUploadForm" enctype="multipart/form-data">
+							<div class="form-group">
+								<input id="${namespace}inputFile" class="form-control" name="${namespace}multipartFiles" multiple="multiple" type="file"/>
+								<input name="${mvc.csrf.name}" value="${mvc.csrf.token}" type="hidden"/>
+								<input class="btn btn-primary" value="${submit}" type="submit"/>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr />
+	<ul>
+		<li>Weld ${weldVersion}</li>
+	</ul>
+	<portlet:resourceURL id="viewTerms" var="viewTermsResourceURL"/>
+	<a href="${viewTermsResourceURL}" style="float:right;line-height:0px;" target="_blank">
+		<fmt:message bundle="${i18n}" key="terms-of-service" />
+	</a>
+</jsp:root>

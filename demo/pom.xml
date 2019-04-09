@@ -23,10 +23,45 @@
 	<name>Demo Portlets</name>
 
 	<modules>
+		<module>applicant-mvcbean-cdi-jsp-portlet</module>
+		<module>applicant-mvcbean-cdi-thymeleaf-portlet</module>
 		<module>chat-room-demo-portlet</module>
         <module>hub-demo-portlet</module>
         <module>v3-demo-portlet</module>
         <module>v3-annotated-demo-portlet</module>
 	</modules>
 
+	<build>
+		<plugins>
+			<!-- Workaround for war processing of m-r-r-plugin causing the generated NOTICE and LICENSE file to be put under WEB-INF/classes/META-INF -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-remote-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+							<attached>false</attached>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Don't attach source or javadoc archive (for release plugin) -->
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<configuration>
+					<attach>false</attach>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

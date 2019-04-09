@@ -126,6 +126,7 @@
    </target>
 
    <target name="include-demos" if="includeDemos">
+      <copy file="demo/applicant-mvcbean-cdi-jsp-portlet/target/applicant-mvcbean-cdi-jsp-portlet.war" todir="${dist.dir}/webapps" />
       <copy file="demo/chat-room-demo-portlet/target/chat-room-demo-portlet.war" todir="${dist.dir}/webapps" />
       <copy file="demo/hub-demo-portlet/target/hub-demo-portlet.war" todir="${dist.dir}/webapps" />
       <copy file="demo/v3-annotated-demo-portlet/target/v3-annotated-demo-portlet.war" todir="${dist.dir}/webapps" />

@@ -75,42 +75,6 @@
       </dependency>
    </dependencies>
 
-   <build>
-      <finalName>${project.artifactId}</finalName>
-      <plugins>
-         <!-- Don't attach source or javadoc archive (for release plugin)-->
-         <plugin>
-           <artifactId>maven-source-plugin</artifactId>
-           <configuration>
-             <attach>false</attach>
-           </configuration>
-         </plugin>
-         <plugin>
-           <artifactId>maven-javadoc-plugin</artifactId>
-           <configuration>
-             <skip>true</skip>
-           </configuration>
-         </plugin>
-
-         <!-- workaround for war processing of m-r-r-plugin causing the generated NOTICE and LICENSE file to be put under WEB-INF/classes/META-INF -->
-         <plugin>
-             <groupId>org.apache.maven.plugins</groupId>
-             <artifactId>maven-remote-resources-plugin</artifactId>
-             <executions>
-                 <execution>
-                     <goals>
-                         <goal>process</goal>
-                     </goals>
-                     <configuration>
-                         <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
-                         <attached>false</attached>
-                     </configuration>
-                 </execution>
-             </executions>
-         </plugin>
-      </plugins>
-   </build>
-
    <profiles>
        <profile>
            <id>liferay</id>
@@ -125,6 +89,7 @@
        <profile>
            <id>liferay-cdi</id>
            <build>
+               <finalName>${project.artifactId}</finalName>
                <plugins>
                    <plugin>
                        <artifactId>maven-war-plugin</artifactId>
@@ -141,6 +106,7 @@
        <profile>
            <id>liferay-spring</id>
            <build>
+               <finalName>${project.artifactId}</finalName>
                <plugins>
                    <plugin>
                        <artifactId>maven-war-plugin</artifactId>
@@ -215,6 +181,7 @@
             </dependency>
          </dependencies>
          <build>
+            <finalName>${project.artifactId}</finalName>
             <plugins>
                <plugin>
                  <artifactId>maven-war-plugin</artifactId>
