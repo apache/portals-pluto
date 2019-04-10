@@ -96,9 +96,12 @@
          destfile="${dist.basedir}/${pluto.name}-bundle.tar.bz2"/>
 
       <!-- copy the portlet API jars to the dist directory -->
+      <!-- NOTE: This is commented-out because it is only necessary when a new version of the portlet-api is released -->
+      <!--
       <copy file="portlet-api/target/portlet-api-${pluto.version}.jar" todir="${dist.basedir}"/>         
       <copy file="portlet-api/target/portlet-api-${pluto.version}-javadoc.jar" todir="${dist.basedir}"/>         
       <copy file="portlet-api/target/portlet-api-${pluto.version}-sources.jar" todir="${dist.basedir}"/>         
+	  -->
          
       <!-- Now package the TCK deliverables -->         
       <antcall target="package-tck"/>      
