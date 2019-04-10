@@ -86,7 +86,6 @@
     <dependency>
       <groupId>javax.portlet</groupId>
       <artifactId>portlet-api</artifactId>
-      <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
 

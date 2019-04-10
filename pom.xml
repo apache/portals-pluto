@@ -354,7 +354,7 @@ generate mailto links. -->
       <dependency>
          <groupId>javax.portlet</groupId>
          <artifactId>portlet-api</artifactId>
-         <version>${project.version}</version>
+         <version>3.0.1</version>
          <scope>provided</scope>
       </dependency>
       <dependency>
@@ -792,9 +792,6 @@ generate mailto links. -->
       
       <!-- Pluto Modules ======================================================= -->
       <modules>
-        <!-- Portlet API module (spec -->
-        <module>portlet-api</module>
-
         <!-- Pluto Container API -->
         <module>pluto-container-api</module>
 
