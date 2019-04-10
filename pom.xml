@@ -30,7 +30,7 @@
   <artifactId>pluto</artifactId>
   <packaging>pom</packaging>
   <name>Apache Pluto</name>
-  <version>3.0.2-SNAPSHOT</version>
+  <version>3.1.0-SNAPSHOT</version>
   <!-- Due to a bug in maven 2.0, the description must not contain any line breaks or tabs. -->
   <description>Apache Pluto is the Reference Implementation of the Java Portlet Specification.</description>
   <url>http://portals.apache.org/pluto</url>
@@ -263,7 +263,6 @@ generate mailto links. -->
   -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
     <pluto.container.name>Pluto</pluto.container.name>
     <javax.portlet.version.major>3</javax.portlet.version.major>
     <javax.portlet.version.minor>0</javax.portlet.version.minor>
@@ -308,6 +307,34 @@ generate mailto links. -->
     <includeDemosBegin />
 	 <includeDemosEnd />
   </properties>
+
+  <modules>
+    <module>pluto-container-api</module>
+    <module>pluto-container</module>
+    <module>pluto-taglib</module>
+    <module>pluto-container-driver-api</module>
+    <module>pluto-portal-driver</module>
+    <module>pluto-portal-driver-impl</module>
+    <module>pluto-portal</module>
+    <module>pluto-testsuite</module>
+    <module>pluto-common</module>
+    <module>demo</module>
+    <module>demo-integration-tests</module>
+    <module>pluto-util</module>
+    <module>maven-pluto-plugin</module>
+    <module>pluto-ant-tasks</module>
+    <module>pluto-site-skin</module>
+    <module>portlet-servlet-adapter</module>
+    <module>portlet-templating</module>
+    <module>test-base</module>
+	<!-- The following are excluded from the apache-release profile since they are on separate release schedules -->
+	<module>maven-archetypes/bean-portlet-archetype</module>
+	<module>maven-archetypes/generic-portlet-archetype</module>
+	<module>maven-archetypes/mvcbean-jsp-portlet-archetype</module>
+	<module>maven-archetypes/mvcbean-thymeleaf-portlet-archetype</module>
+    <module>portlet-api</module>
+    <module>portlet-tck_3.0</module>
+  </modules>
 
   <dependencyManagement>
     <dependencies>
@@ -780,50 +807,28 @@ generate mailto links. -->
   </build>
 
   <profiles>
-    <profile>
-      <id>all</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-        <!-- profile must also be activated when building for tomee -->
-        <property>
-          <name>tomee</name>
-        </property>
-      </activation>
-      
-      <!-- Pluto Modules ======================================================= -->
-      <modules>
-        <!-- Pluto Container API -->
-        <module>pluto-container-api</module>
 
-        <!-- Pluto Core Modules -->
+    <profile>
+      <id>apache-release</id>
+      <modules>
+        <module>pluto-container-api</module>
         <module>pluto-container</module>
         <module>pluto-taglib</module>
-
-        <!-- Pluto Portal and Testsuite Modules -->
         <module>pluto-container-driver-api</module>
         <module>pluto-portal-driver</module>
         <module>pluto-portal-driver-impl</module>
         <module>pluto-portal</module>
         <module>pluto-testsuite</module>
-
-        <!-- Aggregated common jar for shared library location -->
         <module>pluto-common</module>
-
-        <!-- Demonstration portlets -->
         <module>demo</module>
-
-        <!-- Pluto Utilities, Maven Plugins and Ant Tasks -->
+        <module>demo-integration-tests</module>
         <module>pluto-util</module>
         <module>maven-pluto-plugin</module>
         <module>pluto-ant-tasks</module>
         <module>pluto-site-skin</module>
         <module>portlet-servlet-adapter</module>
         <module>portlet-templating</module>
-        
-        <!-- the Technology Compliance Kit -->
         <module>test-base</module>
-        <module>portlet-tck_3.0</module>
-        <module>demo-integration-tests</module>
       </modules>
     </profile>
 

@@ -41,7 +41,7 @@
       <dependency>
         <groupId>org.apache.portals.pluto</groupId>
         <artifactId>test-base</artifactId>
-        <version>${project.version}</version>
+		<version>${pluto.test.version}</version>
       </dependency>
       <dependency>
          <groupId>org.seleniumhq.selenium</groupId>

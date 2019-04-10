@@ -43,7 +43,7 @@ Since 3.0.0
 2. Prepare the source for release
 	* Cleanup JIRA so the Fix Version in issues resolved since the last release includes this release version correctly.
 	* Create a JIRA issue for release maintenance for example see
-		https://issues.apache.org/jira/browse/JS2-1355
+		https://issues.apache.org/jira/browse/PLUTO-777
 	* Checkout a clean copy of the trunk (on the specific branch if needed) to release using command line git.
 	    cd ~/apache/releases
 	    git clone https://github.com/apache/portals-pluto
@@ -57,7 +57,7 @@ Since 3.0.0
 4. DRY RUN
 	Do a dry run of the release:prepare step:
 
-		$ mvn -P all,apache-release -DrunOnlyAtExecutionRoot=true release:prepare -DdryRun=true
+		$ mvn -P apache-release -DrunOnlyAtExecutionRoot=true release:prepare -DdryRun=true
 
 	The dry run will not commit any changes back to Git and gives you the opportunity to verify that the release process will complete as expected.
 	You will be prompted for the following information :

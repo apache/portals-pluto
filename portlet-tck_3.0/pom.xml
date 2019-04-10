@@ -20,7 +20,7 @@
    <parent>
       <groupId>org.apache.portals.pluto</groupId>
       <artifactId>pluto</artifactId>
-      <version>3.0.2-SNAPSHOT</version>
+      <version>3.1.0-SNAPSHOT</version>
       <relativePath>../pom.xml</relativePath>
    </parent>
    
@@ -28,6 +28,7 @@
    
    <groupId>javax.portlet</groupId>
    <artifactId>portlet-tck</artifactId>
+   <version>3.0.2-SNAPSHOT</version>
    <name>Portlet API Technology Compatibility Kit</name>
    <packaging>pom</packaging>
 
@@ -46,6 +47,7 @@
   </scm>
 
    <properties>
+      <pluto.test.version>3.1.0-SNAPSHOT</pluto.test.version>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
       <!-- To automatically generate a list of test cases, each module transforms the portlet.xml file -->
@@ -210,7 +212,7 @@
          <dependency>
             <groupId>org.apache.portals.pluto</groupId>
             <artifactId>pluto-taglib</artifactId>
-            <version>${project.version}</version>
+			<version>${pluto.test.version}</version>
             <scope>provided</scope>
          </dependency>
       </dependencies>

@@ -5,7 +5,7 @@ repositories {
 }
 
 dependencies {
-    compile group: 'org.apache.portals.pluto', name: 'thymeleaf-mvc-portlet-cdi', version:'3.0.2-SNAPSHOT'
+    compile group: 'org.apache.portals.pluto', name: 'thymeleaf-mvc-portlet-cdi', version:'3.1.0-SNAPSHOT'
     compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.25'
     compile group: 'org.slf4j', name: 'slf4j-log4j12', version:'1.7.25'
     providedCompile group: 'javax.mvc', name: 'javax.mvc-api', version:'1.0-pfd'

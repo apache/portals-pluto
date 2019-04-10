@@ -28,7 +28,7 @@
 	<artifactId>generic-portlet-archetype</artifactId>
 	<packaging>maven-archetype</packaging>
 	<name>generic-portlet-archetype</name>
-	<version>3.0.2-SNAPSHOT</version>
+	<version>3.1.0-SNAPSHOT</version>
 	<description>Maven archetype for a generic portlet</description>
 	<scm>
 		<connection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</connection>
