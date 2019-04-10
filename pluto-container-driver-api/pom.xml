@@ -10,73 +10,64 @@
    OF ANY KIND, either express or implied. See the License for the specific 
    language governing permissions and limitations under the License. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
-   <modelVersion>4.0.0</modelVersion>
-   <parent>
-      <groupId>org.apache.portals.pluto</groupId>
-      <artifactId>pluto</artifactId>
-      <version>3.1.0-SNAPSHOT</version>
-      <relativePath>../pom.xml</relativePath>
-   </parent>
-
-   <artifactId>pluto-container-driver-api</artifactId>
-   <packaging>bundle</packaging>
-   <name>Apache Pluto Container Driver API</name>
-
-   <dependencies>
-      <!-- Specification Libraries =========================================== -->
-      <dependency>
-         <groupId>javax.portlet</groupId>
-         <artifactId>portlet-api</artifactId>
-         <scope>provided</scope>
-      </dependency>
-
-      <dependency>
-         <groupId>org.apache.tomcat</groupId>
-         <artifactId>tomcat-servlet-api</artifactId>
-         <scope>provided</scope>
-      </dependency>
-
-      <!-- CCPP Libraries -->
-      <dependency>
-         <groupId>javax.ccpp</groupId>
-         <artifactId>ccpp</artifactId>
-         <scope>provided</scope>
-      </dependency>
-
-      <dependency>
-         <groupId>org.apache.portals.pluto</groupId>
-         <artifactId>pluto-container-api</artifactId>
-         <version>${project.version}</version>
-         <scope>compile</scope>
-      </dependency>
-
-      <dependency>
-         <groupId>org.apache.portals.pluto</groupId>
-         <artifactId>pluto-container</artifactId>
-         <version>${project.version}</version>
-         <scope>provided</scope>
-      </dependency>
-
-      <!-- Other Support Libraries =========================================== -->
-      <dependency>
-         <groupId>org.slf4j</groupId>
-         <artifactId>slf4j-api</artifactId>
-         <scope>provided</scope>
-      </dependency>
-   </dependencies>
-   
-   <build>
-      <plugins>
-         <plugin>
-            <groupId>org.apache.rat</groupId>
-            <artifactId>apache-rat-plugin</artifactId>
-            <configuration>
-               <excludes>
-                  <exclude>src/main/resources/META-INF/services/javax.servlet.ServletContainerInitializer</exclude>
-               </excludes>
-            </configuration>
-         </plugin>
-      </plugins>
-   </build>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.apache.portals.pluto</groupId>
+		<artifactId>pluto</artifactId>
+		<version>3.1.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>pluto-container-driver-api</artifactId>
+	<packaging>bundle</packaging>
+	<name>Apache Pluto Container Driver API</name>
+	<dependencies>
+		<!-- Specification Libraries =========================================== -->
+		<dependency>
+			<groupId>javax.portlet</groupId>
+			<artifactId>portlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- CCPP Libraries -->
+		<dependency>
+			<groupId>javax.ccpp</groupId>
+			<artifactId>ccpp</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.portals.pluto</groupId>
+			<artifactId>pluto-container-api</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.portals.pluto</groupId>
+			<artifactId>pluto-container</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- Other Support Libraries =========================================== -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.rat</groupId>
+				<artifactId>apache-rat-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>src/main/resources/META-INF/services/javax.servlet.ServletContainerInitializer</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

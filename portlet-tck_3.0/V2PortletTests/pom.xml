@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!--
     Licensed to the Apache Software Foundation (ASF) under one
     or more contributor license agreements.  See the NOTICE file
@@ -17,161 +18,147 @@
     under the License.     
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-   <modelVersion>4.0.0</modelVersion>
-
-   <parent>
-      <groupId>javax.portlet</groupId>
-      <artifactId>portlet-tck</artifactId>
-      <version>3.0.2-SNAPSHOT</version>
-      <relativePath>../pom.xml</relativePath>
-   </parent>
-
-   <artifactId>tck-V2PortletTests</artifactId>
-   <packaging>war</packaging>
-
-   <dependencies>
-      <dependency>
-         <groupId>javax.portlet</groupId>
-         <artifactId>portlet-api</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.tomcat</groupId>
-         <artifactId>tomcat-servlet-api</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>javax.portlet</groupId>
-         <artifactId>tck-common</artifactId>
-         <version>${project.version}</version>
-         <scope>compile</scope>
-      </dependency>
-
-      <!-- for tooling purposes -->
-      <dependency>
-         <groupId>org.apache.tomcat</groupId>
-         <artifactId>tomcat-jsp-api</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.tomcat</groupId>
-         <artifactId>tomcat-el-api</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.taglibs</groupId>
-         <artifactId>taglibs-standard-spec</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.taglibs</groupId>
-         <artifactId>taglibs-standard-impl</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.taglibs</groupId>
-         <artifactId>taglibs-standard-jstlel</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.portals.pluto</groupId>
-         <artifactId>pluto-taglib</artifactId>
-         <scope>provided</scope>
-      </dependency>
-   </dependencies>
-
-   <properties>
-
-      <!-- This project contains additional test cases to run with the portlets -->
-      <additional.testcase.uri>file:///${basedir}/src/main/resources/xml-resources/additionalTCs.xml</additional.testcase.uri>
-
-      <!-- Set to true for modules that define all test cases in a file (TCs are not generated from the portlet.xml) -->
-      <additional.testcases.only>true</additional.testcases.only>
-
-      <!-- put all portlets from this module on the same page -->
-      <page.file.xsl>plutoMultiPortletPage.xsl</page.file.xsl>
-
-      <portlet.descriptor.dir>src/main/webapp/WEB-INF/pluto</portlet.descriptor.dir>
-
-   </properties>
-
-   <build>
-      <finalName>${project.artifactId}</finalName>
-      <plugins>
-         <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-               <execution>
-                  <id>prepare-package</id>
-                  <phase>prepare-package</phase>
-                  <goals>
-                     <goal>run</goal>
-                  </goals>
-                  <configuration>
-                     <target>
-                        <copy file="${basedir}/${portlet.descriptor.dir}/portlet.xml" tofile="${project.build.directory}/${project.build.finalName}/WEB-INF/portlet.xml" />
-                     </target>
-                  </configuration>
-               </execution>
-            </executions>
-         </plugin>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-         </plugin>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-war-plugin</artifactId>
-            <configuration>
-               <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
-            </configuration>
-         </plugin>
-         <!-- Transform the portlet XML into test properties XML file -->
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-         </plugin>
-         <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>xml-maven-plugin</artifactId>
-         </plugin>
-      </plugins>
-   </build>
-
-
-   <profiles>
-      <profile>
-         <id>pluto</id>
-         <properties>
-            <expected.size>2</expected.size>
-            <expected.option>javax.portlet.servletDefaultSessionScope</expected.option>
-            <expected.value>PORTLET_SCOPE</expected.value>
-         </properties>
-         <dependencies>
-            <dependency>
-               <groupId>org.apache.taglibs</groupId>
-               <artifactId>taglibs-standard-spec</artifactId>
-               <scope>compile</scope>
-            </dependency>
-            <dependency>
-               <groupId>org.apache.taglibs</groupId>
-               <artifactId>taglibs-standard-impl</artifactId>
-               <scope>compile</scope>
-            </dependency>
-            <dependency>
-               <groupId>org.apache.taglibs</groupId>
-               <artifactId>taglibs-standard-jstlel</artifactId>
-               <scope>compile</scope>
-            </dependency>
-         </dependencies>
-      </profile>
-      <profile>
-         <id>liferay</id>
-         <properties>
-            <expected.size>1</expected.size>
-            <expected.option>javax.portlet.escapeXml</expected.option>
-            <expected.value>true</expected.value>
-            <portlet.descriptor.dir>src/main/webapp/WEB-INF/liferay</portlet.descriptor.dir>
-         </properties>
-      </profile>
-   </profiles>
-
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>javax.portlet</groupId>
+		<artifactId>portlet-tck</artifactId>
+		<version>3.0.2-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>tck-V2PortletTests</artifactId>
+	<packaging>war</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>javax.portlet</groupId>
+			<artifactId>portlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.portlet</groupId>
+			<artifactId>tck-common</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- for tooling purposes -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jsp-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-el-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taglibs</groupId>
+			<artifactId>taglibs-standard-spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taglibs</groupId>
+			<artifactId>taglibs-standard-impl</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taglibs</groupId>
+			<artifactId>taglibs-standard-jstlel</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.portals.pluto</groupId>
+			<artifactId>pluto-taglib</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<properties>
+		<!-- This project contains additional test cases to run with the portlets -->
+		<additional.testcase.uri>file:///${basedir}/src/main/resources/xml-resources/additionalTCs.xml</additional.testcase.uri>
+		<!-- Set to true for modules that define all test cases in a file (TCs are not generated from the portlet.xml) -->
+		<additional.testcases.only>true</additional.testcases.only>
+		<!-- put all portlets from this module on the same page -->
+		<page.file.xsl>plutoMultiPortletPage.xsl</page.file.xsl>
+		<portlet.descriptor.dir>src/main/webapp/WEB-INF/pluto</portlet.descriptor.dir>
+	</properties>
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>prepare-package</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<copy file="${basedir}/${portlet.descriptor.dir}/portlet.xml" tofile="${project.build.directory}/${project.build.finalName}/WEB-INF/portlet.xml"/>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+				</configuration>
+			</plugin>
+			<!-- Transform the portlet XML into test properties XML file -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>xml-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+	<profiles>
+		<profile>
+			<id>pluto</id>
+			<properties>
+				<expected.size>2</expected.size>
+				<expected.option>javax.portlet.servletDefaultSessionScope</expected.option>
+				<expected.value>PORTLET_SCOPE</expected.value>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.apache.taglibs</groupId>
+					<artifactId>taglibs-standard-spec</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.taglibs</groupId>
+					<artifactId>taglibs-standard-impl</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.taglibs</groupId>
+					<artifactId>taglibs-standard-jstlel</artifactId>
+					<scope>compile</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>liferay</id>
+			<properties>
+				<expected.size>1</expected.size>
+				<expected.option>javax.portlet.escapeXml</expected.option>
+				<expected.value>true</expected.value>
+				<portlet.descriptor.dir>src/main/webapp/WEB-INF/liferay</portlet.descriptor.dir>
+			</properties>
+		</profile>
+	</profiles>
 </project>

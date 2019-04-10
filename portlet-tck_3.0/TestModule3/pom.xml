@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!--
     Licensed to the Apache Software Foundation (ASF) under one
     or more contributor license agreements.  See the NOTICE file
@@ -17,39 +18,32 @@
     under the License.     
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-   <modelVersion>4.0.0</modelVersion>
-
-   <parent>
-      <groupId>javax.portlet</groupId>
-      <artifactId>portlet-tck</artifactId>
-      <version>3.0.2-SNAPSHOT</version>
-      <relativePath>../pom.xml</relativePath>
-   </parent>
-
-   <artifactId>tck-TestModule3</artifactId>
-   <packaging>war</packaging>
-   
-   <!-- This project creates a war file containing only the contents of the xml-resources directory. -->
-
-   <build>
-      <finalName>${project.artifactId}</finalName>
-
-      <resources>
-         <resource>
-            <directory>src/main/resources/xml-resources</directory>
-            <targetPath>../${test.file.dir}</targetPath>
-            <includes>
-               <include>*.xml</include>
-            </includes>
-         </resource>
-      </resources>
-
-      <plugins>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-war-plugin</artifactId>
-         </plugin>
-      </plugins>
-   </build>
-
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>javax.portlet</groupId>
+		<artifactId>portlet-tck</artifactId>
+		<version>3.0.2-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>tck-TestModule3</artifactId>
+	<packaging>war</packaging>
+	<!-- This project creates a war file containing only the contents of the xml-resources directory. -->
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources/xml-resources</directory>
+				<targetPath>../${test.file.dir}</targetPath>
+				<includes>
+					<include>*.xml</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

@@ -10,7 +10,6 @@
    OF ANY KIND, either express or implied. See the License for the specific
    language governing permissions and limitations under the License. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.apache.portals.pluto</groupId>
@@ -21,16 +20,14 @@
 	<artifactId>demo</artifactId>
 	<packaging>pom</packaging>
 	<name>Demo Portlets</name>
-
 	<modules>
 		<module>applicant-mvcbean-cdi-jsp-portlet</module>
 		<module>applicant-mvcbean-cdi-thymeleaf-portlet</module>
 		<module>chat-room-demo-portlet</module>
-        <module>hub-demo-portlet</module>
-        <module>v3-demo-portlet</module>
-        <module>v3-annotated-demo-portlet</module>
+		<module>hub-demo-portlet</module>
+		<module>v3-demo-portlet</module>
+		<module>v3-annotated-demo-portlet</module>
 	</modules>
-
 	<build>
 		<plugins>
 			<!-- Workaround for war processing of m-r-r-plugin causing the generated NOTICE and LICENSE file to be put under WEB-INF/classes/META-INF -->

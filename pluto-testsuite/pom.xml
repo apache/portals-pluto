@@ -18,158 +18,155 @@
   under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.apache.portals.pluto</groupId>
-        <artifactId>pluto</artifactId>
-        <version>3.1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
-    
-    <artifactId>pluto-testsuite</artifactId>
-    <packaging>war</packaging>
-    <name>Apache Pluto Testsuite Portlet</name>
-  
-    <dependencies>
-        <dependency>
-          <groupId>javax.portlet</groupId>
-          <artifactId>portlet-api</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-servlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-digester</groupId>
-            <artifactId>commons-digester</artifactId>
-            <scope>${dependency.scope}</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.taglibs</groupId>
-            <artifactId>taglibs-standard-spec</artifactId>
-            <scope>${dependency.scope}</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-jsp-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.taglibs</groupId>
-            <artifactId>taglibs-standard-impl</artifactId>
-            <scope>${dependency.scope}</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-jsp-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-    </dependencies>
-  
-    <!-- Build configuration -->
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <plugins>
-            <!-- configure maven-war-plugin to use updated web.xml -->
-            <plugin>
-   			  	<groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <webXml>${project.build.directory}/pluto-resources/web.xml</webXml>
-                </configuration>
-            </plugin>
-            <!-- bind 'pluto:assemble' goal to 'process-resources' lifecycle -->
-            <plugin>
-                <groupId>org.apache.portals.pluto</groupId>
-                <artifactId>pluto-maven-plugin</artifactId>
-                <version>${project.version}</version>
-                <executions>
-                    <execution>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>assemble</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- workaround for war processing of m-r-r-plugin causing the generated NOTICE and LICENSE file to be put under WEB-INF/classes/META-INF -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-remote-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>process</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
-                            <attached>false</attached>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- Don't attach source or javadoc archive -->
-            <plugin>
-                <artifactId>maven-source-plugin</artifactId>
-                <configuration>
-                    <attach>false</attach>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-  
-    <profiles>
-        <profile>
-            <id>deploy-testsuite</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-                <property><name>deploy.dir</name></property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>integration-test</phase>
-                                <configuration>
-                                    <tasks>
-                                    <!--
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.apache.portals.pluto</groupId>
+		<artifactId>pluto</artifactId>
+		<version>3.1.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>pluto-testsuite</artifactId>
+	<packaging>war</packaging>
+	<name>Apache Pluto Testsuite Portlet</name>
+	<dependencies>
+		<dependency>
+			<groupId>javax.portlet</groupId>
+			<artifactId>portlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-digester</groupId>
+			<artifactId>commons-digester</artifactId>
+			<scope>${dependency.scope}</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taglibs</groupId>
+			<artifactId>taglibs-standard-spec</artifactId>
+			<scope>${dependency.scope}</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.tomcat</groupId>
+					<artifactId>tomcat-jsp-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taglibs</groupId>
+			<artifactId>taglibs-standard-impl</artifactId>
+			<scope>${dependency.scope}</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.tomcat</groupId>
+					<artifactId>tomcat-jsp-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jdk14</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
+	<!-- Build configuration -->
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<!-- configure maven-war-plugin to use updated web.xml -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webXml>${project.build.directory}/pluto-resources/web.xml</webXml>
+				</configuration>
+			</plugin>
+			<!-- bind 'pluto:assemble' goal to 'process-resources' lifecycle -->
+			<plugin>
+				<groupId>org.apache.portals.pluto</groupId>
+				<artifactId>pluto-maven-plugin</artifactId>
+				<version>${project.version}</version>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>assemble</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- workaround for war processing of m-r-r-plugin causing the generated NOTICE and LICENSE file to be put under WEB-INF/classes/META-INF -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-remote-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+							<attached>false</attached>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Don't attach source or javadoc archive -->
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<configuration>
+					<attach>false</attach>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<profiles>
+		<profile>
+			<id>deploy-testsuite</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<property>
+					<name>deploy.dir</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<configuration>
+									<tasks>
+										<!--
                                       Use this to build and deploy the testsuite war.
                                       PORTLET_DEPLOY_DIR is an environmental variable 
                                       pointing to the hot-deploy directory of your portal.
@@ -177,36 +174,38 @@
                                       on the command line when invoking maven:
                                       mvn -Ddeploy.dir=/pluto-1.1.4/webapps integration-test
                                     -->
-                                        <property environment="env" />
-                                        <property name="deploy.dir" value="${env.PORTLET_DEPLOY_DIR}" />
-                                        <copy file="target/${project.build.finalName}.war" tofile="${deploy.dir}/testsuite.war" />
-                                    </tasks>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>deploy-testsuite-by-env</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-                <property><name>env.PORTLET_DEPLOY_DIR</name></property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>integration-test</phase>
-                                <configuration>
-                                    <tasks>
-                                    <!--
+										<property environment="env"/>
+										<property name="deploy.dir" value="${env.PORTLET_DEPLOY_DIR}"/>
+										<copy file="target/${project.build.finalName}.war" tofile="${deploy.dir}/testsuite.war"/>
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>deploy-testsuite-by-env</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<property>
+					<name>env.PORTLET_DEPLOY_DIR</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<configuration>
+									<tasks>
+										<!--
                                       Use this to build and deploy the testsuite war.
                                       PORTLET_DEPLOY_DIR is an environmental variable 
                                       pointing to the hot-deploy directory of your portal.
@@ -214,36 +213,35 @@
                                       on the command line when invoking maven:
                                       mvn -Ddeploy.dir=/pluto-1.1.4/webapps integration-test
                                     -->
-                                        <property environment="env" />
-                                        <property name="deploy.dir" value="${env.PORTLET_DEPLOY_DIR}" />
-                                        <copy file="target/${project.build.finalName}.war" tofile="${deploy.dir}/testsuite.war" />
-                                    </tasks>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    
-        <profile>
-            <id>rat</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.rat</groupId>
-                        <artifactId>apache-rat-plugin</artifactId>
-                        <configuration>
-                            <excludes combine.children="append">
-                                <exclude>src/main/webapp/META-INF/SLF4J-LICENSE</exclude>
-                            </excludes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>  
+										<property environment="env"/>
+										<property name="deploy.dir" value="${env.PORTLET_DEPLOY_DIR}"/>
+										<copy file="target/${project.build.finalName}.war" tofile="${deploy.dir}/testsuite.war"/>
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>rat</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.rat</groupId>
+						<artifactId>apache-rat-plugin</artifactId>
+						<configuration>
+							<excludes combine.children="append">
+								<exclude>src/main/webapp/META-INF/SLF4J-LICENSE</exclude>
+							</excludes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

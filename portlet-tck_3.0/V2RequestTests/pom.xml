@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!--
     Licensed to the Apache Software Foundation (ASF) under one
     or more contributor license agreements.  See the NOTICE file
@@ -17,134 +18,118 @@
     under the License.     
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-   <modelVersion>4.0.0</modelVersion>
-
-   <parent>
-      <groupId>javax.portlet</groupId>
-      <artifactId>portlet-tck</artifactId>
-      <version>3.0.2-SNAPSHOT</version>
-      <relativePath>../pom.xml</relativePath>
-   </parent>
-
-   <artifactId>tck-V2RequestTests</artifactId>
-   <packaging>war</packaging>
-
-   <dependencies>
-      <dependency>
-         <groupId>javax.portlet</groupId>
-         <artifactId>portlet-api</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.tomcat</groupId>
-         <artifactId>tomcat-servlet-api</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>javax.portlet</groupId>
-         <artifactId>tck-common</artifactId>
-         <version>${project.version}</version>
-         <scope>compile</scope>
-      </dependency>
-
-      <!-- for tooling purposes -->
-      <dependency>
-         <groupId>org.apache.tomcat</groupId>
-         <artifactId>tomcat-jsp-api</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.tomcat</groupId>
-         <artifactId>tomcat-el-api</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.taglibs</groupId>
-         <artifactId>taglibs-standard-spec</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.taglibs</groupId>
-         <artifactId>taglibs-standard-impl</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.taglibs</groupId>
-         <artifactId>taglibs-standard-jstlel</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.portals.pluto</groupId>
-         <artifactId>pluto-taglib</artifactId>
-         <scope>provided</scope>
-      </dependency>
-   </dependencies>
-
-   <properties>
-
-      <!-- Set to true for modules that define all test cases in a file (TCs are not generated from the portlet.xml) -->
-      <additional.testcases.only>true</additional.testcases.only>
-
-      <!-- This module places the portlets on the page through a file. (Page is not generated from the portlet.xml) -->
-      <additional.pagefile.only>true</additional.pagefile.only>
-
-      <portal.security.role>pluto</portal.security.role>
-
-      <portletrequest.context.path>/tck-V2RequestTests</portletrequest.context.path>
-   </properties>
-
-   <build>
-      <finalName>${project.artifactId}</finalName>
-      <plugins>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-         </plugin>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-war-plugin</artifactId>
-            <configuration>
-               <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
-            </configuration>
-         </plugin>
-         
-         <!-- copy page & test case files, renaming properly -->
-         <plugin>
-            <groupId>com.coderplus.maven.plugins</groupId>
-            <artifactId>copy-rename-maven-plugin</artifactId>
-         </plugin>
-      </plugins>
-   </build>
-
-
-   <profiles>
-      <profile>
-         <id>liferay</id>
-         <properties>
-            <portal.security.role>User</portal.security.role>
-            <portletrequest.context.path>/o/tck-V2RequestTests</portletrequest.context.path>
-         </properties>
-      </profile>
-      <profile>
-         <id>pluto</id>
-
-         <dependencies>
-            <dependency>
-               <groupId>org.apache.taglibs</groupId>
-               <artifactId>taglibs-standard-spec</artifactId>
-               <scope>compile</scope>
-            </dependency>
-            <dependency>
-               <groupId>org.apache.taglibs</groupId>
-               <artifactId>taglibs-standard-impl</artifactId>
-               <scope>compile</scope>
-            </dependency>
-            <dependency>
-               <groupId>org.apache.taglibs</groupId>
-               <artifactId>taglibs-standard-jstlel</artifactId>
-               <scope>compile</scope>
-            </dependency>
-         </dependencies>
-
-      </profile>
-   </profiles>
-
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>javax.portlet</groupId>
+		<artifactId>portlet-tck</artifactId>
+		<version>3.0.2-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>tck-V2RequestTests</artifactId>
+	<packaging>war</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>javax.portlet</groupId>
+			<artifactId>portlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.portlet</groupId>
+			<artifactId>tck-common</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- for tooling purposes -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jsp-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-el-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taglibs</groupId>
+			<artifactId>taglibs-standard-spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taglibs</groupId>
+			<artifactId>taglibs-standard-impl</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taglibs</groupId>
+			<artifactId>taglibs-standard-jstlel</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.portals.pluto</groupId>
+			<artifactId>pluto-taglib</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<properties>
+		<!-- Set to true for modules that define all test cases in a file (TCs are not generated from the portlet.xml) -->
+		<additional.testcases.only>true</additional.testcases.only>
+		<!-- This module places the portlets on the page through a file. (Page is not generated from the portlet.xml) -->
+		<additional.pagefile.only>true</additional.pagefile.only>
+		<portal.security.role>pluto</portal.security.role>
+		<portletrequest.context.path>/tck-V2RequestTests</portletrequest.context.path>
+	</properties>
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+				</configuration>
+			</plugin>
+			<!-- copy page & test case files, renaming properly -->
+			<plugin>
+				<groupId>com.coderplus.maven.plugins</groupId>
+				<artifactId>copy-rename-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+	<profiles>
+		<profile>
+			<id>liferay</id>
+			<properties>
+				<portal.security.role>User</portal.security.role>
+				<portletrequest.context.path>/o/tck-V2RequestTests</portletrequest.context.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>pluto</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.apache.taglibs</groupId>
+					<artifactId>taglibs-standard-spec</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.taglibs</groupId>
+					<artifactId>taglibs-standard-impl</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.taglibs</groupId>
+					<artifactId>taglibs-standard-jstlel</artifactId>
+					<scope>compile</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 </project>

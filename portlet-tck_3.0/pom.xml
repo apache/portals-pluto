@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
     Licensed to the Apache Software Foundation (ASF) under one
     or more contributor license agreements.  See the NOTICE file
     distributed with this work for additional information
@@ -15,77 +16,64 @@
     KIND, either express or implied.  See the License for the
     specific language governing permissions and limitations
     under the License.     
---><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-   
-   <parent>
-      <groupId>org.apache.portals.pluto</groupId>
-      <artifactId>pluto</artifactId>
-      <version>3.1.0-SNAPSHOT</version>
-      <relativePath>../pom.xml</relativePath>
-   </parent>
-   
-   <modelVersion>4.0.0</modelVersion>
-   
-   <groupId>javax.portlet</groupId>
-   <artifactId>portlet-tck</artifactId>
-   <version>3.0.2-SNAPSHOT</version>
-   <name>Portlet API Technology Compatibility Kit</name>
-   <packaging>pom</packaging>
-
-   <licenses>
-      <license>
-         <name>apache_v2</name>
-         <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-      </license>
-   </licenses>
-
-   <scm>
-      <connection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</connection>
-      <developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</developerConnection>
-      <url>https://github.com/apache/portals-pluto</url>
-     <tag>HEAD</tag>
-  </scm>
-
-   <properties>
-      <pluto.test.version>3.1.0-SNAPSHOT</pluto.test.version>
-      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-      <!-- To automatically generate a list of test cases, each module transforms the portlet.xml file -->
-      <!-- using an XSLT transformation. -->
-
-      <!-- Configuration used by XML transformations -->
-      <!-- test.file.xslt Name of stylesheet in ${project.build.directory}/xml-resources/ dirs -->
-      <!-- test.file.dir location of generated xml files in individual modules for tests -->
-      <!-- test.file.name per-module name of xml file containing list of covered test cases -->
-      <test.file.xsl>test.xsl</test.file.xsl>
-      <test.file.dir>generated-resources/xml/module</test.file.dir>
-      <test.file.name>${project.artifactId}-tests.xml</test.file.name>
-
-      <!-- page.file.xsl Name of stylesheet used to create page definititions -->
-      <!-- page.file.name per-module name of xml file containing page definitions for test -->
-      <page.file.xsl>plutoSinglePortletPage.xsl</page.file.xsl>
-      <page.file.name>${project.artifactId}-pages.xml</page.file.name>
-      <page.file.final.xsl>plutoPageCombiner.xsl</page.file.final.xsl>
-      <page.file.final.name>pluto-portal-driver-config.xml</page.file.final.name>
-
-      <!-- test.context.base context string used when addressing test pages. Used by module stylesheet -->
-      <test.context.base>pluto/portal/</test.context.base>
-
-      <!-- test.list.xsl Name of stylesheet to combine test case lists from subproject -->
-      <!-- test.list.dir location of finished xml file containing complete test case list -->
-      <!-- test.list.name name of xml file containing complete test case list -->
-      <test.list.xsl>testCombiner.xsl</test.list.xsl>
-      <test.list.dir>generated-resources/xml/final</test.list.dir>
-      <test.list.name>test.xml</test.list.name>
-      <test.list.file>${project.build.directory}/classes/${test.list.dir}/${test.list.name}</test.list.file>
-      
-      <!-- The name of the file containing the test cases to be ignored -->
-      <test.ignore.list.name>ignoredTestCases.xml</test.ignore.list.name>
-      <test.ignore.list.file>${project.build.directory}/classes/${test.list.dir}/${test.ignore.list.name}</test.ignore.list.file>
-
-      <test.non.exclusive.file></test.non.exclusive.file>
-
-      <!-- This variable is used by the test driver to determine how test 
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<groupId>org.apache.portals.pluto</groupId>
+		<artifactId>pluto</artifactId>
+		<version>3.1.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>javax.portlet</groupId>
+	<artifactId>portlet-tck</artifactId>
+	<version>3.0.2-SNAPSHOT</version>
+	<name>Portlet API Technology Compatibility Kit</name>
+	<packaging>pom</packaging>
+	<licenses>
+		<license>
+			<name>apache_v2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+		</license>
+	</licenses>
+	<scm>
+		<connection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</connection>
+		<developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</developerConnection>
+		<url>https://github.com/apache/portals-pluto</url>
+		<tag>HEAD</tag>
+	</scm>
+	<properties>
+		<pluto.test.version>3.1.0-SNAPSHOT</pluto.test.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- To automatically generate a list of test cases, each module transforms the portlet.xml file -->
+		<!-- using an XSLT transformation. -->
+		<!-- Configuration used by XML transformations -->
+		<!-- test.file.xslt Name of stylesheet in ${project.build.directory}/xml-resources/ dirs -->
+		<!-- test.file.dir location of generated xml files in individual modules for tests -->
+		<!-- test.file.name per-module name of xml file containing list of covered test cases -->
+		<test.file.xsl>test.xsl</test.file.xsl>
+		<test.file.dir>generated-resources/xml/module</test.file.dir>
+		<test.file.name>${project.artifactId}-tests.xml</test.file.name>
+		<!-- page.file.xsl Name of stylesheet used to create page definititions -->
+		<!-- page.file.name per-module name of xml file containing page definitions for test -->
+		<page.file.xsl>plutoSinglePortletPage.xsl</page.file.xsl>
+		<page.file.name>${project.artifactId}-pages.xml</page.file.name>
+		<page.file.final.xsl>plutoPageCombiner.xsl</page.file.final.xsl>
+		<page.file.final.name>pluto-portal-driver-config.xml</page.file.final.name>
+		<!-- test.context.base context string used when addressing test pages. Used by module stylesheet -->
+		<test.context.base>pluto/portal/</test.context.base>
+		<!-- test.list.xsl Name of stylesheet to combine test case lists from subproject -->
+		<!-- test.list.dir location of finished xml file containing complete test case list -->
+		<!-- test.list.name name of xml file containing complete test case list -->
+		<test.list.xsl>testCombiner.xsl</test.list.xsl>
+		<test.list.dir>generated-resources/xml/final</test.list.dir>
+		<test.list.name>test.xml</test.list.name>
+		<test.list.file>${project.build.directory}/classes/${test.list.dir}/${test.list.name}</test.list.file>
+		<!-- The name of the file containing the test cases to be ignored -->
+		<test.ignore.list.name>ignoredTestCases.xml</test.ignore.list.name>
+		<test.ignore.list.file>${project.build.directory}/classes/${test.list.dir}/${test.ignore.list.name}</test.ignore.list.file>
+		<test.non.exclusive.file/>
+		<!-- This variable is used by the test driver to determine how test 
          page links are to be found. Values: generateURLs the driver generates URLs 
          based on config information. followLinks the driver looks for links containing 
          the page name and clicks them in order to access the test pages. In this 
@@ -93,493 +81,452 @@
          If configured to generate URLs, the driver generates URLs of the form: http://<test.server.host>:<test.server.port>/<test.context.base><test.page.name> 
          where <test.page.name> is the name of the test page generated by the individual 
          modules -->
-      <test.url.strategy>followLinks</test.url.strategy>
-
-      <!-- Configuration of portlet container under test for generated URLs -->
-      <!-- (only needed if test.url.strategy=generateURLs) -->
-      <test.server.host>localhost</test.server.host>
-      <test.server.port>8080</test.server.port>
-
-      <!-- Configuration of URL to login page -->
-      <test.server.login.url>http://${test.server.host}:${test.server.port}/pluto/portal/About Apache Pluto</test.server.login.url>
-
-      <!-- HTML field IDs and values for username & password to enable automatic  login -->
-	  <!-- User specified must be in 'tckuser' role. Please configure 'tckuser' role for the specified user in tomcat-users.xml -->
-      <test.server.username.id>j_username</test.server.username.id>
-      <test.server.username>pluto</test.server.username>
-      <test.server.password.id>j_password</test.server.password.id>
-      <test.server.password>pluto</test.server.password>
-
-      <!-- Specifies the browser to be used by selenium WebDriver for running the tests. -->
-      <!-- Can be used with firefox or HTMLUnit without setting the test.browser.webDriver property. -->
-      <!-- Use of Chrome or IE requires the webDriver to be downloaded and available. Set the -->
-      <!-- test.browser.webDriver property to point to the appropriate WebDriver server. -->
-      <test.browser>firefox</test.browser>
-      <test.browser>HTMLUnit</test.browser>
-      
-      <!-- Lines commented out below illustrate how the chromedriver web driver can be configured -->
-      <test.browser>chrome</test.browser>
-      <test.browser.webDriver>c:/ntutil/chromedriver.exe</test.browser.webDriver>
-      
-      <!-- commented outline below shows configuration for the Internet Explorer driver -->
-      <!-- test.browser.webDriver>C:\ntutil\IEDriverServer_x64_2.42.0\IEDriverServer.exe</test.browser.webDriver -->
-      
-      <!-- Configuration for phantomJS driver -->
-      <!-- To use phantomJS, remove the comment marks around the following two lines.
+		<test.url.strategy>followLinks</test.url.strategy>
+		<!-- Configuration of portlet container under test for generated URLs -->
+		<!-- (only needed if test.url.strategy=generateURLs) -->
+		<test.server.host>localhost</test.server.host>
+		<test.server.port>8080</test.server.port>
+		<!-- Configuration of URL to login page -->
+		<test.server.login.url>http://${test.server.host}:${test.server.port}/pluto/portal/About Apache Pluto</test.server.login.url>
+		<!-- HTML field IDs and values for username & password to enable automatic  login -->
+		<!-- User specified must be in 'tckuser' role. Please configure 'tckuser' role for the specified user in tomcat-users.xml -->
+		<test.server.username.id>j_username</test.server.username.id>
+		<test.server.username>pluto</test.server.username>
+		<test.server.password.id>j_password</test.server.password.id>
+		<test.server.password>pluto</test.server.password>
+		<!-- Specifies the browser to be used by selenium WebDriver for running the tests. -->
+		<!-- Can be used with firefox or HTMLUnit without setting the test.browser.webDriver property. -->
+		<!-- Use of Chrome or IE requires the webDriver to be downloaded and available. Set the -->
+		<!-- test.browser.webDriver property to point to the appropriate WebDriver server. -->
+		<test.browser>firefox</test.browser>
+		<test.browser>HTMLUnit</test.browser>
+		<!-- Lines commented out below illustrate how the chromedriver web driver can be configured -->
+		<test.browser>chrome</test.browser>
+		<test.browser.webDriver>c:/ntutil/chromedriver.exe</test.browser.webDriver>
+		<!-- commented outline below shows configuration for the Internet Explorer driver -->
+		<!-- test.browser.webDriver>C:\ntutil\IEDriverServer_x64_2.42.0\IEDriverServer.exe</test.browser.webDriver -->
+		<!-- Configuration for phantomJS driver -->
+		<!-- To use phantomJS, remove the comment marks around the following two lines.
       <test.browser>phantomjs</test.browser>
       <test.browser.webDriver>${phantomjs.binary}</test.browser.webDriver>
        -->
-
-      <!-- Specify timeout in seconds for the driver to wait for page load. must be an integer. -->
-      <test.timeout>3</test.timeout>
-
-      <!-- Set in subprojects containing additional test case file. default is no additional file (false) -->
-      <additional.testcase.uri>false</additional.testcase.uri>
-      
-      <!-- Set to true for modules that define all test cases in a file (TCs are not generated from the portlet.xml) -->
-      <additional.testcases.only>false</additional.testcases.only>
-      
-      <!-- Set to true for modules that define all test pages in a file (page file is not generated from the portlet.xml) -->
-      <additional.pagefile.only>false</additional.pagefile.only>
-
-      <portlet.descriptor.dir>src/main/webapp/WEB-INF</portlet.descriptor.dir>
-   </properties>
-
-   <modules>
-      <module>common</module>
-      <module>TestModule1</module>
-      <module>TestModule2</module>
-      <module>TestModule3</module>
-      <module>TestModule3-portlet1</module>
-      <module>TestModule3-portlet2</module>
-      <module>V2AnnotationTests</module>
-      <module>V2EnvironmentTests</module>
-      <module>V2ExceptionTests</module>
-      <module>V2FilterTests</module>
-      <module>V2PortletTests</module>
-      <module>V2RequestTests</module>
-      <module>V2ResponseTests</module>
-      <module>V2URLTests</module>
-      <module>V2WrapperTests</module>
-      <module>V2AddlEnvironmentTests</module>
-      <module>V2AddlFilterTests</module>
-      <module>V2AddlPortletTests</module>
-      <module>V2AddlRequestTests</module>
-      <module>V2AddlResponseTests</module>
-      <module>V2PortletTagLibraryTests</module>
-      <module>V2PortletTagLibraryTests2</module>
-      <module>V2PortletTagLibraryTests3</module>
-      <module>V2DispatcherTests</module>
-      <module>V2DispatcherTests2</module>
-      <module>V2DispatcherTests3S</module>
-      <module>V2DispatcherTests4</module>
-      <module>V2DispatcherTests5</module>
-      <module>V2DispatcherTests6</module>
-      <module>V2DispatcherReqRespTests1</module>
-      <module>V2DispatcherReqRespTests2</module>
-      <module>V2DispatcherReqRespTests3</module>
-      <module>V2DispatcherReqRespTests4</module>
-      <module>V2DispatcherReqRespTests5S</module>
-      <module>V2SigTestsAction</module>
-      <module>V2SigTestsEnv</module>
-      <module>V2SigTestsEvent</module>
-      <module>V2SigTestsException</module>
-      <module>V2SigTestsFilter</module>
-      <module>V2SigTestsRender</module>
-      <module>V2SigTestsResource</module>
-      <module>V2SigTestsURL</module>
-      <module>V2SigTestsWrapper</module>
-      <module>V3PortletContextTests</module>
-      <module>V3PortletConfigTests</module>
-	   <module>V3URLTests</module>
-	   <module>V3RenderStateTests</module>
-      <module>V3HeaderPortletTests</module>
-      <module>V3PortletParametersTests</module>
-      <module>V3AnnotationPortletArtifactValidityTests</module>
-      <module>V3AnnotationPortletApplicationConfigTests</module>
-      <module>V3AnnotationPortletAppConfigOverrideTests</module>
-      <module>V3AnnotationPortletConfigTests</module>
-      <module>V3PortletHubTests</module>
-      <module>V3ResourceAsyncTests</module>
-      <module>deploy</module>
-      <module>driver</module>
-   </modules>
-
-   <dependencyManagement>
-      <dependencies>
-
-         <!-- the portlet tag library -->
-         <dependency>
-            <groupId>org.apache.portals.pluto</groupId>
-            <artifactId>pluto-taglib</artifactId>
-			<version>${pluto.test.version}</version>
-            <scope>provided</scope>
-         </dependency>
-      </dependencies>
-   </dependencyManagement>
-
-   <build>
-      <finalName>${project.artifactId}</finalName>
-
-      <pluginManagement>
-         <plugins>
-            <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-jar-plugin</artifactId>
-               <configuration>
-                  <skipIfEmpty>true</skipIfEmpty>
-               </configuration>
-            </plugin>
-
-            <!-- For Performing xml translations to create test.xml files -->
-            <plugin>
-               <groupId>org.codehaus.mojo</groupId>
-               <artifactId>xml-maven-plugin</artifactId>
-               <version>1.0</version>
-               <executions>
-               
-                  <!-- For generating test case list from portlet.xml and additionalTCs.xml files -->
-                  <execution>
-                     <id>generate-testcases</id>
-                     <phase>generate-resources</phase>
-                     <goals>
-                        <goal>transform</goal>
-                     </goals>
-                     <configuration>
-                        <skip>${additional.testcases.only}</skip>
-                        <transformationSets>
-                     
-                           <!-- automatically generate test case list for module -->
-                           <transformationSet>
-                              <dir>${portlet.descriptor.dir}</dir>
-                              <includes>
-                                 <include>portlet.xml</include>
-                              </includes>
-                              <outputDir>${project.build.directory}/${test.file.dir}</outputDir>
-                              <fileMappers>
-                                 <fileMapper implementation="org.codehaus.plexus.components.io.filemappers.MergeFileMapper">
-                                    <targetName>${test.file.name}</targetName>
-                                 </fileMapper>
-                              </fileMappers>
-                              <parameters>
-                                 <parameter>
-                                    <name>additionalTCs</name>
-                                    <value>${additional.testcase.uri}</value>
-                                 </parameter>
-                                 <parameter>
-                                    <name>copyOnly</name>
-                                    <value>${additional.testcases.only}</value>
-                                 </parameter>
-                              </parameters>
-                              <stylesheet>${project.build.directory}/xml-resources/${test.file.xsl}</stylesheet>
-                           </transformationSet>
-                     
-                        </transformationSets>
-                     </configuration>
-                  </execution>
-                  
-                  <!-- For generating page file from portlet.xml -->
-                  <execution>
-                     <id>generate-pagefile</id>
-                     <phase>generate-resources</phase>
-                     <goals>
-                        <goal>transform</goal>
-                     </goals>
-                     <configuration>
-                        <skip>${additional.pagefile.only}</skip>
-                        <transformationSets>
-                     
-                           <!-- Automatically generate page file for the module -->
-                           <transformationSet>
-                              <dir>${portlet.descriptor.dir}</dir>
-                              <includes>
-                                 <include>portlet.xml</include>
-                              </includes>
-                              <outputDir>${project.build.directory}/${test.file.dir}</outputDir>
-                              <fileMappers>
-                                 <fileMapper implementation="org.codehaus.plexus.components.io.filemappers.MergeFileMapper">
-                                    <targetName>${page.file.name}</targetName>
-                                 </fileMapper>
-                              </fileMappers>
-                              <parameters>
-                                 <parameter>
-                                    <name>portlet-app-context</name>
-                                    <value>${project.artifactId}-${project.version}</value>
-                                 </parameter>
-                              </parameters>
-                              <stylesheet>${project.build.directory}/xml-resources/${page.file.xsl}</stylesheet>
-                           </transformationSet>
-                     
-                        </transformationSets>
-                     </configuration>
-                  </execution>
-               </executions>
-            </plugin>
-
-            <!-- For extracting the XML transformation stylesheets from common module -->
-            <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-dependency-plugin</artifactId>
-               <version>2.8</version>
-               <executions>
-                  <execution>
-                     <id>xml-resource-dependencies</id>
-                     <phase>generate-sources</phase>
-                     <goals>
-                        <goal>unpack-dependencies</goal>
-                     </goals>
-                     <configuration>
-                        <includeArtifactIds>tck-common</includeArtifactIds>
-                        <includes>xml-resources/**</includes>
-                        <outputDirectory>${project.build.directory}</outputDirectory>
-                     </configuration>
-                  </execution>
-               </executions>
-            </plugin>
-            
-            <!-- For copying the page & testcase files for V3 module build -->
-            <plugin>
-               <groupId>com.coderplus.maven.plugins</groupId>
-               <artifactId>copy-rename-maven-plugin</artifactId>
-               <version>1.0.1</version>
-               <executions>
-                  <execution>
-                     <id>copy-files</id>
-                     <phase>generate-sources</phase>
-                     <goals>
-                        <goal>copy</goal>
-                     </goals>
-                     <configuration>
-                        <fileSets>
-                           <fileSet>
-                              <sourceFile>src/main/resources/xml-resources/additionalTCs.xml</sourceFile>
-                              <destinationFile>target/${test.file.dir}/${project.artifactId}-tests.xml</destinationFile>
-                           </fileSet>
-                           <fileSet>
-                              <sourceFile>src/main/resources/xml-resources/additionalPages.xml</sourceFile>
-                              <destinationFile>target/${test.file.dir}/${project.artifactId}-pages.xml</destinationFile>
-                           </fileSet>                
-                        </fileSets>
-                     </configuration>
-                  </execution>
-               </executions>
-            </plugin>
-         
-            <!-- Don't attach source or javadoc archive (for release plugin)-->
-            <plugin>
-              <artifactId>maven-source-plugin</artifactId>
-              <configuration>
-                <attach>false</attach>
-              </configuration>
-            </plugin>
-            <plugin>
-              <artifactId>maven-javadoc-plugin</artifactId>
-              <configuration>
-                <skip>true</skip>
-              </configuration>
-            </plugin>
-         
-             
-         </plugins>
-      </pluginManagement>
-
-      <plugins>
-      
-         <!-- skip legal file checking for now -->
-         <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>ianal-maven-plugin</artifactId>
-            <executions>
-               <execution>
-                  <goals>
-                     <goal>verify-legal-files</goal>
-                  </goals>
-                  <configuration>
-                     <skip>true</skip>
-                  </configuration>
-               </execution>
-            </executions>
-         </plugin>
-      
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <configuration>
-               <doctitle>
+		<!-- Specify timeout in seconds for the driver to wait for page load. must be an integer. -->
+		<test.timeout>3</test.timeout>
+		<!-- Set in subprojects containing additional test case file. default is no additional file (false) -->
+		<additional.testcase.uri>false</additional.testcase.uri>
+		<!-- Set to true for modules that define all test cases in a file (TCs are not generated from the portlet.xml) -->
+		<additional.testcases.only>false</additional.testcases.only>
+		<!-- Set to true for modules that define all test pages in a file (page file is not generated from the portlet.xml) -->
+		<additional.pagefile.only>false</additional.pagefile.only>
+		<portlet.descriptor.dir>src/main/webapp/WEB-INF</portlet.descriptor.dir>
+	</properties>
+	<modules>
+		<module>common</module>
+		<module>TestModule1</module>
+		<module>TestModule2</module>
+		<module>TestModule3</module>
+		<module>TestModule3-portlet1</module>
+		<module>TestModule3-portlet2</module>
+		<module>V2AnnotationTests</module>
+		<module>V2EnvironmentTests</module>
+		<module>V2ExceptionTests</module>
+		<module>V2FilterTests</module>
+		<module>V2PortletTests</module>
+		<module>V2RequestTests</module>
+		<module>V2ResponseTests</module>
+		<module>V2URLTests</module>
+		<module>V2WrapperTests</module>
+		<module>V2AddlEnvironmentTests</module>
+		<module>V2AddlFilterTests</module>
+		<module>V2AddlPortletTests</module>
+		<module>V2AddlRequestTests</module>
+		<module>V2AddlResponseTests</module>
+		<module>V2PortletTagLibraryTests</module>
+		<module>V2PortletTagLibraryTests2</module>
+		<module>V2PortletTagLibraryTests3</module>
+		<module>V2DispatcherTests</module>
+		<module>V2DispatcherTests2</module>
+		<module>V2DispatcherTests3S</module>
+		<module>V2DispatcherTests4</module>
+		<module>V2DispatcherTests5</module>
+		<module>V2DispatcherTests6</module>
+		<module>V2DispatcherReqRespTests1</module>
+		<module>V2DispatcherReqRespTests2</module>
+		<module>V2DispatcherReqRespTests3</module>
+		<module>V2DispatcherReqRespTests4</module>
+		<module>V2DispatcherReqRespTests5S</module>
+		<module>V2SigTestsAction</module>
+		<module>V2SigTestsEnv</module>
+		<module>V2SigTestsEvent</module>
+		<module>V2SigTestsException</module>
+		<module>V2SigTestsFilter</module>
+		<module>V2SigTestsRender</module>
+		<module>V2SigTestsResource</module>
+		<module>V2SigTestsURL</module>
+		<module>V2SigTestsWrapper</module>
+		<module>V3PortletContextTests</module>
+		<module>V3PortletConfigTests</module>
+		<module>V3URLTests</module>
+		<module>V3RenderStateTests</module>
+		<module>V3HeaderPortletTests</module>
+		<module>V3PortletParametersTests</module>
+		<module>V3AnnotationPortletArtifactValidityTests</module>
+		<module>V3AnnotationPortletApplicationConfigTests</module>
+		<module>V3AnnotationPortletAppConfigOverrideTests</module>
+		<module>V3AnnotationPortletConfigTests</module>
+		<module>V3PortletHubTests</module>
+		<module>V3ResourceAsyncTests</module>
+		<module>deploy</module>
+		<module>driver</module>
+	</modules>
+	<dependencyManagement>
+		<dependencies>
+			<!-- the portlet tag library -->
+			<dependency>
+				<groupId>org.apache.portals.pluto</groupId>
+				<artifactId>pluto-taglib</artifactId>
+				<version>${pluto.test.version}</version>
+				<scope>provided</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<configuration>
+						<skipIfEmpty>true</skipIfEmpty>
+					</configuration>
+				</plugin>
+				<!-- For Performing xml translations to create test.xml files -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>xml-maven-plugin</artifactId>
+					<version>1.0</version>
+					<executions>
+						<!-- For generating test case list from portlet.xml and additionalTCs.xml files -->
+						<execution>
+							<id>generate-testcases</id>
+							<phase>generate-resources</phase>
+							<goals>
+								<goal>transform</goal>
+							</goals>
+							<configuration>
+								<skip>${additional.testcases.only}</skip>
+								<transformationSets>
+									<!-- automatically generate test case list for module -->
+									<transformationSet>
+										<dir>${portlet.descriptor.dir}</dir>
+										<includes>
+											<include>portlet.xml</include>
+										</includes>
+										<outputDir>${project.build.directory}/${test.file.dir}</outputDir>
+										<fileMappers>
+											<fileMapper implementation="org.codehaus.plexus.components.io.filemappers.MergeFileMapper">
+												<targetName>${test.file.name}</targetName>
+											</fileMapper>
+										</fileMappers>
+										<parameters>
+											<parameter>
+												<name>additionalTCs</name>
+												<value>${additional.testcase.uri}</value>
+											</parameter>
+											<parameter>
+												<name>copyOnly</name>
+												<value>${additional.testcases.only}</value>
+											</parameter>
+										</parameters>
+										<stylesheet>${project.build.directory}/xml-resources/${test.file.xsl}</stylesheet>
+									</transformationSet>
+								</transformationSets>
+							</configuration>
+						</execution>
+						<!-- For generating page file from portlet.xml -->
+						<execution>
+							<id>generate-pagefile</id>
+							<phase>generate-resources</phase>
+							<goals>
+								<goal>transform</goal>
+							</goals>
+							<configuration>
+								<skip>${additional.pagefile.only}</skip>
+								<transformationSets>
+									<!-- Automatically generate page file for the module -->
+									<transformationSet>
+										<dir>${portlet.descriptor.dir}</dir>
+										<includes>
+											<include>portlet.xml</include>
+										</includes>
+										<outputDir>${project.build.directory}/${test.file.dir}</outputDir>
+										<fileMappers>
+											<fileMapper implementation="org.codehaus.plexus.components.io.filemappers.MergeFileMapper">
+												<targetName>${page.file.name}</targetName>
+											</fileMapper>
+										</fileMappers>
+										<parameters>
+											<parameter>
+												<name>portlet-app-context</name>
+												<value>${project.artifactId}-${project.version}</value>
+											</parameter>
+										</parameters>
+										<stylesheet>${project.build.directory}/xml-resources/${page.file.xsl}</stylesheet>
+									</transformationSet>
+								</transformationSets>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- For extracting the XML transformation stylesheets from common module -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>2.8</version>
+					<executions>
+						<execution>
+							<id>xml-resource-dependencies</id>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>unpack-dependencies</goal>
+							</goals>
+							<configuration>
+								<includeArtifactIds>tck-common</includeArtifactIds>
+								<includes>xml-resources/**</includes>
+								<outputDirectory>${project.build.directory}</outputDirectory>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- For copying the page & testcase files for V3 module build -->
+				<plugin>
+					<groupId>com.coderplus.maven.plugins</groupId>
+					<artifactId>copy-rename-maven-plugin</artifactId>
+					<version>1.0.1</version>
+					<executions>
+						<execution>
+							<id>copy-files</id>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>copy</goal>
+							</goals>
+							<configuration>
+								<fileSets>
+									<fileSet>
+										<sourceFile>src/main/resources/xml-resources/additionalTCs.xml</sourceFile>
+										<destinationFile>target/${test.file.dir}/${project.artifactId}-tests.xml</destinationFile>
+									</fileSet>
+									<fileSet>
+										<sourceFile>src/main/resources/xml-resources/additionalPages.xml</sourceFile>
+										<destinationFile>target/${test.file.dir}/${project.artifactId}-pages.xml</destinationFile>
+									</fileSet>
+								</fileSets>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- Don't attach source or javadoc archive (for release plugin)-->
+				<plugin>
+					<artifactId>maven-source-plugin</artifactId>
+					<configuration>
+						<attach>false</attach>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<configuration>
+						<skip>true</skip>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<!-- skip legal file checking for now -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>ianal-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>verify-legal-files</goal>
+						</goals>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<doctitle>
                   JSR 362 Portlet Specification 3.0 TCK Working
                   Document
                </doctitle>
-               <windowtitle>
+					<windowtitle>
                   JSR 362 Portlet Specification 3.0 TCK
                   Working Document
                </windowtitle>
-               <stylesheetfile>${javadoc.css.file}</stylesheetfile>
-               <!-- link to Java EE APIs for cross-references -->
-               <links>
-                  <link>http://docs.oracle.com/javaee/7/api/</link>
-               </links>
-               <docfilessubdirs>true</docfilessubdirs>
-               <bottom>
-               <![CDATA[Java Portlet Specification V3.0 Working Document.
+					<stylesheetfile>${javadoc.css.file}</stylesheetfile>
+					<!-- link to Java EE APIs for cross-references -->
+					<links>
+						<link>http://docs.oracle.com/javaee/7/api/</link>
+					</links>
+					<docfilessubdirs>true</docfilessubdirs>
+					<bottom><![CDATA[Java Portlet Specification V3.0 Working Document.
                   See the <a href="doc-files/NOTICE.txt">Copyright</a> and 
                   <a href="doc-files/LICENSE.txt">License</a> provided with this distribution.
                   Use is subject to
-                  <a href="http://www.apache.org/licenses/LICENSE-2.0">license terms</a>.]]>
-               </bottom>
-            </configuration>
-            <executions>
-               <execution>
-                  <id>aggregate</id>
-                  <goals>
-                     <goal>aggregate</goal>
-                  </goals>
-                  <phase>site</phase>
-               </execution>
-            </executions>
-         </plugin>
-         
-         <!-- configure excludes for maven rat plugin -->
-         <plugin>
-            <groupId>org.apache.rat</groupId>
-            <artifactId>apache-rat-plugin</artifactId>
-            <configuration>
-               <excludes>
-                  <exclude>src/main/javadoc/doc-files/JSR286ApidocAssertions.csv</exclude>
-                  <exclude>src/main/javadoc/doc-files/JSR286ApidocGenerated.csv</exclude>
-                  <exclude>src/main/javadoc/doc-files/JSR286SpecAssertions.csv</exclude>
-                  <exclude>src/main/javadoc/doc-files/JSR286SpecAssertionsDispatcher.csv</exclude>
-                  <exclude>src/main/javadoc/doc-files/JSR286TCDispatchTableAssertions.csv</exclude>
-               </excludes>
-            </configuration>
-         </plugin>
-
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-deploy-plugin</artifactId>
-            <configuration>
-               <skip>true</skip>
-            </configuration>
-         </plugin>
-
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <configuration>
-               <skip>true</skip>
-            </configuration>
-         </plugin>
-
-      </plugins>
-   </build>
-
-   <reporting>
-      <plugins>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-report-plugin</artifactId>
-            <version>2.17</version>
-            <configuration>
-               <aggregate>true</aggregate>
-               <reportsDirectories>
-                  <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-                  <reportsDirectory>${project.build.directory}/jasmine</reportsDirectory>
-               </reportsDirectories>
-            </configuration>
-         </plugin>
-      </plugins>
-   </reporting>
-
-   <profiles>
-      <profile>
-         <id>pluto</id>
-         <activation>
-            <activeByDefault>true</activeByDefault>
-         </activation>
-         <properties>
-            <test.tck.driver>**/javax/portlet/tck/driver/TCKTestDriver.java</test.tck.driver>
-         </properties>
-         <dependencies>
-            <dependency>
-               <groupId>org.slf4j</groupId>
-               <artifactId>slf4j-api</artifactId>
-               <scope>provided</scope>
-            </dependency>
-            <dependency>
-               <groupId>org.slf4j</groupId>
-               <artifactId>slf4j-jdk14</artifactId>
-               <scope>provided</scope>
-            </dependency>
-         </dependencies>
-         <build>
-            <plugins>
-               <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-war-plugin</artifactId>
-                  <configuration>
-                     <archiveClasses>false</archiveClasses>
-                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                     <packagingExcludes>
+                  <a href="http://www.apache.org/licenses/LICENSE-2.0">license terms</a>.]]></bottom>
+				</configuration>
+				<executions>
+					<execution>
+						<id>aggregate</id>
+						<goals>
+							<goal>aggregate</goal>
+						</goals>
+						<phase>site</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- configure excludes for maven rat plugin -->
+			<plugin>
+				<groupId>org.apache.rat</groupId>
+				<artifactId>apache-rat-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>src/main/javadoc/doc-files/JSR286ApidocAssertions.csv</exclude>
+						<exclude>src/main/javadoc/doc-files/JSR286ApidocGenerated.csv</exclude>
+						<exclude>src/main/javadoc/doc-files/JSR286SpecAssertions.csv</exclude>
+						<exclude>src/main/javadoc/doc-files/JSR286SpecAssertionsDispatcher.csv</exclude>
+						<exclude>src/main/javadoc/doc-files/JSR286TCDispatchTableAssertions.csv</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.17</version>
+				<configuration>
+					<aggregate>true</aggregate>
+					<reportsDirectories>
+						<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+						<reportsDirectory>${project.build.directory}/jasmine</reportsDirectory>
+					</reportsDirectories>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+	<profiles>
+		<profile>
+			<id>pluto</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<test.tck.driver>**/javax/portlet/tck/driver/TCKTestDriver.java</test.tck.driver>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-jdk14</artifactId>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<configuration>
+							<archiveClasses>false</archiveClasses>
+							<failOnMissingWebXml>false</failOnMissingWebXml>
+							<packagingExcludes>
                         WEB-INF/liferay/portlet.xml,
                         WEB-INF/liferay-portlet.xml,
                         WEB-INF/classes/log4j.properties
                      </packagingExcludes>
-                     <webResources>
-                        <webResource>
-                          <filtering>true</filtering>
-                          <directory>${project.build.directory}/${test.file.dir}</directory>
-                          <includes>
-                            <include>${project.artifactId}-pages.xml</include>
-                            <include>${project.artifactId}-tests.xml</include>
-                          </includes>
-                          <targetPath>${test.file.dir}</targetPath>
-                        </webResource>
-                     </webResources>
-                  </configuration>
-               </plugin>
-            </plugins>
-         </build>
-      </profile>
-      <profile>
-         <id>liferay</id>
-         <properties>
-            <test.tck.driver>**/javax/portlet/tck/driver/TCKLiferayTestDriver.java</test.tck.driver>
-            <test.server.login.url>http://${test.server.host}:${test.server.port}/group/portlet-tck</test.server.login.url>
-         </properties>
-         <dependencies>
-            <dependency>
-               <groupId>org.slf4j</groupId>
-               <artifactId>slf4j-api</artifactId>
-               <scope>provided</scope>
-            </dependency>
-         </dependencies>
-         <build>
-            <plugins>
-               <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-war-plugin</artifactId>
-                  <configuration>
-                     <archiveClasses>false</archiveClasses>
-                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                     <packagingExcludes>
+							<webResources>
+								<webResource>
+									<filtering>true</filtering>
+									<directory>${project.build.directory}/${test.file.dir}</directory>
+									<includes>
+										<include>${project.artifactId}-pages.xml</include>
+										<include>${project.artifactId}-tests.xml</include>
+									</includes>
+									<targetPath>${test.file.dir}</targetPath>
+								</webResource>
+							</webResources>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>liferay</id>
+			<properties>
+				<test.tck.driver>**/javax/portlet/tck/driver/TCKLiferayTestDriver.java</test.tck.driver>
+				<test.server.login.url>http://${test.server.host}:${test.server.port}/group/portlet-tck</test.server.login.url>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<configuration>
+							<archiveClasses>false</archiveClasses>
+							<failOnMissingWebXml>false</failOnMissingWebXml>
+							<packagingExcludes>
                         WEB-INF/pluto/portlet.xml,
                         WEB-INF/classes/logging.properties
                      </packagingExcludes>
-                     <webResources>
-                        <webResource>
-                          <filtering>true</filtering>
-                          <directory>${project.build.directory}/${test.file.dir}</directory>
-                          <includes>
-                            <include>${project.artifactId}-pages.xml</include>
-                            <include>${project.artifactId}-tests.xml</include>
-                          </includes>
-                          <targetPath>${test.file.dir}</targetPath>
-                        </webResource>
-                     </webResources>
-                  </configuration>
-               </plugin>
-            </plugins>
-         </build>
-      </profile>
-   </profiles>
-
+							<webResources>
+								<webResource>
+									<filtering>true</filtering>
+									<directory>${project.build.directory}/${test.file.dir}</directory>
+									<includes>
+										<include>${project.artifactId}-pages.xml</include>
+										<include>${project.artifactId}-tests.xml</include>
+									</includes>
+									<targetPath>${test.file.dir}</targetPath>
+								</webResource>
+							</webResources>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

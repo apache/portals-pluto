@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one
   or more contributor license agreements.  See the NOTICE file
@@ -17,31 +18,26 @@
   under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
-  <modelVersion>4.0.0</modelVersion>
-  <prerequisites>
-    <maven>2.0.9</maven>
-  </prerequisites>
-
-  <parent>
-    <groupId>org.apache.portals.pluto</groupId>
-    <artifactId>pluto</artifactId>
-    <version>3.1.0-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
-  </parent>
-
-  <artifactId>pluto-site-skin</artifactId>
-  <name>Apache Pluto Website Skin</name>
-  <packaging>jar</packaging>
-  <description>Apache Pluto Website Resources (CSS, images)</description>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-remote-resources-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
-
+	<modelVersion>4.0.0</modelVersion>
+	<prerequisites>
+		<maven>2.0.9</maven>
+	</prerequisites>
+	<parent>
+		<groupId>org.apache.portals.pluto</groupId>
+		<artifactId>pluto</artifactId>
+		<version>3.1.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>pluto-site-skin</artifactId>
+	<name>Apache Pluto Website Skin</name>
+	<packaging>jar</packaging>
+	<description>Apache Pluto Website Resources (CSS, images)</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-remote-resources-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

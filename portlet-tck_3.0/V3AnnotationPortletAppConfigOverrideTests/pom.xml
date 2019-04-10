@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
     Licensed to the Apache Software Foundation (ASF) under one
     or more contributor license agreements.  See the NOTICE file
     distributed with this work for additional information
@@ -15,231 +16,219 @@
     KIND, either express or implied.  See the License for the
     specific language governing permissions and limitations
     under the License.     
---><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-   <modelVersion>4.0.0</modelVersion>
-
-   <parent>
-      <groupId>javax.portlet</groupId>
-      <artifactId>portlet-tck</artifactId>
-      <version>3.0.2-SNAPSHOT</version>
-      <relativePath>../pom.xml</relativePath>
-   </parent>
-
-   <artifactId>tck-V3AnnotationPortletAppConfigOverrideTests</artifactId>
-   <packaging>war</packaging>
-
-   <dependencies>
-      <dependency>
-         <groupId>javax.portlet</groupId>
-         <artifactId>portlet-api</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.tomcat</groupId>
-         <artifactId>tomcat-servlet-api</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>javax.portlet</groupId>
-         <artifactId>tck-common</artifactId>
-         <version>${project.version}</version>
-         <scope>compile</scope>
-      </dependency>
-
-      <!-- for tooling purposes -->
-      <dependency>
-         <groupId>org.apache.tomcat</groupId>
-         <artifactId>tomcat-jsp-api</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.tomcat</groupId>
-         <artifactId>tomcat-el-api</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.taglibs</groupId>
-         <artifactId>taglibs-standard-spec</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.taglibs</groupId>
-         <artifactId>taglibs-standard-impl</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.taglibs</groupId>
-         <artifactId>taglibs-standard-jstlel</artifactId>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.portals.pluto</groupId>
-         <artifactId>pluto-taglib</artifactId>
-         <scope>provided</scope>
-      </dependency>
-   </dependencies>
-
-   <properties>
-      <!-- This module defines all test cases in a file (TCs are not generated from the portlet.xml) -->
-      <additional.testcases.only>true</additional.testcases.only>
-
-      <!-- This module places the portlets on the page through a file. (Page is not generated from the portlet.xml) -->
-      <additional.pagefile.only>true</additional.pagefile.only>
-   </properties>
-
-   <build>
-      <finalName>${project.artifactId}</finalName>
-      
-      <plugins>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-         </plugin>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-war-plugin</artifactId>
-         </plugin>
-         
-         <!-- copy page & test case files, renaming properly -->
-         <plugin>
-            <groupId>com.coderplus.maven.plugins</groupId>
-            <artifactId>copy-rename-maven-plugin</artifactId>
-         </plugin>
-         
-         <!-- ignored files for rat check -->
-         <plugin>
-            <groupId>org.apache.rat</groupId>
-            <artifactId>apache-rat-plugin</artifactId>
-            <configuration>
-               <excludes>
-                  <exclude>src/main/docs/ModuleAssertions.csv</exclude>
-               </excludes>
-            </configuration>
-         </plugin>
-      </plugins>
-   </build>
-
-
-   <profiles>
-      <profile>
-         <id>liferay</id>
-         <build>
-            <plugins>
-               <plugin>
-                  <artifactId>maven-compiler-plugin</artifactId>
-                  <configuration>
-                     <excludes>
-                        <exclude>**/pluto/*.java</exclude>
-                     </excludes>
-                  </configuration>
-               </plugin>
-            </plugins>
-         </build>
-      </profile>
-      <profile>
-         <id>liferay-cdi</id>
-         <build>
-            <plugins>
-               <plugin>
-                  <artifactId>maven-war-plugin</artifactId>
-                  <configuration>
-                     <packagingExcludes>
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>javax.portlet</groupId>
+		<artifactId>portlet-tck</artifactId>
+		<version>3.0.2-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>tck-V3AnnotationPortletAppConfigOverrideTests</artifactId>
+	<packaging>war</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>javax.portlet</groupId>
+			<artifactId>portlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.portlet</groupId>
+			<artifactId>tck-common</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- for tooling purposes -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jsp-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-el-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taglibs</groupId>
+			<artifactId>taglibs-standard-spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taglibs</groupId>
+			<artifactId>taglibs-standard-impl</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taglibs</groupId>
+			<artifactId>taglibs-standard-jstlel</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.portals.pluto</groupId>
+			<artifactId>pluto-taglib</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<properties>
+		<!-- This module defines all test cases in a file (TCs are not generated from the portlet.xml) -->
+		<additional.testcases.only>true</additional.testcases.only>
+		<!-- This module places the portlets on the page through a file. (Page is not generated from the portlet.xml) -->
+		<additional.pagefile.only>true</additional.pagefile.only>
+	</properties>
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+			</plugin>
+			<!-- copy page & test case files, renaming properly -->
+			<plugin>
+				<groupId>com.coderplus.maven.plugins</groupId>
+				<artifactId>copy-rename-maven-plugin</artifactId>
+			</plugin>
+			<!-- ignored files for rat check -->
+			<plugin>
+				<groupId>org.apache.rat</groupId>
+				<artifactId>apache-rat-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>src/main/docs/ModuleAssertions.csv</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<profiles>
+		<profile>
+			<id>liferay</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<configuration>
+							<excludes>
+								<exclude>**/pluto/*.java</exclude>
+							</excludes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>liferay-cdi</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<configuration>
+							<packagingExcludes>
                         WEB-INF/applicationContext.xml,
                         WEB-INF/classes/logging.properties
                      </packagingExcludes>
-                  </configuration>
-               </plugin>
-            </plugins>
-         </build>
-      </profile>
-      <profile>
-         <id>liferay-spring</id>
-         <build>
-            <plugins>
-               <plugin>
-                  <artifactId>maven-war-plugin</artifactId>
-                  <configuration>
-                     <packagingExcludes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>liferay-spring</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<configuration>
+							<packagingExcludes>
                         WEB-INF/beans.xml,
                         WEB-INF/classes/logging.properties
                      </packagingExcludes>
-                  </configuration>
-               </plugin>
-            </plugins>
-         </build>
-         <dependencies>
-            <dependency>
-               <groupId>${liferay.spring.group.id}</groupId>
-               <artifactId>${liferay.spring.artifact.id}</artifactId>
-               <version>${liferay.spring.artifact.version}</version>
-            </dependency>
-            <dependency>
-               <groupId>org.hibernate.validator</groupId>
-               <artifactId>hibernate-validator</artifactId>
-            </dependency>
-            <dependency>
-               <groupId>org.springframework</groupId>
-               <artifactId>spring-beans</artifactId>
-               <version>${springframework.liferay.version}</version>
-            </dependency>
-            <dependency>
-               <groupId>org.springframework</groupId>
-               <artifactId>spring-context</artifactId>
-               <version>${springframework.liferay.version}</version>
-            </dependency>
-            <dependency>
-               <groupId>org.springframework</groupId>
-               <artifactId>spring-core</artifactId>
-               <version>${springframework.liferay.version}</version>
-            </dependency>
-            <dependency>
-               <groupId>org.springframework</groupId>
-               <artifactId>spring-web</artifactId>
-               <version>${springframework.liferay.version}</version>
-            </dependency>
-         </dependencies>
-      </profile>
-      <profile>
-         <id>pluto</id>
-         <dependencies>
-            <dependency>
-               <groupId>org.apache.taglibs</groupId>
-               <artifactId>taglibs-standard-spec</artifactId>
-               <scope>compile</scope>
-            </dependency>
-            <dependency>
-               <groupId>org.apache.taglibs</groupId>
-               <artifactId>taglibs-standard-impl</artifactId>
-               <scope>compile</scope>
-            </dependency>
-            <dependency>
-               <groupId>org.apache.taglibs</groupId>
-               <artifactId>taglibs-standard-jstlel</artifactId>
-               <scope>compile</scope>
-            </dependency>
-         </dependencies>
-         <build>
-            <plugins>
-               <plugin>
-                  <artifactId>maven-compiler-plugin</artifactId>
-                  <configuration>
-                     <excludes>
-                        <exclude>**/liferay/*.java</exclude>
-                     </excludes>
-                  </configuration>
-               </plugin>
-               <plugin>
-                  <artifactId>maven-war-plugin</artifactId>
-                  <configuration>
-                     <packagingExcludes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+			<dependencies>
+				<dependency>
+					<groupId>${liferay.spring.group.id}</groupId>
+					<artifactId>${liferay.spring.artifact.id}</artifactId>
+					<version>${liferay.spring.artifact.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.hibernate.validator</groupId>
+					<artifactId>hibernate-validator</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+					<version>${springframework.liferay.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+					<version>${springframework.liferay.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+					<version>${springframework.liferay.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-web</artifactId>
+					<version>${springframework.liferay.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>pluto</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.apache.taglibs</groupId>
+					<artifactId>taglibs-standard-spec</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.taglibs</groupId>
+					<artifactId>taglibs-standard-impl</artifactId>
+					<scope>compile</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.taglibs</groupId>
+					<artifactId>taglibs-standard-jstlel</artifactId>
+					<scope>compile</scope>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<configuration>
+							<excludes>
+								<exclude>**/liferay/*.java</exclude>
+							</excludes>
+						</configuration>
+					</plugin>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<configuration>
+							<packagingExcludes>
                         WEB-INF/applicationContext.xml,
                         WEB-INF/beans.xml,
                         WEB-INF/classes/log4j.properties,
                         WEB-INF/liferay-portlet.xml
                      </packagingExcludes>
-                  </configuration>
-               </plugin>
-            </plugins>
-         </build>
-      </profile>
-   </profiles>
-
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
