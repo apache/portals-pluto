@@ -62,6 +62,7 @@
 
     <xmlproperty file="pom.xml"/> <!-- picks up pluto build version from pom file -->
     <property name="pluto.version" value="${project.version}" description="Version of Pluto to build"/>
+    <property name="portals.portlet-api.version" value="${project.properties.portals.portlet-api.version}" description="Version of the Portlet API"/>
 
    <property name="dist.basedir" value="target/dist" description="Base working directory"/>
    <property name="base.name" value="apache-tomcat-${tomcat.full.version}"/>
@@ -95,18 +96,17 @@
       <bzip2 src="${dist.basedir}/${pluto.name}-bundle.tar" 
          destfile="${dist.basedir}/${pluto.name}-bundle.tar.bz2"/>
 
-      <!-- copy the portlet API jars to the dist directory -->
-      <!-- NOTE: This is commented-out because it is only necessary when a new version of the portlet-api is released -->
-      <!--
-      <copy file="portlet-api/target/portlet-api-${pluto.version}.jar" todir="${dist.basedir}"/>         
-      <copy file="portlet-api/target/portlet-api-${pluto.version}-javadoc.jar" todir="${dist.basedir}"/>         
-      <copy file="portlet-api/target/portlet-api-${pluto.version}-sources.jar" todir="${dist.basedir}"/>         
-	  -->
-         
-      <!-- Now package the TCK deliverables -->         
+      <antcall target="package-portlet-api"/>      
+
       <antcall target="package-tck"/>      
             
       <antcall target="clean"/>   
+   </target>
+
+   <target name="package-portlet-api" if="packagePortletAPI">
+      <copy file="portlet-api/target/portlet-api-${portals.portlet-api.version}.jar" todir="${dist.basedir}"/>         
+      <copy file="portlet-api/target/portlet-api-${portals.portlet-api.version}-javadoc.jar" todir="${dist.basedir}"/>         
+      <copy file="portlet-api/target/portlet-api-${portals.portlet-api.version}-sources.jar" todir="${dist.basedir}"/>         
    </target>
 
    <target name="package-tck" if="packageTck">
