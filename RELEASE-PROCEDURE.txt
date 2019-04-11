@@ -84,19 +84,19 @@ Since 3.0.0
 6. CLEANUP AND START OVER
 	Cleanup the release prepare files again:
 
-	$ mvn -P all,apache-release release:clean
+	$ mvn -P apache-release release:clean
 
 7. PREPARE THE RELEASE
 	Run the "release:prepare" step for real this time. You'll be prompted for the same version information.
 
-	$ mvn -P all,apache-release -DrunOnlyAtExecutionRoot=true release:prepare
+	$ mvn -P apache-release -DrunOnlyAtExecutionRoot=true release:prepare
 
 	Backup (zip or tar) your local release candidate directory in case you need to rollback the release after the next step is performed.
 
 8. PERFORM THE RELEASE
 	a. This step will create a maven staging repository and site for use in testing and voting.
 
-	$ mvn -P all,apache-release release:perform -Duser.name=[your_apache_uid]
+	$ mvn -P apache-release release:perform -Duser.name=[your_apache_uid]
 
 	If your local OS userid doesn't match your Apache userid, then you'll have to also override the value provided
 	by the OS to Maven for the site-deploy step to work. This is known to work for Linux, but not for Mac and unknown for Windows.
