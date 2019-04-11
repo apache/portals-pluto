@@ -22,7 +22,7 @@ limitations under the License.
 <%@ page import="java.io.*,java.util.*,javax.portlet.*" %>
 <%@ page import="javax.portlet.MimeResponse.Copy" %>
 <%@ page import="static javax.portlet.MimeResponse.Copy.*" %>
-<%@ page import="static basic.portlet.Constants.*" %>
+<%@ page import="static org.apache.portals.pluto.demo.v3.Constants.*" %>
 
 <portlet:defineObjects />
 

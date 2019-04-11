@@ -20,7 +20,7 @@ limitations under the License.
 <%@ taglib uri="http://xmlns.jcp.org/portlet_3_0"  prefix="portlet" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.*" %>
-<%@ page import="static basic.portlet.TagLibPortlet.*" %>
+<%@ page import="static org.apache.portals.pluto.demo.v3.TagLibPortlet.*" %>
 
 <portlet:defineObjects />
 

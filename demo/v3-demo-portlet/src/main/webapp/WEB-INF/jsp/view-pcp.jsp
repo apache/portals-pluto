@@ -16,7 +16,7 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
-<%@ page import="static basic.portlet.Constants.*" %>
+<%@ page import="static org.apache.portals.pluto.demo.v3.Constants.*" %>
 <%@ page session="false" %>
 <%@ taglib uri="http://xmlns.jcp.org/portlet_3_0"  prefix="portlet" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

@@ -26,7 +26,7 @@ limitations under the License.
       <portlet-name>V3ImageViewer</portlet-name>
       <display-name>V3 Image Viewer Portlet</display-name>
       
-      <portlet-class>basic.portlet.ResourcePortlet</portlet-class>
+      <portlet-class>org.apache.portals.pluto.demo.v3.ResourcePortlet</portlet-class>
 
       <supports>
          <mime-type>text/html</mime-type>
@@ -53,7 +53,7 @@ limitations under the License.
       <portlet-name>MessageBoxPortlet</portlet-name>
       <display-name>Message Box Portlet</display-name>
       
-      <portlet-class>basic.portlet.MessageBoxPortlet</portlet-class>
+      <portlet-class>org.apache.portals.pluto.demo.v3.MessageBoxPortlet</portlet-class>
 
       <supports>
          <mime-type>text/html</mime-type>
@@ -77,7 +77,7 @@ limitations under the License.
       <portlet-name>V3ImageSelector</portlet-name>
       <display-name>Image Selection Portlet - alt PRP name</display-name>
       
-      <portlet-class>basic.portlet.ImageSelPortlet</portlet-class>
+      <portlet-class>org.apache.portals.pluto.demo.v3.ImageSelPortlet</portlet-class>
 
       <supports>
          <mime-type>text/html</mime-type>
@@ -103,7 +103,7 @@ limitations under the License.
       <portlet-name>V3ColorSelector</portlet-name>
       <display-name>Color Selection Portlet - alt QName</display-name>
       
-      <portlet-class>basic.portlet.ColorSelPortlet</portlet-class>
+      <portlet-class>org.apache.portals.pluto.demo.v3.ColorSelPortlet</portlet-class>
 
       <supports>
          <mime-type>text/html</mime-type>
@@ -133,7 +133,7 @@ limitations under the License.
       <portlet-name>PortletConfigPortlet1</portlet-name>
       <display-name>Portlet Config Portlet #1</display-name>
       
-      <portlet-class>basic.portlet.PortletConfigPortlet</portlet-class>
+      <portlet-class>org.apache.portals.pluto.demo.v3.PortletConfigPortlet</portlet-class>
 
       <supports>
          <mime-type>text/html</mime-type>
@@ -167,7 +167,7 @@ limitations under the License.
       <portlet-name>PortletConfigPortlet2</portlet-name>
       <display-name>Portlet Config Portlet #2</display-name>
       
-      <portlet-class>basic.portlet.PortletConfigPortlet</portlet-class>
+      <portlet-class>org.apache.portals.pluto.demo.v3.PortletConfigPortlet</portlet-class>
 
       <supports>
          <mime-type>text/html</mime-type>
@@ -189,7 +189,7 @@ limitations under the License.
       <portlet-name>ParamTestPortlet</portlet-name>
       <display-name>V3 Parameter Test Portlet</display-name>
       
-      <portlet-class>basic.portlet.ParamTestPortlet</portlet-class>
+      <portlet-class>org.apache.portals.pluto.demo.v3.ParamTestPortlet</portlet-class>
 
       <supports>
          <mime-type>text/html</mime-type>
@@ -210,7 +210,7 @@ limitations under the License.
       <portlet-name>UrlTestPortlet</portlet-name>
       <display-name>V3 URL Test Portlet</display-name>
       
-      <portlet-class>basic.portlet.UrlTestPortlet</portlet-class>
+      <portlet-class>org.apache.portals.pluto.demo.v3.UrlTestPortlet</portlet-class>
 
       <supports>
          <mime-type>text/html</mime-type>
@@ -231,7 +231,7 @@ limitations under the License.
       <portlet-name>UrlRPTestPortlet</portlet-name>
       <display-name>V3 URL Render Parameter Test Portlet</display-name>
       
-      <portlet-class>basic.portlet.UrlRPTestPortlet</portlet-class>
+      <portlet-class>org.apache.portals.pluto.demo.v3.UrlRPTestPortlet</portlet-class>
 
       <supports>
          <mime-type>text/html</mime-type>
@@ -252,7 +252,7 @@ limitations under the License.
       <portlet-name>UrlAPTestPortlet</portlet-name>
       <display-name>V3 Action URL Parameter Test Portlet</display-name>
       
-      <portlet-class>basic.portlet.UrlAPTestPortlet</portlet-class>
+      <portlet-class>org.apache.portals.pluto.demo.v3.UrlAPTestPortlet</portlet-class>
 
       <supports>
          <mime-type>text/html</mime-type>
@@ -273,7 +273,7 @@ limitations under the License.
       <portlet-name>LongPortlet</portlet-name>
       <display-name>V3 Fragment Identifier Test Portlet</display-name>
       
-      <portlet-class>basic.portlet.LongPortlet</portlet-class>
+      <portlet-class>org.apache.portals.pluto.demo.v3.LongPortlet</portlet-class>
 
       <supports>
          <mime-type>text/html</mime-type>
@@ -297,7 +297,7 @@ limitations under the License.
       <portlet-name>AuthSCPortlet</portlet-name>
       <display-name>V3 Authentication and Status Code Test Portlet</display-name>
       
-      <portlet-class>basic.portlet.AuthSCPortlet</portlet-class>
+      <portlet-class>org.apache.portals.pluto.demo.v3.AuthSCPortlet</portlet-class>
 
       <supports>
          <mime-type>text/html</mime-type>
@@ -364,7 +364,7 @@ limitations under the License.
 
    <listener>
       <description>Test Listener</description>
-      <listener-class>basic.portlet.URLFilter</listener-class>
+      <listener-class>org.apache.portals.pluto.demo.v3.URLFilter</listener-class>
    </listener>
 
  </portlet-app>
