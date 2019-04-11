@@ -26,10 +26,10 @@ import javax.inject.Named;
 import javax.mvc.Models;
 import javax.portlet.PortletPreferences;
 
+import org.apache.portals.pluto.demo.applicant.mvcbean.cdi.thymeleaf.convert.DateParamConverter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.apache.portals.pluto.demo.applicant.mvcbean.cdi.thymeleaf.convert.DateParamConverter;
 
 
 /**

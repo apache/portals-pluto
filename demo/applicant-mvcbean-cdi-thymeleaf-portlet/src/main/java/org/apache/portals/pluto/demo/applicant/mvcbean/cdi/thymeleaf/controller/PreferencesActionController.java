@@ -40,10 +40,10 @@ import javax.validation.executable.ExecutableType;
 import javax.validation.executable.ValidateOnExecution;
 import javax.ws.rs.FormParam;
 
+import org.apache.portals.pluto.demo.applicant.mvcbean.cdi.thymeleaf.dto.Preferences;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.apache.portals.pluto.demo.applicant.mvcbean.cdi.thymeleaf.dto.Preferences;
 
 
 /**

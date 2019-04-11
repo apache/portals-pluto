@@ -34,11 +34,11 @@ import javax.portlet.annotations.PortletRequestScoped;
 import javax.validation.Valid;
 import javax.ws.rs.BeanParam;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.apache.portals.pluto.demo.applicant.mvcbean.cdi.thymeleaf.dto.Applicant;
 import org.apache.portals.pluto.demo.applicant.mvcbean.cdi.thymeleaf.dto.Attachment;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
