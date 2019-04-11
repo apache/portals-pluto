@@ -57,7 +57,7 @@ Since 3.0.0
 4. DRY RUN
 	Do a dry run of the release:prepare step:
 
-		$ mvn -P apache-release -DrunOnlyAtExecutionRoot=true release:prepare -DdryRun=true
+		$ mvn -P apache-release,pluto -DrunOnlyAtExecutionRoot=true release:prepare -DdryRun=true
 
 	The dry run will not commit any changes back to Git and gives you the opportunity to verify that the release process will complete as expected.
 	You will be prompted for the following information :
@@ -84,12 +84,12 @@ Since 3.0.0
 6. CLEANUP AND START OVER
 	Cleanup the release prepare files again:
 
-	$ mvn -P apache-release release:clean
+	$ mvn -P apache-release,pluto release:clean
 
 7. PREPARE THE RELEASE
 	Run the "release:prepare" step for real this time. You'll be prompted for the same version information.
 
-	$ mvn -P apache-release release:prepare -DrunOnlyAtExecutionRoot=true
+	$ mvn -P apache-release,pluto release:prepare -DrunOnlyAtExecutionRoot=true
 
 	Backup (zip or tar) your local release candidate directory in case you need to rollback the release after the next step is performed.
 
@@ -108,7 +108,7 @@ Since 3.0.0
 	b. REQUIRED: Release the main Apache Pluto software modules
 
 	$ cd portals-pluto
-	$ mvn -P apache-release release:perform -Duser.name=[your_apache_uid]
+	$ mvn -P apache-release,pluto release:perform -Duser.name=[your_apache_uid]
 	$ vi portlet-tck_3.0/pom.xml # Update the parent <version/> and also the version in the <pluto.test.version/> property
 	$ git commit -m "Upgraded the TCK to Pluto test version x.y.z"
 
@@ -123,8 +123,8 @@ Since 3.0.0
 	      the portlet-tck_3.0/pom.xml and TCK sub-module POM descriptors.
 
 	$ cd portals-pluto/portlet-tck_3.0
-	$ mvn -P apache-release release:prepare -DrunOnlyAtExecutionRoot=true
-	$ mvn -P apache-release release:perform -Duser.name=[your_apache_uid]
+	$ mvn -P apache-release,pluto release:prepare -DrunOnlyAtExecutionRoot=true
+	$ mvn -P apache-release,pluto release:perform -Duser.name=[your_apache_uid]
 
 	d. OPTIONAL: Release the Archetypes (Each has its own version scheme and release schedule)
 
