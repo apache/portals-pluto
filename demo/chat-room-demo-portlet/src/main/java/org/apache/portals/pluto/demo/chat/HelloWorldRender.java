@@ -19,6 +19,8 @@
 
 package org.apache.portals.pluto.demo.chat;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import javax.inject.Inject;
 import javax.portlet.annotations.RenderMethod;
 
@@ -48,7 +50,7 @@ public class HelloWorldRender {
       txt.append("<h3>Hello \n");
       // Get the name from the bean. If it hasn't been set, just greet the world.
       if (nameBean.getName() != null) {
-         txt.append(nameBean.getName());
+         txt.append(StringEscapeUtils.escapeHtml4(nameBean.getName()));
       } else {
          txt.append("World\n");
       }

@@ -43,6 +43,10 @@
 			<version>6.0</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
 		<!-- for eclipse JSP tooling purposes -->
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>

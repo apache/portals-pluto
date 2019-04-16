@@ -18,6 +18,8 @@
 
 package org.apache.portals.pluto.demo.chat;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -66,7 +68,7 @@ public class ChatHistory {
       StringBuilder txt = new StringBuilder(128);
       synchronized (messages) {
          for (String msg : messages) {
-            txt.append("<p>").append(msg).append("</p>\n");
+            txt.append("<p>").append(StringEscapeUtils.escapeHtml4(msg)).append("</p>\n");
          }
       }
       return txt.toString();
