@@ -271,33 +271,6 @@ generate mailto links. -->
 		<includeDemosBegin/>
 		<includeDemosEnd/>
 	</properties>
-	<modules>
-		<module>pluto-container-api</module>
-		<module>pluto-container</module>
-		<module>pluto-taglib</module>
-		<module>pluto-container-driver-api</module>
-		<module>pluto-portal-driver</module>
-		<module>pluto-portal-driver-impl</module>
-		<module>pluto-portal</module>
-		<module>pluto-testsuite</module>
-		<module>pluto-common</module>
-		<module>demo</module>
-		<module>demo-integration-tests</module>
-		<module>pluto-util</module>
-		<module>maven-pluto-plugin</module>
-		<module>pluto-ant-tasks</module>
-		<module>pluto-site-skin</module>
-		<module>portlet-servlet-adapter</module>
-		<module>portlet-templating</module>
-		<module>test-base</module>
-		<!-- The following are excluded from the apache-release profile since they are on separate release schedules -->
-		<module>maven-archetypes/bean-portlet-archetype</module>
-		<module>maven-archetypes/generic-portlet-archetype</module>
-		<module>maven-archetypes/mvcbean-jsp-portlet-archetype</module>
-		<module>maven-archetypes/mvcbean-thymeleaf-portlet-archetype</module>
-		<module>portlet-api</module>
-		<module>portlet-tck_3.0</module>
-	</modules>
 	<dependencyManagement>
 		<dependencies>
 			<!-- Logging =========================================== -->
@@ -757,6 +730,39 @@ generate mailto links. -->
 		</plugins>
 	</build>
 	<profiles>
+		<profile>
+			<id>all</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>pluto-container-api</module>
+				<module>pluto-container</module>
+				<module>pluto-taglib</module>
+				<module>pluto-container-driver-api</module>
+				<module>pluto-portal-driver</module>
+				<module>pluto-portal-driver-impl</module>
+				<module>pluto-portal</module>
+				<module>pluto-testsuite</module>
+				<module>pluto-common</module>
+				<module>demo</module>
+				<module>demo-integration-tests</module>
+				<module>pluto-util</module>
+				<module>maven-pluto-plugin</module>
+				<module>pluto-ant-tasks</module>
+				<module>pluto-site-skin</module>
+				<module>portlet-servlet-adapter</module>
+				<module>portlet-templating</module>
+				<module>test-base</module>
+				<!-- The following are excluded from the apache-release profile since they are on separate release schedules -->
+				<module>maven-archetypes/bean-portlet-archetype</module>
+				<module>maven-archetypes/generic-portlet-archetype</module>
+				<module>maven-archetypes/mvcbean-jsp-portlet-archetype</module>
+				<module>maven-archetypes/mvcbean-thymeleaf-portlet-archetype</module>
+				<module>portlet-api</module>
+				<module>portlet-tck_3.0</module>
+			</modules>
+		</profile>
 		<profile>
 			<id>apache-release</id>
 			<modules>
