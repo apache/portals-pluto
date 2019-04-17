@@ -21,7 +21,7 @@
 	<parent>
 		<groupId>org.apache.portals.pluto</groupId>
 		<artifactId>pluto</artifactId>
-		<version>3.1.0-SNAPSHOT</version>
+		<version>3.1.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -43,7 +43,7 @@
 		<tag>HEAD</tag>
 	</scm>
 	<properties>
-		<pluto.test.version>3.1.0-SNAPSHOT</pluto.test.version>
+		<pluto.test.version>3.1.0</pluto.test.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- To automatically generate a list of test cases, each module transforms the portlet.xml file -->
 		<!-- using an XSLT transformation. -->
