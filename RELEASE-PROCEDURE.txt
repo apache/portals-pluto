@@ -86,14 +86,7 @@ Since 3.0.0
 
 	$ mvn -P apache-release,pluto release:clean
 
-7. PREPARE THE RELEASE
-	Run the "release:prepare" step for real this time. You'll be prompted for the same version information.
-
-	$ mvn -P apache-release,pluto release:prepare -DrunOnlyAtExecutionRoot=true
-
-	Backup (zip or tar) your local release candidate directory in case you need to rollback the release after the next step is performed.
-
-8. PERFORM THE RELEASE
+7. PERFORM THE RELEASE
 
 	a. OPTIONAL: Release the Portlet API (It has its own version scheme and release schedule)
 
@@ -103,14 +96,14 @@ Since 3.0.0
 	$ cd ..
 	$ vi pom.xml # Update the version in the <portals.portlet-api.version/> property
 	$ git commit -m "Upgraded to portlet-api-x.y.z"
-	$ git push upstream master
 
 	b. REQUIRED: Release the main Apache Pluto software modules
 
 	$ cd portals-pluto
+	$ mvn -P apache-release,pluto release:prepare -DrunOnlyAtExecutionRoot=true
 	$ mvn -P apache-release,pluto release:perform -Duser.name=[your_apache_uid]
 	$ vi portlet-tck_3.0/pom.xml # Update the parent <version/> and also the version in the <pluto.test.version/> property
-	$ git commit -m "Upgraded the TCK to Pluto test version x.y.z"
+	$ git commit -a -m "PLUTO-716 Upgraded the TCK to Pluto test version 3.1.0"
 
 	If your local OS userid doesn't match your Apache userid, then you'll have to also override the value provided
 	by the OS to Maven for the site-deploy step to work. This is known to work for Linux, but not for Mac and unknown for Windows.
@@ -141,10 +134,18 @@ Since 3.0.0
 	$ mvn -P apache-release release:perform -Duser.name=[your_apache_uid]
 
 	$ cd portals-pluto/maven-archetypes/mvcbean-thymeleaf-portlet-archetype
+	
+	#	
+	# NOTE: You might need to get rid of a "-SNAPSHOT" from the following POM descriptor first!
+	#
+
+	$ vi src/main/resources/archetype-resources/pom.xml # Change "3.1.0-SNAPSHOT" to "3.1.0" 
+	$ git commit -a -m "PLUTO-716 Upgraded to version 3.1.0"
+
 	$ mvn -P apache-release release:prepare -Duser.name=[your_apache_uid]
 	$ mvn -P apache-release release:perform -Duser.name=[your_apache_uid]
 
-9. VERIFY THE RELEASE
+8. VERIFY THE RELEASE
 	a. Verify signatures (Verifying release signatures)
 
 	$ gpg --verify target/pluto-3.1.0-source-release.zip.asc target/pluto-3.1.0-source-release.zip
@@ -159,9 +160,13 @@ Since 3.0.0
         .md5 files
     See http://people.apache.org/~henkp/repo/faq.html and http://www.apache.org/dev/release-signing.html#openpgp-ascii-detach-sig
 
+9. Push the commits upstream but do NOT yet push any tags (commits can be reverted if necessary)
+
+	$ git push upstream master
+
 10. Checkout the new tag, since the repository will be set to a later commit
 
-    git checkout pluto-3.1.0
+    $ git checkout pluto-3.1.0
 
 11. Create a Distribution Bundle
 
@@ -185,7 +190,7 @@ Since 3.0.0
         #
         #  And the download filename will be pluto-bundle-3.1.0.zip
         #
-        mvn \
+        mvn -Papache-release,pluto \
           gpg:sign-and-deploy-file \
           -Dfile=target/dist/pluto-3.1.0-bundle.zip \
           -DgroupId=org.apache.portals.pluto \
@@ -223,7 +228,7 @@ Since 3.0.0
     #
     # NOTE: Set base URL to the Nexus staging repository
     #
-    BASE_URL="https://repository.apache.org/service/local/repositories/orgapacheportals-1022/content"
+    BASE_URL="https://repository.apache.org/service/local/repositories/orgapacheportals-1025/content"
     wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.0/pluto-3.1.0-source-release.zip
     wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.0/pluto-3.1.0-source-release.zip.asc
     wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.0/pluto-3.1.0-source-release.zip.md5
@@ -305,6 +310,14 @@ Since 3.0.0
         $ FILES=`svn status | grep pluto | awk '{print $2}'`
         $ svn rm $FILES
         $ svn commit -m "PLUTO-716 Promoted artifacts from dev to release for Pluto 3.1.0" --username $USER_NAME
+
+    e. Push the tags upstream
+        $ git push upstream pluto-3.1.0
+        $ git push upstream portlet-tck-3.0.2
+        $ git push upstream bean-portlet-archetype-3.1.0
+        $ git push upstream generic-portlet-archetype-3.1.0
+        $ git push upstream mvcbean-jsp-portlet-archetype-3.1.0
+        $ git push upstream mvcbean-thymeleaf-portlet-archetype-3.1.0
 
     WAIT 24hrs after committing releases for mirrors to replicate before announcing release
 
