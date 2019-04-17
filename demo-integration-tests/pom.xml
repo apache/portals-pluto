@@ -22,7 +22,7 @@
 		<relativePath>../pom.xml</relativePath>
 		<groupId>org.apache.portals.pluto</groupId>
 		<artifactId>pluto</artifactId>
-		<version>3.1.0-SNAPSHOT</version>
+		<version>3.1.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>javax.portlet</groupId>
@@ -39,7 +39,7 @@
 		<connection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</connection>
 		<developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</developerConnection>
 		<url>https://github.com/apache/portals-pluto</url>
-		<tag>HEAD</tag>
+		<tag>pluto-3.1.0</tag>
 	</scm>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

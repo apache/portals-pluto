@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.apache.portals.pluto.templating</groupId>
 		<artifactId>templating</artifactId>
-		<version>3.1.0-SNAPSHOT</version>
+		<version>3.1.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>thymeleaf-mvc-portlet-cdi</artifactId>

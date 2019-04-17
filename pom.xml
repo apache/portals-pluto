@@ -28,7 +28,7 @@
 	<artifactId>pluto</artifactId>
 	<packaging>pom</packaging>
 	<name>Apache Pluto</name>
-	<version>3.1.0-SNAPSHOT</version>
+	<version>3.1.0</version>
 	<!-- Due to a bug in maven 2.0, the description must not contain any line breaks or tabs. -->
 	<description>Apache Pluto is the Reference Implementation of the Java Portlet Specification.</description>
 	<url>http://portals.apache.org/pluto</url>
@@ -127,7 +127,7 @@ generate mailto links. -->
 			<id>zheng</id>
 			<email>zheng#a@T#apache.d0t.org</email>
 			<timezone>+1</timezone>
-			<organization/>
+			<organization />
 			<roles>
 				<role>Java Developer</role>
 			</roles>
@@ -136,13 +136,13 @@ generate mailto links. -->
 			<name>Santiago Gala</name>
 			<id>sgala</id>
 			<email>sgala#a@T#hisitech.d0t.com</email>
-			<organization/>
+			<organization />
 		</developer>
 		<developer>
 			<name>Raphael Luta</name>
 			<id>raphael</id>
 			<email>raphael#a@T#apache.d0t.org</email>
-			<organization/>
+			<organization />
 		</developer>
 		<developer>
 			<name>David S. Taylor</name>
@@ -218,7 +218,7 @@ generate mailto links. -->
 		<connection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</connection>
 		<developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</developerConnection>
 		<url>https://github.com/apache/portals-pluto</url>
-		<tag>HEAD</tag>
+		<tag>pluto-3.1.0</tag>
 	</scm>
 	<!-- Dependency Version Properties ======================================= -->
 	<!--
@@ -269,8 +269,8 @@ generate mailto links. -->
 		<dependency.scope>compile</dependency.scope>
 		<!-- following properties control whether or not demos are included in page 
          config file (see profile 'excludeDemos' below) -->
-		<includeDemosBegin/>
-		<includeDemosEnd/>
+		<includeDemosBegin />
+		<includeDemosEnd />
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -802,7 +802,7 @@ generate mailto links. -->
 		<profile>
 			<id>website</id>
 			<!-- For building website documentation, there's no need to include modules. -->
-			<modules/>
+			<modules />
 		</profile>
 		<!-- To build Pluto for deployment on tomee, activate this profile -->
 		<!-- Activate using the tomee property: mvn clean install -Dtomee -->

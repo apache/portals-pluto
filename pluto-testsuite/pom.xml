@@ -22,7 +22,7 @@
 	<parent>
 		<groupId>org.apache.portals.pluto</groupId>
 		<artifactId>pluto</artifactId>
-		<version>3.1.0-SNAPSHOT</version>
+		<version>3.1.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>pluto-testsuite</artifactId>
@@ -174,9 +174,9 @@
                                       on the command line when invoking maven:
                                       mvn -Ddeploy.dir=/pluto-1.1.4/webapps integration-test
                                     -->
-										<property environment="env"/>
-										<property name="deploy.dir" value="${env.PORTLET_DEPLOY_DIR}"/>
-										<copy file="target/${project.build.finalName}.war" tofile="${deploy.dir}/testsuite.war"/>
+										<property environment="env" />
+										<property name="deploy.dir" value="${env.PORTLET_DEPLOY_DIR}" />
+										<copy file="target/${project.build.finalName}.war" tofile="${deploy.dir}/testsuite.war" />
 									</tasks>
 								</configuration>
 								<goals>
@@ -213,9 +213,9 @@
                                       on the command line when invoking maven:
                                       mvn -Ddeploy.dir=/pluto-1.1.4/webapps integration-test
                                     -->
-										<property environment="env"/>
-										<property name="deploy.dir" value="${env.PORTLET_DEPLOY_DIR}"/>
-										<copy file="target/${project.build.finalName}.war" tofile="${deploy.dir}/testsuite.war"/>
+										<property environment="env" />
+										<property name="deploy.dir" value="${env.PORTLET_DEPLOY_DIR}" />
+										<copy file="target/${project.build.finalName}.war" tofile="${deploy.dir}/testsuite.war" />
 									</tasks>
 								</configuration>
 								<goals>
