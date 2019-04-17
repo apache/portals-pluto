@@ -248,6 +248,7 @@ generate mailto links. -->
 		<springframework.version>5.1.5.RELEASE</springframework.version>
 		<maven.version>2.0.5</maven.version>
 		<ant.version>1.6.5</ant.version>
+		<commons-lang.scope>provided</commons-lang.scope>
 		<commons-lang.version>3.4</commons-lang.version>
 		<commons-io.version>2.4</commons-io.version>
 		<ccpp-api.version>1.0</ccpp-api.version>
@@ -578,7 +579,7 @@ generate mailto links. -->
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
 				<version>${commons-lang.version}</version>
-				<scope>provided</scope>
+				<scope>${commons-lang.scope}</scope>
 			</dependency>
 			<dependency>
 				<groupId>commons-digester</groupId>
@@ -752,7 +753,7 @@ generate mailto links. -->
 				<module>pluto-ant-tasks</module>
 				<module>pluto-site-skin</module>
 				<module>portlet-servlet-adapter</module>
-				<module>portlet-templating</module>
+				<module>templating</module>
 				<module>test-base</module>
 				<!-- The following are excluded from the apache-release profile since they are on separate release schedules -->
 				<module>maven-archetypes/bean-portlet-archetype</module>
@@ -782,9 +783,15 @@ generate mailto links. -->
 				<module>pluto-ant-tasks</module>
 				<module>pluto-site-skin</module>
 				<module>portlet-servlet-adapter</module>
-				<module>portlet-templating</module>
+				<module>templating</module>
 				<module>test-base</module>
 			</modules>
+		</profile>
+		<profile>
+			<id>liferay</id>
+			<properties>
+				<commons-lang.scope>compile</commons-lang.scope>
+			</properties>
 		</profile>
 		<profile>
 			<id>liferay-spring</id>

@@ -12,20 +12,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.apache.portals.pluto</groupId>
-		<artifactId>portlet-templating</artifactId>
+		<groupId>org.apache.portals.pluto.templating</groupId>
+		<artifactId>templating</artifactId>
 		<version>3.1.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>thymeleaf-mvc-portlet-cdi</artifactId>
-	<name>Thymeleaf MVC Portlet CDI</name>
-	<description>CDI implementation of the Thymeleaf MVC Portlet API</description>
+	<artifactId>thymeleaf-mvc-portlet-spring</artifactId>
+	<name>Thymeleaf MVC Portlet Spring</name>
+	<description>Spring implementation of the Thymeleaf MVC Portlet API</description>
 	<dependencies>
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
 		<dependency>
 			<groupId>javax.mvc</groupId>
 			<artifactId>javax.mvc-api</artifactId>
@@ -35,6 +30,12 @@
 			<groupId>javax.portlet</groupId>
 			<artifactId>portlet-api</artifactId>
 			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.enterprise</groupId>
+					<artifactId>cdi-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -56,9 +57,21 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.portals.pluto</groupId>
+			<groupId>org.apache.portals.pluto.templating</groupId>
 			<artifactId>thymeleaf-mvc-portlet-api</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
 		</dependency>
 	</dependencies>
 </project>

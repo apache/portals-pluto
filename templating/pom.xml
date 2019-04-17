@@ -17,9 +17,10 @@
 		<version>3.1.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>portlet-templating</artifactId>
+	<groupId>org.apache.portals.pluto.templating</groupId>
+	<artifactId>templating</artifactId>
 	<packaging>pom</packaging>
-	<name>Portlet Templating</name>
+	<name>Pluto Templating</name>
 	<modules>
 		<module>thymeleaf-portlet-api</module>
 		<module>thymeleaf-mvc-portlet-api</module>
