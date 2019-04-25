@@ -293,7 +293,7 @@ Since 3.0.0
         $ cd release
         $ svn co https://dist.apache.org/repos/dist/release/portals/pluto
         $ cd pluto
-        $ mv ../../dev/portals/pluto/pluto-3.1.0-source-release* .
+        $ mv ../../dev/pluto/pluto-3.1.0-source-release* .
         $ svn add pluto-3.1.0-source-release*
         $ svn commit -m "PLUTO-716 Committing Source Release for pluto-3.1.0" --username $USER_NAME
 
@@ -303,10 +303,10 @@ Since 3.0.0
         $ svn commit -m "PLUTO-716 Committing Binary Release for portlet-api-3.0.2" --username $USER_NAME
 
     d. Move the bundle artifacts over to the distribution area
-        $ mv ../../dev/portals/pluto/pluto-bundle-3.1.0.zip* .
+        $ mv ../../dev/pluto/pluto-bundle-3.1.0.zip* .
         $ svn add pluto-bundle-3.1.0.zip*
         $ svn commit -m "PLUTO-716 Committing Binary Release for Pluto 3.1.0" --username $USER_NAME
-        $ cd ../dev/pluto
+        $ cd ../../dev/pluto
         $ FILES=`svn status | grep pluto | awk '{print $2}'`
         $ svn rm $FILES
         $ svn commit -m "PLUTO-716 Promoted artifacts from dev to release for Pluto 3.1.0" --username $USER_NAME
@@ -335,10 +335,10 @@ Since 3.0.0
         $ cd site
         $ cp -r pluto/src/site/xdoc/v301 pluto/src/site/xdoc/v310
 
-    b. Edit the following files, replacing "v301" with "v310" and "3.0.1" with "3.1.0":
+    b. Edit the following files, replacing "3.0.1" with "3.1.0":
         pluto/src/site/xdoc/v310/*
 
-        NOTE: For pluto/src/site/xdoc/v310/getting-started.html you should only replace the version numbers if
+        NOTE: For pluto/src/site/xdoc/v310/getting-started.xml you should only replace the version numbers if
               the archetypes were released! Also, are there new archetypes to add?
 
         NOTE: For pluto/src/site/xdoc/v310/tck.html you should take care with substitution of version numbers
@@ -352,24 +352,35 @@ Since 3.0.0
         pluto/src/site/xdoc/news.xml <-- Also add a news item detailing the release.
         pluto/src/site/xdoc/security.xml <-- Also add descriptions of any CVE issues that were fixed.
         pluto/src/site/xdoc/status.xml <-- If applicable, add a description of the new major or minor version.
+                                           Also, replace "Pluto 3.0" with "Pluto 3.1" where appropriate.
 
-    d. Edit site/pluto/src/site/xdoc/v30/release-notes.xml
+    d. Edit site/pluto/src/site/xdoc/v31/release-notes.xml
         include generated release notes from step 15
 
     e. Generate the site:
         $ cd ~/asf/svn/site
-        $ mvn site
+        $ mvn site # Only needed to update the Apache Portals news page
         $ cd pluto
-        $ mvn site
+        $ mvn clean site
 
     f. Publish the docs to LIVE SITE
 
     Commit changes into the SVN location of Apache Portals Maven Site documentation:
         https://svn.apache.org/repos/asf/portals/site/
 
+        $ svn add src/site/xdoc/v310/*
+        $ svn commit -m "PLUTO-716 Committing site changes associated with the Pluto 3.1.0 release" --username $USER_NAME
+
     Copy the generated html and resources into the workspace folder of the following svnpubsub SVN location:
         https://svn.apache.org/repos/asf/portals/site-live/
     Commit your changes to site-live, they will publish automatically
+
+    	$ cd ~/asf/svn
+    	$ svn checkout https://svn.apache.org/repos/asf/portals/site-live
+
+    	# Copy the generated html and resources to site-live
+
+        $ svn commit -m "PLUTO-716 Committing site changes associated with the Pluto 3.1.0 release" --username $USER_NAME
 
 17. ANNOUNCE THE RELEASE
 
