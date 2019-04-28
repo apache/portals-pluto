@@ -233,6 +233,10 @@ Since 3.0.0
     wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.0/pluto-3.1.0-source-release.zip.asc
     wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.0/pluto-3.1.0-source-release.zip.md5
     wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.0/pluto-3.1.0-source-release.zip.sha1
+    # Generate the SHA-512 checksum for the source release
+    /usr/bin/shasum -a 512 pluto-3.1.0-source-release.zip > pluto-3.1.0-source-release.zip.sha512
+    # Linux: sha512sum -a 512 pluto-3.1.0-source-release.zip > pluto-3.1.0-source-release.zip.sha512
+
     svn add pluto-3.1.0-source-release*
     #
     # NOTE: If the Portlet API was released, then un-comment the following:
@@ -251,12 +255,19 @@ Since 3.0.0
     # wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.2/portlet-api-3.0.2.jar.asc
     # wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.2/portlet-api-3.0.2.jar.md5
     # wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.2/portlet-api-3.0.2.jar.sha1
+    # Generate the SHA-512 checksum for the portlet-api release
+    /usr/bin/shasum -a 512 portlet-api-3.0.2.jar > portlet-api-3.0.2.jar.sha512
+    # Linux: sha512sum -a 512 portlet-api-3.0.2.jar > portlet-api-3.0.2.jar.sha512
     # svn add portlet-api-3.0.2.jar*
+
     # svn commit -m "PLUTO-716 Committing Binary Release for portlet-api-3.0.2" --username $USER_NAME
     wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.0/pluto-bundle-3.1.0.zip
     wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.0/pluto-bundle-3.1.0.zip.asc
     wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.0/pluto-bundle-3.1.0.zip.md5
     wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.0/pluto-bundle-3.1.0.zip.sha1
+    # Generate the SHA-512 checksum for the binary release
+    /usr/bin/shasum -a 512 pluto-bundle-3.1.0.zip > pluto-bundle-3.1.0.zip.sha512
+    # Linux: sha512sum -a 512 pluto-bundle-3.1.0.zip > pluto-bundle-3.1.0.zip.sha512
     svn add pluto-bundle-3.1.0.zip*
     svn commit -m "PLUTO-716 Committing Binary Release for Pluto 3.1.0" --username $USER_NAME
 
@@ -502,19 +513,13 @@ Subject: [ANNOUNCE] Apache Portals Pluto 3.1.0 release
 The Apache Portals team is pleased to announce the General Availability of
 Apache Pluto version 3.1.0.
 
-This is a maintenance release that builds on the success of version 3.0.0,
-which was the first release to implement all JSR 362 features and pass the new
-Portlet 3.0 TCK.
-
 Additional Resources:
 
 The Java Community Process JSR 362 page will allow you to access the complete
-specification for full details.
-
+specification for full details:
 http://jcp.org/en/jsr/detail?id=362
 
-The Portlet API Version 3.0 page documents the portlet programming interface.
-
+The Portlet API Version 3.0 page documents the portlet programming interface:
 http://portals.apache.org/pluto/portlet-3.0-apidocs/index.html
 
 For a full overview of all the Pluto features, see the online documentation.
@@ -524,30 +529,14 @@ latest Tomcat 8 ready to run.
 Features:
 http://portals.apache.org/pluto/v310/v3Features.html
 
-Release notes:
+Release Notes:
 http://portals.apache.org/pluto/v310/release-notes.html
 
 Website Documentation:
 http://portals.apache.org/pluto
 
-Download and Deploying:
-http://portals.apache.org/pluto/v30/deploying.html
-
-KEYS file:
-https://www.apache.org/dist/portals/pluto/KEYS
-
-Tomcat 8 Bundle:
-https://www.apache.org/dist/portals/pluto/pluto-bundle-3.1.0.zip
-https://www.apache.org/dist/portals/pluto/pluto-bundle-3.1.0.zip.asc
-https://www.apache.org/dist/portals/pluto/pluto-bundle-3.1.0.zip.sha1
-
-Using the Portlet 3.0 API with Maven:
-<dependency>
-    <groupId>javax.portlet</groupId>
-    <artifactId>portlet-api</artifactId>
-    <version>3.0.0</version>
-    <scope>provided</scope>
-</dependency>
+Downloads:
+https://portals.apache.org/pluto/download.html
 
 --
 David S Taylor
