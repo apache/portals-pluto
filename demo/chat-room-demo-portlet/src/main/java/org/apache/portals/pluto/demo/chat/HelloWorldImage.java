@@ -41,15 +41,17 @@ public class HelloWorldImage {
 
    // Some chimp pictures to associate with a name
    private final static String[] chimps = new String[] { 
-      "/resources/images/BabyChimp.gif", 
-      "/resources/images/bonoboMomKid.gif",
-      "/resources/images/Chimpanzee_thinking-small.gif", 
-      "/resources/images/monkey4.gif", 
-      "/resources/images/monkey5.gif", 
-      "/resources/images/monkeySmile.gif", 
-      "/resources/images/monkeySmile2.gif", 
-      "/resources/images/gorilla2.gif", 
-      "/resources/images/gorilla1.gif" };
+         "/resources/images/umonkey1.gif", 
+         "/resources/images/umonkey2.gif", 
+         "/resources/images/umonkey3.gif", 
+         "/resources/images/umonkey4.gif", 
+         "/resources/images/umonkey5.gif", 
+         "/resources/images/umonkey6.gif", 
+         "/resources/images/umonkey7.gif", 
+         "/resources/images/umonkey8.gif", 
+         "/resources/images/umonkey9.gif", 
+         "/resources/images/umonkeyA.gif", 
+      };
    
    /**
     * Render method using automatic include. If a render method has multiple render methods,

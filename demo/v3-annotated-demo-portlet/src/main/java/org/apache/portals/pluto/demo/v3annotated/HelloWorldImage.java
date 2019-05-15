@@ -45,10 +45,16 @@ public class HelloWorldImage {
    
    // Some chimp pictures to associate with a name
    private final static String[] chimps = new String[] {
-      "/resources/images/BabyChimp.gif",
-      "/resources/images/bonoboMomKid.gif",
-      "/resources/images/Chimpanzee_thinking-small.gif",
-      "/resources/images/ChimpEatingDollar.gif"
+         "/resources/images/umonkey1.gif", 
+         "/resources/images/umonkey2.gif", 
+         "/resources/images/umonkey3.gif", 
+         "/resources/images/umonkey4.gif", 
+         "/resources/images/umonkey5.gif", 
+         "/resources/images/umonkey6.gif", 
+         "/resources/images/umonkey7.gif", 
+         "/resources/images/umonkey8.gif", 
+         "/resources/images/umonkey9.gif", 
+         "/resources/images/umonkeyA.gif", 
    };
 
    @RenderMethod(portletNames = {"BeanPortlet"}, ordinal=100)

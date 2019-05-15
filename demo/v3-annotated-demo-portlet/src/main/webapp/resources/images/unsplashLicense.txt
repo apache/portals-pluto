@@ -1,0 +1,34 @@
+
+The images in this folder originated from the unsplash website. The original
+photos are licensed as follows:
+
+Unsplash license: https://unsplash.com/license
+=================
+
+All photos published on Unsplash can be used for free. You can use them for
+commercial and noncommercial purposes. You do not need to ask permission from or
+provide credit to the photographer or Unsplash, although it is appreciated when
+possible.
+
+More precisely, Unsplash grants you an irrevocable, nonexclusive, worldwide
+copyright license to download, copy, modify, distribute, perform, and use photos
+from Unsplash for free, including for commercial purposes, without permission
+from or attributing the photographer or Unsplash. This license does not include
+the right to compile photos from Unsplash to replicate a similar or competing
+service.
+
+Original image file names:
+
+dusan-smetana-1539686-unsplash.jpg
+howling-red-570942-unsplash.jpg
+kelly-sikkema-94610-unsplash.jpg
+patrick-beznoska-527680-unsplash.jpg
+quinten-de-graaf-1492080-unsplash.jpg
+ravi-kant-480828-unsplash.jpg
+rishi-ragunathan-1233429-unsplash.jpg
+rob-schreckhise-40905-unsplash.jpg
+sander-wehkamp-532443-unsplash.jpg
+sander-wehkamp-715120-unsplash.jpg
+
+The images were modified to fit the needs of the demo program.
+
