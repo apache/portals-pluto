@@ -26,7 +26,7 @@ limitations under the License.
     <page:window-state>token</page:window-state>
   </page:supports>
   <page:portlet-app>
-    <page:context-path>page:context-path</page:context-path>
+    <page:context-path>/dummypath</page:context-path>
     <page:portlets>
       <page:portlet name="token"/>
     </page:portlets>

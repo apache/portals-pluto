@@ -34,6 +34,12 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.portals.pluto</groupId>
+			<artifactId>pluto-taglib</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-servlet-api</artifactId>
 			<scope>provided</scope>
@@ -64,13 +70,18 @@
 			<artifactId>taglibs-standard-jstlel</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.portals.pluto</groupId>
-			<artifactId>pluto-taglib</artifactId>
-			<version>2.1.0-M3</version>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<profiles>
 		<profile>
 			<id>liferay</id>
@@ -85,7 +96,6 @@
 		<profile>
 			<id>liferay-cdi</id>
 			<build>
-				<finalName>${project.artifactId}</finalName>
 				<plugins>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
@@ -102,7 +112,6 @@
 		<profile>
 			<id>liferay-spring</id>
 			<build>
-				<finalName>${project.artifactId}</finalName>
 				<plugins>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
@@ -177,7 +186,6 @@
 				</dependency>
 			</dependencies>
 			<build>
-				<finalName>${project.artifactId}</finalName>
 				<plugins>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
