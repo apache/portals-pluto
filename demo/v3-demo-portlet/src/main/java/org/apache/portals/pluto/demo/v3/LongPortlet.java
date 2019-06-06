@@ -21,7 +21,7 @@ package org.apache.portals.pluto.demo.v3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.apache.portals.pluto.demo.v3.Constants.ATTRIB_LONGLINES;
+import static org.apache.portals.pluto.demo.v3.Constants.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -171,7 +171,13 @@ public class LongPortlet extends GenericPortlet {
    public void processAction(ActionRequest req, ActionResponse resp)
          throws PortletException, IOException {
       
-      mrp.set(ap);
+      // validate parameters
+      
+      String frag = ap.getValue(PARAM_FRAG);
+      String ln = ap.getValue(PARAM_LINE);
+      if (frag != null && frag.matches("^\\w+$") && ln != null && ln.matches("^\\d+$")) {
+         mrp.set(ap);
+      }
 
       if (isDebug) {
          StringBuffer sb = new StringBuffer();

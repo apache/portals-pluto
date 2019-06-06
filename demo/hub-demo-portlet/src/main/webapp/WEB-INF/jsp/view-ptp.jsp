@@ -31,7 +31,7 @@ Entering 'null' by itself will cause the parameter to be set to null (removed).
 Entering 'empty' by itself will set the parameter to an empty array.
 Leaving the value field empty will set the parameter to an array containing a single empty string.
 <p/>
-<p><hr/></p>
+<hr/>
 <FORM id='<portlet:namespace/>-setParams' METHOD='POST' onsubmit='return false;' enctype='application/x-www-form-urlencoded' accept-charset='UTF-8'>
    <table><tr><td align='left'>
       Parameter Name:
@@ -46,7 +46,7 @@ Leaving the value field empty will set the parameter to an array containing a si
    </td></tr></table>
 </FORM>
 
-<p><hr/></p>
+<hr/>
 <div id='<portlet:namespace/>-putResourceHere'></div>
 
 
@@ -96,27 +96,36 @@ Leaving the value field empty will set the parameter to an array containing a si
           pValue = this[pvid].value, 
           nstate, vals, ii;
       
-      console.log("PTP: updating parameters. PN=" + pName + ", PV=" + pValue);
-      
-      nstate = currState.clone();
-      if (pValue === 'null') {
-         nstate.remove(pName);
+      // limit allowed characters
+      if (/\W/.test(pName) || (pValue.length > 0 && !/^[\w,]+$/.test(pValue))) {
+         console.log("PTP: Bad characters. PN=" + pName + ", PV=" + pValue);
       } else {
-         if (pValue === 'empty') {
-            nstate.parameters[pName] = [];
+         
+         console.log("PTP: updating parameters. PN=" + pName + ", PV=" + pValue);
+         
+         nstate = currState.clone();
+         if (pValue === 'null') {
+            nstate.remove(pName);
          } else {
-            vals = pValue.split(",");
-            for (ii = 0; ii < vals.length; ii++) {
-               if (vals[ii] === 'null') {
-                  vals[ii] = null;
+            if (pValue === 'empty') {
+               nstate.parameters[pName] = [];
+            } else {
+               vals = pValue.split(",");
+               for (ii = 0; ii < vals.length; ii++) {
+                  if (vals[ii] === 'null') {
+                     vals[ii] = null;
+                  }
                }
+               nstate.setValues(pName, vals);
             }
-            nstate.setValues(pName, vals);
          }
+         
+         hub.setRenderState(nstate);
       }
-      
-      hub.setRenderState(nstate);
-      
+
+      this[pnid].value = '';
+      this[pvid].value = '';
+
       event.preventDefault();
    });
       

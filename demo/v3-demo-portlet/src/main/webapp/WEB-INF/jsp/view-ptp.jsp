@@ -50,7 +50,7 @@ Entering 'empty' by itself will set the parameter to an empty array.
 Leaving the value field empty will set the parameter to an array containing a single empty string.
 <p/>
 <p><%=prpStr.toString() %></p>
-<p><hr/></p>
+<hr/> 
 <%
    ActionURL aurl = renderResponse.createActionURL(ALL);
 %>
@@ -87,6 +87,6 @@ Leaving the value field empty will set the parameter to an array containing a si
    </td></tr></table>
 </FORM>
 
-<p><hr/></p>
+<hr/>
 <%=renderRequest.getAttribute(ATTRIB_PARAMS) %>
-<p><hr/></p>
+<hr/>

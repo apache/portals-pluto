@@ -81,10 +81,13 @@ public class AuthSCPortlet extends GenericPortlet {
       StringBuilder txt = new StringBuilder();
       
       String scText = req.getRenderParameters().getValue(PARAM_STATUSCODE);
-      if (scText != null && scText.matches("\\d+")) {
-         int sc = Integer.parseInt(scText);
-         if (isDebug) {
-            logger.debug("Setting HTTP status code to: " + sc);
+      if (scText != null) {
+         int sc = 400;     // bad request
+         if (scText.matches("\\d+")) {
+            sc = Integer.parseInt(scText);
+            if (isDebug) {
+               logger.debug("Setting HTTP status code to: " + sc);
+            }
          }
          resp.setStatus(sc);
       }
@@ -106,8 +109,11 @@ public class AuthSCPortlet extends GenericPortlet {
 
    public void processAction(ActionRequest req, ActionResponse resp)
          throws PortletException, IOException {
-      
-      mrp.set(ap);
+   
+      String scText = ap.getValue(PARAM_STATUSCODE);
+      if (scText != null && scText.matches("\\d+")) {
+         mrp.set(ap);
+      }
 
       if (isDebug) {
          StringBuffer sb = new StringBuffer();

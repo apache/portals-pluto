@@ -18,6 +18,7 @@
 
 package org.apache.portals.pluto.demo.v3;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -363,8 +364,12 @@ public class UrlAPTestPortlet extends GenericPortlet {
          txt.append("   <table>");
          
          for (String pn : ap.getNames()) {
-            String val = ap.getValue(pn);
+            pn = StringEscapeUtils.escapeHtml4(pn);
+            String val = StringEscapeUtils.escapeHtml4(ap.getValue(pn));
             String[] vals = ap.getValues(pn);
+            for (int ii=0; ii < vals.length; ii++) {
+               vals[ii] = StringEscapeUtils.escapeHtml4(vals[ii]);
+            }
             txt.append("      <tr><td " + style + ">Name: ")
                .append(pn)
                .append("</td><td " + style + ">Val: ")
@@ -399,8 +404,9 @@ public class UrlAPTestPortlet extends GenericPortlet {
       // Get the parameter name & values. Parse values string into individual values.
       // if string is 'null', change it into null.
       
-      String pn = ap.getValue(PARAM_NAME);
-      String pv = ap.getValue(PARAM_VALUES);
+      // string escape here to avoid xss vulnerability & problem with portlet hub json
+      String pn = StringEscapeUtils.escapeHtml4(ap.getValue(PARAM_NAME));
+      String pv = StringEscapeUtils.escapeHtml4(ap.getValue(PARAM_VALUES));
 
       String[] parsedVals = null;
       txt = new StringBuilder("Setting values to ");

@@ -64,8 +64,8 @@ limitations under the License.
    
    // Update function called by the Portlet Hub when an onStatechange event occurs. 
    update = function (type, state) {
-      var bo = state.p.getValue('bo'),
-          ca = state.p.getValue('ca', hub.constants.PAGE);
+      var bo = state.getValue('bo'),
+          ca = state.getValue('ca', hub.constants.PAGE);
       
       currState = state;
       
@@ -76,7 +76,7 @@ limitations under the License.
       
       resparms = hub.newParameters();
       if (bo) {
-         resparms.setValue('border', bo);
+         resparms['border'] = [bo];
          document.getElementById(border).checked = true;
       } else {
          document.getElementById(border).checked = false;
@@ -117,7 +117,7 @@ limitations under the License.
       if (cacheability !== c) {
          cacheability = c;
          nstate = currState.clone();
-         nstate.p.setValue('ca', c);
+         nstate.setValue('ca', c);
          hub.setRenderState(nstate);
       }
    };
@@ -133,9 +133,9 @@ limitations under the License.
       var nstate = currState.clone();
       console.log("IVP: border checked: " + this.checked);
       if (this.checked) {
-         nstate.p.setValue('bo', '#00F');;
+         nstate.setValue('bo', '#00F');;
       } else {
-         nstate.p.remove('bo');
+         nstate.remove('bo');
       }
       hub.setRenderState(nstate);
    };

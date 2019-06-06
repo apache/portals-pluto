@@ -32,6 +32,8 @@ import static org.apache.portals.pluto.demo.hub.Constants.PARAM_SUBTYPE;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -82,6 +84,8 @@ public class ColorSelPortlet extends GenericPortlet {
    public void serveResource(ResourceRequest req, ResourceResponse resp)
          throws PortletException, IOException {
    }
+   
+   final static Pattern validMsgChars = Pattern.compile("^[\\w ]+$");
 
    @ActionMethod(portletName="PH-ColorSelPortlet", publishingEvents= {
          @PortletQName(namespaceURI="http://www.apache.org/portals/pluto/ResourcePortlet", localPart="Message")
@@ -118,6 +122,10 @@ public class ColorSelPortlet extends GenericPortlet {
       
       String text = req.getActionParameters().getValue(PARAM_MSG_INPUT);
       if (text != null) {
+         Matcher m = validMsgChars.matcher(text);
+         if (!m.matches()) {
+            text = "invalid characters.";
+         }
          resp.getRenderParameters().setValue(PARAM_MSG_INPUT, text);
       }
       

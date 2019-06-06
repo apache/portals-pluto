@@ -198,7 +198,7 @@ limitations under the License.
     </page>
     <page name="V2 and V3 Header Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/v3-demo-portlet" name="V3HeaderPortlet"/>
-      <portlet context="/ResourcePortlet-PRP" name="ResourcePortlet-PRP"/>
+      <portlet context="/v3-demo-portlet" name="V3ImageViewer"/>
     </page>
     <page name="Bean Portlet Demo" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/v3-annotated-demo-portlet" name="BeanPortlet"/>

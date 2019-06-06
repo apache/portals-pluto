@@ -43,11 +43,11 @@ import javax.portlet.annotations.PortletConfiguration;
 
 
 /**
- * A purtlet hub portlet that allows parameter names & values to be entered and set.
+ * A portlet hub portlet that allows parameter names & values to be entered and set.
  * 
  * @author Scott Nicklous
  */
-@PortletConfiguration(portletName = "ParamTestPortlet", publicParams = {"color", "imgName"},
+@PortletConfiguration(portletName = "PH-ParamTestPortlet", publicParams = {"color", "imgName"},
                         title = @LocaleString("PH Parameter Test Portlet"),
                         dependencies = @Dependency(name="PortletHub", scope="javax.portlet", version="3.0.0"))
 public class ParamTestPortlet extends GenericPortlet {
