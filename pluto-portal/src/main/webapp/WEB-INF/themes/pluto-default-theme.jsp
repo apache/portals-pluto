@@ -39,6 +39,7 @@ group (the left column) displays portlets with odd IDs, while the second group
 <html>
 
 <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>Pluto Portal</title>
     <script type="text/javascript">
        /**
@@ -50,7 +51,9 @@ group (the left column) displays portlets with odd IDs, while the second group
        var portlet = portlet || {};
        portlet.impl = portlet.impl || {};
        portlet.impl.getInitData = function () {
-          return <%=ps.toJSONString()%>;
+          var str = '<%=ps.toEncodedJSONString()%>';
+          str = str.replace(/%3C/g, "<");
+          return JSON.parse(str);
        }
 	   portlet.impl.getUrlBase = function () {
 		   return '<%=response.encodeURL(ps.getUrlBase())%>';
