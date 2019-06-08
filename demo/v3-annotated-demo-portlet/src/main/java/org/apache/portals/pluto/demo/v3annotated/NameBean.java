@@ -87,8 +87,7 @@ public class NameBean implements PortletSerializable {
       txt.append("   Enter your name:");
       txt.append("   </td><td>");
       txt.append("   <input name='").append(PARAM_NAME);
-      txt.append("' type='text' value='").append((name == null) ? "" : name);
-      txt.append("' size='50' maxlength='50'>");
+      txt.append("' type='text' value='' size='50' maxlength='50'>");
       txt.append("   <input type='hidden' name='").append(ActionRequest.ACTION_NAME);
       txt.append("' value='setName'>");
       txt.append("   </td></tr><tr><td>");
