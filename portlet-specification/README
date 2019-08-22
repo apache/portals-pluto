@@ -1,0 +1,43 @@
+
+Readme for the Portlet Specification:
+=====================================
+
+The portlet specification version 1.0, 2.0, and 3.0 were created within the
+framework of the Java Community Process, see:
+
+https://www.jcp.org/en/jsr/detail?id=168
+https://www.jcp.org/en/jsr/detail?id=286
+https://www.jcp.org/en/jsr/detail?id=362
+
+The Portlet Specification is closely tied to the Servlet Specification and other
+Java Enterprise Edition technology. Since the Enterprise Edition specifications
+have been transferred to the Eclipse Jakarta project (see links below), it would
+make sense for the Portlet Specification to move to Eclipse Jakarta as well.
+
+https://projects.eclipse.org/proposals/eclipse-jakarta-ee-platform
+https://github.com/javaee/javaee-spec
+
+As an interim step, the source corresponding to Portlet Specification Version 3.0
+is being placed here, since this repository also hosts the Reference Implementation,
+Portlet API class files, and the Technology Compliance Kit for version 3.0.
+
+This directory contains the complete portlet specification source in Microsoft
+Word document format along with the illustrations from the spec as separate image 
+files, which are generally in 'gif' format.
+
+Most of the illustrations were created using Microsoft Powerpoint. The PowerPoint
+source file is also provided.
+
+Note that the official version of the current v3.0 specification can be obtained from
+the jcp.org download page, located here:
+
+https://jcp.org/aboutJava/communityprocess/final/jsr362/index.html
+
+Files:
+
+aPortletSpec.docx    - The specification document
+SpecPics.pptx        - Powerpoint file containing many of the illustrations
+
+The remaining files are image files from the illustrations that were imported 
+into the spec.
+

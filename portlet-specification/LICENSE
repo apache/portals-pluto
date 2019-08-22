@@ -1,0 +1,42 @@
+Java(TM) Portlet Specification ("Specification") +
+Version: 3.0 Status: Final, Specification Lead: IBM Corp. 
+
+Copyright 2016 IBM Corp. All rights reserved.
+
+IBM Corporation (the "Spec Lead") for the Portlet (JSR 362) Specification 3.0
+(the "Specification") hereby grants permission to copy and display the
+Specification, in any medium without fee or royalty, provided that you include
+the following on ALL copies, or portions thereof, that you make:
+
+1. A link or URL to the Specification at this location: http://jcp.org/en/jsr/detail?id=362.
+2. The copyright notice as shown herein.
+
+The Spec Lead offers to grant a perpetual, non-exclusive, worldwide, fully
+paid-up, royalty free, irrevocable license under its licensable copyrights and
+patent claims for which there is no technically feasible way of avoiding
+infringement in the course of implementing the Specification, provided that you:
+
+(a)  fully implement the Specification including all its required interfaces and functionality.
+(b)  do not modify, subset, superset or otherwise extend the Specification's name space;
+(c)  pass the TCK for this Specification; and
+(d)  grant a reciprocal license to any of your patents necessary to implement
+     required portions of the Specification on terms consistent with the provisions
+     of Section 6.A of the Java Specification Participation Agreement.
+
+THE SPECIFICATION IS PROVIDED "AS IS," AND THE SPEC LEAD AND ANY OTHER AUTHORS
+MAKE NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT
+LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+NON-INFRINGEMENT, OR TITLE; THAT THE CONTENTS OF THE SPECIFICATION ARE SUITABLE
+FOR ANY PURPOSE; NOR THAT THE IMPLEMENTATION OF SUCH CONTENTS WILL NOT INFRINGE
+ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS. THE SPEC LEAD
+AND ANY OTHER AUTHORS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL,
+INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF ANY USE OF THE SPECIFICATION
+OR THE PERFORMANCE OR IMPLEMENTATION OF THE CONTENTS THEREOF.
+
+The name and trademarks of the Spec Lead or any other Authors may NOT be used in
+any manner, including advertising or publicity pertaining to the Specification
+or its contents without specific, written prior permission. Title to copyright
+in the Specification will at all times remain with the Authors.
+
+No other rights are granted by implication, estoppel or otherwise.
+
