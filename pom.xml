@@ -245,7 +245,8 @@ generate mailto links. -->
 		<commons-digester.version>1.8</commons-digester.version>
 		<commons-cli.version>1.0</commons-cli.version>
 		<slf4j.version>1.7.5</slf4j.version>
-		<springframework.version>5.1.5.RELEASE</springframework.version>
+		<springframework.version>5.3.7</springframework.version>
+		<springsecurity.version>5.5.0</springsecurity.version>
 		<maven.version>2.0.5</maven.version>
 		<ant.version>1.6.5</ant.version>
 		<commons-lang.scope>provided</commons-lang.scope>
@@ -553,17 +554,17 @@ generate mailto links. -->
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-config</artifactId>
-				<version>${springframework.version}</version>
+				<version>${springsecurity.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-core</artifactId>
-				<version>${springframework.version}</version>
+				<version>${springsecurity.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-web</artifactId>
-				<version>${springframework.version}</version>
+				<version>${springsecurity.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.thymeleaf</groupId>
