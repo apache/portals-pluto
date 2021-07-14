@@ -251,7 +251,7 @@ generate mailto links. -->
 		<ant.version>1.6.5</ant.version>
 		<commons-lang.scope>provided</commons-lang.scope>
 		<commons-lang.version>3.4</commons-lang.version>
-		<commons-io.version>2.4</commons-io.version>
+		<commons-io.version>2.7</commons-io.version>
 		<ccpp-api.version>1.0</ccpp-api.version>
 		<junit.version>4.12</junit.version>
 		<jmock.version>1.2.0</jmock.version>
