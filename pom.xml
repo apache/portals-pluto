@@ -238,7 +238,7 @@ generate mailto links. -->
 		<jsp-api.version>8.0.28</jsp-api.version>
 		<jstl.version>8.0.28</jstl.version>
 		<el-api.version>8.0.28</el-api.version>
-		<taglibs.standard.version>1.2.1</taglibs.standard.version>
+		<taglibs.standard.version>1.2.3</taglibs.standard.version>
 		<jaxb.version>2.1</jaxb.version>
 		<jaxb-impl.version>2.1.9</jaxb-impl.version>
 		<stax.impl.version>1.2.0</stax.impl.version>
