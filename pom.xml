@@ -253,7 +253,7 @@ generate mailto links. -->
 		<commons-lang.version>3.4</commons-lang.version>
 		<commons-io.version>2.7</commons-io.version>
 		<ccpp-api.version>1.0</ccpp-api.version>
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<jmock.version>1.2.0</jmock.version>
 		<xmlunit.version>1.1</xmlunit.version>
 		<cdi.version>2.3.1.Final</cdi.version>
