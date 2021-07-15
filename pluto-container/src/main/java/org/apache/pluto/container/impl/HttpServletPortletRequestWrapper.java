@@ -50,6 +50,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpUpgradeHandler;
 import javax.servlet.http.Part;
 
+import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.NamespaceMapper;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
@@ -93,6 +94,8 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
    @SuppressWarnings("unused")
    private static final String       INCLUDE_REQUEST_URI  = "javax.servlet.include.request_uri";
    private static final String       INCLUDE_SERVLET_PATH = "javax.servlet.include.servlet_path";
+   
+   private static final String       ENABLE_NESTED_FORWARD_SUPPORT = "pluto.enable.nested.resource.forwards";
 
    private final Map<String, String> origin               = new HashMap<String, String>();
    {
@@ -124,13 +127,16 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
    private final NamespaceMapper mapper;
    private final PortletWindowID winId;
    private final String phase;
+   private boolean nestedForwardsSupported;  // Enable expected behaviour for nested resource forwards (not to spec)
 
    public HttpServletPortletRequestWrapper(HttpServletRequest hreq, HttpSession session, PortletRequest preq) {
       super(hreq);
       this.preq = preq;
       this.session = session;
       reqctx = (PortletRequestContext) preq.getAttribute(PortletInvokerService.REQUEST_CONTEXT);
-      this.mapper = reqctx.getContainer().getContainerServices().getNamespaceMapper();
+      ContainerServices containerServices = reqctx.getContainer().getContainerServices();
+      this.mapper = containerServices.getNamespaceMapper();
+      this.nestedForwardsSupported = Boolean.valueOf(containerServices.getPortalContext().getProperty(ENABLE_NESTED_FORWARD_SUPPORT));
       this.winId = reqctx.getPortletWindow().getId();
       this.phase = (String) preq.getAttribute(PortletRequest.LIFECYCLE_PHASE);
    }
@@ -374,7 +380,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       de.type = Type.FWD;
       de.qparms = processPath(path);
       dispatches.add(de);
-      isMethSpecialHandling = true;       //!isForwardingPossible(); (logical, but not to spec)
+      isMethSpecialHandling = !nestedForwardsSupported || !isForwardingPossible(); // Default to spec with option for useful nested forwards.
       isAttrSpecialHandling = true;
       
       reqctx.startDispatch(this, de.qparms, phase);
