@@ -31,6 +31,7 @@ import java.util.Map;
 
 import javax.portlet.ClientDataRequest;
 import javax.portlet.HeaderRequest;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
@@ -374,7 +375,19 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       de.type = Type.FWD;
       de.qparms = processPath(path);
       dispatches.add(de);
-      isMethSpecialHandling = true;       //!isForwardingPossible(); (logical, but not to spec)
+      isMethSpecialHandling = true;
+
+      // PLUTO-781
+      PortletConfig portletConfig = reqctx.getPortletConfig();
+      String initParameter = portletConfig.getInitParameter("org.apache.pluto.enable.nested.resource.forwards");
+      if ("true".equalsIgnoreCase(initParameter)) {
+         // Note: When isMethSpecialHandling is false, it causes failures
+         // in the following Portlet 3.0 TCK tests:
+         // V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_invoke7
+         // V2DispatcherTests6_SPEC2_19_FwdThenForwardServletResource_invoke7
+         isMethSpecialHandling = !isForwardingPossible(); // (logical, but not to spec)
+      }
+
       isAttrSpecialHandling = true;
       
       reqctx.startDispatch(this, de.qparms, phase);
