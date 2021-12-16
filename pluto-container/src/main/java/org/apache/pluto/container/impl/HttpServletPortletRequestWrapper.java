@@ -31,6 +31,7 @@ import java.util.Map;
 
 import javax.portlet.ClientDataRequest;
 import javax.portlet.HeaderRequest;
+import javax.portlet.PortalContext;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -51,7 +52,9 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpUpgradeHandler;
 import javax.servlet.http.Part;
 
+import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.NamespaceMapper;
+import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletResourceRequestContext;
@@ -78,6 +81,8 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
                                                                 .getLogger(HttpServletPortletRequestWrapper.class);
    private static final boolean      isDebug              = LOG.isDebugEnabled();
    private static final boolean      isTrace              = LOG.isTraceEnabled();
+
+   private static final String       ENABLE_NESTED_RESOURCE_FORWARDS = "org.apache.pluto.enable.nested.resource.forwards";
 
    private static final String       FORWARD_CONTEXT_PATH = "javax.servlet.forward.context_path";
    private static final String       FORWARD_PATH_INFO    = "javax.servlet.forward.path_info";
@@ -378,9 +383,17 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper 
       isMethSpecialHandling = true;
 
       // PLUTO-781
-      PortletConfig portletConfig = reqctx.getPortletConfig();
-      String initParameter = portletConfig.getInitParameter("org.apache.pluto.enable.nested.resource.forwards");
-      if ("true".equalsIgnoreCase(initParameter)) {
+      PortletContainer portletContainer = reqctx.getContainer();
+      ContainerServices containerServices = portletContainer.getContainerServices();
+      PortalContext portalContext = containerServices.getPortalContext();
+      boolean enableNestedResourceForwards = Boolean.valueOf(portalContext.getProperty(ENABLE_NESTED_RESOURCE_FORWARDS));
+
+      if (!enableNestedResourceForwards) {
+         PortletConfig portletConfig = reqctx.getPortletConfig();
+         enableNestedResourceForwards = Boolean.valueOf(portletConfig.getInitParameter(ENABLE_NESTED_RESOURCE_FORWARDS));
+      }
+
+      if (enableNestedResourceForwards) {
          // Note: When isMethSpecialHandling is false, it causes failures
          // in the following Portlet 3.0 TCK tests:
          // V2DispatcherTests5_SPEC2_19_IncThenForwardServletResource_invoke7
