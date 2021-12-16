@@ -105,14 +105,18 @@ public class UrlTestPortlet extends GenericPortlet {
          // try to test all parameter apis
          String val = rp.getValue(pn);
          String[] vals = rp.getValues(pn);
+         String[] escapedVals = new String[vals.length];
+         for (int i = 0; i < vals.length; i++) {
+            escapedVals[i] = StringEscapeUtils.escapeHtml4(vals[i]);
+         }
          txt.append("      <tr><td " + style + ">Name: ")
             .append(pn)
             .append("</td><td " + style + ">Val: ")
-            .append(val)
+            .append(StringEscapeUtils.escapeHtml4(val))
             .append("</td><td " + style + ">Len: ")
             .append(vals.length)
             .append("</td><td " + style + ">Values: ")
-            .append(Arrays.toString(vals))
+            .append(Arrays.toString(escapedVals))
             .append("</td></tr>\n");
       }
       
@@ -320,14 +324,18 @@ public class UrlTestPortlet extends GenericPortlet {
          if (!pn.equals(PARAM_AURLCOPY) && !pn.equals(PARAM_REMTYPE) && !pn.equals(PARAM_SETTYPE)) {
             String val = mrp.getValue(pn);
             String[] vals = mrp.getValues(pn);
+            String[] escapedVals = new String[vals.length];
+            for (int i = 0; i < vals.length; i++) {
+               escapedVals[i] = StringEscapeUtils.escapeHtml4(vals[i]);
+            }
             txt.append("      <tr><td " + style + ">Name: ")
                .append(pn)
                .append("</td><td " + style + ">Val: ")
-               .append(val)
+               .append(StringEscapeUtils.escapeHtml4(val))
                .append("</td><td " + style + ">Len: ")
                .append(vals.length)
                .append("</td><td " + style + ">Values: ")
-               .append(Arrays.toString(vals))
+               .append(Arrays.toString(escapedVals))
                .append("</td></tr>\n");
          }
       }
@@ -340,20 +348,20 @@ public class UrlTestPortlet extends GenericPortlet {
       txt.append("   <table>");
 
       for (String pn : ap.getNames()) {
-         pn = StringEscapeUtils.escapeHtml4(pn);
-         String val = StringEscapeUtils.escapeHtml4(ap.getValue(pn));
+         String val = ap.getValue(pn);
          String[] vals = ap.getValues(pn);
-         for (int ii=0; ii < vals.length; ii++) {
-            vals[ii] = StringEscapeUtils.escapeHtml4(vals[ii]);
+         String[] escapedVals = new String[vals.length];
+         for (int i = 0; i < vals.length; i++) {
+            escapedVals[i] = StringEscapeUtils.escapeHtml4(vals[i]);
          }
          txt.append("      <tr><td " + style + ">Name: ")
             .append(pn)
             .append("</td><td " + style + ">Val: ")
-            .append(val)
+            .append(StringEscapeUtils.escapeHtml4(val))
             .append("</td><td " + style + ">Len: ")
             .append(vals.length)
             .append("</td><td " + style + ">Values: ")
-            .append(Arrays.toString(vals))
+            .append(Arrays.toString(escapedVals))
             .append("</td></tr>\n");
       }
       
