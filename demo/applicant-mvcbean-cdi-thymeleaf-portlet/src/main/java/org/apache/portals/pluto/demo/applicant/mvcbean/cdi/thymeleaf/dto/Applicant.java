@@ -24,13 +24,14 @@ import java.util.List;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
 import javax.ws.rs.FormParam;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
 
 /**
@@ -86,7 +87,7 @@ public class Applicant implements Serializable {
 	@Inject
 	@FormParam("provinceId")
 	@NotNull
-	@Positive
+	@Range(min = 1L)
 	private Long provinceId;
 
 	public Applicant() {

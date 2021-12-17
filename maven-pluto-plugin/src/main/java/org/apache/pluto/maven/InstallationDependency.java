@@ -55,11 +55,11 @@ class InstallationDependency {
             VERSION_PROPERTIES.getProperty("classmate.version"));
 
     public static final InstallationDependency HIBERNATE_VALIDATOR =
-        new InstallationDependency("org.hibernate.validator", "hibernate-validator",
+        new InstallationDependency("org.hibernate", "hibernate-validator",
             VERSION_PROPERTIES.getProperty("hibernate-validator.version"));
 
     public static final InstallationDependency HIBERNATE_VALIDATOR_CDI =
-        new InstallationDependency("org.hibernate.validator", "hibernate-validator-cdi",
+        new InstallationDependency("org.hibernate", "hibernate-validator-cdi",
             VERSION_PROPERTIES.getProperty("hibernate-validator.version"));
 
     public static final InstallationDependency JAXRS_API =

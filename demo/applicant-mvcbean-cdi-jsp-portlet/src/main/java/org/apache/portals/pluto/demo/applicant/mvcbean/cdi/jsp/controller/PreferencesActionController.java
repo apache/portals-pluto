@@ -35,12 +35,13 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.WindowState;
 import javax.portlet.annotations.ActionMethod;
 import javax.portlet.annotations.PortletRequestScoped;
-import javax.validation.constraints.NotBlank;
 import javax.validation.executable.ExecutableType;
 import javax.validation.executable.ValidateOnExecution;
 import javax.ws.rs.FormParam;
 
 import org.apache.portals.pluto.demo.applicant.mvcbean.cdi.jsp.dto.Preferences;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

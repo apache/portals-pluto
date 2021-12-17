@@ -16,7 +16,7 @@
  */
 package org.apache.portals.pluto.demo.applicant.mvcbean.cdi.thymeleaf.dto;
 
-import javax.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotBlank;
 
 
 /**

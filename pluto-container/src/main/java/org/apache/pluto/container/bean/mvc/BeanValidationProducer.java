@@ -25,7 +25,6 @@ import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.validation.MessageInterpolator;
-import javax.validation.NoProviderFoundException;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
@@ -82,8 +81,8 @@ public class BeanValidationProducer {
 			try {
 				validatorFactory = Validation.buildDefaultValidatorFactory();
 			}
-			catch (NoProviderFoundException npfe) {
-				LOG.error(npfe.getMessage(), npfe);
+			catch (Exception e) {
+				LOG.error(e.getMessage(), e);
 			}
 		}
 

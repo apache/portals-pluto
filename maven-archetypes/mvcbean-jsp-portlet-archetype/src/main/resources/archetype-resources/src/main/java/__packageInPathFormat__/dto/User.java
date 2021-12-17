@@ -1,9 +1,9 @@
 package ${package}.dto;
 
 import javax.inject.Inject;
-import javax.validation.constraints.NotBlank;
 import javax.ws.rs.FormParam;
 import java.io.Serializable;
+import org.hibernate.validator.constraints.NotBlank;
 
 public class User implements Serializable {
 

@@ -162,7 +162,7 @@
 					<version>${liferay.spring.artifact.version}</version>
 				</dependency>
 				<dependency>
-					<groupId>org.hibernate.validator</groupId>
+					<groupId>org.hibernate</groupId>
 					<artifactId>hibernate-validator</artifactId>
 				</dependency>
 				<dependency>
