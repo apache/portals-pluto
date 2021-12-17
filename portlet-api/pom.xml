@@ -147,6 +147,13 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.rat</groupId>
+				<artifactId>apache-rat-plugin</artifactId>
+				<configuration>
+					<excludes>**/promise*.min.js</excludes>
+				</configuration>
+			</plugin>
 			<!-- Run the junit tests -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

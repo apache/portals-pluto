@@ -109,9 +109,7 @@
 				<groupId>org.apache.rat</groupId>
 				<artifactId>apache-rat-plugin</artifactId>
 				<configuration>
-					<excludes>
-						<exclude>src/main/docs/ModuleAssertions.csv</exclude>
-					</excludes>
+					<excludes>**/ModuleAssertions.csv</excludes>
 				</configuration>
 			</plugin>
 		</plugins>

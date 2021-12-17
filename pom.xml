@@ -631,9 +631,9 @@ generate mailto links. -->
 				<plugin>
 					<groupId>org.apache.rat</groupId>
 					<artifactId>apache-rat-plugin</artifactId>
-					<version>0.12</version>
+					<version>0.13</version>
 					<configuration>
-						<excludes>maven-archetypes/**/archetype-resources/**/*</excludes>
+						<excludes>**/portlet-app*.xsd,**/JAXB-LICENSE,**/web-app_2_3.dtd,**/unsplashLicense.txt</excludes>
 					</configuration>
 				</plugin>
 				<plugin>

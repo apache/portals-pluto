@@ -110,10 +110,7 @@
 				<groupId>org.apache.rat</groupId>
 				<artifactId>apache-rat-plugin</artifactId>
 				<configuration>
-					<excludes>
-						<exclude>src/main/webapp/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType1.html</exclude>
-						<exclude>src/main/webapp/WEB-INF/V2EnvironmentTests_PortletContext_ApiRender_getMimeType4.invalid</exclude>
-					</excludes>
+					<excludes>**/*getMimeType1.html,**/*getMimeType4.invalid</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
