@@ -79,7 +79,7 @@ Since 3.0.0
 	Check release.properties and make sure that the scm properties have the right version. Sometimes the scm location can be the previous version not the next version.
 
 	Verify signatures (Verifying release signatures)
-        gpg --verify target/pluto-3.1.1-SNAPSHOT-source-release.zip.asc target/pluto-3.1.0-SNAPSHOT-source-release.zip
+        gpg --verify target/pluto-3.1.1-SNAPSHOT-source-release.zip.asc target/pluto-3.1.1-SNAPSHOT-source-release.zip
 
 6. CLEANUP AND START OVER
 	Cleanup the release prepare files again:
@@ -139,7 +139,7 @@ Since 3.0.0
 	# NOTE: You might need to get rid of a "-SNAPSHOT" from the following POM descriptor first!
 	#
 
-	$ vi src/main/resources/archetype-resources/pom.xml # Change "3.1.1-SNAPSHOT" to "3.1.0"
+	$ vi src/main/resources/archetype-resources/pom.xml # Change "3.1.1-SNAPSHOT" to "3.1.1"
 	$ git commit -a -m "PLUTO-795 Upgraded to version 3.1.1"
 
 	$ mvn -P apache-release release:prepare -Duser.name=[your_apache_uid]
@@ -148,7 +148,7 @@ Since 3.0.0
 8. VERIFY THE RELEASE
 	a. Verify signatures (Verifying release signatures)
 
-	$ gpg --verify target/pluto-3.1.1-source-release.zip.asc target/pluto-3.1.0-source-release.zip
+	$ gpg --verify target/pluto-3.1.1-source-release.zip.asc target/pluto-3.1.1-source-release.zip
 
     b. Verify the Nexus release artifacts
 
@@ -229,13 +229,13 @@ Since 3.0.0
     # NOTE: Set base URL to the Nexus staging repository
     #
     BASE_URL="https://repository.apache.org/service/local/repositories/orgapacheportals-1025/content"
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.1/pluto-3.1.0-source-release.zip
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.1/pluto-3.1.0-source-release.zip.asc
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.1/pluto-3.1.0-source-release.zip.md5
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.1/pluto-3.1.0-source-release.zip.sha1
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.1/pluto-3.1.1-source-release.zip
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.1/pluto-3.1.1-source-release.zip.asc
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.1/pluto-3.1.1-source-release.zip.md5
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.1/pluto-3.1.1-source-release.zip.sha1
     # Generate the SHA-512 checksum for the source release
-    /usr/bin/shasum -a 512 pluto-3.1.1-source-release.zip > pluto-3.1.0-source-release.zip.sha512
-    # Linux: sha512sum -a 512 pluto-3.1.1-source-release.zip > pluto-3.1.0-source-release.zip.sha512
+    /usr/bin/shasum -a 512 pluto-3.1.1-source-release.zip > pluto-3.1.1-source-release.zip.sha512
+    # Linux: sha512sum -a 512 pluto-3.1.1-source-release.zip > pluto-3.1.1-source-release.zip.sha512
 
     svn add pluto-3.1.1-source-release*
     #
@@ -261,13 +261,13 @@ Since 3.0.0
     # svn add portlet-api-3.0.2.jar*
 
     # svn commit -m "PLUTO-795 Committing Binary Release for portlet-api-3.0.2" --username $USER_NAME
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.1/pluto-bundle-3.1.0.zip
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.1/pluto-bundle-3.1.0.zip.asc
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.1/pluto-bundle-3.1.0.zip.md5
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.1/pluto-bundle-3.1.0.zip.sha1
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.1/pluto-bundle-3.1.1.zip
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.1/pluto-bundle-3.1.1.zip.asc
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.1/pluto-bundle-3.1.1.zip.md5
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.1/pluto-bundle-3.1.1.zip.sha1
     # Generate the SHA-512 checksum for the binary release
-    /usr/bin/shasum -a 512 pluto-bundle-3.1.1.zip > pluto-bundle-3.1.0.zip.sha512
-    # Linux: sha512sum -a 512 pluto-bundle-3.1.1.zip > pluto-bundle-3.1.0.zip.sha512
+    /usr/bin/shasum -a 512 pluto-bundle-3.1.1.zip > pluto-bundle-3.1.1.zip.sha512
+    # Linux: sha512sum -a 512 pluto-bundle-3.1.1.zip > pluto-bundle-3.1.1.zip.sha512
     svn add pluto-bundle-3.1.1.zip*
     svn commit -m "PLUTO-795 Committing Binary Release for Pluto 3.1.1" --username $USER_NAME
 
