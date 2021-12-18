@@ -43,8 +43,8 @@ Since 3.0.0
 2. Prepare the source for release
 	* Cleanup JIRA so the Fix Version in issues resolved since the last release includes this release version correctly.
 	* Create a JIRA issue for release maintenance for example see
-		https://issues.apache.org/jira/browse/PLUTO-777
-	* Checkout a clean copy of the trunk (on the specific branch if needed) to release using command line git.
+		https://issues.apache.org/jira/browse/PLUTO-795
+	* Clone a clean copy of master (on the specific branch if needed) to release using command line git.
 	    cd ~/apache/releases
 	    git clone https://github.com/apache/portals-pluto
 
@@ -103,7 +103,7 @@ Since 3.0.0
 	$ mvn -P apache-release,pluto release:prepare -DrunOnlyAtExecutionRoot=true
 	$ mvn -P apache-release,pluto release:perform -Duser.name=[your_apache_uid]
 	$ vi portlet-tck_3.0/pom.xml # Update the parent <version/> and also the version in the <pluto.test.version/> property
-	$ git commit -a -m "PLUTO-716 Upgraded the TCK to Pluto test version 3.1.0"
+	$ git commit -a -m "PLUTO-795 Upgraded the TCK to Pluto test version 3.1.0"
 
 	If your local OS userid doesn't match your Apache userid, then you'll have to also override the value provided
 	by the OS to Maven for the site-deploy step to work. This is known to work for Linux, but not for Mac and unknown for Windows.
@@ -140,7 +140,7 @@ Since 3.0.0
 	#
 
 	$ vi src/main/resources/archetype-resources/pom.xml # Change "3.1.0-SNAPSHOT" to "3.1.0" 
-	$ git commit -a -m "PLUTO-716 Upgraded to version 3.1.0"
+	$ git commit -a -m "PLUTO-795 Upgraded to version 3.1.0"
 
 	$ mvn -P apache-release release:prepare -Duser.name=[your_apache_uid]
 	$ mvn -P apache-release release:perform -Duser.name=[your_apache_uid]
@@ -250,7 +250,7 @@ Since 3.0.0
     # wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.2/portlet-api-3.0.2-javadoc.jar.md5
     # wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.2/portlet-api-3.0.2-javadoc.jar.sha1
     # svn add portlet-api-3.0.2*
-    # svn commit -m "PLUTO-716 Committing Source Release for portlet-api-3.0.2" --username $USER_NAME
+    # svn commit -m "PLUTO-795 Committing Source Release for portlet-api-3.0.2" --username $USER_NAME
     # wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.2/portlet-api-3.0.2.jar
     # wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.2/portlet-api-3.0.2.jar.asc
     # wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.2/portlet-api-3.0.2.jar.md5
@@ -260,7 +260,7 @@ Since 3.0.0
     # Linux: sha512sum -a 512 portlet-api-3.0.2.jar > portlet-api-3.0.2.jar.sha512
     # svn add portlet-api-3.0.2.jar*
 
-    # svn commit -m "PLUTO-716 Committing Binary Release for portlet-api-3.0.2" --username $USER_NAME
+    # svn commit -m "PLUTO-795 Committing Binary Release for portlet-api-3.0.2" --username $USER_NAME
     wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.0/pluto-bundle-3.1.0.zip
     wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.0/pluto-bundle-3.1.0.zip.asc
     wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.0/pluto-bundle-3.1.0.zip.md5
@@ -269,7 +269,7 @@ Since 3.0.0
     /usr/bin/shasum -a 512 pluto-bundle-3.1.0.zip > pluto-bundle-3.1.0.zip.sha512
     # Linux: sha512sum -a 512 pluto-bundle-3.1.0.zip > pluto-bundle-3.1.0.zip.sha512
     svn add pluto-bundle-3.1.0.zip*
-    svn commit -m "PLUTO-716 Committing Binary Release for Pluto 3.1.0" --username $USER_NAME
+    svn commit -m "PLUTO-795 Committing Binary Release for Pluto 3.1.0" --username $USER_NAME
 
 13. PUT THE RELEASE CANDIDATE UP FOR A VOTE
 
@@ -306,21 +306,21 @@ Since 3.0.0
         $ cd pluto
         $ mv ../../dev/pluto/pluto-3.1.0-source-release* .
         $ svn add pluto-3.1.0-source-release*
-        $ svn commit -m "PLUTO-716 Committing Source Release for pluto-3.1.0" --username $USER_NAME
+        $ svn commit -m "PLUTO-795 Committing Source Release for pluto-3.1.0" --username $USER_NAME
 
     c. If the Portlet API was released, then move the source/binary artifacts over to the distribution area
         $ mv ../../dev/portals/pluto/portlet-api-3.0.2* .
         $ svn add portlet-api-3.0.2*
-        $ svn commit -m "PLUTO-716 Committing Binary Release for portlet-api-3.0.2" --username $USER_NAME
+        $ svn commit -m "PLUTO-795 Committing Binary Release for portlet-api-3.0.2" --username $USER_NAME
 
     d. Move the bundle artifacts over to the distribution area
         $ mv ../../dev/pluto/pluto-bundle-3.1.0.zip* .
         $ svn add pluto-bundle-3.1.0.zip*
-        $ svn commit -m "PLUTO-716 Committing Binary Release for Pluto 3.1.0" --username $USER_NAME
+        $ svn commit -m "PLUTO-795 Committing Binary Release for Pluto 3.1.0" --username $USER_NAME
         $ cd ../../dev/pluto
         $ FILES=`svn status | grep pluto | awk '{print $2}'`
         $ svn rm $FILES
-        $ svn commit -m "PLUTO-716 Promoted artifacts from dev to release for Pluto 3.1.0" --username $USER_NAME
+        $ svn commit -m "PLUTO-795 Promoted artifacts from dev to release for Pluto 3.1.0" --username $USER_NAME
 
     e. Push the tags upstream
         $ git push upstream pluto-3.1.0
@@ -380,7 +380,7 @@ Since 3.0.0
         https://svn.apache.org/repos/asf/portals/site/
 
         $ svn add src/site/xdoc/v310/*
-        $ svn commit -m "PLUTO-716 Committing site changes associated with the Pluto 3.1.0 release" --username $USER_NAME
+        $ svn commit -m "PLUTO-795 Committing site changes associated with the Pluto 3.1.0 release" --username $USER_NAME
 
     Copy the generated html and resources into the workspace folder of the following svnpubsub SVN location:
         https://svn.apache.org/repos/asf/portals/site-live/
@@ -391,7 +391,7 @@ Since 3.0.0
 
     	# Copy the generated html and resources to site-live
 
-        $ svn commit -m "PLUTO-716 Committing site changes associated with the Pluto 3.1.0 release" --username $USER_NAME
+        $ svn commit -m "PLUTO-795 Committing site changes associated with the Pluto 3.1.0 release" --username $USER_NAME
 
 17. ANNOUNCE THE RELEASE
 
