@@ -136,10 +136,11 @@ Since 3.0.0
 	$ cd portals-pluto/maven-archetypes/mvcbean-thymeleaf-portlet-archetype
 	
 	#	
-	# NOTE: You might need to get rid of a "-SNAPSHOT" from the following POM descriptor first!
+	# NOTE: You might need to get rid of a "-SNAPSHOT" from the following POM and Gradle descriptors first!
 	#
 
 	$ vi src/main/resources/archetype-resources/pom.xml # Change "3.1.1-SNAPSHOT" to "3.1.1"
+	$ vi src/main/resources/archetype-resources/build.gradle # Change "3.1.1-SNAPSHOT" to "3.1.1"
 	$ git commit -a -m "PLUTO-795 Upgraded to version 3.1.1"
 
 	$ mvn -P apache-release release:prepare -Duser.name=[your_apache_uid]
@@ -162,7 +163,7 @@ Since 3.0.0
 
 9. Push the commits upstream but do NOT yet push any tags (commits can be reverted if necessary)
 
-	$ git push upstream master
+	$ git push origin master
 
 10. Checkout the new tag, since the repository will be set to a later commit
 
