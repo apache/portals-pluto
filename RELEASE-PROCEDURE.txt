@@ -535,10 +535,10 @@ To get up and running quickly, download the bundle which comes with a bundled
 latest Tomcat 8 ready to run.
 
 Features:
-http://portals.apache.org/pluto/v310/v3Features.html
+http://portals.apache.org/pluto/v311/v3Features.html
 
 Release Notes:
-http://portals.apache.org/pluto/v310/release-notes.html
+http://portals.apache.org/pluto/v311/release-notes.html
 
 Website Documentation:
 http://portals.apache.org/pluto
