@@ -180,6 +180,13 @@
 						</configuration>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.plexus</groupId>
+						<artifactId>plexus-utils</artifactId>
+						<version>3.3.0</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<!-- copy the original uncompressed javascript files as web resources, 
             just to have them too. -->
