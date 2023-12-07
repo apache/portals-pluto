@@ -247,7 +247,7 @@ generate mailto links. -->
 		<slf4j.version>1.7.5</slf4j.version>
 		<springframework.version>5.3.19</springframework.version>
 		<springsecurity.version>5.5.1</springsecurity.version>
-		<maven.version>2.0.5</maven.version>
+		<mvn.subsystem.version>2.0.5</mvn.subsystem.version>
 		<ant.version>1.6.5</ant.version>
 		<commons-lang.scope>provided</commons-lang.scope>
 		<commons-lang.version>3.4</commons-lang.version>
@@ -460,27 +460,27 @@ generate mailto links. -->
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-core</artifactId>
-				<version>${maven.version}</version>
+				<version>${mvn.subsystem.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-artifact</artifactId>
-				<version>${maven.version}</version>
+				<version>${mvn.subsystem.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-model</artifactId>
-				<version>${maven.version}</version>
+				<version>${mvn.subsystem.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-project</artifactId>
-				<version>${maven.version}</version>
+				<version>${mvn.subsystem.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-plugin-api</artifactId>
-				<version>${maven.version}</version>
+				<version>${mvn.subsystem.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.tomcat</groupId>
