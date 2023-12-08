@@ -74,7 +74,7 @@ public class RenderResponseImpl extends MimeResponseImpl implements RenderRespon
    @Override
    public void setContentType(String contentType) {
       ArgumentUtility.validateNotNull("contentType", contentType);
-      contentType = contentType.replaceAll("([^;]*).*", "$1").replaceAll(" ", "");
+      contentType = contentType.replaceAll("([^;]*).*", "$1").replace(" ", "");
       if (!isValidContentType(contentType)) {
          throw new IllegalArgumentException("Specified content type '" + contentType + "' is not supported.");
       }
