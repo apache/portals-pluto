@@ -286,10 +286,10 @@ public class AddlResponseTests_SPEC2_12_Resource implements Portlet, ResourceSer
          Locale loc = new Locale("en");
          portletResp.setLocale(loc);
          TestResult tr6 = tcd.getTestResultFailed(V2ADDLRESPONSETESTS_SPEC2_12_RESOURCE_CHARACTERENCODING2);
-         if (portletResp.getCharacterEncoding().equals("iso-8859-16")) {
+         if (portletResp.getCharacterEncoding().equals("iso-8859-15")) {
             tr6.setTcSuccess(true);
          } else {
-            tr6.appendTcDetail("Failed because character encoding is not \"iso-8859-16\" but " + portletResp.getCharacterEncoding());
+            tr6.appendTcDetail("Failed because character encoding is not \"iso-8859-15\" but " + portletResp.getCharacterEncoding());
          }
          portletResp.setCharacterEncoding("UTF-8");
          tr6.writeTo(writer);

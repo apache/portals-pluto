@@ -34,7 +34,7 @@
    <locale-encoding-mapping-list>
       <locale-encoding-mapping>
          <locale>en</locale>
-         <encoding>iso-8859-16</encoding>
+         <encoding>iso-8859-15</encoding>
       </locale-encoding-mapping>
    </locale-encoding-mapping-list> 
 
