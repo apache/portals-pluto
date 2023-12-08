@@ -245,8 +245,8 @@ generate mailto links. -->
 		<commons-digester.version>1.8</commons-digester.version>
 		<commons-cli.version>1.0</commons-cli.version>
 		<slf4j.version>1.7.5</slf4j.version>
-		<springframework.version>5.3.19</springframework.version>
-		<springsecurity.version>5.5.1</springsecurity.version>
+		<springframework.version>5.3.30</springframework.version>
+		<springsecurity.version>5.8.8</springsecurity.version>
 		<maven.version>3.8.1</maven.version>
 		<ant.version>1.6.5</ant.version>
 		<commons-lang.scope>provided</commons-lang.scope>
