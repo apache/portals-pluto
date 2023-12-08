@@ -234,10 +234,10 @@ generate mailto links. -->
 		<javax.portlet.version.minor>0</javax.portlet.version.minor>
 		<portals.portlet-api.version>3.0.1</portals.portlet-api.version>
 		<servlet-api.version>3.1.0</servlet-api.version>
-		<tomcat.servlet-api.version>8.0.28</tomcat.servlet-api.version>
-		<jsp-api.version>8.0.28</jsp-api.version>
-		<jstl.version>8.0.28</jstl.version>
-		<el-api.version>8.0.28</el-api.version>
+		<tomcat.servlet-api.version>9.0.83</tomcat.servlet-api.version>
+		<jsp-api.version>9.0.83</jsp-api.version>
+		<jstl.version>9.0.83</jstl.version>
+		<el-api.version>9.0.83</el-api.version>
 		<taglibs.standard.version>1.2.3</taglibs.standard.version>
 		<jaxb.version>2.1</jaxb.version>
 		<jaxb-impl.version>2.1.9</jaxb-impl.version>
