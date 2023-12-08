@@ -81,7 +81,7 @@ public abstract class AbstractManagementMojo extends AbstractPlutoMojo {
     /**
      * @parameter expression="${project.remoteArtifactRepositories}"
      */
-    protected List<File> remoteRepositories;
+    protected List<ArtifactRepository> remoteRepositories;
 
     /**
      * @parameter expression="${ctx}" default-value="pluto"
