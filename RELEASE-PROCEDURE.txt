@@ -43,7 +43,7 @@ Since 3.0.0
 2. Prepare the source for release
 	* Cleanup JIRA so the Fix Version in issues resolved since the last release includes this release version correctly.
 	* Create a JIRA issue for release maintenance for example see
-		https://issues.apache.org/jira/browse/PLUTO-795
+		https://issues.apache.org/jira/browse/PLUTO-807
 	* Clone a clean copy of master (on the specific branch if needed) to release using command line git.
 	    cd ~/apache/releases
 	    git clone https://github.com/apache/portals-pluto
@@ -62,7 +62,7 @@ Since 3.0.0
 	The dry run will not commit any changes back to Git and gives you the opportunity to verify that the release process will complete as expected.
 	You will be prompted for the following information :
 
-		Release version - take the default or use semvar like 3.1.1
+		Release version - take the default or use semvar like 3.1.2
 		SCM release tag - review the default naming and compare it with the existing git tag structure; change it if needed.
 		New development version - take the default
 		Have your GPG Passphrase ready
@@ -79,7 +79,7 @@ Since 3.0.0
 	Check release.properties and make sure that the scm properties have the right version. Sometimes the scm location can be the previous version not the next version.
 
 	Verify signatures (Verifying release signatures)
-        gpg --verify target/pluto-3.1.1-SNAPSHOT-source-release.zip.asc target/pluto-3.1.1-SNAPSHOT-source-release.zip
+        gpg --verify target/pluto-3.1.2-SNAPSHOT-source-release.zip.asc target/pluto-3.1.2-SNAPSHOT-source-release.zip
 
 6. CLEANUP AND START OVER
 	Cleanup the release prepare files again:
@@ -103,7 +103,7 @@ Since 3.0.0
 	$ mvn -P apache-release,pluto release:prepare -DrunOnlyAtExecutionRoot=true
 	$ mvn -P apache-release,pluto release:perform -Duser.name=[your_apache_uid]
 	$ vi portlet-tck_3.0/pom.xml # Update the parent <version/> and also the version in the <pluto.test.version/> property
-	$ git commit -a -m "PLUTO-795 Upgraded the TCK to Pluto test version 3.1.1"
+	$ git commit -a -m "PLUTO-807 Upgraded the TCK to Pluto test version 3.1.2"
 
 	If your local OS userid doesn't match your Apache userid, then you'll have to also override the value provided
 	by the OS to Maven for the site-deploy step to work. This is known to work for Linux, but not for Mac and unknown for Windows.
@@ -139,9 +139,9 @@ Since 3.0.0
 	# NOTE: You might need to get rid of a "-SNAPSHOT" from the following POM and Gradle descriptors first!
 	#
 
-	$ vi src/main/resources/archetype-resources/pom.xml # Change "3.1.1-SNAPSHOT" to "3.1.1"
-	$ vi src/main/resources/archetype-resources/build.gradle # Change "3.1.1-SNAPSHOT" to "3.1.1"
-	$ git commit -a -m "PLUTO-795 Upgraded to version 3.1.1"
+	$ vi src/main/resources/archetype-resources/pom.xml # Change "3.1.2-SNAPSHOT" to "3.1.2"
+	$ vi src/main/resources/archetype-resources/build.gradle # Change "3.1.2-SNAPSHOT" to "3.1.2"
+	$ git commit -a -m "PLUTO-807 Upgraded to version 3.1.2"
 
 	$ mvn -P apache-release release:prepare -Duser.name=[your_apache_uid]
 	$ mvn -P apache-release release:perform -Duser.name=[your_apache_uid]
@@ -149,7 +149,7 @@ Since 3.0.0
 8. VERIFY THE RELEASE
 	a. Verify signatures (Verifying release signatures)
 
-	$ gpg --verify target/pluto-3.1.1-source-release.zip.asc target/pluto-3.1.1-source-release.zip
+	$ gpg --verify target/pluto-3.1.2-source-release.zip.asc target/pluto-3.1.2-source-release.zip
 
     b. Verify the Nexus release artifacts
 
@@ -167,7 +167,7 @@ Since 3.0.0
 
 10. Checkout the new tag, since the repository will be set to a later commit
 
-    $ git checkout pluto-3.1.1
+    $ git checkout pluto-3.1.2
 
 11. Create a Distribution Bundle
 
@@ -181,22 +181,22 @@ Since 3.0.0
 
 12. Release the bundle Zip file
 
-	a. Use Maven command-line to release pluto-3.1.1-bundle.zip
+	a. Use Maven command-line to release pluto-3.1.2-bundle.zip
 
         #
         # NOTE: This will release a file with the following identification:
         #		 <groupId>org.apache.portals.pluto</groupId>
         #		 <artifactId>pluto-bundle</artifactId>
-        #		 <version>3.1.1</version>
+        #		 <version>3.1.2</version>
         #
-        #  And the download filename will be pluto-bundle-3.1.1.zip
+        #  And the download filename will be pluto-bundle-3.1.2.zip
         #
         mvn -Papache-release,pluto \
           gpg:sign-and-deploy-file \
-          -Dfile=target/dist/pluto-3.1.1-bundle.zip \
+          -Dfile=target/dist/pluto-3.1.2-bundle.zip \
           -DgroupId=org.apache.portals.pluto \
           -DartifactId=pluto-bundle \
-          -Dversion=3.1.1 \
+          -Dversion=3.1.2 \
           -Durl=https://repository.apache.org/service/local/staging/deploy/maven2 \
           -DrepositoryId=apache.releases.https
 
@@ -230,15 +230,15 @@ Since 3.0.0
     # NOTE: Set base URL to the Nexus staging repository
     #
     BASE_URL="https://repository.apache.org/service/local/repositories/orgapacheportals-1025/content"
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.1/pluto-3.1.1-source-release.zip
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.1/pluto-3.1.1-source-release.zip.asc
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.1/pluto-3.1.1-source-release.zip.md5
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.1/pluto-3.1.1-source-release.zip.sha1
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.2/pluto-3.1.2-source-release.zip
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.2/pluto-3.1.2-source-release.zip.asc
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.2/pluto-3.1.2-source-release.zip.md5
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto/3.1.2/pluto-3.1.2-source-release.zip.sha1
     # Generate the SHA-512 checksum for the source release
-    /usr/bin/shasum -a 512 pluto-3.1.1-source-release.zip > pluto-3.1.1-source-release.zip.sha512
-    # Linux: sha512sum -a 512 pluto-3.1.1-source-release.zip > pluto-3.1.1-source-release.zip.sha512
+    /usr/bin/shasum -a 512 pluto-3.1.2-source-release.zip > pluto-3.1.2-source-release.zip.sha512
+    # Linux: sha512sum -a 512 pluto-3.1.2-source-release.zip > pluto-3.1.2-source-release.zip.sha512
 
-    svn add pluto-3.1.1-source-release*
+    svn add pluto-3.1.2-source-release*
     #
     # NOTE: If the Portlet API was released, then un-comment the following:
     #
@@ -251,7 +251,7 @@ Since 3.0.0
     # wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.2/portlet-api-3.0.2-javadoc.jar.md5
     # wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.2/portlet-api-3.0.2-javadoc.jar.sha1
     # svn add portlet-api-3.0.2*
-    # svn commit -m "PLUTO-795 Committing Source Release for portlet-api-3.0.2" --username $USER_NAME
+    # svn commit -m "PLUTO-807 Committing Source Release for portlet-api-3.0.2" --username $USER_NAME
     # wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.2/portlet-api-3.0.2.jar
     # wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.2/portlet-api-3.0.2.jar.asc
     # wget --no-check-certificate $BASE_URL/javax/portlet/portlet-api/3.0.2/portlet-api-3.0.2.jar.md5
@@ -261,16 +261,16 @@ Since 3.0.0
     # Linux: sha512sum -a 512 portlet-api-3.0.2.jar > portlet-api-3.0.2.jar.sha512
     # svn add portlet-api-3.0.2.jar*
 
-    # svn commit -m "PLUTO-795 Committing Binary Release for portlet-api-3.0.2" --username $USER_NAME
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.1/pluto-bundle-3.1.1.zip
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.1/pluto-bundle-3.1.1.zip.asc
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.1/pluto-bundle-3.1.1.zip.md5
-    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.1/pluto-bundle-3.1.1.zip.sha1
+    # svn commit -m "PLUTO-807 Committing Binary Release for portlet-api-3.0.2" --username $USER_NAME
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.2/pluto-bundle-3.1.2.zip
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.2/pluto-bundle-3.1.2.zip.asc
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.2/pluto-bundle-3.1.2.zip.md5
+    wget --no-check-certificate $BASE_URL/org/apache/portals/pluto/pluto-bundle/3.1.2/pluto-bundle-3.1.2.zip.sha1
     # Generate the SHA-512 checksum for the binary release
-    /usr/bin/shasum -a 512 pluto-bundle-3.1.1.zip > pluto-bundle-3.1.1.zip.sha512
-    # Linux: sha512sum -a 512 pluto-bundle-3.1.1.zip > pluto-bundle-3.1.1.zip.sha512
-    svn add pluto-bundle-3.1.1.zip*
-    svn commit -m "PLUTO-795 Committing Binary Release for Pluto 3.1.1" --username $USER_NAME
+    /usr/bin/shasum -a 512 pluto-bundle-3.1.2.zip > pluto-bundle-3.1.2.zip.sha512
+    # Linux: sha512sum -a 512 pluto-bundle-3.1.2.zip > pluto-bundle-3.1.2.zip.sha512
+    svn add pluto-bundle-3.1.2.zip*
+    svn commit -m "PLUTO-807 Committing Binary Release for Pluto 3.1.2" --username $USER_NAME
 
 13. PUT THE RELEASE CANDIDATE UP FOR A VOTE
 
@@ -298,38 +298,38 @@ Since 3.0.0
         Click checkbox of the closed staging repo (org.apache.portals-XXX) and select Release.
 
     b. Move the source/binary artifacts over to the distribution area
-       Command line examples to distribute artifacts (pluto-3.1.1-source-release.zip as an example below.):
+       Command line examples to distribute artifacts (pluto-3.1.2-source-release.zip as an example below.):
 
         $ cd ~/asf/svn
         $ mkdir release
         $ cd release
         $ svn co https://dist.apache.org/repos/dist/release/portals/pluto
         $ cd pluto
-        $ mv ../../dev/pluto/pluto-3.1.1-source-release* .
-        $ svn add pluto-3.1.1-source-release*
-        $ svn commit -m "PLUTO-795 Committing Source Release for pluto-3.1.1" --username $USER_NAME
+        $ mv ../../dev/pluto/pluto-3.1.2-source-release* .
+        $ svn add pluto-3.1.2-source-release*
+        $ svn commit -m "PLUTO-807 Committing Source Release for pluto-3.1.2" --username $USER_NAME
 
     c. If the Portlet API was released, then move the source/binary artifacts over to the distribution area
         $ mv ../../dev/portals/pluto/portlet-api-3.0.2* .
         $ svn add portlet-api-3.0.2*
-        $ svn commit -m "PLUTO-795 Committing Binary Release for portlet-api-3.0.2" --username $USER_NAME
+        $ svn commit -m "PLUTO-807 Committing Binary Release for portlet-api-3.0.2" --username $USER_NAME
 
     d. Move the bundle artifacts over to the distribution area
-        $ mv ../../dev/pluto/pluto-bundle-3.1.1.zip* .
-        $ svn add pluto-bundle-3.1.1.zip*
-        $ svn commit -m "PLUTO-795 Committing Binary Release for Pluto 3.1.1" --username $USER_NAME
+        $ mv ../../dev/pluto/pluto-bundle-3.1.2.zip* .
+        $ svn add pluto-bundle-3.1.2.zip*
+        $ svn commit -m "PLUTO-807 Committing Binary Release for Pluto 3.1.2" --username $USER_NAME
         $ cd ../../dev/pluto
         $ FILES=`svn status | grep pluto | awk '{print $2}'`
         $ svn rm $FILES
-        $ svn commit -m "PLUTO-795 Promoted artifacts from dev to release for Pluto 3.1.1" --username $USER_NAME
+        $ svn commit -m "PLUTO-807 Promoted artifacts from dev to release for Pluto 3.1.2" --username $USER_NAME
 
     e. Push the tags upstream
-        $ git push upstream pluto-3.1.1
+        $ git push upstream pluto-3.1.2
         $ git push upstream portlet-tck-3.0.3
-        $ git push upstream bean-portlet-archetype-3.1.1
-        $ git push upstream generic-portlet-archetype-3.1.1
-        $ git push upstream mvcbean-jsp-portlet-archetype-3.1.1
-        $ git push upstream mvcbean-thymeleaf-portlet-archetype-3.1.1
+        $ git push upstream bean-portlet-archetype-3.1.2
+        $ git push upstream generic-portlet-archetype-3.1.2
+        $ git push upstream mvcbean-jsp-portlet-archetype-3.1.2
+        $ git push upstream mvcbean-thymeleaf-portlet-archetype-3.1.2
 
     WAIT 24hrs after committing releases for mirrors to replicate before announcing release
 
@@ -347,7 +347,7 @@ Since 3.0.0
         $ cd site
         $ cp -r pluto/src/site/xdoc/v310 pluto/src/site/xdoc/v311
 
-    b. Edit the following files, replacing "3.1.0" with "3.1.1":
+    b. Edit the following files, replacing "3.1.0" with "3.1.2":
         pluto/src/site/xdoc/v311/*
 
         NOTE: For pluto/src/site/xdoc/v311/getting-started.xml you should only replace the version numbers if
@@ -356,7 +356,7 @@ Since 3.0.0
         NOTE: For pluto/src/site/xdoc/v311/tck.html you should take care with substitution of version numbers
               since the TCK has its won version scheme and release schedule.
 
-    c. Edit the following files, replacing "v310" with "v311" and "3.1.0" with "3.1.1":
+    c. Edit the following files, replacing "v310" with "v311" and "3.1.0" with "3.1.2":
         pluto/src/site/fml/faq.fml
         pluto/src/site/site.xml <-- If applicable, instead of replacing version numbers, add a new <menu name="Pluto 3.1"> section
         pluto/src/site/xdoc/download.xml
@@ -381,7 +381,7 @@ Since 3.0.0
         https://svn.apache.org/repos/asf/portals/site/
 
         $ svn add src/site/xdoc/v311
-        $ svn commit -m "PLUTO-795 Committing site changes associated with the Pluto 3.1.1 release" --username $USER_NAME
+        $ svn commit -m "PLUTO-807 Committing site changes associated with the Pluto 3.1.2 release" --username $USER_NAME
 
     Copy the generated html and resources into the workspace folder of the following svnpubsub SVN location:
         https://svn.apache.org/repos/asf/portals/site-live/
@@ -399,7 +399,7 @@ Since 3.0.0
 
     	$ svn add v311
 
-        $ svn commit -m "PLUTO-795 Committing site changes associated with the Pluto 3.1.1 release" --username $USER_NAME
+        $ svn commit -m "PLUTO-807 Committing site changes associated with the Pluto 3.1.2 release" --username $USER_NAME
 
 17. ANNOUNCE THE RELEASE
 
@@ -437,11 +437,11 @@ Since 3.0.0
 ------------------------------------ Release Candidate Email Template ------------------------------------------------------------
 To: pluto-dev list
 cc: pluto-user list, portals-pmc list
-Subject: [VOTE] Release Apache Portals Pluto 3.1.1
+Subject: [VOTE] Release Apache Portals Pluto 3.1.2
 
 Dear Apache Portals Pluto Team and community,
 
-I've staged a release candidate for the new Apache Portals Pluto 3.1.1 release.
+I've staged a release candidate for the new Apache Portals Pluto 3.1.2 release.
 
 This release candidate includes:
 
@@ -463,7 +463,7 @@ https://issues.apache.org/jira/secure/ReleaseNote.jspa?projectId=****&version=**
 The KEYS file to verify the release artifacts signature can be found here:
 https://dist.apache.org/repos/dist/release/portals/pluto/KEYS
 
-Please review the release candidates and vote on releasing Apache Portals Pluto 3.1.1
+Please review the release candidates and vote on releasing Apache Portals Pluto 3.1.2
 
 REMINDER: According to the following policy:
 http://www.apache.org/legal/release-policy.html#release-approval
@@ -473,7 +473,7 @@ http://www.apache.org/legal/release-policy.html#release-approval
     cryptographic signatures, compile as provided, and test the result on their
     own platform."
 
-Please review the release candidates and vote on releasing Apache Portals Pluto 3.1.1
+Please review the release candidates and vote on releasing Apache Portals Pluto 3.1.2
 
 This vote is open for the next 72 hours.
 
@@ -490,7 +490,7 @@ Regards,
 ------------------------------------ Result/Vote Email Template ------------------------------------------------------------
 
 Respond to last email
-Subject: [RESULT][VOTE] Release Apache Portals Pluto 3.1.1
+Subject: [RESULT][VOTE] Release Apache Portals Pluto 3.1.2
 
 Apache Portals Team and community,
 
@@ -516,10 +516,10 @@ To      announce@apache.org
         pluto-user@portals.apache.org
         jetspeed-user@portals.apache.org
 
-Subject: [ANNOUNCE] Apache Portals Pluto 3.1.1 release
+Subject: [ANNOUNCE] Apache Portals Pluto 3.1.2 release
 
 The Apache Portals team is pleased to announce the General Availability of
-Apache Pluto version 3.1.1.
+Apache Pluto version 3.1.2.
 
 Additional Resources:
 
