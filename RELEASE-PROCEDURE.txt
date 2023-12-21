@@ -345,18 +345,18 @@ Since 3.0.0
         $ cd ~/asf/svn
         $ svn checkout https://svn.apache.org/repos/asf/portals/site/
         $ cd site
-        $ cp -r pluto/src/site/xdoc/v310 pluto/src/site/xdoc/v311
+        $ cp -r pluto/src/site/xdoc/v311 pluto/src/site/xdoc/v312
 
-    b. Edit the following files, replacing "3.1.0" with "3.1.2":
-        pluto/src/site/xdoc/v311/*
+    b. Edit the following files, replacing "3.1.1" with "3.1.2":
+        pluto/src/site/xdoc/v312/*
 
-        NOTE: For pluto/src/site/xdoc/v311/getting-started.xml you should only replace the version numbers if
+        NOTE: For pluto/src/site/xdoc/v312/maven-archetypes.xml you should only replace the version numbers if
               the archetypes were released! Also, are there new archetypes to add?
 
-        NOTE: For pluto/src/site/xdoc/v311/tck.html you should take care with substitution of version numbers
-              since the TCK has its won version scheme and release schedule.
+        NOTE: For pluto/src/site/xdoc/v312/tck.html you should take care with substitution of version numbers
+              since the TCK has its own version scheme and release schedule.
 
-    c. Edit the following files, replacing "v310" with "v311" and "3.1.0" with "3.1.2":
+    c. Edit the following files, replacing "v311" with "v312" and "3.1.1" with "3.1.2":
         pluto/src/site/fml/faq.fml
         pluto/src/site/site.xml <-- If applicable, instead of replacing version numbers, add a new <menu name="Pluto 3.1"> section
         pluto/src/site/xdoc/download.xml
@@ -366,7 +366,7 @@ Since 3.0.0
         pluto/src/site/xdoc/status.xml <-- If applicable, add a description of the new major or minor version.
                                            Also, replace "Pluto 3.0" with "Pluto 3.1" where appropriate.
 
-    d. Edit site/pluto/src/site/xdoc/v311/release-notes.xml
+    d. Edit site/pluto/src/site/xdoc/v312/release-notes.xml
         include generated release notes from step 15
 
     e. Generate the site:
@@ -380,7 +380,7 @@ Since 3.0.0
     Commit changes into the SVN location of Apache Portals Maven Site documentation:
         https://svn.apache.org/repos/asf/portals/site/
 
-        $ svn add src/site/xdoc/v311
+        $ svn add src/site/xdoc/v312
         $ svn commit -m "PLUTO-807 Committing site changes associated with the Pluto 3.1.2 release" --username $USER_NAME
 
     Copy the generated html and resources into the workspace folder of the following svnpubsub SVN location:
@@ -397,7 +397,7 @@ Since 3.0.0
 
     	$ cd ../../../../site-live/pluto
 
-    	$ svn add v311
+    	$ svn add v312
 
         $ svn commit -m "PLUTO-807 Committing site changes associated with the Pluto 3.1.2 release" --username $USER_NAME
 
@@ -535,10 +535,10 @@ To get up and running quickly, download the bundle which comes with a bundled
 latest Tomcat 8 ready to run.
 
 Features:
-http://portals.apache.org/pluto/v311/v3Features.html
+http://portals.apache.org/pluto/v312/v3Features.html
 
 Release Notes:
-http://portals.apache.org/pluto/v311/release-notes.html
+http://portals.apache.org/pluto/v312/release-notes.html
 
 Website Documentation:
 http://portals.apache.org/pluto
@@ -547,5 +547,6 @@ Downloads:
 https://portals.apache.org/pluto/download.html
 
 --
-David S Taylor
+(your name)
+
 On behalf of the Apache Portals PMC
