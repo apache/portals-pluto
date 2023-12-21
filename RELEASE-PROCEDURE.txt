@@ -320,7 +320,7 @@ Since 3.0.0
         $ svn commit -m "PLUTO-807 Committing Binary Release for Pluto 3.1.2" --username $USER_NAME
         $ cd ../../dev/pluto
         $ FILES=`svn status | grep pluto | awk '{print $2}'`
-        $ svn rm $FILES
+        $ svn rm "$FILES"
         $ svn commit -m "PLUTO-807 Promoted artifacts from dev to release for Pluto 3.1.2" --username $USER_NAME
 
     e. Push the tags upstream
