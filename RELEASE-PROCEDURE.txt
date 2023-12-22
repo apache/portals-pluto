@@ -514,7 +514,6 @@ Regards,
 To      announce@apache.org
         general@portals.apache.org
         pluto-user@portals.apache.org
-        jetspeed-user@portals.apache.org
 
 Subject: [ANNOUNCE] Apache Portals Pluto 3.1.2 release
 
