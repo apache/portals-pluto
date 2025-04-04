@@ -605,12 +605,13 @@
 		</annotation>
 		<sequence>
 			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
-         <element name="display-name" type="portlet:display-nameType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="display-name" type="portlet:display-nameType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="identifier" type="portlet:string"/>
 			<choice>
 				<element name="qname" type="xs:QName"/>
 				<element name="name" type="xs:NCName"/>
 			</choice>
+			<element name="alias" type="xs:QName" minOccurs="0" maxOccurs="unbounded"/>	
 		</sequence>
 		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
