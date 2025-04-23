@@ -245,7 +245,7 @@ generate mailto links. -->
 		<commons-digester.version>1.8</commons-digester.version>
 		<commons-cli.version>1.0</commons-cli.version>
 		<slf4j.version>1.7.5</slf4j.version>
-		<springframework.version>5.3.30</springframework.version>
+		<springframework.version>6.0.15</springframework.version>
 		<springsecurity.version>5.8.8</springsecurity.version>
 		<maven.version>3.8.1</maven.version>
 		<ant.version>1.6.5</ant.version>
@@ -804,7 +804,7 @@ generate mailto links. -->
 		<profile>
 			<id>liferay-spring</id>
 			<properties>
-				<springframework.liferay.version>${springframework.version}</springframework.liferay.version>
+				<springframework.liferay.version>6.0.15</springframework.liferay.version>
 			</properties>
 		</profile>
 		<profile>
