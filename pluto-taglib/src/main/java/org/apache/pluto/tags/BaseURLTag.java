@@ -370,11 +370,11 @@ public abstract class BaseURLTag extends TagSupport {
      */
     protected String doEscapeXml(String str) {
     	if(!isEmpty(str)){
-    	    str = str.replaceAll("&", "&amp;");
-    		str = str.replaceAll("<", "&lt;");
-    		str = str.replaceAll(">", "&gt;");
-    		str = str.replaceAll("\"", "&#034;");
-    		str = str.replaceAll("'", "&#039;");
+    	    str = str.replace("&", "&amp;");
+    		str = str.replace("<", "&lt;");
+    		str = str.replace(">", "&gt;");
+    		str = str.replace("\"", "&#034;");
+    		str = str.replace("'", "&#039;");
     	}
         return str;
     }
